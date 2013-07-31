@@ -1,0 +1,13 @@
+SET(MatchPoint_Elastix_IS_ENABLED ON)
+
+# The Elastix source tree used by MatchPoint.
+SET(MatchPoint_Elastix_SOURCE_DIR @Elastix_SOURCE_DIR@)
+
+# The Elastix source tree used by MatchPoint.
+SET(MatchPoint_Elastix_BINARY_DIR @Elastix_DIR@)
+
+# The Elastix libraries used by MatchPoint.
+SET(MatchPoint_Elastix_LIBRARIES @Elastix_LIBRARIES@)
+
+# The Elastix include directories used by MatchPoint.
+SET(MatchPoint_Elastix_INCLUDE_DIRS @ELASTIX_INCLUDE_DIRECTORIES@)

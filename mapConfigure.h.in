@@ -1,0 +1,108 @@
+// -----------------------------------------------------------------------
+// MatchPoint - DKFZ translational registration framework
+//
+// Copyright (c) German Cancer Research Center (DKFZ),
+// Software development for Integrated Diagnostics and Therapy (SIDT).
+// ALL RIGHTS RESERVED.
+// See mapCopyright.txt or
+// http://www.dkfz.de/en/sidt/projects/MatchPoint/copyright.html
+//
+// This software is distributed WITHOUT ANY WARRANTY; without even
+// the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+// PURPOSE.  See the above copyright notices for more information.
+//
+//------------------------------------------------------------------------
+/*!
+// @file
+// @version $Revision: 4912 $ (last changed revision)
+// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/mapConfigure.h.in $
+*/
+
+//----------------------------------------------------------
+// !!!EXPERIMENTAL CODE!!!
+//
+// This code may not be used for release.
+// Add #define SIDT_ENFORCE_MATURE_CODE to any release module
+// to ensure this policy.
+//----------------------------------------------------------
+#ifdef SIDT_ENFORCE_MATURE_CODE
+#error “This code is marked as experimental code. It must not be used because this build enforces mature code.”
+#endif
+#ifndef SIDT_CONTAINS_EXPERIMENTAL_CODE
+#define SIDT_CONTAINS_EXPERIMENTAL_CODE 1
+#endif
+
+#ifndef __MAPCONFIGURE_H
+#define __MAPCONFIGURE_H
+
+
+
+/*! @def MAP_BUILD_SHARED_LIBS
+ * This define indicates if MatchPoint will be build as static library (define MAP_STATIC) or as DLL (define MAP_DLL).
+ * By default MAP_BUILD_SHARED_LIBSis not defined.
+*/
+#cmakedefine MAP_BUILD_SHARED_LIBS
+
+#ifdef MAP_BUILD_SHARED_LIBS
+#define MAP_DLL
+#else
+#define MAP_STATIC
+#endif
+
+/*! @def MAP_LEAN_AND_MEAN
+ * This define controls if MatchPoint should be build without debug information code or
+ * any other code that isn't needed for correct functionality but for maintenance convinience.
+ * (e.g. the mapLogDebugMacro() won't generate any code)
+ * By default MAP_LEAN_AND_MEAN is not defined.
+ * @remark This definition should by configured via the advance options in CMake.
+*/
+#cmakedefine MAP_LEAN_AND_MEAN
+
+/*! @def MAP_ENFORCE_MATURE_CODE
+ * This define controls if MatchPoint should force the whole build to be mature code.
+ * Mature code convention is part of the SIDT coding styles.
+ * Projects that use MatchPoint are able to ensure with SIDT_ENFORCE_MATURE_CODE
+ * that used code is guaranteed to be tested and reviewed regarding the strict
+ * SIDT coding styles.\n
+ * MAP_ENFORCE_MATURE_CODE can be used to ensure that strictness when prebuilding
+ * static or dynamic libraries.
+ * By default MAP_LEAN_AND_MEAN is not defined.
+ * @remark This definition should by configured via the advance options in CMake.
+*/
+#cmakedefine MAP_ENFORCE_MATURE_CODE
+#ifdef MAP_ENFORCE_MATURE_CODE
+#define SIDT_ENFORCE_MATURE_CODE
+#endif
+
+/*! @def MAP_DISABLE_ITK_IO_FACTORY_AUTO_REGISTER
+ * This define controls if MatchPoint should disable the auto
+ * register functionality of the itk io factory, when MatchPoint
+ * io reader and writer classes (e.g. mapImageReader.h) are used.
+ * This is needed in cases where MatchPoint is build "dynamic" and
+ * used in an application that also uses the ITK shared objects
+ * under Windows systems (e.g. MITK). Loading and unloading MatchPoint
+ * shared objects in such an application would lead to an corrupted
+ * itk factory stack, because its implementation is not fail safe
+ * in this scenario.
+ * By default MAP_LEAN_AND_MEAN is not defined.
+ * @remark This definition should by configured via the advance options in CMake.
+*/
+#cmakedefine MAP_DISABLE_ITK_IO_FACTORY_AUTO_REGISTER
+
+#define MAP_VERSION_MAJOR @MatchPoint_VERSION_MAJOR@
+#define MAP_VERSION_MINOR @MatchPoint_VERSION_MINOR@
+#define MAP_VERSION_PATCH @MatchPoint_VERSION_PATCH@
+#define MAP_VERSION_STRING "@MatchPoint_VERSION_STRING@"
+#define MAP_FULL_VERSION_STRING "@MatchPoint_FULL_VERSION_STRING@"
+#define MAP_SOURCE_VERSION "MatchPoint version " MAP_FULL_VERSION_STRING ", map source $Revision: 4912 $, $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $"
+
+
+#define MAP_DLL_INTERFACE_VERSION_MAJOR @MatchPoint_DLL_INTERFACE_VERSION_MAJOR@
+#define MAP_DLL_INTERFACE_VERSION_MINOR @MatchPoint_DLL_INTERFACE_VERSION_MINOR@
+#define MAP_DLL_INTERFACE_VERSION_STRING "@MatchPoint_DLL_INTERFACE_VERSION_STRING@"
+
+#include <cstddef>
+
+#endif

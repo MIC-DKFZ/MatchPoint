@@ -1,0 +1,10 @@
+<Kernel InputDimensions='2' OutputDimensions='2'>
+  <StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider>
+  <KernelType>ExpandedFieldKernel</KernelType>
+  <FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath>
+  <UseNullVector>1</UseNullVector>
+  <NullVector>
+    <Value Row='0'>-1.000000000</Value>
+    <Value Row='1'>-2.000000000</Value>
+  </NullVector>
+</Kernel>

@@ -1,0 +1,1 @@
+<Main type='demo'>boss<Sub id='1'>1st</Sub><Sub id='2' attr2='###'>2nd</Sub><Sub id='3'><Sub id='3.1'/></Sub><Add/></Main>

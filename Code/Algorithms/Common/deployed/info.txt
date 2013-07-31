@@ -1,0 +1,2 @@
+Info:
+The DummyRegistration algorithms are deployed via sub project MAPDeployment (../../../Deployment/deployed), to resolve cyclic dependencies.

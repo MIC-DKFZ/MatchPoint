@@ -1,0 +1,8 @@
+MAP_CREATE_MODULE(MAPAlgorithmsITK DEPENDS MAPAlgorithms MAPUtilities)
+MAP_CREATE_MODULE_TESTS(MAPAlgorithmsITK PACKAGE_DEPENDS Litmus HEADER_TESTS)
+
+MAP_DEFINE_DEPLOYED_ALGORITHM(ITKEuler3DMattesMI FILES "deployed/mapITKEuler3DMattesMI.cpp" DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(ITKEuler3DMattesMIMultiRes FILES "deployed/mapITKEuler3DMattesMIMultiRes.cpp" DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(ITKEuler3DMS FILES "deployed/mapITKEuler3DMS.cpp" DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigid2DMattesMI FILES "deployed/mapITKRigid2DMattesMI.cpp" DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigid3DClosedForm FILES "deployed/mapITKRigid3DClosedForm.cpp" DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)

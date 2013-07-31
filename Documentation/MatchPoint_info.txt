@@ -1,0 +1,171 @@
+// -----------------------------------------------------------------------
+// MatchPoint - DKFZ Registration Platform
+//
+// (c) Copyright 2007, DKFZ, Heidelberg, Germany
+// ALL RIGHTS RESERVED
+//
+// THIS FILE CONTAINS CONFIDENTIAL AND PROPRIETARY INFORMATION OF DKFZ.
+// ANY DUPLICATION, MODIFICATION, DISTRIBUTION, OR
+// DISCLOSURE IN ANY FORM, IN WHOLE, OR IN PART, IS STRICTLY PROHIBITED
+// WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF DKFZ.
+//
+//------------------------------------------------------------------------
+/*!
+// @file
+// @version $Revision: 4910 $ (last changed revision)
+// @date    $Date: 2013-07-30 14:08:21 +0200 (Di, 30 Jul 2013) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// @author  *none* (Reviewer)
+//
+// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Documentation/MatchPoint_info.txt $
+*/
+
+/** \mainpage MatchPoint - DKFZ registration platform
+ * \section intro Introduction
+ *
+ * Welcome to MatchPoint...*/
+
+
+/** \defgroup Core Core component
+ * This is the core library of MatchPoint. It defines and implements the supportive infra sturctur of MatchPoint and the vital classes like
+ * the registration itself, the their kernels and operations on the kernels.*/
+
+    /** \defgroup Logging Logging
+     * \ingroup Core
+     * MatchPoint has a centralized infrastructure for logging. This section contains
+     * the basic structures and classes used in MatchPoint for that purpose.*/
+
+    /** \defgroup Exception Exceptions
+     * \ingroup Core
+     * This section contains the exception classes and their support structures / macros that are used in MatchPoint.*/
+
+    /** \defgroup Services Services
+     * \ingroup Core
+     * MatchPoint uses service provider to request dynamicaly needed functionality like kernel inverters. This section contains
+     * the basic service infra structure and classes used in MatchPoint*/
+
+        /** \defgroup LoadPolicies Load policies
+         * \ingroup Services 
+         * Service repositories can have several load policies to control the set default service providers.This section contains
+         * the load policies currently defined.*/
+
+        /** \defgroup ThreadingPolicies Threading policies
+         * \ingroup Services 
+         * Service repositories can have several threading policies to control their behaviour regarding multi threading
+         * environments. This section contains the load policies currently defined.*/
+
+    /** \defgroup Testing Testing
+     * \ingroup Core
+     * MatchPoint uses several classes and macros to realize simple unit testing features (based upon "unit test++").
+     * This section contains the declerations and definitions needed for this basic testing infra structure*/
+
+        /** \defgroup Tester Tester
+         * \ingroup Testing 
+         * The matchpoint testing fascility can use functor like tester classes to integrate special tests in its testing concept.
+         * Testers are used in conjunction with the CHECK_TESTER macro.*/
+
+    /** \defgroup Continuous Continuous space elements
+     * \ingroup Core
+     * MatchPoint seperates between structures in continuous space (e.g. points) and in discrete space (like discrete images).
+     * This section contains the elements of the continuous space.*/
+
+    /** \defgroup Discrete Discrete space elements
+     * \ingroup Core
+     * MatchPoint seperates between structures in continuous space (e.g. points) and in discrete space (like discrete images).
+     * This section contains the elements of the discrete space.*/
+
+    /** \defgroup Registration Registration
+     * \ingroup Core*/
+
+        /** \defgroup RegFunctors Registration functors
+         * \ingroup Registration
+         * */
+
+        /** \defgroup RegOperation Registration manipulators / operators
+         * \ingroup Registration
+         * */
+
+        /** \defgroup MappingTask Mapping task performer
+         * \ingroup Registration
+         * */
+
+        /** \defgroup RegKernel Registration kernels
+         * \ingroup Registration
+         * Kernels used by Matchpoint to define inverse or direct transformation (e.g. by transformation models or vector fields)
+         * */
+
+        /** \defgroup TransformModel Transform models
+         * \ingroup Registration
+         * Registration kernels used in Matchpoint are normaly field or transform model based. The section contains all transform model
+         * classes defined by MatchPoint by defautl.
+         * */
+
+/** \defgroup Algorithms Registration algorithms
+ * This is the algorithm library of MatchPoint. It defines and implements all interfaces and base classes needed
+ * to develop registration algorithms. It also containes predefined default algorithms as demonstration and basic tool set.*/
+
+    /** \defgroup AlgorithmFacets Algorithm facets
+     * \ingroup Algorithms*/
+
+    /** \defgroup ITKPolicies ITK algorithm policies
+     * \ingroup Algorithms*/
+
+    /** \defgroup MetricControl ITK metric controllers
+     * \ingroup Algorithms*/
+
+    /** \defgroup OptimizerControl ITK optimizer controllers
+     * \ingroup Algorithms*/
+
+    /** \defgroup ITKTransformModel Transform model wrapper for ITK transforms
+     * \ingroup Algorithms*/
+
+    /** \defgroup Boxed "Boxed" default algorithms
+     * This group lists all algorithms already boxed in the base version of MatchPoint.
+     * It is more an example than a fully fledged algorithm library, but enough to get a picture and
+     * sufficiant for simple registration tasks.
+     * \ingroup Algorithms*/
+
+    /** \defgroup InitPolicy Initialization policies for algorithms
+     * This group lists all initializiation policies that are available for different algorithms aspects/parts.
+     * \ingroup Algorithms*/
+
+        /** \defgroup OptimizerInitPolicy Initialization policies for optimizers
+         * This group lists all initializiation policies for optimizers defined in MatchPoint so far.
+         * \ingroup InitPolicy 
+
+        /** \defgroup MetricInitPolicy Initialization policies for metrics
+         * This group lists all initializiation policies for metrics defined in MatchPoint so far.
+         * \ingroup InitPolicy 
+
+
+/** \defgroup ITK ITK concerning implementations/wrappings. */
+
+
+/** \defgroup Events Events
+ * This group lists all type of events defined in MatchPoint.*/
+
+    /** \defgroup InternalEvents Internal events
+     * \ingroup Events
+     * These events are normaly used "under the hood" of algorithms (and other objects in MatchPoint) to realize
+     * an abstraction of interaction between different parts (e.g. an algorithm and its policy).*/
+
+/** \defgroup Deployment Deployment
+ * This group contains everything relevant for deployment. Such as tools and helper classes to create deployment DLLs
+ * and deploy an algorithm. Also tools for host application developer that want to utilize a deployed algorithms are listed
+ * here.*/
+
+    /** \defgroup DeployAlgorithm Algorithm deployment
+     * \ingroup Deployment
+     * This group contains tools and helper classes to create deployment DLLs and deploy algorithms that can be used by other applications.*/
+
+    /** \defgroup DeployHost Host assistance
+     * \ingroup Deployment
+     * This group contains tools and helper classes for host application developer that want to utilize a deployed algorithms.*/
+
+    /** \defgroup ExceptionDeployment Deployment exceptions
+     * \ingroup Exception
+     * \ingroup Deployment
+     * This section contains the exception classes and their support structures / macros that are used in the context of MatchPoint algorithm deployment.*/
+
+/** \defgroup Examples Examples
+ * List of all examples and demo programs offered by MatchPoint.*/

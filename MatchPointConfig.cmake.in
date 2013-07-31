@@ -1,0 +1,54 @@
+#-----------------------------------------------------------------------------
+#
+# MatchPointConfig.cmake - MatchPoint CMake configuration file for external projects.
+#
+# This file is configured by MatchPoint and used by the UseMatchPoint.cmake module
+# to load MatchPoint's settings for an external project.
+
+SET(MatchPoint_FOUND 1)
+
+# The MatchPoint source tree.
+SET(MatchPoint_SOURCE_DIR "@MatchPoint_SOURCE_DIR@")
+
+# The MatchPoint binary tree.
+SET(MatchPoint_BINARY_DIR "@MatchPoint_BINARY_DIR@")
+
+# The MatchPoint include file directories.
+SET(MatchPoint_INCLUDE_DIRS "@MatchPoint_INCLUDE_DIRS_CONFIG@")
+
+# The MatchPoint library directories.
+SET(MatchPoint_LIBRARY_DIRS "@MatchPoint_LIBRARY_DIRS_CONFIG@")
+
+# The itk source tree used by MatchPoint.
+SET(MatchPoint_ITK_SOURCE_DIR @MatchPoint_ITK_SOURCE_DIR@)
+
+# The itk library directories used by MatchPoint.
+SET(MatchPoint_ITK_LIBRARY_DIRS @MatchPoint_ITK_LIBRARY_DIRS@)
+
+# The itk library directories used by MatchPoint.
+SET(MatchPoint_ITK_LIBRARIES @MatchPoint_ITK_LIBRARIES@)
+
+# The itk include directories used by MatchPoint.
+SET(MatchPoint_ITK_INCLUDE_DIRS @MatchPoint_ITK_INCLUDE_DIRS@)
+
+# The MatchPoint version number
+SET(MatchPoint_VERSION_MAJOR "@MatchPoint_VERSION_MAJOR@")
+SET(MatchPoint_VERSION_MINOR "@MatchPoint_VERSION_MINOR@")
+SET(MatchPoint_VERSION_PATCH "@MatchPoint_VERSION_PATCH@")
+
+# MatchPoint DLL interface version number.
+SET(MatchPoint_DLL_INTERFACE_VERSION_MAJOR "@MatchPoint_DLL_INTERFACE_VERSION_MAJOR@")
+SET(MatchPoint_DLL_INTERFACE_VERSION_MINOR "@MatchPoint_DLL_INTERFACE_VERSION_MINOR@")
+
+# The location of the UseMatchPoint.cmake file.
+SET(MatchPoint_USE_FILE "@MatchPoint_USE_FILE@")
+
+# The location of the MatchPointTargets.cmake file.
+SET(MatchPoint_TARGETS_FILE "@MatchPoint_TARGETS_FILE@")
+
+# The MatchPoint library dependencies.
+IF(NOT MatchPoint_NO_LIBRARY_DEPENDS AND
+    EXISTS "@MatchPoint_LIBRARY_DEPENDS_FILE@")
+  INCLUDE("@MatchPoint_LIBRARY_DEPENDS_FILE@")
+ENDIF(NOT MatchPoint_NO_LIBRARY_DEPENDS AND
+  EXISTS "@MatchPoint_LIBRARY_DEPENDS_FILE@")

@@ -1,0 +1,17 @@
+[GLOBAL]
+fixed=wrong_file_path/to_test_sanity_checks_of_plastimatch_wrapper/target.test
+moving=wrong_file_path/to_test_sanity_checks_of_plastimatch_wrapper/moving.test
+vf_out=wrong_file_path/to_test_sanity_checks_of_plastimatch_wrapper/vf_out.test
+xform_out=wrong_file_path/to_test_sanity_checks_of_plastimatch_wrapper/xform_out.test
+img_out=wrong_file_path/to_test_sanity_checks_of_plastimatch_wrapper/img.test
+
+[STAGE]
+xform=translation
+optim=rsg
+impl=itk
+max_its=200
+convergence_tol=0
+grad_tol=0.0001
+res=1 1 1
+min_step=0.001
+metric=mse

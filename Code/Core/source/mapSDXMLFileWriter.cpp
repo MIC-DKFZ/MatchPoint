@@ -1,0 +1,109 @@
+// -----------------------------------------------------------------------
+// MatchPoint - DKFZ translational registration framework
+//
+// Copyright (c) German Cancer Research Center (DKFZ),
+// Software development for Integrated Diagnostics and Therapy (SIDT).
+// ALL RIGHTS RESERVED.
+// See mapCopyright.txt or
+// http://www.dkfz.de/en/sidt/projects/MatchPoint/copyright.html
+//
+// This software is distributed WITHOUT ANY WARRANTY; without even
+// the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+// PURPOSE.  See the above copyright notices for more information.
+//
+//------------------------------------------------------------------------
+/*!
+// @file
+// @version $Revision: 4912 $ (last changed revision)
+// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapSDXMLFileWriter.cpp $
+*/
+
+
+
+#include "mapSDXMLFileWriter.h"
+#include "mapSDXMLStrWriter.h"
+#include "mapSDExceptions.h"
+
+namespace map
+{
+
+	namespace structuredData
+	{
+		void
+		XMLFileWriter::
+		setXSLTFile(const core::String &file)
+		{
+			this->_XSLTFile = file;
+		};
+
+		core::String
+		XMLFileWriter::
+		getXSLTFile() const
+		{
+			return this->_XSLTFile;
+		};
+
+		void
+		XMLFileWriter::
+		write(const core::String &filePath, const Element *pElement)
+		{
+			if (!pElement)
+			{
+				mapDefaultExceptionMacro( << "Error, cannot write passed StructuredData element to an xml file. Passed element is NULL.");
+			}
+
+			XMLIntendedStrWriter::Pointer spStrWriter = XMLIntendedStrWriter::New();
+
+			core::String savedStr = spStrWriter->write(pElement);
+
+			std::ofstream file;
+
+			std::ios_base::openmode iOpenFlag = std::ios_base::out | std::ios_base::trunc;
+			file.open(filePath.c_str(), iOpenFlag);
+
+			if (!file.is_open())
+			{
+				mapDefaultExceptionMacro( << "Cannot open or create specified file to save. File path: " << filePath);
+			}
+
+			file << "<?xml version=\"1.0\" encoding=\"" << _EncodingType << "\"?>\n";
+
+			if (!_XSLTFile.empty())
+			{
+				file << "<?xml-stylesheet type=\"text/xsl\" href=\"" << _XSLTFile << "\"?>\n";
+			}
+
+			file << savedStr;
+			file.close();
+		};
+
+		void
+		XMLFileWriter::
+		write(const core::String &filePath, const StreamingInterface *pInterface)
+		{
+			if (!pInterface)
+			{
+				mapDefaultExceptionMacro( << "Error, cannot write passed object to an xml file. Passed interface is NULL.");
+			}
+
+			ElementPointer spData = pInterface->streamToStructuredData();
+			this->write(filePath, spData);
+		};
+
+		XMLFileWriter::
+		XMLFileWriter()
+		{
+			this->_XSLTFile = "";
+			this->_EncodingType = "ISO-8859-1";
+		};
+
+		XMLFileWriter::
+		~XMLFileWriter()
+		{
+		};
+
+	} //end of namespace structuredData
+
+} //end of namespace map

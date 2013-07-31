@@ -1,0 +1,13 @@
+MAP_CREATE_MODULE(MAPAlgorithmsPlastimatch DEPENDS MAPAlgorithms MAPUtilities MAPIO)
+MAP_CREATE_MODULE_TESTS(MAPAlgorithmsPlastimatch DEPENDS MAPAlgorithmsITK PACKAGE_DEPENDS Litmus HEADER_TESTS)
+
+IF (BUILD_TESTING)
+	ADD_EXECUTABLE(mapDummyPlastimatch "test/mapDummyPlastimatch.cpp")
+	SET_TARGET_PROPERTIES(mapDummyPlastimatch PROPERTIES OUTPUT_NAME "plastimatch")
+	TARGET_LINK_LIBRARIES(mapDummyPlastimatch MAPCore MAPAlgorithmsPlastimatch LitmusCommon)
+ENDIF (BUILD_TESTING)
+
+MAP_DEFINE_DEPLOYED_ALGORITHM(PlmParameterFileCLI2DRegistration FILES "deployed/mapPlmParameterFileCLI2DRegistration.cpp" DEPENDS MAPAlgorithmsPlastimatch MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(PlmParameterFileCLI3DRegistration FILES "deployed/mapPlmParameterFileCLI3DRegistration.cpp" DEPENDS MAPAlgorithmsPlastimatch MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(PlmBSplineCLI2DRegistration FILES "deployed/mapPlmBSplineCLI2DRegistration.cpp" DEPENDS MAPAlgorithmsPlastimatch MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(PlmBSplineCLI3DRegistration FILES "deployed/mapPlmBSplineCLI3DRegistration.cpp" DEPENDS MAPAlgorithmsPlastimatch MAPDeployment)
