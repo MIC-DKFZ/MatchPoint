@@ -26,13 +26,10 @@
 #include "mapITKEuler3DMattesMIRegistrationAlgorithmTemplate.h"
 #include "mapConfigure.h"
 
-
-/*! UID policy for the new reboxed algorithm. This policy gives the reboxed version of the algorithm a new
- * unique identifer to track the usage of the algorithm within any application.*/
-mapGenerateAlgorithmUIDPolicyMacro(DefaultCommonEuler3DMattesMIAlgorithm3DUIDPolicy, "de.dkfz.matchpoint.common", "Euler3DMattesMIAlgorithm.3D.default", "1.0.1");
+#include "ITKEuler3DMattesMI_ProfileResource.h"
 
 typedef map::core::discrete::Elements<3>::InternalImageType ImageType;
-typedef map::algorithm::boxed::ITKEuler3DMattesMIRegistrationAlgorithm<ImageType, ImageType, DefaultCommonEuler3DMattesMIAlgorithm3DUIDPolicy> AlgorithmType;
+typedef map::algorithm::boxed::ITKEuler3DMattesMIRegistrationAlgorithm<ImageType, ImageType, ::map::algorithm::ITKEuler3DMattesMIUIDPolicy> AlgorithmType;
 
 typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
 

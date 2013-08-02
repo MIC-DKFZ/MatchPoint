@@ -21,5 +21,5 @@ IF (BUILD_TESTING)
 	TARGET_LINK_LIBRARIES(mapTestAlgorithmConfig MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 ENDIF (BUILD_TESTING)
 
-MAP_DEFINE_DEPLOYED_ALGORITHM(Dummy3DImageReg FILES "deployed/mapDummy3DImageReg.cpp" DEPENDS MAPCore MAPAlgorithms MAPDeployment)
-MAP_DEFINE_DEPLOYED_ALGORITHM(Dummy2DImageReg FILES "deployed/mapDummy2DImageReg.cpp" DEPENDS MAPCore MAPAlgorithms MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(Dummy3DImageReg FILES "deployed/mapDummy3DImageReg.cpp" PROFILE "deployed/Dummy3DImageReg.profile" MODULE_DEPENDS MAPCore MAPAlgorithms MAPDeployment )
+MAP_DEFINE_DEPLOYED_ALGORITHM(Dummy2DImageReg FILES "deployed/mapDummy2DImageReg.cpp" PROFILE "deployed/Dummy2DImageReg.profile" MODULE_DEPENDS MAPCore MAPAlgorithms MAPDeployment)
