@@ -25,7 +25,6 @@
  * deployment dlls.
  */
 
-#include "mapDeploymentDLLInterface.h"
 #include "mapDeploymentDLLHelper.h"
 #include "mapDiscreteElements.h"
 #include "mapDummyImageRegistrationAlgorithm.h"
@@ -55,6 +54,24 @@ __declspec(dllexport)
 void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID)
 {
 	spUID = DLLHelperType::mapGetRegistrationAlgorithmUID();
+};
+
+extern "C"
+#ifdef _WIN32
+__declspec(dllexport)
+#endif
+void mapGetRegistrationAlgorithmUID(map::core::String &profile)
+{
+	profile = DLLHelperType::mapGetRegistrationAlgorithmProfile();
+};
+
+extern "C"
+#ifdef _WIN32
+__declspec(dllexport)
+#endif
+void mapGetRegistrationAlgorithmUID(map::core::String &desc)
+{
+	desc = DLLHelperType::mapGetRegistrationAlgorithmDescription();
 };
 
 extern "C"

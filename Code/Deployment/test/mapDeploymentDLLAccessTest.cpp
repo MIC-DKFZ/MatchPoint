@@ -76,6 +76,9 @@ namespace map
 			spInstance = NULL; //Enforce the destruction of the instance before the DLL is closed!
 
 			CHECK_NO_THROW(map::deployment::closeDeploymentDLL(spHandle1));
+			
+TODO: es gibt neue symbole im dll interface, die müssen mitgetestet werden
+und entsprechend die browser bzw. access routinen anpassen. ->DLLInfo erweitern
 
 			//Test open file invalid DLL (missing mapGetDLLInterfaceVersion symbol)
 			std::string invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid1" + itksys::DynamicLoader::LibExtension();

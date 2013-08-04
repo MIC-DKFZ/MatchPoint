@@ -99,14 +99,18 @@ namespace map
 			*/
 			static Pointer New(const LibraryHandleType &libraryHandle,
 			                   const map::algorithm::UID *pUID,
-			                   const core::String &libraryFile);
+			                   const core::String &libraryFile,
+              const core::String &profileStr,
+              const core::String &description);
 
 			const LibraryHandleType &getLibraryHandle() const;
 
 		protected:
 			DLLHandle(const LibraryHandleType &libraryHandle,
 			          const map::algorithm::UID *pUID,
-			          const core::String &libraryFile);
+			          const core::String &libraryFile,
+              const core::String &profileStr,
+              const core::String &description);
 
 			~DLLHandle();
 

@@ -82,7 +82,8 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy = DefaultFSLRegistrationUIDPolicy>
 			class FSLRegistrationAlgorithm : public IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
 				public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
-				public MetaPropertyAlgorithmBase
+				public MetaPropertyAlgorithmBase,
+        public TIdentificationPolicy
 			{
 			public:
 				typedef FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
@@ -132,9 +133,9 @@ namespace map
 				*/
 				virtual bool hasCurrentOptimizerValue() const;
 
-				static UIDPointer UID();
-
 				virtual UIDPointer getUID() const;
+				virtual map::core::String getAlgorithmProfile() const;
+				virtual map::core::String getAlgorithmDescription() const;
 
 				virtual typename FieldRepRequirement::Type isMovingRepresentationRequired() const;
 

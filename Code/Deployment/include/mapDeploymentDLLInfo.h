@@ -60,20 +60,30 @@ namespace map
 			* @eguarantee strong
 			*/
 			static Pointer New(const map::algorithm::UID *pUID,
-			                   const core::String &libraryFilePath);
+			                   const core::String &libraryFilePath,
+              const core::String &profileStr,
+              const core::String &description);
 
 			const map::algorithm::UID &getAlgorithmUID() const;
+			const core::String &getAlgorithmProfileStr() const;
+			const core::String &getAlgorithmDescription() const;
 
 			const core::String &getLibraryFilePath() const;
 
 		protected:
 			DLLInfo(const map::algorithm::UID *pUID,
-			        const core::String &libraryFilePath);
+			        const core::String &libraryFilePath,
+              const core::String &profileStr,
+              const core::String &description);
 
 			~DLLInfo();
 
 			map::algorithm::UID::ConstPointer _spAlgorithmUID;
 			core::String _libraryFilePath;
+      /** Profile string (xml structured) associated with the algorithm*/
+      core::String _profileStr;
+      /** Description string associated with the algorithm*/
+      core::String _description;
 
 		private:
 			DLLInfo(const Self &);//purposely not implemented

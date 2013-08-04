@@ -73,7 +73,8 @@ namespace map
 				public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
 				public MetaPropertyAlgorithmBase,
 				public ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType>,
-				public TInterpolatorPolicy,
+				public TIdentificationPolicy,
+        public TInterpolatorPolicy,
 				public TMetricPolicy,
 				public TOptimizerPolicy,
 				public TTransformPolicy
@@ -146,9 +147,9 @@ namespace map
 				*/
 				virtual bool hasCurrentOptimizerValue() const;
 
-				static UIDPointer UID();
-
 				virtual UIDPointer getUID() const;
+				virtual map::core::String getAlgorithmProfile() const;
+				virtual map::core::String getAlgorithmDescription() const;
 
 				virtual typename FieldRepRequirement::Type isMovingRepresentationRequired() const;
 

@@ -45,14 +45,6 @@ namespace map
 				return true;
 			};
 
-			template<class TMovingPointSet, class TTargetPointSet, class TITKTransform, class TIdentificationPolicy>
-			typename ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::UIDPointer
-			ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::
-			UID()
-			{
-				UIDPointer spResult = IdentificationPolicyType::getUID();
-				return spResult;
-			};
 
 			template<class TMovingPointSet, class TTargetPointSet, class TITKTransform, class TIdentificationPolicy>
 			typename ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::UIDPointer
@@ -62,6 +54,21 @@ namespace map
 				return this->UID();
 			};
 
+			template<class TMovingPointSet, class TTargetPointSet, class TITKTransform, class TIdentificationPolicy>
+			::map::core::String
+      ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::
+			getAlgorithmProfile() const
+			{
+				return this->AlgorithmProfile();
+			};
+
+			template<class TMovingPointSet, class TTargetPointSet, class TITKTransform, class TIdentificationPolicy>
+			::map::core::String
+      ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::
+			getAlgorithmDescription() const
+			{
+				return this->AlgorithmDescription();
+			};
 
 			template<class TMovingPointSet, class TTargetPointSet, class TITKTransform, class TIdentificationPolicy>
 			typename ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::FieldRepRequirement::Type

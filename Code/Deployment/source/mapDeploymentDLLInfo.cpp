@@ -38,6 +38,20 @@ namespace map
 
 		const core::String &
 		DLLInfo::
+		getAlgorithmProfileStr() const
+		{
+			return _profileStr;
+		};
+
+		const core::String &
+		DLLInfo::
+		getAlgorithmDescription() const
+		{
+			return _description;
+		};
+
+		const core::String &
+		DLLInfo::
 		getLibraryFilePath() const
 		{
 			return _libraryFilePath;
@@ -45,7 +59,9 @@ namespace map
 
 		DLLInfo::
 		DLLInfo(const map::algorithm::UID *pUID,
-		        const core::String &libraryFilePath): _spAlgorithmUID(pUID), _libraryFilePath(libraryFilePath)
+		        const core::String &libraryFilePath,
+              const core::String &profileStr,
+              const core::String &description): _spAlgorithmUID(pUID),_libraryFilePath(libraryFilePath), _profileStr(profileStr), _description(description)
 		{
 			if (!pUID)
 			{
@@ -61,7 +77,9 @@ namespace map
 		DLLInfo::Pointer
 		DLLInfo::
 		New(const map::algorithm::UID *pUID,
-		    const core::String &libraryFile)
+		    const core::String &libraryFile,
+        const core::String &profileStr,
+        const core::String &description)
 		{
 			if (!pUID)
 			{
@@ -69,7 +87,7 @@ namespace map
 			}
 
 			Pointer smartPtr;
-			Self *rawPtr = new Self(pUID, libraryFile);
+			Self *rawPtr = new Self(pUID, libraryFile, profileStr, description);
 			smartPtr = rawPtr;
 			rawPtr->UnRegister();
 			return smartPtr;

@@ -60,7 +60,8 @@ namespace map
 			         class TIdentificationPolicy = DefaultITKClosedFormRegistrationUIDPolicy >
 			class ITKClosedFormRegistrationAlgorithm : public RegistrationAlgorithm<TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>,
 				public PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>,
-				public facet::AnalyticAlgorithmInterface
+				public facet::AnalyticAlgorithmInterface,
+        public TIdentificationPolicy
 			{
 			public:
 				typedef ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy> Self;
@@ -83,9 +84,9 @@ namespace map
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
-				static UIDPointer UID();
-
 				virtual UIDPointer getUID() const;
+				virtual map::core::String getAlgorithmProfile() const;
+				virtual map::core::String getAlgorithmDescription() const;
 
 				/*! @brief Returns the algorithm type for this registration algorithm
 				@eguarantee strong

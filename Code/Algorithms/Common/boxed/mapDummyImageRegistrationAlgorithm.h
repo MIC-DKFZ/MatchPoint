@@ -53,7 +53,8 @@ namespace map
 		         class TIdentificationPolicy = DummyImageRegistrationUIDPolicy >
 		class DummyImageRegistrationAlgorithm : public facet::AnalyticAlgorithmInterface,
 			public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
-			public RegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>
+			public RegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+      public TIdentificationPolicy
 		{
 		public:
 			typedef DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
@@ -71,9 +72,9 @@ namespace map
 			typedef typename Superclass::RegistrationType RegistrationType;
 			typedef typename Superclass::RegistrationPointer RegistrationPointer;
 
-			static UIDPointer UID();
-
 			virtual UIDPointer getUID() const;
+			virtual map::core::String getAlgorithmProfile() const;
+			virtual map::core::String getAlgorithmDescription() const;
 
 			/*! @brief Returns the algorithm type for this registration algorithm
 			  @eguarantee strong

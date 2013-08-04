@@ -20,8 +20,8 @@
 // Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/deployed/mapITKEuler3DMattesMI.cpp $
 */
 
-#include "mapDeploymentDLLInterface.h"
 #include "mapDeploymentDLLHelper.h"
+
 #include "mapDiscreteElements.h"
 #include "mapITKEuler3DMattesMIRegistrationAlgorithmTemplate.h"
 #include "mapConfigure.h"
@@ -31,35 +31,4 @@
 typedef map::core::discrete::Elements<3>::InternalImageType ImageType;
 typedef map::algorithm::boxed::ITKEuler3DMattesMIRegistrationAlgorithm<ImageType, ImageType, ::map::algorithm::ITKEuler3DMattesMIUIDPolicy> AlgorithmType;
 
-typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
-
-/** @class ITKEuler3DMattesMIAlgorithm_default
- * @ingroup Data_image Model_rigid Det_comp_iterative Det_stochastic Det_res_single Dim_3D_3D Mod_multi
- */
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor)
-{
-	major = MAP_DLL_INTERFACE_VERSION_MAJOR;
-	minor = MAP_DLL_INTERFACE_VERSION_MINOR;
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID)
-{
-	spUID = DLLHelperType::mapGetRegistrationAlgorithmUID();
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, map::deployment::SyncObject *syncObject)
-{
-	spAlgorithm = DLLHelperType::mapGetRegistrationAlgorithmInstance(syncObject);
-};
+mapDeployAlgorithmMacro(AlgorithmType);

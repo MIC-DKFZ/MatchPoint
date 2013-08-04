@@ -55,15 +55,29 @@ namespace map
 				typedef algorithm::UID UIDType;
 				typedef UIDType::Pointer UIDPointer;
 
-				/*! Returns the MetaPropertyInfo for the property identified by the passed name
+				/*! Returns the unique ID (UID) of the algorithm.
+          @remark The same information may also be defined in the
+          profile string (getAlgorithmProfile()). But this is a convinient access to this information.
 				  @eguarantee strong
-				  @return returns SmartPointer to the MetaPropertyInfo. SmartPointer may be null,
-				  if the passed property name is unkown.
-				  @retval NULL-pointer Property is unknown
+				  @return returns SmartPointer to the UID object.
 				 */
 				virtual UIDPointer getUID() const = 0;
 
-			protected:
+				/*! Returns the profile string of the algorithm. The string contains within an xml structure
+          all general given informations (e.g. supported dimensionsm, description, used transform modell, ...).
+          Use AlgorithmProfileHelper to parse the profile string.
+				  @eguarantee strong
+				 */
+        virtual map::core::String getAlgorithmProfile() const = 0;
+
+				/*! Returns the description string of the algorithm.
+          @remark The same information may also be defined in the
+          profile string (getAlgorithmProfile()). But this is a convinient access to this information.
+				  @eguarantee strong
+          */
+        virtual map::core::String getAlgorithmDescription() const = 0;
+
+      protected:
 				AlgorithmIdentificationInterface() {};
 				virtual ~AlgorithmIdentificationInterface() {};
 

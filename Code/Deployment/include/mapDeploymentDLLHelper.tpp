@@ -37,6 +37,14 @@ namespace map
 		};
 
 		template<typename TAlgorithmType>
+		map::core::String
+		DeploymentDLLHelper<TAlgorithmType>::
+		mapGetRegistrationAlgorithmProfile()
+		{
+      return map::core::String(AlgorithmType::AlgorithmProfile());
+		};
+
+		template<typename TAlgorithmType>
 		typename DeploymentDLLHelper<TAlgorithmType>::AlgorithmBasePointer
 		DeploymentDLLHelper<TAlgorithmType>::
 		mapGetRegistrationAlgorithmInstance(SyncObject *pSyncObj)

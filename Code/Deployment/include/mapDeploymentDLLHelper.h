@@ -21,14 +21,13 @@
 */
 
 
-
-
 #ifndef __MAP_DEPLOYMENT_DLL_HELPER_H
 #define __MAP_DEPLOYMENT_DLL_HELPER_H
 
 #include "mapRegistrationAlgorithmBase.h"
 #include "mapUID.h"
 #include "mapDeploymentSync.h"
+#include "mapDeploymentDLLInterface.h"
 
 /*! @namespace map The namespace map is used throughout the MatchPoint project to
     mark code as components of this project
@@ -54,8 +53,17 @@ namespace map
 			typedef map::algorithm::RegistrationAlgorithmBase AlgorithmBaseType;
 			typedef typename AlgorithmBaseType::Pointer       AlgorithmBasePointer;
 
+      /*! Returns a smart pointer to the UID of the algorithm
+       */
 			static map::algorithm::UID::Pointer mapGetRegistrationAlgorithmUID();
 
+      /*! Returns a profile string containing the profile of the algorithm type.
+       * The profile is stored in xml format. String may be empty if no profile is specified.
+       */
+      static map::core::String mapGetRegistrationAlgorithmProfile();
+
+      /*! Returns a smart pointer to an instance of the algorithm (as RegistrationAlgorithmBase)
+       */
 			static AlgorithmBasePointer mapGetRegistrationAlgorithmInstance(SyncObject *pSyncObj);
 
 		private:
@@ -68,8 +76,41 @@ namespace map
 		};
 
 	}
-
 }
+
+#ifdef _WIN32
+  #define MAP_DEPLOYMENT_ALG_EXPORT extern "C" __declspec(dllexport)
+#else
+  #define MAP_DEPLOYMENT_ALG_EXPORT extern "C"
+#endif
+
+/*!@def mapDeployAlgorithmMacro
+ * This macro is used to throw a basic ExceptionObject within an object method.
+ * The macro presumes that the object owns a method this->GetNameOfClass().\n
+ * Use mapExceptionMacro() if you want to specifiy a arbitrary exception class that should be thrown.
+ * @sa DeploymentDLLHelper
+ * @sa DeploymentDLLInterface
+ * @ingroup DeployAlgorithm
+ */
+#define mapDeployAlgorithmMacro(AlgorithmClass) \
+MAP_DEPLOYMENT_ALG_EXPORT void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor) \
+{ \
+	major = MAP_DLL_INTERFACE_VERSION_MAJOR; \
+	minor = MAP_DLL_INTERFACE_VERSION_MINOR; \
+}; \
+MAP_DEPLOYMENT_ALG_EXPORT void mapGetRegistrationAlgorithmUID(::map::algorithm::UID::Pointer &spUID) \
+{ \
+	spUID = ::map::deployment::DeploymentDLLHelper<AlgorithmClass>::mapGetRegistrationAlgorithmUID(); \
+}; \
+MAP_DEPLOYMENT_ALG_EXPORT void mapGetRegistrationAlgorithmProfile(::map::core::String &profileString)\
+{\
+	profileString = ::map::deployment::DeploymentDLLHelper<AlgorithmClass>::mapGetRegistrationAlgorithmProfile();\
+};\
+MAP_DEPLOYMENT_ALG_EXPORT void mapGetRegistrationAlgorithmInstance(::map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, ::map::deployment::SyncObject *syncObject)\
+{\
+	spAlgorithm = ::map::deployment::DeploymentDLLHelper<AlgorithmClass>::mapGetRegistrationAlgorithmInstance(syncObject);\
+}
+
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapDeploymentDLLHelper.tpp"

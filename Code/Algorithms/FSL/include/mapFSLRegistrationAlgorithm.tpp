@@ -43,21 +43,28 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			typename FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::UIDPointer
 			FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			UID()
-			{
-				UIDPointer spResult = TIdentificationPolicy::getUID();
-				return spResult;
-			};
-
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			typename FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::UIDPointer
-			FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			getUID() const
 			{
 				return this->UID();
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
+      ::map::core::String
+      FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			getAlgorithmProfile() const
+			{
+				return this->AlgorithmProfile();
+			};
+
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
+      ::map::core::String
+			FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			getAlgorithmDescription() const
+			{
+				return this->AlgorithmDescription();
+			};
+      
+      template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			typename FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::FieldRepRequirement::Type
 			FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			isMovingRepresentationRequired() const
