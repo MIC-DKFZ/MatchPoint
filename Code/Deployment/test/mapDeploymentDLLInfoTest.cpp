@@ -36,12 +36,13 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			map::algorithm::UID::Pointer spUID = map::algorithm::UID::New("de.dkfz.matchpoint.test", "TestDummy", "1.0.0", "x");
-			map::deployment::DLLInfo::Pointer spInfo = map::deployment::DLLInfo::New(spUID, "testfile.dll");
+			map::deployment::DLLInfo::Pointer spInfo = map::deployment::DLLInfo::New(spUID, "testfile.dll", "profile");
 
 			CHECK_EQUAL(spUID.GetPointer(), &(spInfo->getAlgorithmUID()));
 			CHECK_EQUAL("testfile.dll", spInfo->getLibraryFilePath());
+      CHECK_EQUAL("profile", spInfo->getAlgorithmProfileStr());
 
-			CHECK_THROW(map::deployment::DLLInfo::New(NULL, "file_with_NULL_UID.dll"));
+			CHECK_THROW(map::deployment::DLLInfo::New(NULL, "file_with_NULL_UID.dll", ""));
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

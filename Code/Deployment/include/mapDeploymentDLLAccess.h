@@ -49,6 +49,13 @@ namespace map
 		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER)(map::algorithm::UID::Pointer &spUID);
 
 		/**
+		 * Function pointer for the mapGetRegistrationAlgorithmUID symbol in a deployment DLL.
+		 * @sa mapGetRegistrationAlgorithmUID
+		 * @ingroup DeployHost
+		 */
+		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER)(const map::core::String& profile);
+
+    /**
 		 * Function pointer for the mapGetRegistrationAlgorithmInstance symbol in a deployment DLL.
 		 * @sa mapGetRegistrationAlgorithmInstance
 		 * @ingroup DeployHost
@@ -91,6 +98,8 @@ namespace map
 		*/
 		MAPDeployment_EXPORT algorithm::UID::ConstPointer peekDeploymentDLL(const char *libraryFile);
 		MAPDeployment_EXPORT algorithm::UID::ConstPointer peekDeploymentDLL(const core::String &libraryFile);
+    MAPDeployment_EXPORT void peekDeploymentDLL(const char *libraryFile, algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
+    MAPDeployment_EXPORT void peekDeploymentDLL(const core::String &libraryFile, algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
 
 
 		/*! Method requests an algorithm instance of the DLL specified by the passed DLL info.

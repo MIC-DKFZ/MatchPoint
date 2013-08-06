@@ -68,6 +68,8 @@ namespace map
 			CHECK_EQUAL("de.dkfz.matchpoint", spHandle1->getAlgorithmUID().getNamespace());
 			CHECK_EQUAL("TestAlgorithm", spHandle1->getAlgorithmUID().getName());
 			CHECK_EQUAL("1.0.0", spHandle1->getAlgorithmUID().getVersion());
+      CHECK_EQUAL("testprofile", spHandle1->getAlgorithmProfileStr());
+
 
 			map::algorithm::RegistrationAlgorithmBase::Pointer spInstance = NULL;
 			CHECK_NO_THROW(spInstance = map::deployment::getRegistrationAlgorithm(spHandle1));
@@ -77,9 +79,6 @@ namespace map
 
 			CHECK_NO_THROW(map::deployment::closeDeploymentDLL(spHandle1));
 			
-TODO: es gibt neue symbole im dll interface, die müssen mitgetestet werden
-und entsprechend die browser bzw. access routinen anpassen. ->DLLInfo erweitern
-
 			//Test open file invalid DLL (missing mapGetDLLInterfaceVersion symbol)
 			std::string invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid1" + itksys::DynamicLoader::LibExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::MissingSymbolException);
@@ -92,7 +91,11 @@ und entsprechend die browser bzw. access routinen anpassen. ->DLLInfo erweitern
 			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid3" + itksys::DynamicLoader::LibExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::MissingSymbolException);
 
-			//Test open file invalid DLL (wrong version)
+      //Test open file invalid DLL (missing mapGetRegistrationAlgorithmProfile symbol)
+      invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid7" + itksys::DynamicLoader::LibExtension();
+      CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::MissingSymbolException);
+
+      //Test open file invalid DLL (wrong version)
 			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid4" + itksys::DynamicLoader::LibExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::InvalidInterfaceVersionException);
 
@@ -100,14 +103,13 @@ und entsprechend die browser bzw. access routinen anpassen. ->DLLInfo erweitern
 			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid5" + itksys::DynamicLoader::LibExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::InvalidUIDException);
 
-			//////////////////////////////////////////////////
+      //////////////////////////////////////////////////
 			// Test: getRegistrationAlgorithm errors
 			CHECK_THROW(map::deployment::getRegistrationAlgorithm(NULL));
 
 
 			//////////////////////////////////////////////////
 			// Test: peekDeploymentDLL
-
 			map::algorithm::UID::ConstPointer spUID;
 
 			//Test peek with wrong path pointer
@@ -119,14 +121,40 @@ und entsprechend die browser bzw. access routinen anpassen. ->DLLInfo erweitern
 			//Test peek file with wrong file extension
 			CHECK_THROW_EXPLICIT(map::deployment::peekDeploymentDLL("nonExistingFile.???"), deployment::InvalidDLLException);
 
-			//Test peek with valid DLL
+			//Test peek with valid DLL (using String)
 			CHECK_NO_THROW(spUID = map::deployment::peekDeploymentDLL(validDLLPath));
 			CHECK(spUID.IsNotNull());
 			CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
 			CHECK_EQUAL("TestAlgorithm", spUID->getName());
 			CHECK_EQUAL("1.0.0", spUID->getVersion());
 
-			//skipped testing other errors with peekDeploymentDLL because it just calls openDeploymentDLL and closeDeploymentDLL, which have been tested above
+      //Test peek with valid DLL (using char*)
+      CHECK_NO_THROW(spUID = map::deployment::peekDeploymentDLL(validDLLPath.c_str()));
+      CHECK(spUID.IsNotNull());
+      CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
+      CHECK_EQUAL("TestAlgorithm", spUID->getName());
+      CHECK_EQUAL("1.0.0", spUID->getVersion());
+
+      //Test alternative peek with valid dll
+      spUID = NULL;
+      core::String testProfile = "";
+      CHECK_NO_THROW(map::deployment::peekDeploymentDLL(validDLLPath,spUID,testProfile));
+      CHECK(spUID.IsNotNull());
+      CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
+      CHECK_EQUAL("TestAlgorithm", spUID->getName());
+      CHECK_EQUAL("1.0.0", spUID->getVersion());
+      CHECK_EQUAL("testprofile", testProfile);
+
+      spUID = NULL;
+      testProfile = "";
+      CHECK_NO_THROW(map::deployment::peekDeploymentDLL(validDLLPath.c_str(), spUID, testProfile));
+      CHECK(spUID.IsNotNull());
+      CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
+      CHECK_EQUAL("TestAlgorithm", spUID->getName());
+      CHECK_EQUAL("1.0.0", spUID->getVersion());
+      CHECK_EQUAL("testprofile", testProfile);
+
+      //skipped testing other errors with peekDeploymentDLL because it just calls openDeploymentDLL and closeDeploymentDLL, which have been tested above
 
 			//////////////////////////////////////////////////
 			// Test: checkNameIsSharedLibrary

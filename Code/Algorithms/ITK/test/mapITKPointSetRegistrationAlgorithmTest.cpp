@@ -75,6 +75,9 @@ namespace map
 				RegTestCommand(const Self &); //purposely not implemented
 				void operator=(const Self &); //purposely not implemented
 			};
+
+      mapGenerateAlgorithmUIDPolicyMacro(ArbitraryITKPointSetRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "ArbitraryITKPointSetRegistrationAlgorithm.Test", "1.0.0","");
+
 		}
 
 		typedef core::continuous::Elements<2>::InternalPointSetType LandmarksType;
@@ -105,7 +108,7 @@ namespace map
 			LandmarksType::Pointer spMovingLMs2 = utilities::loadLandMarksFromFile<LandmarksType>(movingLMFileName);
 			LandmarksType::Pointer spTargetLMs2 = utilities::loadLandMarksFromFile<LandmarksType>(targetLMFileName);
 
-			typedef algorithm::itk::ITKPointSetRegistrationAlgorithm<LandmarksType, LandmarksType> ArbitraryITKPointSetRegistrationAlgorithmType;
+			typedef algorithm::itk::ITKPointSetRegistrationAlgorithm<LandmarksType, LandmarksType, ArbitraryITKPointSetRegistrationAlgorithmUIDPolicy> ArbitraryITKPointSetRegistrationAlgorithmType;
 			ArbitraryITKPointSetRegistrationAlgorithmType::Pointer spAlgorithm = ArbitraryITKPointSetRegistrationAlgorithmType::New();
 
 			//Add observer for algorithm events.

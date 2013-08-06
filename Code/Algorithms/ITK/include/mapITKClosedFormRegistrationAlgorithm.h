@@ -47,17 +47,15 @@ namespace map
 		namespace itk
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKClosedFormRegistrationUIDPolicy, "de.dkfz.matchpoint", "ITKClosedFormRegistrationAlgorithm.arbitrayDefault", "1.0.0");
-
 			/*! @class ITKClosedFormRegistrationAlgorithm
-			@brief The class implements the posibility of point set registration by a closed form solution
+			@brief The class implements the possibility of point set registration by a closed form solution
 			The algorithm allows to perform the determination of a point set registration via closed form solution.
 			The solution is based on Berthold K. P. Horn (1987), "Closed-form solution of absolute orientation using unit quaternions,"
 			http://people.csail.mit.edu/bkph/papers/Absolute_Orientation.pdf.
 			@ingroup Algorithms
 			*/
 			template < class TMovingPointSet, class TTargetPointSet, class TITKTransform,
-			         class TIdentificationPolicy = DefaultITKClosedFormRegistrationUIDPolicy >
+			         class TIdentificationPolicy >
 			class ITKClosedFormRegistrationAlgorithm : public RegistrationAlgorithm<TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>,
 				public PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>,
 				public facet::AnalyticAlgorithmInterface,
@@ -84,9 +82,7 @@ namespace map
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
-				virtual UIDPointer getUID() const;
-				virtual map::core::String getAlgorithmProfile() const;
-				virtual map::core::String getAlgorithmDescription() const;
+        mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				/*! @brief Returns the algorithm type for this registration algorithm
 				@eguarantee strong

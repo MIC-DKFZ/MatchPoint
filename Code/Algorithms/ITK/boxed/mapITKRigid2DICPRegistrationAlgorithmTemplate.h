@@ -41,8 +41,8 @@ namespace map
 	{
 		namespace boxed
 		{
-
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKRigid2DICPRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKRigid2DICPRegistrationAlgorithm.default", "1.0.0");
+      const char *const DefaultITKRigid2DICPRegistrationAlgorithm_profile = "<Profile><Description>Simple 2D rigid (translation and euler angles) registration algorithm using point sets pairs and a ICP solution.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Points</DataType><DimMoving>2</DimMoving><DimTarget>2</DimTarget><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain><Optimization>ICP<Optimization/></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKRigid2DICPRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKRigid2DICPRegistrationAlgorithm.default", "1.0.0", DefaultITKRigid2DICPRegistrationAlgorithm_profile);
 
 			/** @brief Boxing of a simple rigid point set registration algorithm using Rigid3D transform
 			@ingroup Boxed

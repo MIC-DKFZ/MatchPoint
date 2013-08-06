@@ -164,7 +164,7 @@ int testAccess(AlgorithmBaseType *pAlgorithm, bool accessExpected)
 	return result;
 }
 
-mapGenerateAlgorithmUIDPolicyMacro(DemoAutoSealedRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "DemoAutoSealedRegistrationAlgorithm", "1.0.0");
+mapGenerateAlgorithmUIDPolicyMacro(DemoAutoSealedRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "DemoAutoSealedRegistrationAlgorithm", "1.0.0", "");
 
 int main(int argc, char *argv[])
 {

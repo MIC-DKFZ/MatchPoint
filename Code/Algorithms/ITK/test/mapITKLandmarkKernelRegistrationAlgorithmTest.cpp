@@ -73,6 +73,8 @@ namespace map
 				RegTestCommand(const Self &); //purposely not implemented
 				void operator=(const Self &); //purposely not implemented
 			};
+
+      mapGenerateAlgorithmUIDPolicyMacro(ITKLandmarkKernelRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKLandmarkKernelRegistrationAlgorithm.test", "1.0.0", "");
 		}
 
 		typedef core::continuous::Elements<3>::InternalPointSetType LandmarksType;
@@ -104,7 +106,7 @@ namespace map
 			LandmarksType::Pointer spTargetLMs2 = utilities::loadLandMarksFromFile<LandmarksType>(targetLMFileName);
 
 
-			typedef algorithm::itk::ITKLandmarkKernelRegistrationAlgorithm<LandmarksType, itk::VolumeSplineKernelTransform<core::continuous::ScalarType, 3> > RegistrationAlgorithmType;
+			typedef algorithm::itk::ITKLandmarkKernelRegistrationAlgorithm<LandmarksType, itk::VolumeSplineKernelTransform<core::continuous::ScalarType, 3>, ITKLandmarkKernelRegistrationAlgorithmUIDPolicy> RegistrationAlgorithmType;
 
 			RegistrationAlgorithmType::Pointer spAlgorithm = RegistrationAlgorithmType::New();
 

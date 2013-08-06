@@ -47,7 +47,7 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultRigid2DMattesMIRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "Rigid2DMattesMIRegistrationAlgorithm.default", "1.0.0");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultRigid2DMattesMIRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "Rigid2DMattesMIRegistrationAlgorithm.default", "1.0.0", "");
 
 			template < class TMovingImage, class TTargetImage = TMovingImage,
 			         typename TUIDPolicy = DefaultRigid2DMattesMIRegistrationAlgorithmUIDPolicy,

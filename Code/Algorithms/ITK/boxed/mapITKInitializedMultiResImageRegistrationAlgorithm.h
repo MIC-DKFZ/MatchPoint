@@ -33,7 +33,7 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKInitializingImageRegistrationUIDPolicy, "MatchPoint.ITK", "ITKInitializedMultiResImageRegistrationAlgorithm.default", "1.0.0");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKInitializingImageRegistrationUIDPolicy, "MatchPoint.ITK", "ITKInitializedMultiResImageRegistrationAlgorithm.default", "1.0.0", "");
 
 			template < class TMovingImage, class TTargetImage,
 			         class TUIDPolicy = DefaultITKInitializingImageRegistrationUIDPolicy,

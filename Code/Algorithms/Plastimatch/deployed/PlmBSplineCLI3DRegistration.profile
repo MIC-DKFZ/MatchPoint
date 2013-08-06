@@ -1,0 +1,15 @@
+SET(ALGORITHM_PROFILE_UID_Namespace "de.dkfz.matchpoint.plastimatch.cli")
+SET(ALGORITHM_PROFILE_UID_Name "BSplineRegistration.3D")
+SET(ALGORITHM_PROFILE_UID_Version "1.0.1")
+
+SET(ALGORITHM_PROFILE_Description "This is a MatchPoint wrapper for the registration tool Plastimatch for 3D images. It is configured to preform a B-Spline registration on the image.")
+SET(ALGORITHM_PROFILE_Contact "Ralf Floca\; sbr@dkfz-heidelberg.de")
+
+SET(ALGORITHM_PROFILE_DataType "Image")
+SET(ALGORITHM_PROFILE_DimMoving "3")
+SET(ALGORITHM_PROFILE_ModalityMoving "any")
+SET(ALGORITHM_PROFILE_DimTarget "3")
+SET(ALGORITHM_PROFILE_ModalityTarget "any")
+SET(ALGORITHM_PROFILE_TransformModel "B-Spline")
+SET(ALGORITHM_PROFILE_TransformDomain "local")
+SET(ALGORITHM_PROFILE_Keywords "plastimatch" "wrapper")

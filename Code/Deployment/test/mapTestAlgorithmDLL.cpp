@@ -31,7 +31,7 @@
 #include "mapDummyImageRegistrationAlgorithm.h"
 #include "mapConfigure.h"
 
-mapGenerateAlgorithmUIDPolicyMacro(TestAlgorithmDLLPolicy, "de.dkfz.matchpoint", "TestAlgorithm", "1.0.0");
+mapGenerateAlgorithmUIDPolicyMacro(TestAlgorithmDLLPolicy, "de.dkfz.matchpoint", "TestAlgorithm", "1.0.0", "testprofile");
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
 typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, TestAlgorithmDLLPolicy> AlgorithmType;

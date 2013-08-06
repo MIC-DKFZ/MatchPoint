@@ -37,7 +37,9 @@ namespace map
 		namespace
 		{
 
-			class TestRegistrationAlgorithmBase: public algorithm::RegistrationAlgorithmBase
+      mapGenerateAlgorithmUIDPolicyMacro(TestRegistrationAlgorithmBaseUIDPolicy, "de.dkfz.matchpoint.test", "TestRegistrationAlgorithmBase", "1", "");
+
+			class TestRegistrationAlgorithmBase: public algorithm::RegistrationAlgorithmBase, public TestRegistrationAlgorithmBaseUIDPolicy
 			{
 			public:
 				typedef TestRegistrationAlgorithmBase Self;
@@ -50,7 +52,7 @@ namespace map
 				itkTypeMacro(TestRegistrationAlgorithmBase, RegistrationAlgorithmBase);
 				mapNewAlgorithmMacro(Self);
 
-				mapDefineAlgorithmUIDWithAutmaticBuildNRMacro("de.dkfz.matchpoint.test", "TestRegistrationAlgorithmBase", "1");
+				mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				virtual AlgorithmType getAlgorithmType() const
 				{

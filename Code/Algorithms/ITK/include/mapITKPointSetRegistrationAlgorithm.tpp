@@ -43,23 +43,6 @@ namespace map
 		{
 
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
-			typename ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::UIDPointer
-			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			UID()
-			{
-				UIDPointer spResult = IdentificationPolicyType::getUID();
-				return spResult;
-			};
-
-			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
-			typename ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::UIDPointer
-			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			getUID() const
-			{
-				return this->UID();
-			};
-
-			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			bool
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
 			isStoppable() const

@@ -53,23 +53,6 @@ namespace map
 		{
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			typename ITKDemonsRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::UIDPointer
-			ITKDemonsRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			UID()
-			{
-				UIDPointer spResult = IdentificationPolicyType::getUID();
-				return spResult;
-			};
-
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			typename ITKDemonsRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::UIDPointer
-			ITKDemonsRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			getUID() const
-			{
-				return this->UID();
-			};
-
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			bool
 			ITKDemonsRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			isStoppable() const

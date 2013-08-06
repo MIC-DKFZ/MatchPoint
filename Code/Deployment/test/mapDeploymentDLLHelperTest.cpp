@@ -33,17 +33,19 @@ namespace map
 {
 	namespace testing
 	{
+    mapGenerateAlgorithmUIDPolicyMacro(DeploymentDLLHelperTestAlgUIDPolicy,"de.dkfz.matchpoint","DeploymentDLLHelperTest","1.0.0","profile");
+
 		int mapDeploymentDLLHelperTest(int, char* [])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-			typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType> AlgorithmType;
+			typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, DeploymentDLLHelperTestAlgUIDPolicy> AlgorithmType;
 
 			typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
 
 			//test UID retrieve
-			map::algorithm::UID::Pointer spUIDRef = map::algorithm::DummyImageRegistrationUIDPolicy::getUID();
+			map::algorithm::UID::Pointer spUIDRef = DeploymentDLLHelperTestAlgUIDPolicy::UID();
 
 			map::algorithm::UID::Pointer spUID;
 

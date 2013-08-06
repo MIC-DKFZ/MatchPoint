@@ -26,46 +26,9 @@
 #include "mapConfigure.h"
 
 #include "mapElxParameterFileRegistrationAlgorithm.h"
-
-
-/*! UID policy for the new reboxed algorithm. This policy gives the reboxed version of the algorithm a new
- * unique identifer to track the usage of the algorithm within any application.*/
-mapGenerateAlgorithmUIDPolicyMacro(ElxParamFileCLI2DUIDPolicy, "de.dkfz.matchpoint.elastix.cli", "ParameterFileRegistration.2D", "1.0.0");
+#include "ElxParameterFileCLI2DRegistration_ProfileResource.h"
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::elastix::ParameterFileRegistrationAlgorithm<ImageType, ImageType, ElxParamFileCLI2DUIDPolicy> AlgorithmType;
+typedef map::algorithm::elastix::ParameterFileRegistrationAlgorithm<ImageType, ImageType, map::algorithm::ElxParameterFileCLI2DRegistrationUIDPolicy> AlgorithmType;
 
-typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
-
-/** @class ElxParameterFileCLI2DImageRegistrationAlgorithm
- * @ingroup Data_image Dim_2D_2D
- */
-
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor)
-{
-	major = MAP_DLL_INTERFACE_VERSION_MAJOR;
-	minor = MAP_DLL_INTERFACE_VERSION_MINOR;
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID)
-{
-	spUID = DLLHelperType::mapGetRegistrationAlgorithmUID();
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, map::deployment::SyncObject *syncObject)
-{
-	spAlgorithm = DLLHelperType::mapGetRegistrationAlgorithmInstance(syncObject);
-};
+mapDeployAlgorithmMacro(AlgorithmType);

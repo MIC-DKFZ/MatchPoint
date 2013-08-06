@@ -37,7 +37,7 @@ namespace map
 	namespace testing
 	{
 
-		mapGenerateAlgorithmUIDPolicyMacro(TestFSL3DRegistrationUIDPolicy, "de.dkfz.matchpoint.test", "FSL.3D.default", "1.0.0");
+		mapGenerateAlgorithmUIDPolicyMacro(TestFSL3DRegistrationUIDPolicy, "de.dkfz.matchpoint.test", "FSL.3D.default", "1.0.0", "");
 
 		typedef std::map<core::String, core::String> ArgumentMapType;
 

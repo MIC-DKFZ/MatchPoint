@@ -56,6 +56,8 @@ void onBatchEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
 	}
 }
 
+mapGenerateAlgorithmUIDPolicyMacro(DemoArbitraryImageRegUIDPolicy,"de.dkfz.matchpoint.demo","ArbitraryITKImageReg","1.0.0","");
+
 int main(int argc, char *argv[])
 {
 	AppGlobals globals;
@@ -89,7 +91,7 @@ int main(int argc, char *argv[])
 
 	std::cout << "Establish registration algorithm..." << std::endl;
 
-	typedef map::algorithm::itk::ITKImageRegistrationAlgorithm<ImageType, ImageType> ArbitraryITKImageRegistrationAlgorithmType;
+	typedef map::algorithm::itk::ITKImageRegistrationAlgorithm<ImageType, ImageType, DemoArbitraryImageRegUIDPolicy> ArbitraryITKImageRegistrationAlgorithmType;
 
 	ArbitraryITKImageRegistrationAlgorithmType::Pointer spAlgorithm = ArbitraryITKImageRegistrationAlgorithmType::New();
 

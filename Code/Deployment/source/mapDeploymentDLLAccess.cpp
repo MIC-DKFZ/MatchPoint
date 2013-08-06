@@ -177,13 +177,19 @@ namespace map
 			//look for the other expected symbols
 			MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER pUIDFunction = (MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(libHandle, "mapGetRegistrationAlgorithmUID");
 			MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER pInstanceFunction = (MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(libHandle, "mapGetRegistrationAlgorithmInstance");
-
+      MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER pProfileFunction = (MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(libHandle, "mapGetRegistrationAlgorithmProfile");
+  
 			if (pUIDFunction == NULL)
 			{
 				mapExceptionStaticMacro(MissingSymbolException, "Error. DLL seems to be invalid; mapGetRegistrationAlgorithmUID symbol is missing. File path: " << libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
 			}
 
-			if (pInstanceFunction == NULL)
+      if (pProfileFunction == NULL)
+      {
+        mapExceptionStaticMacro(MissingSymbolException, "Error. DLL seems to be invalid; mapGetRegistrationAlgorithmProfile symbol is missing. File path: " << libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
+      }
+
+      if (pInstanceFunction == NULL)
 			{
 				mapExceptionStaticMacro(MissingSymbolException, "Error. DLL seems to be invalid; mapGetRegistrationAlgorithmInstance symbol is missing. File path: " << libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
 			}
@@ -198,10 +204,13 @@ namespace map
 				mapExceptionStaticMacro(InvalidUIDException, "Error. DLL returns NULL pointer as UID. File path: " << libraryFile);
 			}
 
+      map::core::String profileStr;
+      (*pProfileFunction)(profileStr);
+
 			//copy the UID information to a UID that is not instanciated within the DLL, thus the new UID does not depend on the DLL.
 			algorithm::UID::Pointer spUID = algorithm::UID::New(spUIDdll->getNamespace(), spUIDdll->getName(), spUIDdll->getVersion(), spUIDdll->getBuildTag());
 
-			DLLHandle::Pointer spResult = DLLHandle::New(libHandle, spUID, libraryFile);
+			DLLHandle::Pointer spResult = DLLHandle::New(libHandle, spUID, libraryFile, profileStr);
 
 			dllGuard.deactivate();
 
@@ -237,7 +246,10 @@ namespace map
 		{
 			DLLHandle::Pointer spHandle = openDeploymentDLL(libraryFile);
 
-			algorithm::UID::ConstPointer spUID = &(spHandle->getAlgorithmUID());
+			algorithm::UID::ConstPointer spUID;
+      core::String tempProfile;
+      
+      peekDeploymentDLL(libraryFile,spUID,tempProfile);
 
 			closeDeploymentDLL(spHandle);
 
@@ -248,6 +260,22 @@ namespace map
 		{
 			return peekDeploymentDLL(libraryFile.c_str());
 		};
+
+    void peekDeploymentDLL(const char *libraryFile, algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile)
+    {
+      DLLHandle::Pointer spHandle = openDeploymentDLL(libraryFile);
+
+      spUID = algorithm::UID::New(spHandle->getAlgorithmUID().getNamespace(),spHandle->getAlgorithmUID().getName(),spHandle->getAlgorithmUID().getVersion(),spHandle->getAlgorithmUID().getBuildTag());
+      algProfile = spHandle->getAlgorithmProfileStr();
+
+      closeDeploymentDLL(spHandle);
+    };
+
+    void peekDeploymentDLL(const core::String &libraryFile, algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile)
+    {
+      peekDeploymentDLL(libraryFile.c_str(),spUID,algProfile);
+    };
+
 
 		RegistrationAlgorithmBasePointer getRegistrationAlgorithm(const DLLHandle *pDLLHandle)
 		{

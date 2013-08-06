@@ -34,30 +34,6 @@ namespace map
 	namespace algorithm
 	{
 
-		template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-		typename DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::UIDPointer
-		DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
-		getUID() const
-		{
-			return this->UID();
-		};
-
-		template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-    map::core::String
-    DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
-		getAlgorithmProfile() const
-		{
-			return this->AlgorithmProfile();
-		};
-
-		template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-    map::core::String
-		DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
-		getAlgorithmDescription() const
-		{
-			return this->AlgorithmDescription();
-		};
-    
     template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 		typename DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::FieldRepRequirement::Type
 		DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::

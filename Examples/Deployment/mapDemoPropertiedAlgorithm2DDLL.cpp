@@ -34,37 +34,9 @@
 
 /*! UID policy for the new reboxed algorithm. This policy gives the reboxed version of the algorithm a new
  * unique identifer to track the usage of the algorithm within any application.*/
-mapGenerateAlgorithmUIDPolicyMacro(DemoPropertiedAlgorithm2DUIDPolicy, "de.dkfz.matchpoint.test", "DemoPropertiedAlgorithm.2D", "1.0.0");
+mapGenerateAlgorithmUIDPolicyMacro(DemoPropertiedAlgorithm2DUIDPolicy, "de.dkfz.matchpoint.test", "DemoPropertiedAlgorithm.2D", "1.0.0", "");
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
 typedef map::algorithm::boxed::DemoPropertiedAlgorithm<ImageType, ImageType, DemoPropertiedAlgorithm2DUIDPolicy> AlgorithmType;
 
-typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor)
-{
-	major = MAP_DLL_INTERFACE_VERSION_MAJOR;
-	minor = MAP_DLL_INTERFACE_VERSION_MINOR;
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID)
-{
-	spUID = DLLHelperType::mapGetRegistrationAlgorithmUID();
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, map::deployment::SyncObject *pSyncObject)
-{
-	spAlgorithm = DLLHelperType::mapGetRegistrationAlgorithmInstance(pSyncObject);
-};
+mapDeployAlgorithmMacro(AlgorithmType);

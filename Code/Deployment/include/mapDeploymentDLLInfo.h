@@ -61,20 +61,17 @@ namespace map
 			*/
 			static Pointer New(const map::algorithm::UID *pUID,
 			                   const core::String &libraryFilePath,
-              const core::String &profileStr,
-              const core::String &description);
+              const core::String &profileStr);
 
 			const map::algorithm::UID &getAlgorithmUID() const;
 			const core::String &getAlgorithmProfileStr() const;
-			const core::String &getAlgorithmDescription() const;
 
 			const core::String &getLibraryFilePath() const;
 
 		protected:
 			DLLInfo(const map::algorithm::UID *pUID,
 			        const core::String &libraryFilePath,
-              const core::String &profileStr,
-              const core::String &description);
+              const core::String &profileStr);
 
 			~DLLInfo();
 

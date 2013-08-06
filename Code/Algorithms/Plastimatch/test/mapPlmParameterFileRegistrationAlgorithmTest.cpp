@@ -41,7 +41,7 @@ namespace map
 	namespace testing
 	{
 
-		mapGenerateAlgorithmUIDPolicyMacro(TestPlm3DRegistrationUIDPolicy, "de.dkfz.matchpoint.plastimatch.test", "ProgramFileRegistration.3D.default", "1.0.0");
+		mapGenerateAlgorithmUIDPolicyMacro(TestPlm3DRegistrationUIDPolicy, "de.dkfz.matchpoint.plastimatch.test", "ProgramFileRegistration.3D.default", "1.0.0", "");
 
 		typedef std::vector<core::String> ArgumentsType;
 

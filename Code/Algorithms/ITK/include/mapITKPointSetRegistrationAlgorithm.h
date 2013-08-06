@@ -51,15 +51,13 @@ namespace map
 		namespace itk
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKPointSetRegistrationUIDPolicy, "de.dkfz.matchpoint", "ITKPointSetRegistrationAlgorithm.arbitrayDefault", "1.0.0");
-
 			/*! @class ITKPointSetRegistrationAlgorithm
 			@brief The class for a point set image registration algorithm based on ITK (PointSetToPointSetRegistrationMethod)
 			It implements a MetaPropertyAlgorithmInterface, but has by default no properties defined.
 			@ingroup Algorithms
 			*/
 			template < class TMovingPointSet, class TTargetPointSet,
-			         class TIdentificationPolicy = DefaultITKPointSetRegistrationUIDPolicy,
+			         class TIdentificationPolicy,
 			         class TMetricPolicy = ArbitraryPointSetToPointSetMetricPolicy<TMovingPointSet, TTargetPointSet>,
 			         class TOptimizerPolicy = ArbitraryMVNLOptimizerPolicy,
 			         class TTransformPolicy = ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension> >
@@ -67,6 +65,7 @@ namespace map
 				public PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>,
 				public MetaPropertyAlgorithmBase,
 				public ITKPointSetRegistrationAlgorithmInterface<TMovingPointSet, TTargetPointSet, typename TTransformPolicy::TransformScalarType>,
+        public TIdentificationPolicy,
 				public TMetricPolicy,
 				public TOptimizerPolicy,
 				public TTransformPolicy
@@ -110,6 +109,8 @@ namespace map
 				typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
 				typedef typename MetaPropertyAlgorithmBase::MetaPropertyNameType MetaPropertyNameType;
 
+        mapDefineAlgorithmIdentificationByPolicyMacro;
+
 				// IterativeRegistrationAlgorithm
 				/*! @eguarantee strong*/
 				virtual bool isStoppable() const;
@@ -132,10 +133,6 @@ namespace map
 				@return Indicates if the algorithm can determin its curent value.
 				*/
 				virtual bool hasCurrentOptimizerValue() const;
-
-				static UIDPointer UID();
-
-				virtual UIDPointer getUID() const;
 
 				virtual typename FieldRepRequirement::Type isMovingRepresentationRequired() const;
 

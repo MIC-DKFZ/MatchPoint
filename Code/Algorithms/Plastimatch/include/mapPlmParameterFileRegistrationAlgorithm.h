@@ -39,8 +39,6 @@ namespace map
 		namespace plastimatch
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultPlmParameterFileRegistrationUIDPolicy, "de.dkfz.matchpoint.plastimatch.cli", "ParameterFileRegistration.Default", "1.0.0");
-
 			/*! @class ParameterFileRegistrationAlgorithm
 						@brief The class is an algorithm that serves as a wrapper for the registration tool "plastimatch".
 						The algorithm uses user specified parameter files to configure plastimatch. The user can specify the location
@@ -48,7 +46,7 @@ namespace map
 			    @ingroup Algorithms
 						@ingroup Plastimatch
 			 */
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy = DefaultPlmParameterFileRegistrationUIDPolicy>
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			class ParameterFileRegistrationAlgorithm : public CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
 			{
 			public:

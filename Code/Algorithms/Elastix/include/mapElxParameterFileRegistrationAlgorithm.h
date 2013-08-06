@@ -39,8 +39,6 @@ namespace map
 		namespace elastix
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultElxParameterFileRegistrationUIDPolicy, "de.dkfz.matchpoint.elastix.cli", "ParameterFileRegistration.Default", "1.0.0");
-
 			/*! @class ParameterFileRegistrationAlgorithm
 						@brief The class is an algorithm that serves as a wrapper for the registration tool "elastix".
 						The algorithm uses user specified parameter files to configure elastix. The user can specify the location
@@ -48,7 +46,7 @@ namespace map
 			    @ingroup Algorithms
 						@ingroup Elastix
 			 */
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy = DefaultElxParameterFileRegistrationUIDPolicy>
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			class ParameterFileRegistrationAlgorithm : public CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
 			{
 			public:

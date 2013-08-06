@@ -40,24 +40,6 @@ namespace map
 		{
 
 			template<class TPointSet, class TITKTransform, class TIdentificationPolicy>
-			typename ITKLandmarkKernelRegistrationAlgorithm<TPointSet, TITKTransform, TIdentificationPolicy>::UIDPointer
-			ITKLandmarkKernelRegistrationAlgorithm<TPointSet, TITKTransform, TIdentificationPolicy>::
-			UID()
-			{
-				UIDPointer spResult = IdentificationPolicyType::getUID();
-				return spResult;
-			};
-
-			template<class TPointSet, class TITKTransform, class TIdentificationPolicy>
-			typename ITKLandmarkKernelRegistrationAlgorithm<TPointSet, TITKTransform, TIdentificationPolicy>::UIDPointer
-			ITKLandmarkKernelRegistrationAlgorithm<TPointSet, TITKTransform, TIdentificationPolicy>::
-			getUID() const
-			{
-				return this->UID();
-			};
-
-
-			template<class TPointSet, class TITKTransform, class TIdentificationPolicy>
 			typename ITKLandmarkKernelRegistrationAlgorithm<TPointSet, TITKTransform, TIdentificationPolicy>::FieldRepRequirement::Type
 			ITKLandmarkKernelRegistrationAlgorithm<TPointSet, TITKTransform, TIdentificationPolicy>::
 			isMovingRepresentationRequired() const
