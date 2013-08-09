@@ -1,11 +1,1 @@
-itkLoggerThreadWrapper.h/.txx:
-
-	from:
-
-#if ! ( defined(_MSC_VER) || ( defined(__GNUC__) && (__GNUC__ <= 2) ))
-
-	to:
-
-#if ! ( (defined(_MSC_VER)&& (_MSC_VER<1300)) || ( defined(__GNUC__) && (__GNUC__ <= 2) ))
-
-Reason: Visual Studio 2005 or higher is able to compile the  code.
+None for the supported ITK versions (ITK 4.0.0 or greater).
