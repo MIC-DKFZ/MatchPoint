@@ -182,9 +182,9 @@ namespace map
 			establishConcreteStack()
 			{
 				ConcreteServiceStackPointer spConcreteStack = ConcreteServiceStackType::New(false);
-				registerConcreteStack(spConcreteStack);
+				DefaultSLStaticPolicy<TConcreteServiceStack>::registerConcreteStack(spConcreteStack);
 				spConcreteStack->rehash();
-				finalizeStaticLoading(spConcreteStack);
+				DefaultSLStaticPolicy<TConcreteServiceStack>::finalizeStaticLoading(spConcreteStack);
 
 				return spConcreteStack;
 			};

@@ -179,7 +179,7 @@ namespace map
 
 				if (result)
 				{
-					setCurrentState(Superclass::AlgorithmState::Stopping);
+					this->setCurrentState(Superclass::AlgorithmState::Stopping);
 				}
 			}
 			else if (this->getCurrentState() == Superclass::AlgorithmState::Stopping ||
