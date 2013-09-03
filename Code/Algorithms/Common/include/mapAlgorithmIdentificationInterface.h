@@ -64,8 +64,8 @@ namespace map
 				 */
 				virtual UIDPointer getUID() const = 0;
 
-				/*! Returns the profile string of the algorithm. The string contains within an xml structure
-          all general given informations (e.g. supported dimensionsm, description, used transform modell, ...).
+				/*! Returns the profile string of the algorithm. The string contains within a xml structure
+          all general given informations (e.g. supported dimensions, description, used transform model, ...).
           Use AlgorithmProfileHelper to parse the profile string.
 				  @eguarantee strong
 				 */
@@ -110,11 +110,16 @@ namespace map
   }
 
 /*! Helper macro that generates a policy struct used by algorithm templates (e.g. ITKImageRegistrationAlgorithm)
- * to specify the algorithm UID, profile and description
- * Algorithms specified by using the CMake utilities provided by MatchPoint generate fitting UIDPolicies
- * automatically (see all deployed algorithms in the MatchPoint release). For any other algorithms this macro can
- * be used to generate a suitable policy.*/
-
+ * to specify the algorithm UID, profile and description.
+ * Algorithms, that are specified by using the CMake macro (MAP_DEFINE_DEPLOYED_ALGORITHM) provided by MatchPoint,
+ * generate fitting UIDPolicies automatically (see all deployed algorithms in the MatchPoint release).
+ * For any other algorithms this macro can be used to generate a suitable policy.
+ * @param policyName Name of the policy structure that should be generated.
+ * @param ns Namespace of the algorithm (part of the algorithm UID; should be a string)
+ * @param name Name of the algorithm (part of the algorithm UID; should be a string)
+ * @param version Version of the algorithm (part of the algorithm UID; should be a string)
+ * @param profile Profile string of the algorithm (xml encoded profile).
+ */
 #define mapGenerateAlgorithmUIDPolicyMacro(policyName, ns, name, version, profile) \
 	struct policyName\
 	{\
