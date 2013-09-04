@@ -138,7 +138,7 @@ namespace map
 			structuredData::XMLStrWriter::Pointer spStrWriter = structuredData::XMLStrWriter::New();
 
 			core::String data = spStrWriter->write(spDataLazy);
-			core::String ref = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>" + map::core::FileDispatch::createFullPath(testPath, "ExpandingFieldKernelWriterTest_lazy_field.mhd") + "</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
+			core::String ref = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>ExpandingFieldKernelWriterTest_lazy_field.mhd</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
 
 			CHECK_EQUAL(ref, data);
 

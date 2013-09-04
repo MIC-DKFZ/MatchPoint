@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Registration>
+  <Tag Name='RegistrationUID'>RegistrationFileWriterTest.reg4</Tag>
+  <MovingDimensions>2</MovingDimensions>
+  <TargetDimensions>2</TargetDimensions>
+  <Kernel ID='direct' InputDimensions='2' OutputDimensions='2'>
+    <StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider>
+    <KernelType>ExpandedFieldKernel</KernelType>
+    <FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath>
+    <UseNullVector>1</UseNullVector>
+    <NullVector>
+      <Value Row='0'>-1.000000000</Value>
+      <Value Row='1'>-2.000000000</Value>
+    </NullVector>
+  </Kernel>
+  <Kernel ID='inverse' InputDimensions='2' OutputDimensions='2'>
+    <StreamProvider>NullRegistrationKernelWriter&lt;2,2&gt;</StreamProvider>
+    <KernelType>NullRegistrationKernel</KernelType>
+  </Kernel>
+</Registration>
