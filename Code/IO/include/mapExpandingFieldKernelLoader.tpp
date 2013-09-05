@@ -29,6 +29,8 @@
 #include "mapRegistrationManipulator.h"
 #include "mapConvert.h"
 #include "mapFieldByFileLoadFunctor.h"
+#include "mapSDTags.h"
+#include "mapFileDispatch.h"
 
 namespace map
 {
@@ -121,7 +123,19 @@ namespace map
 				mapExceptionMacro(core::ServiceException, << "Error. Cannot load kernel. Description as no file path element.")
 			}
 
-			//determin null vector (support)
+      //check if kernel descriptor is loaded from file and get its path (needed if file path is relative
+			if ( request._spKernelDescriptor->attributeExists(map::tags::SDInternalSourceReader)&&request._spKernelDescriptor->attributeExists(map::tags::SDInternalSourceURI))
+			{
+				if ((request._spKernelDescriptor->getAttribute(map::tags::SDInternalSourceReader) == map::tags::SDInternalSourceReader_file))
+				{
+					core::String basePath = request._spKernelDescriptor->getAttribute(map::tags::SDInternalSourceURI);
+					basePath = map::core::FileDispatch::getPath(basePath);
+
+					filePath = itksys::SystemTools::CollapseFullPath(filePath.c_str(),basePath.c_str());
+				}
+			}
+      
+      //determin null vector (support)
 			bool usesNullVector = false;
 			structuredData::Element::ConstSubElementIteratorType usesNullPos = structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(), tags::UseNullVector);
 

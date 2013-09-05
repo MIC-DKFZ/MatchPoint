@@ -142,12 +142,13 @@ namespace map
 				core::Logbook::warning("No request name specified. Field will be stored to unspecified file '_field.mhd'.");
 			}
 
-			core::String fieldPath = core::FileDispatch::createFullPath(request._path, request._name + "_field.mhd");
+			core::String fieldPath =  request._name + "_field.mhd";
+			core::String absoluteFieldPath = core::FileDispatch::createFullPath(request._path, fieldPath);
 
 			typedef ::itk::ImageFileWriter< typename KernelType::FieldType  > FieldWriterType;
 			typename FieldWriterType::Pointer  spFieldWriter  = FieldWriterType::New();
 
-			spFieldWriter->SetFileName(fieldPath.c_str());
+			spFieldWriter->SetFileName(absoluteFieldPath.c_str());
 			spFieldWriter->SetInput(spField);
 			spFieldWriter->Update();
 
