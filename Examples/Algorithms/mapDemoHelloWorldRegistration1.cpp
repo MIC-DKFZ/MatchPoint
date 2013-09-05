@@ -32,7 +32,7 @@
 
 #include "mapDemoHelloWorldRegistration1Helper.h"
 
-#include "mapRigidMSRegistrationAlgorithmTemplate.h"
+#include "mapTransMSRegistrationAlgorithmTemplate.h"
 #include "mapImageMappingTask.h"
 
 int main(int argc, char *argv[])
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 	//
 	//In this case it is an itk based algorithm formed by a rigid transform,
 	//a mean squares metric and a regular step gradient decent algorithm.
-	typedef map::algorithm::boxed::RigidMSRegistrationAlgorithmTemplate<ImageType>::Type AlgorithmType;
+	typedef map::algorithm::boxed::TransMSRegistrationAlgorithmTemplate<ImageType>::Type AlgorithmType;
 
 	AlgorithmType::Pointer spAlgorithm = AlgorithmType::New();
 

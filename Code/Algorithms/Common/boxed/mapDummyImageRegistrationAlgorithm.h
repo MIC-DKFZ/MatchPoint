@@ -40,8 +40,6 @@ namespace map
 	namespace algorithm
 	{
 
-		mapGenerateAlgorithmUIDPolicyMacro(DummyImageRegistrationUIDPolicy, "de.dkfz.matchpoint", "Dummy", "1.0.0");
-
 		/*! @class DummyImageRegistrationAlgorithm
 		    @brief This is a simple image registration algorithm that does nothing.
 		    The algorithm determines a registration that has an identity transform no
@@ -50,10 +48,11 @@ namespace map
 		    @ingroup Boxed
 		 */
 		template < class TMovingImage, class TTargetImage,
-		         class TIdentificationPolicy = DummyImageRegistrationUIDPolicy >
+		         class TIdentificationPolicy >
 		class DummyImageRegistrationAlgorithm : public facet::AnalyticAlgorithmInterface,
 			public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
-			public RegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>
+			public RegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+      public TIdentificationPolicy
 		{
 		public:
 			typedef DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
@@ -71,9 +70,7 @@ namespace map
 			typedef typename Superclass::RegistrationType RegistrationType;
 			typedef typename Superclass::RegistrationPointer RegistrationPointer;
 
-			static UIDPointer UID();
-
-			virtual UIDPointer getUID() const;
+			mapDefineAlgorithmIdentificationByPolicyMacro;
 
 			/*! @brief Returns the algorithm type for this registration algorithm
 			  @eguarantee strong

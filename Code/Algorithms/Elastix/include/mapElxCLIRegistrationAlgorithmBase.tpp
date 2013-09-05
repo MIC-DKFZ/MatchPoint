@@ -46,23 +46,6 @@ namespace map
 		namespace elastix
 		{
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			typename CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::UIDPointer
-			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			UID()
-			{
-				UIDPointer spResult = TIdentificationPolicy::getUID();
-				return spResult;
-			};
-
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			typename CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::UIDPointer
-			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			getUID() const
-			{
-				return this->UID();
-			};
-
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			typename CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::FieldRepRequirement::Type
 			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			isMovingRepresentationRequired() const

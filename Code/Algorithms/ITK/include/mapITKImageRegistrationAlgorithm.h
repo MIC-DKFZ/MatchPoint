@@ -54,15 +54,13 @@ namespace map
 		namespace itk
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKImageRegistrationUIDPolicy, "de.dkfz.matchpoint", "ITKImageRegistrationAlgorithm.arbitrayDefault", "1.0.0");
-
 			/*! @class ITKImageRegistrationAlgorithm
 			@brief The class for an image registration algorithm based on ITK
 			@ingroup Algorithms
 			@ingroup ITK
 			*/
 			template < class TMovingImage, class TTargetImage,
-			         class TIdentificationPolicy = DefaultITKImageRegistrationUIDPolicy,
+			         class TIdentificationPolicy,
 			         class TInterpolatorPolicy = ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
 			         class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
 			         class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,
@@ -73,7 +71,8 @@ namespace map
 				public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
 				public MetaPropertyAlgorithmBase,
 				public ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType>,
-				public TInterpolatorPolicy,
+				public TIdentificationPolicy,
+        public TInterpolatorPolicy,
 				public TMetricPolicy,
 				public TOptimizerPolicy,
 				public TTransformPolicy
@@ -146,9 +145,7 @@ namespace map
 				*/
 				virtual bool hasCurrentOptimizerValue() const;
 
-				static UIDPointer UID();
-
-				virtual UIDPointer getUID() const;
+				mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				virtual typename FieldRepRequirement::Type isMovingRepresentationRequired() const;
 

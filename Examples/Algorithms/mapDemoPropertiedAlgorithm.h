@@ -75,7 +75,7 @@ namespace map
 	{
 		namespace boxed
 		{
-			mapGenerateAlgorithmUIDPolicyMacro(DemoPropertiedAlgorithmUIDPolicy, "MatchPoint::Test", "DemoPropertiedAlgorithm.default", "1.0.0");
+			mapGenerateAlgorithmUIDPolicyMacro(DemoPropertiedAlgorithmUIDPolicy, "MatchPoint::Test", "DemoPropertiedAlgorithm.default", "1.0.0", "");
 
 			template <class TMovingImage, class TTargetImage = TMovingImage, typename TUIDPolicy = DemoRegistrationAlgorithmUIDPolicy>
 			class DemoPropertiedAlgorithm : public DemoRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy>

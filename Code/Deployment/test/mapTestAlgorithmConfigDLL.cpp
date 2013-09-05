@@ -25,7 +25,6 @@
  * deployment dlls.
  */
 
-#include "mapDeploymentDLLInterface.h"
 #include "mapDeploymentDLLHelper.h"
 #include "mapDiscreteElements.h"
 #include "mapDummyImageRegistrationAlgorithm.h"
@@ -33,8 +32,10 @@
 #include "mapLogbook.h"
 
 
+mapGenerateAlgorithmUIDPolicyMacro(TestAlgorithmDLLPolicy, "de.dkfz.matchpoint", "TestAlgorithm.config", "1.0.0", "testprofile");
+
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType> AlgorithmType;
+typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, TestAlgorithmDLLPolicy> AlgorithmType;
 
 typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
 
@@ -55,6 +56,15 @@ __declspec(dllexport)
 void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID)
 {
 	spUID = DLLHelperType::mapGetRegistrationAlgorithmUID();
+};
+
+extern "C"
+#ifdef _WIN32
+__declspec(dllexport)
+#endif
+void mapGetRegistrationAlgorithmProfile(map::core::String &profile)
+{
+	profile = DLLHelperType::mapGetRegistrationAlgorithmProfile();
 };
 
 extern "C"

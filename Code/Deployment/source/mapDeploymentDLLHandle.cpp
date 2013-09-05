@@ -39,7 +39,8 @@ namespace map
 		DLLHandle::
 		DLLHandle(const LibraryHandleType &libraryHandle,
 		          const map::algorithm::UID *pUID,
-		          const core::String &libraryFile): DLLInfo(pUID, libraryFile), _libraryHandle(libraryHandle)
+		          const core::String &libraryFile,
+              const core::String &profileStr): DLLInfo(pUID, libraryFile, profileStr), _libraryHandle(libraryHandle)
 		{
 		};
 
@@ -52,7 +53,8 @@ namespace map
 		DLLHandle::
 		New(const LibraryHandleType &libraryHandle,
 		    const map::algorithm::UID *pUID,
-		    const core::String &libraryFile)
+		    const core::String &libraryFile,
+              const core::String &profileStr)
 		{
 			if (!pUID)
 			{
@@ -60,7 +62,7 @@ namespace map
 			}
 
 			Pointer smartPtr;
-			Self *rawPtr = new Self(libraryHandle, pUID, libraryFile);
+			Self *rawPtr = new Self(libraryHandle, pUID, libraryFile, profileStr);
 			smartPtr = rawPtr;
 			rawPtr->UnRegister();
 			return smartPtr;

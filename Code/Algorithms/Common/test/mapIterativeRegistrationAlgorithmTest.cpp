@@ -36,8 +36,10 @@ namespace map
 		namespace
 		{
 
+      mapGenerateAlgorithmUIDPolicyMacro(IterativeTestUIDPolicy, "de.dkfz.matchpoint.test", "TestIterativeRegistrationAlgorithm", "1","");
+
 			template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
-			class TestIterativeRegistrationAlgorithm: public algorithm::IterativeRegistrationAlgorithm<VMovingDimensions, VTargetDimensions>
+			class TestIterativeRegistrationAlgorithm: public algorithm::IterativeRegistrationAlgorithm<VMovingDimensions, VTargetDimensions>, public IterativeTestUIDPolicy
 			{
 			public:
 				typedef TestIterativeRegistrationAlgorithm<VMovingDimensions, VTargetDimensions> Self;
@@ -53,7 +55,7 @@ namespace map
 
 				mapNewAlgorithmMacro(Self);
 
-				mapDefineAlgorithmUIDWithAutmaticBuildNRMacro("de.dkfz.matchpoint.test", "TestIterativeRegistrationAlgorithm", "1");
+				mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				mutable unsigned int _prepareAlgorithm;
 				mutable unsigned int _runAlgorithm;

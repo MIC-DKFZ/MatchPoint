@@ -62,7 +62,7 @@ void onBatchEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
 	}
 }
 
-mapGenerateAlgorithmUIDPolicyMacro(DemoFixedRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "DemoFixedITKImageRegistrationAlgorithm", "1.0.0");
+mapGenerateAlgorithmUIDPolicyMacro(DemoFixedRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "DemoFixedITKImageRegistrationAlgorithm", "1.0.0", "");
 
 int main(int argc, char *argv[])
 {

@@ -67,8 +67,6 @@ namespace map
 				};
 			};
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultFSLRegistrationUIDPolicy, "MatchPoint.FSL", "FSLRegistrationAlgorithm.Default", "1.0.0");
-
 			/*! @class FSLRegistrationAlgorithm
 			@brief The class is an algorithm that serves as a wrapper for the FSL registration tool "flirt".
 			The algorithm generates a temporary working directory, where it stores the given moving and target
@@ -79,10 +77,11 @@ namespace map
 			@ingroup Algorithms
 			@ingroup FSL
 			*/
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy = DefaultFSLRegistrationUIDPolicy>
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			class FSLRegistrationAlgorithm : public IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
 				public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
-				public MetaPropertyAlgorithmBase
+				public MetaPropertyAlgorithmBase,
+        public TIdentificationPolicy
 			{
 			public:
 				typedef FSLRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
@@ -132,9 +131,9 @@ namespace map
 				*/
 				virtual bool hasCurrentOptimizerValue() const;
 
-				static UIDPointer UID();
-
 				virtual UIDPointer getUID() const;
+				virtual map::core::String getAlgorithmProfile() const;
+				virtual map::core::String getAlgorithmDescription() const;
 
 				virtual typename FieldRepRequirement::Type isMovingRepresentationRequired() const;
 

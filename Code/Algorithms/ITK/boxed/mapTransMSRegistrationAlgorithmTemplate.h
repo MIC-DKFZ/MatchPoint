@@ -43,15 +43,16 @@ namespace map
 	{
 		namespace boxed
 		{
+      const char *const DefaultTransMSRegistrationAlgorithm_profile = "<Profile><Description>A simple Mattes MI based image registration algorithm just supporting translation.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Image</DataType><TransformModel>translation</TransformModel><TransformDomain>global</TransformDomain><Metric>Mean square difference</Metric><Optimization>Regular Step Gradient Descent</Optimization></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultRigidMSRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "RigidMSRegistrationAlgorithm.default", "1.0.0");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultTransMSRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "TransMSRegistrationAlgorithm.default", "1.0.0",DefaultTransMSRegistrationAlgorithm_profile);
 
-			/** @brief Boxing of a simple rigid mean square based image registration algorithm
+			/** @brief Boxing of a simple mean square based image registration algorithm only allow translation
 			 @ingroup Boxed
 			*/
 			template < class TMovingImage, class TTargetImage = TMovingImage,
-			         class TIdentificationPolicy = DefaultRigidMSRegistrationAlgorithmUIDPolicy >
-			struct RigidMSRegistrationAlgorithmTemplate
+			         class TIdentificationPolicy = DefaultTransMSRegistrationAlgorithmUIDPolicy >
+			struct TransMSRegistrationAlgorithmTemplate
 			{
 public:
 				//optional

@@ -44,7 +44,7 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMSRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "Euler3DMSRegistrationAlgorithm.default", "1.0.0");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMSRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "Euler3DMSRegistrationAlgorithm.default", "1.0.0", "");
 
 			template < class TMovingImage, class TTargetImage = TMovingImage,
 			         typename TUIDPolicy = DefaultEuler3DMSRegistrationAlgorithmUIDPolicy,

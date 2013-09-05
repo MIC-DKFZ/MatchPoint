@@ -36,7 +36,8 @@
 #include "mapITKTranslationTransform.h"
 #include "mapITKLinearInterpolateImageFunction.h"
 
-typedef map::algorithm::itk::ITKMultiResImageRegistrationAlgorithm<ImageType, ImageType> ArbitraryITKMultiResImageRegistrationAlgorithmType;
+mapGenerateAlgorithmUIDPolicyMacro(DemoArbitraryMultiResImageRegUIDPolicy,"de.dkfz.matchpoint.demo","ArbitraryMultiResITKImageReg","1.0.0","");
+typedef map::algorithm::itk::ITKMultiResImageRegistrationAlgorithm<ImageType, ImageType, DemoArbitraryMultiResImageRegUIDPolicy> ArbitraryITKMultiResImageRegistrationAlgorithmType;
 
 void onRegistrationEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
 {

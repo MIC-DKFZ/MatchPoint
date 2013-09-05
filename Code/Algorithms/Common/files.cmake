@@ -5,6 +5,7 @@ source/mapMultiResRegistrationAlgorithmBase.cpp
 source/mapAlgorithmStateChangeEvent.cpp
 source/mapAlgorithmException.cpp
 source/mapAlgorithmWrapperEvent.cpp
+source/mapAlgorithmProfileHelper.cpp
 source/mapMetaPropertyInfo.cpp
 source/mapMetaPropertyAlgorithmBase.cpp
 source/mapUID.cpp  
@@ -19,6 +20,7 @@ include/mapAlgorithmException.h
 include/mapAlgorithmIdentificationInterface.h
 include/mapAlgorithmStateChangeEvent.h
 include/mapAlgorithmWrapperEvent.h
+include/mapAlgorithmProfileHelper.h
 include/mapAnalyticAlgorithmInterface.h
 include/mapArbitraryImagePyramidesPolicy.h
 include/mapImagePyramidesGetterInterface.h
@@ -81,4 +83,5 @@ test/mapRegistrationAlgorithmBaseTest.cpp
 test/mapRegistrationAlgorithmTest.cpp
 test/mapUIDTest.cpp 
 test/mapStateTestCommand.cpp
+test/mapAlgorithmProfileHelperTest.cpp
 )

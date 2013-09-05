@@ -36,8 +36,9 @@ namespace map
 		namespace boxed
 		{
 
+      const char *const DefaultITKRigid2DClosedFormRegistrationAlgorithm_profile = "<Profile><Description>Simple 3D rigid (translation and euler angles) registration algorithm using point sets pairs and a closed form solution. It assumes that both given point sets are sorted by pair index.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Points</DataType><ComputationStyle>analytic</ComputationStyle><Deterministic/><DimMoving>2</DimMoving><DimTarget>2</DimTarget><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKRigid2DClosedFormRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKRigid2DClosedFormRegistrationAlgorithm.default", "1.0.0");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKRigid2DClosedFormRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKRigid2DClosedFormRegistrationAlgorithm.default", "1.0.0", DefaultITKRigid2DClosedFormRegistrationAlgorithm_profile);
 
 			/** @brief Boxing of a closed form 2D rigid registration algorithm
 			 @ingroup Boxed

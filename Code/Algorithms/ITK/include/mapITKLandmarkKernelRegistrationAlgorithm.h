@@ -46,19 +46,18 @@ namespace map
 		namespace itk
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKLandmarkKernelRegistrationUIDPolicy, "de.dkfz.matchpoint", "ITKLandmarkKernelRegistrationAlgorithm.arbitrayDefault", "1.0.0");
-
 			/*! @class ITKLandmarkKernelRegistrationAlgorithm
-			@brief The class implements a "registration" algorithm that intializes its transformation modell.
+			@brief The class implements a "registration" algorithm that initializes its transformation model.
 			This algorithm is a analytic approach that assumes that the transform model in conjunction with the
 			a moving and a target landmark set is sufficient to establish a registration.
 			@remark this algorithm can only be used with transforms that derive from itk::KernelTransform (e.g. ElasticBodySplineKernelTransform).
 			@ingroup Algorithms
 			*/
 			template < class TPointSet, class TITKTransform,
-			         class TIdentificationPolicy = DefaultITKLandmarkKernelRegistrationUIDPolicy >
+			         class TIdentificationPolicy >
 			class ITKLandmarkKernelRegistrationAlgorithm : public RegistrationAlgorithm<TPointSet::PointDimension, TPointSet::PointDimension>,
 				public PointSetRegistrationAlgorithmBase<TPointSet, TPointSet>,
+        public TIdentificationPolicy,
 				public facet::AnalyticAlgorithmInterface
 			{
 			public:
@@ -81,9 +80,7 @@ namespace map
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
-				static UIDPointer UID();
-
-				virtual UIDPointer getUID() const;
+        mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				/*! @brief Returns the algorithm type for this registration algorithm
 				@eguarantee strong

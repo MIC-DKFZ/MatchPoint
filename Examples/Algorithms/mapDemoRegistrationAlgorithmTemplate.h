@@ -57,11 +57,12 @@
 #define __MAP_DEMO_REGISTRATION_ALGORITHM_TEMPLATE_H
 
 
-#include "mapRigidMSRegistrationAlgorithmTemplate.h"
+#include "mapTransMSRegistrationAlgorithmTemplate.h"
 
 namespace
 {
-	mapGenerateAlgorithmUIDPolicyMacro(DemoRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "DemoRegistrationAlgorithm", "1.0.0");
+  const char *const DemoRegistrationAlgorithm_profile = "<Profile><Description>A simple Mattes MI based image registration algorithm just supporting translation.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Image</DataType><TransformModel>translation</TransformModel><TransformDomain>global</TransformDomain><Metric>Mean square difference</Metric><Optimization>Regular Step Gradient Descent</Optimization></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
+	mapGenerateAlgorithmUIDPolicyMacro(DemoRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "DemoRegistrationAlgorithm", "1.0.0", DemoRegistrationAlgorithm_profile);
 }
 
 namespace map
@@ -78,17 +79,17 @@ namespace map
 			* UID policy is changed, because the reboxed algorithm should have its own unique identifier.
 			*/
 			template <class TMovingImage, class TTargetImage = TMovingImage, typename TUIDPolicy = DemoRegistrationAlgorithmUIDPolicy>
-			class DemoRegistrationAlgorithm: public map::algorithm::boxed::RigidMSRegistrationAlgorithmTemplate<TMovingImage, TTargetImage, TUIDPolicy>::Type
+			class DemoRegistrationAlgorithm: public map::algorithm::boxed::TransMSRegistrationAlgorithmTemplate<TMovingImage, TTargetImage, TUIDPolicy>::Type
 			{
 			public:
 				typedef DemoRegistrationAlgorithm Self;
 
-				typedef typename map::algorithm::boxed::RigidMSRegistrationAlgorithmTemplate<TMovingImage, TTargetImage, TUIDPolicy>::Type  Superclass;
+				typedef typename map::algorithm::boxed::TransMSRegistrationAlgorithmTemplate<TMovingImage, TTargetImage, TUIDPolicy>::Type  Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
 
-				itkTypeMacro(DemoRegistrationAlgorithm, RigidMSRegistrationAlgorithmTemplate);
+				itkTypeMacro(DemoRegistrationAlgorithm, TransMSRegistrationAlgorithmTemplate);
 				mapNewAlgorithmMacro(Self);
 
 			protected:

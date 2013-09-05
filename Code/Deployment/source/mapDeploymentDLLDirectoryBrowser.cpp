@@ -172,8 +172,10 @@ namespace map
 			{
 				try
 				{
-					algorithm::UID::ConstPointer spUID = map::deployment::peekDeploymentDLL(libraryFilePath);
-					DLLInfo::Pointer spInfo = DLLInfo::New(spUID, libraryFilePath);
+					algorithm::UID::ConstPointer spUID;
+          core::String profileStr;
+          map::deployment::peekDeploymentDLL(libraryFilePath,spUID,profileStr);
+					DLLInfo::Pointer spInfo = DLLInfo::New(spUID, libraryFilePath, profileStr);
 					list.push_back(spInfo);
 					core::String sComment = "Valid DLL: " + libraryFilePath;
 					this->InvokeEvent(map::events::ValidDLLEvent(spInfo.GetPointer(), sComment));

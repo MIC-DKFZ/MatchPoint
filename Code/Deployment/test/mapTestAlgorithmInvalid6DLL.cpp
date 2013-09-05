@@ -30,8 +30,10 @@
 #include "mapDummyImageRegistrationAlgorithm.h"
 #include "mapConfigure.h"
 
+mapGenerateAlgorithmUIDPolicyMacro(InvalidTestAlgUIDPolicy,"de.dkfz.matchpoint.test", "InvalidAlgorithm6_noValidAlgorithm", "1.0", "InvalidAlgorithm6_noValidAlgorithm");
+
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType> AlgorithmType;
+typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType,InvalidTestAlgUIDPolicy> AlgorithmType;
 
 typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
 
@@ -52,6 +54,15 @@ __declspec(dllexport)
 void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID)
 {
 	spUID = map::algorithm::UID::New("de.dkfz.matchpoint.test", "InvalidAlgorithm6_noValidAlgorithm", "1.0", "");
+};
+
+extern "C"
+#ifdef _WIN32
+  __declspec(dllexport)
+#endif
+  void mapGetRegistrationAlgorithmProfile(map::core::String& profile)
+{
+  profile = "InvalidAlgorithm6_noValidAlgorithm";
 };
 
 extern "C"

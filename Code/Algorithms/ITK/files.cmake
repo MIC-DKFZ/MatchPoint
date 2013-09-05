@@ -134,7 +134,7 @@ boxed/mapITKRigid2DClosedFormRegistrationAlgorithmTemplate.h
 boxed/mapITKRigid2DICPRegistrationAlgorithmTemplate.h
 boxed/mapITKRigid2DMattesMIRegistrationAlgorithmTemplate.h
 boxed/mapITKRigid3DClosedFormRegistrationAlgorithmTemplate.h
-boxed/mapRigidMSRegistrationAlgorithmTemplate.h
+boxed/mapTransMSRegistrationAlgorithmTemplate.h
 boxed/mapTransMattesMIRegistrationAlgorithmTemplate.h
 )
 

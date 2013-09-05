@@ -39,8 +39,6 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultElxBSplineCLIRegistrationUIDPolicy, "de.dkfz.matchpoint.elastix.cli", "BSplineRegistration.Default", "1.0.0");
-
 			/*! @class ElxBSplineCLIRegistrationAlgorithm
 						@brief The class is a boxed elastix BSpline registration algorithm (using CLI).
 						The algorithm has two stages (1. rigid registration, 2. BSpline registration). It uses elastix via CLI and uses auto
@@ -49,7 +47,7 @@ namespace map
 						@ingroup Elastix
 						@ingroup Boxed
 			 */
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy = DefaultElxBSplineCLIRegistrationUIDPolicy>
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			class ElxBSplineCLIRegistrationAlgorithm : public elastix::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
 			{
 			public:

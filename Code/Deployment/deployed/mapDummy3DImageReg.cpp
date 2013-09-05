@@ -20,50 +20,14 @@
 // Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/deployed/mapDummy3DImageReg.cpp $
 */
 
-#include "mapDeploymentDLLInterface.h"
 #include "mapDeploymentDLLHelper.h"
 #include "mapDiscreteElements.h"
 #include "mapDummyImageRegistrationAlgorithm.h"
 #include "mapConfigure.h"
 
-/*! UID policy for the new reboxed algorithm. This policy gives the reboxed version of the algorithm a new
- * unique identifer to track the usage of the algorithm within any application.*/
-mapGenerateAlgorithmUIDPolicyMacro(Dummy3DUIDPolicy, "de.dkfz.matchpoint.common", "Dummy.3D.Image", "1.0.0");
+#include "Dummy3DImageReg_ProfileResource.h"
 
 typedef map::core::discrete::Elements<3>::InternalImageType ImageType;
-typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, Dummy3DUIDPolicy> Dummy3DAlgorithmType;
+typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, map::algorithm::Dummy3DImageRegUIDPolicy> AlgorithmType;
 
-typedef map::deployment::DeploymentDLLHelper<Dummy3DAlgorithmType> DLLHelperType;
-
-/** @class Dummy3DImageRegistrationAlgorithm
- * @ingroup Data_image Det_comp_analytic Det_deterministic Dim_3D_3D
- */
-
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor)
-{
-	major = MAP_DLL_INTERFACE_VERSION_MAJOR;
-	minor = MAP_DLL_INTERFACE_VERSION_MINOR;
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID)
-{
-	spUID = DLLHelperType::mapGetRegistrationAlgorithmUID();
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, map::deployment::SyncObject *syncObject)
-{
-	spAlgorithm = DLLHelperType::mapGetRegistrationAlgorithmInstance(syncObject);
-};
+mapDeployAlgorithmMacro(AlgorithmType);

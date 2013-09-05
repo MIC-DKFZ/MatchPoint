@@ -43,8 +43,6 @@ namespace map
 		namespace plastimatch
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultPlmCLIRegistrationUIDPolicy, "de.dkfz.matchpoint.plastimatch", "CommandLineInterfaceRegistration.Base", "1.0.0");
-
 			/*! @class CLIRegistrationAlgorithmBase
 						@brief This is the base class for algorithms that serve as a wrapper for the registration
 						tool "plastimatch". The algorithm is a very simple wrapper using a command line interface to
@@ -58,11 +56,12 @@ namespace map
 			    @ingroup Algorithms
 						@ingroup Plastimatch
 			 */
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy = DefaultPlmCLIRegistrationUIDPolicy>
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			class CLIRegistrationAlgorithmBase : public IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
 				public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
 				public MetaPropertyAlgorithmBase,
-				public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>
+				public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+        public TIdentificationPolicy
 			{
 			public:
 				typedef CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
@@ -92,6 +91,8 @@ namespace map
 				typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
 				typedef typename MetaPropertyAlgorithmBase::MetaPropertyNameType MetaPropertyNameType;
 
+        mapDefineAlgorithmIdentificationByPolicyMacro;
+
 				// IterativeRegistrationAlgorithm
 				/*! @eguarantee strong*/
 				virtual bool isStoppable() const;
@@ -114,10 +115,6 @@ namespace map
 				@return Indicates if the algorithm can determin its curent value.
 				*/
 				virtual bool hasCurrentOptimizerValue() const;
-
-				static UIDPointer UID();
-
-				virtual UIDPointer getUID() const;
 
 				virtual typename FieldRepRequirement::Type isMovingRepresentationRequired() const;
 

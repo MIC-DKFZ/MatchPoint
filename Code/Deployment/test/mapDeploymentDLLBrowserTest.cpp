@@ -124,6 +124,8 @@ namespace map
 				_falseNegatives.clear();
 				_falsePositives.clear();
 
+				_pResults->onTestStart(getCurrentTestLabel());
+				
 				for (deployment::DLLDirectoryBrowser::PathListType::const_iterator pos = _candidates.begin(); pos != _candidates.end(); ++pos)
 				{
 					bool foundByBrowser = checkLocationInInfos(_infos, *pos);

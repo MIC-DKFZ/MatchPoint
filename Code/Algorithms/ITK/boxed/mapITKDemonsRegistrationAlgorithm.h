@@ -45,7 +45,7 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(ITKDemonsRegistationUIDPolicy, "de.dkfz.matchpoint", "ITKDemonsRegistrationAlgorithm", "1.0.0");
+			mapGenerateAlgorithmUIDPolicyMacro(ITKDemonsRegistationUIDPolicy, "de.dkfz.matchpoint", "ITKDemonsRegistrationAlgorithm", "1.0.0", "");
 
 			/*! @class ITKDemonsRegistrationAlgorithm
 			    @brief The class wraps the itk::DemonsRegistrationFilter as MatchPoint algorithm
@@ -55,6 +55,7 @@ namespace map
 			         class TIdentificationPolicy = ITKDemonsRegistationUIDPolicy >
 			class ITKDemonsRegistrationAlgorithm : public IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
 				public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
+        public TIdentificationPolicy,
 				public MetaPropertyAlgorithmBase
 			{
 			public:
@@ -81,6 +82,8 @@ namespace map
 				typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
 				typedef typename Superclass::IterationCountType IterationCountType;
 
+        mapDefineAlgorithmIdentificationByPolicyMacro;
+
 				// IterativeRegistrationAlgorithm
 				/*! @eguarantee strong*/
 				virtual bool isStoppable() const;
@@ -103,10 +106,6 @@ namespace map
 				@return Indicates if the algorithm can determine its current value.
 				*/
 				virtual bool hasCurrentOptimizerValue() const;
-
-				static UIDPointer UID();
-
-				virtual UIDPointer getUID() const;
 
 			protected:
 				ITKDemonsRegistrationAlgorithm();

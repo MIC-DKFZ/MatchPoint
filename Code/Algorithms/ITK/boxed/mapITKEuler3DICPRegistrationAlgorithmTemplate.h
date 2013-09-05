@@ -42,8 +42,9 @@ namespace map
 	{
 		namespace boxed
 		{
+      const char *const DefaultITKEuler3DICPRegistrationAlgorithm_profile = "<Profile><Description>Simple 3D rigid (translation and euler angles) registration algorithm using point sets pairs and a ICP solution.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Points</DataType><DimMoving>3</DimMoving><DimTarget>3</DimTarget><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain><Optimization>ICP<Optimization/></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKEuler3DICPRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKEuler3DICPRegistrationAlgorithm.default", "1.0.0");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKEuler3DICPRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKEuler3DICPRegistrationAlgorithm.default", "1.0.0", DefaultITKEuler3DICPRegistrationAlgorithm_profile);
 
 			/** @brief Boxing of a simple rigid point set registration algorithm using Euler3D transform
 			@ingroup Boxed

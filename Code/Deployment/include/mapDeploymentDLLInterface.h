@@ -26,14 +26,15 @@
 
 #include "mapRegistrationAlgorithmBase.h"
 #include "mapUID.h"
+#include "mapString.h"
 #include "mapDeploymentSync.h"
 
 /*!@file
  * This file declares the available function symbols for default MatchPoint deployment DLLs.
  * If you want to deploy a algorithm via DLL, add this file to your project and define/implement
  * the functions declared in this file.\n
- * For a default implementation of mapGetDLLInterfaceVersion() just include mapGetDLLInterfaceVersion.cpp
- * to your project or MAPDeployment.lib which already contains that function. For the other functions see
+ * For a default implementation of mapGetDLLInterfaceVersion() just link
+ * your project to the MAPDeployment library which already contains that function. For the other functions see
  * mapDeploymentDLLHelper.h
  * @ingroup DeployAlgorithm
  */
@@ -59,6 +60,16 @@ extern "C"
 __declspec(dllexport)
 #endif
 void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID);
+
+/*! @brief Returns a profile string containing the profile of the algorithm offered by the deployment DLL.
+ * The profile is stored in xml format. String may be empty if no profile is specified.
+ * @ingroup DeployAlgorithm
+ */
+extern "C"
+#ifdef _WIN32
+__declspec(dllexport)
+#endif
+void mapGetRegistrationAlgorithmProfile(map::core::String& profileString);
 
 /*! @brief Returns a smart pointer to an instance of the algorithm (as RegistrationAlgorithmBase) offered by the DLL.
  * @ingroup DeployAlgorithm

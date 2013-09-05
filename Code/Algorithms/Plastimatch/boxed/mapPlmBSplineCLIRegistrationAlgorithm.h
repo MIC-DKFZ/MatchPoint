@@ -39,8 +39,6 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultPlmBSplineCLIRegistrationUIDPolicy, "de.dkfz.matchpoint.plastimatch.cli", "BSplineRegistration.Default", "1.0.0");
-
 			/*! @class PlmBSplineCLIRegistrationAlgorithm
 						@brief The class is a boxed plastimatch BSpline registration algorithm (using CLI, in many aspects similar to the SLICER PLastimatch BSpline plugin).
 						The algorithm has three stages (1. rigid registration, 2./3. BSpline registration). It uses plastimatch via CLI and uses auto
@@ -49,7 +47,7 @@ namespace map
 						@ingroup Plastimatch
 						@ingroup Boxed
 			 */
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy = DefaultPlmBSplineCLIRegistrationUIDPolicy>
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			class PlmBSplineCLIRegistrationAlgorithm : public plastimatch::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
 			{
 			public:

@@ -43,8 +43,6 @@ namespace map
 		namespace itk
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKMultiResImageRegistrationUIDPolicy, "de.dkfz.matchpoint", "ITKMultiResImageRegistrationAlgorithm.arbitrayDefault", "1.0.0");
-
 			/*! @class ITKMultiResImageRegistrationAlgorithm
 			@brief The class is used for image registration algorithm based on ITK and using a multi resolution approach.
 			If you need to react on level changes (e.g. to adapt certain algorithm parameters) you can observe the object
@@ -53,7 +51,7 @@ namespace map
 			@ingroup Algorithms
 			*/
 			template < class TMovingImage, class TTargetImage,
-			         class TIdentificationPolicy = DefaultITKMultiResImageRegistrationUIDPolicy,
+			         class TIdentificationPolicy,
 			         class TInterpolatorPolicy = ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
 			         class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
 			         class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,

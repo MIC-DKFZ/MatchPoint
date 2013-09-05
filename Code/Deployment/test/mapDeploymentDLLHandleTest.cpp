@@ -37,13 +37,14 @@ namespace map
 
 			map::algorithm::UID::Pointer spUID = map::algorithm::UID::New("de.dkfz.matchpoint.test", "TestDummy", "1.0.0", "x");
 			map::deployment::DLLHandle::LibraryHandleType handle = (map::deployment::DLLHandle::LibraryHandleType)24;
-			map::deployment::DLLHandle::Pointer spHandle = map::deployment::DLLHandle::New(handle, spUID, "testfile.dll");
+			map::deployment::DLLHandle::Pointer spHandle = map::deployment::DLLHandle::New(handle, spUID, "testfile.dll", "profile");
 
 			CHECK_EQUAL(handle, spHandle->getLibraryHandle());
 			CHECK_EQUAL(spUID.GetPointer(), &(spHandle->getAlgorithmUID()));
 			CHECK_EQUAL("testfile.dll", spHandle->getLibraryFilePath());
+      CHECK_EQUAL("profile", spHandle->getAlgorithmProfileStr());
 
-			CHECK_THROW(map::deployment::DLLHandle::New(handle, NULL, "file_with_NULL_UID.dll"));
+			CHECK_THROW(map::deployment::DLLHandle::New(handle, NULL, "file_with_NULL_UID.dll", "profile"));
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

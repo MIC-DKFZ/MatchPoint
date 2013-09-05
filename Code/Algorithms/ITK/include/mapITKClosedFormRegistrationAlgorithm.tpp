@@ -46,24 +46,6 @@ namespace map
 			};
 
 			template<class TMovingPointSet, class TTargetPointSet, class TITKTransform, class TIdentificationPolicy>
-			typename ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::UIDPointer
-			ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::
-			UID()
-			{
-				UIDPointer spResult = IdentificationPolicyType::getUID();
-				return spResult;
-			};
-
-			template<class TMovingPointSet, class TTargetPointSet, class TITKTransform, class TIdentificationPolicy>
-			typename ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::UIDPointer
-			ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::
-			getUID() const
-			{
-				return this->UID();
-			};
-
-
-			template<class TMovingPointSet, class TTargetPointSet, class TITKTransform, class TIdentificationPolicy>
 			typename ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::FieldRepRequirement::Type
 			ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::
 			isMovingRepresentationRequired() const

@@ -77,6 +77,8 @@ namespace map
 				RegTestCommand(const Self &); //purposely not implemented
 				void operator=(const Self &); //purposely not implemented
 			};
+
+      mapGenerateAlgorithmUIDPolicyMacro(ArbitraryITKImageRegistrationAlgorithmUIDPolicy,"de.dkfz.matchpoint","ArbitraryITKImageRegistrationAlgorithmTest","1.0.0","");
 		}
 
 		int mapITKImageRegistrationAlgorithmTest(int argc, char *argv[])
@@ -107,7 +109,7 @@ namespace map
 			TestImageType::Pointer spMovingImage2 = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(movingImageFileName);
 			TestImageType::Pointer spTargetImage2 = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(targetImageFileName);
 
-			typedef algorithm::itk::ITKImageRegistrationAlgorithm<TestImageType, TestImageType> ArbitraryITKImageRegistrationAlgorithmType;
+			typedef algorithm::itk::ITKImageRegistrationAlgorithm<TestImageType, TestImageType, ArbitraryITKImageRegistrationAlgorithmUIDPolicy> ArbitraryITKImageRegistrationAlgorithmType;
 			ArbitraryITKImageRegistrationAlgorithmType::Pointer spAlgorithm = ArbitraryITKImageRegistrationAlgorithmType::New();
 
 			//Add observer for algorithm events.

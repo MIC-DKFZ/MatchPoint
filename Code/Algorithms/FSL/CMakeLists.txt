@@ -8,5 +8,5 @@ IF (BUILD_TESTING)
 ENDIF (BUILD_TESTING)
 
 
-MAP_DEFINE_DEPLOYED_ALGORITHM(FSL2DRegistration FILES "deployed/mapFSL2DRegistration.cpp" DEPENDS MAPCore MAPAlgorithms MAPDeployment MAPAlgorithmsFSL MAPUtilities)
-MAP_DEFINE_DEPLOYED_ALGORITHM(FSL3DRegistration FILES "deployed/mapFSL3DRegistration.cpp" DEPENDS MAPCore MAPAlgorithms MAPDeployment MAPAlgorithmsFSL MAPUtilities)
+MAP_DEFINE_DEPLOYED_ALGORITHM(FSL2DRegistration PROFILE "deployed/FSL2DRegistration.profile" FILES "deployed/mapFSL2DRegistration.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPDeployment MAPAlgorithmsFSL MAPUtilities)
+MAP_DEFINE_DEPLOYED_ALGORITHM(FSL3DRegistration PROFILE "deployed/FSL3DRegistration.profile"FILES "deployed/mapFSL3DRegistration.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPDeployment MAPAlgorithmsFSL MAPUtilities)

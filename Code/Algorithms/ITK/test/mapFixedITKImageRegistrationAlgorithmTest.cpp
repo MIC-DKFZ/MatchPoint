@@ -85,7 +85,7 @@ namespace map
 			};
 
 
-			mapGenerateAlgorithmUIDPolicyMacro(TestAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "ITKImageRegistrationAlgorithm.fixedTest", "1.0.0");
+			mapGenerateAlgorithmUIDPolicyMacro(TestAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "ITKImageRegistrationAlgorithm.fixedTest", "1.0.0","");
 		}
 
 		int mapFixedITKImageRegistrationAlgorithmTest(int argc, char *argv[])

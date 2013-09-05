@@ -22,45 +22,18 @@
 
 /*! @file
  * correct test dll that deploys the default DemoRegistrationAlgorithm.
- * The DLL is used for several tests of some MatchPoint deployment class.
+ * The DLL is used for several tests of some MatchPoint deployment class
+ * and to implicitly test the mapDeployAlgorithmMacro.
  */
 
-#include "mapDeploymentDLLInterface.h"
 #include "mapDeploymentDLLHelper.h"
 #include "mapDiscreteElements.h"
 #include "mapDummyImageRegistrationAlgorithm.h"
 #include "mapConfigure.h"
 
+mapGenerateAlgorithmUIDPolicyMacro(TestAlgorithmDLLPolicy, "de.dkfz.matchpoint", "TestAlgorithm", "1.0.0", "testprofile");
+
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-mapGenerateAlgorithmUIDPolicyMacro(TestAlgorithmDLLPolicy, "de.dkfz.matchpoint", "TestAlgorithm", "1.0.0");
 typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, TestAlgorithmDLLPolicy> AlgorithmType;
 
-typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor)
-{
-	major = MAP_DLL_INTERFACE_VERSION_MAJOR;
-	minor = MAP_DLL_INTERFACE_VERSION_MINOR;
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID)
-{
-	spUID = DLLHelperType::mapGetRegistrationAlgorithmUID();
-};
-
-extern "C"
-#ifdef _WIN32
-__declspec(dllexport)
-#endif
-void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, map::deployment::SyncObject *syncObject)
-{
-	spAlgorithm = DLLHelperType::mapGetRegistrationAlgorithmInstance(syncObject);
-};
+mapDeployAlgorithmMacro(AlgorithmType);

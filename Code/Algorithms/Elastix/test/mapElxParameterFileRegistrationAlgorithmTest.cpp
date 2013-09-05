@@ -38,7 +38,7 @@ namespace map
 	namespace testing
 	{
 
-		mapGenerateAlgorithmUIDPolicyMacro(TestElx2DRegistrationUIDPolicy, "de.dkfz.matchpoint.elastix.test", "ProgramFileRegistration.2D.default", "1.0.0");
+		mapGenerateAlgorithmUIDPolicyMacro(TestElx2DRegistrationUIDPolicy, "de.dkfz.matchpoint.elastix.test", "ProgramFileRegistration.2D.default", "1.0.0", "");
 
 		typedef std::map<core::String, core::String> ArgumentMapType;
 
