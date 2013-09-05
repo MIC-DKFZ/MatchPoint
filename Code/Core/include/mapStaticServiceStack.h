@@ -58,7 +58,7 @@ namespace map
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef TConcreteServiceStack	  																	 ConcreteServiceStackType;
+				typedef TConcreteServiceStack	 ConcreteServiceStackType;
 				typedef typename ConcreteServiceStackType::Pointer                 ConcreteServiceStackPointer;
 				typedef typename ConcreteServiceStackType::ProviderBaseType        ProviderBaseType;
 				typedef typename ProviderBaseType::Pointer										     ProviderBasePointer;
@@ -66,7 +66,7 @@ namespace map
 
 				typedef StaticServiceStack<ProviderBaseType, TStaticLoadStaticPolicy, TThreadingStaticPolicy>  Self;
 
-				typedef TStaticLoadStaticPolicy<ProviderBaseType>                  StaticLoadStaticPolicyType;
+				typedef TStaticLoadStaticPolicy<ConcreteServiceStackType>          StaticLoadStaticPolicyType;
 				typedef typename ConcreteServiceStackType::StaticLoadPolicyType    StaticLoadPolicyType;
 				typedef TThreadingStaticPolicy                                     ThreadingStaticPolicyType;
 				typedef typename ConcreteServiceStackType::ThreadingPolicyType     ThreadingPolicyType;
