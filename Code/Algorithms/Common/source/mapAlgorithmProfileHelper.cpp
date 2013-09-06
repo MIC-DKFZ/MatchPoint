@@ -79,7 +79,7 @@ namespace map
           while (pos != node->getSubElementEnd())
           {
             result.push_back((*pos)->getValue());
-            pos = ::map::structuredData::findNextSubElement(pos,node->getSubElementEnd(),tag);
+            pos = ::map::structuredData::findNextSubElement(++pos,node->getSubElementEnd(),tag);
           }
         }
         return result;
