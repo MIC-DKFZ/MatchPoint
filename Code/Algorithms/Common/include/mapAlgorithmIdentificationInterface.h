@@ -118,9 +118,9 @@ namespace map
  * @param ns Namespace of the algorithm (part of the algorithm UID; should be a string)
  * @param name Name of the algorithm (part of the algorithm UID; should be a string)
  * @param version Version of the algorithm (part of the algorithm UID; should be a string)
- * @param profile Profile string of the algorithm (xml encoded profile).
+ * @param profileStr Profile string of the algorithm (xml encoded profile).
  */
-#define mapGenerateAlgorithmUIDPolicyMacro(policyName, ns, name, version, profile) \
+#define mapGenerateAlgorithmUIDPolicyMacro(policyName, ns, name, version, profileStr) \
 	struct policyName\
 	{\
 	public:\
@@ -135,12 +135,11 @@ namespace map
     static const ::map::core::String AlgorithmDescription()\
     {\
       ::map::core::String tmpProfile = policyName::AlgorithmProfile();\
-      ::map::structuredData::Element::Pointer spProfile = ::map::algorithm::parseProfileString(tmpProfile);\
-      return ::map::algorithm::getAlgorithmDescription(spProfile);\
+      return ::map::algorithm::profile::getDescription(tmpProfile);\
     }\
     static const ::map::core::String AlgorithmProfile()\
     {\
-      return profile;\
+      return profileStr;\
     }\
 	}
 

@@ -45,8 +45,7 @@ namespace map
 			static const ::map::core::String AlgorithmDescription()
 			{				
 			  ::map::core::String tmpProfile = @ALGORITHM_NAME@UIDPolicy::AlgorithmProfile();
-			  ::map::structuredData::Element::Pointer spProfile = ::map::algorithm::parseProfileString(tmpProfile);
-			  return ::map::algorithm::getAlgorithmDescription(spProfile);
+			  return ::map::algorithm::profile::getDescription(tmpProfile);
 			}
 			
 			static const ::map::core::String AlgorithmProfile()
