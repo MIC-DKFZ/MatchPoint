@@ -163,6 +163,19 @@ namespace map
         return getDataType(profile);
       }
 
+      MAPAlgorithms_EXPORT ValueListType getResolutionStyle(const structuredData::Element* profileRoot)
+      {
+        structuredData::Element::Pointer chars = extractCharacteristicsFromProfile(profileRoot);
+        ValueListType result = getValues(chars,tags::AlgorithmResolutionStyle);
+        return result;
+      }
+
+      MAPAlgorithms_EXPORT ValueListType getResolutionStyle(const core::String& profileStr)
+      {
+        structuredData::Element::Pointer profile = parseProfileString(profileStr);
+        return getResolutionStyle(profile);
+      }
+
       MAPAlgorithms_EXPORT bool getComputationStyle(const structuredData::Element* profileRoot, map::core::String& stlye)
       {
         bool result = false;
@@ -294,6 +307,18 @@ namespace map
         return getTransformModel(profile);
       }
 
+      MAPAlgorithms_EXPORT ValueListType getTransformDomain(const structuredData::Element* profileRoot)
+      {
+        structuredData::Element::Pointer chars = extractCharacteristicsFromProfile(profileRoot);
+        ValueListType result = getValues(chars,tags::AlgorithmTransformDomain);
+        return result;
+      }
+
+      MAPAlgorithms_EXPORT ValueListType getTransformDomain(const core::String& profileStr)
+      {
+        structuredData::Element::Pointer profile = parseProfileString(profileStr);
+        return getTransformDomain(profile);
+      }
 
       MAPAlgorithms_EXPORT ValueListType getMetric(const structuredData::Element* profileRoot)
       {
