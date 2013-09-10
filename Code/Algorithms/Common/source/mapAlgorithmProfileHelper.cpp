@@ -176,26 +176,17 @@ namespace map
         return getResolutionStyle(profile);
       }
 
-      MAPAlgorithms_EXPORT bool getComputationStyle(const structuredData::Element* profileRoot, map::core::String& stlye)
+      MAPAlgorithms_EXPORT ValueListType getComputationStyle(const structuredData::Element* profileRoot)
       {
-        bool result = false;
         structuredData::Element::Pointer chars = extractCharacteristicsFromProfile(profileRoot);
-        if(chars)
-        {
-          ::map::structuredData::Element::ConstSubElementIteratorType pos = ::map::structuredData::findNextSubElement(chars->getSubElementBegin(),chars->getSubElementEnd(),tags::AlgorithmComputationStyle);
-          if(pos != chars->getSubElementEnd())
-          {
-            stlye = (*pos)->getValue();
-            result = true;
-          }
-        }
+        ValueListType result = getValues(chars,tags::AlgorithmComputationStyle);
         return result;
       }
 
-      MAPAlgorithms_EXPORT bool getComputationStyle(const core::String& profileStr, map::core::String& stlye)
+      MAPAlgorithms_EXPORT ValueListType getComputationStyle(const core::String& profileStr)
       {
         structuredData::Element::Pointer profile = parseProfileString(profileStr);
-        return getComputationStyle(profile, stlye);
+        return getComputationStyle(profile);
       }
 
       MAPAlgorithms_EXPORT bool getMovingDimensions(const structuredData::Element* profileRoot, unsigned int& dims)
