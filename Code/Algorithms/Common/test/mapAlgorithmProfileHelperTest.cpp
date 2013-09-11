@@ -90,9 +90,9 @@ namespace map
       CHECK_EQUAL("Image", algorithm::profile::getDataType(spValidProfile_full)[0]);
       CHECK(0 == algorithm::profile::getDataType(spValidProfile_noDesc).size());
 
-      CHECK(algorithm::profile::getComputationStyle(spValidProfile_full,value));
-      CHECK_EQUAL("Analytic", value);
-      CHECK(!algorithm::profile::getComputationStyle(spValidProfile_noDesc,value));
+      CHECK(1 == algorithm::profile::getComputationStyle(spValidProfile_full).size());
+      CHECK_EQUAL("Analytic", algorithm::profile::getComputationStyle(spValidProfile_full)[0]);
+      CHECK(0 == algorithm::profile::getComputationStyle(spValidProfile_noDesc).size());
 
       CHECK(algorithm::profile::isDeterministic(spValidProfile_full));
       CHECK(!algorithm::profile::isDeterministic(spValidProfile_noDesc));
@@ -169,9 +169,9 @@ namespace map
       CHECK_EQUAL("Image", algorithm::profile::getDataType(validStr_full)[0]);
       CHECK(0 == algorithm::profile::getDataType(validStr_noDesc).size());
 
-      CHECK(algorithm::profile::getComputationStyle(validStr_full,value));
-      CHECK_EQUAL("Analytic", value);
-      CHECK(!algorithm::profile::getComputationStyle(validStr_noDesc,value));
+      CHECK(1 == algorithm::profile::getComputationStyle(validStr_full).size());
+      CHECK_EQUAL("Analytic", algorithm::profile::getComputationStyle(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getComputationStyle(validStr_noDesc).size());
 
       CHECK(algorithm::profile::isDeterministic(validStr_full));
       CHECK(!algorithm::profile::isDeterministic(validStr_noDesc));
