@@ -150,6 +150,83 @@ namespace map
       CHECK(0 == algorithm::profile::getKeywords(spValidProfile_noDesc).size());
 
 
+      //////////////////////////////////////////////////////////
+      // Test profile values getter functions (string version
+      CHECK_EQUAL("My test description.", algorithm::profile::getDescription(validStr));
+      CHECK_EQUAL("", algorithm::profile::getDescription(validStr_noDesc));
+      CHECK_EQUAL("", algorithm::profile::getDescription(invalidStr));
+
+      CHECK(2 == algorithm::profile::getContact(validStr_full).size());
+      CHECK_EQUAL("contact1", algorithm::profile::getContact(validStr_full)[0]);
+      CHECK_EQUAL("contact2", algorithm::profile::getContact(validStr_full)[1]);
+      CHECK(0 == algorithm::profile::getContact(validStr_noDesc).size());
+
+      CHECK(algorithm::profile::getTerms(validStr_full,value));
+      CHECK_EQUAL("the terms", value);
+      CHECK(!algorithm::profile::getTerms(validStr_noDesc,value));
+
+      CHECK(1 == algorithm::profile::getDataType(validStr_full).size());
+      CHECK_EQUAL("Image", algorithm::profile::getDataType(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getDataType(validStr_noDesc).size());
+
+      CHECK(algorithm::profile::getComputationStyle(validStr_full,value));
+      CHECK_EQUAL("Analytic", value);
+      CHECK(!algorithm::profile::getComputationStyle(validStr_noDesc,value));
+
+      CHECK(algorithm::profile::isDeterministic(validStr_full));
+      CHECK(!algorithm::profile::isDeterministic(validStr_noDesc));
+
+      CHECK(1 == algorithm::profile::getResolutionStyle(validStr_full).size());
+      CHECK_EQUAL("Single", algorithm::profile::getResolutionStyle(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getResolutionStyle(validStr_noDesc).size());
+
+      CHECK(algorithm::profile::getMovingDimensions(validStr_full,dimValue));
+      CHECK_EQUAL(3, dimValue);
+      CHECK(!algorithm::profile::getMovingDimensions(validStr_noDesc,dimValue));
+
+      CHECK(2 == algorithm::profile::getMovingModality(validStr_full).size());
+      CHECK_EQUAL("ModType1", algorithm::profile::getMovingModality(validStr_full)[0]);
+      CHECK_EQUAL("ModType2", algorithm::profile::getMovingModality(validStr_full)[1]);
+      CHECK(0 == algorithm::profile::getMovingModality(validStr_noDesc).size());
+
+      CHECK(algorithm::profile::getTargetDimensions(validStr_full,dimValue));
+      CHECK_EQUAL(2, dimValue);
+      CHECK(!algorithm::profile::getTargetDimensions(validStr_noDesc,dimValue));
+
+      CHECK(1 == algorithm::profile::getTargetModality(validStr_full).size());
+      CHECK_EQUAL("any", algorithm::profile::getTargetModality(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getTargetModality(validStr_noDesc).size());
+
+      CHECK(1 == algorithm::profile::getSubject(validStr_full).size());
+      CHECK_EQUAL("sub1", algorithm::profile::getSubject(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getSubject(validStr_noDesc).size());
+
+      CHECK(1 == algorithm::profile::getObject(validStr_full).size());
+      CHECK_EQUAL("obj1", algorithm::profile::getObject(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getObject(validStr_noDesc).size());
+
+      CHECK(1 == algorithm::profile::getTransformModel(validStr_full).size());
+      CHECK_EQUAL("rigid", algorithm::profile::getTransformModel(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getTransformModel(validStr_noDesc).size());
+
+      CHECK(1 == algorithm::profile::getTransformDomain(validStr_full).size());
+      CHECK_EQUAL("global", algorithm::profile::getTransformDomain(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getTransformDomain(validStr_noDesc).size());
+
+      CHECK(1 == algorithm::profile::getOptimization(validStr_full).size());
+      CHECK_EQUAL("opt1", algorithm::profile::getOptimization(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getOptimization(validStr_noDesc).size());
+
+      CHECK(1 == algorithm::profile::getMetric(validStr_full).size());
+      CHECK_EQUAL("metric1", algorithm::profile::getMetric(validStr_full)[0]);
+      CHECK(0 == algorithm::profile::getMetric(validStr_noDesc).size());
+
+      CHECK(3 == algorithm::profile::getKeywords(validStr_full).size());
+      CHECK_EQUAL("key1", algorithm::profile::getKeywords(validStr_full)[0]);
+      CHECK_EQUAL("key2", algorithm::profile::getKeywords(validStr_full)[1]);
+      CHECK_EQUAL("key3", algorithm::profile::getKeywords(validStr_full)[2]);
+      CHECK(0 == algorithm::profile::getKeywords(validStr_noDesc).size());
+
       RETURN_AND_REPORT_TEST_SUCCESS;
     }
   } //namespace testing
