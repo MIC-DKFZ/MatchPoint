@@ -47,7 +47,7 @@ namespace map
 		to indicate the beginning of the next resolution level usage
 		@see map::events::AlgorithmIterationEvent
 		*/
-		class MAPAlgorithms_EXPORT MultiResRegistrationAlgorithmBase : public facet::MultiResRegistrationAlgorithmInterface, public facet::MultiResRegistrationAlgorithmSetterInterface
+		class MAPAlgorithms_EXPORT MultiResRegistrationAlgorithmBase : public facet::MultiResRegistrationAlgorithmInterface, public facet::MultiResRegistrationAlgorithmSetterInterface, public facet::MultiResScheduleSetterInterface
 		{
 		public:
 			typedef MultiResRegistrationAlgorithmBase Self;

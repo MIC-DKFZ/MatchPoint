@@ -23,8 +23,8 @@
 
 
 
-#ifndef __MULTI_RES_REGISTRATION_ALGORITHM_SETTER_INTERFACE_H
-#define __MULTI_RES_REGISTRATION_ALGORITHM_SETTER_INTERFACE_H
+#ifndef __MULTI_RES_SCHEDULE_SETTER_INTERFACE_H
+#define __MULTI_RES_SCHEDULE_SETTER_INTERFACE_H
 
 #include "mapMultiResRegistrationAlgorithmInterface.h"
 
@@ -42,28 +42,41 @@ namespace map
 			@ingroup AlgorithmFacets
 			@see map::algorithm::facet::MultiResRegistrationAlgorithmInterface
 			*/
-			class MultiResRegistrationAlgorithmSetterInterface
+			class MultiResScheduleSetterInterface
 			{
 			public:
-				typedef MultiResRegistrationAlgorithmSetterInterface Self;
+				typedef MultiResScheduleSetterInterface Self;
 
-				typedef MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType ResolutionLevelCountType;
+				typedef MultiResRegistrationAlgorithmInterface::ScheduleType ScheduleType;
 
-				/*! resets the both schedules to the passed level count.
-				The sub sampling rate of a level is 2^(levels - n). n is the
-				current level (starting with 1).\n
-				Passing 4 will therefore generate 8, 4, 2, 1.
-				@pre "levels" must be >0.
+				/*! @brief sets the moving and the target schedule as copies of the
+				passed schedule.
+				@pre the 2nd Dimension of the passed schedule must equal the
+				resolution dimension of moving and target information space.
+				@pre the 1st Dimension of the schedule must be >1 (hence it must have
+				at least one resolution level).
+				@eguarantee strong
 				*/
-				virtual void setResolutionLevels(ResolutionLevelCountType levels) = 0;
+				virtual void setSchedule(const ScheduleType &schedule) = 0;
+
+				/*! @brief sets the moving and the target schedule as copies of the
+				passed schedules.
+				@pre the 2nd Dimension of the passed schedules must equal the
+				resolution dimension of their information spaces.
+				@pre the 1st Dimension of the passed schedules must be equal
+				@pre the 1st Dimension of the schedule must be >1 (hence it must have
+				at least one resolution level).
+				@eguarantee strong
+				*/
+				virtual void setSchedule(const ScheduleType &movingSchedule, const ScheduleType &targetSchedule) = 0;
 
 			protected:
-				MultiResRegistrationAlgorithmSetterInterface() {};
-				virtual ~MultiResRegistrationAlgorithmSetterInterface() {};
+				MultiResScheduleSetterInterface() {};
+				virtual ~MultiResScheduleSetterInterface() {};
 
 			private:
 				//No copy constructor allowed
-				MultiResRegistrationAlgorithmSetterInterface(const Self &source); //purposely not implemented
+				MultiResScheduleSetterInterface(const Self &source); //purposely not implemented
 				void operator=(const Self &); //purposely not implemented
 
 			};
