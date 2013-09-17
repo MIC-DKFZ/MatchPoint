@@ -17,26 +17,18 @@
 // @version $Revision: 4912 $ (last changed revision)
 // @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
 // @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKPDEDeformableRegistrationAlgorithm.h $
+// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.h $
 */
 
 
 
 
-#ifndef __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_H
-#define __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_H
+#ifndef __ITK_FAST_SYMMETRIC_FORCES_DEMONS_REGISTRATION_ALGORITHM_H
+#define __ITK_FAST_SYMMETRIC_FORCES_DEMONS_REGISTRATION_ALGORITHM_H
 
-#include "mapContinuous.h"
-#include "mapDiscreteElements.h"
+#include "itkFastSymmetricForcesDemonsRegistrationFilter.h"
 
-#include "mapIterativeRegistrationAlgorithm.h"
-#include "mapImageRegistrationAlgorithmBase.h"
-#include "mapMetaPropertyAlgorithmBase.h"
-#include "mapObserverSentinel.h"
-#include "mapModificationTimeValidator.h"
-
-#include "itkPDEDeformableRegistrationFilter.h"
-#include "itkSimpleFastMutexLock.h"
+#include "mapITKPDEDeformableRegistrationAlgorithm.h"
 
 namespace map
 {
@@ -45,27 +37,26 @@ namespace map
 		namespace itk
 		{
 
-			/*! @class ITKPDEDeformableRegistrationAlgorithm
+			/*! @class ITKFastSymmetricForcesDemonsRegistrationAlgorithm
 			@brief The class for an image registration algorithm based on ITK
 			@ingroup Algorithms
 			@ingroup ITK
 			*/
 			template < class TImageType,
 			         class TIdentificationPolicy,
-							 class TDisplacementField = core::discrete::Elements<typename TImageType::ImageDimension>::VectorFieldType ,
-			         class TInternalRegistrationFilter = ::itk::PDEDeformableRegistrationFilter<TImageType, TImageType, TDisplacementField> >
-			class ITKPDEDeformableRegistrationAlgorithm : public IterativeRegistrationAlgorithm<TImageType::ImageDimension, TImageType::ImageDimension>,
+							 class TDisplacementField = core::discrete::Elements<typename TImageType::ImageDimension>::VectorFieldType>
+			class ITKFastSymmetricForcesDemonsRegistrationAlgorithm : public ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, ::itk::FastSymmetricForcesDemonsRegistrationFilter<TImageType, TImageType, TDisplacment> TImageType, ::ImageDimension, TImageType::ImageDimension>,
 				public ImageRegistrationAlgorithmBase<TImageType, TImageType>,
 				public MetaPropertyAlgorithmBase,
 				public TIdentificationPolicy
 			{
 			public:
-				typedef ITKPDEDeformableRegistrationAlgorithm < TImageType, TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter > Self;
+				typedef ITKFastSymmetricForcesDemonsRegistrationAlgorithm < TImageType, TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter > Self;
 				typedef IterativeRegistrationAlgorithm<TImageType::ImageDimension, TImageType::ImageDimension>  Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
-				itkTypeMacro(ITKPDEDeformableRegistrationAlgorithm, IterativeRegistrationAlgorithm);
+				itkTypeMacro(ITKFastSymmetricForcesDemonsRegistrationAlgorithm, IterativeRegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
 				typedef typename Superclass::UIDType UIDType;
@@ -125,8 +116,8 @@ namespace map
 				virtual bool isReusable() const;
 
 			protected:
-				ITKPDEDeformableRegistrationAlgorithm();
-				virtual ~ITKPDEDeformableRegistrationAlgorithm();
+				ITKFastSymmetricForcesDemonsRegistrationAlgorithm();
+				virtual ~ITKFastSymmetricForcesDemonsRegistrationAlgorithm();
 
 				typedef TInternalRegistrationFilter InternalRegistrationMethodType;
 				typedef typename Superclass::InterimRegistrationType InterimRegistrationType;
@@ -316,7 +307,7 @@ namespace map
 				/*! This member function is called by the observer of the transform for all kind of events. It serves as a pass through.*/
 				void onGeneralRegistrationMethodEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
 
-				ITKPDEDeformableRegistrationAlgorithm(const Self &source);
+				ITKFastSymmetricForcesDemonsRegistrationAlgorithm(const Self &source);
 				void operator=(const Self &); //purposely not implemented
 			};
 
@@ -325,7 +316,7 @@ namespace map
 }
 
 #ifndef MatchPoint_MANUAL_TPP
-#include "mapITKPDEDeformableRegistrationAlgorithm.tpp"
+#include "mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.tpp"
 #endif
 
 #endif

@@ -17,12 +17,12 @@
 // @version $Revision: 4912 $ (last changed revision)
 // @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
 // @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKPDEDeformableRegistrationAlgorithm.tpp $
+// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.tpp $
 */
 
 
-#ifndef __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_TPP
-#define __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_TPP
+#ifndef __ITK_FAST_SYMMETRIC_FORCES_DEMONS_REGISTRATION_ALGORITHM_TPP
+#define __ITK_FAST_SYMMETRIC_FORCES_DEMONS_REGISTRATION_ALGORITHM_TPP
 
 #include <itkHistogramMatchingImageFilter.h>
 
@@ -40,16 +40,16 @@ namespace map
 		{
       
       template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			typename ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::FieldRepRequirement::Type
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::FieldRepRequirement::Type
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			isMovingRepresentationRequired() const
 			{
 				return FieldRepRequirement::No;
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			typename ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::FieldRepRequirement::Type
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::FieldRepRequirement::Type
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			isTargetRepresentationRequired() const
 			{
 				return FieldRepRequirement::No;
@@ -57,23 +57,23 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			bool
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			isStoppable() const
 			{
 				bool result = true;
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			typename ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::IterationCountType
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::IterationCountType
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			doGetCurrentIteration() const
 			{
 				return this->_currentIterationCount;
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			typename ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::IterationCountType
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::IterationCountType
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			doGetMaxIterations() const
 			{
 				IterationCountType result = 0;
@@ -88,7 +88,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			bool
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			hasIterationCount() const
 			{
 				return true;
@@ -96,7 +96,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			bool
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			hasMaxIterationCount() const
 			{
 				bool result = _internalRegistrationMethod != NULL;
@@ -106,7 +106,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			bool
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			hasCurrentOptimizerValue() const
 			{
 				bool result = _internalRegistrationMethod != NULL;
@@ -116,36 +116,36 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			bool
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			isReusable() const
 			{
 				return true;
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
-			ITKPDEDeformableRegistrationAlgorithm() : _currentIterationCount(0), _matchHistograms(true), _thresholdAtMeanIntensity(true), _numberOfHistogramLevels(1024), _numberOfHistogramMatchPoints(7)
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm() : _currentIterationCount(0), _matchHistograms(true), _thresholdAtMeanIntensity(true), _numberOfHistogramLevels(1024), _numberOfHistogramMatchPoints(7)
 			{
 				_spInternalMovingImage = NULL;
 				_spInternalTargetImage = NULL;
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
-			~ITKPDEDeformableRegistrationAlgorithm()
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			~ITKFastSymmetricForcesDemonsRegistrationAlgorithm()
 			{
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			configureAlgorithm()
 			{
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			typename ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::InterimRegistrationPointer
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::InterimRegistrationPointer
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			determineInterimRegistration(const MovingRepresentationDescriptorType *pMovingRepresentation,
 			                             const TargetRepresentationDescriptorType *pTargetRepresentation) const
 			{
@@ -184,7 +184,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			bool
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			doStopAlgorithm()
 			{
 				bool result = false;
@@ -200,7 +200,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			prepCheckValidity()
 			{
 				if (!this->getMovingImage())
@@ -216,21 +216,21 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			prepPrepareSubComponents()
 			{
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			prepAssembleSubComponents()
 			{
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			prepPerpareInternalInputData()
 			{
         if (this->_matchHistograms)
@@ -258,7 +258,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			prepSetInternalInputData()
 			{
 				//Connect images
@@ -269,21 +269,21 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			prepInitializeTransformation()
 			{
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			prepFinalizePreparation()
 			{
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			prepareAlgorithm()
 			{
 				this->prepCheckValidity();
@@ -335,7 +335,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			bool
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			runAlgorithm()
 			{
 				this->_internalRegistrationMethod->Update();
@@ -344,7 +344,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			finalizeAlgorithm()
 			{
 				RegistrationPointer spResult = NULL;
@@ -382,8 +382,8 @@ namespace map
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			typename ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::RegistrationPointer
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::RegistrationPointer
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			doGetRegistration() const
 			{
 				return _spFinalizedRegistration;
@@ -392,7 +392,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			onIterationEvent(::itk::Object *caller, const ::itk::EventObject &eventObject)
 			{
 				::map::core::OStringStream os;
@@ -421,7 +421,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			onGeneralRegistrationMethodEvent(::itk::Object *caller, const ::itk::EventObject &eventObject)
 			{
 				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal registration method event");
@@ -430,7 +430,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			bool
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			registrationIsOutdated() const
 			{
 				bool outdated = _spFinalizedRegistration.IsNull();
@@ -460,8 +460,8 @@ namespace map
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			typename ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::OptimizerMeasureType
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::OptimizerMeasureType
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			doGetCurrentOptimizerValue() const
 			{
 				OptimizerMeasureType result;
@@ -476,8 +476,8 @@ namespace map
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			typename ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::InternalRegistrationMethodType &
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::InternalRegistrationMethodType &
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			getInternalRegistrationMethod()
 			{
 				return *(this->_internalRegistrationMethod.GetPointer());
@@ -485,7 +485,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			PrintSelf(std::ostream &os, ::itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
@@ -498,7 +498,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			compileInfos(MetaPropertyVectorType &infos) const
 			{
 #ifndef MAP_SEAL_ALGORITHMS
@@ -511,8 +511,8 @@ namespace map
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
-			typename ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::MetaPropertyPointer
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::MetaPropertyPointer
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			doGetProperty(const MetaPropertyNameType &name) const
 			{
 				MetaPropertyPointer spResult;
@@ -547,7 +547,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
 			void
-			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
 			{
 				if (name == "MatchHistograms")

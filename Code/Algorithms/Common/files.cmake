@@ -40,6 +40,7 @@ include/mapMultiResImageRegistrationAlgorithmBase.h
 include/mapMultiResRegistrationAlgorithmBase.h
 include/mapMultiResRegistrationAlgorithmInterface.h
 include/mapMultiResRegistrationAlgorithmSetterInterface.h
+include/mapMultiResScheduleSetterInterface.h
 include/mapOptimizerControlInterface.h
 include/mapOptimizerGetterInterface.h
 include/mapPointSetRegistrationAlgorithmBase.h

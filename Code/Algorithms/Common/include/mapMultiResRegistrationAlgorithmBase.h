@@ -28,6 +28,8 @@
 
 #include "mapMultiResRegistrationAlgorithmInterface.h"
 #include "mapMultiResRegistrationAlgorithmSetterInterface.h"
+#include "mapMultiResScheduleSetterInterface.h"
+
 #include "mapMacros.h"
 #include "mapMAPAlgorithmsExports.h"
 
