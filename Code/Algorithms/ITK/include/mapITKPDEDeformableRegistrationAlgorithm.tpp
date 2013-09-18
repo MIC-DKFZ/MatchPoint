@@ -79,10 +79,8 @@ namespace map
 			{
 				IterationCountType result = 0;
 
-				if (_internalRegistrationMethod)
-				{
-					result = _internalRegistrationMethod->GetNumberOfIterations();
-				}
+        MetaPropertyPointer prop = this->getProperty("NumberOfIterations");
+				map::core::unwrapMetaProperty(prop, result);
 
 				return result;
 			};
@@ -214,6 +212,26 @@ namespace map
 				{
 					mapExceptionMacro(AlgorithmException, << "Cannot start algorithm; no target image.");
 				}
+
+        if (this->getTargetRepresentation())
+        {
+          typename TargetRepresentationDescriptorType::Pointer targetImageRep = map::core::createFieldRepresentation(*(this->getTargetImage()));
+
+          if (!(*(this->getTargetRepresentation())==(*targetImageRep)))
+          {
+  					mapExceptionMacro(AlgorithmException, << "Cannot start algorithm; user defined target representation does not match the target image.");
+          }
+        }
+
+        if (this->getMovingRepresentation())
+        {
+          typename MovingRepresentationDescriptorType::Pointer movingImageRep =  map::core::createFieldRepresentation(*(this->getMovingImage()));
+
+          if (!(*(this->getMovingRepresentation())==(*movingImageRep)))
+          {
+  					mapExceptionMacro(AlgorithmException, << "Cannot start algorithm; user defined moving representation does not match the moving image.");
+          }
+        }
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
@@ -360,7 +378,15 @@ namespace map
 				typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> GeneratorType;
 				typename GeneratorType::Pointer spGenerator = GeneratorType::New();
 				typedef typename GeneratorType::InverseKernelBaseType DirectKernelType;
-				typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*(spIKernel.GetPointer()), this->getMovingRepresentation());
+
+        typename MovingRepresentationDescriptorType::ConstPointer movingImageRep  =  this->getMovingRepresentation();
+
+        if (movingImageRep.IsNull())
+        {
+          movingImageRep =  map::core::createFieldRepresentation(*(this->getMovingImage()));
+        }
+
+				typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*(spIKernel.GetPointer()), movingImageRep);
 
 				if (spDKernel.IsNull())
 				{
