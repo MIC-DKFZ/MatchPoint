@@ -49,6 +49,7 @@ namespace map
 			ITKLevelSetMotionRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
 			configureAlgorithm()
 			{
+			    Superclass::configureAlgorithm();
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField>

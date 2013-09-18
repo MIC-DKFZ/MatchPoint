@@ -51,6 +51,7 @@ namespace map
 			ITKPDEDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
 			configureAlgorithm()
 			{
+              Superclass::configureAlgorithm();			
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField>
