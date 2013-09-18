@@ -93,7 +93,7 @@ namespace map
 				}
 				else
 				{
-					assert(false); //any other property name should have been excluded by the calling function.
+					spResult = Superclass::doGetProperty(name);
 				}
 
 				return spResult;
@@ -122,6 +122,10 @@ namespace map
 					map::core::unwrapMetaProperty(pProperty, value);
 					this->getInternalRegistrationMethod().SetUseGradientType(static_cast<Superclass::InternalRegistrationMethodType::GradientType>(value));
 				}
+        else
+        {
+          Superclass::doSetProperty(name, pProperty);
+        }
 			};
 
 		} // end namespace itk
