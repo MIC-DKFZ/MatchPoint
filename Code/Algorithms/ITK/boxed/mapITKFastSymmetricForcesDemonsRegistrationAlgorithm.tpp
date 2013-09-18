@@ -89,7 +89,7 @@ namespace map
 				}
 				else if (name == "UseGradientType")
 				{
-					spResult = map::core::MetaProperty<unsigned int>::New(0);
+					spResult = map::core::MetaProperty<int>::New(0);
 				}
 				else
 				{
