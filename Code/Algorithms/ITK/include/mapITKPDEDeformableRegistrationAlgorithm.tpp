@@ -142,6 +142,7 @@ namespace map
 			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			configureAlgorithm()
 			{
+				this->_internalRegistrationMethod = InternalRegistrationMethodType::New();
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
