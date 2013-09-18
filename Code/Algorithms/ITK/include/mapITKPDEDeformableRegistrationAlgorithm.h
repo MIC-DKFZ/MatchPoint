@@ -60,7 +60,7 @@ namespace map
 				public TIdentificationPolicy
 			{
 			public:
-				typedef ITKPDEDeformableRegistrationAlgorithm < TImageType, TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter > Self;
+				typedef ITKPDEDeformableRegistrationAlgorithm < TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter > Self;
 				typedef IterativeRegistrationAlgorithm<TImageType::ImageDimension, TImageType::ImageDimension>  Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;

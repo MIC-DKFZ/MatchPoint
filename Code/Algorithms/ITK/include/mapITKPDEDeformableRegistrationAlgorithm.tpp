@@ -31,6 +31,7 @@
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
+#include "mapMetaProperty.h"
 
 namespace map
 {
@@ -60,7 +61,7 @@ namespace map
 			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			isStoppable() const
 			{
-				bool result = true;
+				return true;
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
@@ -99,7 +100,7 @@ namespace map
 			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			hasMaxIterationCount() const
 			{
-				bool result = _internalRegistrationMethod != NULL;
+				bool result = _internalRegistrationMethod.IsNotNull();
 
 				return result;
 			};
@@ -109,7 +110,7 @@ namespace map
 			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			hasCurrentOptimizerValue() const
 			{
-				bool result = _internalRegistrationMethod != NULL;
+				bool result = _internalRegistrationMethod.IsNotNull();
 
 				return result;
 			};
@@ -157,7 +158,7 @@ namespace map
 					typedef core::FieldKernels<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel InverseKernelType;
 
 					typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
-					spIKernel->setField(_internalRegistrationMethod->GetDisplacementField());
+					spIKernel->setField(*(_internalRegistrationMethod->GetDisplacementField()));
 
 					//now build the direct kernel via inversion of the inverse kernel
 					typedef core::InverseRegistrationKernelGenerator<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions> GeneratorType;
@@ -240,13 +241,13 @@ namespace map
           strm <<  "Match histograms of images. Threshold: "<< this->_thresholdAtMeanIntensity << "; histogram levels: "<<this->_numberOfHistogramLevels<<"; match points: "<<this->_numberOfHistogramMatchPoints;
 				  this->InvokeEvent(events::AlgorithmEvent(this, strm.str()));
 
-          typedef itk::HistogramMatchingImageFilter< TImageType, TImageType>   MatchingFilterType;
+          typedef ::itk::HistogramMatchingImageFilter< TImageType, TImageType>   MatchingFilterType;
           MatchingFilterType::Pointer matcher = MatchingFilterType::New();
 
           matcher->SetInput( this->_spInternalMovingImage );
           matcher->SetReferenceImage( this->_spInternalTargetImage );
 
-          matcher->SetNumberOfHistogramLevels( this->_spNumberOfHistogramLevels );
+          matcher->SetNumberOfHistogramLevels( this->_numberOfHistogramLevels );
           matcher->SetNumberOfMatchPoints( this->_numberOfHistogramMatchPoints );
           matcher->SetThresholdAtMeanIntensity(this->_thresholdAtMeanIntensity);
 
@@ -290,7 +291,6 @@ namespace map
 
 				this->_currentIterationCount = 0;
 				this->_spFinalizedRegistration = NULL;
-				this->_finalizedTransformParameters.Fill(0);
 
 				//create method
 				this->_internalRegistrationMethod = InternalRegistrationMethodType::New();
@@ -353,7 +353,7 @@ namespace map
 				typedef core::FieldKernels<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel InverseKernelType;
 
 				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
-				spIKernel->setField(_internalRegistrationMethod->GetDisplacementField());
+				spIKernel->setField(*(_internalRegistrationMethod->GetDisplacementField()));
 
 				//now build the direct kernel via inversion of the inverse kernel
 				typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> GeneratorType;
@@ -398,16 +398,16 @@ namespace map
 				::map::core::OStringStream os;
 
 				bool hasCurrentValue = this->hasCurrentOptimizerValue();
-				typename OptimizerBaseType::SVNLMeasureType currentValue = this->getCurrentOptimizerValue();
+				OptimizerMeasureType currentValue = this->getCurrentOptimizerValue();
 
 				this->_currentIterationLock.Lock();
 				++_currentIterationCount;
 
 				os << "Iteration #" << _currentIterationCount << "; metric value: ";
 
-				if (hasCurrentValue)
+				if (hasCurrentValue && currentValue.size()>0)
 				{
-					os << currentValue;
+					os << currentValue[0];
 				}
 				else
 				{
@@ -468,8 +468,7 @@ namespace map
 
 				if (this->_internalRegistrationMethod.IsNotNull())
 				{
-					result = this->_internalRegistrationMethod->GetMetric();
-					
+					result.push_back(this->_internalRegistrationMethod->GetMetric());
 				}
 
 				return result;
@@ -490,7 +489,7 @@ namespace map
 			{
 				Superclass::PrintSelf(os, indent);
 
-				ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::PrintSelf(os, indent);
+				ImageRegistrationAlgorithmBase<TImageType, TImageType>::PrintSelf(os, indent);
 
 				os << indent << "Current itertation count: " << _currentIterationCount << std::endl;
 				os << indent << "Finalized registration: " << _spFinalizedRegistration << std::endl;

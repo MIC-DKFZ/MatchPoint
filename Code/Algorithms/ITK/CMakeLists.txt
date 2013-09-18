@@ -6,3 +6,4 @@ MAP_DEFINE_DEPLOYED_ALGORITHM(ITKEuler3DMattesMIMultiRes PROFILE "deployed/ITKEu
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKEuler3DMS PROFILE "deployed/ITKEuler3DMS.profile" FILES "deployed/mapITKEuler3DMS.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigid2DMattesMI PROFILE "deployed/ITKRigid2DMattesMI.profile" FILES "deployed/mapITKRigid2DMattesMI.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigid3DClosedForm PROFILE "deployed/ITKRigid3DClosedForm.profile" FILES "deployed/mapITKRigid3DClosedForm.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(ITKFastSymmetricForcesDemons3D PROFILE "deployed/ITKFastSymmetricForcesDemons3D.profile" FILES "deployed/mapITKFastSymmetricForcesDemons3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
