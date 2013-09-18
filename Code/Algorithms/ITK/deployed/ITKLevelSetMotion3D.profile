@@ -1,8 +1,8 @@
 SET(ALGORITHM_PROFILE_UID_Namespace "de.dkfz.matchpoint.itk")
-SET(ALGORITHM_PROFILE_UID_Name "Demons.FastSymmetricForces.3D.default")
+SET(ALGORITHM_PROFILE_UID_Name "LevelSetMotion.3D.default")
 SET(ALGORITHM_PROFILE_UID_Version "1.0.0")
 
-SET(ALGORITHM_PROFILE_Description "Deformable 3D registration algorithm based on the concept of Thiron's demons using fast symmetric forces. This algorithm is only suitable for mono modal tasks.")
+SET(ALGORITHM_PROFILE_Description "Deformable 3D registration algorithm based on an level set motion approach. This algorithm is only suitable for mono modal tasks.")
 SET(ALGORITHM_PROFILE_Contact "Ralf Floca\; sbr@dkfz-heidelberg.de")
 
 SET(ALGORITHM_PROFILE_DataType "Image")
@@ -16,4 +16,4 @@ SET(ALGORITHM_PROFILE_Object "any")
 SET(ALGORITHM_PROFILE_TransformModel "deformable")
 SET(ALGORITHM_PROFILE_TransformDomain "lokal")
 SET(ALGORITHM_PROFILE_Metric "Mean square difference")
-SET(ALGORITHM_PROFILE_Keywords "deformable" "demons" "monomodal")
+SET(ALGORITHM_PROFILE_Keywords "deformable" "monomodal")

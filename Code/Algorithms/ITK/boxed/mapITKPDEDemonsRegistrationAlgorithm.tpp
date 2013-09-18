@@ -17,12 +17,14 @@
 // @version $Revision: 4912 $ (last changed revision)
 // @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
 // @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.tpp $
+// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKPDEDemonsRegistrationAlgorithm.tpp $
 */
 
 
-#ifndef __ITK_FAST_SYMMETRIC_FORCES_DEMONS_REGISTRATION_ALGORITHM_TPP
-#define __ITK_FAST_SYMMETRIC_FORCES_DEMONS_REGISTRATION_ALGORITHM_TPP
+#ifndef __ITK_PDE_DEMONS_REGISTRATION_ALGORITHM_TPP
+#define __ITK_PDE_DEMONS_REGISTRATION_ALGORITHM_TPP
+
+#include "mapITKPDEDemonsRegistrationAlgorithm.h"
 
 namespace map
 {
@@ -33,41 +35,39 @@ namespace map
       
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField>
-			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
-			ITKFastSymmetricForcesDemonsRegistrationAlgorithm()
+			ITKPDEDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
+			ITKPDEDemonsRegistrationAlgorithm()
 			{
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField>
-			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
-			~ITKFastSymmetricForcesDemonsRegistrationAlgorithm()
+			ITKPDEDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
+			~ITKPDEDemonsRegistrationAlgorithm()
 			{
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField>
 			void
-			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
+			ITKPDEDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
 			configureAlgorithm()
 			{
-        Superclass::configureAlgorithm();
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField>
 			void
-			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
+			ITKPDEDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
 			compileInfos(MetaPropertyVectorType &infos) const
 			{
         Superclass::compileInfos(infos);
 #ifndef MAP_SEAL_ALGORITHMS
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("IntensityDifferenceThreshold", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumUpdateStepLength", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("UseGradientType", typeid(int), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("UseMovingImageGradient", typeid(bool), true, true));
 #endif
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField>
-			typename ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::MetaPropertyPointer
-			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
+			typename ITKPDEDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::MetaPropertyPointer
+			ITKPDEDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
 			doGetProperty(const MetaPropertyNameType &name) const
 			{
 				MetaPropertyPointer spResult;
@@ -76,13 +76,9 @@ namespace map
 				{
 					spResult = map::core::MetaProperty<double>::New(0.001);
 				}
-        else if (name == "MaximumUpdateStepLength")
+        else if (name == "UseMovingImageGradient")
 				{
-					spResult = map::core::MetaProperty<double>::New(0.5);
-				}
-				else if (name == "UseGradientType")
-				{
-					spResult = map::core::MetaProperty<int>::New(0);
+					spResult = map::core::MetaProperty<bool>::New(false);
 				}
 				else
 				{
@@ -94,7 +90,7 @@ namespace map
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField>
 			void
-			ITKFastSymmetricForcesDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
+			ITKPDEDemonsRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField>::
 			doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
 			{
 				if (name == "IntensityDifferenceThreshold")
@@ -103,17 +99,11 @@ namespace map
 					map::core::unwrapMetaProperty(pProperty, value);
 					this->getInternalRegistrationMethod().SetIntensityDifferenceThreshold(value);
 				}
-        else if (name == "MaximumUpdateStepLength")
+        else if (name == "UseMovingImageGradient")
 				{
-					double value;
+					bool value;
 					map::core::unwrapMetaProperty(pProperty, value);
-					this->getInternalRegistrationMethod().SetMaximumUpdateStepLength(value);
-				}
-				else if (name == "UseGradientType")
-				{
-					int value;
-					map::core::unwrapMetaProperty(pProperty, value);
-					this->getInternalRegistrationMethod().SetUseGradientType(static_cast<Superclass::InternalRegistrationMethodType::GradientType>(value));
+					this->getInternalRegistrationMethod().SetUseMovingImageGradient(value);
 				}
         else
         {

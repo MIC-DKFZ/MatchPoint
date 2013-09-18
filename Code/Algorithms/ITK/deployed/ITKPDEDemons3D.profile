@@ -1,8 +1,8 @@
 SET(ALGORITHM_PROFILE_UID_Namespace "de.dkfz.matchpoint.itk")
-SET(ALGORITHM_PROFILE_UID_Name "Demons.FastSymmetricForces.3D.default")
+SET(ALGORITHM_PROFILE_UID_Name "Demons.new.3D.default")
 SET(ALGORITHM_PROFILE_UID_Version "1.0.0")
 
-SET(ALGORITHM_PROFILE_Description "Deformable 3D registration algorithm based on the concept of Thiron's demons using fast symmetric forces. This algorithm is only suitable for mono modal tasks.")
+SET(ALGORITHM_PROFILE_Description "Deformable 3D registration algorithm based on the concept of Thiron's demons using fast symmetric forces. It is based on the implementation itk::DemonsRegistrationFilter. This algorithm is only suitable for mono modal tasks.")
 SET(ALGORITHM_PROFILE_Contact "Ralf Floca\; sbr@dkfz-heidelberg.de")
 
 SET(ALGORITHM_PROFILE_DataType "Image")

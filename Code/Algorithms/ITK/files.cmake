@@ -138,6 +138,8 @@ boxed/mapITKRigid3DClosedFormRegistrationAlgorithmTemplate.h
 boxed/mapTransMSRegistrationAlgorithmTemplate.h
 boxed/mapTransMattesMIRegistrationAlgorithmTemplate.h
 boxed/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.h
+boxed/mapITKPDEDemonsRegistrationAlgorithm.h
+boxed/mapITKLevelSetMotionRegistrationAlgorithm.h
 )
 
 SET(TPP_FILES
@@ -177,6 +179,8 @@ boxed/mapITKEuler3DMSRegistrationAlgorithmTemplate.tpp
 boxed/mapITKInitializedMultiResImageRegistrationAlgorithm.tpp
 boxed/mapITKRigid2DMattesMIRegistrationAlgorithmTemplate.tpp
 boxed/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.tpp
+boxed/mapITKPDEDemonsRegistrationAlgorithm.tpp
+boxed/mapITKLevelSetMotionRegistrationAlgorithm.tpp
 )
 
 SET(TEST_CPP_FILES
