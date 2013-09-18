@@ -81,11 +81,11 @@ namespace map
 
 				if (name == "IntensityDifferenceThreshold")
 				{
-					spResult = map::core::MetaProperty<bool>::New(0.001);
+					spResult = map::core::MetaProperty<double>::New(0.001);
 				}
         else if (name == "MaximumUpdateStepLength")
 				{
-					spResult = map::core::MetaProperty<bool>::New(0.5);
+					spResult = map::core::MetaProperty<double>::New(0.5);
 				}
 				else if (name == "UseGradientType")
 				{

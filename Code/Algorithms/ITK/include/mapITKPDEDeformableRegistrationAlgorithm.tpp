@@ -501,6 +501,7 @@ namespace map
 			compileInfos(MetaPropertyVectorType &infos) const
 			{
 #ifndef MAP_SEAL_ALGORITHMS
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MatchHistograms", typeid(bool), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("ThresholdAtMeanIntensity", typeid(bool), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfHistogramLevels", typeid(unsigned int), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfHistogramMatchPoints", typeid(unsigned int), true, true));
@@ -534,7 +535,7 @@ namespace map
 				}
 				else if (name == "NumberOfIterations")
 				{
-					spResult = map::core::MetaProperty<unsigned int>::New(static_cast<unsigned int>(this->_internalRegistrationMethod->GetNumberOfIterations()));
+					spResult = map::core::MetaProperty<unsigned long>::New(static_cast<unsigned long>(this->_internalRegistrationMethod->GetNumberOfIterations()));
 				}
 				else
 				{
@@ -575,7 +576,7 @@ namespace map
 				}
 				else if (name == "NumberOfIterations")
 				{
-					unsigned int num;
+					unsigned long num;
 					map::core::unwrapMetaProperty(pProperty, num);
 					this->_internalRegistrationMethod->SetNumberOfIterations(num);
 				}
