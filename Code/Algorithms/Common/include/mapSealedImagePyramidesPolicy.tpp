@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapSealedImagePyramidesPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -30,7 +30,8 @@ namespace map
 	{
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::ConcreteMovingImagePyramideType *
+		typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::ConcreteMovingImagePyramideType*
+
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getConcreteMovingPyramide()
 		{
@@ -38,7 +39,9 @@ namespace map
 		};
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		const typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::ConcreteMovingImagePyramideType *
+		const typename
+		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::ConcreteMovingImagePyramideType*
+
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getConcreteMovingPyramide() const
 		{
@@ -46,7 +49,8 @@ namespace map
 		};
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::ConcreteTargetImagePyramideType *
+		typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::ConcreteTargetImagePyramideType*
+
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getConcreteTargetPyramide()
 		{
@@ -54,7 +58,9 @@ namespace map
 		};
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		const typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::ConcreteTargetImagePyramideType *
+		const typename
+		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::ConcreteTargetImagePyramideType*
+
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getConcreteTargetPyramide() const
 		{
@@ -79,7 +85,8 @@ namespace map
 
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::MovingImagePyramideBaseType *
+		typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::MovingImagePyramideBaseType*
+
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getMovingPyramideInternal()
 		{
@@ -87,7 +94,9 @@ namespace map
 		};
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		const typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::MovingImagePyramideBaseType *
+		const typename
+		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::MovingImagePyramideBaseType*
+
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getMovingPyramideInternal() const
 		{
@@ -95,7 +104,8 @@ namespace map
 		};
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::TargetImagePyramideBaseType *
+		typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::TargetImagePyramideBaseType*
+
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getTargetPyramideInternal()
 		{
@@ -103,7 +113,9 @@ namespace map
 		};
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		const typename SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::TargetImagePyramideBaseType *
+		const typename
+		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::TargetImagePyramideBaseType*
+
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getTargetPyramideInternal() const
 		{

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/ITK/include/mapNULLVectorAwareLinearInterpolateImageFunction.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __NULL_VECTOR_AWARE_LINEAR_INTERPOLATE_IMAGE_FUNCTION_H
@@ -61,7 +61,7 @@ namespace itk
 
 			/** Run-time type information (and related methods). */
 			itkTypeMacro(NULLVectorAwareLinearInterpolateImageFunction,
-			             VectorLinearInterpolateImageFunction);
+						 VectorLinearInterpolateImageFunction);
 
 			/** InputImageType typedef support. */
 			typedef typename Superclass::InputImageType InputImageType;
@@ -90,14 +90,14 @@ namespace itk
 			* ImageFunction::IsInsideBuffer() can be used to check bounds before
 			* calling the method. */
 			virtual OutputType EvaluateAtContinuousIndex(
-			    const ContinuousIndexType &index) const;
+				const ContinuousIndexType& index) const;
 
-			const OutputType &GetNullVector() const
+			const OutputType& GetNullVector() const
 			{
 				return _nullVector;
 			};
 
-			void SetNullVector(const OutputType &nullVector)
+			void SetNullVector(const OutputType& nullVector)
 			{
 				_nullVector = nullVector;
 			};
@@ -116,7 +116,7 @@ namespace itk
 		protected:
 			NULLVectorAwareLinearInterpolateImageFunction();
 			~NULLVectorAwareLinearInterpolateImageFunction() {};
-			void PrintSelf(std::ostream &os, Indent indent) const;
+			void PrintSelf(std::ostream& os, Indent indent) const;
 
 			bool _useNullVector;
 			OutputType _nullVector;
@@ -125,8 +125,8 @@ namespace itk
 			static const unsigned long  m_Neighbors;
 
 		private:
-			NULLVectorAwareLinearInterpolateImageFunction(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			NULLVectorAwareLinearInterpolateImageFunction(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 
 		};

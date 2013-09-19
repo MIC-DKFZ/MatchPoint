@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKClosedFormRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -159,33 +159,42 @@ namespace map
 
 				if (!_spTransform)
 				{
-					mapExceptionMacro(AlgorithmException, << "Error. Cannot determine final registration. No transform model present on internal level (getTransformInternal()). Please ensure proper setup of algorithm.");
+					mapExceptionMacro(AlgorithmException,
+									  << "Error. Cannot determine final registration. No transform model present on internal level (getTransformInternal()). Please ensure proper setup of algorithm.");
 				}
 
 				//clone the transform model
-				typename TransformModelType::TransformModelBasePointer spFinalTransformModel = _spTransform->clone();
+				typename TransformModelType::TransformModelBasePointer spFinalTransformModel =
+					_spTransform->clone();
 
 				if (spFinalTransformModel.IsNull())
 				{
-					mapExceptionMacro(AlgorithmException, << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " << * (_spTransform.GetPointer()));
+					mapExceptionMacro(AlgorithmException,
+									  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " <<
+									  * (_spTransform.GetPointer()));
 				}
 
 
 				//now build the inverse kernel (main kernel of a closed form based registration algorithm using itk::LandmarkInitializer)
-				typedef core::ModelBasedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> InverseKernelType;
+				typedef core::ModelBasedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>
+				InverseKernelType;
 
 				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
 				spIKernel->setTransformModel(spFinalTransformModel);
 
 				//now build the direct kernel via inversion of the inverse kernel
-				typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> GeneratorType;
+				typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>
+				GeneratorType;
 				typename GeneratorType::Pointer spGenerator = GeneratorType::New();
 				typedef typename GeneratorType::InverseKernelBaseType DirectKernelType;
-				typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*(spIKernel.GetPointer()), this->getMovingRepresentation());
+				typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*
+						(spIKernel.GetPointer()), this->getMovingRepresentation());
 
 				if (spDKernel.IsNull())
 				{
-					mapExceptionMacro(AlgorithmException, << "Error. Cannot determine direct mapping kernel of final registration. Current inverse kernel: " << spIKernel);
+					mapExceptionMacro(AlgorithmException,
+									  << "Error. Cannot determine direct mapping kernel of final registration. Current inverse kernel: "
+									  << spIKernel);
 				}
 
 				//now create the registration an set the kernels
@@ -235,7 +244,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TITKTransform, class TIdentificationPolicy>
 			void
 			ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::
-			PrintSelf(std::ostream &os, ::itk::Indent indent) const
+			PrintSelf(std::ostream& os, ::itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 

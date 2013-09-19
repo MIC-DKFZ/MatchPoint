@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapRegistrationBase.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #include "mapRegistrationBase.h"
@@ -47,7 +47,7 @@ namespace map
 
 		void
 		RegistrationBase::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 			os << indent << "MovingDimensions: " << this->getMovingDimensions() << std::endl;
@@ -67,7 +67,7 @@ namespace map
 			os << std::endl;
 		}
 
-		const RegistrationBase::TagMapType &
+		const RegistrationBase::TagMapType&
 		RegistrationBase::
 		getTags() const
 		{
@@ -76,7 +76,7 @@ namespace map
 
 		bool
 		RegistrationBase::
-		getTagValue(const TagType &tag, ValueType &value) const
+		getTagValue(const TagType& tag, ValueType& value) const
 		{
 			bool retval = false;
 			TagMapType::const_iterator iter;
@@ -93,7 +93,7 @@ namespace map
 
 		void
 		RegistrationBase::
-		setTagValues(const RegistrationBase::TagMapType &tags)
+		setTagValues(const RegistrationBase::TagMapType& tags)
 		{
 			TagMapType tempTags = tags;
 
@@ -111,7 +111,7 @@ namespace map
 			this->Modified();
 		};
 
-		RegistrationBase::TagMapType &
+		RegistrationBase::TagMapType&
 		RegistrationBase::
 		getTagValues()
 		{

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/source/mapGenericImageReader.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #include "mapGenericImageReader.h"
@@ -54,12 +54,14 @@ namespace map
 			}
 
 			::itk::ImageIOBase::Pointer imageIO =
-			    ::itk::ImageIOFactory::CreateImageIO(probeFileName.c_str(),
-			                                         ::itk::ImageIOFactory::ReadMode);
+				::itk::ImageIOFactory::CreateImageIO(probeFileName.c_str(),
+						::itk::ImageIOFactory::ReadMode);
 
 			if (!imageIO)
 			{
-				mapDefaultExceptionMacro( << "No ImageIO found for given file. Please check if the file exists and has a supported format. File:" << probeFileName);
+				mapDefaultExceptionMacro( <<
+										  "No ImageIO found for given file. Please check if the file exists and has a supported format. File:"
+										  << probeFileName);
 				return;
 			}
 
@@ -82,14 +84,17 @@ namespace map
 			this->_loadedDimensions = imageIO->GetNumberOfDimensions();
 
 			if (this->_seriesReadStyle == ImageSeriesReadStyle::Numeric &&
-			        this->_loadedDimensions == 2)
+				this->_loadedDimensions == 2)
 			{
 				this->_loadedDimensions = 3; //it is a stack of 2D images -> 3D
 			}
 
 			if (this->_loadedDimensions < 2 || this->_loadedDimensions > 3)
 			{
-				mapDefaultExceptionMacro( << "The file uses a number of dimensions that is not supported in this application. PixelType: " << this->_loadedPixelTypeStr << "; ComponentType: " << this->_loadedComponentTypeStr << "; Number of dimension: " << this->_loadedDimensions);
+				mapDefaultExceptionMacro( <<
+										  "The file uses a number of dimensions that is not supported in this application. PixelType: " <<
+										  this->_loadedPixelTypeStr << "; ComponentType: " << this->_loadedComponentTypeStr <<
+										  "; Number of dimension: " << this->_loadedDimensions);
 			}
 
 			switch (_loadedPixelType)
@@ -110,7 +115,11 @@ namespace map
 
 				default:
 				{
-					mapDefaultExceptionMacro( << "The file uses a pixel type that is not supported in this application. PixelType: " << this->_loadedPixelTypeStr << "; ComponentType: " << this->_loadedComponentTypeStr << "; Number of pixel channels: " << imageIO->GetNumberOfComponents() << "; Number of image dimensions: " << this->_loadedDimensions);
+					mapDefaultExceptionMacro( <<
+											  "The file uses a pixel type that is not supported in this application. PixelType: " <<
+											  this->_loadedPixelTypeStr << "; ComponentType: " << this->_loadedComponentTypeStr <<
+											  "; Number of pixel channels: " << imageIO->GetNumberOfComponents() <<
+											  "; Number of image dimensions: " << this->_loadedDimensions);
 				}
 			}
 
@@ -128,67 +137,80 @@ namespace map
 			{
 				case ::itk::ImageIOBase::UCHAR:
 				{
-					this->_spImage = readImage<unsigned char, unsigned char, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<unsigned char, unsigned char, IDimension>(_fileName, _seriesReadStyle,
+									 false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				case ::itk::ImageIOBase::CHAR:
 				{
-					this->_spImage = readImage<char, char, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<char, char, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
+									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				case ::itk::ImageIOBase::USHORT:
 				{
-					this->_spImage = readImage<unsigned short, unsigned short, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<unsigned short, unsigned short, IDimension>(_fileName, _seriesReadStyle,
+									 false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				case ::itk::ImageIOBase::SHORT:
 				{
-					this->_spImage = readImage<short, short, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<short, short, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
+									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				case ::itk::ImageIOBase::UINT:
 				{
-					this->_spImage = readImage<unsigned int, unsigned int, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<unsigned int, unsigned int, IDimension>(_fileName, _seriesReadStyle,
+									 false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				case ::itk::ImageIOBase::INT:
 				{
-					this->_spImage = readImage<int, int, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<int, int, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
+									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				case ::itk::ImageIOBase::ULONG:
 				{
-					this->_spImage = readImage<unsigned long, unsigned long, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<unsigned long, unsigned long, IDimension>(_fileName, _seriesReadStyle,
+									 false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				case ::itk::ImageIOBase::LONG:
 				{
-					this->_spImage = readImage<long, long, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<long, long, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
+									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				case ::itk::ImageIOBase::FLOAT:
 				{
-					this->_spImage = readImage<float, float, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<float, float, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
+									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				case ::itk::ImageIOBase::DOUBLE:
 				{
-					this->_spImage = readImage<double, double, IDimension>(_fileName, _seriesReadStyle, false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
+					this->_spImage = readImage<double, double, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
+									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
 				default:
 				{
-					mapDefaultExceptionMacro( << "The file uses a pixel component type that is not supported in this application. PixelType: " << this->_loadedPixelTypeStr << "; ComponentType: " << this->_loadedComponentTypeStr << "; Number of dimension: " << this->_loadedDimensions);
+					mapDefaultExceptionMacro( <<
+											  "The file uses a pixel component type that is not supported in this application. PixelType: " <<
+											  this->_loadedPixelTypeStr << "; ComponentType: " << this->_loadedComponentTypeStr <<
+											  "; Number of dimension: " << this->_loadedDimensions);
 				}
 			}
 		};
@@ -259,7 +281,7 @@ namespace map
 		//  }
 		//};
 
-		const core::String &
+		const core::String&
 		GenericImageReader::
 		getFileName() const
 		{
@@ -269,7 +291,7 @@ namespace map
 
 		void
 		GenericImageReader::
-		setFileName(const core::String &fileName)
+		setFileName(const core::String& fileName)
 		{
 			if (fileName != _fileName)
 			{
@@ -319,9 +341,10 @@ namespace map
 		};
 
 
-		GenericImageReader::GenericOutputImageType *
+		GenericImageReader::GenericOutputImageType*
 		GenericImageReader::
-		GetOutput(unsigned int &loadedDimensions, LoadedPixelType &loadedPixelType, LoadedComponentType &loadedComponentType)
+		GetOutput(unsigned int& loadedDimensions, LoadedPixelType& loadedPixelType,
+				  LoadedComponentType& loadedComponentType)
 		{
 			if (!_upToDate)
 			{
@@ -351,7 +374,7 @@ namespace map
 		{
 		};
 
-		const GenericImageReader::MetaDataDictionaryArrayType &
+		const GenericImageReader::MetaDataDictionaryArrayType&
 		GenericImageReader::
 		getMetaDictionaryArray()
 		{

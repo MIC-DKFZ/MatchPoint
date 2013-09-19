@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapPointSetMappingTask.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,7 +35,7 @@ namespace map
 		template <class TRegistration, class TInputPointSet, class TResultPointSet, template <class> class TLoadPolicy>
 		void
 		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::
-		setInputPointSet(const InputPointSetType *inputPoints)
+		setInputPointSet(const InputPointSetType* inputPoints)
 		{
 			if (_spInputPoints != inputPoints)
 			{
@@ -46,7 +46,9 @@ namespace map
 		}
 
 		template <class TRegistration, class TInputPointSet, class TResultPointSet, template <class> class TLoadPolicy>
-		const typename PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::InputPointSetType *
+		const typename
+		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::InputPointSetType*
+
 		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::
 		getInputPointSet() const
 		{
@@ -94,15 +96,17 @@ namespace map
 				mapExceptionMacro(ServiceException, << "Cannot register point set. Input point set is null.");
 			}
 
-			PerformerRequestType request(Superclass::_spRegistration, _spInputPoints, _throwOnMappingError, _errorValue);
+			PerformerRequestType request(Superclass::_spRegistration, _spInputPoints, _throwOnMappingError,
+										 _errorValue);
 
 			mapLogInfoMacro( << "Register pointset. Request: " << request);
 
-			TaskPerformerBaseType *pPerformer = TaskPerformerStackType::getProvider(request);
+			TaskPerformerBaseType* pPerformer = TaskPerformerStackType::getProvider(request);
 
 			if (!pPerformer)
 			{
-				mapExceptionMacro(MissingProviderException, << "No responsible registration performer available for given request. Request:" << request);
+				mapExceptionMacro(MissingProviderException,
+								  << "No responsible registration performer available for given request. Request:" << request);
 			}
 
 			_spResultPoints = pPerformer->performMapping(request);
@@ -149,7 +153,7 @@ namespace map
 		template <class TRegistration, class TInputPointSet, class TResultPointSet, template <class> class TLoadPolicy>
 		void
 		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::
-		setErrorPointValue(const ErrorPointValueType &value)
+		setErrorPointValue(const ErrorPointValueType& value)
 		{
 			if (value != _errorValue)
 			{
@@ -159,7 +163,9 @@ namespace map
 		};
 
 		template <class TRegistration, class TInputPointSet, class TResultPointSet, template <class> class TLoadPolicy>
-		const typename PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::ErrorPointValueType &
+		const typename
+		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::ErrorPointValueType&
+
 		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::
 		getErrorPointValue() const
 		{
@@ -169,7 +175,7 @@ namespace map
 		template <class TRegistration, class TInputPointSet, class TResultPointSet, template <class> class TLoadPolicy>
 		void
 		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 

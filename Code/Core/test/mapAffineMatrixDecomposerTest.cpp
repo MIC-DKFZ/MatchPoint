@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapAffineMatrixDecomposerTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -42,7 +42,8 @@ namespace map
 			typedef core::AffineMatrixDecomposer<2, 2> DecomposerType;
 
 			typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> > TransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
+			TransformType;
 			typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel FieldKernelType;
 
 			ModelKernelType::Pointer spKernel = ModelKernelType::New();

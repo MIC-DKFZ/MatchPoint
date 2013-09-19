@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/test/mapRegistrationFileWriterTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -39,7 +39,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapRegistrationFileWriterTest(int argc, char *argv[])
+		int mapRegistrationFileWriterTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: test storage path
 			//           2: ref path
@@ -76,12 +76,18 @@ namespace map
 			typedef WriterType::DirectKernelWriterStackType DirectStackType;
 			typedef WriterType::InverseKernelWriterStackType InverseStackType;
 
-			CHECK(NULL != DirectStackType::getProvider(io::MatrixModelBasedKernelWriter<2, 2>::getStaticProviderName()));
-			CHECK(NULL != DirectStackType::getProvider(io::NullRegistrationKernelWriter<2, 2>::getStaticProviderName()));
-			CHECK(NULL != DirectStackType::getProvider(io::ExpandingFieldKernelWriter<2,2>::getStaticProviderName()));
-			CHECK(NULL != InverseStackType::getProvider(io::MatrixModelBasedKernelWriter<2, 2>::getStaticProviderName()));
-			CHECK(NULL != InverseStackType::getProvider(io::NullRegistrationKernelWriter<2, 2>::getStaticProviderName()));
-			CHECK(NULL != InverseStackType::getProvider(io::ExpandingFieldKernelWriter<2,2>::getStaticProviderName()));
+			CHECK(NULL != DirectStackType::getProvider(
+					  io::MatrixModelBasedKernelWriter<2, 2>::getStaticProviderName()));
+			CHECK(NULL != DirectStackType::getProvider(
+					  io::NullRegistrationKernelWriter<2, 2>::getStaticProviderName()));
+			CHECK(NULL != DirectStackType::getProvider(
+					  io::ExpandingFieldKernelWriter<2, 2>::getStaticProviderName()));
+			CHECK(NULL != InverseStackType::getProvider(
+					  io::MatrixModelBasedKernelWriter<2, 2>::getStaticProviderName()));
+			CHECK(NULL != InverseStackType::getProvider(
+					  io::NullRegistrationKernelWriter<2, 2>::getStaticProviderName()));
+			CHECK(NULL != InverseStackType::getProvider(
+					  io::ExpandingFieldKernelWriter<2, 2>::getStaticProviderName()));
 
 			// create a ModelBasedKernels for testing
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
@@ -91,7 +97,8 @@ namespace map
 			typedef TestKernelBase<2, 2> IllegalKernelType;
 			typedef core::NullRegistrationKernel<2, 2> NullKernelType;
 
-			typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> > TransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> >
+			TransformType;
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::Pointer spTransform2 = TransformType::New();
 
@@ -137,20 +144,24 @@ namespace map
 			manipulator3.setTagValues(tags3);
 
 			RegistrationType::Pointer spInvalidDirectKernelRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator4(spInvalidDirectKernelRegistration.GetPointer());
+			core::RegistrationManipulator<RegistrationType> manipulator4(
+				spInvalidDirectKernelRegistration.GetPointer());
 			manipulator4.setDirectMapping(IllegalKernelType::New());
 			manipulator4.setInverseMapping(spKernel2);
 
 			RegistrationType::Pointer spInvalidInverseKernelRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator5(spInvalidInverseKernelRegistration.GetPointer());
+			core::RegistrationManipulator<RegistrationType> manipulator5(
+				spInvalidInverseKernelRegistration.GetPointer());
 			manipulator5.setDirectMapping(spKernel);
 			manipulator5.setInverseMapping(IllegalKernelType::New());
 
 			CHECK_NO_THROW(spWriter->write(spValidRegistration, testRegFile1));
 			CHECK_NO_THROW(spWriter->write(spValidRegistration2, testRegFile2));
 			CHECK_NO_THROW(spWriter->write(spValidRegistration3, testRegFile3));
-			CHECK_THROW_EXPLICIT(spWriter->write(spInvalidDirectKernelRegistration, ""), core::MissingProviderException);
-			CHECK_THROW_EXPLICIT(spWriter->write(spInvalidInverseKernelRegistration, ""), core::MissingProviderException);
+			CHECK_THROW_EXPLICIT(spWriter->write(spInvalidDirectKernelRegistration, ""),
+								 core::MissingProviderException);
+			CHECK_THROW_EXPLICIT(spWriter->write(spInvalidInverseKernelRegistration, ""),
+								 core::MissingProviderException);
 
 			lit::TextFileTester tester;
 			tester.setExpectedFile(refRegFile1);

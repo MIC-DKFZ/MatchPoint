@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldByModelFieldCombinationFunctor.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FIELD_BY_MODEL_FIELD_COMBINATION_FUNCTOR_H
@@ -51,16 +51,19 @@ namespace map
 			* @tparam VOutputDimensions Dimensions of the output space the field should map into.
 			*/
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			class FieldByModelFieldCombinationFunctor: public FieldGenerationFunctor<VInputDimensions, VOutputDimensions>,
-				public FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			class FieldByModelFieldCombinationFunctor: public
+				FieldGenerationFunctor<VInputDimensions, VOutputDimensions>,
+			public FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef FieldByModelFieldCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>  Self;
+				typedef FieldByModelFieldCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>
+				Self;
 				typedef FieldGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
 				typedef itk::SmartPointer<Self>        Pointer;
 				typedef itk::SmartPointer<const Self>  ConstPointer;
-				typedef FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>  CombinationInterface;
+				typedef FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+				CombinationInterface;
 
 				itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
 				itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);
@@ -68,14 +71,15 @@ namespace map
 				typedef typename Superclass::InFieldRepresentationType            InFieldRepresentationType;
 				typedef typename Superclass::InFieldRepresentationConstPointer    InFieldRepresentationConstPointer;
 				typedef typename Superclass::OutFieldRepresentationType           OutFieldRepresentationType;
-				typedef typename Superclass::OutFieldRepresentationConstPointer   OutFieldRepresentationConstPointer;
+				typedef typename Superclass::OutFieldRepresentationConstPointer
+				OutFieldRepresentationConstPointer;
 				typedef typename Superclass::FieldType                            FieldType;
 				typedef typename Superclass::FieldPointer                         FieldPointer;
 				typedef FieldBasedRegistrationKernel < VInterimDimensions,
-				        VOutputDimensions >           SourceFieldKernelType;
+						VOutputDimensions >           SourceFieldKernelType;
 				typedef typename SourceFieldKernelType::ConstPointer              SourceFieldKernelConstPointer;
 				typedef ModelBasedRegistrationKernel < VInputDimensions,
-				        VInterimDimensions >          SourceModelKernelType;
+						VInterimDimensions >          SourceModelKernelType;
 				typedef typename SourceModelKernelType::ConstPointer              SourceModelKernelConstPointer;
 				typedef typename CombinationInterface::SourceKernel1BaseType SourceKernel1BaseType;
 				typedef typename CombinationInterface::SourceKernel2BaseType SourceKernel2BaseType;
@@ -95,7 +99,7 @@ namespace map
 				 * @return Pointer to the source field kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				const SourceFieldKernelType *getSourceFieldKernel(void) const;
+				const SourceFieldKernelType* getSourceFieldKernel(void) const;
 
 				/*! Returns a const pointer to the source transformation model kernel that will be used
 				 * in order to generate the combined field.
@@ -103,7 +107,7 @@ namespace map
 				 * @return Pointer to the transform model kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				const SourceModelKernelType *getSourceModelKernel(void) const;
+				const SourceModelKernelType* getSourceModelKernel(void) const;
 
 				/*! Returns a const pointer to the first source kernel base (source model kernel)
 				* that will be used in order to generate the field.
@@ -111,7 +115,7 @@ namespace map
 				 * @return Pointer to the source field kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				virtual const SourceKernel1BaseType *get1stSourceKernelBase(void) const;
+				virtual const SourceKernel1BaseType* get1stSourceKernelBase(void) const;
 
 				/*! Returns a const pointer to the second source kernel base (source field kernel)
 				* that will be used in order to generate the field.
@@ -119,7 +123,7 @@ namespace map
 				 * @return Pointer to the source field kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				virtual const SourceKernel2BaseType *get2ndSourceKernelBase(void) const;
+				virtual const SourceKernel2BaseType* get2ndSourceKernelBase(void) const;
 
 				/*! Static methods that creates the functor.
 				 * Thus it is a specialized version of the itkNewMacro()
@@ -130,9 +134,9 @@ namespace map
 				 * may not be null for this functor.
 				 * @return Smart pointer to the new functor
 				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				static Pointer New(const SourceModelKernelType &modelKernel,
-				                   const SourceFieldKernelType &fieldKernel,
-				                   const InFieldRepresentationType *pInFieldRepresentation);
+				static Pointer New(const SourceModelKernelType& modelKernel,
+								   const SourceFieldKernelType& fieldKernel,
+								   const InFieldRepresentationType* pInFieldRepresentation);
 
 				/*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
 				 * @eguarantee strong
@@ -147,9 +151,9 @@ namespace map
 				 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
 				 * may not be null for this functor.
 				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				FieldByModelFieldCombinationFunctor(const SourceModelKernelType &modelKernel,
-				                                    const SourceFieldKernelType &fieldKernel,
-				                                    const InFieldRepresentationType *pInFieldRepresentation);
+				FieldByModelFieldCombinationFunctor(const SourceModelKernelType& modelKernel,
+													const SourceFieldKernelType& fieldKernel,
+													const InFieldRepresentationType* pInFieldRepresentation);
 
 				virtual ~FieldByModelFieldCombinationFunctor();
 
@@ -160,11 +164,11 @@ namespace map
 				SourceFieldKernelConstPointer _spSourceFieldKernel;
 
 				/*! Methods invoked by itk::LightObject::Print().  */
-				virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			private:
-				FieldByModelFieldCombinationFunctor(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				FieldByModelFieldCombinationFunctor(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		} // end namespace functors

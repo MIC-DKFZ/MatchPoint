@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapNullRegistrationKernelWriter.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_NULL_REGISTRATION_KERNEL_WRITER_TPP
@@ -35,10 +35,10 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
 		NullRegistrationKernelWriter<VInputDimensions, VOutputDimensions>::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
 			// if the kernel "request" is a model-based kernel, then we can handle it.
-			const KernelType *pKernel = dynamic_cast<const KernelType *>(request._spKernel.GetPointer());
+			const KernelType* pKernel = dynamic_cast<const KernelType*>(request._spKernel.GetPointer());
 
 			bool canHandle = false;
 
@@ -76,7 +76,8 @@ namespace map
 		getDescription() const
 		{
 			core::OStringStream os;
-			os << "NullRegistrationKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: " << VOutputDimensions << ".";
+			os << "NullRegistrationKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: "
+			   << VOutputDimensions << ".";
 			return os.str();
 		}
 
@@ -84,13 +85,14 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		structuredData::Element::Pointer
 		NullRegistrationKernelWriter<VInputDimensions, VOutputDimensions>::
-		storeKernel(const RequestType &request) const
+		storeKernel(const RequestType& request) const
 		{
-			const KernelType *pKernel = dynamic_cast<const KernelType *>(request._spKernel.GetPointer());
+			const KernelType* pKernel = dynamic_cast<const KernelType*>(request._spKernel.GetPointer());
 
 			if (pKernel == NULL)
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot store kernel. Reason: cannot cast to NullRegistrationKernel: " << pKernel);
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot store kernel. Reason: cannot cast to NullRegistrationKernel: " << pKernel);
 			}
 
 			structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
@@ -103,8 +105,10 @@ namespace map
 			os2 << VOutputDimensions;
 			spKernelElement->setAttribute(tags::OutputDimensions, os2.str());
 
-			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider, this->getProviderName()));
-			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType, "NullRegistrationKernel"));
+			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
+										   this->getProviderName()));
+			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
+										   "NullRegistrationKernel"));
 			return spKernelElement;
 		}
 

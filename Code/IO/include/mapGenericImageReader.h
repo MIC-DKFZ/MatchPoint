@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapGenericImageReader.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_GENERIC_IMAGE_READER_H
@@ -109,12 +109,12 @@ namespace map
 			/** Function to access the member variable _FileName. _FileName represents the filename of the
 			* headerfile. The path must be included, the file extension may left away.
 			* @return File name of the header file.*/
-			const core::String  &getFileName() const;
+			const core::String&  getFileName() const;
 
 			/** Function to access the member variable _FileName. _FileName represents the filename of the
 			* headerfile. The path must be included, the file extension may left away.
 			* @param [in] sFileName The file name of the header file.*/
-			void setFileName(const core::String  &sFileName);
+			void setFileName(const core::String&  sFileName);
 
 			/** Function to access the member variable _upperSeriesLimit. _upperSeriesLimit represents
 			* the upper limit for the series file search.
@@ -141,11 +141,12 @@ namespace map
 			* @exception map::core::ExceptionObject If pixel type is not supported. Currently only scalar pixels are supported.
 			* @exception map::core::ExceptionObject If pixel component type is not supported.
 			*/
-			GenericOutputImageType  *GetOutput(unsigned int &loadedDimensions, LoadedPixelType &loadedPixelType, LoadedComponentType &loadedComponentType);
+			GenericOutputImageType*  GetOutput(unsigned int& loadedDimensions, LoadedPixelType& loadedPixelType,
+											   LoadedComponentType& loadedComponentType);
 
 			/** Function returns the reference to the meta data dictionary(ies) of the latest file(s) loaded by this class.
 			 * Array may be empty if no MetaDictionary exists.*/
-			const MetaDataDictionaryArrayType &getMetaDictionaryArray();
+			const MetaDataDictionaryArrayType& getMetaDictionaryArray();
 
 		protected:
 			GenericImageReader();

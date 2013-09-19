@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapRegistrationCombinatorTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -76,28 +76,29 @@ namespace map
 		}
 
 
-		bool fieldExists(const core::RegistrationKernelBase<2, 2> &kernel)
+		bool fieldExists(const core::RegistrationKernelBase<2, 2>& kernel)
 		{
 			typedef core::CombinedFieldBasedRegistrationKernel<2, 2, 2> CombinedKernelType;
 
-			const CombinedKernelType *pCombinedKernel = dynamic_cast<const CombinedKernelType *>(&kernel);
+			const CombinedKernelType* pCombinedKernel = dynamic_cast<const CombinedKernelType*>(&kernel);
 			return pCombinedKernel->fieldExists();
 		}
 
-		bool isKernelCorrectlyComposed(const core::RegistrationKernelBase<2, 2> &kernelToCheck,
-		                               const core::RegistrationKernelBase<2, 2> &kernel1,
-		                               const core::RegistrationKernelBase<2, 2> &kernel2)
+		bool isKernelCorrectlyComposed(const core::RegistrationKernelBase<2, 2>& kernelToCheck,
+									   const core::RegistrationKernelBase<2, 2>& kernel1,
+									   const core::RegistrationKernelBase<2, 2>& kernel2)
 		{
 			typedef core::CombinedFieldBasedRegistrationKernel<2, 2, 2> CombinedKernelType;
 
-			const CombinedKernelType *pCombinedKernel = dynamic_cast<const CombinedKernelType *>(&kernelToCheck);
+			const CombinedKernelType* pCombinedKernel = dynamic_cast<const CombinedKernelType*>(&kernelToCheck);
 
 			bool result = false;
 
 			if (pCombinedKernel)
 			{
 				typedef core::functors::FieldCombinationFunctorInterface<2, 2, 2> FunctorInterfaceType;
-				const FunctorInterfaceType *pFunctor = dynamic_cast<const FunctorInterfaceType *>(pCombinedKernel->getFieldFunctor());
+				const FunctorInterfaceType* pFunctor = dynamic_cast<const FunctorInterfaceType*>
+													   (pCombinedKernel->getFieldFunctor());
 
 				if (pFunctor)
 				{
@@ -120,11 +121,12 @@ namespace map
 
 
 
-		int mapRegistrationCombinatorTest(int argc, char *argv[])
+		int mapRegistrationCombinatorTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef core::RegistrationCombinator< core::Registration<2, 2>, core::Registration<2, 2> > CombinatorType;
+			typedef core::RegistrationCombinator< core::Registration<2, 2>, core::Registration<2, 2> >
+			CombinatorType;
 			typedef CombinatorType::PreRegistrationType PreRegistrationType;
 			typedef CombinatorType::RegistrationType RegistrationType;
 
@@ -144,23 +146,27 @@ namespace map
 
 
 			PreRegistrationType::Pointer spInvalidDirectKernelPreRegistration = PreRegistrationType::New();
-			core::RegistrationManipulator<PreRegistrationType> manipulator3(spInvalidDirectKernelPreRegistration.GetPointer());
+			core::RegistrationManipulator<PreRegistrationType> manipulator3(
+				spInvalidDirectKernelPreRegistration.GetPointer());
 			manipulator3.setDirectMapping(IllegalKernelType::New());
 			manipulator3.setInverseMapping(generateKernel());
 
 			PreRegistrationType::Pointer spInvalidInverseKernelPreRegistration = PreRegistrationType::New();
-			core::RegistrationManipulator<PreRegistrationType> manipulator4(spInvalidInverseKernelPreRegistration.GetPointer());
+			core::RegistrationManipulator<PreRegistrationType> manipulator4(
+				spInvalidInverseKernelPreRegistration.GetPointer());
 			manipulator4.setDirectMapping(generateKernel());
 			manipulator4.setInverseMapping(IllegalKernelType::New());
 
 
 			RegistrationType::Pointer spInvalidDirectKernelRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator5(spInvalidDirectKernelRegistration.GetPointer());
+			core::RegistrationManipulator<RegistrationType> manipulator5(
+				spInvalidDirectKernelRegistration.GetPointer());
 			manipulator5.setDirectMapping(IllegalKernelType::New());
 			manipulator5.setInverseMapping(generateKernel());
 
 			RegistrationType::Pointer spInvalidInverseKernelRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator6(spInvalidInverseKernelRegistration.GetPointer());
+			core::RegistrationManipulator<RegistrationType> manipulator6(
+				spInvalidInverseKernelRegistration.GetPointer());
 			manipulator6.setDirectMapping(generateKernel());
 			manipulator6.setInverseMapping(IllegalKernelType::New());
 
@@ -198,40 +204,51 @@ namespace map
 			CombinatorType::CombinedRegistrationPointer spResult;
 
 			// both kernels must not be initialized
-			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()), *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::None));
+			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()),
+									  *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::None));
 			CHECK(spResult.IsNotNull());
 			CHECK(!fieldExists(spResult->getDirectMapping()));
 			CHECK(!fieldExists(spResult->getInverseMapping()));
 
 			// both kernels must not be initialized
-			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()), *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::DirectMapping));
+			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()),
+									  *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::DirectMapping));
 			CHECK(spResult.IsNotNull());
 			CHECK(fieldExists(spResult->getDirectMapping()));
 			CHECK(!fieldExists(spResult->getInverseMapping()));
 
 			// both kernels must not be initialized
-			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()), *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::InverseMapping));
+			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()),
+									  *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::InverseMapping));
 			CHECK(spResult.IsNotNull());
 			CHECK(!fieldExists(spResult->getDirectMapping()));
 			CHECK(fieldExists(spResult->getInverseMapping()));
 
 			// both kernels must not be initialized
-			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()), *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::CompleteRegistration));
+			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()),
+									  *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::CompleteRegistration));
 			CHECK(spResult.IsNotNull());
 			CHECK(fieldExists(spResult->getDirectMapping()));
 			CHECK(fieldExists(spResult->getInverseMapping()));
 
 			// check if the kernels are at the right position:
-			CHECK(isKernelCorrectlyComposed(spResult->getDirectMapping(), spValidPreRegistration->getDirectMapping(), spValidRegistration->getDirectMapping()));
-			CHECK(isKernelCorrectlyComposed(spResult->getInverseMapping(), spValidRegistration->getInverseMapping(), spValidPreRegistration->getInverseMapping()));
+			CHECK(isKernelCorrectlyComposed(spResult->getDirectMapping(),
+											spValidPreRegistration->getDirectMapping(), spValidRegistration->getDirectMapping()));
+			CHECK(isKernelCorrectlyComposed(spResult->getInverseMapping(),
+											spValidRegistration->getInverseMapping(), spValidPreRegistration->getInverseMapping()));
 
 			// test for exceptions: call process() with a registration that has a kernel
 			// for which there is no appropriate combinator on the combinator stack
-			CHECK_THROW_EXPLICIT(spCombinator->process(*(spInvalidDirectKernelPreRegistration.GetPointer()), *(spValidRegistration.GetPointer())), core::MissingProviderException);
-			CHECK_THROW_EXPLICIT(spCombinator->process(*(spInvalidInverseKernelPreRegistration.GetPointer()), *(spValidRegistration.GetPointer())), core::MissingProviderException);
-			CHECK_THROW_EXPLICIT(spCombinator->process(*(spValidPreRegistration.GetPointer()), *(spInvalidDirectKernelRegistration.GetPointer())), core::MissingProviderException);
-			CHECK_THROW_EXPLICIT(spCombinator->process(*(spValidPreRegistration.GetPointer()), *(spInvalidInverseKernelRegistration.GetPointer())), core::MissingProviderException);
-			CHECK_THROW_EXPLICIT(spCombinator->process(*(spInvalidDirectKernelPreRegistration.GetPointer()), *(spInvalidInverseKernelRegistration.GetPointer())), core::MissingProviderException);
+			CHECK_THROW_EXPLICIT(spCombinator->process(*(spInvalidDirectKernelPreRegistration.GetPointer()),
+								 *(spValidRegistration.GetPointer())), core::MissingProviderException);
+			CHECK_THROW_EXPLICIT(spCombinator->process(*(spInvalidInverseKernelPreRegistration.GetPointer()),
+								 *(spValidRegistration.GetPointer())), core::MissingProviderException);
+			CHECK_THROW_EXPLICIT(spCombinator->process(*(spValidPreRegistration.GetPointer()),
+								 *(spInvalidDirectKernelRegistration.GetPointer())), core::MissingProviderException);
+			CHECK_THROW_EXPLICIT(spCombinator->process(*(spValidPreRegistration.GetPointer()),
+								 *(spInvalidInverseKernelRegistration.GetPointer())), core::MissingProviderException);
+			CHECK_THROW_EXPLICIT(spCombinator->process(*(spInvalidDirectKernelPreRegistration.GetPointer()),
+								 *(spInvalidInverseKernelRegistration.GetPointer())), core::MissingProviderException);
 
 
 			RETURN_AND_REPORT_TEST_SUCCESS;

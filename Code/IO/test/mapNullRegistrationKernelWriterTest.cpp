@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/test/mapNullRegistrationKernelWriterTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -37,7 +37,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapNullRegistrationKernelWriterTest(int argc, char *argv[])
+		int mapNullRegistrationKernelWriterTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -73,7 +73,8 @@ namespace map
 			structuredData::XMLStrWriter::Pointer spStrWriter = structuredData::XMLStrWriter::New();
 
 			core::String data = spStrWriter->write(spData);
-			core::String ref = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>NullRegistrationKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>NullRegistrationKernel</KernelType></Kernel>";
+			core::String ref =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>NullRegistrationKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>NullRegistrationKernel</KernelType></Kernel>";
 
 			CHECK_EQUAL(ref, data);
 

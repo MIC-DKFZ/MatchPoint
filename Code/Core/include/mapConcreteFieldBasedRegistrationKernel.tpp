@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapConcreteFieldBasedRegistrationKernel.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __CONCRETE_FIELD_BASED_REGISTRATION_KERNEL_TPP
@@ -44,7 +44,8 @@ namespace map
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions, template <unsigned int, unsigned int> class TFieldPolicy >
-		const typename ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>::FieldType *
+		const typename
+		ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>::FieldType*
 		ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>::
 		getField() const
 		{
@@ -57,7 +58,8 @@ namespace map
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions, template <unsigned int, unsigned int> class TFieldPolicy >
-		typename ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>::FieldType *
+		typename ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>::FieldType*
+
 		ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>::
 		getField()
 		{
@@ -95,21 +97,25 @@ namespace map
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions, template <unsigned int, unsigned int> class TFieldPolicy >
 		bool
 		ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>::
-		doMapPoint(const InputPointType &inPoint, OutputPointType &outPoint) const
+		doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const
 		{
-			typedef itk::VectorLinearInterpolateImageFunction<FieldType, continuous::ScalarType> InterpolatorType;
-			typedef itk::map::NULLVectorAwareLinearInterpolateImageFunction<FieldType, continuous::ScalarType> NULLAwareInterpolatorType;
+			typedef itk::VectorLinearInterpolateImageFunction<FieldType, continuous::ScalarType>
+			InterpolatorType;
+			typedef itk::map::NULLVectorAwareLinearInterpolateImageFunction<FieldType, continuous::ScalarType>
+			NULLAwareInterpolatorType;
 
 			if (! FieldPolicyType::checkAndPrepareField())
 			{
-				mapDefaultExceptionMacro( << "Error. Field is not ready and cannot be prepared. Unable to map point.");
+				mapDefaultExceptionMacro( <<
+										  "Error. Field is not ready and cannot be prepared. Unable to map point.");
 			}
 
 			typename InterpolatorType::Pointer spInterpolator;
 
 			if (Superclass::_useNullVector)
 			{
-				typename NULLAwareInterpolatorType::Pointer spNullAwareInterpolator = NULLAwareInterpolatorType::New();
+				typename NULLAwareInterpolatorType::Pointer spNullAwareInterpolator =
+					NULLAwareInterpolatorType::New();
 				spNullAwareInterpolator->SetNullVector(Superclass::_nullVector);
 				spNullAwareInterpolator->SetNullVectorUsage(true);
 				spInterpolator = spNullAwareInterpolator;
@@ -137,7 +143,8 @@ namespace map
 				}
 				else
 				{
-					PointVectorCombinationPolicy<VInputDimensions, VOutputDimensions>::mapPoint(inPoint, vector, outPoint);
+					PointVectorCombinationPolicy<VInputDimensions, VOutputDimensions>::mapPoint(inPoint, vector,
+							outPoint);
 				}
 			}
 
@@ -147,7 +154,7 @@ namespace map
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions, template <unsigned int, unsigned int> class TFieldPolicy >
 		void
 		ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 			FieldPolicyType::PrintSelf(os, indent);

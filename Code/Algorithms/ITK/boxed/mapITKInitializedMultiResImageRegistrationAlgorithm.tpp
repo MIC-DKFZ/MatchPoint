@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKInitializedMultiResImageRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -41,101 +41,103 @@ namespace map
 		{
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy,
-			         class TMetricInitializationPolicy,
-			         class TOptimizerInitializationPolicy,
-			         class TTransformInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy,
+					 class TMetricInitializationPolicy,
+					 class TOptimizerInitializationPolicy,
+					 class TTransformInitializationPolicy >
 			ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                 TInterpolatorPolicy,
-			                                                 TPyramideInitializationPolicy,
-			                                                 TMetricInitializationPolicy,
-			                                                 TOptimizerInitializationPolicy,
-			                                                 TTransformInitializationPolicy >::
-			                                                 ITKInitializedMultiResImageRegistrationAlgorithm()
+															 TInterpolatorPolicy,
+															 TPyramideInitializationPolicy,
+															 TMetricInitializationPolicy,
+															 TOptimizerInitializationPolicy,
+															 TTransformInitializationPolicy >::
+															 ITKInitializedMultiResImageRegistrationAlgorithm()
 			{
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy,
-			         class TMetricInitializationPolicy,
-			         class TOptimizerInitializationPolicy,
-			         class TTransformInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy,
+					 class TMetricInitializationPolicy,
+					 class TOptimizerInitializationPolicy,
+					 class TTransformInitializationPolicy >
 			ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                 TInterpolatorPolicy,
-			                                                 TPyramideInitializationPolicy,
-			                                                 TMetricInitializationPolicy,
-			                                                 TOptimizerInitializationPolicy,
-			                                                 TTransformInitializationPolicy >::
-			                                                 ~ITKInitializedMultiResImageRegistrationAlgorithm()
+															 TInterpolatorPolicy,
+															 TPyramideInitializationPolicy,
+															 TMetricInitializationPolicy,
+															 TOptimizerInitializationPolicy,
+															 TTransformInitializationPolicy >::
+															 ~ITKInitializedMultiResImageRegistrationAlgorithm()
 			{
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy,
-			         class TMetricInitializationPolicy,
-			         class TOptimizerInitializationPolicy,
-			         class TTransformInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy,
+					 class TMetricInitializationPolicy,
+					 class TOptimizerInitializationPolicy,
+					 class TTransformInitializationPolicy >
 			void
 			ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                 TInterpolatorPolicy,
-			                                                 TPyramideInitializationPolicy,
-			                                                 TMetricInitializationPolicy,
-			                                                 TOptimizerInitializationPolicy,
-			                                                 TTransformInitializationPolicy >::
-			                                                 configureAlgorithm()
+															 TInterpolatorPolicy,
+															 TPyramideInitializationPolicy,
+															 TMetricInitializationPolicy,
+															 TOptimizerInitializationPolicy,
+															 TTransformInitializationPolicy >::
+															 configureAlgorithm()
 			{
 				_preInitialize = false;
 				_useCenterOfGravity = false;
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy,
-			         class TMetricInitializationPolicy,
-			         class TOptimizerInitializationPolicy,
-			         class TTransformInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy,
+					 class TMetricInitializationPolicy,
+					 class TOptimizerInitializationPolicy,
+					 class TTransformInitializationPolicy >
 			void
 			ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                 TInterpolatorPolicy,
-			                                                 TPyramideInitializationPolicy,
-			                                                 TMetricInitializationPolicy,
-			                                                 TOptimizerInitializationPolicy,
-			                                                 TTransformInitializationPolicy >::
-			                                                 compileInfos(MetaPropertyVectorType &infos) const
+															 TInterpolatorPolicy,
+															 TPyramideInitializationPolicy,
+															 TMetricInitializationPolicy,
+															 TOptimizerInitializationPolicy,
+															 TTransformInitializationPolicy >::
+															 compileInfos(MetaPropertyVectorType& infos) const
 			{
 #ifndef MAP_SEAL_ALGORITHMS
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitTransform", typeid(bool), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitByCenterOfGravity", typeid(bool), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitTransform", typeid(bool), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitByCenterOfGravity", typeid(bool),
+								true, true));
 #endif
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy,
-			         class TMetricInitializationPolicy,
-			         class TOptimizerInitializationPolicy,
-			         class TTransformInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy,
+					 class TMetricInitializationPolicy,
+					 class TOptimizerInitializationPolicy,
+					 class TTransformInitializationPolicy >
 			typename ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			         TInterpolatorPolicy,
-			         TPyramideInitializationPolicy,
-			         TMetricInitializationPolicy,
-			         TOptimizerInitializationPolicy,
-			         TTransformInitializationPolicy >::MetaPropertyPointer
-			         ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			         TInterpolatorPolicy,
-			         TPyramideInitializationPolicy,
-			         TMetricInitializationPolicy,
-			         TOptimizerInitializationPolicy,
-			         TTransformInitializationPolicy >::
-			         doGetProperty(const MetaPropertyNameType &name) const
+					 TInterpolatorPolicy,
+					 TPyramideInitializationPolicy,
+					 TMetricInitializationPolicy,
+					 TOptimizerInitializationPolicy,
+					 TTransformInitializationPolicy >::MetaPropertyPointer
+					 ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
+					 TInterpolatorPolicy,
+					 TPyramideInitializationPolicy,
+					 TMetricInitializationPolicy,
+					 TOptimizerInitializationPolicy,
+					 TTransformInitializationPolicy >::
+					 doGetProperty(const MetaPropertyNameType& name) const
 			{
 				MetaPropertyPointer spResult;
 
@@ -156,20 +158,20 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy,
-			         class TMetricInitializationPolicy,
-			         class TOptimizerInitializationPolicy,
-			         class TTransformInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy,
+					 class TMetricInitializationPolicy,
+					 class TOptimizerInitializationPolicy,
+					 class TTransformInitializationPolicy >
 			void
 			ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                 TInterpolatorPolicy,
-			                                                 TPyramideInitializationPolicy,
-			                                                 TMetricInitializationPolicy,
-			                                                 TOptimizerInitializationPolicy,
-			                                                 TTransformInitializationPolicy >::
-			                                                 doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
+															 TInterpolatorPolicy,
+															 TPyramideInitializationPolicy,
+															 TMetricInitializationPolicy,
+															 TOptimizerInitializationPolicy,
+															 TTransformInitializationPolicy >::
+															 doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				if (name == "PreinitTransform")
 				{
@@ -191,20 +193,20 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy,
-			         class TMetricInitializationPolicy,
-			         class TOptimizerInitializationPolicy,
-			         class TTransformInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy,
+					 class TMetricInitializationPolicy,
+					 class TOptimizerInitializationPolicy,
+					 class TTransformInitializationPolicy >
 			void
 			ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                 TInterpolatorPolicy,
-			                                                 TPyramideInitializationPolicy,
-			                                                 TMetricInitializationPolicy,
-			                                                 TOptimizerInitializationPolicy,
-			                                                 TTransformInitializationPolicy >::
-			                                                 prepInitializeTransformation()
+															 TInterpolatorPolicy,
+															 TPyramideInitializationPolicy,
+															 TMetricInitializationPolicy,
+															 TOptimizerInitializationPolicy,
+															 TTransformInitializationPolicy >::
+															 prepInitializeTransformation()
 			{
 				Superclass::prepInitializeTransformation();
 
@@ -212,7 +214,8 @@ namespace map
 				{
 					this->InvokeEvent(events::AlgorithmEvent(this, "Preinitialize transform."));
 
-					typedef ::itk::CenteredTransformInitializer<typename Superclass::ConcreteTransformType::TransformType, typename Superclass::TargetImageType, typename Superclass::MovingImageType> InitializerType;
+					typedef ::itk::CenteredTransformInitializer<typename Superclass::ConcreteTransformType::TransformType, typename Superclass::TargetImageType, typename Superclass::MovingImageType>
+					InitializerType;
 
 					typename InitializerType::Pointer spInitializer = InitializerType::New();
 
@@ -241,10 +244,13 @@ namespace map
 
 				core::OStringStream os;
 
-				os << "Preinitialized transform to: " << this->getConcreteTransformModel()->getConcreteTransform()->GetParameters();
+				os << "Preinitialized transform to: " <<
+				   this->getConcreteTransformModel()->getConcreteTransform()->GetParameters();
 				//set the parameter of the transform model to the current transform parameters of the algorithm
-				this->setCurrentTransformParameters(this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
-				this->getInternalRegistrationMethod().SetInitialTransformParameters(this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
+				this->setCurrentTransformParameters(
+					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
+				this->getInternalRegistrationMethod().SetInitialTransformParameters(
+					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
 
 				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
 			};

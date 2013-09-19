@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapServiceStack.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -67,7 +67,8 @@ namespace map
 			* und wir erreichen eine strong guarantee be remove all und rehash.
 			*/
 			template <class TProviderBase, class TStaticLoadPolicy = NoneStaticLoadPolicy<TProviderBase>, class TThreadingPolicy = FastLockedThreadingPolicy>
-			class ServiceStack: public itk::Object, public TStaticLoadPolicy, public TThreadingPolicy, public ServiceRepositoryPolicyLoadInterface<TProviderBase>
+			class ServiceStack: public itk::Object, public TStaticLoadPolicy, public TThreadingPolicy,
+				public ServiceRepositoryPolicyLoadInterface<TProviderBase>
 			{
 			public:
 				/*! Standard class typedefs. */
@@ -102,7 +103,7 @@ namespace map
 				 * @return Pointer to a suitable provider. Return value may be null.
 				 * @retval NULL There was no suitable provider in the stack.
 				 */
-				ProviderBaseType *getProvider(const RequestType &request) const;
+				ProviderBaseType* getProvider(const RequestType& request) const;
 
 				/*! Returns a pointer to the provider with the specified name.
 				 * @eguarantee strong
@@ -110,7 +111,7 @@ namespace map
 				 * @return Pointer to a suitable provider. Return value may be null.
 				 * @retval NULL There was no suitable provider in the stack.
 				 */
-				ProviderBaseType *getProvider(const String &providerName) const;
+				ProviderBaseType* getProvider(const String& providerName) const;
 
 				/*! Indicates if there is a provider that can handle the passed request.
 				 * @eguarantee strong
@@ -119,7 +120,7 @@ namespace map
 				 * @retval true There is a suitable provider in the stack.
 				 * @retval false There is no suitable provider in the stack.
 				 */
-				bool providerIsAvailable(const RequestType &request) const;
+				bool providerIsAvailable(const RequestType& request) const;
 
 				/*! Registers a given provider in the stack. The new provider will be topmost and therfore
 				 * will be favored over providers registered ealier. The stack will behave like a smartpointer
@@ -133,7 +134,7 @@ namespace map
 				 * @retval false The provider was already on the stack. Stack is unchanged.
 				 * @post Stack is unchanged or added provider is the topmost element on the stack.
 				 */
-				bool registerProvider(ProviderBaseType *pProvider);
+				bool registerProvider(ProviderBaseType* pProvider);
 
 				/*! Removes the provider (identified only by the pointer address) from the stack.
 				 * @eguarantee strong
@@ -143,7 +144,7 @@ namespace map
 				 * @retval true The provider instance was on the stack and was removed.
 				 * @retval false The provider instance is not a part of the stack.
 				 */
-				bool unregisterProviderByPointer(ProviderBaseType *pProvider);
+				bool unregisterProviderByPointer(ProviderBaseType* pProvider);
 
 				/*! Removes the topmost entry of a given provider (identified by the provider name)
 				 * from the stack.
@@ -154,7 +155,7 @@ namespace map
 				 * @retval true There is no more entry for this provider in the stack.
 				 * @retval false There is at least one more entry for this provider in the stack.
 				 */
-				bool unregisterProvider(const String &providerName);
+				bool unregisterProvider(const String& providerName);
 
 				/*! Removes all providers from the stack.
 				 * @eguarantee basic*/
@@ -171,7 +172,7 @@ namespace map
 				ServiceStack();
 				virtual ~ServiceStack();
 
-				typedef std::vector<ProviderBaseType *> ProviderVectorType;
+				typedef std::vector<ProviderBaseType*> ProviderVectorType;
 
 				ProviderVectorType _providers;
 
@@ -179,7 +180,7 @@ namespace map
 				 * This methods just adds the given provider to providers and registers the use of the object.
 				 * @remark This impolementation uses unregisterProviderByPointerInternal() under the assumption that this method is only invoked by
 				 * loadStaticProviders() of the policy and this method itself is only invoked by this->rehash() which does the mutex locking*/
-				virtual bool addProviderByPolicy(ProviderBaseType *pProvider);
+				virtual bool addProviderByPolicy(ProviderBaseType* pProvider);
 
 				/*! Registers a given provider in the stack. The new provider will be topmost and therefore
 				 * will be favored over providers registered earlier. The stack will behave like a smartpointer
@@ -194,13 +195,13 @@ namespace map
 				 * @retval false The provider was already on the stack. Stack is unchanged.
 				 * @post Stack is unchanged or added provider is the topmost element on the stack.
 				 */
-				bool registerProviderInternal(ProviderBaseType *pProvider);
+				bool registerProviderInternal(ProviderBaseType* pProvider);
 
 				/*!Implements the ServiceRepositoryPolicyLoadInterface that allows loading policies to remove or add providers from the stack
 				 * This methods just removes the given provider from the provider list, if present, and lowers the reference count of the object.
 				 * @remark This impolementation uses unregisterProviderByPointerInternal() under the assumption that this method is only invoked by
 				 * loadStaticProviders() of the policy and this method itself is only invoked by this->rehash() which does the mutex locking*/
-				virtual bool removeProviderByPolicy(ProviderBaseType *pProvider);
+				virtual bool removeProviderByPolicy(ProviderBaseType* pProvider);
 
 				/*! Removes the provider (identified only by the pointer address) from the stack.
 				* This method is not secured via the mutex is used by unregisterProviderByPointer() and removeProviderByPolicy()
@@ -211,14 +212,14 @@ namespace map
 				 * @retval true The provider instance was on the stack and was removed.
 				 * @retval false The provider instance is not a part of the stack.
 				 */
-				bool unregisterProviderByPointerInternal(ProviderBaseType *pProvider);
+				bool unregisterProviderByPointerInternal(ProviderBaseType* pProvider);
 
 				/*! Methods invoked by itk::LightObject::Print().  */
-				virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			private:
-				ServiceStack(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ServiceStack(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		} // end namespace services

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapIterativeRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,19 +45,25 @@ namespace map
 		@ingroup Algorithms
 		*/
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
-		class IterativeRegistrationAlgorithm: public RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>, public IterativeAlgorithmBase, public facet::InterimRegistrationResultAccessInterface<VMovingDimensions, VTargetDimensions>, public facet::StoppableAlgorithmInterface
+		class IterativeRegistrationAlgorithm: public
+			RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>, public IterativeAlgorithmBase,
+		public facet::InterimRegistrationResultAccessInterface<VMovingDimensions, VTargetDimensions>,
+		public facet::StoppableAlgorithmInterface
 		{
 		public:
 			typedef IterativeRegistrationAlgorithm<VMovingDimensions, VTargetDimensions> Self;
 			typedef RegistrationAlgorithm<VMovingDimensions, VTargetDimensions> Superclass;
 
-			typedef facet::InterimRegistrationResultAccessInterface<VMovingDimensions, VTargetDimensions> InterimInterfaceType;
+			typedef facet::InterimRegistrationResultAccessInterface<VMovingDimensions, VTargetDimensions>
+			InterimInterfaceType;
 
 			typedef typename InterimInterfaceType::InterimRegistrationType InterimRegistrationType;
 			typedef typename InterimRegistrationType::Pointer          InterimRegistrationPointer;
 
-			typedef typename InterimInterfaceType::MovingRepresentationDescriptorType MovingRepresentationDescriptorType;
-			typedef typename InterimInterfaceType::TargetRepresentationDescriptorType TargetRepresentationDescriptorType;
+			typedef typename InterimInterfaceType::MovingRepresentationDescriptorType
+			MovingRepresentationDescriptorType;
+			typedef typename InterimInterfaceType::TargetRepresentationDescriptorType
+			TargetRepresentationDescriptorType;
 
 			typedef typename InterimInterfaceType::OptimizerMeasureType OptimizerMeasureType;
 			typedef typename RegistrationAlgorithmBase::AlgorithmType AlgorithmType;
@@ -75,8 +81,9 @@ namespace map
 			@retval a Registration object
 			@sa Registration
 			*/
-			virtual InterimRegistrationPointer getInterimRegistration(const MovingRepresentationDescriptorType *pMovingRepresentation = NULL,
-			                                                          const TargetRepresentationDescriptorType *pTargetRepresentation = NULL) const;
+			virtual InterimRegistrationPointer getInterimRegistration(const MovingRepresentationDescriptorType*
+					pMovingRepresentation = NULL,
+					const TargetRepresentationDescriptorType* pTargetRepresentation = NULL) const;
 
 
 			/*! @brief gets the current value/cost of the optimizer iteration of the registration algorithm
@@ -100,8 +107,9 @@ namespace map
 			@retval a Registration object
 			@sa Registration
 			*/
-			virtual InterimRegistrationPointer determineInterimRegistration(const MovingRepresentationDescriptorType *pMovingRepresentation,
-			                                                                const TargetRepresentationDescriptorType *pTargetRepresentation) const = 0;
+			virtual InterimRegistrationPointer determineInterimRegistration(const
+					MovingRepresentationDescriptorType* pMovingRepresentation,
+					const TargetRepresentationDescriptorType* pTargetRepresentation) const = 0;
 
 			/*! Performes the computation of the registration.
 			* First prepareAlgorithm() will be called, then the algorithm state will be changed to AlgorithmState::Running and runAlgorithm()
@@ -164,8 +172,8 @@ namespace map
 			core::String _stopConditionDescription;
 		private:
 			//No copy constructor allowed
-			IterativeRegistrationAlgorithm(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			IterativeRegistrationAlgorithm(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

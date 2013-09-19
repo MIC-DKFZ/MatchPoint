@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapImageMappingPerformerRequest.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -44,7 +44,8 @@ namespace map
 		* @tparam TResultData Type of the data in the target space.
 		*/
 		template <class TRegistration, class TInputData, class TResultData>
-		class ImageMappingPerformerRequest: public MappingPerformerRequestBase<TRegistration, TInputData, TResultData>
+		class ImageMappingPerformerRequest: public
+			MappingPerformerRequestBase<TRegistration, TInputData, TResultData>
 		{
 		public:
 			typedef MappingPerformerRequestBase<TRegistration, TInputData, TResultData> Superclass;
@@ -58,16 +59,16 @@ namespace map
 			typedef itk::InterpolateImageFunction<TInputData, continuous::ScalarType> InterpolateBaseType;
 			typedef typename InterpolateBaseType::Pointer InterpolateBasePointer;
 
-			ImageMappingPerformerRequest(const RegistrationType *pRegistration,
-			                             const InputDataType *pInputData, const ResultImageDescriptorType *pResultDescriptor,
-			                             InterpolateBaseType *pInterpolateFunction,
-			                             bool throwOnMappingError, const ErrorValueType &errorValue,
-			                             bool throwOnOutOfInputAreaError, PaddingValueType paddingValue);
+			ImageMappingPerformerRequest(const RegistrationType* pRegistration,
+										 const InputDataType* pInputData, const ResultImageDescriptorType* pResultDescriptor,
+										 InterpolateBaseType* pInterpolateFunction,
+										 bool throwOnMappingError, const ErrorValueType& errorValue,
+										 bool throwOnOutOfInputAreaError, PaddingValueType paddingValue);
 
 			virtual ~ImageMappingPerformerRequest();
 
-			ImageMappingPerformerRequest(const ImageMappingPerformerRequest &);
-			void operator=(const ImageMappingPerformerRequest &);
+			ImageMappingPerformerRequest(const ImageMappingPerformerRequest&);
+			void operator=(const ImageMappingPerformerRequest&);
 
 			typename ResultImageDescriptorType::ConstPointer _spResultDescriptor;
 
@@ -81,7 +82,8 @@ namespace map
 		};
 
 		template <class TRegistration, class TInputData, class TResultData>
-		std::ostream &operator<<(std::ostream &os, const ImageMappingPerformerRequest<TRegistration, TInputData, TResultData> &request)
+		std::ostream& operator<<(std::ostream& os,
+								 const ImageMappingPerformerRequest<TRegistration, TInputData, TResultData>& request)
 		{
 			if (request._spRegistration.IsNull())
 			{

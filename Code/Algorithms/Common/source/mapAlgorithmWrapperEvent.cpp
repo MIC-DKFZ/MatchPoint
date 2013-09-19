@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/source/mapAlgorithmWrapperEvent.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -30,7 +30,8 @@ namespace map
 	{
 
 		AlgorithmWrapperEvent::
-		AlgorithmWrapperEvent(const ::itk::EventObject &wrappedEvent, ::itk::Object *wrappedCaller, const std::string &comment) : Superclass(NULL, comment)
+		AlgorithmWrapperEvent(const ::itk::EventObject& wrappedEvent, ::itk::Object* wrappedCaller,
+							  const std::string& comment) : Superclass(NULL, comment)
 		{
 			_pWrappedCaller = wrappedCaller;
 			_pWrappedEvent = wrappedEvent.MakeObject();
@@ -47,7 +48,7 @@ namespace map
 			delete _pWrappedEvent;
 		};
 
-		const char *
+		const char*
 		AlgorithmWrapperEvent::
 		GetEventName() const
 		{
@@ -56,10 +57,10 @@ namespace map
 
 		bool
 		AlgorithmWrapperEvent::
-		CheckEvent(const ::itk::EventObject *e) const
+		CheckEvent(const ::itk::EventObject* e) const
 		{
 			bool result = false;
-			const Self *pEvent = dynamic_cast<const Self *>(e);
+			const Self* pEvent = dynamic_cast<const Self*>(e);
 
 			if (pEvent)
 			{
@@ -69,7 +70,7 @@ namespace map
 			return result;
 		};
 
-		::itk::EventObject *
+		::itk::EventObject*
 		AlgorithmWrapperEvent::
 		MakeObject() const
 		{
@@ -77,18 +78,19 @@ namespace map
 		};
 
 		AlgorithmWrapperEvent::
-		AlgorithmWrapperEvent(const Self &s) : Superclass(NULL, s.getComment()), _pWrappedCaller(s._pWrappedCaller), _pWrappedEvent(s._pWrappedEvent->MakeObject())
+		AlgorithmWrapperEvent(const Self& s) : Superclass(NULL, s.getComment()),
+			_pWrappedCaller(s._pWrappedCaller), _pWrappedEvent(s._pWrappedEvent->MakeObject())
 		{
 		};
 
-		::itk::EventObject &
+		::itk::EventObject&
 		AlgorithmWrapperEvent::
 		getWrappedEvent() const
 		{
 			return *_pWrappedEvent;
 		};
 
-		::itk::Object *
+		::itk::Object*
 		AlgorithmWrapperEvent::
 		getWrappedCaller() const
 		{
@@ -97,7 +99,7 @@ namespace map
 
 		void
 		AlgorithmWrapperEvent::
-		Print(std::ostream &os) const
+		Print(std::ostream& os) const
 		{
 			Superclass::Print(os);
 			os << "wrapped caller: " << _pWrappedCaller << std::endl;

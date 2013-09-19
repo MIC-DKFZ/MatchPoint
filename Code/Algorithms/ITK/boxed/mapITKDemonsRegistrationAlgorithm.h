@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKDemonsRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,22 +45,25 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(ITKDemonsRegistationUIDPolicy, "de.dkfz.matchpoint", "ITKDemonsRegistrationAlgorithm", "1.0.0", "");
+			mapGenerateAlgorithmUIDPolicyMacro(ITKDemonsRegistationUIDPolicy, "de.dkfz.matchpoint",
+											   "ITKDemonsRegistrationAlgorithm", "1.0.0", "");
 
 			/*! @class ITKDemonsRegistrationAlgorithm
 			    @brief The class wraps the itk::DemonsRegistrationFilter as MatchPoint algorithm
 			    @ingroup Boxed
 			 */
 			template < class TMovingImage, class TTargetImage,
-			         class TIdentificationPolicy = ITKDemonsRegistationUIDPolicy >
-			class ITKDemonsRegistrationAlgorithm : public IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-				public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
-        public TIdentificationPolicy,
-				public MetaPropertyAlgorithmBase
+					 class TIdentificationPolicy = ITKDemonsRegistationUIDPolicy >
+			class ITKDemonsRegistrationAlgorithm : public
+				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+			public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
+			public TIdentificationPolicy,
+			public MetaPropertyAlgorithmBase
 			{
 			public:
 				typedef ITKDemonsRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
-				typedef IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>  Superclass;
+				typedef IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>
+				Superclass;
 				typedef TIdentificationPolicy IdentificationPolicyType;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
@@ -68,7 +71,9 @@ namespace map
 				itkTypeMacro(ITKDemonsRegistrationAlgorithm, IterativeRegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
-				typedef typename IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType OptimizerMeasureType;
+				typedef typename
+				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType
+				OptimizerMeasureType;
 
 				typedef typename Superclass::UIDType UIDType;
 				typedef typename Superclass::UIDPointer UIDPointer;
@@ -82,7 +87,7 @@ namespace map
 				typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
 				typedef typename Superclass::IterationCountType IterationCountType;
 
-        mapDefineAlgorithmIdentificationByPolicyMacro;
+				mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				// IterativeRegistrationAlgorithm
 				/*! @eguarantee strong*/
@@ -111,8 +116,10 @@ namespace map
 				ITKDemonsRegistrationAlgorithm();
 				virtual ~ITKDemonsRegistrationAlgorithm();
 
-				typedef typename ::map::core::discrete::Elements< Superclass::TargetDimensions >::VectorFieldType DisplacementFieldType;
-				typedef ::itk::DemonsRegistrationFilter<TTargetImage, TMovingImage, DisplacementFieldType> InternalRegistrationMethodType;
+				typedef typename ::map::core::discrete::Elements< Superclass::TargetDimensions >::VectorFieldType
+				DisplacementFieldType;
+				typedef ::itk::DemonsRegistrationFilter<TTargetImage, TMovingImage, DisplacementFieldType>
+				InternalRegistrationMethodType;
 
 				// IterativeRegistrationAlgorithmInterface
 
@@ -125,8 +132,9 @@ namespace map
 				  @retval a Registration object
 				  @sa Registration
 				 */
-				virtual InterimRegistrationPointer determineInterimRegistration(const MovingRepresentationDescriptorType *pMovingRepresentation,
-				                                                                const TargetRepresentationDescriptorType *pTargetRepresentation) const;
+				virtual InterimRegistrationPointer determineInterimRegistration(const
+						MovingRepresentationDescriptorType* pMovingRepresentation,
+						const TargetRepresentationDescriptorType* pTargetRepresentation) const;
 
 				/*!
 				 * Returns the final registration
@@ -179,7 +187,7 @@ namespace map
 				virtual OptimizerMeasureType doGetCurrentOptimizerValue() const;
 
 				/*! Methods invoked by derivated classes.  */
-				virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 				/*! @eguarantee strong*/
 				virtual IterationCountType doGetCurrentIteration() const;
@@ -205,13 +213,13 @@ namespace map
 				mutable ::itk::SimpleFastMutexLock _currentIterationLock;
 
 				/*! This member function is called by the observer of the optimizer, when ever a IterationEvent is invoked.*/
-				void onIterationEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onIterationEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the observer of the transform for all kind of events. It serves as a pass through.*/
-				void onGeneralRegistrationMethodEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onGeneralRegistrationMethodEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
-				ITKDemonsRegistrationAlgorithm(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKDemonsRegistrationAlgorithm(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

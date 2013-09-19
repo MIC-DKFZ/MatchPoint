@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/boxed/mapDummyImageRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -34,7 +34,7 @@ namespace map
 	namespace algorithm
 	{
 
-    template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
+		template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 		typename DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::FieldRepRequirement::Type
 		DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
 		isMovingRepresentationRequired() const
@@ -102,15 +102,18 @@ namespace map
 		{
 			RegistrationPointer spResult = NULL;
 
-			typedef map::algorithm::itk::ITKTransformModel< ::itk::AffineTransform<core::continuous::ScalarType, RegistrationType::MovingDimensions> > TransformModelType;
+			typedef map::algorithm::itk::ITKTransformModel< ::itk::AffineTransform<core::continuous::ScalarType, RegistrationType::MovingDimensions> >
+			TransformModelType;
 
 			typename TransformModelType::Pointer spFinalTransformModel = TransformModelType::New();
 
 			spFinalTransformModel->getConcreteTransform()->SetIdentity();
 
 			//now build the inverse kernel (main kernel of a image based registration algorithm)
-			typedef core::ModelBasedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> InverseKernelType;
-			typedef core::ModelBasedRegistrationKernel<RegistrationType::MovingDimensions, RegistrationType::TargetDimensions> DirectKernelType;
+			typedef core::ModelBasedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>
+			InverseKernelType;
+			typedef core::ModelBasedRegistrationKernel<RegistrationType::MovingDimensions, RegistrationType::TargetDimensions>
+			DirectKernelType;
 
 			typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
 			spIKernel->setTransformModel(spFinalTransformModel);
@@ -145,7 +148,7 @@ namespace map
 		template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 		void
 		DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
-		PrintSelf(std::ostream &os, ::itk::Indent indent) const
+		PrintSelf(std::ostream& os, ::itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 

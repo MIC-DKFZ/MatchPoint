@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldFieldKernelCombinator.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -37,36 +37,44 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		typename FieldFieldKernelCombinator<VInputDimensions, VInterimDimensions, VOutputDimensions>::CombinedKernelBasePointer
 		FieldFieldKernelCombinator<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		combineKernels(const RequestType &request,
-		               const InputFieldRepresentationType *pInputFieldRepresentation,
-		               bool usePadding,
-		               const PaddingVectorType &paddingVector) const
+		combineKernels(const RequestType& request,
+					   const InputFieldRepresentationType* pInputFieldRepresentation,
+					   bool usePadding,
+					   const PaddingVectorType& paddingVector) const
 		{
 			assert(pInputFieldRepresentation);
 
 			if (!pInputFieldRepresentation)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot combine kernels. Reason: input field representation is NULL");
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot combine kernels. Reason: input field representation is NULL");
 			}
 
-			const Kernel1Type *pKernel1 = dynamic_cast<const Kernel1Type *>(request._spKernel1.GetPointer());
-			const Kernel2Type *pKernel2 = dynamic_cast<const Kernel2Type *>(request._spKernel2.GetPointer());
+			const Kernel1Type* pKernel1 = dynamic_cast<const Kernel1Type*>(request._spKernel1.GetPointer());
+			const Kernel2Type* pKernel2 = dynamic_cast<const Kernel2Type*>(request._spKernel2.GetPointer());
 
 			if (pKernel1 == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot combine kernels. Reason: cannot cast first kernel to FieldBasedRegistrationKernel: " << pKernel1);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot combine kernels. Reason: cannot cast first kernel to FieldBasedRegistrationKernel: "
+								  << pKernel1);
 			}
 
 			if (pKernel2 == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot combine kernels. Reason: cannot cast second kernel to FieldBasedRegistrationKernel: " << pKernel2);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot combine kernels. Reason: cannot cast second kernel to FieldBasedRegistrationKernel: "
+								  << pKernel2);
 			}
 
-			typedef CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions> CombinedKernelType;
+			typedef CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			CombinedKernelType;
 			typename CombinedKernelType::Pointer spCombinedKernel = CombinedKernelType::New();
 
-			typedef functors::FieldByFieldFieldCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions> FunctorType;
-			typename FunctorType::Pointer spFunctor = FunctorType::New(*pKernel1, *pKernel2, pInputFieldRepresentation);
+			typedef functors::FieldByFieldFieldCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			FunctorType;
+			typename FunctorType::Pointer spFunctor = FunctorType::New(*pKernel1, *pKernel2,
+					pInputFieldRepresentation);
 
 			spFunctor->setUsePadding(usePadding);
 			spFunctor->setPaddingVector(paddingVector);
@@ -81,12 +89,12 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		bool
 		FieldFieldKernelCombinator<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
 			// get the two kernels from the request (which is a RegistrationCombinationRequest object)
 			// and check if they are both FieldKernels
-			const Kernel1Type *pKernel1 = dynamic_cast<const Kernel1Type *>(request._spKernel1.GetPointer());
-			const Kernel2Type *pKernel2 = dynamic_cast<const Kernel2Type *>(request._spKernel2.GetPointer());
+			const Kernel1Type* pKernel1 = dynamic_cast<const Kernel1Type*>(request._spKernel1.GetPointer());
+			const Kernel2Type* pKernel2 = dynamic_cast<const Kernel2Type*>(request._spKernel2.GetPointer());
 
 			return ((pKernel1 != NULL) && (pKernel2 != NULL));
 		}
@@ -105,7 +113,8 @@ namespace map
 		getStaticProviderName()
 		{
 			OStringStream os;
-			os << "FieldFieldKernelCombinator<" << VInputDimensions << "," << VInterimDimensions << "," << VOutputDimensions << ">";
+			os << "FieldFieldKernelCombinator<" << VInputDimensions << "," << VInterimDimensions << "," <<
+			   VOutputDimensions << ">";
 			return os.str();
 		}
 
@@ -115,7 +124,9 @@ namespace map
 		getDescription() const
 		{
 			OStringStream os;
-			os << "FieldFieldKernelCombinator, VInputDimensions: " << VInputDimensions << ", VInterimDimensions: " << VInterimDimensions << ", VOutputDimensions: " << VOutputDimensions << ".";
+			os << "FieldFieldKernelCombinator, VInputDimensions: " << VInputDimensions <<
+			   ", VInterimDimensions: " << VInterimDimensions << ", VOutputDimensions: " << VOutputDimensions <<
+			   ".";
 			return os.str();
 		}
 

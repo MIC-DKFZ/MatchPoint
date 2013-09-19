@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapTransformModel.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -53,16 +53,16 @@ namespace map
 			itkTypeMacro(TransformModel, TransformModelBase);
 
 			typedef TransformModelCreationPolicy < TTransform, TScalarType,
-			        VInputDimensions,
-			        VOutputDimensions >       CreationPolicyType;
+					VInputDimensions,
+					VOutputDimensions >       CreationPolicyType;
 			typedef typename Superclass::ScalarType                       ScalarType;
 
 			typedef typename Superclass::InverseTransformModelBaseType    InverseTransformModelBaseType;
 			typedef typename Superclass::InverseTransformModelBasePointer InverseTransformModelBasePointer;
 
 			typedef typename TransformModel < TTransform, TScalarType,
-			        VOutputDimensions,
-			        VInputDimensions >             InverseTransformModelType;
+					VOutputDimensions,
+					VInputDimensions >             InverseTransformModelType;
 			typedef typename InverseTransformModelType::Pointer           InverseTransformModelPointer;
 
 			typedef typename Superclass::TransformBaseType                TransformBaseType;
@@ -75,22 +75,22 @@ namespace map
 			typedef typename InverseTransformModelType::TransformType           InverseTransformType;
 			typedef typename InverseTransformModelType::TransformPointer        InverseTransformPointer;
 
-			virtual const TransformBaseType &getTransform() const;
-			virtual TransformBaseType &getTransform();
+			virtual const TransformBaseType& getTransform() const;
+			virtual TransformBaseType& getTransform();
 
-			virtual const TransformType &getConcreteTransform() const;
-			virtual TransformType &getConcreteTransform();
+			virtual const TransformType& getConcreteTransform() const;
+			virtual TransformType& getConcreteTransform();
 
-			operator const TransformType &() const
+			operator const TransformType& () const
 			{
 				return getConcreteTransform();
 			}
-			operator TransformType &()
+			operator TransformType& ()
 			{
 				return getConcreteTransform();
 			}
 
-			virtual bool getInverse(InverseTransformModelBasePointer &spInverseModel) const;
+			virtual bool getInverse(InverseTransformModelBasePointer& spInverseModel) const;
 
 		protected:
 
@@ -101,8 +101,8 @@ namespace map
 			virtual ~TransformModel();
 
 		private:
-			TransformModel(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			TransformModel(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapLogbookMacros.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -48,8 +48,8 @@
 	{ if (this->GetDebug())   \
 		{ ::map::core::OStringStream mapMsg; \
 			mapMsg << "In " __FILE__ ", line " << __LINE__ << "\n" \
-			       << this->GetNameOfClass() << " (" << this << "): " x  \
-			       << "\n"; \
+				   << this->GetNameOfClass() << " (" << this << "): " x  \
+				   << "\n"; \
 			::map::core::Logbook::debug(mapMsg.str());\
 		} \
 	}
@@ -68,7 +68,7 @@
 #define mapLogDebugStaticMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "In " __FILE__ ", line " << __LINE__ << "\n" \
-		       x << "\n"; \
+			   x << "\n"; \
 		::map::core::Logbook::debug(mapMsg.str());\
 	}
 #endif
@@ -88,8 +88,8 @@
 #define mapLogDebugObjMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "In " __FILE__ ", line " << __LINE__ << ", sig "\
-		       << MAP_FUNCTION_SIGNATURE << "\n" << " (& " << this << "): " x  \
-		       << "\n"; \
+			   << MAP_FUNCTION_SIGNATURE << "\n" << " (& " << this << "): " x  \
+			   << "\n"; \
 		::map::core::Logbook::debug(mapMsg.str());\
 	}
 #endif
@@ -111,8 +111,8 @@
 	{ if (this->GetDebug())   \
 		{ ::map::core::OStringStream mapMsg; \
 			mapMsg << "In " __FILE__ ", line " << __LINE__ << "\n" \
-			       << this->GetNameOfClass() << " (" << this << "): " x  \
-			       << "\n"; \
+				   << this->GetNameOfClass() << " (" << this << "): " x  \
+				   << "\n"; \
 			::map::core::Logbook::info(mapMsg.str());\
 		} \
 	}
@@ -131,7 +131,7 @@
 #define mapLogInfoStaticMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "In " __FILE__ ", line " << __LINE__ << "\n" \
-		       x << "\n"; \
+			   x << "\n"; \
 		::map::core::Logbook::info(mapMsg.str());\
 	}
 #endif
@@ -151,8 +151,8 @@
 #define mapLogInfoObjMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "In " __FILE__ ", line " << __LINE__ << ", sig "\
-		       << MAP_FUNCTION_SIGNATURE << "\n" << " (& " << this << "): " x  \
-		       << "\n"; \
+			   << MAP_FUNCTION_SIGNATURE << "\n" << " (& " << this << "): " x  \
+			   << "\n"; \
 		::map::core::Logbook::info(mapMsg.str());\
 	}
 #endif
@@ -174,8 +174,8 @@
 	{ if (this->GetDebug())   \
 		{ ::map::core::OStringStream mapMsg; \
 			mapMsg << "In " __FILE__ ", line " << __LINE__ << "\n" \
-			       << this->GetNameOfClass() << " (" << this << "): " x  \
-			       << "\n"; \
+				   << this->GetNameOfClass() << " (" << this << "): " x  \
+				   << "\n"; \
 			::map::core::Logbook::warning(mapMsg.str());\
 		} \
 	}
@@ -194,7 +194,7 @@
 #define mapLogWarningStaticMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "In " __FILE__ ", line " << __LINE__ << "\n" \
-		       x << "\n"; \
+			   x << "\n"; \
 		::map::core::Logbook::warning(mapMsg.str());\
 	}
 #endif
@@ -214,8 +214,8 @@
 #define mapLogWarningObjMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "In " __FILE__ ", line " << __LINE__ << ", sig "\
-		       << MAP_FUNCTION_SIGNATURE << "\n" << " (& " << this << "): " x  \
-		       << "\n"; \
+			   << MAP_FUNCTION_SIGNATURE << "\n" << " (& " << this << "): " x  \
+			   << "\n"; \
 		::map::core::Logbook::warning(mapMsg.str());\
 	}
 #endif
@@ -233,8 +233,8 @@
 #define mapLogErrorMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "In " __FILE__ ", line " << __LINE__ << "\n" \
-		       << this->GetNameOfClass() << " (" << this << "): " x  \
-		       << "\n"; \
+			   << this->GetNameOfClass() << " (" << this << "): " x  \
+			   << "\n"; \
 		::map::core::Logbook::error(mapMsg.str());\
 	}
 
@@ -248,7 +248,7 @@
 #define mapLogErrorStaticMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "Debug: In " __FILE__ ", line " << __LINE__ << "\n" \
-		       x << "\n"; \
+			   x << "\n"; \
 		::map::core::Logbook::error(mapMsg.str());\
 	}
 
@@ -264,8 +264,8 @@
 #define mapLogErrorObjMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "In " __FILE__ ", line " << __LINE__ << ", sig "\
-		       << MAP_FUNCTION_SIGNATURE << "\n" << " (& " << this << "): " x  \
-		       << "\n"; \
+			   << MAP_FUNCTION_SIGNATURE << "\n" << " (& " << this << "): " x  \
+			   << "\n"; \
 		::map::core::Logbook::error(mapMsg.str());\
 	}
 
@@ -285,7 +285,7 @@
 #define mapLogObjectStateMacro() \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "Object state in " __FILE__ ", line " << __LINE__ << ", sig "\
-		       << MAP_FUNCTION_SIGNATURE << "\n\n" << &this << "\n";  \
+			   << MAP_FUNCTION_SIGNATURE << "\n\n" << &this << "\n";  \
 		::map::core::Logbook::info(mapMsg.str());\
 	}
 #endif
@@ -305,8 +305,8 @@
 #define mapLogCommentedObjectStateMacro(x) \
 	{ ::map::core::OStringStream mapMsg; \
 		mapMsg << "Object state in " __FILE__ ", line " << __LINE__ << ", sig "\
-		       << MAP_FUNCTION_SIGNATURE << "\n\n" << &this << "\n\n"  \
-		       << "Comment: " x; \
+			   << MAP_FUNCTION_SIGNATURE << "\n\n" << &this << "\n\n"  \
+			   << "Comment: " x; \
 		::map::core::Logbook::info(mapMsg.str());\
 	}
 #endif

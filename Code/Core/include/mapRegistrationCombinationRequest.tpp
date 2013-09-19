@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationCombinationRequest.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_REGISTRATION_COMBINATION_REQUEST_TPP
@@ -32,7 +32,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		RegistrationCombinationRequest<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		RegistrationCombinationRequest(const Kernel1BaseType *pKernel1, const Kernel2BaseType *pKernel2):
+		RegistrationCombinationRequest(const Kernel1BaseType* pKernel1, const Kernel2BaseType* pKernel2):
 			_spKernel1(pKernel1), _spKernel2(pKernel2)
 		{
 			assert(pKernel1);
@@ -41,7 +41,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		RegistrationCombinationRequest<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		RegistrationCombinationRequest(const Kernel1BaseType &kernel1, const Kernel2BaseType &kernel2):
+		RegistrationCombinationRequest(const Kernel1BaseType& kernel1, const Kernel2BaseType& kernel2):
 			_spKernel1(&kernel1), _spKernel2(&kernel2)
 		{
 		};
@@ -56,7 +56,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		RegistrationCombinationRequest<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		RegistrationCombinationRequest(const RegistrationCombinationRequest &req):
+		RegistrationCombinationRequest(const RegistrationCombinationRequest& req):
 			_spKernel1(req._spKernel1), _spKernel2(req._spKernel2)
 		{
 			assert(_spKernel1.IsNotNull());
@@ -66,7 +66,7 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		void
 		RegistrationCombinationRequest<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		operator=(const RegistrationCombinationRequest &req)
+		operator=(const RegistrationCombinationRequest& req)
 		{
 			if (&req != this)
 			{

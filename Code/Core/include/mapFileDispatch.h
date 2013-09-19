@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFileDispatch.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -37,30 +37,30 @@ namespace map
 		{
 		public:
 			/** Returns the name of the file (without extension).*/
-			static String getName(const String &sFilePath);
+			static String getName(const String& sFilePath);
 			/** Returns the extansion of the file (dot included).*/
-			static String getExtension(const String &sFilePath);
+			static String getExtension(const String& sFilePath);
 			/** Returns name of the file plus extension.*/
-			static String getFullName(const String &sFilePath);
+			static String getFullName(const String& sFilePath);
 			/** Returns the directory the file is located in (without trailing slash).
 			* @remark this function always removes the last element of the path. Thus
 			* if you pass a path without a file, it will return the parent directory.*/
-			static String getPath(const String &sFilePath);
+			static String getPath(const String& sFilePath);
 
 			/** Helper function to concat path and file into
 			* a full path */
-			static String createFullPath(const char *path, const char *file);
-			static String createFullPath(const String &path, const String &file);
+			static String createFullPath(const char* path, const char* file);
+			static String createFullPath(const String& path, const String& file);
 
 			/** Convertes all path seperators in the seperators used in the current OS.*/
-			static String ensureCorrectOSPathSeparator(const String &path);
+			static String ensureCorrectOSPathSeparator(const String& path);
 
 			String getName();
 			String getExtension();
 			String getFullName();
 			String getPath();
 
-			FileDispatch(const String &filePath);
+			FileDispatch(const String& filePath);
 
 		private:
 			String _fileName;

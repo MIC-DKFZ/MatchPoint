@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapSealedInterpolatorPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -56,7 +56,8 @@ namespace map
 
 				typedef TConcreteInterpolator ConcreteInterpolatorType;
 				typedef typename ConcreteInterpolatorType::Pointer ConcreteInterpolatorPointer;
-				typedef ::itk::InterpolateImageFunction<typename ConcreteInterpolatorType::InputImageType, typename ConcreteInterpolatorType::CoordRepType> InterpolatorType;
+				typedef ::itk::InterpolateImageFunction<typename ConcreteInterpolatorType::InputImageType, typename ConcreteInterpolatorType::CoordRepType>
+				InterpolatorType;
 				typedef typename ConcreteInterpolatorType::CoordRepType CoordRepType;
 
 			protected:
@@ -86,20 +87,20 @@ namespace map
 				@eguarantee strong
 				@return a pointer to an interpolator type
 				*/
-				InterpolatorType *getInterpolatorInternal();
-				const InterpolatorType *getInterpolatorInternal() const;
+				InterpolatorType* getInterpolatorInternal();
+				const InterpolatorType* getInterpolatorInternal() const;
 
 				/*! gets the concrete interpolator
 				@eguarantee strong
 				@return a pointer to a ConcreteInterpolatorType object
 				*/
-				const ConcreteInterpolatorType *getConcreteInterpolator() const;
+				const ConcreteInterpolatorType* getConcreteInterpolator() const;
 
 				/*! gets the concrete interpolator
 				 * @eguarantee strong
 				 * @return a pointer to a ConcreteInterpolatorType object
 				*/
-				ConcreteInterpolatorType *getConcreteInterpolator();
+				ConcreteInterpolatorType* getConcreteInterpolator();
 
 				/*! initializes the interpolator
 				@eguarantee strong
@@ -120,8 +121,8 @@ namespace map
 				ConcreteInterpolatorPointer _spInterpolator;
 
 				//No copy constructor allowed
-				SealedInterpolatorPolicy(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				SealedInterpolatorPolicy(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMappingTaskBatchThread.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -43,7 +43,7 @@ namespace map
 		template <class TMappingTaskBase>
 		void
 		MappingTaskBatchThread<TMappingTaskBase>::
-		setThreadID(const ThreadIDType &id)
+		setThreadID(const ThreadIDType& id)
 		{
 			MutexHolderType hold(_executionMutex);
 
@@ -98,13 +98,13 @@ namespace map
 		template <class TMappingTaskBase>
 		void
 		MappingTaskBatchThread<TMappingTaskBase>::
-		setNewTask(MappingTaskBaseType *pTask)
+		setNewTask(MappingTaskBaseType* pTask)
 		{
 			_pNewTask = pTask;
 		};
 
 		template <class TMappingTaskBase>
-		typename MappingTaskBatchThread<TMappingTaskBase>::MappingTaskBaseType *
+		typename MappingTaskBatchThread<TMappingTaskBase>::MappingTaskBaseType*
 		MappingTaskBatchThread<TMappingTaskBase>::
 		getCurrentTask()
 		{

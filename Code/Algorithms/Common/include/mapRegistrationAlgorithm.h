@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -48,7 +48,8 @@ namespace map
 		    @ingroup Algorithms
 		 */
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
-		class RegistrationAlgorithm: public RegistrationAlgorithmBase, public facet::RegistrationAlgorithmInterface<VMovingDimensions, VTargetDimensions>
+		class RegistrationAlgorithm: public RegistrationAlgorithmBase,
+			public facet::RegistrationAlgorithmInterface<VMovingDimensions, VTargetDimensions>
 		{
 		public:
 			typedef RegistrationAlgorithm<VMovingDimensions, VTargetDimensions> Self;
@@ -61,10 +62,12 @@ namespace map
 			itkStaticConstMacro(MovingDimensions, unsigned int, VMovingDimensions);
 			itkStaticConstMacro(TargetDimensions, unsigned int, VTargetDimensions);
 
-			typedef facet::RegistrationAlgorithmInterface<VMovingDimensions, VTargetDimensions> RegistrationAlgorithmInterfaceType;
+			typedef facet::RegistrationAlgorithmInterface<VMovingDimensions, VTargetDimensions>
+			RegistrationAlgorithmInterfaceType;
 			typedef typename RegistrationAlgorithmInterfaceType::RegistrationType          RegistrationType;
 			typedef typename RegistrationAlgorithmInterfaceType::RegistrationPointer       RegistrationPointer;
-			typedef typename RegistrationAlgorithmInterfaceType::ConstRegistrationPointer  ConstRegistrationPointer;
+			typedef typename RegistrationAlgorithmInterfaceType::ConstRegistrationPointer
+			ConstRegistrationPointer;
 
 			/*! @brief Gets the number of moving dimensions for this registration algorithm
 			  @eguarantee strong
@@ -92,11 +95,11 @@ namespace map
 			typedef core::FieldRepresentationDescriptor<VMovingDimensions> MovingRepresentationDescriptorType;
 			typedef core::FieldRepresentationDescriptor<VTargetDimensions> TargetRepresentationDescriptorType;
 
-			const MovingRepresentationDescriptorType *getMovingRepresentation() const;
-			void setMovingRepresentation(const MovingRepresentationDescriptorType *pDescriptor);
+			const MovingRepresentationDescriptorType* getMovingRepresentation() const;
+			void setMovingRepresentation(const MovingRepresentationDescriptorType* pDescriptor);
 
-			const TargetRepresentationDescriptorType *getTargetRepresentation() const;
-			void setTargetRepresentation(const TargetRepresentationDescriptorType *pDescriptor);
+			const TargetRepresentationDescriptorType* getTargetRepresentation() const;
+			void setTargetRepresentation(const TargetRepresentationDescriptorType* pDescriptor);
 
 		protected:
 
@@ -127,7 +130,8 @@ namespace map
 			/*! This method is called by setMovingRepresentation() before the new representation is set.
 			 * This default implementation does nothing.
 			 * @param [in] pMovingRepresentation Pointer to the new representation.*/
-			virtual void doBeforeSetMovingRepresentation(const MovingRepresentationDescriptorType *pMovingRepresentation);
+			virtual void doBeforeSetMovingRepresentation(const MovingRepresentationDescriptorType*
+					pMovingRepresentation);
 			/*! This method is called by setMovingRepresentation() after the new representation is set.
 			 * This default implementation does nothing.*/
 			virtual void doAfterSetMovingRepresentation();
@@ -135,7 +139,8 @@ namespace map
 			/*! This method is called by setTargetRepresentation() before the new representation is set.
 			 * This default implementation does nothing.
 			 * @param [in] pTargetRepresentation Pointer to the new representation.*/
-			virtual void doBeforeSetTargetRepresentation(const TargetRepresentationDescriptorType *pTargetRepresentation);
+			virtual void doBeforeSetTargetRepresentation(const TargetRepresentationDescriptorType*
+					pTargetRepresentation);
 			/*! This method is called by setTargetRepresentation() after the new representation is set.
 			 * This default implementation does nothing.*/
 			virtual void doAfterSetTargetRepresentation();
@@ -156,8 +161,8 @@ namespace map
 			virtual ~RegistrationAlgorithm();
 
 		private:
-			RegistrationAlgorithm(const Self &source);  //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			RegistrationAlgorithm(const Self& source);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

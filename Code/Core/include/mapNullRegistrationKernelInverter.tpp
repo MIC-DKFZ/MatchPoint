@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapNullRegistrationKernelInverter.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_NULL_REGISTRATION_KERNEL_INVERTER_TPP
@@ -34,10 +34,10 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
 		NullRegistrationKernelInverter<VInputDimensions, VOutputDimensions>::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
 			// if the kernel "request" is a null kernel, then we can handle it.
-			const KernelType *pKernel = dynamic_cast<const KernelType *>(&request);
+			const KernelType* pKernel = dynamic_cast<const KernelType*>(&request);
 			return (pKernel != NULL);
 		}
 
@@ -67,7 +67,8 @@ namespace map
 		getDescription() const
 		{
 			OStringStream os;
-			os << "NullRegistrationKernelInverter, InputDimension: " << VInputDimensions << ", OutputDimension: " << VOutputDimensions << ".";
+			os << "NullRegistrationKernelInverter, InputDimension: " << VInputDimensions <<
+			   ", OutputDimension: " << VOutputDimensions << ".";
 			return os.str();
 		}
 
@@ -75,15 +76,16 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		typename NullRegistrationKernelInverter<VInputDimensions, VOutputDimensions>::InverseKernelBasePointer
 		NullRegistrationKernelInverter<VInputDimensions, VOutputDimensions>::
-		invertKernel(const KernelBaseType &kernel,
-		             const FieldRepresentationType *pFieldRepresentation,
-		             const InverseFieldRepresentationType *pInverseFieldRepresentation) const
+		invertKernel(const KernelBaseType& kernel,
+					 const FieldRepresentationType* pFieldRepresentation,
+					 const InverseFieldRepresentationType* pInverseFieldRepresentation) const
 		{
-			const KernelType *pKernel = dynamic_cast<const KernelType *>(&kernel);
+			const KernelType* pKernel = dynamic_cast<const KernelType*>(&kernel);
 
 			if (pKernel == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot invert kernel. Reason: cannot cast to NullRegistrationKernel: " << pKernel);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot invert kernel. Reason: cannot cast to NullRegistrationKernel: " << pKernel);
 			}
 
 			//inversion of a null kernel is always a null kernel

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/test/mapMetaPropertyInfoTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -38,12 +38,15 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 
-			const std::type_info &intTypeInfo = typeid(int);
-			const std::type_info &boolPointerTypeInfo = typeid(bool *);
+			const std::type_info& intTypeInfo = typeid(int);
+			const std::type_info& boolPointerTypeInfo = typeid(bool*);
 
-			map::algorithm::MetaPropertyInfo::Pointer spInfo1 = map::algorithm::MetaPropertyInfo::New("Test1", intTypeInfo);
-			map::algorithm::MetaPropertyInfo::Pointer spInfo2 = map::algorithm::MetaPropertyInfo::New("Test2", boolPointerTypeInfo, false, true);
-			map::algorithm::MetaPropertyInfo::Pointer spInfo3 = map::algorithm::MetaPropertyInfo::New("Test3", intTypeInfo, true, false);
+			map::algorithm::MetaPropertyInfo::Pointer spInfo1 = map::algorithm::MetaPropertyInfo::New("Test1",
+					intTypeInfo);
+			map::algorithm::MetaPropertyInfo::Pointer spInfo2 = map::algorithm::MetaPropertyInfo::New("Test2",
+					boolPointerTypeInfo, false, true);
+			map::algorithm::MetaPropertyInfo::Pointer spInfo3 = map::algorithm::MetaPropertyInfo::New("Test3",
+					intTypeInfo, true, false);
 
 			CHECK_EQUAL("Test1", spInfo1->getName());
 			CHECK_EQUAL(intTypeInfo.name(), spInfo1->getTypeName());
@@ -67,7 +70,8 @@ namespace map
 
 			map::algorithm::MetaPropertyInfo::Pointer spInfoClone;
 
-			CHECK_NO_THROW(spInfoClone = dynamic_cast<map::algorithm::MetaPropertyInfo *>(spInfo2->CreateAnother().GetPointer()));
+			CHECK_NO_THROW(spInfoClone = dynamic_cast<map::algorithm::MetaPropertyInfo*>
+										 (spInfo2->CreateAnother().GetPointer()));
 
 			CHECK_EQUAL(spInfo2->getName(), spInfoClone->getName());
 			CHECK_EQUAL(spInfo2->getTypeName(), spInfoClone->getTypeName());

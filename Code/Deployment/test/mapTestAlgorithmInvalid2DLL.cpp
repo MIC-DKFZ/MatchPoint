@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/test/mapTestAlgorithmInvalid2DLL.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 /*! @file
@@ -30,10 +30,12 @@
 #include "mapDummyImageRegistrationAlgorithm.h"
 #include "mapConfigure.h"
 
-mapGenerateAlgorithmUIDPolicyMacro(InvalidTestAlgUIDPolicy,"de.dkfz.matchpoint.test", "InvalidAlgorithm2_missingSymbol", "1.0", "InvalidAlgorithm2_missingSymbol");
+mapGenerateAlgorithmUIDPolicyMacro(InvalidTestAlgUIDPolicy, "de.dkfz.matchpoint.test",
+								   "InvalidAlgorithm2_missingSymbol", "1.0", "InvalidAlgorithm2_missingSymbol");
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType,InvalidTestAlgUIDPolicy> AlgorithmType;
+typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, InvalidTestAlgUIDPolicy>
+AlgorithmType;
 
 typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
 
@@ -41,7 +43,7 @@ extern "C"
 #ifdef _WIN32
 __declspec(dllexport)
 #endif
-void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor)
+void mapGetDLLInterfaceVersion(unsigned int& major, unsigned int& minor)
 {
 	major = MAP_DLL_INTERFACE_VERSION_MAJOR;
 	minor = MAP_DLL_INTERFACE_VERSION_MINOR;
@@ -59,11 +61,11 @@ void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor)
 
 extern "C"
 #ifdef _WIN32
-  __declspec(dllexport)
+__declspec(dllexport)
 #endif
-  void mapGetRegistrationAlgorithmProfile(map::core::String& profile)
+void mapGetRegistrationAlgorithmProfile(map::core::String& profile)
 {
-  profile = "InvalidAlgorithm2_missingSymbol";
+	profile = "InvalidAlgorithm2_missingSymbol";
 };
 
 
@@ -71,7 +73,8 @@ extern "C"
 #ifdef _WIN32
 __declspec(dllexport)
 #endif
-void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, map::deployment::SyncObject *syncObject)
+void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer&
+		spAlgorithm, map::deployment::SyncObject* syncObject)
 {
 	spAlgorithm = DLLHelperType::mapGetRegistrationAlgorithmInstance(syncObject);
 };

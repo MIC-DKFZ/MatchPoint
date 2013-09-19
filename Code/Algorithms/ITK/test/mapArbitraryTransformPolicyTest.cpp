@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapArbitraryTransformPolicyTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -37,7 +37,8 @@ namespace map
 		namespace
 		{
 			template<class TScalar, unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			class TestPolicy : public algorithm::itk::ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>
+			class TestPolicy : public
+				algorithm::itk::ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>
 			{
 				//derivered a test class to generate public constructors (The policy itsself cannot
 				//be instantiated directly), to set the visibility of getTransformInternal to
@@ -50,10 +51,12 @@ namespace map
 
 				TestPolicy()
 				{
-					typedef ::itk::ReceptorMemberCommand< TestPolicy<TScalar, VInputDimensions, VOutputDimensions> > AlgorithmCommandType;
+					typedef ::itk::ReceptorMemberCommand< TestPolicy<TScalar, VInputDimensions, VOutputDimensions> >
+					AlgorithmCommandType;
 
 					typename AlgorithmCommandType::Pointer spCmd = AlgorithmCommandType::New();
-					spCmd->SetCallbackFunction(this, & TestPolicy<TScalar, VInputDimensions, VOutputDimensions>::onChange);
+					spCmd->SetCallbackFunction(this,
+											   & TestPolicy<TScalar, VInputDimensions, VOutputDimensions>::onChange);
 					this->_spOnChange = spCmd;
 
 					_regEventCount = 0;
@@ -62,7 +65,7 @@ namespace map
 				};
 
 				void
-				onChange(const ::itk::EventObject &eventObject)
+				onChange(const ::itk::EventObject& eventObject)
 				{
 					map::events::UnregisterAlgorithmComponentEvent unregEvent;
 					map::events::RegisterAlgorithmComponentEvent regEvent;
@@ -86,15 +89,16 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			TestPolicy<core::continuous::ScalarType, 3, 3> policy;
-			const TestPolicy<core::continuous::ScalarType, 3, 3> &constPolicy = policy;
+			const TestPolicy<core::continuous::ScalarType, 3, 3>& constPolicy = policy;
 
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 3> > ModelType;
+			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 3> >
+			ModelType;
 
 			ModelType::Pointer spModel1 = ModelType::New();
 			ModelType::Pointer spModel2 = ModelType::New();
 
-			core::TransformModelBase<core::continuous::ScalarType, 3, 3> *pModel = NULL;
-			const core::TransformModelBase<core::continuous::ScalarType, 3, 3> *pConstModel = NULL;
+			core::TransformModelBase<core::continuous::ScalarType, 3, 3>* pModel = NULL;
+			const core::TransformModelBase<core::continuous::ScalarType, 3, 3>* pConstModel = NULL;
 
 			CHECK_NO_THROW(pModel = policy.getTransformInternal());
 			CHECK_NO_THROW(pConstModel = constPolicy.getTransformInternal());

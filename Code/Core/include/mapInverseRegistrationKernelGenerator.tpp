@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapInverseRegistrationKernelGenerator.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,25 +35,29 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		typename InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::InverseKernelBasePointer
 		InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::
-		generateInverse(const KernelBaseType &kernel, const InverseFieldRepresentationType *pInverseFieldRepresentation) const
+		generateInverse(const KernelBaseType& kernel,
+						const InverseFieldRepresentationType* pInverseFieldRepresentation) const
 		{
-			return generateInverse(kernel, kernel.getLargestPossibleRepresentation(), pInverseFieldRepresentation);
+			return generateInverse(kernel, kernel.getLargestPossibleRepresentation(),
+								   pInverseFieldRepresentation);
 		};
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		typename InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::InverseKernelBasePointer
 		InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::
-		generateInverse(const KernelBaseType &kernel, const FieldRepresentationType *pFieldRepresentation,
-		                const InverseFieldRepresentationType *pInverseFieldRepresentation) const
+		generateInverse(const KernelBaseType& kernel, const FieldRepresentationType* pFieldRepresentation,
+						const InverseFieldRepresentationType* pInverseFieldRepresentation) const
 		{
-			InverterBaseType *pInverter = InverterStackType::getProvider(kernel);
+			InverterBaseType* pInverter = InverterStackType::getProvider(kernel);
 
 			if (!pInverter)
 			{
-				mapExceptionMacro(MissingProviderException, << "No responsible inverter available for given kernel. Kernel:" << kernel);
+				mapExceptionMacro(MissingProviderException,
+								  << "No responsible inverter available for given kernel. Kernel:" << kernel);
 			}
 
-			InverseKernelBasePointer spInverseKernel = pInverter->invertKernel(kernel, pFieldRepresentation, pInverseFieldRepresentation);
+			InverseKernelBasePointer spInverseKernel = pInverter->invertKernel(kernel, pFieldRepresentation,
+					pInverseFieldRepresentation);
 
 			assert(spInverseKernel.IsNotNull());
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldByFileLoadFunctor.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FIELD_BY_FILE_LOAD_FUNCTOR_H
@@ -79,7 +79,7 @@ namespace map
 				 * @eguarantee no fail
 				 * @return reference to the specified path.
 				 */
-				const String &getFieldFilePath(void) const;
+				const String& getFieldFilePath(void) const;
 
 				/*! Static methods that creates the functor.
 				 * Thus it is a specialized version of the itkNewMacro()
@@ -88,8 +88,8 @@ namespace map
 				 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
 				 * may be null for this functor (meaning that the loaded field defines the representation).
 				 * @return Smart pointer to the new functor*/
-				static Pointer New(const String &filepath,
-				                   const InFieldRepresentationType *pInFieldRepresentation = NULL);
+				static Pointer New(const String& filepath,
+								   const InFieldRepresentationType* pInFieldRepresentation = NULL);
 
 				/*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
 				 * @eguarantee strong
@@ -102,19 +102,19 @@ namespace map
 				 * @param [in] model Reference to the transform model that should be used.
 				* @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
 				* may be null for this functor (meaning that the loaded field defines the representation).*/
-				FieldByFileLoadFunctor(const String &filepath,
-				                       const InFieldRepresentationType *pInFieldRepresentation);
+				FieldByFileLoadFunctor(const String& filepath,
+									   const InFieldRepresentationType* pInFieldRepresentation);
 
 				virtual ~FieldByFileLoadFunctor();
 
 				String _filePath;
 
 				/*! Methods invoked by itk::LightObject::Print().  */
-				virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			private:
-				FieldByFileLoadFunctor(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				FieldByFileLoadFunctor(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		} // end namespace functors
@@ -130,7 +130,7 @@ namespace map
 		*/
 		template <unsigned int VDimensions>
 		typename FieldRepresentationDescriptor<VDimensions>::Pointer
-		createFieldRepresentationOfMetaImageFile(const String &filePath);
+		createFieldRepresentationOfMetaImageFile(const String& filePath);
 
 	} // end namespace core
 } // end namespace map

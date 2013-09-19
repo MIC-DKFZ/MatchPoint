@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapSmartMetaProperty.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -46,7 +46,8 @@ namespace map
 		*/
 
 		template <typename TValue>
-		class SmartMetaProperty : public MetaPropertyBase, public MetaPropertyAccessInterface< TValue * >, public MetaPropertyLightPointerAccessInterface
+		class SmartMetaProperty : public MetaPropertyBase, public MetaPropertyAccessInterface< TValue* >,
+			public MetaPropertyLightPointerAccessInterface
 		{
 		public:
 			/** Smart pointer typedef support. */
@@ -57,7 +58,7 @@ namespace map
 
 			typedef TValue ValueType;
 			typedef ::itk::SmartPointer<ValueType>  ValueSmartPointerType;
-			typedef TValue *ValuePointerType;
+			typedef TValue* ValuePointerType;
 
 			typedef MetaPropertyAccessInterface< ValuePointerType > AccessInterfaceType;
 			typedef typename AccessInterfaceType::ValueSetType ValueSetType;
@@ -89,14 +90,14 @@ namespace map
 			* @return A pointer to a const char array containing the unique type name.
 			* @eguarantee strong
 			*/
-			virtual const char *getMetaPropertyTypeName() const;
+			virtual const char* getMetaPropertyTypeName() const;
 
 			/**
 			* @brief Returns the type_id of the value type that stores the property.
 			* @eguarantee strong
 			* @return A constant reference to a std::type_info object
 			*/
-			virtual const std::type_info &getMetaPropertyTypeInfo(void) const;
+			virtual const std::type_info& getMetaPropertyTypeInfo(void) const;
 
 			/**
 			* @brief Returns the property value
@@ -117,13 +118,13 @@ namespace map
 			* @return indicates if it is possible to convert
 			* @eguarantee strong
 			*/
-			virtual bool getUntypedValue(ConstLightPointer &) const;
+			virtual bool getUntypedValue(ConstLightPointer&) const;
 			/**
 			* @brief Returns the property Value as LightObject pointer
 			* @return indicates if it is possible to convert
 			* @eguarantee strong
 			*/
-			virtual bool getUntypedValue(LightPointer &) const;
+			virtual bool getUntypedValue(LightPointer&) const;
 
 		protected:
 
@@ -139,15 +140,15 @@ namespace map
 			* @eguarantee strong
 			* @param os An output stream
 			*/
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
 
 			/*! Property value.*/
 			ValueSmartPointerType _spValue;
 
-			SmartMetaProperty(const Self &);//purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			SmartMetaProperty(const Self&); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

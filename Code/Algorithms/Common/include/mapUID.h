@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapUID.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -83,35 +83,36 @@ namespace map
 			* @param isWritable Indicates if the property is writable
 			* @eguarantee strong
 			*/
-			static Pointer New(const NamespaceType &ns, const NameType &name, const VersionType &version, const BuildTagType &buildTag);
+			static Pointer New(const NamespaceType& ns, const NameType& name, const VersionType& version,
+							   const BuildTagType& buildTag);
 
 			/**
 			* @brief Returns the namespace of the algorithm.
 			* @eguarantee strong
 			* @return A constant reference to the namespace
 			*/
-			const NamespaceType &getNamespace() const;
+			const NamespaceType& getNamespace() const;
 
 			/**
 			* @brief Returns the name of the algorithm.
 			* @eguarantee strong
 			* @return A constant reference to the name
 			*/
-			const NameType &getName() const;
+			const NameType& getName() const;
 
 			/**
 			* @brief Returns the version of the algorithm.
 			* @eguarantee strong
 			* @return A constant reference to the version
 			*/
-			const VersionType &getVersion() const;
+			const VersionType& getVersion() const;
 
 			/**
 			* @brief Returns the build number of the algorithm.
 			* @eguarantee strong
 			* @return A constant reference to the build number
 			*/
-			const BuildTagType &getBuildTag() const;
+			const BuildTagType& getBuildTag() const;
 
 			/**
 			* @brief Converts the UID into a display string containing all informations.
@@ -131,13 +132,14 @@ namespace map
 			* @eguarantee strong
 			* @param os An output stream
 			*/
-			virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 			~UID();
-			UID(const NamespaceType &ns, const NameType &name, const VersionType &version, const BuildTagType &buildTag);
+			UID(const NamespaceType& ns, const NameType& name, const VersionType& version,
+				const BuildTagType& buildTag);
 		private:
-			UID(const Self &);//purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			UID(const Self&); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 		/** Helper function that allows to compare uids directly or with wild cards,
@@ -153,7 +155,8 @@ namespace map
 		 * @return True, if the uids match (regarding the wildcard settings).
 		 * @eguarantee strong
 		 * @TODO add to unit test*/
-		MAPAlgorithms_EXPORT bool compareUIDs(const UID *uid1, const UID *uid2, bool wcNamespace = false, bool wcName = false, bool wcVersion = false, bool wcBuild = false);
+		MAPAlgorithms_EXPORT bool compareUIDs(const UID* uid1, const UID* uid2, bool wcNamespace = false,
+											  bool wcName = false, bool wcVersion = false, bool wcBuild = false);
 
 		/** Helper function that allows to compare uids directly or with wild cards,
 		 * thus ignoring parts of the uid.
@@ -166,7 +169,8 @@ namespace map
 		 * @return True, if the uids match (regarding the wildcard settings).
 		 * @eguarantee strong
 		 * @TODO add to unit test*/
-		MAPAlgorithms_EXPORT bool compareUIDs(const UID &uid1, const UID &uid2, bool wcNamespace = false, bool wcName = false, bool wcVersion = false, bool wcBuild = false);
+		MAPAlgorithms_EXPORT bool compareUIDs(const UID& uid1, const UID& uid2, bool wcNamespace = false,
+											  bool wcName = false, bool wcVersion = false, bool wcBuild = false);
 
 
 	}

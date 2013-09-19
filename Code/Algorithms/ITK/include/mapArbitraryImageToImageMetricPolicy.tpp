@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapArbitraryImageToImageMetricPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -46,15 +46,16 @@ namespace map
 			template<class TMovingImage, class TTargetImage>
 			void
 			ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::
-			setMetricControl(MetricControlType *pMetric)
+			setMetricControl(MetricControlType* pMetric)
 			{
 				if (pMetric != _spMetric.GetPointer())
 				{
 					//there is really the need to change
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::UnregisterAlgorithmComponentEvent unRegEvent(_spMetric.GetPointer(), "Unregister current metric");
-						this->_spOnChange->Execute((::itk::Object *)NULL, unRegEvent);
+						events::UnregisterAlgorithmComponentEvent unRegEvent(_spMetric.GetPointer(),
+								"Unregister current metric");
+						this->_spOnChange->Execute((::itk::Object*)NULL, unRegEvent);
 					}
 
 					_mTime.setWatchedObject(pMetric);
@@ -63,7 +64,7 @@ namespace map
 					if (this->_spOnChange.IsNotNull())
 					{
 						events::RegisterAlgorithmComponentEvent regEvent(_spMetric.GetPointer(), "Register new metric");
-						this->_spOnChange->Execute((::itk::Object *)NULL, regEvent);
+						this->_spOnChange->Execute((::itk::Object*)NULL, regEvent);
 					}
 				}
 			};
@@ -81,7 +82,7 @@ namespace map
 			};
 
 			template<class TMovingImage, class TTargetImage>
-			typename ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::MetricControlType *
+			typename ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::MetricControlType*
 			ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::
 			getMetricInternal()
 			{
@@ -89,7 +90,7 @@ namespace map
 			};
 
 			template<class TMovingImage, class TTargetImage>
-			const typename ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::MetricControlType *
+			const typename ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::MetricControlType*
 			ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::
 			getMetricInternal() const
 			{
@@ -97,7 +98,7 @@ namespace map
 			};
 
 			template<class TMovingImage, class TTargetImage>
-			typename ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::MetricControlType *
+			typename ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::MetricControlType*
 			ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::
 			getMetricControl()
 			{
@@ -105,7 +106,7 @@ namespace map
 			};
 
 			template<class TMovingImage, class TTargetImage>
-			const typename ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::MetricControlType *
+			const typename ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::MetricControlType*
 			ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::
 			getMetricControl() const
 			{

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapSDExceptions.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -51,15 +51,16 @@ namespace map
 			MissingIdentifierException();
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			MissingIdentifierException(const String &file, unsigned int lineNumber);
+			MissingIdentifierException(const String& file, unsigned int lineNumber);
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			MissingIdentifierException(const String &file, unsigned int lineNumber, const String &desc, const String &loc);
+			MissingIdentifierException(const String& file, unsigned int lineNumber, const String& desc,
+									   const String& loc);
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
 			virtual ~MissingIdentifierException() throw();
 
-			virtual const char *GetNameOfClass() const
+			virtual const char* GetNameOfClass() const
 			{
 				return "map::MissingIdentifierException";
 			}
@@ -73,10 +74,11 @@ namespace map
 			* and every task is processed (or failed through an exception).
 			* @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			* @eguarantee no throw*/
-			virtual BaseExceptionType *clone() const throw();
+			virtual BaseExceptionType* clone() const throw();
 		};
 
-		MAPCore_EXPORT std::ostream &operator<<(std::ostream &os, const MissingIdentifierException &exception);
+		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os,
+												const MissingIdentifierException& exception);
 
 		/** @class OutOfRangeException
 		* @brief Exception for requests that are out of range.
@@ -96,15 +98,16 @@ namespace map
 			OutOfRangeException();
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			OutOfRangeException(const String &file, unsigned int lineNumber);
+			OutOfRangeException(const String& file, unsigned int lineNumber);
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			OutOfRangeException(const String &file, unsigned int lineNumber, const String &desc, const String &loc);
+			OutOfRangeException(const String& file, unsigned int lineNumber, const String& desc,
+								const String& loc);
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
 			virtual ~OutOfRangeException() throw();
 
-			virtual const char *GetNameOfClass() const
+			virtual const char* GetNameOfClass() const
 			{
 				return "map::OutOfRangeException";
 			}
@@ -118,10 +121,10 @@ namespace map
 			* and every task is processed (or failed through an exception).
 			* @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			* @eguarantee no throw*/
-			virtual BaseExceptionType *clone() const throw();
+			virtual BaseExceptionType* clone() const throw();
 		};
 
-		MAPCore_EXPORT std::ostream &operator<<(std::ostream &os, const OutOfRangeException &exception);
+		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os, const OutOfRangeException& exception);
 
 		/** @class SDStreamingException
 		* @brief Exception for missing keys in f.r.e.e..
@@ -141,15 +144,16 @@ namespace map
 			SDStreamingException();
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			SDStreamingException(const String &file, unsigned int lineNumber);
+			SDStreamingException(const String& file, unsigned int lineNumber);
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			SDStreamingException(const String &file, unsigned int lineNumber, const String &desc, const String &loc);
+			SDStreamingException(const String& file, unsigned int lineNumber, const String& desc,
+								 const String& loc);
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
 			virtual ~SDStreamingException() throw();
 
-			virtual const char *GetNameOfClass() const
+			virtual const char* GetNameOfClass() const
 			{
 				return "map::SDStreamingException";
 			}
@@ -163,10 +167,10 @@ namespace map
 			* and every task is processed (or failed through an exception).
 			* @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			* @eguarantee no throw*/
-			virtual BaseExceptionType *clone() const throw();
+			virtual BaseExceptionType* clone() const throw();
 		};
 
-		MAPCore_EXPORT std::ostream &operator<<(std::ostream &os, const SDStreamingException &exception);
+		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os, const SDStreamingException& exception);
 
 	} //end of namespace core
 } //end of namespace map

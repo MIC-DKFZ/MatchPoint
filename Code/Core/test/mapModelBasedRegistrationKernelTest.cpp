@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapModelBasedRegistrationKernelTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -40,7 +40,8 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> > TransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
+			TransformType;
 
 			KernelType::Pointer spKernel = KernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
@@ -57,7 +58,8 @@ namespace map
 
 			KernelType::InputVectorType inVector;
 			inVector.Fill(4);
-			KernelType::OutputVectorType referenceVector = spTransform->getTransform()->TransformVector(inVector);
+			KernelType::OutputVectorType referenceVector = spTransform->getTransform()->TransformVector(
+						inVector);
 
 			KernelType::OutputVectorType resultVector;
 			KernelType::OutputPointType resultPoint;

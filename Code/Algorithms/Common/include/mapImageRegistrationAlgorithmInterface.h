@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapImageRegistrationAlgorithmInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -73,13 +73,13 @@ namespace map
 				@eguarantee strong
 				@param pMovingImage a pointer to the moving image
 				*/
-				virtual void setMovingImage(const MovingImageType *pMovingImage) = 0;
+				virtual void setMovingImage(const MovingImageType* pMovingImage) = 0;
 
 				/*! @brief sets the target image
 				@eguarantee strong
 				@param pTargetImage a pointer to the moving image
 				*/
-				virtual void setTargetImage(const TargetImageType *pTargetImage) = 0;
+				virtual void setTargetImage(const TargetImageType* pTargetImage) = 0;
 
 			protected:
 				/*! @brief virtual destructor
@@ -90,8 +90,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ImageRegistrationAlgorithmInterface(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ImageRegistrationAlgorithmInterface(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 		}
 	}

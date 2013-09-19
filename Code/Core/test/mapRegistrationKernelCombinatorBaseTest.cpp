@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapRegistrationKernelCombinatorBaseTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -35,12 +35,15 @@ namespace map
 	{
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		class TestRegistrationKernelCombinatorBase: public core::RegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions>
+		class TestRegistrationKernelCombinatorBase: public
+			core::RegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions>
 		{
 		public:
 
-			typedef TestRegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions> Self;
-			typedef core::RegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions> Superclass;
+			typedef TestRegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			Self;
+			typedef core::RegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
@@ -51,16 +54,16 @@ namespace map
 
 			itkNewMacro(Self);
 
-			CombinedKernelBasePointer combineKernels(const RequestType &request,
-			                                         const InputFieldRepresentationType *pInputFieldRepresentation,
-			                                         bool usePadding = false,
-			                                         const PaddingVectorType &paddingVector = PaddingVectorType(0.0)) const
+			CombinedKernelBasePointer combineKernels(const RequestType& request,
+					const InputFieldRepresentationType* pInputFieldRepresentation,
+					bool usePadding = false,
+					const PaddingVectorType& paddingVector = PaddingVectorType(0.0)) const
 			{
 				CombinedKernelBasePointer spDummy;
 				return spDummy;
 			}
 
-			virtual bool canHandleRequest(const RequestType &request) const
+			virtual bool canHandleRequest(const RequestType& request) const
 			{
 				return false;
 			}

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMetaProperty.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -93,14 +93,14 @@ namespace map
 			* @return A pointer to a const char array containing the unique type name.
 			* @eguarantee strong
 			*/
-			virtual const char *getMetaPropertyTypeName() const;
+			virtual const char* getMetaPropertyTypeName() const;
 
 			/**
 			* @brief Returns the type_id of the value type that stores the property.
 			* @eguarantee strong
 			* @return A constant reference to a std::type_info object
 			*/
-			virtual const std::type_info &getMetaPropertyTypeInfo(void) const;
+			virtual const std::type_info& getMetaPropertyTypeInfo(void) const;
 
 			/**
 			* @brief Returns the property value
@@ -129,15 +129,15 @@ namespace map
 			* @eguarantee strong
 			* @param os An output stream
 			*/
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
 
 			/*! Property value.*/
 			ValueType _value;
 
-			MetaProperty(const Self &);//purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			MetaProperty(const Self&); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

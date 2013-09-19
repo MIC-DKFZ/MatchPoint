@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapMetaPropertyInfo.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -68,7 +68,8 @@ namespace map
 			* @param isWritable Indicates if the property is writable
 			* @eguarantee strong
 			*/
-			static Pointer New(const core::String &name, const std::type_info &type_info, bool isReadable = true, bool isWritable = false);
+			static Pointer New(const core::String& name, const std::type_info& type_info,
+							   bool isReadable = true, bool isWritable = false);
 
 			/**
 			* @brief Dublicates a MetaProperty instance. The value of the property is copied.
@@ -82,21 +83,21 @@ namespace map
 			* @return A pointer to a const char array containing the unique type name.
 			* @eguarantee strong
 			*/
-			const char *getTypeName() const;
+			const char* getTypeName() const;
 
 			/**
 			* @brief Returns the type_id of the value type that stores the associated property.
 			* @eguarantee strong
 			* @return A constant reference to a std::type_info object
 			*/
-			const std::type_info &getTypeInfo() const;
+			const std::type_info& getTypeInfo() const;
 
 			/**
 			* @brief Returns the identifying name of the associated property.
 			* @eguarantee strong
 			* @return A constant reference to a String that is the name
 			*/
-			const core::String &getName() const;
+			const core::String& getName() const;
 
 			/**
 			* @brief Returns if the property is supposed to be accessed. This is
@@ -118,7 +119,7 @@ namespace map
 
 		protected:
 			core::String _name;
-			const std::type_info &_type_info;
+			const std::type_info& _type_info;
 			bool _isReadable;
 			bool _isWritable;
 
@@ -127,13 +128,14 @@ namespace map
 			* @eguarantee strong
 			* @param os An output stream
 			*/
-			virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 			~MetaPropertyInfo();
-			MetaPropertyInfo(const core::String &name, const std::type_info &type_info, bool isReadable = true, bool isWritable = false);
+			MetaPropertyInfo(const core::String& name, const std::type_info& type_info, bool isReadable = true,
+							 bool isWritable = false);
 		private:
-			MetaPropertyInfo(const Self &);//purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			MetaPropertyInfo(const Self&); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

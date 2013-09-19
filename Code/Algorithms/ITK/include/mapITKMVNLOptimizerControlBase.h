@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKMVNLOptimizerControlBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -64,16 +64,16 @@ namespace map
 				@eguarantee no fail
 				@param pOptimizer the OptimizerType object that has to be set. Must not be NULL (otherwise an exception will be thrown).
 				*/
-				virtual void setOptimizer(ConcreteOptimizerType *pOptimizer);
+				virtual void setOptimizer(ConcreteOptimizerType* pOptimizer);
 
-				virtual OptimizerBaseType *getOptimizer();
-				virtual const OptimizerBaseType *getOptimizer() const;
+				virtual OptimizerBaseType* getOptimizer();
+				virtual const OptimizerBaseType* getOptimizer() const;
 
-				virtual MVNLOptimizerBaseType *getMVNLOptimizer();
-				virtual const MVNLOptimizerBaseType *getMVNLOptimizer() const;
+				virtual MVNLOptimizerBaseType* getMVNLOptimizer();
+				virtual const MVNLOptimizerBaseType* getMVNLOptimizer() const;
 
-				virtual ConcreteOptimizerType *getConcreteOptimizer();
-				virtual const ConcreteOptimizerType *getConcreteOptimizer() const;
+				virtual ConcreteOptimizerType* getConcreteOptimizer();
+				virtual const ConcreteOptimizerType* getConcreteOptimizer() const;
 
 				/*! The modification time (MT) of an optimizer controler is the the maximum of his MT
 				 * and the MT of the controlled optimizer.  */
@@ -102,7 +102,8 @@ namespace map
 				/*! Method is called by clone() to transfer the properties between the cloned
 				 * optimizer and the source.
 				 * @remark this base implementation copies the scales and the initial position.*/
-				virtual void copyProperties(const ConcreteOptimizerType *source, ConcreteOptimizerType *destination) const;
+				virtual void copyProperties(const ConcreteOptimizerType* source,
+											ConcreteOptimizerType* destination) const;
 
 				/*! Method is called by clone() to clone the concrete control type derivated from this class. */
 				virtual Pointer doCloneControl() const = 0;
@@ -118,8 +119,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKMVNLOptimizerControlBase(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKMVNLOptimizerControlBase(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 		}
 	}

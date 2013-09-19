@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMappingTaskBatchThread.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -63,7 +63,7 @@ namespace map
 			typedef unsigned long ThreadIDType;
 
 			ThreadIDType getThreadID() const;
-			void setThreadID(const ThreadIDType &id);
+			void setThreadID(const ThreadIDType& id);
 
 			/** Executes the thread. The default handling requests a task via
 			* invoking an NextTaskThreadEvent. The thread assumes that the next task is set
@@ -73,9 +73,9 @@ namespace map
 			*/
 			void execute();
 
-			void setNewTask(MappingTaskBaseType *pTask);
+			void setNewTask(MappingTaskBaseType* pTask);
 
-			MappingTaskBaseType *getCurrentTask();
+			MappingTaskBaseType* getCurrentTask();
 
 			bool hasUnhandledExceptionOccured() const;
 
@@ -90,16 +90,16 @@ namespace map
 			ThreadIDType _threadID;
 			bool _unhandledExceptionOccured;
 
-			MappingTaskBaseType *_pNewTask;
-			MappingTaskBaseType *_pCurrentProcessedTask;
+			MappingTaskBaseType* _pNewTask;
+			MappingTaskBaseType* _pCurrentProcessedTask;
 
 			/** Responsible for locking the processing, to ensure no change of values
 			* while thread is in Execution.*/
 			::itk::SimpleFastMutexLock _executionMutex;
 			typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock > MutexHolderType;
 
-			MappingTaskBatchThread(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			MappingTaskBatchThread(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 	} // end namespace core
 } // end namespace map

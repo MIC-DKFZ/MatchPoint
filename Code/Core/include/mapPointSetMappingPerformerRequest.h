@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapPointSetMappingPerformerRequest.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -42,7 +42,8 @@ namespace map
 			* @tparam TResultData Type of the data in the target space.
 		*/
 		template <class TRegistration, class TInputData, class TResultData>
-		class PointSetMappingPerformerRequest: public MappingPerformerRequestBase<TRegistration, TInputData, TResultData>
+		class PointSetMappingPerformerRequest: public
+			MappingPerformerRequestBase<TRegistration, TInputData, TResultData>
 		{
 		public:
 			typedef MappingPerformerRequestBase<TRegistration, TInputData, TResultData> Superclass;
@@ -52,19 +53,21 @@ namespace map
 			typedef typename Superclass::InputDataType InputDataType;
 			typedef typename ResultDataType::PixelType ErrorPointValueType;
 
-			PointSetMappingPerformerRequest(const RegistrationType *pRegistration, const InputDataType *pInputData, bool throwOnMappingError, const ErrorPointValueType &errorValue);
+			PointSetMappingPerformerRequest(const RegistrationType* pRegistration,
+											const InputDataType* pInputData, bool throwOnMappingError, const ErrorPointValueType& errorValue);
 			virtual ~PointSetMappingPerformerRequest();
 
-			PointSetMappingPerformerRequest(const PointSetMappingPerformerRequest &);
+			PointSetMappingPerformerRequest(const PointSetMappingPerformerRequest&);
 
-			void operator=(const PointSetMappingPerformerRequest &);
+			void operator=(const PointSetMappingPerformerRequest&);
 
 			bool _throwOnMappingError;
 			ErrorPointValueType _errorValue;
 		};
 
 		template <class TRegistration, class TInputData, class TResultData>
-		std::ostream &operator<<(std::ostream &os, const PointSetMappingPerformerRequest<TRegistration, TInputData, TResultData> &request)
+		std::ostream& operator<<(std::ostream& os,
+								 const PointSetMappingPerformerRequest<TRegistration, TInputData, TResultData>& request)
 		{
 			os << "Registration: ";
 

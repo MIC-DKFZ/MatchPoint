@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/ITK/include/mapArbitraryWarpImageFilter.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -86,9 +86,9 @@ namespace itk
 		 */
 		template <
 		class TInputImage,
-		      class TOutputImage,
-		      class TDisplacementField
-		      >
+			  class TOutputImage,
+			  class TDisplacementField
+			  >
 		class ITK_EXPORT ArbitraryWarpImageFilter :
 			public itk::WarpImageFilter<TInputImage, TOutputImage, TDisplacementField>
 		{
@@ -188,17 +188,17 @@ namespace itk
 		protected:
 			ArbitraryWarpImageFilter();
 			~ArbitraryWarpImageFilter() {};
-			void PrintSelf(std::ostream &os, Indent indent) const;
+			void PrintSelf(std::ostream& os, Indent indent) const;
 
 			/** WarpImageFilter is implemented as a multi-threaded filter.
 			 * As such, it needs to provide and implementation for
 			 * ThreadedGenerateData(). */
-			void ThreadedGenerateData(const OutputImageRegionType &outputRegionForThread,
-			                          ::itk::ThreadIdType threadId);
+			void ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread,
+									  ::itk::ThreadIdType threadId);
 
 		private:
-			ArbitraryWarpImageFilter(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			ArbitraryWarpImageFilter(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 			bool      m_UseStandardWarpFilter;
 			SizeType  m_Size;              // Size of the output image
@@ -208,7 +208,8 @@ namespace itk
 			bool m_UseNullVector;
 			DisplacementType m_NullVector;
 
-			typedef NULLVectorAwareLinearInterpolateImageFunction<DisplacementFieldType, CoordRepType> FieldInterpolatorType;
+			typedef NULLVectorAwareLinearInterpolateImageFunction<DisplacementFieldType, CoordRepType>
+			FieldInterpolatorType;
 			typedef typename FieldInterpolatorType::Pointer FieldInterpolatorPointer;
 
 			FieldInterpolatorPointer        m_FieldInterpolator;

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapObserverSentinel.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,7 +50,8 @@ namespace map
 
 			itkTypeMacro(ObserverSentinel, ::itk::Object);
 
-			static Pointer New(::itk::Object *pObserverOwner, const ::itk::EventObject &event, itk::Command *pCmd);
+			static Pointer New(::itk::Object* pObserverOwner, const ::itk::EventObject& event,
+							   itk::Command* pCmd);
 
 			virtual ::itk::LightObject::Pointer CreateAnother(void) const;
 
@@ -60,7 +61,8 @@ namespace map
 
 		protected:
 			/*! @pre pObserverOwner and pCmd must not be NULL.*/
-			ObserverSentinel(::itk::Object *pObserverOwner, const ::itk::EventObject &event, itk::Command *pCmd);
+			ObserverSentinel(::itk::Object* pObserverOwner, const ::itk::EventObject& event,
+							 itk::Command* pCmd);
 			virtual ~ObserverSentinel();
 
 		private:
@@ -68,8 +70,8 @@ namespace map
 			::itk::Object::Pointer _spObject;
 
 			//No copy constructor allowed
-			ObserverSentinel(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			ObserverSentinel(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Utilities/test/mapProcessExecutorTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -38,16 +38,18 @@ namespace map
 		map::core::String testCOUT;
 		map::core::String testCERR;
 
-		void onRegistrationEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
+		void onRegistrationEvent(itk::Object* pCaller, const itk::EventObject& e, void*)
 		{
-			const map::events::ExternalProcessStdOutEvent *pEvent = dynamic_cast<const map::events::ExternalProcessStdOutEvent *>(&e);
+			const map::events::ExternalProcessStdOutEvent* pEvent =
+				dynamic_cast<const map::events::ExternalProcessStdOutEvent*>(&e);
 
 			if (pEvent)
 			{
 				testCOUT = testCOUT + pEvent->getComment();
 			}
 
-			const map::events::ExternalProcessStdErrEvent *pErrEvent = dynamic_cast<const map::events::ExternalProcessStdErrEvent *>(&e);
+			const map::events::ExternalProcessStdErrEvent* pErrEvent =
+				dynamic_cast<const map::events::ExternalProcessStdErrEvent*>(&e);
 
 			if (pErrEvent)
 			{
@@ -58,9 +60,9 @@ namespace map
 		//defined by mapDeploymentTests.cpp. It is the path to the current running executable.
 		//It is needed to bypass the problem that when using MS Visual Studio the actual binary
 		//path depends of the compile mode (release/debug) and is not the CMake binary path.
-		extern const char *_callingAppPath;
+		extern const char* _callingAppPath;
 
-		int mapProcessExecutorTest(int argc, char *argv[])
+		int mapProcessExecutorTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -96,7 +98,8 @@ namespace map
 			CHECK_EQUAL("test error output", testCERR);
 
 			args.clear();
-			args.push_back(map::utilities::ProcessExecutor::getOSDependendExecutableName("mapTestProcessExecutorApp"));
+			args.push_back(
+				map::utilities::ProcessExecutor::getOSDependendExecutableName("mapTestProcessExecutorApp"));
 			args.push_back("my");
 			args.push_back("other");
 			args.push_back("test");

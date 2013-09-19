@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapVolumeSize.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_VOLUME_SIZE_H
@@ -69,32 +69,32 @@ namespace map
 				}
 
 				/** Add two sizes.  */
-				Self operator+(const Self &vec) const;
+				Self operator+(const Self& vec) const;
 
 				/** Increment size by a size.  */
-				const Self &operator+=(const Self &vec);
+				const Self& operator+=(const Self& vec);
 
 				/** Subtract two sizes.  */
-				Self operator-(const Self &vec) const;
+				Self operator-(const Self& vec) const;
 
 				/** Decrement size by a size.  */
-				const Self &operator-=(const Self &vec);
+				const Self& operator-=(const Self& vec);
 
 				/** Multiply two sizes (elementwise product).  */
-				Self operator*(const Self &vec) const;
+				Self operator*(const Self& vec) const;
 
 				/** Multiply two sizes (elementwise product).  */
-				const Self &operator*=(const Self &vec);
+				const Self& operator*=(const Self& vec);
 
 				/** Compare two sizes. */
-				bool operator==(const Self &vec) const;
+				bool operator==(const Self& vec) const;
 
 				/** Compare two sizes. */
-				bool operator!=(const Self &vec) const;
+				bool operator!=(const Self& vec) const;
 
 				/** Access an element of the size. Elements are numbered
 				* 0, ..., VDimension-1. No bounds checking is performed. */
-				SizeValueType &operator[](unsigned int dim);
+				SizeValueType& operator[](unsigned int dim);
 
 				/** Access an element of the size. Elements are numbered
 				* 0, ..., VDimension-1. This version can only be an rvalue.
@@ -103,7 +103,7 @@ namespace map
 
 				/** Get the value array of VolumeSize. This provides a read only reference to the size.
 				* @sa SetSize */
-				const SizeValueType *getVolumeSize() const;
+				const SizeValueType* getVolumeSize() const;
 
 				/** Set the value array of VolumeSize.
 				 * Try to prototype this function so that val has to point to a block of
@@ -148,7 +148,7 @@ namespace map
 
 
 			template<unsigned int VDimensions>
-			std::ostream &operator<<(std::ostream &os, const VolumeSize<VDimensions> &size);
+			std::ostream& operator<<(std::ostream& os, const VolumeSize<VDimensions>& size);
 
 		} // end namespace continuous
 	} // end namespace core

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapMultiResRegistrationAlgorithmSetterInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -60,7 +60,7 @@ namespace map
 				at least one resolution level).
 				@eguarantee strong
 				*/
-				virtual void setSchedule(const ScheduleType &schedule) = 0;
+				virtual void setSchedule(const ScheduleType& schedule) = 0;
 
 				/*! @brief sets the moving and the target schedule as copies of the
 				passed schedules.
@@ -71,7 +71,8 @@ namespace map
 				at least one resolution level).
 				@eguarantee strong
 				*/
-				virtual void setSchedule(const ScheduleType &movingSchedule, const ScheduleType &targetSchedule) = 0;
+				virtual void setSchedule(const ScheduleType& movingSchedule,
+										 const ScheduleType& targetSchedule) = 0;
 
 				/*! resets the both schedules to the passed level count.
 				The sub sampling rate of a level is 2^(levels - n). n is the
@@ -87,8 +88,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				MultiResRegistrationAlgorithmSetterInterface(const Self &source); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				MultiResRegistrationAlgorithmSetterInterface(const Self& source); //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 		}

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapPointSetByModelPerformerTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -38,7 +38,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapPointSetByModelPerformerTest(int argc, char *argv[])
+		int mapPointSetByModelPerformerTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -50,8 +50,10 @@ namespace map
 			typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
 			typedef TestKernelBase<2, 2> IllegalKernelType;
 
-			typedef core::PointSetByModelPerformer<RegistrationType, InputDataType, ResultDataType> PerformerType;
-			typedef core::PointSetByModelPerformer<Registration2Type, InputDataType, ResultData2Type> Performer2Type;
+			typedef core::PointSetByModelPerformer<RegistrationType, InputDataType, ResultDataType>
+			PerformerType;
+			typedef core::PointSetByModelPerformer<Registration2Type, InputDataType, ResultData2Type>
+			Performer2Type;
 
 			//Now we create the kernels
 			ModelKernelType::Pointer spKernel = ModelKernelType::New();
@@ -59,7 +61,8 @@ namespace map
 			ModelKernelType::Pointer spIllegalModelKernel = ModelKernelType::New(); //has no transform model
 
 			//setting up model kernel
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> > TransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
+			TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
@@ -100,12 +103,15 @@ namespace map
 			// valid request
 			PerformerType::RequestType request(spRegistration.GetPointer(), spInputSet.GetPointer(), true, 0);
 			// illegal request
-			PerformerType::RequestType illegalRequest1(spRegistration.GetPointer(), spInputSet.GetPointer(), true, 0);
+			PerformerType::RequestType illegalRequest1(spRegistration.GetPointer(), spInputSet.GetPointer(),
+					true, 0);
 			illegalRequest1._spInputData = NULL;
 			// illegal request: field, field
-			PerformerType::RequestType illegalRequest2(spIllegalRegistration1.GetPointer(), spInputSet.GetPointer(), true, 0);
+			PerformerType::RequestType illegalRequest2(spIllegalRegistration1.GetPointer(),
+					spInputSet.GetPointer(), true, 0);
 			// illegal request: field, field
-			PerformerType::RequestType illegalRequest3(spIllegalRegistration2.GetPointer(), spInputSet.GetPointer(), true, 0);
+			PerformerType::RequestType illegalRequest3(spIllegalRegistration2.GetPointer(),
+					spInputSet.GetPointer(), true, 0);
 
 			//creating the combinator
 			PerformerType::Pointer spPerformer = PerformerType::New();
@@ -113,7 +119,8 @@ namespace map
 			//TEST
 			CHECK_EQUAL(false, spPerformer->canHandleRequest(illegalRequest1));
 			CHECK_EQUAL(false, spPerformer->canHandleRequest(illegalRequest2));
-			CHECK_EQUAL(true, spPerformer->canHandleRequest(illegalRequest3)); //is illegal because the model kernel is invalid, but theoretically it can be handled by the performer
+			CHECK_EQUAL(true, spPerformer->canHandleRequest(
+							illegalRequest3)); //is illegal because the model kernel is invalid, but theoretically it can be handled by the performer
 			CHECK_EQUAL(true, spPerformer->canHandleRequest(request));
 
 			CHECK_EQUAL("PointSetByModelPerformer<Registration<2,2>>", PerformerType::getStaticProviderName());

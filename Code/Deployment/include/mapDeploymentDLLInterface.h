@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/include/mapDeploymentDLLInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,7 +50,7 @@ extern "C"
 #ifdef _WIN32
 __declspec(dllexport)
 #endif
-void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor);
+void mapGetDLLInterfaceVersion(unsigned int& major, unsigned int& minor);
 
 /*! @brief Returns a smart pointer to the UID of the algorithm offered by the deployment DLL.
  * @ingroup DeployAlgorithm
@@ -59,7 +59,7 @@ extern "C"
 #ifdef _WIN32
 __declspec(dllexport)
 #endif
-void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID);
+void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer& spUID);
 
 /*! @brief Returns a profile string containing the profile of the algorithm offered by the deployment DLL.
  * The profile is stored in xml format. String may be empty if no profile is specified.
@@ -78,6 +78,7 @@ extern "C"
 #ifdef _WIN32
 __declspec(dllexport)
 #endif
-void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithmBase, map::deployment::SyncObject *pSyncObject);
+void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer&
+		spAlgorithmBase, map::deployment::SyncObject* pSyncObject);
 
 #endif

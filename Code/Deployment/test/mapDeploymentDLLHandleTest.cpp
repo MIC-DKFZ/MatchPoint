@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/test/mapDeploymentDLLHandleTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -35,14 +35,17 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			map::algorithm::UID::Pointer spUID = map::algorithm::UID::New("de.dkfz.matchpoint.test", "TestDummy", "1.0.0", "x");
-			map::deployment::DLLHandle::LibraryHandleType handle = (map::deployment::DLLHandle::LibraryHandleType)24;
-			map::deployment::DLLHandle::Pointer spHandle = map::deployment::DLLHandle::New(handle, spUID, "testfile.dll", "profile");
+			map::algorithm::UID::Pointer spUID = map::algorithm::UID::New("de.dkfz.matchpoint.test",
+												 "TestDummy", "1.0.0", "x");
+			map::deployment::DLLHandle::LibraryHandleType handle =
+				(map::deployment::DLLHandle::LibraryHandleType)24;
+			map::deployment::DLLHandle::Pointer spHandle = map::deployment::DLLHandle::New(handle, spUID,
+					"testfile.dll", "profile");
 
 			CHECK_EQUAL(handle, spHandle->getLibraryHandle());
 			CHECK_EQUAL(spUID.GetPointer(), &(spHandle->getAlgorithmUID()));
 			CHECK_EQUAL("testfile.dll", spHandle->getLibraryFilePath());
-      CHECK_EQUAL("profile", spHandle->getAlgorithmProfileStr());
+			CHECK_EQUAL("profile", spHandle->getAlgorithmProfileStr());
 
 			CHECK_THROW(map::deployment::DLLHandle::New(handle, NULL, "file_with_NULL_UID.dll", "profile"));
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapITKImageRegistrationAlgorithmTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -56,13 +56,14 @@ namespace map
 				itkNewMacro(Self);
 
 			protected:
-				virtual void checkEvent(const ::itk::Object *caller, const ::itk::EventObject &e)
+				virtual void checkEvent(const ::itk::Object* caller, const ::itk::EventObject& e)
 				{
-					const events::AlgorithmEvent *pChangeEvent = dynamic_cast<const events::AlgorithmEvent *>(&e);
+					const events::AlgorithmEvent* pChangeEvent = dynamic_cast<const events::AlgorithmEvent*>(&e);
 
 					if (pChangeEvent)
 					{
-						std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << caller << "): " << pChangeEvent->getComment() << std::endl;
+						std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << caller << "): " <<
+								  pChangeEvent->getComment() << std::endl;
 					}
 					else
 					{
@@ -74,14 +75,15 @@ namespace map
 				virtual ~RegTestCommand() {};
 
 			private:
-				RegTestCommand(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				RegTestCommand(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
-      mapGenerateAlgorithmUIDPolicyMacro(ArbitraryITKImageRegistrationAlgorithmUIDPolicy,"de.dkfz.matchpoint","ArbitraryITKImageRegistrationAlgorithmTest","1.0.0","");
+			mapGenerateAlgorithmUIDPolicyMacro(ArbitraryITKImageRegistrationAlgorithmUIDPolicy,
+											   "de.dkfz.matchpoint", "ArbitraryITKImageRegistrationAlgorithmTest", "1.0.0", "");
 		}
 
-		int mapITKImageRegistrationAlgorithmTest(int argc, char *argv[])
+		int mapITKImageRegistrationAlgorithmTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: moving image
 			//           2: target image
@@ -104,13 +106,23 @@ namespace map
 			//load input data
 			typedef core::discrete::Elements<2>::InternalImageType TestImageType;
 
-			TestImageType::Pointer spMovingImage = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(movingImageFileName);
-			TestImageType::Pointer spTargetImage = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(targetImageFileName);
-			TestImageType::Pointer spMovingImage2 = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(movingImageFileName);
-			TestImageType::Pointer spTargetImage2 = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(targetImageFileName);
+			TestImageType::Pointer spMovingImage =
+				lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(
+					movingImageFileName);
+			TestImageType::Pointer spTargetImage =
+				lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(
+					targetImageFileName);
+			TestImageType::Pointer spMovingImage2 =
+				lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(
+					movingImageFileName);
+			TestImageType::Pointer spTargetImage2 =
+				lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(
+					targetImageFileName);
 
-			typedef algorithm::itk::ITKImageRegistrationAlgorithm<TestImageType, TestImageType, ArbitraryITKImageRegistrationAlgorithmUIDPolicy> ArbitraryITKImageRegistrationAlgorithmType;
-			ArbitraryITKImageRegistrationAlgorithmType::Pointer spAlgorithm = ArbitraryITKImageRegistrationAlgorithmType::New();
+			typedef algorithm::itk::ITKImageRegistrationAlgorithm<TestImageType, TestImageType, ArbitraryITKImageRegistrationAlgorithmUIDPolicy>
+			ArbitraryITKImageRegistrationAlgorithmType;
+			ArbitraryITKImageRegistrationAlgorithmType::Pointer spAlgorithm =
+				ArbitraryITKImageRegistrationAlgorithmType::New();
 
 			//Add observer for algorithm events.
 			RegTestCommand::Pointer spTestCommand = RegTestCommand::New();
@@ -119,20 +131,26 @@ namespace map
 			spAlgorithm->AddObserver(::itk::AnyEvent(), spTestCommand);
 
 			//create registration algorithm components
-			typedef algorithm::itk::ITKMetricControl< ::itk::MeanSquaresImageToImageMetric<TestImageType, TestImageType> > MetricControlType;
-			typedef algorithm::itk::ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer> OptimizerControlType;
-			typedef ::itk::LinearInterpolateImageFunction<TestImageType, core::continuous::ScalarType> InterpolatorType;
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> > TranformModelType;
+			typedef algorithm::itk::ITKMetricControl< ::itk::MeanSquaresImageToImageMetric<TestImageType, TestImageType> >
+			MetricControlType;
+			typedef algorithm::itk::ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer>
+			OptimizerControlType;
+			typedef ::itk::LinearInterpolateImageFunction<TestImageType, core::continuous::ScalarType>
+			InterpolatorType;
+			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
+			TranformModelType;
 
 			OptimizerControlType::Pointer spOptimizer = OptimizerControlType::New();
 			MetricControlType::Pointer spMetric = MetricControlType::New();
 			InterpolatorType::Pointer spInterpolator = InterpolatorType::New();
 			TranformModelType::Pointer spTransformModel = TranformModelType::New();
 
-			CHECK_EQUAL(ArbitraryITKImageRegistrationAlgorithmType::AlgorithmState::Pending, spAlgorithm->getCurrentState());
+			CHECK_EQUAL(ArbitraryITKImageRegistrationAlgorithmType::AlgorithmState::Pending,
+						spAlgorithm->getCurrentState());
 			CHECK_THROW_EXPLICIT(spAlgorithm->determineRegistration(), algorithm::AlgorithmException);
 			CHECK_THROW_EXPLICIT(spAlgorithm->getRegistration(), algorithm::AlgorithmException);
-			CHECK_EQUAL(ArbitraryITKImageRegistrationAlgorithmType::AlgorithmState::Pending, spAlgorithm->getCurrentState());
+			CHECK_EQUAL(ArbitraryITKImageRegistrationAlgorithmType::AlgorithmState::Pending,
+						spAlgorithm->getCurrentState());
 
 			//Set optimizer values
 			spOptimizer->getConcreteOptimizer()->SetMaximumStepLength(4.00);
@@ -152,10 +170,14 @@ namespace map
 
 			ArbitraryITKImageRegistrationAlgorithmType::RegistrationPointer spRegistration;
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
-			CHECK_EQUAL(ArbitraryITKImageRegistrationAlgorithmType::AlgorithmState::Finalized, spAlgorithm->getCurrentState());
+			CHECK_EQUAL(ArbitraryITKImageRegistrationAlgorithmType::AlgorithmState::Finalized,
+						spAlgorithm->getCurrentState());
 
-			const core::ModelBasedRegistrationKernel<2, 2> *pInverseKernel = dynamic_cast<const core::ModelBasedRegistrationKernel<2, 2>* >(&(spRegistration->getInverseMapping()));
-			core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters = pInverseKernel->getParameters();
+			const core::ModelBasedRegistrationKernel<2, 2>* pInverseKernel =
+				dynamic_cast<const core::ModelBasedRegistrationKernel<2, 2>* >(&
+						(spRegistration->getInverseMapping()));
+			core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters =
+				pInverseKernel->getParameters();
 
 			CHECK_CLOSE(13.0, parameters[0], 0.01);
 			CHECK_CLOSE(17.0, parameters[1], 0.01);

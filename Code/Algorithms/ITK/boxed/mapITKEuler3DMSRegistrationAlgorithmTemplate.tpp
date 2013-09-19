@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKEuler3DMSRegistrationAlgorithmTemplate.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -41,30 +41,30 @@ namespace map
 		{
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy >
 			ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                  TInterpolatorPolicy >::
-			                                  ITKEuler3DMSRegistrationAlgorithm()
+											  TInterpolatorPolicy >::
+											  ITKEuler3DMSRegistrationAlgorithm()
 			{
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy >
 			ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                  TInterpolatorPolicy >::
-			                                  ~ITKEuler3DMSRegistrationAlgorithm()
+											  TInterpolatorPolicy >::
+											  ~ITKEuler3DMSRegistrationAlgorithm()
 			{
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy >
 			void
 			ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                  TInterpolatorPolicy >::
-			                                  configureAlgorithm()
+											  TInterpolatorPolicy >::
+											  configureAlgorithm()
 			{
 				_preInitialize = true;
 				_useCenterOfGravity = false;
@@ -88,38 +88,47 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy >
 			void
 			ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                  TInterpolatorPolicy >::
-			                                  compileInfos(MetaPropertyVectorType &infos) const
+											  TInterpolatorPolicy >::
+											  compileInfos(MetaPropertyVectorType& infos) const
 			{
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
 				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
 
 #ifndef MAP_SEAL_ALGORITHMS
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("TransformParameters", typeid(ParametersType), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("FixedTransformParameters", typeid(ParametersType), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("TransformParameters", typeid(ParametersType),
+								true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("FixedTransformParameters",
+								typeid(ParametersType), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("Scales", typeid(ScalesType), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumStepLength", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MinimumStepLength", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("RelaxationFactor", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfIterations", typeid(unsigned long), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("GradientMagnitudeTolerance", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitTransform", typeid(bool), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitByCenterOfGravity", typeid(bool), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumStepLength", typeid(double), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MinimumStepLength", typeid(double), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("RelaxationFactor", typeid(double), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfIterations", typeid(unsigned long),
+								true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("GradientMagnitudeTolerance", typeid(double),
+								true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitTransform", typeid(bool), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitByCenterOfGravity", typeid(bool),
+								true, true));
 #endif
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy >
 			typename ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			         TInterpolatorPolicy >::MetaPropertyPointer
-			         ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			         TInterpolatorPolicy >::
-			         doGetProperty(const MetaPropertyNameType &name) const
+					 TInterpolatorPolicy >::MetaPropertyPointer
+					 ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
+					 TInterpolatorPolicy >::
+					 doGetProperty(const MetaPropertyNameType& name) const
 			{
 				MetaPropertyPointer spResult;
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
@@ -127,11 +136,13 @@ namespace map
 
 				if (name == "TransformParameters")
 				{
-					spResult = map::core::MetaProperty<ParametersType>::New(this->getTransformInternal()->getTransform()->GetParameters());
+					spResult = map::core::MetaProperty<ParametersType>::New(
+								   this->getTransformInternal()->getTransform()->GetParameters());
 				}
 				else if (name == "FixedTransformParameters")
 				{
-					spResult = map::core::MetaProperty<ParametersType>::New(this->getTransformInternal()->getTransform()->GetFixedParameters());
+					spResult = map::core::MetaProperty<ParametersType>::New(
+								   this->getTransformInternal()->getTransform()->GetFixedParameters());
 				}
 				else if (name == "Scales")
 				{
@@ -139,23 +150,28 @@ namespace map
 				}
 				else if (name == "MaximumStepLength")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetMaximumStepLength());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetMaximumStepLength());
 				}
 				else if (name == "MinimumStepLength")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetMinimumStepLength());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetMinimumStepLength());
 				}
 				else if (name == "RelaxationFactor")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetRelaxationFactor());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetRelaxationFactor());
 				}
 				else if (name == "NumberOfIterations")
 				{
-					spResult = map::core::MetaProperty<unsigned long>::New(this->getConcreteITKOptimizer()->GetNumberOfIterations());
+					spResult = map::core::MetaProperty<unsigned long>::New(
+								   this->getConcreteITKOptimizer()->GetNumberOfIterations());
 				}
 				else if (name == "GradientMagnitudeTolerance")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetGradientMagnitudeTolerance());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetGradientMagnitudeTolerance());
 				}
 				else if (name == "PreinitTransform")
 				{
@@ -175,12 +191,12 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy >
 			void
 			ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                  TInterpolatorPolicy >::
-			                                  doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
+											  TInterpolatorPolicy >::
+											  doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
 				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
@@ -253,12 +269,12 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy >
 			void
 			ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                  TInterpolatorPolicy >::
-			                                  prepInitializeTransformation()
+											  TInterpolatorPolicy >::
+											  prepInitializeTransformation()
 			{
 				Superclass::prepInitializeTransformation();
 
@@ -266,7 +282,8 @@ namespace map
 				{
 					this->InvokeEvent(events::AlgorithmEvent(this, "Preinitialize transform."));
 
-					typedef ::itk::CenteredTransformInitializer<typename Superclass::ConcreteTransformType::TransformType, typename Superclass::TargetImageType, typename Superclass::MovingImageType> InitializerType;
+					typedef ::itk::CenteredTransformInitializer<typename Superclass::ConcreteTransformType::TransformType, typename Superclass::TargetImageType, typename Superclass::MovingImageType>
+					InitializerType;
 
 					typename InitializerType::Pointer spInitializer = InitializerType::New();
 
@@ -295,10 +312,13 @@ namespace map
 
 				core::OStringStream os;
 
-				os << "Preinitialized transform to: " << this->getConcreteTransformModel()->getConcreteTransform()->GetParameters();
+				os << "Preinitialized transform to: " <<
+				   this->getConcreteTransformModel()->getConcreteTransform()->GetParameters();
 				//set the parameter of the transform model to the current transform parameters of the algorithm
-				this->setCurrentTransformParameters(this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
-				this->getInternalRegistrationMethod().SetInitialTransformParameters(this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
+				this->setCurrentTransformParameters(
+					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
+				this->getInternalRegistrationMethod().SetInitialTransformParameters(
+					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
 
 				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
 			};

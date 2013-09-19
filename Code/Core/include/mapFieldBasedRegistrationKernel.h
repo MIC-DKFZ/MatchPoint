@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldBasedRegistrationKernel.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -60,8 +60,10 @@ namespace map
 
 			itkTypeMacro(FieldBasedRegistrationKernel, RegistrationKernelBase);
 
-			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectFieldType FieldType;
-			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType MappingVectorType;
+			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectFieldType
+			FieldType;
+			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType
+			MappingVectorType;
 			typedef typename FieldType::RegionType FieldRegionType;
 
 			typedef typename Superclass::InputPointType  InputPointType;
@@ -71,20 +73,20 @@ namespace map
 			  @eguarantee strong
 			  @return const pointer to a FieldType
 			 */
-			virtual const FieldType *getField() const = 0;
+			virtual const FieldType* getField() const = 0;
 
 			/*! gets the field
 			  @eguarantee strong
 			  @return pointer to a FieldType
 			 */
-			virtual FieldType *getField() = 0;
+			virtual FieldType* getField() = 0;
 
-			const MappingVectorType &getNullVector() const
+			const MappingVectorType& getNullVector() const
 			{
 				return _nullVector;
 			};
 
-			void setNullVector(const MappingVectorType &nullVector)
+			void setNullVector(const MappingVectorType& nullVector)
 			{
 				_nullVector = nullVector;
 			};
@@ -102,7 +104,9 @@ namespace map
 		protected:
 			~FieldBasedRegistrationKernel() {};
 
-			FieldBasedRegistrationKernel() : _nullVector(::itk::NumericTraits< typename MappingVectorType::ValueType >::NonpositiveMin()), _useNullVector(true)
+			FieldBasedRegistrationKernel() : _nullVector(
+					::itk::NumericTraits< typename MappingVectorType::ValueType >::NonpositiveMin()),
+					 _useNullVector(true)
 			{};
 
 			MappingVectorType _nullVector;
@@ -111,8 +115,8 @@ namespace map
 		private:
 
 			//No copy constructor allowed
-			FieldBasedRegistrationKernel(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			FieldBasedRegistrationKernel(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

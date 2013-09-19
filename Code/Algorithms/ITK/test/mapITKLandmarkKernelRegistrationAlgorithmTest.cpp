@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapITKLandmarkKernelRegistrationAlgorithmTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -52,13 +52,14 @@ namespace map
 				itkNewMacro(Self);
 
 			protected:
-				virtual void checkEvent(const ::itk::Object *caller, const ::itk::EventObject &e)
+				virtual void checkEvent(const ::itk::Object* caller, const ::itk::EventObject& e)
 				{
-					const events::AlgorithmEvent *pChangeEvent = dynamic_cast<const events::AlgorithmEvent *>(&e);
+					const events::AlgorithmEvent* pChangeEvent = dynamic_cast<const events::AlgorithmEvent*>(&e);
 
 					if (pChangeEvent)
 					{
-						std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << caller << "): " << pChangeEvent->getComment() << std::endl;
+						std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << caller << "): " <<
+								  pChangeEvent->getComment() << std::endl;
 					}
 					else
 					{
@@ -70,16 +71,17 @@ namespace map
 				virtual ~RegTestCommand() {};
 
 			private:
-				RegTestCommand(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				RegTestCommand(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
-      mapGenerateAlgorithmUIDPolicyMacro(ITKLandmarkKernelRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKLandmarkKernelRegistrationAlgorithm.test", "1.0.0", "");
+			mapGenerateAlgorithmUIDPolicyMacro(ITKLandmarkKernelRegistrationAlgorithmUIDPolicy,
+											   "de.dkfz.matchpoint", "ITKLandmarkKernelRegistrationAlgorithm.test", "1.0.0", "");
 		}
 
 		typedef core::continuous::Elements<3>::InternalPointSetType LandmarksType;
 
-		int mapITKLandmarkKernelRegistrationAlgorithmTest(int argc, char *argv[])
+		int mapITKLandmarkKernelRegistrationAlgorithmTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: moving land marks
 			//           2: target land marks
@@ -100,13 +102,18 @@ namespace map
 			}
 
 			//load input data
-			LandmarksType::Pointer spMovingLMs = utilities::loadLandMarksFromFile<LandmarksType>(movingLMFileName);
-			LandmarksType::Pointer spTargetLMs = utilities::loadLandMarksFromFile<LandmarksType>(targetLMFileName);
-			LandmarksType::Pointer spMovingLMs2 = utilities::loadLandMarksFromFile<LandmarksType>(movingLMFileName);
-			LandmarksType::Pointer spTargetLMs2 = utilities::loadLandMarksFromFile<LandmarksType>(targetLMFileName);
+			LandmarksType::Pointer spMovingLMs = utilities::loadLandMarksFromFile<LandmarksType>
+												 (movingLMFileName);
+			LandmarksType::Pointer spTargetLMs = utilities::loadLandMarksFromFile<LandmarksType>
+												 (targetLMFileName);
+			LandmarksType::Pointer spMovingLMs2 = utilities::loadLandMarksFromFile<LandmarksType>
+												  (movingLMFileName);
+			LandmarksType::Pointer spTargetLMs2 = utilities::loadLandMarksFromFile<LandmarksType>
+												  (targetLMFileName);
 
 
-			typedef algorithm::itk::ITKLandmarkKernelRegistrationAlgorithm<LandmarksType, itk::VolumeSplineKernelTransform<core::continuous::ScalarType, 3>, ITKLandmarkKernelRegistrationAlgorithmUIDPolicy> RegistrationAlgorithmType;
+			typedef algorithm::itk::ITKLandmarkKernelRegistrationAlgorithm<LandmarksType, itk::VolumeSplineKernelTransform<core::continuous::ScalarType, 3>, ITKLandmarkKernelRegistrationAlgorithmUIDPolicy>
+			RegistrationAlgorithmType;
 
 			RegistrationAlgorithmType::Pointer spAlgorithm = RegistrationAlgorithmType::New();
 

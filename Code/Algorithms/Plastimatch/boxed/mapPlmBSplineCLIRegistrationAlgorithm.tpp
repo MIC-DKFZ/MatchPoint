@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Plastimatch/boxed/mapPlmBSplineCLIRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -49,7 +49,8 @@ namespace map
 			prepConfigurationPLM()
 			{
 				this->_configurationPLM.clear();
-				this->_configurationPLM.push_back(algorithm::plastimatch::ParameterStageType()); //add global section, will be filled by base class
+				this->_configurationPLM.push_back(
+					algorithm::plastimatch::ParameterStageType()); //add global section, will be filled by base class
 
 				algorithm::plastimatch::ParameterStageType map;
 				/////////////////////////////////

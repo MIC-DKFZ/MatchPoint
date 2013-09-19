@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKSVMetricControlInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -54,8 +54,8 @@ namespace map
 
 				typedef ::itk::SingleValuedCostFunction SVMetricBaseType;
 
-				virtual SVMetricBaseType *getSVMetric() = 0;
-				virtual const SVMetricBaseType *getSVMetric() const = 0;
+				virtual SVMetricBaseType* getSVMetric() = 0;
+				virtual const SVMetricBaseType* getSVMetric() const = 0;
 
 			protected:
 				ITKSVMetricControlInterface();
@@ -63,8 +63,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKSVMetricControlInterface(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKSVMetricControlInterface(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

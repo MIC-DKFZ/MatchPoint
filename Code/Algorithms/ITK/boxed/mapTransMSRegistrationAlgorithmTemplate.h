@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapRigidMSRegistrationAlgorithmTemplate.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -43,23 +43,28 @@ namespace map
 	{
 		namespace boxed
 		{
-      const char *const DefaultTransMSRegistrationAlgorithm_profile = "<Profile><Description>A simple Mattes MI based image registration algorithm just supporting translation.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Image</DataType><TransformModel>translation</TransformModel><TransformDomain>global</TransformDomain><Metric>Mean square difference</Metric><Optimization>Regular Step Gradient Descent</Optimization></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
+			const char* const DefaultTransMSRegistrationAlgorithm_profile =
+				"<Profile><Description>A simple Mattes MI based image registration algorithm just supporting translation.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Image</DataType><TransformModel>translation</TransformModel><TransformDomain>global</TransformDomain><Metric>Mean square difference</Metric><Optimization>Regular Step Gradient Descent</Optimization></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultTransMSRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "TransMSRegistrationAlgorithm.default", "1.0.0",DefaultTransMSRegistrationAlgorithm_profile);
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultTransMSRegistrationAlgorithmUIDPolicy,
+											   "de.dkfz.matchpoint", "TransMSRegistrationAlgorithm.default", "1.0.0",
+											   DefaultTransMSRegistrationAlgorithm_profile);
 
 			/** @brief Boxing of a simple mean square based image registration algorithm only allow translation
 			 @ingroup Boxed
 			*/
 			template < class TMovingImage, class TTargetImage = TMovingImage,
-			         class TIdentificationPolicy = DefaultTransMSRegistrationAlgorithmUIDPolicy >
+					 class TIdentificationPolicy = DefaultTransMSRegistrationAlgorithmUIDPolicy >
 			struct TransMSRegistrationAlgorithmTemplate
 			{
 public:
 				//optional
 				typedef ::itk::MeanSquaresImageToImageMetric<TTargetImage, TMovingImage> MetricType;
 				typedef ::itk::RegularStepGradientDescentOptimizer OptimizerType;
-				typedef ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> InterpolatorType;
-				typedef ::itk::TranslationTransform< map::core::continuous::ScalarType, TMovingImage::ImageDimension > TransformType;
+				typedef ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType>
+				InterpolatorType;
+				typedef ::itk::TranslationTransform< map::core::continuous::ScalarType, TMovingImage::ImageDimension >
+				TransformType;
 
 				typedef SealedFixedImageToImageMetricPolicyMacro<MetricType> MetricPolicyType;
 				typedef SealedFixedSVNLOptimizerPolicyMacro<OptimizerType> OptimizerPolicyType;
@@ -68,11 +73,11 @@ public:
 
 				//default typdefs
 				typedef map::algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
-				        TIdentificationPolicy,
-				        InterpolatorPolicyType,
-				        MetricPolicyType,
-				        OptimizerPolicyType,
-				        TransformPolicyType > Type;
+						TIdentificationPolicy,
+						InterpolatorPolicyType,
+						MetricPolicyType,
+						OptimizerPolicyType,
+						TransformPolicyType > Type;
 				typedef typename Type::Pointer Pointer;
 			};
 		}

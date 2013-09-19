@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapTestMappingPerformer.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -57,11 +57,11 @@ namespace map
 			typedef typename Superclass::ResultDataPointer	    ResultDataPointer;
 
 			mutable ResultDataPointer _spCurrentResult;
-			mutable RequestType *_pCurrentRequest;
+			mutable RequestType* _pCurrentRequest;
 			mutable bool _handleRequest;
 			mutable unsigned _performanceCount;
 
-			virtual ResultDataPointer performMapping(const RequestType &request) const
+			virtual ResultDataPointer performMapping(const RequestType& request) const
 			{
 				delete _pCurrentRequest;
 				_pCurrentRequest = new RequestType(request);
@@ -69,7 +69,7 @@ namespace map
 				return _spCurrentResult;
 			};
 
-			virtual bool canHandleRequest(const RequestType &request) const
+			virtual bool canHandleRequest(const RequestType& request) const
 			{
 				delete _pCurrentRequest;
 				_pCurrentRequest = new RequestType(request);
@@ -106,8 +106,8 @@ namespace map
 			};
 
 		private:
-			TestMappingPerformer(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			TestMappingPerformer(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} // end namespace testing

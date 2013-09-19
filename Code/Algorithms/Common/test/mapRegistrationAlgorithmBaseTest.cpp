@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/test/mapRegistrationAlgorithmBaseTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -37,9 +37,11 @@ namespace map
 		namespace
 		{
 
-      mapGenerateAlgorithmUIDPolicyMacro(TestRegistrationAlgorithmBaseUIDPolicy, "de.dkfz.matchpoint.test", "TestRegistrationAlgorithmBase", "1", "");
+			mapGenerateAlgorithmUIDPolicyMacro(TestRegistrationAlgorithmBaseUIDPolicy,
+											   "de.dkfz.matchpoint.test", "TestRegistrationAlgorithmBase", "1", "");
 
-			class TestRegistrationAlgorithmBase: public algorithm::RegistrationAlgorithmBase, public TestRegistrationAlgorithmBaseUIDPolicy
+			class TestRegistrationAlgorithmBase: public algorithm::RegistrationAlgorithmBase,
+				public TestRegistrationAlgorithmBaseUIDPolicy
 			{
 			public:
 				typedef TestRegistrationAlgorithmBase Self;
@@ -118,8 +120,8 @@ namespace map
 				}
 
 			private:
-				TestRegistrationAlgorithmBase(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				TestRegistrationAlgorithmBase(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 		}
 
@@ -145,23 +147,34 @@ namespace map
 			CHECK_EQUAL(0, spStateEventTest->getEventCount());
 
 			//test basic state interface (set and get)
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending, spRegAlg->getCurrentState());
+			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
+						spRegAlg->getCurrentState());
 
-			CHECK_NO_THROW(spRegAlg->setCurrentState(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing));
+			CHECK_NO_THROW(spRegAlg->setCurrentState(
+							   algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing));
 			CHECK_EQUAL(1, spRegAlg->_onStateChange);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending, spRegAlg->_onStateChangeOldState);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing, spRegAlg->_onStateChangeNewState);
+			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
+						spRegAlg->_onStateChangeOldState);
+			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
+						spRegAlg->_onStateChangeNewState);
 			CHECK_EQUAL(1, spStateEventTest->getEventCount());
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending, spStateEventTest->_oldStates[0]);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing, spStateEventTest->_newStates[0]);
+			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
+						spStateEventTest->_oldStates[0]);
+			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
+						spStateEventTest->_newStates[0]);
 
-			CHECK_NO_THROW(spRegAlg->setCurrentState(algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping));
+			CHECK_NO_THROW(spRegAlg->setCurrentState(
+							   algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping));
 			CHECK_EQUAL(2, spRegAlg->_onStateChange);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing, spRegAlg->_onStateChangeOldState);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping, spRegAlg->_onStateChangeNewState);
+			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
+						spRegAlg->_onStateChangeOldState);
+			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping,
+						spRegAlg->_onStateChangeNewState);
 			CHECK_EQUAL(2, spStateEventTest->getEventCount());
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing, spStateEventTest->_oldStates[1]);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping, spStateEventTest->_newStates[1]);
+			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
+						spStateEventTest->_oldStates[1]);
+			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping,
+						spStateEventTest->_newStates[1]);
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

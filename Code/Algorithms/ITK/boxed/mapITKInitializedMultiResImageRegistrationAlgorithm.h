@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKInitializedMultiResImageRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -33,30 +33,37 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKInitializingImageRegistrationUIDPolicy, "MatchPoint.ITK", "ITKInitializedMultiResImageRegistrationAlgorithm.default", "1.0.0", "");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKInitializingImageRegistrationUIDPolicy,
+											   "MatchPoint.ITK", "ITKInitializedMultiResImageRegistrationAlgorithm.default", "1.0.0", "");
 
 			template < class TMovingImage, class TTargetImage,
-			         class TUIDPolicy = DefaultITKInitializingImageRegistrationUIDPolicy,
-			         class TInterpolatorPolicy = itk::ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
-			         class TMetricPolicy = itk::ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
-			         class TOptimizerPolicy = itk::ArbitrarySVNLOptimizerPolicy,
-			         class TTransformPolicy = itk::ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-			         class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage> >
+					 class TUIDPolicy = DefaultITKInitializingImageRegistrationUIDPolicy,
+					 class TInterpolatorPolicy =
+					 itk::ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
+					 class TMetricPolicy = itk::ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
+					 class TOptimizerPolicy = itk::ArbitrarySVNLOptimizerPolicy,
+					 class TTransformPolicy =
+					 itk::ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+					 class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage> >
 			class ITKInitializedMultiResImageRegistrationAlgorithm :
-				public algorithm::itk::ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
+				public algorithm::itk::ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+				TUIDPolicy,
 				TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy >
 			{
 			public:
 				typedef ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-				        TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy > Self;
+						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy > Self;
 
-				typedef typename algorithm::itk::ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-				        TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy >  Superclass;
+				typedef typename algorithm::itk::ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+						TUIDPolicy,
+						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy,
+						TPyramidesPolicy >  Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
 
-				itkTypeMacro(ITKInitializedMultiResImageRegistrationAlgorithm, ITKMultiResImageRegistrationAlgorithm);
+				itkTypeMacro(ITKInitializedMultiResImageRegistrationAlgorithm,
+							 ITKMultiResImageRegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
 				typedef ::itk::Array<double> ParametersType;
@@ -72,11 +79,11 @@ namespace map
 
 				virtual void configureAlgorithm();
 
-				virtual void compileInfos(MetaPropertyVectorType &infos) const;
+				virtual void compileInfos(MetaPropertyVectorType& infos) const;
 
-				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const;
+				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
 
-				virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
+				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
 
 				/*! Calls the super class version. Afterwards it preinitializes the transform of
 				* the algorithm as setup (no init, init by geometry or init by center of gravity).
@@ -92,8 +99,8 @@ namespace map
 
 			private:
 
-				ITKInitializedMultiResImageRegistrationAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ITKInitializedMultiResImageRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

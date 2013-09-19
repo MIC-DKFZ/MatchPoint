@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapPointVectorCombinationPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_POINT_VECTOR_COMBINATION_POLICY_H
@@ -53,13 +53,14 @@ namespace map
 			typedef typename continuous::Elements<VOutDimensions>::PointType            OutputPointType;
 			typedef typename continuous::Elements<VOutDimensions>::VectorType           OutputVectorType;
 
-			static inline void mapPoint(const PointType &inPoint, const OutputVectorType &mappingVector, OutputPointType &outPoint)
+			static inline void mapPoint(const PointType& inPoint, const OutputVectorType& mappingVector,
+										OutputPointType& outPoint)
 			{
 				doAdd(inPoint, mappingVector, outPoint);
 			};
 
 			/*!mapping as an direct conversion (mapping vector is zero)*/
-			static inline void mapPoint(const PointType &inPoint, OutputPointType &outPoint)
+			static inline void mapPoint(const PointType& inPoint, OutputPointType& outPoint)
 			{
 				OutputVectorType mappingVector;
 				mappingVector.Fill(itk::NumericTraits<typename OutputVectorType::ValueType>::Zero);
@@ -67,12 +68,14 @@ namespace map
 				doAdd(inPoint, mappingVector, outPoint);
 			};
 
-			static inline void combineVectors(const VectorType &vector1, const OutputVectorType &vector2, OutputVectorType &outVector)
+			static inline void combineVectors(const VectorType& vector1, const OutputVectorType& vector2,
+											  OutputVectorType& outVector)
 			{
 				doAdd(vector1, vector2, outVector);
 			};
 
-			static inline void computeVector(const PointType &fromPoint, const OutputPointType &toPoint, OutputVectorType &outVector)
+			static inline void computeVector(const PointType& fromPoint, const OutputPointType& toPoint,
+											 OutputVectorType& outVector)
 			{
 				doSubtract(toPoint, fromPoint, outVector);
 			};
@@ -85,23 +88,27 @@ namespace map
 		private:
 
 			template < typename T1stOp, typename T2ndOp, typename TResultType>
-			static inline void doAdd(const T1stOp &op1, const T2ndOp &op2, TResultType &result)
+			static inline void doAdd(const T1stOp& op1, const T2ndOp& op2, TResultType& result)
 			{
 				for (unsigned int i = 0; i < TResultType::Dimension; ++i)
 				{
-					typename T1stOp::ValueType v1 = (i < T1stOp::Dimension ? op1[i] : itk::NumericTraits<typename T1stOp::ValueType>::Zero);
-					typename T2ndOp::ValueType v2 = (i < T2ndOp::Dimension ? op2[i] : itk::NumericTraits<typename T2ndOp::ValueType>::Zero);
+					typename T1stOp::ValueType v1 = (i < T1stOp::Dimension ? op1[i] :
+													 itk::NumericTraits<typename T1stOp::ValueType>::Zero);
+					typename T2ndOp::ValueType v2 = (i < T2ndOp::Dimension ? op2[i] :
+													 itk::NumericTraits<typename T2ndOp::ValueType>::Zero);
 					result[i] = v1 + v2;
 				}
 			};
 
 			template < typename T1stOp, typename T2ndOp, typename TResultType>
-			static inline void doSubtract(const T1stOp &op1, const T2ndOp &op2, TResultType &result)
+			static inline void doSubtract(const T1stOp& op1, const T2ndOp& op2, TResultType& result)
 			{
 				for (unsigned int i = 0; i < TResultType::Dimension; ++i)
 				{
-					typename T1stOp::ValueType v1 = (i < T1stOp::Dimension ? op1[i] : itk::NumericTraits<typename T1stOp::ValueType>::Zero);
-					typename T2ndOp::ValueType v2 = (i < T2ndOp::Dimension ? op2[i] : itk::NumericTraits<typename T2ndOp::ValueType>::Zero);
+					typename T1stOp::ValueType v1 = (i < T1stOp::Dimension ? op1[i] :
+													 itk::NumericTraits<typename T1stOp::ValueType>::Zero);
+					typename T2ndOp::ValueType v2 = (i < T2ndOp::Dimension ? op2[i] :
+													 itk::NumericTraits<typename T2ndOp::ValueType>::Zero);
 					result[i] = v1 - v2;
 				}
 			};
@@ -109,8 +116,8 @@ namespace map
 			typedef PointVectorCombinationPolicy<VInDimensions, VOutDimensions> Self;
 			PointVectorCombinationPolicy(); //purposely not implemented
 			virtual ~PointVectorCombinationPolicy();  //purposely not implemented
-			PointVectorCombinationPolicy(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			PointVectorCombinationPolicy(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 		/*! @class PointVectorCombinationPolicy<VDimensions, VDimensions, VDimensions>
@@ -128,23 +135,26 @@ namespace map
 			typedef typename continuous::Elements<VDimensions>::PointType     OutputPointType;
 			typedef typename continuous::Elements<VDimensions>::VectorType    OutputVectorType;
 
-			static inline void mapPoint(const PointType &inPoint, const OutputVectorType &mappingVector, OutputPointType &outPoint)
+			static inline void mapPoint(const PointType& inPoint, const OutputVectorType& mappingVector,
+										OutputPointType& outPoint)
 			{
 				outPoint = inPoint + mappingVector;
 			};
 
 			/*!mapping as an direct conversion (mapping vector is zero)*/
-			static inline void mapPoint(const PointType &inPoint, OutputPointType &outPoint)
+			static inline void mapPoint(const PointType& inPoint, OutputPointType& outPoint)
 			{
 				outPoint = inPoint;
 			};
 
-			static inline void combineVectors(const VectorType &vector1, const OutputVectorType &vector2, OutputVectorType &outVector)
+			static inline void combineVectors(const VectorType& vector1, const OutputVectorType& vector2,
+											  OutputVectorType& outVector)
 			{
 				outVector = vector1 + vector2;
 			};
 
-			static inline void computeVector(const PointType &fromPoint, const OutputPointType &toPoint, OutputVectorType &outVector)
+			static inline void computeVector(const PointType& fromPoint, const OutputPointType& toPoint,
+											 OutputVectorType& outVector)
 			{
 				outVector = toPoint - fromPoint;
 			};
@@ -158,8 +168,8 @@ namespace map
 			typedef PointVectorCombinationPolicy<VDimensions, VDimensions> Self;
 			PointVectorCombinationPolicy(); //purposely not implemented
 			virtual ~PointVectorCombinationPolicy();  //purposely not implemented
-			PointVectorCombinationPolicy(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			PointVectorCombinationPolicy(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 	} // end namespace core

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKPointSetToPointSetMetricControlBase.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -36,7 +36,7 @@ namespace map
 			template<class TConcreteMetric>
 			void
 			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::
-			setMetric(ConcreteMetricType *pMetric)
+			setMetric(ConcreteMetricType* pMetric)
 			{
 				if (!pMetric)
 				{
@@ -63,7 +63,7 @@ namespace map
 			};
 
 			template<class TConcreteMetric>
-			typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::MetricBaseType *
+			typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::MetricBaseType*
 			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::
 			getMetric()
 			{
@@ -71,7 +71,7 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			const typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::MetricBaseType *
+			const typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::MetricBaseType*
 			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::
 			getMetric() const
 			{
@@ -79,7 +79,7 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::MVMetricBaseType *
+			typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::MVMetricBaseType*
 			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::
 			getMVMetric()
 			{
@@ -87,7 +87,7 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			const typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::MVMetricBaseType *
+			const typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::MVMetricBaseType*
 			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::
 			getMVMetric() const
 			{
@@ -95,7 +95,7 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::PointSetToPointSetMetricBaseType *
+			typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::PointSetToPointSetMetricBaseType*
 			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::
 			getPointSetToPointSetMetric()
 			{
@@ -103,7 +103,8 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			const typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::PointSetToPointSetMetricBaseType *
+			const typename
+			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::PointSetToPointSetMetricBaseType*
 			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::
 			getPointSetToPointSetMetric() const
 			{
@@ -111,7 +112,7 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::ConcreteMetricType *
+			typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::ConcreteMetricType*
 			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::
 			getConcreteMetric()
 			{
@@ -119,7 +120,7 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			const typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::ConcreteMetricType *
+			const typename ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::ConcreteMetricType*
 			ITKPointSetToPointSetMetricControlBase<TConcreteMetric>::
 			getConcreteMetric() const
 			{

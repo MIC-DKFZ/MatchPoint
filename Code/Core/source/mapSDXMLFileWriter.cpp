@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapSDXMLFileWriter.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -33,7 +33,7 @@ namespace map
 	{
 		void
 		XMLFileWriter::
-		setXSLTFile(const core::String &file)
+		setXSLTFile(const core::String& file)
 		{
 			this->_XSLTFile = file;
 		};
@@ -47,11 +47,12 @@ namespace map
 
 		void
 		XMLFileWriter::
-		write(const core::String &filePath, const Element *pElement)
+		write(const core::String& filePath, const Element* pElement)
 		{
 			if (!pElement)
 			{
-				mapDefaultExceptionMacro( << "Error, cannot write passed StructuredData element to an xml file. Passed element is NULL.");
+				mapDefaultExceptionMacro( <<
+										  "Error, cannot write passed StructuredData element to an xml file. Passed element is NULL.");
 			}
 
 			XMLIntendedStrWriter::Pointer spStrWriter = XMLIntendedStrWriter::New();
@@ -65,7 +66,8 @@ namespace map
 
 			if (!file.is_open())
 			{
-				mapDefaultExceptionMacro( << "Cannot open or create specified file to save. File path: " << filePath);
+				mapDefaultExceptionMacro( << "Cannot open or create specified file to save. File path: " <<
+										  filePath);
 			}
 
 			file << "<?xml version=\"1.0\" encoding=\"" << _EncodingType << "\"?>\n";
@@ -81,11 +83,12 @@ namespace map
 
 		void
 		XMLFileWriter::
-		write(const core::String &filePath, const StreamingInterface *pInterface)
+		write(const core::String& filePath, const StreamingInterface* pInterface)
 		{
 			if (!pInterface)
 			{
-				mapDefaultExceptionMacro( << "Error, cannot write passed object to an xml file. Passed interface is NULL.");
+				mapDefaultExceptionMacro( <<
+										  "Error, cannot write passed object to an xml file. Passed interface is NULL.");
 			}
 
 			ElementPointer spData = pInterface->streamToStructuredData();

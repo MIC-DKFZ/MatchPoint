@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/source/mapAlgorithmStateChangeEvent.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -29,14 +29,15 @@ namespace map
 	{
 
 		AlgorithmStateChangeEvent::
-		AlgorithmStateChangeEvent(const AlgorithmStateType &oldState, const AlgorithmStateType &newState): _oldState(oldState), _newState(newState)
+		AlgorithmStateChangeEvent(const AlgorithmStateType& oldState,
+								  const AlgorithmStateType& newState): _oldState(oldState), _newState(newState)
 		{};
 
 		AlgorithmStateChangeEvent::
 		~AlgorithmStateChangeEvent()
 		{};
 
-		const char *
+		const char*
 		AlgorithmStateChangeEvent::
 		GetEventName() const
 		{
@@ -59,12 +60,12 @@ namespace map
 
 		bool
 		AlgorithmStateChangeEvent::
-		CheckEvent(const ::itk::EventObject *e) const
+		CheckEvent(const ::itk::EventObject* e) const
 		{
-			return dynamic_cast<const Self *>(e);
+			return dynamic_cast<const Self*>(e);
 		};
 
-		::itk::EventObject *
+		::itk::EventObject*
 		AlgorithmStateChangeEvent::
 		MakeObject() const
 		{
@@ -72,13 +73,14 @@ namespace map
 		};
 
 		AlgorithmStateChangeEvent::
-		AlgorithmStateChangeEvent(const Self &s) : Superclass(s),  _oldState(s._oldState), _newState(s._newState)
+		AlgorithmStateChangeEvent(const Self& s) : Superclass(s),  _oldState(s._oldState),
+			_newState(s._newState)
 		{
 		};
 
 		void
 		AlgorithmStateChangeEvent::
-		Print(std::ostream &os) const
+		Print(std::ostream& os) const
 		{
 			Superclass::Print(os);
 			os << "Old state: " << _oldState << std::endl;

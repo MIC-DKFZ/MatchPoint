@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapArbitraryPointSetToPointSetMetricPolicyTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -37,7 +37,8 @@ namespace map
 		namespace
 		{
 			template<class TTargetPointSet, class TMovingPointSet>
-			class TestPolicy : public algorithm::itk::ArbitraryPointSetToPointSetMetricPolicy<TTargetPointSet, TMovingPointSet>
+			class TestPolicy : public
+				algorithm::itk::ArbitraryPointSetToPointSetMetricPolicy<TTargetPointSet, TMovingPointSet>
 			{
 				//derivered a test class to generate public constructors (The policy itsself cannot
 				//be instantiated directly), to set the visibility of getMetricInternal to
@@ -50,7 +51,8 @@ namespace map
 
 				TestPolicy()
 				{
-					typedef ::itk::ReceptorMemberCommand< TestPolicy<TTargetPointSet, TMovingPointSet> > AlgorithmCommandType;
+					typedef ::itk::ReceptorMemberCommand< TestPolicy<TTargetPointSet, TMovingPointSet> >
+					AlgorithmCommandType;
 
 					typename AlgorithmCommandType::Pointer spCmd = AlgorithmCommandType::New();
 					spCmd->SetCallbackFunction(this, & TestPolicy<TTargetPointSet, TMovingPointSet>::onChange);
@@ -62,7 +64,7 @@ namespace map
 				};
 
 				void
-				onChange(const ::itk::EventObject &eventObject)
+				onChange(const ::itk::EventObject& eventObject)
 				{
 					map::events::UnregisterAlgorithmComponentEvent unregEvent;
 					map::events::RegisterAlgorithmComponentEvent regEvent;
@@ -85,16 +87,21 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			TestPolicy<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType> policy;
-			const TestPolicy<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType> &constPolicy = policy;
+			TestPolicy<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			policy;
+			const TestPolicy<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			& constPolicy = policy;
 
-			typedef algorithm::itk::ITKMetricControl< ::itk::EuclideanDistancePointMetric<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType> > MetricType;
+			typedef algorithm::itk::ITKMetricControl< ::itk::EuclideanDistancePointMetric<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType> >
+			MetricType;
 
 			MetricType::Pointer spMetricControl1 = MetricType::New();
 			MetricType::Pointer spMetricControl2 = MetricType::New();
 
-			algorithm::itk::ITKPointSetToPointSetMetricControlInterface<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType> *pMetricControl = NULL;
-			const algorithm::itk::ITKPointSetToPointSetMetricControlInterface<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType> *pConstMetricControl = NULL;
+			algorithm::itk::ITKPointSetToPointSetMetricControlInterface<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			* pMetricControl = NULL;
+			const algorithm::itk::ITKPointSetToPointSetMetricControlInterface<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			* pConstMetricControl = NULL;
 
 			CHECK_NO_THROW(pMetricControl = policy.getMetricInternal());
 			CHECK_NO_THROW(pConstMetricControl = policy.getMetricInternal());

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapStaticServiceStack.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -34,29 +34,29 @@ namespace map
 		{
 
 			template <class TConcreteServiceStack, template <class> class TStaticLoadStaticPolicy, class TThreadingStaticPolicy>
-			typename StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::ProviderBaseType *
+			typename StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::ProviderBaseType*
 			StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::
-			getProvider(const RequestType &request)
+			getProvider(const RequestType& request)
 			{
 				typename ThreadingStaticPolicyType::SentinelType sentinel;
 				ThreadingStaticPolicyType::activateSentinel(sentinel);
 
 				ensureStack();
-				ProviderBaseType *pProvider = _spConcreteStack->getProvider(request);
+				ProviderBaseType* pProvider = _spConcreteStack->getProvider(request);
 
 				return pProvider;
 			};
 
 			template <class TConcreteServiceStack, template <class> class TStaticLoadStaticPolicy, class TThreadingStaticPolicy>
-			typename StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::ProviderBaseType *
+			typename StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::ProviderBaseType*
 			StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::
-			getProvider(const String &providerName)
+			getProvider(const String& providerName)
 			{
 				typename ThreadingStaticPolicyType::SentinelType sentinel;
 				ThreadingStaticPolicyType::activateSentinel(sentinel);
 
 				ensureStack();
-				ProviderBaseType *pProvider = _spConcreteStack->getProvider(providerName);
+				ProviderBaseType* pProvider = _spConcreteStack->getProvider(providerName);
 
 				return pProvider;
 			};
@@ -64,7 +64,7 @@ namespace map
 			template <class TConcreteServiceStack, template <class> class TStaticLoadStaticPolicy, class TThreadingStaticPolicy>
 			bool
 			StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::
-			providerIsAvailable(const RequestType &request)
+			providerIsAvailable(const RequestType& request)
 			{
 				typename ThreadingStaticPolicyType::SentinelType sentinel;
 				ThreadingStaticPolicyType::activateSentinel(sentinel);
@@ -78,7 +78,7 @@ namespace map
 			template <class TConcreteServiceStack, template <class> class TStaticLoadStaticPolicy, class TThreadingStaticPolicy>
 			bool
 			StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::
-			registerProvider(ProviderBaseType *pProvider)
+			registerProvider(ProviderBaseType* pProvider)
 			{
 				typename ThreadingStaticPolicyType::SentinelType sentinel;
 				ThreadingStaticPolicyType::activateSentinel(sentinel);
@@ -92,7 +92,7 @@ namespace map
 			template <class TConcreteServiceStack, template <class> class TStaticLoadStaticPolicy, class TThreadingStaticPolicy>
 			bool
 			StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::
-			unregisterProviderByPointer(ProviderBaseType *pProvider)
+			unregisterProviderByPointer(ProviderBaseType* pProvider)
 			{
 				typename ThreadingStaticPolicyType::SentinelType sentinel;
 				ThreadingStaticPolicyType::activateSentinel(sentinel);
@@ -106,7 +106,7 @@ namespace map
 			template <class TConcreteServiceStack, template <class> class TStaticLoadStaticPolicy, class TThreadingStaticPolicy>
 			bool
 			StaticServiceStack<TConcreteServiceStack, TStaticLoadStaticPolicy, TThreadingStaticPolicy>::
-			unregisterProvider(const String &providerName)
+			unregisterProvider(const String& providerName)
 			{
 				typename ThreadingStaticPolicyType::SentinelType sentinel;
 				ThreadingStaticPolicyType::activateSentinel(sentinel);

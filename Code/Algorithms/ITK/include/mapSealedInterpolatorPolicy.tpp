@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapSealedInterpolatorPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -33,7 +33,7 @@ namespace map
 		{
 
 			template<class TConcreteInterpolator>
-			typename SealedInterpolatorPolicy<TConcreteInterpolator>::ConcreteInterpolatorType *
+			typename SealedInterpolatorPolicy<TConcreteInterpolator>::ConcreteInterpolatorType*
 			SealedInterpolatorPolicy<TConcreteInterpolator>::
 			getConcreteInterpolator()
 			{
@@ -41,7 +41,7 @@ namespace map
 			};
 
 			template<class TConcreteInterpolator>
-			const typename SealedInterpolatorPolicy<TConcreteInterpolator>::ConcreteInterpolatorType *
+			const typename SealedInterpolatorPolicy<TConcreteInterpolator>::ConcreteInterpolatorType*
 			SealedInterpolatorPolicy<TConcreteInterpolator>::
 			getConcreteInterpolator() const
 			{
@@ -64,7 +64,7 @@ namespace map
 
 
 			template<class TConcreteInterpolator>
-			typename SealedInterpolatorPolicy<TConcreteInterpolator>::InterpolatorType *
+			typename SealedInterpolatorPolicy<TConcreteInterpolator>::InterpolatorType*
 			SealedInterpolatorPolicy<TConcreteInterpolator>::
 			getInterpolatorInternal()
 			{
@@ -72,7 +72,7 @@ namespace map
 			};
 
 			template<class TConcreteInterpolator>
-			const typename SealedInterpolatorPolicy<TConcreteInterpolator>::InterpolatorType *
+			const typename SealedInterpolatorPolicy<TConcreteInterpolator>::InterpolatorType*
 			SealedInterpolatorPolicy<TConcreteInterpolator>::
 			getInterpolatorInternal() const
 			{

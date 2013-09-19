@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoHelloWorldRegistration1.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 /*!@file
@@ -35,7 +35,7 @@
 #include "mapTransMSRegistrationAlgorithmTemplate.h"
 #include "mapImageMappingTask.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	AppGlobals globals;
 	int result = EXIT_FAILURE;
@@ -113,7 +113,8 @@ int main(int argc, char *argv[])
 	//define registration tasks
 	std::cout << "Define registration task..." << std::endl;
 
-	typedef map::core::ImageMappingTask<AlgorithmType::RegistrationType, ImageType, ImageType> ImageMappingTaskType;
+	typedef map::core::ImageMappingTask<AlgorithmType::RegistrationType, ImageType, ImageType>
+	ImageMappingTaskType;
 
 	ImageMappingTaskType::Pointer spImageTask = ImageMappingTaskType::New();
 	spImageTask->setInputImage(globals.spMovingImage);

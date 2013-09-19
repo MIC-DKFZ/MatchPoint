@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKSVNLOptimizerControlBase.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,7 +35,7 @@ namespace map
 			template<class TConcreteOptimizer>
 			void
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::
-			setOptimizer(ConcreteOptimizerType *pOptimizer)
+			setOptimizer(ConcreteOptimizerType* pOptimizer)
 			{
 				if (!pOptimizer)
 				{
@@ -62,7 +62,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::SVNLOptimizerBaseType *
+			typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::SVNLOptimizerBaseType*
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::
 			getSVNLOptimizer()
 			{
@@ -70,7 +70,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			const typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::SVNLOptimizerBaseType *
+			const typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::SVNLOptimizerBaseType*
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::
 			getSVNLOptimizer() const
 			{
@@ -78,7 +78,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::OptimizerBaseType *
+			typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::OptimizerBaseType*
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::
 			getOptimizer()
 			{
@@ -86,7 +86,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			const typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::OptimizerBaseType *
+			const typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::OptimizerBaseType*
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::
 			getOptimizer() const
 			{
@@ -94,7 +94,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::ConcreteOptimizerType *
+			typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::ConcreteOptimizerType*
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::
 			getConcreteOptimizer()
 			{
@@ -102,7 +102,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			const typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::ConcreteOptimizerType *
+			const typename ITKSVNLOptimizerControlBase<TConcreteOptimizer>::ConcreteOptimizerType*
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::
 			getConcreteOptimizer() const
 			{
@@ -151,7 +151,7 @@ namespace map
 			template<class TConcreteOptimizer>
 			void
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::
-			copyProperties(const ConcreteOptimizerType *source, ConcreteOptimizerType *destination) const
+			copyProperties(const ConcreteOptimizerType* source, ConcreteOptimizerType* destination) const
 			{
 				destination->SetInitialPosition(source->GetInitialPosition());
 				destination->SetScales(source->GetScales());

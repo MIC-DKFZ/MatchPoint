@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoHelloWorldRegistration1Helper.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -33,7 +33,7 @@
 
 #include <fstream>
 
-int parseArguments(int argc, char *argv[], AppGlobals &globals)
+int parseArguments(int argc, char* argv[], AppGlobals& globals)
 {
 	if ((argc < 4) || (argc < 8 && argc > 4))
 	{
@@ -68,9 +68,11 @@ int parseArguments(int argc, char *argv[], AppGlobals &globals)
 	return EXIT_SUCCESS;
 }
 
-int loadData(AppGlobals &globals)
+int loadData(AppGlobals& globals)
 {
-	globals.spTargetImage = lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(globals.targetImageFileName);
+	globals.spTargetImage =
+		lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(
+			globals.targetImageFileName);
 
 	if (globals.spTargetImage.IsNull())
 	{
@@ -78,7 +80,9 @@ int loadData(AppGlobals &globals)
 		return EXIT_FAILURE;
 	}
 
-	globals.spMovingImage = lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(globals.movingImageFileName);
+	globals.spMovingImage =
+		lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(
+			globals.movingImageFileName);
 
 	if (globals.spMovingImage.IsNull())
 	{
@@ -88,7 +92,9 @@ int loadData(AppGlobals &globals)
 
 	if (globals.doTest)
 	{
-		globals.spReferenceImage = lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(globals.referenceImageFileName);
+		globals.spReferenceImage =
+			lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(
+				globals.referenceImageFileName);
 
 		if (globals.spReferenceImage.IsNull())
 		{
@@ -101,17 +107,18 @@ int loadData(AppGlobals &globals)
 	return EXIT_SUCCESS;
 }
 
-int saveResults(AppGlobals &globals)
+int saveResults(AppGlobals& globals)
 {
 	//save result data
 	std::cout << std::endl << "Save result data..." << std::endl;
 
-	lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::writeImage(globals.spResultImage, globals.resultImageFileName);
+	lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::writeImage(
+		globals.spResultImage, globals.resultImageFileName);
 
 	return EXIT_SUCCESS;
 }
 
-int testResults(AppGlobals &globals)
+int testResults(AppGlobals& globals)
 {
 	PREPARE_DEFAULT_TEST_REPORTING;
 

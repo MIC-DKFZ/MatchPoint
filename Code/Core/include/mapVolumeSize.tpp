@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapVolumeSize.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_VOLUME_SIZE_TPP
@@ -36,7 +36,7 @@ namespace map
 			template<unsigned int VDimensions>
 			typename VolumeSize<VDimensions>::Self
 			VolumeSize<VDimensions>::
-			operator+(const Self &vec) const
+			operator+(const Self& vec) const
 			{
 				Self result;
 
@@ -49,9 +49,9 @@ namespace map
 			}
 
 			template<unsigned int VDimensions>
-			const typename VolumeSize<VDimensions>::Self &
+			const typename VolumeSize<VDimensions>::Self&
 			VolumeSize<VDimensions>::
-			operator+=(const Self &vec)
+			operator+=(const Self& vec)
 			{
 				for (unsigned int i = 0; i < VDimensions; ++i)
 				{
@@ -64,7 +64,7 @@ namespace map
 			template<unsigned int VDimensions>
 			typename VolumeSize<VDimensions>::Self
 			VolumeSize<VDimensions>::
-			operator-(const Self &vec) const
+			operator-(const Self& vec) const
 			{
 				Self result;
 
@@ -77,9 +77,9 @@ namespace map
 			}
 
 			template<unsigned int VDimensions>
-			const typename VolumeSize<VDimensions>::Self &
+			const typename VolumeSize<VDimensions>::Self&
 			VolumeSize<VDimensions>::
-			operator-=(const Self &vec)
+			operator-=(const Self& vec)
 			{
 				for (unsigned int i = 0; i < VDimensions; ++i)
 				{
@@ -92,7 +92,7 @@ namespace map
 			template<unsigned int VDimensions>
 			typename VolumeSize<VDimensions>::Self
 			VolumeSize<VDimensions>::
-			operator*(const Self &vec) const
+			operator*(const Self& vec) const
 			{
 				Self result;
 
@@ -105,9 +105,9 @@ namespace map
 			}
 
 			template<unsigned int VDimensions>
-			const typename VolumeSize<VDimensions>::Self &
+			const typename VolumeSize<VDimensions>::Self&
 			VolumeSize<VDimensions>::
-			operator*=(const Self &vec)
+			operator*=(const Self& vec)
 			{
 				for (unsigned int i = 0; i < VDimensions; ++i)
 				{
@@ -120,7 +120,7 @@ namespace map
 			template<unsigned int VDimensions>
 			bool
 			VolumeSize<VDimensions>::
-			operator==(const Self &vec) const
+			operator==(const Self& vec) const
 			{
 				bool same = true;
 
@@ -135,7 +135,7 @@ namespace map
 			template<unsigned int VDimensions>
 			bool
 			VolumeSize<VDimensions>::
-			operator!=(const Self &vec) const
+			operator!=(const Self& vec) const
 			{
 				bool same = true;
 
@@ -148,7 +148,7 @@ namespace map
 			}
 
 			template<unsigned int VDimensions>
-			typename VolumeSize<VDimensions>::SizeValueType &
+			typename VolumeSize<VDimensions>::SizeValueType&
 			VolumeSize<VDimensions>::
 			operator[](unsigned int dim)
 			{
@@ -166,7 +166,7 @@ namespace map
 			}
 
 			template<unsigned int VDimensions>
-			const typename VolumeSize<VDimensions>::SizeValueType *
+			const typename VolumeSize<VDimensions>::SizeValueType*
 			VolumeSize<VDimensions>::
 			getVolumeSize() const
 			{
@@ -227,7 +227,7 @@ namespace map
 
 
 			template<unsigned int VDimensions>
-			std::ostream &operator<<(std::ostream &os, const VolumeSize<VDimensions> &size)
+			std::ostream& operator<<(std::ostream& os, const VolumeSize<VDimensions>& size)
 			{
 				os << "[";
 

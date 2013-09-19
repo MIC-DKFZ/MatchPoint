@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/include/mapDeploymentDLLDirectoryBrowser.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -71,23 +71,23 @@ namespace map
 			/** Sets the base that is used to collapse relative search paths when added as search locations.
 			* @eguarantee strong
 			*/
-			void setSearchBase(const core::String &base);
+			void setSearchBase(const core::String& base);
 
 			/** Returns the base path that is used to collapse relative search paths when added as search locations.
 			* @eguarantee strong
 			*/
-			const core::String &getSearchBase() const;
+			const core::String& getSearchBase() const;
 
 			/** Adds the passed location to the dll search path list, that is used for searching deployment DLLs.
 			* @param [in] sLocation String to the search location. It may be a file path to the library that should be loaded
 			* or a directory. If a directory location is added, all files in the directory will be scanned if they are dynamic libraries.
 			* @eguarantee strong
 			*/
-			void addDLLSearchLocation(const core::String &location);
+			void addDLLSearchLocation(const core::String& location);
 			/** Returns the current list of additional search locations.
 			* @eguarantee strong
 			*/
-			const PathListType &getDLLSearchLocations() const;
+			const PathListType& getDLLSearchLocations() const;
 			/** Clears the DLL search path list
 			* @eguarantee strong
 			*/
@@ -107,17 +107,18 @@ namespace map
 
 			/** looks for potential deployed algorithm (complying naming conventions) in the passed path. Assumes that real directory is passed.
 			 * Returns a list of file paths with all candidates in the path that should be "peeked".*/
-			PathListType getCandidatesInPath(const core::String &libraryPath) const;
+			PathListType getCandidatesInPath(const core::String& libraryPath) const;
 			/** looks for potential deployed algorithm in the current search locations. If the search location specifies a file, it must exist and be a valid
 			 * shared object. If the location is a directory, the containing files must also following the naming conventions. Assumes that an existing directory is passed.
 			 * Returns a list of file paths with all candidates that should be "peeked".*/
 			PathListType getCandidates() const;
 
 			/** looks for the specified DLL and add an DLLInfo to the parameter list if the file is a valid DLL.*/
-			void peekLibrary(const core::String &libraryFilePath, DLLInfoListType &list, PathListType &touchedFiles) const;
+			void peekLibrary(const core::String& libraryFilePath, DLLInfoListType& list,
+							 PathListType& touchedFiles) const;
 
 			/** looks if the passed libraryFilePath is already contained in the list of touched files.*/
-			bool libraryIsInList(const core::String &libraryFilePath, const PathListType &touchedFiles) const;
+			bool libraryIsInList(const core::String& libraryFilePath, const PathListType& touchedFiles) const;
 
 			DLLDirectoryBrowser();
 
@@ -130,8 +131,8 @@ namespace map
 			core::String _basePath;
 
 		private:
-			DLLDirectoryBrowser(const Self &);//purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			DLLDirectoryBrowser(const Self&); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 
@@ -146,13 +147,13 @@ namespace map
 		 * @param directoryPath the directory path as c-string.
 		 * @result list with DLLInfo instances for all found, valid DLLs.
 		*/
-		MAPDeployment_EXPORT DLLInfoListType peekDeploymentDLLDirectory(const char *directoryPath);
+		MAPDeployment_EXPORT DLLInfoListType peekDeploymentDLLDirectory(const char* directoryPath);
 		/*! @overload
 		 * @param directoryPath the directory path as string.
 		 * @eguarantee strong
 		 * @result list with DLLInfo instances for all found, valid DLLs.
 		*/
-		MAPDeployment_EXPORT DLLInfoListType peekDeploymentDLLDirectory(const core::String &directoryPath);
+		MAPDeployment_EXPORT DLLInfoListType peekDeploymentDLLDirectory(const core::String& directoryPath);
 
 		/** Helper function that selects all dll infos from a given list, that match
 		 * with the passed uid (regarding the given wild cards, thus ignoring parts of the uid).
@@ -166,7 +167,9 @@ namespace map
 		 * @return A dll info list that only contains dll infos, that match the given reference uid.
 		 * @eguarantee strong
 		 * @TODO add to unit test*/
-		MAPDeployment_EXPORT DLLInfoListType selectDLLInfosByUID(const DLLInfoListType &infoList, const algorithm::UID *uid, bool wcNamespace = false, bool wcName = false, bool wcVersion = false, bool wcBuild = false);
+		MAPDeployment_EXPORT DLLInfoListType selectDLLInfosByUID(const DLLInfoListType& infoList,
+				const algorithm::UID* uid, bool wcNamespace = false, bool wcName = false, bool wcVersion = false,
+				bool wcBuild = false);
 
 	} // end namespace deployment
 } // end namespace map

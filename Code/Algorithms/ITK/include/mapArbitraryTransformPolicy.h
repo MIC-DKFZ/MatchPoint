@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapArbitraryTransformPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,12 +50,14 @@ namespace map
 			*/
 
 			template<class TScalar, unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			class ArbitraryTransformPolicy: public facet::ITKTransformSetterInterface<TScalar, VInputDimensions, VOutputDimensions>,
-				public facet::ITKTransformGetterInterface<TScalar, VInputDimensions, VOutputDimensions>
+			class ArbitraryTransformPolicy: public
+				facet::ITKTransformSetterInterface<TScalar, VInputDimensions, VOutputDimensions>,
+			public facet::ITKTransformGetterInterface<TScalar, VInputDimensions, VOutputDimensions>
 			{
 			public:
 				typedef ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>      Self;
-				typedef facet::ITKTransformSetterInterface<TScalar, VInputDimensions, VOutputDimensions>   Superclass;
+				typedef facet::ITKTransformSetterInterface<TScalar, VInputDimensions, VOutputDimensions>
+				Superclass;
 				itkTypeMacro(ArbitraryTransformPolicy, facet::ITKTransformSetterInterface);
 
 				typedef core::TransformModelBase<TScalar, VInputDimensions, VOutputDimensions> TransformType;
@@ -65,14 +67,14 @@ namespace map
 				@eguarantee strong
 				@param pTransform the tranform model
 				*/
-				virtual void setTransformModel(TransformType *pTransform);
+				virtual void setTransformModel(TransformType* pTransform);
 
 				/*! gets the transformation
 				  @eguarantee strong
 				  @return a pointer to the transform
 				*/
-				virtual TransformType *getTransformModel();
-				virtual const TransformType *getTransformModel() const;
+				virtual TransformType* getTransformModel();
+				virtual const TransformType* getTransformModel() const;
 
 				/*! Returns the modification time of the policy (and its controlled component).
 				 * In this case the modification time is a pass through of the internal component.
@@ -100,8 +102,8 @@ namespace map
 				  @eguarantee strong
 				  @return a pointer to a transform type
 				*/
-				virtual TransformType *getTransformInternal();
-				virtual const TransformType *getTransformInternal() const;
+				virtual TransformType* getTransformInternal();
+				virtual const TransformType* getTransformInternal() const;
 
 				/*! initializes the transform
 				  @eguarantee strong
@@ -122,8 +124,8 @@ namespace map
 				mutable core::ModificationTimeValidator _mTime;
 
 				//No copy constructor allowed
-				ArbitraryTransformPolicy(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ArbitraryTransformPolicy(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

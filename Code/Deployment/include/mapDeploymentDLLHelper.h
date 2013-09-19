@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/include/mapDeploymentDLLHelper.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -53,25 +53,25 @@ namespace map
 			typedef map::algorithm::RegistrationAlgorithmBase AlgorithmBaseType;
 			typedef typename AlgorithmBaseType::Pointer       AlgorithmBasePointer;
 
-      /*! Returns a smart pointer to the UID of the algorithm
-       */
+			/*! Returns a smart pointer to the UID of the algorithm
+			 */
 			static map::algorithm::UID::Pointer mapGetRegistrationAlgorithmUID();
 
-      /*! Returns a profile string containing the profile of the algorithm type.
-       * The profile is stored in xml format. String may be empty if no profile is specified.
-       */
-      static map::core::String mapGetRegistrationAlgorithmProfile();
+			/*! Returns a profile string containing the profile of the algorithm type.
+			 * The profile is stored in xml format. String may be empty if no profile is specified.
+			 */
+			static map::core::String mapGetRegistrationAlgorithmProfile();
 
-      /*! Returns a smart pointer to an instance of the algorithm (as RegistrationAlgorithmBase)
-       */
-			static AlgorithmBasePointer mapGetRegistrationAlgorithmInstance(SyncObject *pSyncObj);
+			/*! Returns a smart pointer to an instance of the algorithm (as RegistrationAlgorithmBase)
+			 */
+			static AlgorithmBasePointer mapGetRegistrationAlgorithmInstance(SyncObject* pSyncObj);
 
 		private:
 			DeploymentDLLHelper();  //purposely not implemented
 			~DeploymentDLLHelper();  //purposely not implemented
 			//No copy constructor allowed
-			DeploymentDLLHelper(const Self &source);   //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			DeploymentDLLHelper(const Self& source);   //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 
@@ -79,9 +79,9 @@ namespace map
 }
 
 #ifdef _WIN32
-  #define MAP_DEPLOYMENT_ALG_EXPORT extern "C" __declspec(dllexport)
+#define MAP_DEPLOYMENT_ALG_EXPORT extern "C" __declspec(dllexport)
 #else
-  #define MAP_DEPLOYMENT_ALG_EXPORT extern "C"
+#define MAP_DEPLOYMENT_ALG_EXPORT extern "C"
 #endif
 
 /*!@def mapDeployAlgorithmMacro
@@ -93,23 +93,23 @@ namespace map
  * @ingroup DeployAlgorithm
  */
 #define mapDeployAlgorithmMacro(AlgorithmClass) \
-MAP_DEPLOYMENT_ALG_EXPORT void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor) \
-{ \
-	major = MAP_DLL_INTERFACE_VERSION_MAJOR; \
-	minor = MAP_DLL_INTERFACE_VERSION_MINOR; \
-}; \
-MAP_DEPLOYMENT_ALG_EXPORT void mapGetRegistrationAlgorithmUID(::map::algorithm::UID::Pointer &spUID) \
-{ \
-	spUID = ::map::deployment::DeploymentDLLHelper<AlgorithmClass>::mapGetRegistrationAlgorithmUID(); \
-}; \
-MAP_DEPLOYMENT_ALG_EXPORT void mapGetRegistrationAlgorithmProfile(::map::core::String &profileString)\
-{\
-	profileString = ::map::deployment::DeploymentDLLHelper<AlgorithmClass>::mapGetRegistrationAlgorithmProfile();\
-};\
-MAP_DEPLOYMENT_ALG_EXPORT void mapGetRegistrationAlgorithmInstance(::map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, ::map::deployment::SyncObject *syncObject)\
-{\
-	spAlgorithm = ::map::deployment::DeploymentDLLHelper<AlgorithmClass>::mapGetRegistrationAlgorithmInstance(syncObject);\
-}
+	MAP_DEPLOYMENT_ALG_EXPORT void mapGetDLLInterfaceVersion(unsigned int &major, unsigned int &minor) \
+	{ \
+		major = MAP_DLL_INTERFACE_VERSION_MAJOR; \
+		minor = MAP_DLL_INTERFACE_VERSION_MINOR; \
+	}; \
+	MAP_DEPLOYMENT_ALG_EXPORT void mapGetRegistrationAlgorithmUID(::map::algorithm::UID::Pointer &spUID) \
+	{ \
+		spUID = ::map::deployment::DeploymentDLLHelper<AlgorithmClass>::mapGetRegistrationAlgorithmUID(); \
+	}; \
+	MAP_DEPLOYMENT_ALG_EXPORT void mapGetRegistrationAlgorithmProfile(::map::core::String &profileString)\
+	{\
+		profileString = ::map::deployment::DeploymentDLLHelper<AlgorithmClass>::mapGetRegistrationAlgorithmProfile();\
+	};\
+	MAP_DEPLOYMENT_ALG_EXPORT void mapGetRegistrationAlgorithmInstance(::map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, ::map::deployment::SyncObject *syncObject)\
+	{\
+		spAlgorithm = ::map::deployment::DeploymentDLLHelper<AlgorithmClass>::mapGetRegistrationAlgorithmInstance(syncObject);\
+	}
 
 
 #ifndef MatchPoint_MANUAL_TPP

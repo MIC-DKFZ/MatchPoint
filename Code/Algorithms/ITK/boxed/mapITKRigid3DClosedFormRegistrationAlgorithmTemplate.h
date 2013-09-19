@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKRigid3DClosedFormRegistrationAlgorithmTemplate.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -34,16 +34,19 @@ namespace map
 	namespace algorithm
 	{
 
-    namespace boxed
+		namespace boxed
 		{
-      const char *const DefaultITKRigid3DClosedForm_profile = "<Profile><Description>Simple 3D rigid (translation and euler angles) registration algorithm using point sets pairs and a closed form solution. It assumes that both given point sets are sorted by pair index.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Points</DataType><ComputationStyle>analytic</ComputationStyle><Deterministic/><DimMoving>3</DimMoving><DimTarget>3</DimTarget><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
-      mapGenerateAlgorithmUIDPolicyMacro(DefaultITKRigid3DClosedFormRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKRigid3DClosedFormRegistrationAlgorithm.default", "1.0.0", DefaultITKRigid3DClosedForm_profile);
+			const char* const DefaultITKRigid3DClosedForm_profile =
+				"<Profile><Description>Simple 3D rigid (translation and euler angles) registration algorithm using point sets pairs and a closed form solution. It assumes that both given point sets are sorted by pair index.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Points</DataType><ComputationStyle>analytic</ComputationStyle><Deterministic/><DimMoving>3</DimMoving><DimTarget>3</DimTarget><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKRigid3DClosedFormRegistrationAlgorithmUIDPolicy,
+											   "de.dkfz.matchpoint", "ITKRigid3DClosedFormRegistrationAlgorithm.default", "1.0.0",
+											   DefaultITKRigid3DClosedForm_profile);
 
 			/** @brief Boxing of a closed form 3D rigid registration algorithm
 			 @ingroup Boxed
 			*/
 			template < class TPointSet = core::continuous::Elements<3>::InternalPointSetType,
-			         class TIdentificationPolicy = DefaultITKRigid3DClosedFormRegistrationAlgorithmUIDPolicy >
+					 class TIdentificationPolicy = DefaultITKRigid3DClosedFormRegistrationAlgorithmUIDPolicy >
 			struct ITKRigid3DClosedFormRegistrationAlgorithmTemplate
 			{
 public:
@@ -51,7 +54,8 @@ public:
 				typedef ::itk::VersorRigid3DTransform< map::core::continuous::ScalarType> TransformType;
 
 				//default typdefs
-				typedef map::algorithm::itk::ITKClosedFormRegistrationAlgorithm<TPointSet, TPointSet, TransformType, TIdentificationPolicy> Type;
+				typedef map::algorithm::itk::ITKClosedFormRegistrationAlgorithm<TPointSet, TPointSet, TransformType, TIdentificationPolicy>
+				Type;
 				typedef typename Type::Pointer Pointer;
 			};
 		}

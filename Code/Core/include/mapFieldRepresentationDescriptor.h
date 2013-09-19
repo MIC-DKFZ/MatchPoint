@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldRepresentationDescriptor.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -95,7 +95,7 @@ namespace map
 			@eguarantee strong
 			@param value a value for the SizeType
 			*/
-			void setSize(const SizeType &value);
+			void setSize(const SizeType& value);
 
 
 			/*! gets the field origin
@@ -108,7 +108,7 @@ namespace map
 			@eguarantee strong
 			@param value a value for the PointType
 			*/
-			void setOrigin(const PointType &value);
+			void setOrigin(const PointType& value);
 
 
 			/*! gets the field spacing
@@ -121,7 +121,7 @@ namespace map
 			@eguarantee strong
 			@param value a value for the SpacingType
 			*/
-			void setSpacing(const SpacingType &value);
+			void setSpacing(const SpacingType& value);
 
 			/*! gets the field direction
 			@eguarantee strong
@@ -156,7 +156,7 @@ namespace map
 			@eguarantee strong
 			@param value a value for the SpacingType
 			*/
-			void setDirection(const DirectionType &value);
+			void setDirection(const DirectionType& value);
 
 			/*! gets the represented image region in a local context of an image, thus the index of the image region is
 			 * calculated relative to the passed imageOrigin.
@@ -164,7 +164,8 @@ namespace map
 			@eguarantee strong
 			@return an ImageRegionType containing the represented region
 			*/
-			ImageRegionType getRepresentedLocalImageRegion(const PointType &imageOrigin, const DirectionType &imageDirection) const;
+			ImageRegionType getRepresentedLocalImageRegion(const PointType& imageOrigin,
+					const DirectionType& imageDirection) const;
 
 			/*! gets the represented image region in a local context of the field representation descriptor. Thus index is zero.
 			 * Has the same effect like calling getRepresentedLocalImageRegion(getOrigin()).
@@ -179,7 +180,7 @@ namespace map
 			*/
 			inline const VolumeType getRepresentedVolume() const;
 
-			bool operator == (const Self &frd) const;
+			bool operator == (const Self& frd) const;
 
 		protected:
 			FieldRepresentationDescriptor();
@@ -193,22 +194,22 @@ namespace map
 			DirectionType computePhysicalPointToIndexMatrix() const;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			//using PIMPL idiom to realize strong exception guarantee
-			SizeType *_pFieldSize;
+			SizeType* _pFieldSize;
 			//using PIMPL idiom to realize strong exception guarantee
-			PointType *_pFieldOrigin;
+			PointType* _pFieldOrigin;
 			//using PIMPL idiom to realize strong exception guarantee
-			SpacingType *_pFieldSpacing;
+			SpacingType* _pFieldSpacing;
 			//using PIMPL idiom to realize strong exception guarantee
-			DirectionType *_pFieldDirection;
+			DirectionType* _pFieldDirection;
 
 		private:
 
 			//No copy constructor allowed
-			FieldRepresentationDescriptor(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			FieldRepresentationDescriptor(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 		/*! creates a field representation descriptor from an image
@@ -218,7 +219,7 @@ namespace map
 		*/
 		template <class TImage>
 		typename FieldRepresentationDescriptor<TImage::ImageDimension>::Pointer
-		createFieldRepresentation(const TImage &image);
+		createFieldRepresentation(const TImage& image);
 
 		/*! creates a field representation descriptor from an image region
 		@remark The direction of the representation is identity. The image origin is assumed to be 0.
@@ -229,7 +230,8 @@ namespace map
 		*/
 		template <unsigned int VDimensions>
 		typename FieldRepresentationDescriptor<VDimensions>::Pointer
-		createFieldRepresentation(const itk::ImageRegion<VDimensions> &region, const typename ::map::core::continuous::Elements<VDimensions>::SpacingType &spacing);
+		createFieldRepresentation(const itk::ImageRegion<VDimensions>& region,
+								  const typename ::map::core::continuous::Elements<VDimensions>::SpacingType& spacing);
 
 		/*! creates a field representation descriptor from an image region
 		@eguarantee strong
@@ -242,7 +244,10 @@ namespace map
 		*/
 		template <unsigned int VDimensions>
 		typename FieldRepresentationDescriptor<VDimensions>::Pointer
-		createFieldRepresentation(const itk::ImageRegion<VDimensions> &region, const typename ::map::core::continuous::Elements<VDimensions>::SpacingType &spacing, const typename FieldRepresentationDescriptor<VDimensions>::PointType &imageOrigin, const typename FieldRepresentationDescriptor<VDimensions>::DirectionType &direction);
+		createFieldRepresentation(const itk::ImageRegion<VDimensions>& region,
+								  const typename ::map::core::continuous::Elements<VDimensions>::SpacingType& spacing,
+								  const typename FieldRepresentationDescriptor<VDimensions>::PointType& imageOrigin,
+								  const typename FieldRepresentationDescriptor<VDimensions>::DirectionType& direction);
 
 
 		/*! creates a field representation descriptor from a volume
@@ -254,7 +259,8 @@ namespace map
 		*/
 		template <class TVolume>
 		typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::Pointer
-		createFieldRepresentation(const TVolume &volume, const typename ::map::core::continuous::Elements<TVolume::VolumeDimension>::SpacingType &spacing);
+		createFieldRepresentation(const TVolume& volume,
+								  const typename ::map::core::continuous::Elements<TVolume::VolumeDimension>::SpacingType& spacing);
 
 		/*! creates a field representation descriptor from a volume
 		@eguarantee strong
@@ -265,7 +271,9 @@ namespace map
 		*/
 		template <class TVolume>
 		typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::Pointer
-		createFieldRepresentation(const TVolume &volume, const typename ::map::core::continuous::Elements<TVolume::VolumeDimension>::SpacingType &spacing, const typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::DirectionType &direction);
+		createFieldRepresentation(const TVolume& volume,
+								  const typename ::map::core::continuous::Elements<TVolume::VolumeDimension>::SpacingType& spacing,
+								  const typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::DirectionType& direction);
 
 
 	}

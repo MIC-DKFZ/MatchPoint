@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapStaticServiceStack.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -52,9 +52,10 @@ namespace map
 			* threadding context.
 			*/
 			template < class TConcreteServiceStack,
-			         template <class> class TStaticLoadStaticPolicy = DefaultSLStaticPolicy,
-			         class TThreadingStaticPolicy = FastLockedThreadingStaticPolicy >
-			class StaticServiceStack: public TStaticLoadStaticPolicy<TConcreteServiceStack>, public TThreadingStaticPolicy
+					 template <class> class TStaticLoadStaticPolicy = DefaultSLStaticPolicy,
+					 class TThreadingStaticPolicy = FastLockedThreadingStaticPolicy >
+			class StaticServiceStack: public TStaticLoadStaticPolicy<TConcreteServiceStack>,
+				public TThreadingStaticPolicy
 			{
 			public:
 				/*! Standard class typedefs. */
@@ -78,7 +79,7 @@ namespace map
 				 * @return Pointer to a suitable provider. Return value may be null.
 				 * @retval NULL There was no suitable provider in the stack.
 				 */
-				static ProviderBaseType *getProvider(const RequestType &request);
+				static ProviderBaseType* getProvider(const RequestType& request);
 
 				/*! Returns a pointer to the provider with the specified name.
 				 * @eguarantee strong
@@ -86,7 +87,7 @@ namespace map
 				 * @return Pointer to a suitable provider. Return value may be null.
 				 * @retval NULL There was no suitable provider in the stack.
 				 */
-				static ProviderBaseType *getProvider(const String &providerName);
+				static ProviderBaseType* getProvider(const String& providerName);
 
 				/*! Indicates if there is a provider that can handle the passed request.
 				 * @eguarantee strong
@@ -95,7 +96,7 @@ namespace map
 				 * @retval true There is a suitable provider in the stack.
 				 * @retval false There is no suitable provider in the stack.
 				 */
-				static bool providerIsAvailable(const RequestType &request);
+				static bool providerIsAvailable(const RequestType& request);
 
 				/*! Registers a given provider in the stack. The new provider will be topmost and therfore
 				 * will be favored over providers registered ealier. The stack will behave like a smartpointer
@@ -109,7 +110,7 @@ namespace map
 				 * @retval false The provider was already on the stack. Stack is unchanged.
 				 * @post Stack is unchanged or added provider is the topmost element on the stack.
 				 */
-				static bool registerProvider(ProviderBaseType *pProvider);
+				static bool registerProvider(ProviderBaseType* pProvider);
 
 				/*! Removes the provider (identified only by the pointer address) from the stack.
 				 * @eguarantee strong
@@ -119,7 +120,7 @@ namespace map
 				 * @retval true The provider instance was on the stack and was removed.
 				 * @retval false The provider instance is not a part of the stack.
 				 */
-				static bool unregisterProviderByPointer(ProviderBaseType *pProvider);
+				static bool unregisterProviderByPointer(ProviderBaseType* pProvider);
 
 				/*! Removes the topmost entry of a given provider (identified by the provider name)
 				 * from the stack.
@@ -130,7 +131,7 @@ namespace map
 				 * @retval true There is no more entry for this provider in the stack.
 				 * @retval false There is at least one more entry for this provider in the stack.
 				 */
-				static bool unregisterProvider(const String &providerName);
+				static bool unregisterProvider(const String& providerName);
 
 				/*! Removes all providers from the stack.
 				 * @eguarantee strong*/
@@ -158,8 +159,8 @@ namespace map
 				virtual ~StaticServiceStack() {};
 
 			private:
-				StaticServiceStack(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				StaticServiceStack(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		} // end namespace services

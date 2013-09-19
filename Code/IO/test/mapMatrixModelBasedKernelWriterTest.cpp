@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/test/mapMatrixModelBasedKernelWriterTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -60,12 +60,12 @@ namespace map
 			typedef typename Superclass::MatrixType                       MatrixType;
 			typedef typename Superclass::OutputVectorType                 OutputVectorType;
 
-			virtual bool getInverse(InverseTransformModelBasePointer &spInverseModel) const
+			virtual bool getInverse(InverseTransformModelBasePointer& spInverseModel) const
 			{
 				return false;
 			};
 
-			virtual bool getAffineMatrixDecomposition(MatrixType &matrix, OutputVectorType &offset) const
+			virtual bool getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const
 			{
 				return false;
 			};
@@ -86,15 +86,17 @@ namespace map
 
 		};
 
-		int mapMatrixModelBasedKernelWriterTest(int argc, char *argv[])
+		int mapMatrixModelBasedKernelWriterTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
 
 			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel IllegalKernelType;
-			typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> > TransformType;
-			typedef TestNumericTransformModel<itk::Euler2DTransform, core::continuous::ScalarType> NumericTransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> >
+			TransformType;
+			typedef TestNumericTransformModel<itk::Euler2DTransform, core::continuous::ScalarType>
+			NumericTransformType;
 
 			typedef io::MatrixModelBasedKernelWriter<2, 2> WriterType;
 			typedef io::MatrixModelBasedKernelWriter<2, 3> Writer23Type;
@@ -141,7 +143,8 @@ namespace map
 			structuredData::XMLStrWriter::Pointer spStrWriter = structuredData::XMLStrWriter::New();
 
 			core::String data = spStrWriter->write(spData);
-			core::String ref = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>-3.673205103e-006</Value></Matrix><MatrixStr>-3.67321e-006 -1 1 -3.67321e-006 </MatrixStr><Offset><Value Row='0'>5.000000000</Value><Value Row='1'>2.000000000</Value></Offset><OffsetStr>5 2 </OffsetStr></Kernel>";
+			core::String ref =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>-3.673205103e-006</Value></Matrix><MatrixStr>-3.67321e-006 -1 1 -3.67321e-006 </MatrixStr><Offset><Value Row='0'>5.000000000</Value><Value Row='1'>2.000000000</Value></Offset><OffsetStr>5 2 </OffsetStr></Kernel>";
 
 			CHECK_EQUAL(ref, data);
 

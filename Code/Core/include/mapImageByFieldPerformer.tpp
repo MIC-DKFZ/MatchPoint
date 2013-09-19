@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapImageByFieldPerformer.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -42,17 +42,20 @@ namespace map
 			typedef TRequest RequestType;
 			typedef typename RequestType::ResultDataType::Pointer ResultDataPointer;
 
-			static ResultDataPointer performMapping(const RequestType &request)
+			static ResultDataPointer performMapping(const RequestType& request)
 			{
-				mapExceptionStaticMacro(ServiceException, << "Error: unimplemented feature. Cannot perform unsymetric registrations right now. Request: " << request);
+				mapExceptionStaticMacro(ServiceException,
+										<< "Error: unimplemented feature. Cannot perform unsymetric registrations right now. Request: " <<
+										request);
 				//! @TODO unsymmetrische registrierungen müssen auch noch gehandhabt werden; Strategie ist dafür auszuarbeiten, da es dann auch Regeln für fehlende Surjektivität und Injektivität geben muss.
 			};
 
 		protected:
 			ImageByFieldPerformerHelper(); //purposely not implemented
 			~ImageByFieldPerformerHelper(); //purposely not implemented
-			ImageByFieldPerformerHelper(const ImageByFieldPerformerHelper &); //purposely not implemented
-			ImageByFieldPerformerHelper &operator = (const ImageByFieldPerformerHelper &); //purposely not implemented
+			ImageByFieldPerformerHelper(const ImageByFieldPerformerHelper&);  //purposely not implemented
+			ImageByFieldPerformerHelper& operator = (const
+					ImageByFieldPerformerHelper&);  //purposely not implemented
 		};
 
 		template <unsigned int VDimensions, class TRequest>
@@ -64,15 +67,17 @@ namespace map
 			typedef typename RequestType::ResultDataType ResultDataType;
 			typedef typename RequestType::ResultDataType::Pointer ResultDataPointer;
 			typedef typename RequestType::RegistrationType::InverseMappingType InverseKernelBaseType;
-			typedef FieldBasedRegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions> FieldKernelType;
+			typedef FieldBasedRegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions>
+			FieldKernelType;
 
-			static ResultDataPointer performMapping(const RequestType &request)
+			static ResultDataPointer performMapping(const RequestType& request)
 			{
-				const InverseKernelBaseType &inverseKernelBase = request._spRegistration->getInverseMapping();
-				const FieldKernelType *pInverseKernel = dynamic_cast<const FieldKernelType *>(&inverseKernelBase);
+				const InverseKernelBaseType& inverseKernelBase = request._spRegistration->getInverseMapping();
+				const FieldKernelType* pInverseKernel = dynamic_cast<const FieldKernelType*>(&inverseKernelBase);
 
 				//instantiate resampler
-				typedef itk::map::ArbitraryWarpImageFilter<InputDataType, ResultDataType, typename FieldKernelType::FieldType> WarpFilterType;
+				typedef itk::map::ArbitraryWarpImageFilter<InputDataType, ResultDataType, typename FieldKernelType::FieldType>
+				WarpFilterType;
 				typename WarpFilterType::Pointer spFilter = WarpFilterType::New();
 
 				spFilter->SetOutputSpacing(request._spResultDescriptor->getSpacing());
@@ -97,46 +102,58 @@ namespace map
 		protected:
 			ImageByFieldPerformerHelper(); //purposely not implemented
 			~ImageByFieldPerformerHelper(); //purposely not implemented
-			ImageByFieldPerformerHelper(const ImageByFieldPerformerHelper &); //purposely not implemented
-			ImageByFieldPerformerHelper &operator = (const ImageByFieldPerformerHelper &); //purposely not implemented
+			ImageByFieldPerformerHelper(const ImageByFieldPerformerHelper&);  //purposely not implemented
+			ImageByFieldPerformerHelper& operator = (const
+					ImageByFieldPerformerHelper&);  //purposely not implemented
 		};
 
 		template <class TRegistration, class TInputData, class TResultData>
 		typename ImageByFieldPerformer<TRegistration, TInputData, TResultData>::ResultDataPointer
 		ImageByFieldPerformer<TRegistration, TInputData, TResultData>::
-		performMapping(const RequestType &request) const
+		performMapping(const RequestType& request) const
 		{
-			const InverseKernelBaseType &inverseKernelBase = request._spRegistration->getInverseMapping();
-			const FieldBasedKernelType *pInverseKernel = dynamic_cast<const FieldBasedKernelType *>(&inverseKernelBase);
+			const InverseKernelBaseType& inverseKernelBase = request._spRegistration->getInverseMapping();
+			const FieldBasedKernelType* pInverseKernel = dynamic_cast<const FieldBasedKernelType*>
+					(&inverseKernelBase);
 
 			if (pInverseKernel == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot map image. Reason: inverse mapping kernel of registration is not field based. Registration: " << request._spRegistration);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot map image. Reason: inverse mapping kernel of registration is not field based. Registration: "
+								  << request._spRegistration);
 			}
 
 			if (pInverseKernel->getField() == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot map image. Reason: inverse field based mapping kernel has no field. Check correct creation of the registration. Registration: " << request._spRegistration);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot map image. Reason: inverse field based mapping kernel has no field. Check correct creation of the registration. Registration: "
+								  << request._spRegistration);
 			}
 
 			if (request._spInputData.IsNull())
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot map image. Reason: no input image defined in request. Request: " << request);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot map image. Reason: no input image defined in request. Request: " << request);
 			}
 
 			if (request._spResultDescriptor.IsNull())
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot map image. Reason: no result descriptor defined in request. Request: " << request);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot map image. Reason: no result descriptor defined in request. Request: " <<
+								  request);
 			}
 
 			if (request._spInterpolateFunction.IsNull())
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot map image. Reason: no interpolate function defined in request. Request: " << request);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot map image. Reason: no interpolate function defined in request. Request: " <<
+								  request);
 			}
 
 			if (request._throwOnOutOfInputAreaError)
 			{
-				mapExceptionMacro(ServiceException, << "Error: unimplemented feature. Cannot throw exception on out of input area error. Only padding is implemented right now");
+				mapExceptionMacro(ServiceException,
+								  << "Error: unimplemented feature. Cannot throw exception on out of input area error. Only padding is implemented right now");
 				//! @todo Prüfen ob auch exception geworfen werden soll, wenn ja muss ein erweiterter resample filter gemacht werden, wenn nein, dann muss der request angepasst werden
 			}
 
@@ -144,10 +161,11 @@ namespace map
 
 			try
 			{
-				typedef ImageByFieldPerformerHelper<RequestType::MovingDimensions, RequestType::TargetDimensions, RequestType> HelperType;
+				typedef ImageByFieldPerformerHelper<RequestType::MovingDimensions, RequestType::TargetDimensions, RequestType>
+				HelperType;
 				spResultImage =  HelperType::performMapping(request);
 			}
-			catch (itk::ExceptionObject &ex)
+			catch (itk::ExceptionObject& ex)
 			{
 				mapExceptionMacro(MappingException, << ex.what());
 			}
@@ -163,10 +181,11 @@ namespace map
 		template <class TRegistration, class TInputData, class TResultData>
 		bool
 		ImageByFieldPerformer<TRegistration, TInputData, TResultData>::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
-			const InverseKernelBaseType &inverseKernelBase = request._spRegistration->getInverseMapping();
-			const FieldBasedKernelType *pInverseKernel = dynamic_cast<const FieldBasedKernelType *>(&inverseKernelBase);
+			const InverseKernelBaseType& inverseKernelBase = request._spRegistration->getInverseMapping();
+			const FieldBasedKernelType* pInverseKernel = dynamic_cast<const FieldBasedKernelType*>
+					(&inverseKernelBase);
 
 			return (pInverseKernel != NULL) && (request._spInputData.IsNotNull());
 		}
@@ -185,7 +204,8 @@ namespace map
 		getStaticProviderName()
 		{
 			OStringStream os;
-			os << "ImageByFieldPerformer<Registration<" << RegistrationType::MovingDimensions << "," << RegistrationType::TargetDimensions << ">>";
+			os << "ImageByFieldPerformer<Registration<" << RegistrationType::MovingDimensions << "," <<
+			   RegistrationType::TargetDimensions << ">>";
 			return os.str();
 		}
 
@@ -195,7 +215,8 @@ namespace map
 		getDescription() const
 		{
 			OStringStream os;
-			os << "ImageByFieldPerformer, Registration<" << RegistrationType::MovingDimensions << "," << RegistrationType::TargetDimensions << ">";
+			os << "ImageByFieldPerformer, Registration<" << RegistrationType::MovingDimensions << "," <<
+			   RegistrationType::TargetDimensions << ">";
 			return os.str();
 		}
 

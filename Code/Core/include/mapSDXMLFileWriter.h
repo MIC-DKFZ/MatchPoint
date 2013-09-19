@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapSDXMLFileWriter.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -54,7 +54,7 @@ namespace map
 
 			typedef Element::Pointer ElementPointer;
 
-			void setXSLTFile(const core::String &file);
+			void setXSLTFile(const core::String& file);
 			core::String getXSLTFile() const;
 
 			/**Write the passed StructuredData element as xml to the specified filepath.
@@ -64,7 +64,7 @@ namespace map
 			 * xml file. The pointer must not be NULL.
 			 * @pre The Pointer pElement must not be NULL.
 			 * @pre The specified file path must specify a file location within an existing directory.*/
-			void write(const core::String &filePath, const Element *pElement);
+			void write(const core::String& filePath, const Element* pElement);
 
 			/**Write the passed instance with a StreamingInterface as xml to the specified filepath
 			 * by converting the instance to a StructuredData element.
@@ -73,7 +73,7 @@ namespace map
 			 * @param [in] pInterface Pointer to the streamable interface instance. The pointer must not be NULL.
 			 * @pre The Pointer pInterface must not be NULL.
 			 * @pre The specified file path must specify a file location within an existing directory.*/
-			void write(const core::String &filePath, const StreamingInterface *pInterface);
+			void write(const core::String& filePath, const StreamingInterface* pInterface);
 
 		protected:
 			core::String _XSLTFile;
@@ -84,8 +84,8 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			XMLFileWriter(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			XMLFileWriter(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} //end of namespace structuredData

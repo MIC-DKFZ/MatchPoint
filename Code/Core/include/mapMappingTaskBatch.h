@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMappingTaskBatch.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -55,7 +55,7 @@ namespace map
 			typedef TRegistration					RegistrationType;
 			typedef MappingTaskBase<RegistrationType> MappingTaskBaseType;
 			typedef typename MappingTaskBaseType::Pointer  MappingTaskBasePointer;
-			typedef std::deque<MappingTaskBaseType *>   TaskSelectionType;
+			typedef std::deque<MappingTaskBaseType*>   TaskSelectionType;
 			typedef std::vector<MappingTaskBasePointer> TaskVectorType;
 
 			typedef MappingTaskBatch<TRegistration>  Self;
@@ -77,23 +77,23 @@ namespace map
 			 * @eguarantee: strong
 			 * @pre pTask must not be NULL.
 			 */
-			void addTask(MappingTaskBaseType *pTask);
+			void addTask(MappingTaskBaseType* pTask);
 
 			/*! Adds the registration to every task in the batch and calls execute().
 			 * @param [in] Pointer to the registration that should be used.
 			 * @eguarantee: basic
 			 * @pre pRegistration must not be NULL.
 			 */
-			bool process(const RegistrationType *pRegistration);
+			bool process(const RegistrationType* pRegistration);
 
 			/*! Calls execute() of every task.
 			 * @eguarantee: basic
 			 */
 			bool process();
 
-			const TaskSelectionType &getFailedTasks(void) const;
+			const TaskSelectionType& getFailedTasks(void) const;
 
-			const TaskVectorType &getTasks(void) const;
+			const TaskVectorType& getTasks(void) const;
 
 			/*! Sets the value of _maxThreadCount.
 			 * @eguarantee: strong
@@ -120,7 +120,7 @@ namespace map
 			virtual ~MappingTaskBatch();
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
 			TaskVectorType _tasks;
@@ -144,7 +144,7 @@ namespace map
 			 * @eguarantee: strong
 			 * @pre pRegistration must not be NULL.
 			 */
-			void setRegistration(const RegistrationType *pRegistration);
+			void setRegistration(const RegistrationType* pRegistration);
 
 			typedef MappingTaskBatchThread<MappingTaskBaseType> ThreadType;
 			typedef std::vector<typename ThreadType::Pointer> ThreadVectorType;
@@ -157,20 +157,20 @@ namespace map
 
 			/*! Indicates if a task has failed with an exception and was set exception neutral. Thus the batch won't processe
 			 * any further tasks and will wait for the threads to return and throw the exception afterwards.*/
-			const ExceptionObject *_pTerminatingException;
+			const ExceptionObject* _pTerminatingException;
 
-			static ITK_THREAD_RETURN_TYPE threadExecution(void *arg);
+			static ITK_THREAD_RETURN_TYPE threadExecution(void* arg);
 
-			void onNextTaskThreadEvent(::itk::Object *pCaller, const ::itk::EventObject &eventObject);
-			void onProcessedTaskThreadEvent(::itk::Object *pCaller, const ::itk::EventObject &eventObject);
-			void onFailedTaskThreadEvent(::itk::Object *pCaller, const ::itk::EventObject &eventObject);
+			void onNextTaskThreadEvent(::itk::Object* pCaller, const ::itk::EventObject& eventObject);
+			void onProcessedTaskThreadEvent(::itk::Object* pCaller, const ::itk::EventObject& eventObject);
+			void onFailedTaskThreadEvent(::itk::Object* pCaller, const ::itk::EventObject& eventObject);
 
 			/** Responsible for locking the processing of thread callbacks.*/
 			::itk::SimpleFastMutexLock _threadMutex;
 			typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock > MutexHolderType;
 
-			MappingTaskBatch(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			MappingTaskBatch(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 	} // end namespace core
 } // end namespace map

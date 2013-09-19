@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Plastimatch/include/mapPlmCLIRegistrationAlgorithmBase.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -156,19 +156,22 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			void
 			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			compileInfos(MetaPropertyVectorType &infos) const
+			compileInfos(MetaPropertyVectorType& infos) const
 			{
 #ifndef MAP_SEAL_ALGORITHMS
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("WorkingDirectory", typeid(map::core::String), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("PlastimatchDirectory", typeid(map::core::String), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("DeleteTempDirectory", typeid(bool), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("WorkingDirectory", typeid(map::core::String),
+								true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("PlastimatchDirectory",
+								typeid(map::core::String), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("DeleteTempDirectory", typeid(bool), true,
+								true));
 #endif
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			typename CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::MetaPropertyPointer
 			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			doGetProperty(const MetaPropertyNameType &name) const
+			doGetProperty(const MetaPropertyNameType& name) const
 			{
 				MetaPropertyPointer spResult;
 
@@ -195,7 +198,7 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			void
 			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
+			doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				if (name == "WorkingDirectory")
 				{
@@ -224,8 +227,8 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			typename CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::InterimRegistrationPointer
 			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			determineInterimRegistration(const MovingRepresentationDescriptorType *pMovingRepresentation,
-			                             const TargetRepresentationDescriptorType *pTargetRepresentation) const
+			determineInterimRegistration(const MovingRepresentationDescriptorType* pMovingRepresentation,
+										 const TargetRepresentationDescriptorType* pTargetRepresentation) const
 			{
 				InterimRegistrationPointer spResult = NULL;
 				return spResult;
@@ -238,7 +241,8 @@ namespace map
 			{
 				assert(false);
 
-				mapExceptionMacro(AlgorithmException, << "Cannot stop Plastimatch algorithm. Interim stop feature is not supported. Wrong usage of iterative algorithm interface");
+				mapExceptionMacro(AlgorithmException,
+								  << "Cannot stop Plastimatch algorithm. Interim stop feature is not supported. Wrong usage of iterative algorithm interface");
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
@@ -253,7 +257,9 @@ namespace map
 
 				if (!itksys::SystemTools::MakeDirectory(currentTempDir.c_str()))
 				{
-					mapExceptionMacro(AlgorithmException, << "Cannot create temporary working sub dir. Please check validity of given working dir and ensure right privileges for the application. Failed temporary sub dir: " << _currentTempDir);
+					mapExceptionMacro(AlgorithmException,
+									  << "Cannot create temporary working sub dir. Please check validity of given working dir and ensure right privileges for the application. Failed temporary sub dir: "
+									  << _currentTempDir);
 				}
 
 				_currentTempDir = currentTempDir;
@@ -285,7 +291,8 @@ namespace map
 					this->prepPerpareInternalInputData();
 
 					//storing temporary images
-					this->InvokeEvent(events::AlgorithmEvent(this, "Passing input data to plastimatch working directory."));
+					this->InvokeEvent(events::AlgorithmEvent(this,
+									  "Passing input data to plastimatch working directory."));
 					this->prepSavePlastimatchInputData();
 
 					this->InvokeEvent(events::AlgorithmEvent(this, "Generating parameter maps for plastimatch."));
@@ -316,7 +323,8 @@ namespace map
 				}
 				catch (...)
 				{
-					mapLogWarningObjMacro( << "Cannot clean up. Exception while removing the directory. Directory" << this->_currentTempDir);
+					mapLogWarningObjMacro( << "Cannot clean up. Exception while removing the directory. Directory" <<
+										   this->_currentTempDir);
 				}
 			};
 
@@ -358,7 +366,8 @@ namespace map
 
 				if (this->_configurationPLM.size() < 2)
 				{
-					mapExceptionMacro(AlgorithmException, << "Cannot start algorithm; invalid configuration (need at least the global section and one stage section).");
+					mapExceptionMacro(AlgorithmException,
+									  << "Cannot start algorithm; invalid configuration (need at least the global section and one stage section).");
 				}
 
 				ConfigurationType checkedConfig = this->_configurationPLM;
@@ -389,9 +398,11 @@ namespace map
 
 			template<class TImage>
 			void
-			saveTempImage(const TImage *image, const core::String &filePath)
+			saveTempImage(const TImage* image, const core::String& filePath)
 			{
-				typedef typename io::ImageWriter<typename TImage::PixelType, typename TImage::PixelType, TImage::ImageDimension> WriterType;
+				typedef typename
+				io::ImageWriter<typename TImage::PixelType, typename TImage::PixelType, TImage::ImageDimension>
+				WriterType;
 				typename WriterType::Pointer spWriter = WriterType::New();
 				spWriter->setInput(image);
 				spWriter->setFilePath(filePath);
@@ -400,7 +411,8 @@ namespace map
 
 			template<unsigned int VDimension>
 			typename ::itk::Image<unsigned char, VDimension>::Pointer
-			generateMaskImage(const ::itk::SpatialObject<VDimension> *so, const core::FieldRepresentationDescriptor<VDimension> *descriptor)
+			generateMaskImage(const ::itk::SpatialObject<VDimension>* so,
+							  const core::FieldRepresentationDescriptor<VDimension>* descriptor)
 			{
 				assert(so);
 				assert(descriptor);
@@ -415,7 +427,8 @@ namespace map
 
 				for (unsigned long i = 0; i < VDimension; ++i)
 				{
-					size[i] = static_cast<typename MaskImageType::SizeType::SizeValueType>(descriptor->getSize()[i] / descriptor->getSpacing()[i]);
+					size[i] = static_cast<typename MaskImageType::SizeType::SizeValueType>
+							  (descriptor->getSize()[i] / descriptor->getSpacing()[i]);
 				}
 
 				spFilter->SetSize(size);
@@ -442,9 +455,11 @@ namespace map
 				_movingMaskTempPath = "";
 				_targetMaskTempPath = "";
 
-				this->InvokeEvent(events::AlgorithmEvent(this, "Write temporary moving image. Path: " + _movingImageTempPath));
+				this->InvokeEvent(events::AlgorithmEvent(this,
+								  "Write temporary moving image. Path: " + _movingImageTempPath));
 				saveTempImage(_spInternalMovingImage.GetPointer(), _movingImageTempPath);
-				this->InvokeEvent(events::AlgorithmEvent(this, "Write temporary target image. Path: " + _targetImageTempPath));
+				this->InvokeEvent(events::AlgorithmEvent(this,
+								  "Write temporary target image. Path: " + _targetImageTempPath));
 				saveTempImage(_spInternalTargetImage.GetPointer(), _targetImageTempPath);
 
 				//save the masks
@@ -452,10 +467,12 @@ namespace map
 				{
 					//add moving mask
 					typedef ::itk::Image<unsigned char, TMovingImage::ImageDimension> MaskImageType;
-					MaskImageType::Pointer spMovingMaskImage = generateMaskImage<Superclass::MovingDimensions>(this->getMovingMask(), core::createFieldRepresentation(*(_spInternalMovingImage)).GetPointer());
+					MaskImageType::Pointer spMovingMaskImage = generateMaskImage<Superclass::MovingDimensions>
+							(this->getMovingMask(), core::createFieldRepresentation(*(_spInternalMovingImage)).GetPointer());
 
 					_movingMaskTempPath = core::FileDispatch::createFullPath(_currentTempDir, "movingMask.mhd");
-					this->InvokeEvent(events::AlgorithmEvent(this, "Write temporary moving mask image. Path: " + _movingMaskTempPath));
+					this->InvokeEvent(events::AlgorithmEvent(this,
+									  "Write temporary moving mask image. Path: " + _movingMaskTempPath));
 					saveTempImage(spMovingMaskImage.GetPointer(), _movingMaskTempPath);
 				}
 
@@ -463,10 +480,12 @@ namespace map
 				{
 					//add target mask
 					typedef ::itk::Image<unsigned char, TTargetImage::ImageDimension> MaskImageType;
-					MaskImageType::Pointer spTargetMaskImage = generateMaskImage<Superclass::TargetDimensions>(this->getTargetMask(), core::createFieldRepresentation(*(_spInternalTargetImage)).GetPointer());
+					MaskImageType::Pointer spTargetMaskImage = generateMaskImage<Superclass::TargetDimensions>
+							(this->getTargetMask(), core::createFieldRepresentation(*(_spInternalTargetImage)).GetPointer());
 
 					_targetMaskTempPath = core::FileDispatch::createFullPath(_currentTempDir, "targetMask.mhd");
-					this->InvokeEvent(events::AlgorithmEvent(this, "Write temporary target mask image. Path: " + _targetMaskTempPath));
+					this->InvokeEvent(events::AlgorithmEvent(this,
+									  "Write temporary target mask image. Path: " + _targetMaskTempPath));
 					saveTempImage(spTargetMaskImage.GetPointer(), _targetMaskTempPath);
 				}
 
@@ -490,16 +509,19 @@ namespace map
 				core::OStringStream ostr;
 				ostr << "Calling plastimatch (" << _plastimatchDir << ") with arguments:";
 
-				for (map::utilities::ProcessExecutor::ArgumentListType::const_iterator pos = args.begin(); pos != args.end(); ++pos)
+				for (map::utilities::ProcessExecutor::ArgumentListType::const_iterator pos = args.begin();
+					 pos != args.end(); ++pos)
 				{
 					ostr << " " << *pos;
 				}
 
 				this->InvokeEvent(events::AlgorithmEvent(this, ostr.str()));
 
-				if (!spExec->execute(_plastimatchDir, core::FileDispatch::createFullPath(_plastimatchDir, "plastimatch"), args))
+				if (!spExec->execute(_plastimatchDir, core::FileDispatch::createFullPath(_plastimatchDir,
+									 "plastimatch"), args))
 				{
-					mapExceptionMacro(AlgorithmException, << "Error when executing plastimatch to determine the registration.");
+					mapExceptionMacro(AlgorithmException,
+									  << "Error when executing plastimatch to determine the registration.");
 				}
 
 				return spExec->getExitValue() == 0;
@@ -510,14 +532,16 @@ namespace map
 			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			generateField() const
 			{
-				typedef map::core::functors::FieldByFileLoadFunctor<Superclass::TargetDimensions, Superclass::MovingDimensions> FunctorType;
+				typedef map::core::functors::FieldByFileLoadFunctor<Superclass::TargetDimensions, Superclass::MovingDimensions>
+				FunctorType;
 				FunctorType::Pointer spFunctor = FunctorType::New(_finalFieldTempPath);
 
 				FinalFieldPointer spField = spFunctor->generateField();
 
 				if (spField.IsNull())
 				{
-					mapExceptionMacro(AlgorithmException, << "Error when loading Plastimatch deformation field. File name: " << _finalFieldTempPath);
+					mapExceptionMacro(AlgorithmException,
+									  << "Error when loading Plastimatch deformation field. File name: " << _finalFieldTempPath);
 				}
 
 				return spField;
@@ -540,7 +564,8 @@ namespace map
 			{
 				if (this->_configurationPLM.empty())
 				{
-					mapExceptionMacro(AlgorithmException, << "Cannot determine final transform file path; no parameter maps are defined.");
+					mapExceptionMacro(AlgorithmException,
+									  << "Cannot determine final transform file path; no parameter maps are defined.");
 				}
 
 				core::OStringStream ostr;
@@ -560,16 +585,19 @@ namespace map
 				{
 					_spFinalizedField = this->generateField();
 
-					typedef map::core::FieldKernels<Superclass::TargetDimensions, Superclass::MovingDimensions>::PreCachedFieldBasedRegistrationKernel InverseKernelType;
+					typedef map::core::FieldKernels<Superclass::TargetDimensions, Superclass::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
+					InverseKernelType;
 					typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
 
 					spIKernel->setField(*(_spFinalizedField.GetPointer()));
 
 					//now build the direct kernel via inversion of the inverse kernel
-					typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> GeneratorType;
+					typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>
+					GeneratorType;
 					typename GeneratorType::Pointer spGenerator = GeneratorType::New();
 					typedef typename GeneratorType::InverseKernelBaseType DirectKernelType;
-					typename Superclass::MovingRepresentationDescriptorType::ConstPointer spMovingRep = core::createFieldRepresentation(*(this->getMovingImage()));
+					typename Superclass::MovingRepresentationDescriptorType::ConstPointer spMovingRep =
+						core::createFieldRepresentation(*(this->getMovingImage()));
 
 					if (this->getMovingRepresentation())
 					{
@@ -577,11 +605,14 @@ namespace map
 						spMovingRep = this->getMovingRepresentation();
 					}
 
-					typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*(spIKernel.GetPointer()), spMovingRep);
+					typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*
+							(spIKernel.GetPointer()), spMovingRep);
 
 					if (spDKernel.IsNull())
 					{
-						mapExceptionMacro(AlgorithmException, << "Error. Cannot determine direct mapping kernel of final registration. Current inverse kernel: " << spIKernel);
+						mapExceptionMacro(AlgorithmException,
+										  << "Error. Cannot determine direct mapping kernel of final registration. Current inverse kernel: "
+										  << spIKernel);
 					}
 
 					//now create the registration and set the kernels
@@ -653,7 +684,7 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			void
 			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			PrintSelf(std::ostream &os, ::itk::Indent indent) const
+			PrintSelf(std::ostream& os, ::itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 
@@ -665,9 +696,10 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
 			void
 			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
-			onPlmOutputEvent(::itk::Object *caller, const ::itk::EventObject &eventObject)
+			onPlmOutputEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				const events::ExternalProcessStdOutEvent *pStdEvent = dynamic_cast<const events::ExternalProcessStdOutEvent *>(&eventObject);
+				const events::ExternalProcessStdOutEvent* pStdEvent =
+					dynamic_cast<const events::ExternalProcessStdOutEvent*>(&eventObject);
 
 				if (pStdEvent)
 				{

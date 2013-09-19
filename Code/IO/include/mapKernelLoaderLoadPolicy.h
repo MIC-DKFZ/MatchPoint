@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapKernelLoaderLoadPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_KERNEL_LOADER_LOAD_POLICY_H
@@ -50,7 +50,8 @@ namespace map
 		* @ingroup RegOperation
 		* @sa RegistrationFileReader
 		*/
-		class MAPIO_EXPORT KernelLoaderLoadPolicy : public core::services::GenericStaticLoadPolicyBase<RegistrationKernelLoaderBase >
+		class MAPIO_EXPORT KernelLoaderLoadPolicy : public
+			core::services::GenericStaticLoadPolicyBase<RegistrationKernelLoaderBase >
 		{
 		protected:
 			/*! Standard class typedefs. */
@@ -65,8 +66,8 @@ namespace map
 			~KernelLoaderLoadPolicy();
 
 		private:
-			KernelLoaderLoadPolicy(const KernelLoaderLoadPolicy &); //purposely not implemented
-			void operator=(const KernelLoaderLoadPolicy &); //purposely not implemented
+			KernelLoaderLoadPolicy(const KernelLoaderLoadPolicy&);  //purposely not implemented
+			void operator=(const KernelLoaderLoadPolicy&);  //purposely not implemented
 		};
 
 	} // end namespace io

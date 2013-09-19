@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapSealedImageToImageMetricPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -32,7 +32,7 @@ namespace map
 		{
 
 			template<class TConcreteMetric>
-			typename SealedImageToImageMetricPolicy<TConcreteMetric>::ConcreteMetricControlType *
+			typename SealedImageToImageMetricPolicy<TConcreteMetric>::ConcreteMetricControlType*
 			SealedImageToImageMetricPolicy<TConcreteMetric>::
 			getConcreteMetricControl()
 			{
@@ -40,7 +40,7 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			const typename SealedImageToImageMetricPolicy<TConcreteMetric>::ConcreteMetricControlType *
+			const typename SealedImageToImageMetricPolicy<TConcreteMetric>::ConcreteMetricControlType*
 			SealedImageToImageMetricPolicy<TConcreteMetric>::
 			getConcreteMetricControl() const
 			{
@@ -61,7 +61,7 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			typename SealedImageToImageMetricPolicy<TConcreteMetric>::MetricControlType *
+			typename SealedImageToImageMetricPolicy<TConcreteMetric>::MetricControlType*
 			SealedImageToImageMetricPolicy<TConcreteMetric>::
 			getMetricInternal()
 			{
@@ -69,7 +69,7 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			const typename SealedImageToImageMetricPolicy<TConcreteMetric>::MetricControlType *
+			const typename SealedImageToImageMetricPolicy<TConcreteMetric>::MetricControlType*
 			SealedImageToImageMetricPolicy<TConcreteMetric>::
 			getMetricInternal() const
 			{

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapMaskedRegistrationAlgorithmBase.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -51,7 +51,7 @@ namespace map
 		template<unsigned int VMovingDimension, unsigned int VTargetDimension>
 		void
 		MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension>::
-		setMovingMask(const MovingMaskBaseType *pMovingMask)
+		setMovingMask(const MovingMaskBaseType* pMovingMask)
 		{
 			_spMovingMask = pMovingMask;
 			_movingMaskMTime.setWatchedObject(pMovingMask);
@@ -60,7 +60,7 @@ namespace map
 		template<unsigned int VMovingDimension, unsigned int VTargetDimension>
 		void
 		MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension>::
-		setTargetMask(const TargetMaskBaseType *pTargetMask)
+		setTargetMask(const TargetMaskBaseType* pTargetMask)
 		{
 			_spTargetMask = pTargetMask;
 			_targetMaskMTime.setWatchedObject(pTargetMask);
@@ -83,7 +83,7 @@ namespace map
 		template<unsigned int VMovingDimension, unsigned int VTargetDimension>
 		void
 		MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension>::
-		PrintSelf(std::ostream &os, ::itk::Indent indent) const
+		PrintSelf(std::ostream& os, ::itk::Indent indent) const
 		{
 			os << indent << "Moving mask: " << _spMovingMask.GetPointer() << std::endl;
 			os << indent << "Target mask: " << _spTargetMask.GetPointer() << std::endl;

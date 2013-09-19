@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapPointSetRegistrationAlgorithmInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -72,13 +72,13 @@ namespace map
 				@eguarantee strong
 				@param pMovingPointSet a pointer to the moving point set
 				*/
-				virtual void setMovingPointSet(const MovingPointSetType *pMovingPointSet) = 0;
+				virtual void setMovingPointSet(const MovingPointSetType* pMovingPointSet) = 0;
 
 				/*! @brief sets the target point set
 				@eguarantee strong
 				@param pTargetPointSet a pointer to the moving point set
 				*/
-				virtual void setTargetPointSet(const TargetPointSetType *pTargetPointSet) = 0;
+				virtual void setTargetPointSet(const TargetPointSetType* pTargetPointSet) = 0;
 
 				/*! returns the modification time of the target point set.
 				*/
@@ -98,8 +98,8 @@ namespace map
 			private:
 
 				//No copy constructor allowed
-				PointSetRegistrationAlgorithmInterface(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				PointSetRegistrationAlgorithmInterface(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

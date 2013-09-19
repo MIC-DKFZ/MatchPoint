@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapSDXMLStrReaderTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 #include "litCheckMacros.h"
 
@@ -33,7 +33,8 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			core::String dataStr1 = "<Main type='demo'>boss<Sub id='1'>1st</Sub><Sub id='2' attr2='###'>2nd</Sub><Sub id='3'><Sub id='3.1'/></Sub><Add/></Main>";
+			core::String dataStr1 =
+				"<Main type='demo'>boss<Sub id='1'>1st</Sub><Sub id='2' attr2='###'>2nd</Sub><Sub id='3'><Sub id='3.1'/></Sub><Add/></Main>";
 
 			map::structuredData::XMLStrReader::Pointer spReader = map::structuredData::XMLStrReader::New();
 
@@ -49,7 +50,8 @@ namespace map
 			CHECK_EQUAL("Main", spMain->getTag());
 			CHECK_EQUAL("boss", spMain->getValue());
 			CHECK_EQUAL("demo", spMain->getAttribute("type"));
-			CHECK_EQUAL(tags::SDInternalSourceReader_string, spMain->getAttribute(tags::SDInternalSourceReader));
+			CHECK_EQUAL(tags::SDInternalSourceReader_string,
+						spMain->getAttribute(tags::SDInternalSourceReader));
 			CHECK_EQUAL(tags::SDInternalSourceFormat_xml, spMain->getAttribute(tags::SDInternalSourceFormat));
 			CHECK_EQUAL(3, spMain->getAttributeNames().size());
 			CHECK_EQUAL(4, spMain->getSubElementsCount());
@@ -83,15 +85,18 @@ namespace map
 			CHECK_EQUAL("Sub", spSub->getTag());
 			CHECK_EQUAL("", spSub->getValue());
 			CHECK_EQUAL("3", spSub->getAttribute("id"));
-			CHECK_EQUAL(tags::SDInternalSourceReader_string, spMain->getAttribute(tags::SDInternalSourceReader));
+			CHECK_EQUAL(tags::SDInternalSourceReader_string,
+						spMain->getAttribute(tags::SDInternalSourceReader));
 			CHECK_EQUAL(tags::SDInternalSourceFormat_xml, spMain->getAttribute(tags::SDInternalSourceFormat));
 			CHECK_EQUAL(3, spSub->getAttributeNames().size());
 			CHECK_EQUAL(1, spSub->getSubElementsCount());
 			CHECK_EQUAL("Sub", spSub->getSubElement(0)->getTag());
 			CHECK_EQUAL("", spSub->getSubElement(0)->getValue());
 			CHECK_EQUAL("3.1", spSub->getSubElement(0)->getAttribute("id"));
-			CHECK_EQUAL(tags::SDInternalSourceReader_string, spSub->getSubElement(0)->getAttribute(tags::SDInternalSourceReader));
-			CHECK_EQUAL(tags::SDInternalSourceFormat_xml, spSub->getSubElement(0)->getAttribute(tags::SDInternalSourceFormat));
+			CHECK_EQUAL(tags::SDInternalSourceReader_string,
+						spSub->getSubElement(0)->getAttribute(tags::SDInternalSourceReader));
+			CHECK_EQUAL(tags::SDInternalSourceFormat_xml,
+						spSub->getSubElement(0)->getAttribute(tags::SDInternalSourceFormat));
 			CHECK_EQUAL(3, spSub->getSubElement(0)->getAttributeNames().size());
 			CHECK_EQUAL(0, spSub->getSubElement(0)->getSubElementsCount());
 
@@ -122,7 +127,8 @@ namespace map
 			CHECK_EQUAL("Main", spMain->getTag());
 			CHECK_EQUAL("boss", spMain->getValue());
 			CHECK_EQUAL("demo", spMain->getAttribute("type"));
-			CHECK_EQUAL(tags::SDInternalSourceReader_string, spMain->getAttribute(tags::SDInternalSourceReader));
+			CHECK_EQUAL(tags::SDInternalSourceReader_string,
+						spMain->getAttribute(tags::SDInternalSourceReader));
 			CHECK_EQUAL(tags::SDInternalSourceFormat_xml, spMain->getAttribute(tags::SDInternalSourceFormat));
 			CHECK_EQUAL(3, spMain->getAttributeNames().size());
 			CHECK_EQUAL(4, spMain->getSubElementsCount());
@@ -163,8 +169,10 @@ namespace map
 			CHECK_EQUAL("Sub", spSub->getSubElement(0)->getTag());
 			CHECK_EQUAL("", spSub->getSubElement(0)->getValue());
 			CHECK_EQUAL("3.1", spSub->getSubElement(0)->getAttribute("id"));
-			CHECK_EQUAL(tags::SDInternalSourceReader_string, spSub->getSubElement(0)->getAttribute(tags::SDInternalSourceReader));
-			CHECK_EQUAL(tags::SDInternalSourceFormat_xml, spSub->getSubElement(0)->getAttribute(tags::SDInternalSourceFormat));
+			CHECK_EQUAL(tags::SDInternalSourceReader_string,
+						spSub->getSubElement(0)->getAttribute(tags::SDInternalSourceReader));
+			CHECK_EQUAL(tags::SDInternalSourceFormat_xml,
+						spSub->getSubElement(0)->getAttribute(tags::SDInternalSourceFormat));
 			CHECK_EQUAL(3, spSub->getSubElement(0)->getAttributeNames().size());
 			CHECK_EQUAL(0, spSub->getSubElement(0)->getSubElementsCount());
 

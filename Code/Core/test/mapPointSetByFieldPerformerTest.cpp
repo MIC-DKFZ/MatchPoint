@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapPointSetByFieldPerformerTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -66,7 +66,7 @@ namespace map
 			}
 		}
 
-		int mapPointSetByFieldPerformerTest(int argc, char *argv[])
+		int mapPointSetByFieldPerformerTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -77,8 +77,10 @@ namespace map
 			typedef core::continuous::Elements<3>::InternalPointSetType ResultData2Type;
 			typedef TestKernelBase<2, 2> IllegalKernelType;
 
-			typedef core::PointSetByFieldPerformer<RegistrationType, InputDataType, ResultDataType> PerformerType;
-			typedef core::PointSetByFieldPerformer<Registration2Type, InputDataType, ResultData2Type> Performer2Type;
+			typedef core::PointSetByFieldPerformer<RegistrationType, InputDataType, ResultDataType>
+			PerformerType;
+			typedef core::PointSetByFieldPerformer<Registration2Type, InputDataType, ResultData2Type>
+			Performer2Type;
 
 			//Now we create the kernels
 			FieldKernelType::Pointer spKernel = FieldKernelType::New();
@@ -120,12 +122,15 @@ namespace map
 			// valid request
 			PerformerType::RequestType request(spRegistration.GetPointer(), spInputSet.GetPointer(), true, 0);
 			// valid request 2 (no exception, mark point)
-			PerformerType::RequestType request2(spRegistration.GetPointer(), spInputSet.GetPointer(), false, -1);
+			PerformerType::RequestType request2(spRegistration.GetPointer(), spInputSet.GetPointer(), false,
+												-1);
 			// illegal request
-			PerformerType::RequestType illegalRequest1(spRegistration.GetPointer(), spInputSet.GetPointer(), true, 0);
+			PerformerType::RequestType illegalRequest1(spRegistration.GetPointer(), spInputSet.GetPointer(),
+					true, 0);
 			illegalRequest1._spInputData = NULL;
 			// illegal request: field, field
-			PerformerType::RequestType illegalRequest2(spIllegalRegistration1.GetPointer(), spInputSet.GetPointer(), true, 0);
+			PerformerType::RequestType illegalRequest2(spIllegalRegistration1.GetPointer(),
+					spInputSet.GetPointer(), true, 0);
 
 			//creating the combinator
 			PerformerType::Pointer spPerformer = PerformerType::New();

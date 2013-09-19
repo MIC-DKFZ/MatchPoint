@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldByFieldInversionFunctor.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -46,15 +46,23 @@ namespace map
 			class FieldByFieldInversionFunctorHelper
 			{
 			public:
-				typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::FieldPointer FieldPointer;
-				typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::FieldType    FieldType;
-				typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType    SourceFieldKernelType;
-				typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType    InFieldRepresentationType;
+				typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::FieldPointer
+				FieldPointer;
+				typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::FieldType
+				FieldType;
+				typedef typename
+				FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType
+				SourceFieldKernelType;
+				typedef typename
+				FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
+				InFieldRepresentationType;
 
-				static inline FieldPointer generate(const SourceFieldKernelType *pSourceFieldKernel, const InFieldRepresentationType *pInFieldRepresentation,
-				                                    double stopValue, unsigned int nrOfIterations)
+				static inline FieldPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
+													const InFieldRepresentationType* pInFieldRepresentation,
+													double stopValue, unsigned int nrOfIterations)
 				{
-					mapExceptionStaticMacro(ExceptionObject, << "Error unsymmetric field inversion not implemented yet.");
+					mapExceptionStaticMacro(ExceptionObject,
+											<< "Error unsymmetric field inversion not implemented yet.");
 					return NULL;
 				}
 			};
@@ -65,15 +73,21 @@ namespace map
 			public:
 				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::FieldPointer FieldPointer;
 				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::FieldType    FieldType;
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldType    SourceFieldType;
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldConstPointer    SourceFieldConstPointer;
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldKernelType  SourceFieldKernelType;
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::InFieldRepresentationType    InFieldRepresentationType;
+				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldType
+				SourceFieldType;
+				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldConstPointer
+				SourceFieldConstPointer;
+				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldKernelType
+				SourceFieldKernelType;
+				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::InFieldRepresentationType
+				InFieldRepresentationType;
 
-				static inline FieldPointer generate(const SourceFieldKernelType *pSourceFieldKernel, const InFieldRepresentationType *pInFieldRepresentation,
-				                                    double stopValue, unsigned int nrOfIterations)
+				static inline FieldPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
+													const InFieldRepresentationType* pInFieldRepresentation,
+													double stopValue, unsigned int nrOfIterations)
 				{
-					typedef itk::IterativeInverseDisplacementFieldImageFilter<SourceFieldType, FieldType> FieldInverterType;
+					typedef itk::IterativeInverseDisplacementFieldImageFilter<SourceFieldType, FieldType>
+					FieldInverterType;
 
 					mapLogInfoStaticMacro( << "Generate field by field inversion");
 
@@ -97,13 +111,16 @@ namespace map
 			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
 			generateField() const
 			{
-				FieldPointer spField = FieldByFieldInversionFunctorHelper<VInputDimensions, VOutputDimensions>::generate(_spSourceFieldKernel, Superclass::_spInFieldRepresentation, _stopValue, _nrOfIterations);
+				FieldPointer spField =
+					FieldByFieldInversionFunctorHelper<VInputDimensions, VOutputDimensions>::generate(
+						_spSourceFieldKernel, Superclass::_spInFieldRepresentation, _stopValue, _nrOfIterations);
 
 				return spField;
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			const typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType *
+			const typename
+			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType*
 			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
 			getSourceFieldKernel(void) const
 			{
@@ -113,8 +130,8 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::Pointer
 			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			New(const SourceFieldKernelType &sourceFieldKernel,
-			    const InFieldRepresentationType *pInFieldRepresentation)
+			New(const SourceFieldKernelType& sourceFieldKernel,
+				const InFieldRepresentationType* pInFieldRepresentation)
 			{
 				assert(pInFieldRepresentation);
 				Pointer spFieldByFieldInversionFunctor = new Self(sourceFieldKernel, pInFieldRepresentation);
@@ -137,9 +154,10 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			FieldByFieldInversionFunctor(const SourceFieldKernelType &sourceFieldKernel,
-			                             const InFieldRepresentationType *pInFieldRepresentation):
-				Superclass(pInFieldRepresentation), _spSourceFieldKernel(&sourceFieldKernel), _nrOfIterations(20), _stopValue(0.0)
+			FieldByFieldInversionFunctor(const SourceFieldKernelType& sourceFieldKernel,
+										 const InFieldRepresentationType* pInFieldRepresentation):
+				Superclass(pInFieldRepresentation), _spSourceFieldKernel(&sourceFieldKernel), _nrOfIterations(20),
+				_stopValue(0.0)
 			{
 				assert(pInFieldRepresentation);
 			}
@@ -151,7 +169,7 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			void
 			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			PrintSelf(std::ostream &os, itk::Indent indent) const
+			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 				os << indent << "Number of iterations: " << _nrOfIterations << std::endl;

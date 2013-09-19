@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapRegistrationTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -37,7 +37,8 @@ namespace map
 	{
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class TestRegistrationKernel : public core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>
+		class TestRegistrationKernel : public
+			core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			typedef TestRegistrationKernel<VInputDimensions, VOutputDimensions> Self;
@@ -46,14 +47,15 @@ namespace map
 			typedef itk::SmartPointer<const Self> ConstPointer;
 			typedef typename Superclass::InputPointType InputPointType;
 			typedef typename Superclass::OutputPointType OutputPointType;
-			typedef typename Superclass::RepresentationDescriptorConstPointer RepresentationDescriptorConstPointer;
+			typedef typename Superclass::RepresentationDescriptorConstPointer
+			RepresentationDescriptorConstPointer;
 			typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
 
 			itkTypeMacro(TestRegistrationKernel, RegistrationKernelBase);
 
 			itkNewMacro(Self);
 
-			virtual bool doMapPoint(const InputPointType &inPoint, OutputPointType &outPoint) const
+			virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const
 			{
 				//dummy mapping not important for this test level
 				_hasMappedPoint = true;
@@ -94,8 +96,8 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			TestRegistrationKernel(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			TestRegistrationKernel(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapSealedOptimizerPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -32,7 +32,7 @@ namespace map
 		{
 
 			template<class TConcreteOptimizer>
-			typename SealedOptimizerPolicy<TConcreteOptimizer>::ConcreteOptimizerType *
+			typename SealedOptimizerPolicy<TConcreteOptimizer>::ConcreteOptimizerType*
 			SealedOptimizerPolicy<TConcreteOptimizer>::
 			getConcreteITKOptimizer()
 			{
@@ -40,7 +40,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			const typename SealedOptimizerPolicy<TConcreteOptimizer>::ConcreteOptimizerType *
+			const typename SealedOptimizerPolicy<TConcreteOptimizer>::ConcreteOptimizerType*
 			SealedOptimizerPolicy<TConcreteOptimizer>::
 			getConcreteITKOptimizer() const
 			{
@@ -48,7 +48,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			const typename SealedOptimizerPolicy<TConcreteOptimizer>::ConcreteOptimizerControlType *
+			const typename SealedOptimizerPolicy<TConcreteOptimizer>::ConcreteOptimizerControlType*
 			SealedOptimizerPolicy<TConcreteOptimizer>::
 			getConcreteOptimizerControl() const
 			{
@@ -56,7 +56,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			typename SealedOptimizerPolicy<TConcreteOptimizer>::ConcreteOptimizerControlType *
+			typename SealedOptimizerPolicy<TConcreteOptimizer>::ConcreteOptimizerControlType*
 			SealedOptimizerPolicy<TConcreteOptimizer>::
 			getConcreteOptimizerControl()
 			{
@@ -75,7 +75,7 @@ namespace map
 			~SealedOptimizerPolicy() {};
 
 			template<class TConcreteOptimizer>
-			typename SealedOptimizerPolicy<TConcreteOptimizer>::InternalOptimizerControlType *
+			typename SealedOptimizerPolicy<TConcreteOptimizer>::InternalOptimizerControlType*
 			SealedOptimizerPolicy<TConcreteOptimizer>::
 			getOptimizerInternal()
 			{
@@ -83,7 +83,7 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			const typename SealedOptimizerPolicy<TConcreteOptimizer>::InternalOptimizerControlType *
+			const typename SealedOptimizerPolicy<TConcreteOptimizer>::InternalOptimizerControlType*
 			SealedOptimizerPolicy<TConcreteOptimizer>::
 			getOptimizerInternal() const
 			{

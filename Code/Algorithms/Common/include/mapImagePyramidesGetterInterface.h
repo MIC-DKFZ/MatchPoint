@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapImagePyramidesGetterInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,40 +50,40 @@ namespace map
 
 				/** Type of the Fixed image multiresolution pyramid. */
 				typedef ::itk::MultiResolutionPyramidImageFilter < TargetImageType,
-				        TargetImageType >
-				        TargetImagePyramideBaseType;
+						TargetImageType >
+						TargetImagePyramideBaseType;
 				typedef typename TargetImagePyramideBaseType::Pointer  TargetImagePyramideBasePointer;
 
 				/** Type of the moving image multiresolution pyramid. */
 				typedef ::itk::MultiResolutionPyramidImageFilter < MovingImageType,
-				        MovingImageType >
-				        MovingImagePyramideBaseType;
+						MovingImageType >
+						MovingImagePyramideBaseType;
 				typedef typename MovingImagePyramideBaseType::Pointer MovingImagePyramideBasePointer;
 
 				/*! @brief gets a  pointer to the moving image pyramide
 				@eguarantee strong
 				@return a pointer to the moving image pyramide
 				*/
-				virtual MovingImagePyramideBaseType *getMovingImagePyramide() = 0;
+				virtual MovingImagePyramideBaseType* getMovingImagePyramide() = 0;
 
 				/*! @brief gets a const pointer to the moving image pyramide
 				@eguarantee strong
 				@return a const pointer to the moving image pyramide
 				*/
-				virtual const MovingImagePyramideBaseType *getMovingImagePyramide() const = 0;
+				virtual const MovingImagePyramideBaseType* getMovingImagePyramide() const = 0;
 
 
 				/*! @brief gets a  pointer to the target image pyramide
 				@eguarantee strong
 				@return a pointer to the target image pyramide
 				*/
-				virtual TargetImagePyramideBaseType *getTargetImagePyramide() = 0;
+				virtual TargetImagePyramideBaseType* getTargetImagePyramide() = 0;
 
 				/*! @brief gets a const pointer to the target image pyramide
 				@eguarantee strong
 				@return a const pointer to the target image pyramide
 				*/
-				virtual const TargetImagePyramideBaseType *getTargetImagePyramide() const = 0;
+				virtual const TargetImagePyramideBaseType* getTargetImagePyramide() const = 0;
 
 			protected:
 				ImagePyramidesGetterInterface() {};
@@ -91,8 +91,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ImagePyramidesGetterInterface(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ImagePyramidesGetterInterface(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 		}

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapMaskedRegistrationAlgorithmBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -55,7 +55,8 @@ namespace map
 		 *@template VTargetDimension Dimension of the target space
 		 */
 		template<unsigned int VMovingDimension, unsigned int VTargetDimension>
-		class MaskedRegistrationAlgorithmBase : public facet::MaskedRegistrationAlgorithmInterface<VMovingDimension, VTargetDimension>
+		class MaskedRegistrationAlgorithmBase : public
+			facet::MaskedRegistrationAlgorithmInterface<VMovingDimension, VTargetDimension>
 		{
 		public:
 			typedef MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension> Self;
@@ -82,13 +83,13 @@ namespace map
 			@eguarantee strong
 			@param pMovingMask a pointer to the moving mask
 			*/
-			virtual void setMovingMask(const MovingMaskBaseType *pMovingMask);
+			virtual void setMovingMask(const MovingMaskBaseType* pMovingMask);
 
 			/*! @brief sets the target mask
 			@eguarantee strong
 			@param pTargetMask a pointer to the moving mask
 			*/
-			virtual void setTargetMask(const TargetMaskBaseType *pTargetMask);
+			virtual void setTargetMask(const TargetMaskBaseType* pTargetMask);
 
 		protected:
 			/*! @brief virtual destructor
@@ -98,7 +99,7 @@ namespace map
 			MaskedRegistrationAlgorithmBase();
 
 			/*! Methods invoked by derivated classes.  */
-			virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 			/** Return this modified time of the target mask.  */
 			unsigned long getTargetMaskMTime() const;
@@ -117,8 +118,8 @@ namespace map
 			TargetMaskBaseConstPointer _spTargetMask;
 
 			//No copy constructor allowed
-			MaskedRegistrationAlgorithmBase(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			MaskedRegistrationAlgorithmBase(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

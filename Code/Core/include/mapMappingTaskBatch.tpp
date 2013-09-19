@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMappingTaskBatch.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -68,11 +68,12 @@ namespace map
 		template <class TRegistration>
 		void
 		MappingTaskBatch<TRegistration>::
-		addTask(MappingTaskBaseType *pTask)
+		addTask(MappingTaskBaseType* pTask)
 		{
 			if (!pTask)
 			{
-				mapExceptionMacro(ServiceException, << "Error. Cannot add invalid task to task batch. Task pointer is NULL.");
+				mapExceptionMacro(ServiceException,
+								  << "Error. Cannot add invalid task to task batch. Task pointer is NULL.");
 			}
 
 			this->_tasks.push_back(pTask);
@@ -82,11 +83,12 @@ namespace map
 		template <class TRegistration>
 		void
 		MappingTaskBatch<TRegistration>::
-		setRegistration(const RegistrationType *pRegistration)
+		setRegistration(const RegistrationType* pRegistration)
 		{
 			if (!pRegistration)
 			{
-				mapExceptionMacro(ServiceException, << "Error. Cannot set invalid registration to task batch. Registration pointer is NULL.");
+				mapExceptionMacro(ServiceException,
+								  << "Error. Cannot set invalid registration to task batch. Registration pointer is NULL.");
 			}
 
 			for (typename TaskVectorType::iterator pos = this->_tasks.begin(); pos != this->_tasks.end(); ++pos)
@@ -98,7 +100,7 @@ namespace map
 		template <class TRegistration>
 		bool
 		MappingTaskBatch<TRegistration>::
-		process(const RegistrationType *pRegistration)
+		process(const RegistrationType* pRegistration)
 		{
 			setRegistration(pRegistration);
 			return process();
@@ -123,7 +125,8 @@ namespace map
 
 			if (currentThreadCount < 1)
 			{
-				if (_tasks.size() > (typename ThreadVectorType::size_type)(::itk::NumericTraits<ThreadCountType>::max()))
+				if (_tasks.size() > (typename ThreadVectorType::size_type)(
+						::itk::NumericTraits<ThreadCountType>::max()))
 				{
 					currentThreadCount = ::itk::NumericTraits<ThreadCountType>::max();
 				}
@@ -146,15 +149,20 @@ namespace map
 					//add observer for the communication with the thread
 					typename ::itk::MemberCommand<Self>::Pointer spNewTaskCommand = ::itk::MemberCommand<Self>::New();
 					spNewTaskCommand->SetCallbackFunction(this, &Self::onNextTaskThreadEvent);
-					smpThread->AddObserver(events::NextTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID), spNewTaskCommand);
+					smpThread->AddObserver(events::NextTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID),
+										   spNewTaskCommand);
 
-					typename ::itk::MemberCommand<Self>::Pointer spProcessedTaskCommand = ::itk::MemberCommand<Self>::New();
+					typename ::itk::MemberCommand<Self>::Pointer spProcessedTaskCommand =
+						::itk::MemberCommand<Self>::New();
 					spProcessedTaskCommand->SetCallbackFunction(this, &Self::onProcessedTaskThreadEvent);
-					smpThread->AddObserver(events::ProcessedTaskThreadEvent(events::ProcessedTaskThreadEvent::anyThreadID), spProcessedTaskCommand);
+					smpThread->AddObserver(events::ProcessedTaskThreadEvent(
+											   events::ProcessedTaskThreadEvent::anyThreadID), spProcessedTaskCommand);
 
-					typename ::itk::MemberCommand<Self>::Pointer spFailedTaskCommand = ::itk::MemberCommand<Self>::New();
+					typename ::itk::MemberCommand<Self>::Pointer spFailedTaskCommand =
+						::itk::MemberCommand<Self>::New();
 					spFailedTaskCommand->SetCallbackFunction(this, &Self::onFailedTaskThreadEvent);
-					smpThread->AddObserver(events::FailedTaskThreadEvent(events::FailedTaskThreadEvent::anyThreadID), spFailedTaskCommand);
+					smpThread->AddObserver(events::FailedTaskThreadEvent(events::FailedTaskThreadEvent::anyThreadID),
+										   spFailedTaskCommand);
 
 					_threads.push_back(smpThread);
 					smpThreader->SetMultipleMethod(index, Self::threadExecution, smpThread.GetPointer());
@@ -179,7 +187,7 @@ namespace map
 			{
 				//one process task was exception neutral and threw an exception, pass it on now,
 				//after al threads have terminated
-				throw *_pTerminatingException;
+				throw* _pTerminatingException;
 			}
 
 			return _failedTasks.size() == 0;
@@ -188,14 +196,14 @@ namespace map
 		template <class TRegistration>
 		ITK_THREAD_RETURN_TYPE
 		MappingTaskBatch<TRegistration>::
-		threadExecution(void *arg)
+		threadExecution(void* arg)
 		{
-			ThreadType *pThread;
+			ThreadType* pThread;
 			int threadID;
 
-			threadID = ((itk::MultiThreader::ThreadInfoStruct *)(arg))->ThreadID;
+			threadID = ((itk::MultiThreader::ThreadInfoStruct*)(arg))->ThreadID;
 
-			pThread = (ThreadType *)(((itk::MultiThreader::ThreadInfoStruct *)(arg))->UserData);
+			pThread = (ThreadType*)(((itk::MultiThreader::ThreadInfoStruct*)(arg))->UserData);
 
 			if (!pThread)
 			{
@@ -211,17 +219,17 @@ namespace map
 		template <class TRegistration>
 		void
 		MappingTaskBatch<TRegistration>::
-		onNextTaskThreadEvent(::itk::Object *pCaller, const ::itk::EventObject &eventObject)
+		onNextTaskThreadEvent(::itk::Object* pCaller, const ::itk::EventObject& eventObject)
 		{
 			MutexHolderType holder(_threadMutex);
 
 			if ((!_pendingTasks.empty()) && _pTerminatingException == NULL)
 			{
-				ThreadType *pThread = dynamic_cast<ThreadType *>(pCaller);
+				ThreadType* pThread = dynamic_cast<ThreadType*>(pCaller);
 
 				if (pThread)
 				{
-					MappingTaskBaseType *pTask = _pendingTasks.front();
+					MappingTaskBaseType* pTask = _pendingTasks.front();
 					pThread->setNewTask(pTask);
 					_assignedTasks.push_back(pTask);
 					_pendingTasks.pop_front();
@@ -233,61 +241,67 @@ namespace map
 		template <class TRegistration>
 		void
 		MappingTaskBatch<TRegistration>::
-		onProcessedTaskThreadEvent(::itk::Object *pCaller, const ::itk::EventObject &eventObject)
+		onProcessedTaskThreadEvent(::itk::Object* pCaller, const ::itk::EventObject& eventObject)
 		{
 			MutexHolderType holder(_threadMutex);
 
-			ThreadType *pThread = dynamic_cast<ThreadType *>(pCaller);
+			ThreadType* pThread = dynamic_cast<ThreadType*>(pCaller);
 
 			if (pThread)
 			{
-				MappingTaskBaseType *pTask = pThread->getCurrentTask();
+				MappingTaskBaseType* pTask = pThread->getCurrentTask();
 				std::remove(_assignedTasks.begin(), _assignedTasks.end(), pTask);
 				_processedTasks.push_back(pTask);
-				this->InvokeEvent(events::ProcessedTaskThreadEvent(pThread->getThreadID(), pTask, "Task processed successfully"));
+				this->InvokeEvent(events::ProcessedTaskThreadEvent(pThread->getThreadID(), pTask,
+								  "Task processed successfully"));
 			}
 			else
 			{
-				mapDefaultExceptionMacro( << "Error. onProcessedTaskThreadEvent was called but pCaller doesnt point to a threas. pCaller: " << pCaller);
+				mapDefaultExceptionMacro( <<
+										  "Error. onProcessedTaskThreadEvent was called but pCaller doesnt point to a threas. pCaller: " <<
+										  pCaller);
 			}
 		}
 
 		template <class TRegistration>
 		void
 		MappingTaskBatch<TRegistration>::
-		onFailedTaskThreadEvent(::itk::Object *pCaller, const ::itk::EventObject &eventObject)
+		onFailedTaskThreadEvent(::itk::Object* pCaller, const ::itk::EventObject& eventObject)
 		{
 			MutexHolderType holder(_threadMutex);
 
-			ThreadType *pThread = dynamic_cast<ThreadType *>(pCaller);
+			ThreadType* pThread = dynamic_cast<ThreadType*>(pCaller);
 
 			if (pThread)
 			{
-				MappingTaskBaseType *pTask = pThread->getCurrentTask();
+				MappingTaskBaseType* pTask = pThread->getCurrentTask();
 				std::remove(_assignedTasks.begin(), _assignedTasks.end(), pTask);
 				_failedTasks.push_back(pTask);
 
 				if (pThread->hasUnhandledExceptionOccured())
 				{
 					if ((pTask->getIsExceptionNeutral()) &&
-					        (pTask->getRegistrationException() != NULL))
+						(pTask->getRegistrationException() != NULL))
 					{
 						_pTerminatingException = pTask->getRegistrationException();
 					}
 
-					this->InvokeEvent(events::ThreadTerminatingErrorEvent(pThread->getThreadID(), pThread, "Thread loop terminated with exception"));
+					this->InvokeEvent(events::ThreadTerminatingErrorEvent(pThread->getThreadID(), pThread,
+									  "Thread loop terminated with exception"));
 				}
 
 				this->InvokeEvent(events::FailedTaskThreadEvent(pThread->getThreadID(), pTask, "Task failed"));
 			}
 			else
 			{
-				mapDefaultExceptionMacro( << "Error. onFailedTaskThreadEvent was called but pCaller doesnt point to a threas. pCaller: " << pCaller);
+				mapDefaultExceptionMacro( <<
+										  "Error. onFailedTaskThreadEvent was called but pCaller doesnt point to a threas. pCaller: " <<
+										  pCaller);
 			}
 		}
 
 		template <class TRegistration>
-		const typename MappingTaskBatch<TRegistration>::TaskSelectionType &
+		const typename MappingTaskBatch<TRegistration>::TaskSelectionType&
 		MappingTaskBatch<TRegistration>::
 		getFailedTasks(void) const
 		{
@@ -295,7 +309,7 @@ namespace map
 		}
 
 		template <class TRegistration>
-		const typename MappingTaskBatch<TRegistration>::TaskVectorType &
+		const typename MappingTaskBatch<TRegistration>::TaskVectorType&
 		MappingTaskBatch<TRegistration>::
 		getTasks(void) const
 		{
@@ -326,7 +340,7 @@ namespace map
 		template <class TRegistration>
 		void
 		MappingTaskBatch<TRegistration>::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 

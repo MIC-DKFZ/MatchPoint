@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapAlgorithmWrapperEvent.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -41,30 +41,31 @@ namespace map
 			typedef AlgorithmWrapperEvent Self;
 			typedef AlgorithmEvent Superclass;
 
-			AlgorithmWrapperEvent(const ::itk::EventObject &wrappedEvent, ::itk::Object *wrappedCaller = NULL, const std::string &comment = "");
+			AlgorithmWrapperEvent(const ::itk::EventObject& wrappedEvent, ::itk::Object* wrappedCaller = NULL,
+								  const std::string& comment = "");
 
 			virtual ~AlgorithmWrapperEvent();
 
-			virtual const char *GetEventName() const;
+			virtual const char* GetEventName() const;
 
-			virtual bool CheckEvent(const ::itk::EventObject *e) const;
+			virtual bool CheckEvent(const ::itk::EventObject* e) const;
 
-			virtual ::itk::EventObject *MakeObject() const;
+			virtual ::itk::EventObject* MakeObject() const;
 
-			AlgorithmWrapperEvent(const Self &s);
+			AlgorithmWrapperEvent(const Self& s);
 
-			::itk::EventObject &getWrappedEvent() const;
-			::itk::Object *getWrappedCaller() const;
+			::itk::EventObject& getWrappedEvent() const;
+			::itk::Object* getWrappedCaller() const;
 
-			virtual void Print(std::ostream &os) const;
+			virtual void Print(std::ostream& os) const;
 
 		private:
-			::itk::Object *_pWrappedCaller;
-			::itk::EventObject *_pWrappedEvent;
+			::itk::Object* _pWrappedCaller;
+			::itk::EventObject* _pWrappedEvent;
 
 			std::string _cachedEventName;
 
-			void operator=(const Self &);
+			void operator=(const Self&);
 		};
 	}
 }

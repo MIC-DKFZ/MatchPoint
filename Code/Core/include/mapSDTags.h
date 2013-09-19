@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapSDTags.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -32,19 +32,19 @@ namespace map
 		/** Indicates which kind of reader was used to recieve the
 		 data that was used to generate the structured data.
 		 e.g.: file = for FileReader; string = string in memory...*/
-		const char *const SDInternalSourceReader = "sdInternal:SourceReader";
-		const char *const SDInternalSourceReader_file = "file";
-		const char *const SDInternalSourceReader_string = "string";
+		const char* const SDInternalSourceReader = "sdInternal:SourceReader";
+		const char* const SDInternalSourceReader_file = "file";
+		const char* const SDInternalSourceReader_string = "string";
 
 		/** Indicates which kind of format the structured data was
 		 stored in.
 		 e.g.: xml...*/
-		const char *const SDInternalSourceFormat = "sdInternal:SourceFormat";
-		const char *const SDInternalSourceFormat_xml = "xml";
+		const char* const SDInternalSourceFormat = "sdInternal:SourceFormat";
+		const char* const SDInternalSourceFormat_xml = "xml";
 
 		/** Indicates the location of the data source.
 		 e.g.: the file path...*/
-		const char *const SDInternalSourceURI = "sdInternal:SourceURI";
+		const char* const SDInternalSourceURI = "sdInternal:SourceURI";
 	}
 }
 

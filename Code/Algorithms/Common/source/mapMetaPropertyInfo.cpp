@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/source/mapMetaPropertyInfo.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -31,10 +31,10 @@ namespace map
 
 		MetaPropertyInfo::Pointer
 		MetaPropertyInfo::
-		New(const core::String &name, const std::type_info &type_info, bool isReadable, bool isWritable)
+		New(const core::String& name, const std::type_info& type_info, bool isReadable, bool isWritable)
 		{
 			Pointer smartPtr;
-			Self *rawPtr = new Self(name, type_info, isReadable, isWritable);
+			Self* rawPtr = new Self(name, type_info, isReadable, isWritable);
 			smartPtr = rawPtr;
 			rawPtr->UnRegister();
 			return smartPtr;
@@ -45,11 +45,12 @@ namespace map
 		CreateAnother(void) const
 		{
 			::itk::LightObject::Pointer smartPtr;
-			smartPtr = Self::New(this->_name, this->_type_info, this->_isReadable, this->_isWritable).GetPointer();
+			smartPtr = Self::New(this->_name, this->_type_info, this->_isReadable,
+								 this->_isWritable).GetPointer();
 			return smartPtr;
 		};
 
-		const char *
+		const char*
 		MetaPropertyInfo::
 		getTypeName() const
 		{
@@ -57,14 +58,14 @@ namespace map
 		};
 
 
-		const std::type_info &
+		const std::type_info&
 		MetaPropertyInfo::
 		getTypeInfo() const
 		{
 			return this->_type_info;
 		};
 
-		const core::String &
+		const core::String&
 		MetaPropertyInfo::
 		getName() const
 		{
@@ -87,7 +88,7 @@ namespace map
 
 		void
 		MetaPropertyInfo::
-		PrintSelf(std::ostream &os, ::itk::Indent indent) const
+		PrintSelf(std::ostream& os, ::itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 			os << indent << "Name:     " << this->_name << std::endl;
@@ -102,7 +103,8 @@ namespace map
 		};
 
 		MetaPropertyInfo::
-		MetaPropertyInfo(const core::String &name, const std::type_info &type_info, bool isReadable, bool isWritable) :
+		MetaPropertyInfo(const core::String& name, const std::type_info& type_info, bool isReadable,
+						 bool isWritable) :
 			_name(name), _type_info(type_info), _isReadable(isReadable), _isWritable(isWritable)
 		{};
 

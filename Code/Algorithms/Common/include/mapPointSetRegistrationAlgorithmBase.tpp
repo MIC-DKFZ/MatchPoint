@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapPointSetRegistrationAlgorithmBase.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -51,7 +51,7 @@ namespace map
 		template<class TMovingPointSet, class TTargetPointSet>
 		void
 		PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>::
-		setMovingPointSet(const MovingPointSetType *pMovingPointSet)
+		setMovingPointSet(const MovingPointSetType* pMovingPointSet)
 		{
 			_spMovingPointSet = pMovingPointSet;
 			this->_movingPSMTime.setWatchedObject(pMovingPointSet);
@@ -60,20 +60,24 @@ namespace map
 		template<class TMovingPointSet, class TTargetPointSet>
 		void
 		PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>::
-		setTargetPointSet(const TargetPointSetType *pTargetPointSet)
+		setTargetPointSet(const TargetPointSetType* pTargetPointSet)
 		{
 			_spTargetPointSet = pTargetPointSet;
 			this->_targetPSMTime.setWatchedObject(pTargetPointSet);
 		}
 
 		template<class TMovingPointSet, class TTargetPointSet>
-		unsigned long map::algorithm::PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>::getMovingPointSetMTime() const
+		unsigned long
+		map::algorithm::PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>::getMovingPointSetMTime()
+		const
 		{
 			return _movingPSMTime.getMTime();
 		}
 
 		template<class TMovingPointSet, class TTargetPointSet>
-		unsigned long map::algorithm::PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>::getTargetPointSetMTime() const
+		unsigned long
+		map::algorithm::PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>::getTargetPointSetMTime()
+		const
 		{
 			return _targetPSMTime.getMTime();
 		}
@@ -92,7 +96,7 @@ namespace map
 		template<class TMovingPointSet, class TTargetPointSet>
 		void
 		PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>::
-		PrintSelf(std::ostream &os, ::itk::Indent indent) const
+		PrintSelf(std::ostream& os, ::itk::Indent indent) const
 		{
 			os << indent << "Moving point set: " << _spMovingPointSet.GetPointer() << std::endl;
 			os << indent << "Target point set: " << _spTargetPointSet.GetPointer() << std::endl;

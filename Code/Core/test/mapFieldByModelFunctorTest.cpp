@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapFieldByModelFunctorTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -45,7 +45,8 @@ namespace map
 
 
 			//Model kernel generation
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 3> > ScaleTransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 3> >
+			ScaleTransformType;
 
 			FunctorType::TransformModelType::Pointer spModel = ScaleTransformType::New().GetPointer();
 
@@ -58,7 +59,8 @@ namespace map
 			params.fill(2.0);
 			spModel->getTransform()->SetParameters(params);
 
-			FunctorType::InFieldRepresentationType::Pointer spInRep = FunctorType::InFieldRepresentationType::New();
+			FunctorType::InFieldRepresentationType::Pointer spInRep =
+				FunctorType::InFieldRepresentationType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
@@ -70,7 +72,8 @@ namespace map
 
 			CHECK(spModel == spFunc->getTransformModel());
 
-			FunctorType::Pointer spFuncAnother = dynamic_cast<FunctorType *>(spFunc->CreateAnother().GetPointer());
+			FunctorType::Pointer spFuncAnother = dynamic_cast<FunctorType*>
+												 (spFunc->CreateAnother().GetPointer());
 			CHECK(spFuncAnother->getTransformModel() == spFunc->getTransformModel());
 			CHECK(spFuncAnother->getInFieldRepresentation() == spFunc->getInFieldRepresentation());
 			CHECK(spFuncAnother->GetNameOfClass() == spFunc->GetNameOfClass());
@@ -81,7 +84,8 @@ namespace map
 			CHECK_NO_THROW(spField = spFunc->generateField());
 			CHECK(spField.IsNotNull());
 
-			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType::TransformBaseType> tester;
+			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType::TransformBaseType>
+			tester;
 			tester.setReferenceTransform(spModel->getTransform());
 			tester.setActualField(spField);
 			tester.setCheckThreshold(0.0);

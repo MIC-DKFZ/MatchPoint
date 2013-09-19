@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapPMVolume.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,27 +50,27 @@ namespace map
 			};
 
 			PMVolume::
-			PMVolume(const Self &volume)
+			PMVolume(const Self& volume)
 			{
 				_size = volume._size;
 				_origin = volume._origin;
 			};
 
 			PMVolume::
-			PMVolume(const OriginType &origin, const SizeType &size): _origin(origin), _size(size)
+			PMVolume(const OriginType& origin, const SizeType& size): _origin(origin), _size(size)
 			{
 				assert(origin.size() == size.size());
 			};
 
 			PMVolume::
-			PMVolume(const SizeType &size): _size(size)
+			PMVolume(const SizeType& size): _size(size)
 			{
 				_origin.resize(_size.size(), 0.0);
 			};
 
 			void
 			PMVolume::
-			operator=(const Self &volume)
+			operator=(const Self& volume)
 			{
 				if (this != &volume)
 				{
@@ -81,7 +81,7 @@ namespace map
 
 			bool
 			PMVolume::
-			operator==(const Self &volume) const
+			operator==(const Self& volume) const
 			{
 				bool result = true;
 
@@ -110,12 +110,12 @@ namespace map
 
 			void
 			PMVolume::
-			setOrigin(const OriginType &origin)
+			setOrigin(const OriginType& origin)
 			{
 				_origin = origin;
 			};
 
-			const PMVolume::OriginType &
+			const PMVolume::OriginType&
 			PMVolume::
 			getOrigin() const
 			{
@@ -124,12 +124,12 @@ namespace map
 
 			void
 			PMVolume::
-			setSize(const SizeType &size)
+			setSize(const SizeType& size)
 			{
 				_size = size;
 			};
 
-			const PMVolume::SizeType &
+			const PMVolume::SizeType&
 			PMVolume::
 			getSize() const
 			{
@@ -168,7 +168,7 @@ namespace map
 				return _origin[i];
 			};
 
-			std::ostream &operator<<(std::ostream &os, const PMVolume &volume)
+			std::ostream& operator<<(std::ostream& os, const PMVolume& volume)
 			{
 				os << "PMVolume[origin[";
 

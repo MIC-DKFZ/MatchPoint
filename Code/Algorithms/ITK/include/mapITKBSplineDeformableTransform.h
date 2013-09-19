@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKBSplineDeformableTransform.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -49,7 +49,8 @@ namespace map
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >  Self;
+				typedef ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >
+				Self;
 				typedef map::core::TransformModelBase<TScalarType, VDimensions, VDimensions>  Superclass;
 				typedef ::itk::SmartPointer<Self>        Pointer;
 				typedef ::itk::SmartPointer<const Self>  ConstPointer;
@@ -66,7 +67,8 @@ namespace map
 				typedef typename Superclass::InverseTransformModelBaseType    InverseTransformModelBaseType;
 				typedef typename Superclass::InverseTransformModelBasePointer InverseTransformModelBasePointer;
 
-				typedef ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> > InverseTransformModelType;
+				typedef ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >
+				InverseTransformModelType;
 				typedef typename InverseTransformModelType::Pointer           InverseTransformModelPointer;
 
 				typedef typename Superclass::TransformBaseType                TransformBaseType;
@@ -74,18 +76,19 @@ namespace map
 				typedef typename Superclass::InverseTransformBaseType         InverseTransformBaseType;
 				typedef typename Superclass::InverseTransformBasePointer      InverseTransformBasePointer;
 
-				typedef typename ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder>          TransformType;
+				typedef typename ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder>
+				TransformType;
 				typedef typename TransformType::Pointer                       TransformPointer;
 				typedef typename InverseTransformModelType::TransformType     InverseTransformType;
 				typedef typename InverseTransformModelType::TransformPointer  InverseTransformPointer;
 
-				virtual const TransformBaseType *getTransform() const;
-				virtual TransformBaseType *getTransform();
+				virtual const TransformBaseType* getTransform() const;
+				virtual TransformBaseType* getTransform();
 
-				virtual const TransformType *getConcreteTransform() const;
-				virtual TransformType *getConcreteTransform();
+				virtual const TransformType* getConcreteTransform() const;
+				virtual TransformType* getConcreteTransform();
 
-				virtual bool getInverse(InverseTransformModelBasePointer &spInverseModel) const;
+				virtual bool getInverse(InverseTransformModelBasePointer& spInverseModel) const;
 
 				virtual TransformModelBasePointer clone() const;
 
@@ -97,14 +100,14 @@ namespace map
 				* Thus the modification of the model must be passed through to the transform.  */
 				virtual void Modified() const;
 
-				virtual bool getAffineMatrixDecomposition(MatrixType &matrix, OutputVectorType &offset) const;
+				virtual bool getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const;
 
 			protected:
-				operator const TransformType &() const
+				operator const TransformType& () const
 				{
 					return getConcreteTransform();
 				}
-				operator TransformType &()
+				operator TransformType& ()
 				{
 					return getConcreteTransform();
 				}
@@ -116,8 +119,8 @@ namespace map
 				virtual ~ITKTransformModel();
 
 			private:
-				ITKTransformModel(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ITKTransformModel(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 		}
 	}

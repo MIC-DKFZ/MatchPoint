@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldByModelFunctor.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FIELD_BY_MODEL_FUNCTOR_TPP
@@ -46,7 +46,8 @@ namespace map
 
 				typedef itk::ImageRegionIterator< FieldType > IteratorType;
 
-				typename FieldType::RegionType region = Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
+				typename FieldType::RegionType region =
+					Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
 
 				//allocate image memory
 				spField->SetRegions(region);
@@ -64,7 +65,8 @@ namespace map
 					typename FieldType::PointType inPoint;
 					spField->TransformIndexToPhysicalPoint(index, inPoint);
 
-					typename TransformModelType::OutputPointType outPoint = _spTransformModel->getTransform()->TransformPoint(inPoint);
+					typename TransformModelType::OutputPointType outPoint =
+						_spTransformModel->getTransform()->TransformPoint(inPoint);
 
 					typename FieldType::ValueType value = outPoint - inPoint;
 					iterator.Set(value);
@@ -74,7 +76,7 @@ namespace map
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			const typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::TransformModelType *
+			const typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::TransformModelType*
 			FieldByModelFunctor<VInputDimensions, VOutputDimensions>::
 			getTransformModel(void) const
 			{
@@ -84,8 +86,8 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::Pointer
 			FieldByModelFunctor<VInputDimensions, VOutputDimensions>::
-			New(const TransformModelType &model,
-			    const InFieldRepresentationType *pInFieldRepresentation)
+			New(const TransformModelType& model,
+				const InFieldRepresentationType* pInFieldRepresentation)
 			{
 				assert(pInFieldRepresentation);
 				Pointer spFieldByModelFunctor = new Self(model, pInFieldRepresentation);
@@ -105,8 +107,8 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			FieldByModelFunctor<VInputDimensions, VOutputDimensions>::
-			FieldByModelFunctor(const TransformModelType &model,
-			                    const InFieldRepresentationType *pInFieldRepresentation):
+			FieldByModelFunctor(const TransformModelType& model,
+								const InFieldRepresentationType* pInFieldRepresentation):
 				Superclass(pInFieldRepresentation), _spTransformModel(&model)
 			{
 				assert(pInFieldRepresentation);
@@ -119,7 +121,7 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			void
 			FieldByModelFunctor<VInputDimensions, VOutputDimensions>::
-			PrintSelf(std::ostream &os, itk::Indent indent) const
+			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 				os << indent << "Transform model: " << _spTransformModel << std::endl;

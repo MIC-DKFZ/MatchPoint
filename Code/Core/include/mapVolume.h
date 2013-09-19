@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapVolume.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -84,43 +84,43 @@ namespace map
 				/*! Copy constructor. Volume is a lightweight object that is not
 				* reference counted, so the copy constructor is public.
 				* @eguarantee strong */
-				Volume(const Self &volume);
+				Volume(const Self& volume);
 
 				/*! Constructor that takes an origin and size. Volume is a lightweight
 				* object that is not reference counted, so this constructor is public.
 				* @eguarantee strong
 				* @pre Parameter size must be positive. */
-				Volume(const OriginType &origin, const SizeType &size);
+				Volume(const OriginType& origin, const SizeType& size);
 
 				/*! Constructor that takes a size and assumes an origin of zero. Volume
 				* is lightweight object that is not reference counted so this constructor
 				* is public.
 				* @eguarantee strong
 				* @pre Parameter size must be positive. */
-				Volume(const SizeType &size);
+				Volume(const SizeType& size);
 
 				/*! operator=. Volume is a lightweight object that is not reference
 				* counted, so operator= is public.
 				* @eguarantee basic */
-				void operator=(const Self &volume);
+				void operator=(const Self& volume);
 
 				/*! Set the point defining the origin of the volume.
 				* @eguarantee strong */
-				void setOrigin(const OriginType &origin);
+				void setOrigin(const OriginType& origin);
 
 				/*! Get the point defining the origin of the volume.
 				* @eguarantee strong */
-				const OriginType &getOrigin() const;
+				const OriginType& getOrigin() const;
 
 				/*! Set the size of the volume. This plus the origin determines the
 				* rectangular shape, or extent, of the volume.
 				* @eguarantee strong
 				* @pre Parameter size must be positive.*/
-				void setSize(const SizeType &size);
+				void setSize(const SizeType& size);
 
 				/*! Get the size of the volume.
 				* @eguarantee strong */
-				const SizeType &getSize() const;
+				const SizeType& getSize() const;
 
 				/*! Convenience methods to set the size of the particular dimension i.
 				* @param [in] i Index of the particular dimension; must be within the range
@@ -148,30 +148,30 @@ namespace map
 				OriginValueType getOrigin(unsigned long i) const;
 
 				/*! Compare two volumes. */
-				bool operator==(const Self &volume) const;
+				bool operator==(const Self& volume) const;
 
 				/*! Compare two volumes. */
-				bool operator!=(const Self &volume) const;
+				bool operator!=(const Self& volume) const;
 
 				/*! Test if an point is inside */
-				bool isInside(const PointType &point) const;
+				bool isInside(const PointType& point) const;
 
 				/*! Test if a region (the argument) is completly inside of this volume */
-				bool isInside(const Self &volume) const;
+				bool isInside(const Self& volume) const;
 
 
 				/*! Crop a region by another region. If this region is outside of the
 				* crop, this method returns false and does not modify the
 				* region. Otherwise, this method returns true and the region is
 				* modified to reflect the crop. */
-				bool crop(const Self &region);
+				bool crop(const Self& region);
 
 				/*! Creates a copy of this volume and expands the copie in such a way,
 				* that the new volume is a bounding box of the original volume and the point.
 				* @param [in] point Point that should be contained by the new volume.
 				* @return the new expanded volume.
 				* @eguarantee strong */
-				Self expand(const PointType &point) const;
+				Self expand(const PointType& point) const;
 
 				/*! Creates a copy of this volume and expands the copy in such a way,
 				* that the new volume is a bounding box of this and the second volume.
@@ -180,7 +180,7 @@ namespace map
 				* by the new volume.
 				* @return the new expanded volume.
 				*/
-				Self expand(const Self &volume2) const;
+				Self expand(const Self& volume2) const;
 
 				/*! Converts this to a poly morphical volume representation (PMVolume).
 				* @eguarantee strong
@@ -193,12 +193,12 @@ namespace map
 			};
 
 			template<unsigned int VDimensions>
-			std::ostream &operator<<(std::ostream &os, const Volume<VDimensions> &region);
+			std::ostream& operator<<(std::ostream& os, const Volume<VDimensions>& region);
 
 			template<unsigned int VDimensions>
-			Volume<VDimensions> convertToVolume(const PMVolume &pmVolume);
+			Volume<VDimensions> convertToVolume(const PMVolume& pmVolume);
 			template<unsigned int VDimensions>
-			PMVolume convertToPMVolume(const Volume<VDimensions> &volume);
+			PMVolume convertToPMVolume(const Volume<VDimensions>& volume);
 
 		} // end namespace continuous
 	} // end namespace core

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapTestFieldGenerationFunctor.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_TEST_FIELD_GENERATION_FUNCTOR_H
@@ -32,7 +32,8 @@ namespace map
 	namespace testing
 	{
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class TestFieldGenerationFunctor : public map::core::functors::FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
+		class TestFieldGenerationFunctor : public
+			map::core::functors::FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
@@ -46,7 +47,7 @@ namespace map
 
 			itkTypeMacro(TestFieldGenerationFunctor, FieldGenerationFunctor);
 
-			static Pointer New(const InFieldRepresentationType *pInFieldRepresentation)
+			static Pointer New(const InFieldRepresentationType* pInFieldRepresentation)
 			{
 				Pointer smartPtr = new Self(pInFieldRepresentation);
 				smartPtr->UnRegister();
@@ -69,7 +70,8 @@ namespace map
 				FieldPointer spField = FieldType::New();
 
 				typedef itk::ImageRegionIterator< FieldType > IteratorType;
-				typename InFieldRepresentationType::ImageRegionType region = Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
+				typename InFieldRepresentationType::ImageRegionType region =
+					Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
 
 				spField->SetRegions(region);
 				spField->SetSpacing(Superclass::_spInFieldRepresentation->getSpacing());
@@ -89,15 +91,15 @@ namespace map
 				return spField;
 			}
 
-			TestFieldGenerationFunctor(const InFieldRepresentationType *pInFieldRepresentation):
+			TestFieldGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation):
 				Superclass(pInFieldRepresentation)
 			{};
 
 			virtual ~TestFieldGenerationFunctor() {};
 
 		private:
-			TestFieldGenerationFunctor(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			TestFieldGenerationFunctor(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldByModelInversionFunctor.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FIELD_BY_MODEL_INVERSION_FUNCTOR_TPP
@@ -43,15 +43,23 @@ namespace map
 			class FieldByModelInversionFunctorHelper
 			{
 			public:
-				typedef typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::FieldPointer FieldPointer;
-				typedef typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::FieldType    FieldType;
-				typedef typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::TransformModelType    TransformModelType;
-				typedef typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType    InFieldRepresentationType;
+				typedef typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::FieldPointer
+				FieldPointer;
+				typedef typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::FieldType
+				FieldType;
+				typedef typename
+				FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::TransformModelType
+				TransformModelType;
+				typedef typename
+				FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
+				InFieldRepresentationType;
 
-				static inline FieldPointer generate(const TransformModelType *pTransformModel, const InFieldRepresentationType *pInFieldRepresentation,
-				                                    double stopValue, unsigned int nrOfIterations)
+				static inline FieldPointer generate(const TransformModelType* pTransformModel,
+													const InFieldRepresentationType* pInFieldRepresentation,
+													double stopValue, unsigned int nrOfIterations)
 				{
-					mapExceptionStaticMacro(ExceptionObject, << "Error unsymmetric field inversion not implemented yet.");
+					mapExceptionStaticMacro(ExceptionObject,
+											<< "Error unsymmetric field inversion not implemented yet.");
 					return NULL;
 				}
 			};
@@ -62,13 +70,17 @@ namespace map
 			public:
 				typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::FieldPointer FieldPointer;
 				typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::FieldType    FieldType;
-				typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::TransformModelType    TransformModelType;
-				typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::InFieldRepresentationType    InFieldRepresentationType;
+				typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::TransformModelType
+				TransformModelType;
+				typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::InFieldRepresentationType
+				InFieldRepresentationType;
 
-				static inline FieldPointer generate(const TransformModelType *pTransformModel, const InFieldRepresentationType *pInFieldRepresentation,
-				                                    double stopValue, unsigned int nrOfIterations)
+				static inline FieldPointer generate(const TransformModelType* pTransformModel,
+													const InFieldRepresentationType* pInFieldRepresentation,
+													double stopValue, unsigned int nrOfIterations)
 				{
-					typedef itk::map::IterativeInverseTransformToDisplacementFieldSource<FieldType, typename TransformModelType::ScalarType> FieldSourceType;
+					typedef itk::map::IterativeInverseTransformToDisplacementFieldSource<FieldType, typename TransformModelType::ScalarType>
+					FieldSourceType;
 
 					typename FieldSourceType::Pointer spFieldSource = FieldSourceType::New();
 
@@ -78,7 +90,8 @@ namespace map
 					spFieldSource->SetOrigin(pInFieldRepresentation->getOrigin());
 					spFieldSource->SetDirection(pInFieldRepresentation->getDirection());
 
-					typename InFieldRepresentationType::ImageRegionType region = pInFieldRepresentation->getRepresentedLocalImageRegion();
+					typename InFieldRepresentationType::ImageRegionType region =
+						pInFieldRepresentation->getRepresentedLocalImageRegion();
 
 					spFieldSource->SetSize(region.GetSize());
 
@@ -99,13 +112,16 @@ namespace map
 			{
 				mapLogInfoMacro( << "Generate field by model inversion");
 
-				typename FieldType::Pointer spField = FieldByModelInversionFunctorHelper<VInputDimensions, VOutputDimensions>::generate(_spTransformModel, Superclass::_spInFieldRepresentation, _stopValue , _nrOfIterations);
+				typename FieldType::Pointer spField =
+					FieldByModelInversionFunctorHelper<VInputDimensions, VOutputDimensions>::generate(_spTransformModel,
+							Superclass::_spInFieldRepresentation, _stopValue , _nrOfIterations);
 
 				return spField;
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			const typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::TransformModelType *
+			const typename
+			FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::TransformModelType*
 			FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::
 			getTransformModel(void) const
 			{
@@ -115,8 +131,8 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::Pointer
 			FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::
-			New(const TransformModelType &model,
-			    const InFieldRepresentationType *pInFieldRepresentation)
+			New(const TransformModelType& model,
+				const InFieldRepresentationType* pInFieldRepresentation)
 			{
 				assert(pInFieldRepresentation);
 				Pointer spFieldByModelInversionFunctor = new Self(model, pInFieldRepresentation);
@@ -139,8 +155,8 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::
-			FieldByModelInversionFunctor(const TransformModelType &model,
-			                             const InFieldRepresentationType *pInFieldRepresentation):
+			FieldByModelInversionFunctor(const TransformModelType& model,
+										 const InFieldRepresentationType* pInFieldRepresentation):
 				Superclass(pInFieldRepresentation), _spTransformModel(&model), _nrOfIterations(20), _stopValue(0.0)
 			{
 				assert(pInFieldRepresentation);
@@ -153,7 +169,7 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			void
 			FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::
-			PrintSelf(std::ostream &os, itk::Indent indent) const
+			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 				os << indent << "Number of iterations: " << _nrOfIterations << std::endl;

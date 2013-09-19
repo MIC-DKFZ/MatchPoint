@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4910 $ (last changed revision)
-// @date    $Date: 2013-07-30 14:08:21 +0200 (Di, 30 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/FSL/include/mapFSLRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -44,7 +44,8 @@ namespace map
 
 			template <unsigned int VDimensions>
 			::itk::Matrix < double, VDimensions + 1, VDimensions + 1 >
-			convertVoxelSpaceToRASPhysicalSpaceMatrix(const core::FieldRepresentationDescriptor<VDimensions> *descriptor)
+			convertVoxelSpaceToRASPhysicalSpaceMatrix(const core::FieldRepresentationDescriptor<VDimensions>*
+					descriptor)
 			{
 				// Generate intermediate terms
 				vnl_matrix<double> directions, rasMatrix;
@@ -76,14 +77,15 @@ namespace map
 
 			template <unsigned int VDimensions>
 			vnl_matrix_fixed < double, VDimensions + 1, VDimensions + 1 >
-			readFSLMatrixFromFile(const map::core::String &fileName)
+			readFSLMatrixFromFile(const map::core::String& fileName)
 			{
 				std::ifstream matFile;
 				matFile.open(fileName.c_str());
 
 				if (matFile.fail())
 				{
-					mapDefaultExceptionStaticMacro( << "Error cannot find or access determined matrix file. Path: " << fileName);
+					mapDefaultExceptionStaticMacro( << "Error cannot find or access determined matrix file. Path: " <<
+													fileName);
 				}
 
 				typedef vnl_matrix_fixed < double, VDimensions + 1, VDimensions + 1 > MatrixType;
@@ -105,7 +107,9 @@ namespace map
 
 				if (tempVals.size() != (VDimensions + 1) * (VDimensions + 1))
 				{
-					mapDefaultExceptionStaticMacro( << "Error. Cannot determine final registration. Flirt matrix file has wrong value count. Expected value count: " << (VDimensions + 1) * (VDimensions + 1) << "; recieved data size: " << tempVals.size());
+					mapDefaultExceptionStaticMacro( <<
+													"Error. Cannot determine final registration. Flirt matrix file has wrong value count. Expected value count: "
+													<< (VDimensions + 1) * (VDimensions + 1) << "; recieved data size: " << tempVals.size());
 				}
 
 				//populate the matrix. Flirt stores all as (NOutputDimension+1 x NInputDimension+1)-matrix
@@ -126,7 +130,8 @@ namespace map
 
 			template <unsigned int VDimensions>
 			::itk::Array<double>
-			convertMatrixToAffineTransformParams(const vnl_matrix_fixed < double, VDimensions + 1, VDimensions + 1 > & matrix)
+			convertMatrixToAffineTransformParams(const vnl_matrix_fixed < double, VDimensions + 1,
+												 VDimensions + 1 > & matrix)
 			{
 
 				::itk::Array<double> params(VDimensions * (VDimensions + 1));
@@ -159,15 +164,16 @@ namespace map
 				typedef core::FieldRepresentationDescriptor<VDimensions> DescriptorType;
 
 				//purposely not implemented. Currently only 2D and 3D is supported
-				static MatrixType convertFSLToRAS(const MatrixType &fslMatrix, const DescriptorType *targetDesc, const DescriptorType *movingDesc);
-				static MatrixType convertRASToITKTrans(const MatrixType &rsaMatrix);
+				static MatrixType convertFSLToRAS(const MatrixType& fslMatrix, const DescriptorType* targetDesc,
+												  const DescriptorType* movingDesc);
+				static MatrixType convertRASToITKTrans(const MatrixType& rsaMatrix);
 
 			private:
 				~MatrixConverter();//purposely not implemented
 				MatrixConverter();//purposely not implemented
 
-				MatrixConverter(const MatrixConverter<VDimensions> &);//purposely not implemented
-				void operator=(const MatrixConverter<VDimensions> &); //purposely not implemented
+				MatrixConverter(const MatrixConverter<VDimensions>&); //purposely not implemented
+				void operator=(const MatrixConverter<VDimensions>&);  //purposely not implemented
 			};
 
 			template <>
@@ -177,15 +183,16 @@ namespace map
 				typedef vnl_matrix_fixed<double, 3, 3> MatrixType;
 				typedef core::FieldRepresentationDescriptor<2> DescriptorType;
 
-				static MatrixType convertFSLToRAS(const MatrixType &fslMatrix, const DescriptorType *targetDesc, const DescriptorType *movingDesc);
-				static MatrixType convertRASToITKTrans(const MatrixType &rsaMatrix);
+				static MatrixType convertFSLToRAS(const MatrixType& fslMatrix, const DescriptorType* targetDesc,
+												  const DescriptorType* movingDesc);
+				static MatrixType convertRASToITKTrans(const MatrixType& rsaMatrix);
 
 			private:
 				~MatrixConverter();//purposely not implemented
 				MatrixConverter();//purposely not implemented
 
-				MatrixConverter(const MatrixConverter<2> &);//purposely not implemented
-				void operator=(const MatrixConverter<2> &); //purposely not implemented
+				MatrixConverter(const MatrixConverter<2>&); //purposely not implemented
+				void operator=(const MatrixConverter<2>&);  //purposely not implemented
 			};
 
 			template <>
@@ -195,15 +202,16 @@ namespace map
 				typedef vnl_matrix_fixed<double, 4, 4> MatrixType;
 				typedef core::FieldRepresentationDescriptor<3> DescriptorType;
 
-				static MatrixType convertFSLToRAS(const MatrixType &fslMatrix, const DescriptorType *targetDesc, const DescriptorType *movingDesc);
-				static MatrixType convertRASToITKTrans(const MatrixType &rsaMatrix);
+				static MatrixType convertFSLToRAS(const MatrixType& fslMatrix, const DescriptorType* targetDesc,
+												  const DescriptorType* movingDesc);
+				static MatrixType convertRASToITKTrans(const MatrixType& rsaMatrix);
 
 			private:
 				~MatrixConverter();//purposely not implemented
 				MatrixConverter();//purposely not implemented
 
-				MatrixConverter(const MatrixConverter<2> &);//purposely not implemented
-				void operator=(const MatrixConverter<2> &); //purposely not implemented
+				MatrixConverter(const MatrixConverter<2>&); //purposely not implemented
+				void operator=(const MatrixConverter<2>&);  //purposely not implemented
 			};
 
 

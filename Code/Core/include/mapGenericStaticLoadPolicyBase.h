@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapGenericStaticLoadPolicyBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -66,7 +66,7 @@ namespace map
 				 * @param [in] interface Reference to the interface that should used by the policy when
 				 * loading providers.
 				 */
-				void registerInterfaceForStaticLoading(LoadInterfaceType &loadInterface);
+				void registerInterfaceForStaticLoading(LoadInterfaceType& loadInterface);
 
 				/*! This method should be overwritten in derived classes to realize the loading
 						 * of default providers via the registered interface (_pLoadInterface). The interface is guaranteed to be set
@@ -75,14 +75,14 @@ namespace map
 				virtual void doLoading() = 0;
 
 				/*! Pointer to the load interface*/
-				LoadInterfaceType *_pLoadInterface;
+				LoadInterfaceType* _pLoadInterface;
 
 				GenericStaticLoadPolicyBase();
 				~GenericStaticLoadPolicyBase();
 
 			private:
-				GenericStaticLoadPolicyBase(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				GenericStaticLoadPolicyBase(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		} // end namespace services

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldByFieldInversionFunctor.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -52,7 +52,8 @@ namespace map
 			* @tparam VOutputDimensions Dimensions of the output space the field should map into.
 			*/
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			class FieldByFieldInversionFunctor: public FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
+			class FieldByFieldInversionFunctor: public
+				FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
 			{
 			public:
 				/*! Standard class typedefs. */
@@ -71,7 +72,7 @@ namespace map
 				typedef typename Superclass::FieldType                          FieldType;
 				typedef typename Superclass::FieldPointer                       FieldPointer;
 				typedef FieldBasedRegistrationKernel < VOutputDimensions,
-				        VInputDimensions >          SourceFieldKernelType;
+						VInputDimensions >          SourceFieldKernelType;
 				typedef typename SourceFieldKernelType::ConstPointer            SourceFieldKernelConstPointer;
 				typedef typename SourceFieldKernelType::FieldType               SourceFieldType;
 				typedef typename SourceFieldType::ConstPointer                  SourceFieldConstPointer;
@@ -90,7 +91,7 @@ namespace map
 				 * @return Pointer to the source field.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				const SourceFieldKernelType *getSourceFieldKernel(void) const;
+				const SourceFieldKernelType* getSourceFieldKernel(void) const;
 
 				/*! Static methods that creates the functor.
 				 * Thus it is a specialized version of the itkNewMacro()
@@ -100,8 +101,8 @@ namespace map
 				 * may not be null for this functor.
 				 * @return Smart pointer to the new functor
 				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				static Pointer New(const SourceFieldKernelType &sourceFieldKernel,
-				                   const InFieldRepresentationType *pInFieldRepresentation);
+				static Pointer New(const SourceFieldKernelType& sourceFieldKernel,
+								   const InFieldRepresentationType* pInFieldRepresentation);
 
 				/*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
 				 * @eguarantee strong
@@ -135,8 +136,8 @@ namespace map
 				 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
 				 * may not be null for this functor.
 				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				FieldByFieldInversionFunctor(const SourceFieldKernelType &sourceFieldKernel,
-				                             const InFieldRepresentationType *pInFieldRepresentation);
+				FieldByFieldInversionFunctor(const SourceFieldKernelType& sourceFieldKernel,
+											 const InFieldRepresentationType* pInFieldRepresentation);
 
 				virtual ~FieldByFieldInversionFunctor();
 
@@ -144,15 +145,15 @@ namespace map
 				SourceFieldKernelConstPointer _spSourceFieldKernel;
 
 				/*! Methods invoked by itk::LightObject::Print().  */
-				virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 				unsigned long _nrOfIterations;
 
 				double _stopValue;
 
 			private:
-				FieldByFieldInversionFunctor(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				FieldByFieldInversionFunctor(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		} // end namespace functors

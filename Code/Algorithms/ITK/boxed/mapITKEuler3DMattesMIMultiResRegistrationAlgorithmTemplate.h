@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKEuler3DMattesMIMultiResRegistrationAlgorithmTemplate.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -46,36 +46,43 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMattesMultiResRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "Euler3DMattesMIMultiResRegistrationAlgorithm.default", "1.0.0", "");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMattesMultiResRegistrationAlgorithmUIDPolicy,
+											   "de.dkfz.matchpoint", "Euler3DMattesMIMultiResRegistrationAlgorithm.default", "1.0.0", "");
 
 			template < class TMovingImage, class TTargetImage = TMovingImage,
-			         typename TUIDPolicy = DefaultEuler3DMattesMultiResRegistrationAlgorithmUIDPolicy,
-			         class TInterpolatorPolicy = SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> >,
-			         class TPyramideInitializationPolicy = algorithm::itk::NoComponentInitializationPolicy >
+					 typename TUIDPolicy = DefaultEuler3DMattesMultiResRegistrationAlgorithmUIDPolicy,
+					 class TInterpolatorPolicy =
+					 SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> >,
+					 class TPyramideInitializationPolicy = algorithm::itk::NoComponentInitializationPolicy >
 			class ITKEuler3DMattesMIMultiResRegistrationAlgorithm :
-				public algorithm::boxed::ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
+				public algorithm::boxed::ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage,
+				TTargetImage, TUIDPolicy,
 				TInterpolatorPolicy,
 				SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
 				SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer>,
 				SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<map::core::continuous::ScalarType> >,
-				SealedImagePyramidesPolicy< ::itk::MultiResolutionPyramidImageFilter<TMovingImage, TMovingImage>, ::itk::MultiResolutionPyramidImageFilter<TTargetImage, TTargetImage>, TPyramideInitializationPolicy > >
+				SealedImagePyramidesPolicy< ::itk::MultiResolutionPyramidImageFilter<TMovingImage, TMovingImage>, ::itk::MultiResolutionPyramidImageFilter<TTargetImage, TTargetImage>, TPyramideInitializationPolicy >
+				>
 			{
 			public:
 				typedef ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-				        TInterpolatorPolicy,
-				        TPyramideInitializationPolicy > Self;
+						TInterpolatorPolicy,
+						TPyramideInitializationPolicy > Self;
 
-				typedef typename algorithm::boxed::ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-				        TInterpolatorPolicy,
-				        SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
-				        SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer >,
-				        SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<map::core::continuous::ScalarType> >,
-				        SealedImagePyramidesPolicy< ::itk::MultiResolutionPyramidImageFilter<TMovingImage, TMovingImage>, ::itk::MultiResolutionPyramidImageFilter<TTargetImage, TTargetImage>, TPyramideInitializationPolicy > >  Superclass;
+				typedef typename algorithm::boxed::ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage,
+						TTargetImage, TUIDPolicy,
+						TInterpolatorPolicy,
+						SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
+						SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer >,
+						SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<map::core::continuous::ScalarType> >,
+						SealedImagePyramidesPolicy< ::itk::MultiResolutionPyramidImageFilter<TMovingImage, TMovingImage>, ::itk::MultiResolutionPyramidImageFilter<TTargetImage, TTargetImage>, TPyramideInitializationPolicy >
+						>  Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
 
-				itkTypeMacro(ITKEuler3DMattesMIMultiResRegistrationAlgorithm, ITKMultiResImageRegistrationAlgorithm);
+				itkTypeMacro(ITKEuler3DMattesMIMultiResRegistrationAlgorithm,
+							 ITKMultiResImageRegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
 				typedef ::itk::Array<double> ParametersType;
@@ -91,18 +98,18 @@ namespace map
 
 				virtual void configureAlgorithm();
 
-				virtual void compileInfos(MetaPropertyVectorType &infos) const;
+				virtual void compileInfos(MetaPropertyVectorType& infos) const;
 
-				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const;
+				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
 
-				virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
+				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
 
 				virtual void doInterLevelSetup();
 
 			private:
 
-				ITKEuler3DMattesMIMultiResRegistrationAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ITKEuler3DMattesMIMultiResRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

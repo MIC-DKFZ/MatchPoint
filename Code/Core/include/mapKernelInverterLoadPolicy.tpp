@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapKernelInverterLoadPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -43,11 +43,13 @@ namespace map
 		{
 			typedef ModelBasedKernelInverter<VInputDimensions, VOutputDimensions> ModelKernelInverterType;
 			typedef FieldBasedKernelInverter<VInputDimensions, VOutputDimensions> FieldKernelInverterType;
-			typedef NullRegistrationKernelInverter<VInputDimensions, VOutputDimensions> NullRegistrationKernelInverterType;
+			typedef NullRegistrationKernelInverter<VInputDimensions, VOutputDimensions>
+			NullRegistrationKernelInverterType;
 
 			typename ModelKernelInverterType::Pointer spModelInverter = ModelKernelInverterType::New();
 			typename FieldKernelInverterType::Pointer spFieldInverter = FieldKernelInverterType::New();
-			typename NullRegistrationKernelInverterType::Pointer spNullnverter = NullRegistrationKernelInverterType::New();
+			typename NullRegistrationKernelInverterType::Pointer spNullnverter =
+				NullRegistrationKernelInverterType::New();
 
 			services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(Superclass::_pLoadInterface);
 

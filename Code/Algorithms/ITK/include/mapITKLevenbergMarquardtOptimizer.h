@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKLevenbergMarquardtOptimizer.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,7 +45,8 @@ namespace map
 			@ingroup OptimizerControl
 			*/
 			template<>
-			class ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer> : public ITKMVNLOptimizerControlBase< ::itk::LevenbergMarquardtOptimizer>
+			class ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer> : public
+				ITKMVNLOptimizerControlBase< ::itk::LevenbergMarquardtOptimizer>
 			{
 			public:
 				typedef ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer> Self;
@@ -65,8 +66,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKOptimizerControl(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKOptimizerControl(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			public:
 				virtual bool isStoppable() const
@@ -108,7 +109,8 @@ namespace map
 				{
 					if (!minimize)
 					{
-						mapExceptionMacro(AlgorithmException, << "Error. VNL implementation of Levenberg-Marquart optimizer does only minimization. Try to set to maximize.");
+						mapExceptionMacro(AlgorithmException,
+										  << "Error. VNL implementation of Levenberg-Marquart optimizer does only minimization. Try to set to maximize.");
 					}
 				};
 
@@ -116,7 +118,8 @@ namespace map
 				{
 					if (maximize)
 					{
-						mapExceptionMacro(AlgorithmException, << "Error. VNL implementation of Levenberg-Marquart optimizer does only minimization. Try to set to maximize.");
+						mapExceptionMacro(AlgorithmException,
+										  << "Error. VNL implementation of Levenberg-Marquart optimizer does only minimization. Try to set to maximize.");
 					}
 				};
 
@@ -147,9 +150,11 @@ namespace map
 					return _spOptimizer->GetCachedValue();
 				};
 
-				virtual void copyProperties(const ConcreteOptimizerType *source, ConcreteOptimizerType *destination) const
+				virtual void copyProperties(const ConcreteOptimizerType* source,
+											ConcreteOptimizerType* destination) const
 				{
-					mapDefaultExceptionMacro( << "Error cannot clone Levenberg Marquardt optimizer. Cannot get internals (protected properties).");
+					mapDefaultExceptionMacro( <<
+											  "Error cannot clone Levenberg Marquardt optimizer. Cannot get internals (protected properties).");
 				};
 
 				virtual Superclass::Pointer doCloneControl() const

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapCombinedFieldBasedRegistrationKernelTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -42,7 +42,7 @@ namespace map
 		typedef core::functors::FieldByModelFieldCombinationFunctor<2, 2, 2> CombinatorFunctorType;
 		typedef core::CombinedFieldBasedRegistrationKernel<2, 2, 2> KernelType;
 
-		void generateKernel(KernelType::Pointer &spKernel, CombinatorFunctorType::Pointer &spFunctor)
+		void generateKernel(KernelType::Pointer& spKernel, CombinatorFunctorType::Pointer& spFunctor)
 		{
 			typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
 
@@ -51,13 +51,15 @@ namespace map
 			origin.Fill(0);
 			ModelKernelType::RepresentationDescriptorType::SizeType size;
 			size.fill(10);
-			ModelKernelType::RepresentationDescriptorType::Pointer spInRep = ModelKernelType::RepresentationDescriptorType::New();
+			ModelKernelType::RepresentationDescriptorType::Pointer spInRep =
+				ModelKernelType::RepresentationDescriptorType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
 
 			//Model kernel generation
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> > TransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
+			TransformType;
 
 			ModelKernelType::Pointer spModelKernel = ModelKernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
@@ -84,7 +86,8 @@ namespace map
 			spFieldKernel->setField(*(spField.GetPointer()));
 
 			//Establish combination functor for test
-			spFunctor = CombinatorFunctorType::New(*(spModelKernel.GetPointer()), *(spFieldKernel.GetPointer()), spInRep);
+			spFunctor = CombinatorFunctorType::New(*(spModelKernel.GetPointer()), *(spFieldKernel.GetPointer()),
+												   spInRep);
 
 			spKernel = KernelType::New();
 			spKernel->setFieldFunctor(*(spFunctor.GetPointer()));
@@ -111,7 +114,8 @@ namespace map
 			KernelType::OutputPointType resultPoint;
 
 			//TESTS #1
-			KernelType::RepresentationDescriptorConstPointer spKernelRep = spKernel->getLargestPossibleRepresentation();
+			KernelType::RepresentationDescriptorConstPointer spKernelRep =
+				spKernel->getLargestPossibleRepresentation();
 			CHECK(!(spKernel->fieldExists())); //if field exists, the kernel has illegally created the field
 			//instead of just passing through the representation
 			/// #2

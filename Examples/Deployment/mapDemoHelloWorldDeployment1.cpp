@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Deployment/mapDemoHelloWorldDeployment1.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 /*!@file
@@ -54,7 +54,7 @@
 #include "itkDynamicLoader.h"
 #include "itksys/SystemTools.hxx"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	AppGlobals globals;
 	int result = EXIT_FAILURE;
@@ -91,7 +91,8 @@ int main(int argc, char *argv[])
 		std::cout << "Load registration algorithm..." << std::endl;
 
 		std::string dllPath = itksys::SystemTools::GetProgramPath(argv[0]);
-		dllPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "demoRegistrationAlgorithm2D" + itksys::DynamicLoader::LibExtension();
+		dllPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "demoRegistrationAlgorithm2D" +
+				  itksys::DynamicLoader::LibExtension();
 
 		std::cout << "DLL location: " << dllPath << std::endl;
 
@@ -109,8 +110,10 @@ int main(int argc, char *argv[])
 
 		//Now cast to the right interface (ImageRegistrationAlgorithmInterface)
 		//to set the images
-		typedef map::algorithm::facet::ImageRegistrationAlgorithmInterface<ImageType, ImageType> ImageRegistrationAlgorithmInterfaceType;
-		ImageRegistrationAlgorithmInterfaceType *pImageInterface = dynamic_cast<ImageRegistrationAlgorithmInterfaceType *>(spAlgorithmBase.GetPointer());
+		typedef map::algorithm::facet::ImageRegistrationAlgorithmInterface<ImageType, ImageType>
+		ImageRegistrationAlgorithmInterfaceType;
+		ImageRegistrationAlgorithmInterfaceType* pImageInterface =
+			dynamic_cast<ImageRegistrationAlgorithmInterfaceType*>(spAlgorithmBase.GetPointer());
 
 		if (pImageInterface)
 		{
@@ -126,7 +129,7 @@ int main(int argc, char *argv[])
 
 		//The algorithm is set up and ready to run...
 	}
-	catch (const map::core::ExceptionObject &e)
+	catch (const map::core::ExceptionObject& e)
 	{
 		std::cerr << "ERROR: Caught an MatchPoint exception:\n";
 		e.Print(std::cerr);
@@ -145,7 +148,8 @@ int main(int argc, char *argv[])
 
 	try
 	{
-		RegistrationAlgorithmType *pAlgorithmInterface = dynamic_cast<RegistrationAlgorithmType *>(spAlgorithmBase.GetPointer());
+		RegistrationAlgorithmType* pAlgorithmInterface = dynamic_cast<RegistrationAlgorithmType*>
+				(spAlgorithmBase.GetPointer());
 
 		if (!pAlgorithmInterface)
 		{
@@ -154,7 +158,7 @@ int main(int argc, char *argv[])
 
 		spRegistration = pAlgorithmInterface->getRegistration();
 	}
-	catch (const map::core::ExceptionObject &e)
+	catch (const map::core::ExceptionObject& e)
 	{
 		std::cerr << "ERROR: Caught an MatchPoint exception:\n";
 		e.Print(std::cerr);
@@ -175,7 +179,8 @@ int main(int argc, char *argv[])
 	//define mapping tasks
 	std::cout << "Define mapping task..." << std::endl;
 
-	typedef map::core::ImageMappingTask<RegistrationAlgorithmType::RegistrationType, ImageType, ImageType> ImageMappingTaskType;
+	typedef map::core::ImageMappingTask<RegistrationAlgorithmType::RegistrationType, ImageType, ImageType>
+	ImageMappingTaskType;
 
 	ImageMappingTaskType::Pointer spImageTask = ImageMappingTaskType::New();
 	spImageTask->setInputImage(globals.spMovingImage);

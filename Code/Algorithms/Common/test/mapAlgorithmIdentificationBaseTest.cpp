@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/test/mapAlgorithmIdentificationBaseTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -29,55 +29,59 @@
 
 namespace map
 {
-  namespace testing
-  {
-    mapGenerateAlgorithmUIDPolicyMacro(TestUIDPolicy, "de.dkfz.matchpoint", "TestInterface", "1.0.0", "<Profile><Description>description</Description></Profile>");
+	namespace testing
+	{
+		mapGenerateAlgorithmUIDPolicyMacro(TestUIDPolicy, "de.dkfz.matchpoint", "TestInterface", "1.0.0",
+										   "<Profile><Description>description</Description></Profile>");
 
-    namespace
-    {
+		namespace
+		{
 
-      class TestIdentificationInterface : public algorithm::facet::AlgorithmIdentificationInterface, public TestUIDPolicy
-      {
-      public:
-        mapDefineAlgorithmIdentificationByPolicyMacro;
+			class TestIdentificationInterface : public algorithm::facet::AlgorithmIdentificationInterface,
+				public TestUIDPolicy
+			{
+			public:
+				mapDefineAlgorithmIdentificationByPolicyMacro;
 
-        TestIdentificationInterface()
-        {
-        }
-      };
+				TestIdentificationInterface()
+				{
+				}
+			};
 
-    }
+		}
 
-    int mapAlgorithmIdentificationBaseTest(int, char* [])
-    {
-      PREPARE_DEFAULT_TEST_REPORTING;
+		int mapAlgorithmIdentificationBaseTest(int, char* [])
+		{
+			PREPARE_DEFAULT_TEST_REPORTING;
 
-      TestIdentificationInterface testInterface;
+			TestIdentificationInterface testInterface;
 
-      TestIdentificationInterface::UIDPointer spUID;
-      TestIdentificationInterface::UIDPointer spUIDStatic;
+			TestIdentificationInterface::UIDPointer spUID;
+			TestIdentificationInterface::UIDPointer spUIDStatic;
 
-      CHECK_NO_THROW(spUIDStatic = TestIdentificationInterface::UID());
+			CHECK_NO_THROW(spUIDStatic = TestIdentificationInterface::UID());
 
-      CHECK_EQUAL("de.dkfz.matchpoint", spUIDStatic->getNamespace());
-      CHECK_EQUAL("TestInterface", spUIDStatic->getName());
-      CHECK_EQUAL("1.0.0", spUIDStatic->getVersion());
-      //Remark: cannot be tested because tag is dynamically generated CHECK_EQUAL("x", spUIDStatic->getBuildTag());
-      CHECK_EQUAL("<Profile><Description>description</Description></Profile>", TestIdentificationInterface::AlgorithmProfile());
-      CHECK_EQUAL("description", TestIdentificationInterface::AlgorithmDescription());
+			CHECK_EQUAL("de.dkfz.matchpoint", spUIDStatic->getNamespace());
+			CHECK_EQUAL("TestInterface", spUIDStatic->getName());
+			CHECK_EQUAL("1.0.0", spUIDStatic->getVersion());
+			//Remark: cannot be tested because tag is dynamically generated CHECK_EQUAL("x", spUIDStatic->getBuildTag());
+			CHECK_EQUAL("<Profile><Description>description</Description></Profile>",
+						TestIdentificationInterface::AlgorithmProfile());
+			CHECK_EQUAL("description", TestIdentificationInterface::AlgorithmDescription());
 
 
-      CHECK_NO_THROW(spUID = testInterface.getUID());
+			CHECK_NO_THROW(spUID = testInterface.getUID());
 
-      CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
-      CHECK_EQUAL("TestInterface", spUID->getName());
-      CHECK_EQUAL("1.0.0", spUID->getVersion());
-      CHECK_EQUAL("<Profile><Description>description</Description></Profile>", testInterface.getAlgorithmProfile());
-      CHECK_EQUAL("description", testInterface.getAlgorithmDescription());
+			CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
+			CHECK_EQUAL("TestInterface", spUID->getName());
+			CHECK_EQUAL("1.0.0", spUID->getVersion());
+			CHECK_EQUAL("<Profile><Description>description</Description></Profile>",
+						testInterface.getAlgorithmProfile());
+			CHECK_EQUAL("description", testInterface.getAlgorithmDescription());
 
-      CHECK(map::algorithm::compareUIDs(spUID,spUIDStatic));
+			CHECK(map::algorithm::compareUIDs(spUID, spUIDStatic));
 
-      RETURN_AND_REPORT_TEST_SUCCESS;
-    }
-  } //namespace testing
+			RETURN_AND_REPORT_TEST_SUCCESS;
+		}
+	} //namespace testing
 } //namespace map

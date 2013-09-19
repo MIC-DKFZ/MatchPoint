@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapArbitrarySVNLOptimizerPolicyTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -62,7 +62,7 @@ namespace map
 				};
 
 				void
-				onChange(const ::itk::EventObject &eventObject)
+				onChange(const ::itk::EventObject& eventObject)
 				{
 					map::events::UnregisterAlgorithmComponentEvent unregEvent;
 					map::events::RegisterAlgorithmComponentEvent regEvent;
@@ -86,7 +86,7 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			TestPolicy policy;
-			const TestPolicy &constPolicy = policy;
+			const TestPolicy& constPolicy = policy;
 
 			typedef algorithm::itk::ITKOptimizerControl< ::itk::AmoebaOptimizer> AControlType;
 			typedef algorithm::itk::ITKOptimizerControl< ::itk::PowellOptimizer> BControlType;
@@ -94,11 +94,11 @@ namespace map
 			AControlType::Pointer spAControl = AControlType::New();
 			BControlType::Pointer spBControl = BControlType::New();
 
-			algorithm::itk::ITKSVNLOptimizerControlInterface *pController = NULL;
-			const algorithm::itk::ITKSVNLOptimizerControlInterface *pConstController = NULL;
+			algorithm::itk::ITKSVNLOptimizerControlInterface* pController = NULL;
+			const algorithm::itk::ITKSVNLOptimizerControlInterface* pConstController = NULL;
 
-			algorithm::OptimizerControlInterface *pControllerBase = NULL;
-			const algorithm::OptimizerControlInterface *pConstControllerBase = NULL;
+			algorithm::OptimizerControlInterface* pControllerBase = NULL;
+			const algorithm::OptimizerControlInterface* pConstControllerBase = NULL;
 
 			CHECK_NO_THROW(pController = policy.getITKOptimizerControl());
 			CHECK_NO_THROW(pConstController = constPolicy.getITKOptimizerControl());

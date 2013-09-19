@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationKernelCombinatorBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -42,7 +42,8 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the second kernel.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		class RegistrationKernelCombinatorBase : public services::ServiceProvider< RegistrationCombinationRequest< VInputDimensions, VInterimDimensions, VOutputDimensions> >
+		class RegistrationKernelCombinatorBase : public
+			services::ServiceProvider< RegistrationCombinationRequest< VInputDimensions, VInterimDimensions, VOutputDimensions> >
 		{
 		public:
 			typedef RegistrationKernelBase<VInputDimensions, VInterimDimensions>			Kernel1BaseType;
@@ -53,19 +54,22 @@ namespace map
 			typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions>			CombinedKernelBaseType;
 			typedef typename CombinedKernelBaseType::Pointer												CombinedKernelBasePointer;
 
-			typedef RegistrationCombinationRequest<VInputDimensions, VInterimDimensions, VOutputDimensions> RequestType;
+			typedef RegistrationCombinationRequest<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			RequestType;
 
 			typedef FieldRepresentationDescriptor<VInputDimensions>							InputFieldRepresentationType;
 			typedef FieldRepresentationDescriptor<VInterimDimensions>						InterimFieldRepresentationType;
 
-			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType PaddingVectorType;
+			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType
+			PaddingVectorType;
 
 			itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
 			itkStaticConstMacro(InterimDimensions, unsigned int, VInterimDimensions);
 			itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);
 
 			/*! Standard class typedefs. */
-			typedef RegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions>  Self;
+			typedef RegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			Self;
 			typedef services::ServiceProvider<RequestType>	 Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
@@ -87,22 +91,22 @@ namespace map
 				 * @pre input representation must be coverd by the first kernel and the mapped input representation must be covered by the input
 				 * representation of the second kernel.
 				 */
-			virtual CombinedKernelBasePointer combineKernels(const RequestType &request,
-			                                                 const InputFieldRepresentationType *pInputFieldRepresentation,
-			                                                 bool usePadding = false,
-			                                                 const PaddingVectorType &paddingVector = PaddingVectorType(0)) const = 0;
+			virtual CombinedKernelBasePointer combineKernels(const RequestType& request,
+					const InputFieldRepresentationType* pInputFieldRepresentation,
+					bool usePadding = false,
+					const PaddingVectorType& paddingVector = PaddingVectorType(0)) const = 0;
 
 		protected:
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			RegistrationKernelCombinatorBase();
 			virtual ~RegistrationKernelCombinatorBase();
 
 		private:
-			RegistrationKernelCombinatorBase(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			RegistrationKernelCombinatorBase(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} // end namespace core

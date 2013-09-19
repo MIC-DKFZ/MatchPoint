@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationException.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -47,18 +47,20 @@ namespace map
 			RegistrationException() : Superclass() {}
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			RegistrationException(const char *file, unsigned int lineNumber) : Superclass(file, lineNumber) {}
+			RegistrationException(const char* file, unsigned int lineNumber) : Superclass(file, lineNumber) {}
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			RegistrationException(const std::string &file, unsigned int lineNumber) : Superclass(file, lineNumber) {}
+			RegistrationException(const std::string& file, unsigned int lineNumber) : Superclass(file,
+						lineNumber) {}
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			RegistrationException(const std::string &file, unsigned int lineNumber, const std::string &desc, const std::string &loc) : Superclass(file, lineNumber, desc, loc) {}
+			RegistrationException(const std::string& file, unsigned int lineNumber, const std::string& desc,
+								  const std::string& loc) : Superclass(file, lineNumber, desc, loc) {}
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
 			virtual ~RegistrationException() throw() {}
 
-			virtual const char *GetNameOfClass() const
+			virtual const char* GetNameOfClass() const
 			{
 				return "map::RegistrationException";
 			}
@@ -72,7 +74,7 @@ namespace map
 			 * and every task is processed (or failed through an exception).
 			 * @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			 * @eguarantee no throw*/
-			virtual BaseExceptionType *clone() const throw();
+			virtual BaseExceptionType* clone() const throw();
 		};
 
 	} // end namespace core

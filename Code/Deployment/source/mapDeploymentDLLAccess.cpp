@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/source/mapDeploymentDLLAccess.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -38,7 +38,7 @@ namespace map
 	{
 
 		bool
-		checkNameIsSharedLibrary(const char *name)
+		checkNameIsSharedLibrary(const char* name)
 		{
 			if (!name)
 			{
@@ -56,7 +56,7 @@ namespace map
 		}
 
 		bool
-		checkFileNameIsMDRACompliant(const char *name)
+		checkFileNameIsMDRACompliant(const char* name)
 		{
 			if (!name)
 			{
@@ -130,7 +130,7 @@ namespace map
 			bool _active;
 		};
 
-		DLLHandle::Pointer openDeploymentDLL(const char *libraryFile)
+		DLLHandle::Pointer openDeploymentDLL(const char* libraryFile)
 		{
 			if (!libraryFile)
 			{
@@ -139,29 +139,38 @@ namespace map
 
 			if (!itksys::SystemTools::FileExists(libraryFile, true))
 			{
-				mapExceptionStaticMacro(InvalidDLLException, "Error. Passed library file does not exist. File path: " << libraryFile);
+				mapExceptionStaticMacro(InvalidDLLException,
+										"Error. Passed library file does not exist. File path: " << libraryFile);
 			}
 
 			if (! checkNameIsSharedLibrary(libraryFile))
 			{
-				mapExceptionStaticMacro(InvalidDLLException, "Error. Passed library file seems not to be a valid shared library (wrong file extension). File path: " << libraryFile);
+				mapExceptionStaticMacro(InvalidDLLException,
+										"Error. Passed library file seems not to be a valid shared library (wrong file extension). File path: "
+										<< libraryFile);
 			}
 
 			itksys::DynamicLoader::LibraryHandle libHandle = itksys::DynamicLoader::OpenLibrary(libraryFile);
 
 			if (!libHandle)
 			{
-				mapExceptionStaticMacro(InvalidDLLException, "Error. Passed library cannot be loaded; seems not to be a valid DLL. File path:" << libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
+				mapExceptionStaticMacro(InvalidDLLException,
+										"Error. Passed library cannot be loaded; seems not to be a valid DLL. File path:" << libraryFile <<
+										". Error note: " << itksys::DynamicLoader::LastError());
 			}
 
 			DLLGuard dllGuard(libHandle);
 
 			//DLL is not correctly loaded. Check for the InterfaceVersion Symbol
-			MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER pVersionFunction = (MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(libHandle, "mapGetDLLInterfaceVersion");
+			MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER pVersionFunction =
+				(MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(libHandle,
+						"mapGetDLLInterfaceVersion");
 
 			if (pVersionFunction == NULL)
 			{
-				mapExceptionStaticMacro(MissingSymbolException, "Error. DLL seems to be invalid; mapGetDLLInterfaceVersion symbol is missing. File path: " << libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
+				mapExceptionStaticMacro(MissingSymbolException,
+										"Error. DLL seems to be invalid; mapGetDLLInterfaceVersion symbol is missing. File path: " <<
+										libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
 			}
 
 			//now check the version of the dll
@@ -171,27 +180,42 @@ namespace map
 
 			if (!checkDLLInterfaceVersion(majorVersion, minorVersion))
 			{
-				mapExceptionStaticMacro(InvalidInterfaceVersionException, "Error. DLL seems to have wrong deployment interface version. File path:" << libraryFile << "; DLL version: " << majorVersion << "." << minorVersion << "; host version: " << MAP_DLL_INTERFACE_VERSION_MAJOR << "." << MAP_DLL_INTERFACE_VERSION_MINOR);
+				mapExceptionStaticMacro(InvalidInterfaceVersionException,
+										"Error. DLL seems to have wrong deployment interface version. File path:" << libraryFile <<
+										"; DLL version: " << majorVersion << "." << minorVersion << "; host version: " <<
+										MAP_DLL_INTERFACE_VERSION_MAJOR << "." << MAP_DLL_INTERFACE_VERSION_MINOR);
 			}
 
 			//look for the other expected symbols
-			MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER pUIDFunction = (MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(libHandle, "mapGetRegistrationAlgorithmUID");
-			MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER pInstanceFunction = (MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(libHandle, "mapGetRegistrationAlgorithmInstance");
-      MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER pProfileFunction = (MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(libHandle, "mapGetRegistrationAlgorithmProfile");
-  
+			MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER pUIDFunction =
+				(MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(
+					libHandle, "mapGetRegistrationAlgorithmUID");
+			MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER pInstanceFunction =
+				(MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(
+					libHandle, "mapGetRegistrationAlgorithmInstance");
+			MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER pProfileFunction =
+				(MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(
+					libHandle, "mapGetRegistrationAlgorithmProfile");
+
 			if (pUIDFunction == NULL)
 			{
-				mapExceptionStaticMacro(MissingSymbolException, "Error. DLL seems to be invalid; mapGetRegistrationAlgorithmUID symbol is missing. File path: " << libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
+				mapExceptionStaticMacro(MissingSymbolException,
+										"Error. DLL seems to be invalid; mapGetRegistrationAlgorithmUID symbol is missing. File path: " <<
+										libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
 			}
 
-      if (pProfileFunction == NULL)
-      {
-        mapExceptionStaticMacro(MissingSymbolException, "Error. DLL seems to be invalid; mapGetRegistrationAlgorithmProfile symbol is missing. File path: " << libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
-      }
-
-      if (pInstanceFunction == NULL)
+			if (pProfileFunction == NULL)
 			{
-				mapExceptionStaticMacro(MissingSymbolException, "Error. DLL seems to be invalid; mapGetRegistrationAlgorithmInstance symbol is missing. File path: " << libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
+				mapExceptionStaticMacro(MissingSymbolException,
+										"Error. DLL seems to be invalid; mapGetRegistrationAlgorithmProfile symbol is missing. File path: "
+										<< libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
+			}
+
+			if (pInstanceFunction == NULL)
+			{
+				mapExceptionStaticMacro(MissingSymbolException,
+										"Error. DLL seems to be invalid; mapGetRegistrationAlgorithmInstance symbol is missing. File path: "
+										<< libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
 			}
 
 			//DLL seems to be valid -> Get the UID and compile the DLL info
@@ -201,14 +225,16 @@ namespace map
 
 			if (spUIDdll.IsNull())
 			{
-				mapExceptionStaticMacro(InvalidUIDException, "Error. DLL returns NULL pointer as UID. File path: " << libraryFile);
+				mapExceptionStaticMacro(InvalidUIDException,
+										"Error. DLL returns NULL pointer as UID. File path: " << libraryFile);
 			}
 
-      map::core::String profileStr;
-      (*pProfileFunction)(profileStr);
+			map::core::String profileStr;
+			(*pProfileFunction)(profileStr);
 
 			//copy the UID information to a UID that is not instanciated within the DLL, thus the new UID does not depend on the DLL.
-			algorithm::UID::Pointer spUID = algorithm::UID::New(spUIDdll->getNamespace(), spUIDdll->getName(), spUIDdll->getVersion(), spUIDdll->getBuildTag());
+			algorithm::UID::Pointer spUID = algorithm::UID::New(spUIDdll->getNamespace(), spUIDdll->getName(),
+											spUIDdll->getVersion(), spUIDdll->getBuildTag());
 
 			DLLHandle::Pointer spResult = DLLHandle::New(libHandle, spUID, libraryFile, profileStr);
 
@@ -218,13 +244,13 @@ namespace map
 		};
 
 
-		DLLHandle::Pointer openDeploymentDLL(const core::String &libraryFile)
+		DLLHandle::Pointer openDeploymentDLL(const core::String& libraryFile)
 		{
 			return openDeploymentDLL(libraryFile.c_str());
 		};
 
 
-		void closeDeploymentDLL(const DLLHandle *pDLLHandle)
+		void closeDeploymentDLL(const DLLHandle* pDLLHandle)
 		{
 			if (!pDLLHandle)
 			{
@@ -233,51 +259,59 @@ namespace map
 
 			if (!(pDLLHandle->getLibraryHandle()))
 			{
-				mapExceptionStaticMacro(InvalidDLLException, "Error. Passed library handle is not valid. File path:" << (pDLLHandle->getLibraryFilePath()) << "; handle: " << pDLLHandle->getLibraryHandle());
+				mapExceptionStaticMacro(InvalidDLLException,
+										"Error. Passed library handle is not valid. File path:" << (pDLLHandle->getLibraryFilePath()) <<
+										"; handle: " << pDLLHandle->getLibraryHandle());
 			}
 
 			if (!itksys::DynamicLoader::CloseLibrary(pDLLHandle->getLibraryHandle()))
 			{
-				mapExceptionStaticMacro(InvalidDLLException, "Error. Passed library cannot be closed; seems not to be a valid DLL. File path:" << pDLLHandle->getLibraryFilePath() << ". Error note: " << itksys::DynamicLoader::LastError());
+				mapExceptionStaticMacro(InvalidDLLException,
+										"Error. Passed library cannot be closed; seems not to be a valid DLL. File path:" <<
+										pDLLHandle->getLibraryFilePath() << ". Error note: " << itksys::DynamicLoader::LastError());
 			}
 		};
 
-		algorithm::UID::ConstPointer peekDeploymentDLL(const char *libraryFile)
+		algorithm::UID::ConstPointer peekDeploymentDLL(const char* libraryFile)
 		{
 			DLLHandle::Pointer spHandle = openDeploymentDLL(libraryFile);
 
 			algorithm::UID::ConstPointer spUID;
-      core::String tempProfile;
-      
-      peekDeploymentDLL(libraryFile,spUID,tempProfile);
+			core::String tempProfile;
+
+			peekDeploymentDLL(libraryFile, spUID, tempProfile);
 
 			closeDeploymentDLL(spHandle);
 
 			return spUID;
 		};
 
-		algorithm::UID::ConstPointer peekDeploymentDLL(const core::String &libraryFile)
+		algorithm::UID::ConstPointer peekDeploymentDLL(const core::String& libraryFile)
 		{
 			return peekDeploymentDLL(libraryFile.c_str());
 		};
 
-    void peekDeploymentDLL(const char *libraryFile, algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile)
-    {
-      DLLHandle::Pointer spHandle = openDeploymentDLL(libraryFile);
+		void peekDeploymentDLL(const char* libraryFile, algorithm::UID::ConstPointer& spUID,
+							   ::map::core::String& algProfile)
+		{
+			DLLHandle::Pointer spHandle = openDeploymentDLL(libraryFile);
 
-      spUID = algorithm::UID::New(spHandle->getAlgorithmUID().getNamespace(),spHandle->getAlgorithmUID().getName(),spHandle->getAlgorithmUID().getVersion(),spHandle->getAlgorithmUID().getBuildTag());
-      algProfile = spHandle->getAlgorithmProfileStr();
+			spUID = algorithm::UID::New(spHandle->getAlgorithmUID().getNamespace(),
+										spHandle->getAlgorithmUID().getName(), spHandle->getAlgorithmUID().getVersion(),
+										spHandle->getAlgorithmUID().getBuildTag());
+			algProfile = spHandle->getAlgorithmProfileStr();
 
-      closeDeploymentDLL(spHandle);
-    };
+			closeDeploymentDLL(spHandle);
+		};
 
-    void peekDeploymentDLL(const core::String &libraryFile, algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile)
-    {
-      peekDeploymentDLL(libraryFile.c_str(),spUID,algProfile);
-    };
+		void peekDeploymentDLL(const core::String& libraryFile, algorithm::UID::ConstPointer& spUID,
+							   ::map::core::String& algProfile)
+		{
+			peekDeploymentDLL(libraryFile.c_str(), spUID, algProfile);
+		};
 
 
-		RegistrationAlgorithmBasePointer getRegistrationAlgorithm(const DLLHandle *pDLLHandle)
+		RegistrationAlgorithmBasePointer getRegistrationAlgorithm(const DLLHandle* pDLLHandle)
 		{
 			RegistrationAlgorithmBasePointer spResult = NULL;
 
@@ -288,26 +322,34 @@ namespace map
 
 			if (!(pDLLHandle->getLibraryHandle()))
 			{
-				mapExceptionStaticMacro(InvalidDLLException, "Error. Passed library handle is not valid. File path:" << (pDLLHandle->getLibraryFilePath()) << "; handle: " << pDLLHandle->getLibraryHandle());
+				mapExceptionStaticMacro(InvalidDLLException,
+										"Error. Passed library handle is not valid. File path:" << (pDLLHandle->getLibraryFilePath()) <<
+										"; handle: " << pDLLHandle->getLibraryHandle());
 			}
 
 			//DLL is not correctly loaded. Check for the InterfaceVersion Symbol
-			MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER pInstanceFunction = (MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(pDLLHandle->getLibraryHandle(), "mapGetRegistrationAlgorithmInstance");
+			MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER pInstanceFunction =
+				(MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(
+					pDLLHandle->getLibraryHandle(), "mapGetRegistrationAlgorithmInstance");
 
 			if (pInstanceFunction == NULL)
 			{
-				mapExceptionStaticMacro(MissingSymbolException, "Error. DLL seems to be invalid; mapGetRegistrationAlgorithmInstance symbol is missing. File path: " << pDLLHandle->getLibraryFilePath() << ". Error note: " << itksys::DynamicLoader::LastError());
+				mapExceptionStaticMacro(MissingSymbolException,
+										"Error. DLL seems to be invalid; mapGetRegistrationAlgorithmInstance symbol is missing. File path: "
+										<< pDLLHandle->getLibraryFilePath() << ". Error note: " << itksys::DynamicLoader::LastError());
 			}
 
 			//DLL seems to be valid -> Get an algorithm instance
 
-			SyncObject *pSyncObject = Synchronizer::getSyncObject();
+			SyncObject* pSyncObject = Synchronizer::getSyncObject();
 
 			(*pInstanceFunction)(spResult, pSyncObject);
 
 			if (spResult.IsNull())
 			{
-				mapExceptionStaticMacro(InvalidAlgorithmException, "Error. DLL returns NULL pointer as pointer to an algorithm instance. File path: " << pDLLHandle->getLibraryFilePath());
+				mapExceptionStaticMacro(InvalidAlgorithmException,
+										"Error. DLL returns NULL pointer as pointer to an algorithm instance. File path: " <<
+										pDLLHandle->getLibraryFilePath());
 			}
 
 			return spResult;

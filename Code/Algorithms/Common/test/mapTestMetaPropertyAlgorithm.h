@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/test/mapTestMetaPropertyAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __TEST_META_PROPERTY_ALGORITHM_H
@@ -46,9 +46,9 @@ namespace map
 
 			enum FncCallID
 			{
-			    compileInfosID = 0,
-			    doGetPropertyID = 1,
-			    doSetPropertyID = 2,
+				compileInfosID = 0,
+				doGetPropertyID = 1,
+				doSetPropertyID = 2,
 			};
 
 			mutable ::lit::ValueRecorder<FncCallID> recorder;
@@ -57,26 +57,27 @@ namespace map
 			int _count;
 			float _secret;
 			std::string _text;
-			void *_pHole;
+			void* _pHole;
 
 			using map::algorithm::MetaPropertyAlgorithmBase::configureAlgorithmByMetaProperties;
 			using map::algorithm::MetaPropertyAlgorithmBase::GetMTime;
 
 		protected:
 
-			virtual void compileInfos(MetaPropertyVectorType &infos) const
+			virtual void compileInfos(MetaPropertyVectorType& infos) const
 			{
 				recorder.recordValue(compileInfosID);
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("Size", typeid(int), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("Count", typeid(int), true, false));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("Text", typeid(std::string), true, false));
 #ifndef MAP_SEAL_ALGORITHMS
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("SecretIngredient", typeid(float), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("BlackHole", typeid(void *), false, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("SecretIngredient", typeid(float), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("BlackHole", typeid(void*), false, true));
 #endif
 			};
 
-			virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const
+			virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const
 			{
 				recorder.recordValue(doGetPropertyID);
 
@@ -102,7 +103,7 @@ namespace map
 				return spResult;
 			};
 
-			virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
+			virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				recorder.recordValue(doSetPropertyID);
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapFixedTransformPolicyTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -58,13 +58,13 @@ namespace map
 			typedef PolicyType::ConcreteTransformType ModelType;
 
 			PolicyType policy;
-			const PolicyType &constPolicy = policy;
+			const PolicyType& constPolicy = policy;
 
-			ModelType *pConcreteModel = NULL;
-			const ModelType *pConstConcreteModel = NULL;
+			ModelType* pConcreteModel = NULL;
+			const ModelType* pConstConcreteModel = NULL;
 
-			PolicyType::TransformType *pTransform = NULL;
-			const PolicyType::TransformType *pConstTransform = NULL;
+			PolicyType::TransformType* pTransform = NULL;
+			const PolicyType::TransformType* pConstTransform = NULL;
 
 			CHECK_NO_THROW(pConcreteModel = policy.getConcreteTransformModel());
 			CHECK_NO_THROW(pConstConcreteModel = constPolicy.getConcreteTransformModel());

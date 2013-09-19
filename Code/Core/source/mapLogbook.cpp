@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapLogbook.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -48,7 +48,7 @@ namespace map
 
 		void
 		Logbook::
-		write(PriorityLevelType level, const String &content)
+		write(PriorityLevelType level, const String& content)
 		{
 			if (_spLoggerImpl.IsNull())
 			{
@@ -71,7 +71,7 @@ namespace map
 
 		void
 		Logbook::
-		setDefaultLogFileName(const String &fileName)
+		setDefaultLogFileName(const String& fileName)
 		{
 			if (_spLoggerImpl.IsNotNull() && _defaultFilename != fileName)
 			{
@@ -93,7 +93,7 @@ namespace map
 
 		void
 		Logbook::
-		addAdditionalLogOutput(OutputType *pOutput)
+		addAdditionalLogOutput(OutputType* pOutput)
 		{
 			assert(pOutput); //must not be null
 
@@ -203,7 +203,7 @@ namespace map
 
 		void
 		Logbook::
-		swapImplementations(LogbookImplementation *pImpl)
+		swapImplementations(LogbookImplementation* pImpl)
 		{
 			assert(pImpl); //must not be null;
 
@@ -216,15 +216,17 @@ namespace map
 
 		void
 		Logbook::
-		getSynchronization(deployment::SyncObject &syncObject)
+		getSynchronization(deployment::SyncObject& syncObject)
 		{
-			syncObject._map.insert(std::make_pair("Logbook_Impl", core::SmartMetaProperty<LogbookImplementation>::New(_spLoggerImpl)));
-			syncObject._map.insert(std::make_pair("Logbook_Priority", core::MetaProperty<PriorityLevelType>::New(_currentPriorityLevel)));
+			syncObject._map.insert(std::make_pair("Logbook_Impl",
+												  core::SmartMetaProperty<LogbookImplementation>::New(_spLoggerImpl)));
+			syncObject._map.insert(std::make_pair("Logbook_Priority",
+												  core::MetaProperty<PriorityLevelType>::New(_currentPriorityLevel)));
 		};
 
 		void
 		Logbook::
-		setSynchronization(const deployment::SyncObject &syncObject)
+		setSynchronization(const deployment::SyncObject& syncObject)
 		{
 			LogImplPointer spNewLogger;
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldGenerationFunctor.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -69,7 +69,7 @@ namespace map
 				typedef FieldRepresentationDescriptor<VOutputDimensions>       OutFieldRepresentationType;
 				typedef typename OutFieldRepresentationType::ConstPointer      OutFieldRepresentationConstPointer;
 				typedef typename RegistrationTopology < VInputDimensions,
-				        VOutputDimensions >::DirectFieldType FieldType;
+						VOutputDimensions >::DirectFieldType FieldType;
 				typedef typename FieldType::Pointer FieldPointer;
 
 				itkTypeMacro(FieldGenerationFunctor, itk::Object);
@@ -86,20 +86,20 @@ namespace map
 				 * representation is declared.
 				 * @retval NULL There is no explicit field representation descriptor for the input space.
 				 */
-				const InFieldRepresentationType *getInFieldRepresentation(void) const;
+				const InFieldRepresentationType* getInFieldRepresentation(void) const;
 
 			protected:
-				FieldGenerationFunctor(const InFieldRepresentationType *pInFieldRepresentation);
+				FieldGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation);
 				virtual ~FieldGenerationFunctor();
 
 				InFieldRepresentationConstPointer _spInFieldRepresentation;
 
 				/*! Methods invoked by itk::LightObject::Print().  */
-				virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			private:
-				FieldGenerationFunctor(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				FieldGenerationFunctor(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		} // end namespace functors

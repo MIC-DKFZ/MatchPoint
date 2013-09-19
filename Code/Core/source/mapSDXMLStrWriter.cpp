@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapSDXMLStrWriter.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,7 +35,7 @@ namespace map
 	{
 
 
-		core::String encodeForXml(const core::String &sSrc)
+		core::String encodeForXml(const core::String& sSrc)
 		{
 			core::OStringStream sRet;
 
@@ -83,11 +83,12 @@ namespace map
 
 		core::String
 		XMLStrWriter::
-		write(const Element *pElement) const
+		write(const Element* pElement) const
 		{
 			if (!pElement)
 			{
-				mapDefaultExceptionMacro( << "Error. Cannot convert structured element to string. Passed element pointer is NULL.");
+				mapDefaultExceptionMacro( <<
+										  "Error. Cannot convert structured element to string. Passed element pointer is NULL.");
 			}
 
 			ElementLevelType level = 0;
@@ -98,7 +99,7 @@ namespace map
 
 		core::String
 		XMLStrWriter::
-		writeElement(const Element *pElement, const ElementLevelType &level) const
+		writeElement(const Element* pElement, const ElementLevelType& level) const
 		{
 			assert(pElement);
 
@@ -131,7 +132,7 @@ namespace map
 
 		core::String
 		XMLStrWriter::
-		writeAttributes(const Element *pElement, const ElementLevelType &level) const
+		writeAttributes(const Element* pElement, const ElementLevelType& level) const
 		{
 			assert(pElement);
 
@@ -140,7 +141,8 @@ namespace map
 			Element::AttributeNameVectorType attributes = pElement->getAttributeNames();
 			bool firstLoop = true;
 
-			for (Element::AttributeNameVectorType::const_iterator pos = attributes.begin(); pos != attributes.end(); ++pos)
+			for (Element::AttributeNameVectorType::const_iterator pos = attributes.begin();
+				 pos != attributes.end(); ++pos)
 			{
 				if (pos->find("sdInternal:") != 0)
 				{
@@ -162,7 +164,7 @@ namespace map
 
 		core::String
 		XMLStrWriter::
-		writeSubElements(const Element *pElement, const ElementLevelType &level) const
+		writeSubElements(const Element* pElement, const ElementLevelType& level) const
 		{
 			assert(pElement);
 
@@ -171,7 +173,8 @@ namespace map
 
 			ElementLevelType sublevel = level + 1;
 
-			for (Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin(); pos != pElement->getSubElementEnd(); ++pos)
+			for (Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
+				 pos != pElement->getSubElementEnd(); ++pos)
 			{
 				stream << writeElement(*pos, sublevel);
 			}
@@ -196,7 +199,7 @@ namespace map
 
 		core::String
 		XMLIntendedStrWriter::
-		writeElement(const Element *pElement, const ElementLevelType &level) const
+		writeElement(const Element* pElement, const ElementLevelType& level) const
 		{
 			assert(pElement);
 

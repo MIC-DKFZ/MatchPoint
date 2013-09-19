@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapSmartMetaProperty.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -43,17 +43,17 @@ namespace map
 		};
 
 		template <typename TValue>
-		class SmartMetaPropertyUntypeHelper<const TValue *>
+		class SmartMetaPropertyUntypeHelper<const TValue*>
 		{
 		public:
 			typedef typename SmartMetaProperty<TValue>::LightPointer LightPointer;
 			typedef typename SmartMetaProperty<TValue>::ConstLightPointer ConstLightPointer;
 
-			static bool Convert(const TValue *pValue, LightPointer &pRaw)
+			static bool Convert(const TValue* pValue, LightPointer& pRaw)
 			{
 				return false;
 			};
-			static bool Convert(const TValue *pValue, ConstLightPointer &pRaw)
+			static bool Convert(const TValue* pValue, ConstLightPointer& pRaw)
 			{
 				pRaw = pValue;
 				return true;
@@ -61,18 +61,18 @@ namespace map
 		};
 
 		template <typename TValue>
-		class SmartMetaPropertyUntypeHelper<TValue *>
+		class SmartMetaPropertyUntypeHelper<TValue*>
 		{
 		public:
 			typedef typename SmartMetaProperty<TValue>::LightPointer LightPointer;
 			typedef typename SmartMetaProperty<TValue>::ConstLightPointer ConstLightPointer;
 
-			static bool Convert(TValue *pValue, LightPointer &pRaw)
+			static bool Convert(TValue* pValue, LightPointer& pRaw)
 			{
 				pRaw = pValue;
 				return true;
 			};
-			static bool Convert(TValue *pValue, ConstLightPointer &pRaw)
+			static bool Convert(TValue* pValue, ConstLightPointer& pRaw)
 			{
 				pRaw = pValue;
 				return true;
@@ -90,7 +90,7 @@ namespace map
 		New(ValueSetType initValue)
 		{
 			Pointer smartPtr;
-			Self *rawPtr = new Self(initValue);
+			Self* rawPtr = new Self(initValue);
 			smartPtr = rawPtr;
 			rawPtr->UnRegister();
 			return smartPtr;
@@ -117,7 +117,7 @@ namespace map
 		}
 
 		template<typename TValue>
-		const char *
+		const char*
 		SmartMetaProperty<TValue>::
 		getMetaPropertyTypeName() const
 		{
@@ -125,7 +125,7 @@ namespace map
 		};
 
 		template<typename TValue>
-		const std::type_info &
+		const std::type_info&
 		SmartMetaProperty<TValue>::
 		getMetaPropertyTypeInfo(void) const
 		{
@@ -151,7 +151,7 @@ namespace map
 		template<typename TValue>
 		bool
 		SmartMetaProperty<TValue>::
-		getUntypedValue(ConstLightPointer &pValue) const
+		getUntypedValue(ConstLightPointer& pValue) const
 		{
 			return SmartMetaPropertyUntypeHelper<ValuePointerType>::Convert(_spValue.GetPointer(), pValue);
 		};
@@ -159,7 +159,7 @@ namespace map
 		template<typename TValue>
 		bool
 		SmartMetaProperty<TValue>::
-		getUntypedValue(LightPointer &pValue) const
+		getUntypedValue(LightPointer& pValue) const
 		{
 			return SmartMetaPropertyUntypeHelper<ValuePointerType>::Convert(_spValue.GetPointer(), pValue);
 		};
@@ -167,7 +167,7 @@ namespace map
 		template<typename TValue>
 		void
 		SmartMetaProperty<TValue>::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			os << indent << "SmartMetaProperty [" << this->getMetaPropertyTypeName() << "]: " << std::endl;
 			os << indent.GetNextIndent() << _spValue << std::endl;

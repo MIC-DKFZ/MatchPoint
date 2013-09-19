@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMetaPropertyAccessInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,21 +45,21 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef const itk::LightObject  *ConstLightPointer;
-			typedef itk::LightObject        *LightPointer;
+			typedef const itk::LightObject*  ConstLightPointer;
+			typedef itk::LightObject*        LightPointer;
 
 			/**
 			* @brief Returns the property Value as untyped pointer
 			* @return Property value.
 			* @eguarantee strong
 			*/
-			virtual bool getUntypedValue(ConstLightPointer &) const = 0;
+			virtual bool getUntypedValue(ConstLightPointer&) const = 0;
 			/**
 			* @brief Returns the property Value as untyped pointer
 			* @return Property value.
 			* @eguarantee strong
 			*/
-			virtual bool getUntypedValue(LightPointer &) const = 0;
+			virtual bool getUntypedValue(LightPointer&) const = 0;
 
 		protected:
 
@@ -70,8 +70,9 @@ namespace map
 			{};
 
 		private:
-			MetaPropertyLightPointerAccessInterface(const MetaPropertyLightPointerAccessInterface &); //purposely not implemented
-			void operator=(const MetaPropertyLightPointerAccessInterface &); //purposely not implemented
+			MetaPropertyLightPointerAccessInterface(const
+													MetaPropertyLightPointerAccessInterface&);  //purposely not implemented
+			void operator=(const MetaPropertyLightPointerAccessInterface&);  //purposely not implemented
 		};
 
 
@@ -94,8 +95,8 @@ namespace map
 		public:
 			/** Smart pointer typedef support. */
 			typedef TValueType        ValueType;
-			typedef const ValueType  &ValueSetType;
-			typedef const ValueType  &ValueGetType;
+			typedef const ValueType&  ValueSetType;
+			typedef const ValueType&  ValueGetType;
 
 			/**
 			* @brief Returns the property value
@@ -120,18 +121,19 @@ namespace map
 			{};
 
 		private:
-			MetaPropertyAccessInterface(const MetaPropertyAccessInterface<TValueType> &);//purposely not implemented
-			void operator=(const MetaPropertyAccessInterface<TValueType> &); //purposely not implemented
+			MetaPropertyAccessInterface(const MetaPropertyAccessInterface<TValueType>
+										&); //purposely not implemented
+			void operator=(const MetaPropertyAccessInterface<TValueType>&);  //purposely not implemented
 		};
 
 		/* Template specialication of the MetaPropertyAccessInterface for pointer types
 		*/
 		template <typename TValueType>
-		class MetaPropertyAccessInterface<TValueType *>
+		class MetaPropertyAccessInterface<TValueType*>
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef TValueType        *ValueType;
+			typedef TValueType*        ValueType;
 			typedef ValueType          ValueSetType;
 			typedef ValueType          ValueGetType;
 
@@ -158,8 +160,9 @@ namespace map
 			{};
 
 		private:
-			MetaPropertyAccessInterface(const MetaPropertyAccessInterface<TValueType *> &); //purposely not implemented
-			void operator=(const MetaPropertyAccessInterface<TValueType *> &); //purposely not implemented
+			MetaPropertyAccessInterface(const MetaPropertyAccessInterface<TValueType*>
+										&);   //purposely not implemented
+			void operator=(const MetaPropertyAccessInterface<TValueType*>&);   //purposely not implemented
 		};
 
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapServiceStack.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -63,17 +63,18 @@ namespace map
 			};
 
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
-			typename ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::ProviderBaseType *
+			typename ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::ProviderBaseType*
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			getProvider(const RequestType &request) const
+			getProvider(const RequestType& request) const
 			{
-				ProviderBaseType *pResult = NULL;
+				ProviderBaseType* pResult = NULL;
 
 				this->lock();
 
 				// search vector in reverse order, because ServiceStack should operate by the LIFU principle (last in, first used)
 				// thus the lastest added provider suitable for a request should be used.
-				for (typename ProviderVectorType::const_reverse_iterator pos = _providers.rbegin(); pos != _providers.rend(); ++pos)
+				for (typename ProviderVectorType::const_reverse_iterator pos = _providers.rbegin();
+					 pos != _providers.rend(); ++pos)
 				{
 					if ((*pos)->canHandleRequest(request))
 					{
@@ -88,17 +89,18 @@ namespace map
 			};
 
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
-			typename ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::ProviderBaseType *
+			typename ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::ProviderBaseType*
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			getProvider(const String &providerName) const
+			getProvider(const String& providerName) const
 			{
-				ProviderBaseType *pResult = NULL;
+				ProviderBaseType* pResult = NULL;
 
 				this->lock();
 
 				// search vector in reverse order, because ServiceStack should operate by the LIFU principle (last in, first used)
 				// thus the lastest added provider suitable for a request should be used.
-				for (typename ProviderVectorType::const_reverse_iterator pos = _providers.rbegin(); pos != _providers.rend(); ++pos)
+				for (typename ProviderVectorType::const_reverse_iterator pos = _providers.rbegin();
+					 pos != _providers.rend(); ++pos)
 				{
 					if ((*pos)->getProviderName() == providerName)
 					{
@@ -115,7 +117,7 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			bool
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			providerIsAvailable(const RequestType &request) const
+			providerIsAvailable(const RequestType& request) const
 			{
 				return getProvider(request) != NULL;
 			};
@@ -123,7 +125,7 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			bool
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			registerProvider(ProviderBaseType *pProvider)
+			registerProvider(ProviderBaseType* pProvider)
 			{
 				this->lock();
 
@@ -137,9 +139,10 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			bool
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			registerProviderInternal(ProviderBaseType *pProvider)
+			registerProviderInternal(ProviderBaseType* pProvider)
 			{
-				typename ProviderVectorType::iterator finding = std::find(_providers.begin(), _providers.end(), pProvider);
+				typename ProviderVectorType::iterator finding = std::find(_providers.begin(), _providers.end(),
+						pProvider);
 				bool result = false;
 
 				if (finding == _providers.end())
@@ -156,7 +159,7 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			bool
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			unregisterProviderByPointer(ProviderBaseType *pProvider)
+			unregisterProviderByPointer(ProviderBaseType* pProvider)
 			{
 				this->lock();
 
@@ -170,9 +173,10 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			bool
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			unregisterProviderByPointerInternal(ProviderBaseType *pProvider)
+			unregisterProviderByPointerInternal(ProviderBaseType* pProvider)
 			{
-				typename ProviderVectorType::iterator finding = std::find(_providers.begin(), _providers.end(), pProvider);
+				typename ProviderVectorType::iterator finding = std::find(_providers.begin(), _providers.end(),
+						pProvider);
 				bool result = false;
 
 				if (finding != _providers.end())
@@ -189,7 +193,7 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			bool
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			unregisterProvider(const String &providerName)
+			unregisterProvider(const String& providerName)
 			{
 				this->lock();
 
@@ -264,7 +268,7 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			bool
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			addProviderByPolicy(ProviderBaseType *pProvider)
+			addProviderByPolicy(ProviderBaseType* pProvider)
 			{
 				return registerProviderInternal(pProvider);
 			};
@@ -272,7 +276,7 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			bool
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			removeProviderByPolicy(ProviderBaseType *pProvider)
+			removeProviderByPolicy(ProviderBaseType* pProvider)
 			{
 				return unregisterProviderByPointerInternal(pProvider);
 			};
@@ -280,14 +284,15 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			void
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			PrintSelf(std::ostream &os, itk::Indent indent) const
+			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 				os << indent << "Provider count: " << _providers.size() << std::endl;
 				os << indent << "Stack content (in descending priority): " << std::endl;
 				itk::Indent indent2 = indent.GetNextIndent();
 
-				for (typename ProviderVectorType::const_reverse_iterator pos = _providers.rbegin(); pos != _providers.rend(); ++pos)
+				for (typename ProviderVectorType::const_reverse_iterator pos = _providers.rbegin();
+					 pos != _providers.rend(); ++pos)
 				{
 					os << indent2 << (*pos)->getProviderName() << std::endl;
 				}

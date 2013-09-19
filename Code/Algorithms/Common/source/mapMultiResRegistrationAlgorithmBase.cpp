@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/source/mapMultiResRegistrationAlgorithmBase.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -42,47 +42,53 @@ namespace map
 
 		void
 		MultiResRegistrationAlgorithmBase::
-		setSchedule(const ScheduleType &schedule)
+		setSchedule(const ScheduleType& schedule)
 		{
 			setSchedule(schedule, schedule);
 		};
 
 		void
 		MultiResRegistrationAlgorithmBase::
-		setSchedule(const ScheduleType &movingSchedule, const ScheduleType &targetSchedule)
+		setSchedule(const ScheduleType& movingSchedule, const ScheduleType& targetSchedule)
 		{
 			if (movingSchedule.columns() != this->getMovingResolutionDimensions())
 			{
-				mapDefaultExceptionStaticMacro( << "Error. Schedule of moving information space has wrong dimension (column count). Dimension: " << this->getMovingResolutionDimensions() << "; columns: " << movingSchedule.columns());
+				mapDefaultExceptionStaticMacro( <<
+												"Error. Schedule of moving information space has wrong dimension (column count). Dimension: " <<
+												this->getMovingResolutionDimensions() << "; columns: " << movingSchedule.columns());
 			}
 
 			if (targetSchedule.columns() != this->getTargetResolutionDimensions())
 			{
-				mapDefaultExceptionStaticMacro( << "Error. Schedule of target information space has wrong dimension (column count). Dimension: " << this->getTargetResolutionDimensions() << "; columns: " << targetSchedule.columns());
+				mapDefaultExceptionStaticMacro( <<
+												"Error. Schedule of target information space has wrong dimension (column count). Dimension: " <<
+												this->getTargetResolutionDimensions() << "; columns: " << targetSchedule.columns());
 			}
 
 			if (targetSchedule.rows() != movingSchedule.rows())
 			{
-				mapDefaultExceptionStaticMacro( << "Error. Schedules have different level count (rows). moving: " << movingSchedule.rows() << "; " << targetSchedule.rows());
+				mapDefaultExceptionStaticMacro( << "Error. Schedules have different level count (rows). moving: " <<
+												movingSchedule.rows() << "; " << targetSchedule.rows());
 			}
 
 			ScheduleType tempMovingSchedule = movingSchedule;
 			ScheduleType tempTargetSchedule = targetSchedule;
 
-			this->onScheduleChange(this->_movingResSchedule, tempMovingSchedule, this->_targetResSchedule, tempTargetSchedule);
+			this->onScheduleChange(this->_movingResSchedule, tempMovingSchedule, this->_targetResSchedule,
+								   tempTargetSchedule);
 
 			this->_movingResSchedule = tempMovingSchedule;
 			this->_targetResSchedule = tempTargetSchedule;
 		};
 
-		const MultiResRegistrationAlgorithmBase::ScheduleType &
+		const MultiResRegistrationAlgorithmBase::ScheduleType&
 		MultiResRegistrationAlgorithmBase::
 		getMovingSchedule() const
 		{
 			return this->_movingResSchedule;
 		};
 
-		const MultiResRegistrationAlgorithmBase::ScheduleType &
+		const MultiResRegistrationAlgorithmBase::ScheduleType&
 		MultiResRegistrationAlgorithmBase::
 		getTargetSchedule() const
 		{
@@ -135,7 +141,8 @@ namespace map
 
 		void
 		MultiResRegistrationAlgorithmBase::
-		onScheduleChange(const ScheduleType &oldMovingSchedule, ScheduleType &newMovingSchedule, const ScheduleType &oldTargetSchedule, ScheduleType &newTargetMovingSchedule) const
+		onScheduleChange(const ScheduleType& oldMovingSchedule, ScheduleType& newMovingSchedule,
+						 const ScheduleType& oldTargetSchedule, ScheduleType& newTargetMovingSchedule) const
 		{
 			//default implementation does nothing.
 			//reimplement if you want to react on level changes

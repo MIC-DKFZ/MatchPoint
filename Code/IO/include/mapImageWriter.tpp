@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapImageWriter.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -98,8 +98,9 @@ namespace map
 			}
 
 			if ((_seriesWriteStyle == map::io::ImageSeriesWriteStyle::Numeric) ||
-			        (_seriesWriteStyle == map::io::ImageSeriesWriteStyle::Default &&
-			         ((sTemp == ".png") || (sTemp == ".bmp") || (sTemp == ".jpg") || (sTemp == ".tif") || (sTemp == ".dcm") || (sTemp == ".ima"))))
+				(_seriesWriteStyle == map::io::ImageSeriesWriteStyle::Default &&
+				 ((sTemp == ".png") || (sTemp == ".bmp") || (sTemp == ".jpg") || (sTemp == ".tif")
+				  || (sTemp == ".dcm") || (sTemp == ".ima"))))
 			{
 				typedef ::itk::CastImageFilter< InputImageType, OutputImageType > CastFilterType;
 				typedef ::itk::RescaleIntensityImageFilter< InputImageType, InputImageType > RescaleFilterType;
@@ -140,7 +141,7 @@ namespace map
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
 		void
 		ImageWriter<TInputPixel, TOutputPixel, iDimension>::
-		setInput(const InputImageType *pImage)
+		setInput(const InputImageType* pImage)
 		{
 			_spImage = pImage;
 		};

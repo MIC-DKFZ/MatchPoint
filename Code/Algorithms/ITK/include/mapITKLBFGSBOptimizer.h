@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKLBFGSBOptimizer.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -43,7 +43,8 @@ namespace map
 			@ingroup OptimizerControl
 			*/
 			template<>
-			class ITKOptimizerControl< ::itk::LBFGSBOptimizer> : public ITKSVNLOptimizerControlBase< ::itk::LBFGSBOptimizer>
+			class ITKOptimizerControl< ::itk::LBFGSBOptimizer> : public
+				ITKSVNLOptimizerControlBase< ::itk::LBFGSBOptimizer>
 			{
 			public:
 				typedef ITKOptimizerControl< ::itk::LBFGSBOptimizer> Self;
@@ -63,8 +64,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKOptimizerControl(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKOptimizerControl(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			public:
 				virtual bool isStoppable() const
@@ -139,10 +140,11 @@ namespace map
 					return _spOptimizer->GetCachedValue();
 				};
 
-				virtual void copyProperties(const ConcreteOptimizerType *source, ConcreteOptimizerType *destination) const
+				virtual void copyProperties(const ConcreteOptimizerType* source,
+											ConcreteOptimizerType* destination) const
 				{
 					//cast needed because of wrong const correctness in optimizer interface
-					ConcreteOptimizerType *nonConstSource = const_cast<ConcreteOptimizerType *>(source);
+					ConcreteOptimizerType* nonConstSource = const_cast<ConcreteOptimizerType*>(source);
 
 					destination->SetInitialPosition(source->GetInitialPosition());
 					destination->SetTrace(nonConstSource->GetTrace());

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapFieldByModelInversionFunctorTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -37,7 +37,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapFieldByModelInversionFunctorTest(int argc, char *argv[])
+		int mapFieldByModelInversionFunctorTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: Number of iterations
 			//           2: Stop value
@@ -71,7 +71,8 @@ namespace map
 			}
 
 			typedef core::functors::FieldByModelInversionFunctor<2, 2> FunctorType;
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> > TransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
+			TransformType;
 
 			TransformType::Pointer spModel = TransformType::New();
 
@@ -84,7 +85,8 @@ namespace map
 			params.fill(3.0);
 			spModel->getTransform()->SetParameters(params);
 
-			FunctorType::InFieldRepresentationType::Pointer spInRep = FunctorType::InFieldRepresentationType::New();
+			FunctorType::InFieldRepresentationType::Pointer spInRep =
+				FunctorType::InFieldRepresentationType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
@@ -99,7 +101,8 @@ namespace map
 			CHECK(spFunc->getNumberOfIterations() == nrOfIterations);
 			CHECK(spModel == spFunc->getTransformModel());
 
-			FunctorType::Pointer spFuncAnother = dynamic_cast<FunctorType *>(spFunc->CreateAnother().GetPointer());
+			FunctorType::Pointer spFuncAnother = dynamic_cast<FunctorType*>
+												 (spFunc->CreateAnother().GetPointer());
 			CHECK(spFuncAnother->getTransformModel() == spFunc->getTransformModel());
 			CHECK(spFuncAnother->getInFieldRepresentation() == spFunc->getInFieldRepresentation());
 			CHECK(spFuncAnother->GetNameOfClass() == spFunc->GetNameOfClass());
@@ -111,11 +114,13 @@ namespace map
 			CHECK_NO_THROW(spField = spFunc->generateField());
 			CHECK(spField.IsNotNull());
 
-			TransformType::InverseTransformModelBasePointer spInverseModel; //barra = TransformType::InverseTransformModelType::New();
+			TransformType::InverseTransformModelBasePointer
+			spInverseModel; //barra = TransformType::InverseTransformModelType::New();
 			spModel->getInverse(spInverseModel);
 
 
-			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType::TransformBaseType> tester;
+			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType::TransformBaseType>
+			tester;
 			tester.setReferenceTransform(spInverseModel->getTransform());
 			tester.setActualField(spField);
 			tester.setCheckThreshold(checkThreshold);

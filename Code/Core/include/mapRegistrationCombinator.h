@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationCombinator.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -83,33 +83,35 @@ namespace map
 			itkStaticConstMacro(TargetDimensions, unsigned int, RegistrationType::TargetDimensions);
 
 			typedef RegistrationKernelCombinatorBase < itkGetStaticConstMacro(MovingDimensions),
-			        itkGetStaticConstMacro(InterimDimensions),
-			        itkGetStaticConstMacro(TargetDimensions) > DirectKernelCombinatorBaseType;
+					itkGetStaticConstMacro(InterimDimensions),
+					itkGetStaticConstMacro(TargetDimensions) > DirectKernelCombinatorBaseType;
 			typedef RegistrationKernelCombinatorBase < itkGetStaticConstMacro(TargetDimensions),
-			        itkGetStaticConstMacro(InterimDimensions),
-			        itkGetStaticConstMacro(MovingDimensions) > InverseKernelCombinatorBaseType;
+					itkGetStaticConstMacro(InterimDimensions),
+					itkGetStaticConstMacro(MovingDimensions) > InverseKernelCombinatorBaseType;
 
 			typedef Registration < itkGetStaticConstMacro(MovingDimensions),
-			        itkGetStaticConstMacro(TargetDimensions) >  CombinedRegistrationType;
+					itkGetStaticConstMacro(TargetDimensions) >  CombinedRegistrationType;
 			typedef typename CombinedRegistrationType::Pointer						  CombinedRegistrationPointer;
 
 			typedef typename RegistrationTopology < itkGetStaticConstMacro(MovingDimensions),
-			        itkGetStaticConstMacro(TargetDimensions) >::DirectMappingVectorType DirectMappingVectorType;
+					itkGetStaticConstMacro(TargetDimensions) >::DirectMappingVectorType DirectMappingVectorType;
 			typedef typename RegistrationTopology < itkGetStaticConstMacro(MovingDimensions),
-			        itkGetStaticConstMacro(TargetDimensions) >::InverseMappingVectorType InverseMappingVectorType;
+					itkGetStaticConstMacro(TargetDimensions) >::InverseMappingVectorType InverseMappingVectorType;
 
-			typedef typename CombinedRegistrationType::DirectFieldRepresentationType	CombinedDirectFieldRepresentationType;
-			typedef typename CombinedRegistrationType::InverseFieldRepresentationType	CombinedInverseFieldRepresentationType;
+			typedef typename CombinedRegistrationType::DirectFieldRepresentationType
+			CombinedDirectFieldRepresentationType;
+			typedef typename CombinedRegistrationType::InverseFieldRepresentationType
+			CombinedInverseFieldRepresentationType;
 
 
 			struct InitialisationStyle
 			{
 				enum Type
 				{
-				    None = 0,
-				    DirectMapping = 1,
-				    InverseMapping = 2,
-				    CompleteRegistration = 3,
+					None = 0,
+					DirectMapping = 1,
+					InverseMapping = 2,
+					CompleteRegistration = 3,
 				};
 			};
 			typedef typename InitialisationStyle::Type InitialisationStyleType;
@@ -117,16 +119,20 @@ namespace map
 #ifdef ITK_USE_CONCEPT_CHECKING
 			/** Begin concept checking */
 			itkConceptMacro(CombinableRegistrationsCheck,
-			                (itk::Concept::SameDimension<PreRegistrationType::TargetDimensions, RegistrationType::MovingDimensions>));
+							(itk::Concept::SameDimension<PreRegistrationType::TargetDimensions, RegistrationType::MovingDimensions>));
 			/** End concept checking */
 #endif
 
 		protected:
-			typedef services::ServiceStack<DirectKernelCombinatorBaseType, TLoadPolicy<DirectKernelCombinatorBaseType> > ConcreteDirectCombinatorStackType;
-			typedef services::ServiceStack<InverseKernelCombinatorBaseType, TLoadPolicy<InverseKernelCombinatorBaseType> > ConcreteInverseCombinatorStackType;
+			typedef services::ServiceStack<DirectKernelCombinatorBaseType, TLoadPolicy<DirectKernelCombinatorBaseType> >
+			ConcreteDirectCombinatorStackType;
+			typedef services::ServiceStack<InverseKernelCombinatorBaseType, TLoadPolicy<InverseKernelCombinatorBaseType> >
+			ConcreteInverseCombinatorStackType;
 		public:
-			typedef services::StaticServiceStack<ConcreteDirectCombinatorStackType>			 DirectKernelCombinatorStackType;
-			typedef services::StaticServiceStack<ConcreteInverseCombinatorStackType>			 InverseKernelCombinatorStackType;
+			typedef services::StaticServiceStack<ConcreteDirectCombinatorStackType>
+			DirectKernelCombinatorStackType;
+			typedef services::StaticServiceStack<ConcreteInverseCombinatorStackType>
+			InverseKernelCombinatorStackType;
 
 			/*! Generates a combined registration using the both passed registrations.
 			 * @eguarantee strong
@@ -135,13 +141,15 @@ namespace map
 			 * @param [in] initStyle Defines the which mapping direction should be initialized directly by the combinator and therefor are not in "lazy mode".
 			 * @return Smart pointer to the registration combining the two given registrations.
 			 */
-			CombinedRegistrationPointer process(const PreRegistrationType &preRegistration, const RegistrationType &registration,
-			                                    InitialisationStyleType initStyle = InitialisationStyle::None) const;
+			CombinedRegistrationPointer process(const PreRegistrationType& preRegistration,
+												const RegistrationType& registration,
+												InitialisationStyleType initStyle = InitialisationStyle::None) const;
 
-			CombinedRegistrationPointer process(const PreRegistrationType &preRegistration, const RegistrationType &registration,
-			                                    const CombinedDirectFieldRepresentationType *pDirectRepresentation,
-			                                    const CombinedInverseFieldRepresentationType *pInverseRepresentation,
-			                                    InitialisationStyleType initStyle = InitialisationStyle::None) const;
+			CombinedRegistrationPointer process(const PreRegistrationType& preRegistration,
+												const RegistrationType& registration,
+												const CombinedDirectFieldRepresentationType* pDirectRepresentation,
+												const CombinedInverseFieldRepresentationType* pInverseRepresentation,
+												InitialisationStyleType initStyle = InitialisationStyle::None) const;
 
 			/*! gets _useDirectPadding */
 			bool getUseDirectPadding() const;
@@ -156,19 +164,19 @@ namespace map
 
 			/*! Gets _directPaddingVector
 			 * @return vector The _directPaddingVector*/
-			const DirectMappingVectorType &getDirectPaddingVector() const;
+			const DirectMappingVectorType& getDirectPaddingVector() const;
 
 			/*! Sets _directPaddingVector by vector and _useDirectPadding to true.
 			 * @param [in] vector The new value for _directPaddingVector*/
-			void setDirectPaddingVector(const DirectMappingVectorType &vector);
+			void setDirectPaddingVector(const DirectMappingVectorType& vector);
 
 			/*! Gets _inversePaddingVector
 			 * @return vector The _directPaddingVector*/
-			const InverseMappingVectorType &getInversePaddingVector() const;
+			const InverseMappingVectorType& getInversePaddingVector() const;
 
 			/*! Sets _inversePaddingVector by vector and _useInversePadding to true.
 			 * @param [in] vector The new value for _inversePaddingVector*/
-			void setInversePaddingVector(const InverseMappingVectorType &vector);
+			void setInversePaddingVector(const InverseMappingVectorType& vector);
 
 		protected:
 			RegistrationCombinator();
@@ -193,11 +201,11 @@ namespace map
 			bool _useInversePadding;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
-			RegistrationCombinator(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			RegistrationCombinator(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 	} // end namespace core
 } // end namespace map

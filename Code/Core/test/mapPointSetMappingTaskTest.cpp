@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapPointSetMappingTaskTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -42,7 +42,8 @@ namespace map
 			typedef core::Registration<2, 2> RegistrationType;
 			typedef core::continuous::Elements<2>::InternalPointSetType InputDataType;
 			typedef core::continuous::Elements<2>::InternalPointSetType OutputDataType;
-			typedef core::PointSetMappingTask<RegistrationType, InputDataType, OutputDataType, core::NoneMappingPerformerLoadPolicy> MappingTaskType;
+			typedef core::PointSetMappingTask<RegistrationType, InputDataType, OutputDataType, core::NoneMappingPerformerLoadPolicy>
+			MappingTaskType;
 			typedef TestMappingPerformer<MappingTaskType::PerformerRequestType> TestPerformerType;
 
 			MappingTaskType::Pointer spTask = MappingTaskType::New();
@@ -51,7 +52,8 @@ namespace map
 			OutputDataType::Pointer spReference = OutputDataType::New();
 			RegistrationType::Pointer spRegistration = RegistrationType::New();
 
-			MappingTaskType::ErrorPointValueType errorPointReference = itk::NumericTraits<MappingTaskType::ErrorPointValueType>::Zero;
+			MappingTaskType::ErrorPointValueType errorPointReference =
+				itk::NumericTraits<MappingTaskType::ErrorPointValueType>::Zero;
 
 			//Setting up test performer and adding to stack
 			spPerformer->_spCurrentResult = spReference;
@@ -86,7 +88,8 @@ namespace map
 			CHECK_EQUAL(spReference.GetPointer(), spResult.GetPointer());
 			CHECK_EQUAL(false, spPerformer->_pCurrentRequest->_throwOnMappingError);
 			CHECK_EQUAL(errorPointReference, spPerformer->_pCurrentRequest->_errorValue);
-			CHECK_EQUAL(spRegistration.GetPointer(), spPerformer->_pCurrentRequest->_spRegistration.GetPointer());
+			CHECK_EQUAL(spRegistration.GetPointer(),
+						spPerformer->_pCurrentRequest->_spRegistration.GetPointer());
 			CHECK_EQUAL(spInput.GetPointer(), spPerformer->_pCurrentRequest->_spInputData.GetPointer());
 
 			//check if registration is reperformed when input is unchanged

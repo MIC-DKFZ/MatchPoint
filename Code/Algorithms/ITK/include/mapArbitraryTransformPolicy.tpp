@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapArbitraryTransformPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,15 +45,16 @@ namespace map
 			template<class TScalar, unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			void
 			ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::
-			setTransformModel(TransformType *pTransform)
+			setTransformModel(TransformType* pTransform)
 			{
 				if (pTransform != _spTransformModel.GetPointer())
 				{
 					//there is really the need to change
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::UnregisterAlgorithmComponentEvent unRegEvent(_spTransformModel.GetPointer(), "Unregister current transform model");
-						this->_spOnChange->Execute((::itk::Object *)NULL, unRegEvent);
+						events::UnregisterAlgorithmComponentEvent unRegEvent(_spTransformModel.GetPointer(),
+								"Unregister current transform model");
+						this->_spOnChange->Execute((::itk::Object*)NULL, unRegEvent);
 					}
 
 					_spTransformModel  = pTransform;
@@ -61,8 +62,9 @@ namespace map
 
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::RegisterAlgorithmComponentEvent regEvent(_spTransformModel.GetPointer(), "Register new transform model");
-						this->_spOnChange->Execute((::itk::Object *)NULL, regEvent);
+						events::RegisterAlgorithmComponentEvent regEvent(_spTransformModel.GetPointer(),
+								"Register new transform model");
+						this->_spOnChange->Execute((::itk::Object*)NULL, regEvent);
 					}
 				}
 			};
@@ -80,7 +82,7 @@ namespace map
 			};
 
 			template<class TScalar, unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			typename ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::TransformType *
+			typename ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::TransformType*
 			ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::
 			getTransformInternal()
 			{
@@ -88,7 +90,8 @@ namespace map
 			};
 
 			template<class TScalar, unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			const typename ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::TransformType *
+			const typename
+			ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::TransformType*
 			ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::
 			getTransformInternal() const
 			{
@@ -96,7 +99,7 @@ namespace map
 			};
 
 			template<class TScalar, unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			typename ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::TransformType *
+			typename ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::TransformType*
 			ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::
 			getTransformModel()
 			{
@@ -104,7 +107,8 @@ namespace map
 			};
 
 			template<class TScalar, unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			const typename ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::TransformType *
+			const typename
+			ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::TransformType*
 			ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::
 			getTransformModel() const
 			{

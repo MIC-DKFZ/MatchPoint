@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapEvents.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -30,27 +30,27 @@ namespace map
 
 
 		EventObject::
-		EventObject(void *pData, const std::string &comment): _pData(pData), _comment(comment)
+		EventObject(void* pData, const std::string& comment): _pData(pData), _comment(comment)
 		{};
 
 		EventObject::
 		~EventObject() {};
 
-		void *
+		void*
 		EventObject::
 		getData() const
 		{
 			return _pData;
 		};
 
-		const std::string &
+		const std::string&
 		EventObject::
 		getComment() const
 		{
 			return _comment;
 		};
 
-		const char *
+		const char*
 		EventObject::
 		GetEventName() const
 		{
@@ -59,12 +59,12 @@ namespace map
 
 		bool
 		EventObject::
-		CheckEvent(const ::itk::EventObject *e) const
+		CheckEvent(const ::itk::EventObject* e) const
 		{
-			return dynamic_cast<const Self *>(e);
+			return dynamic_cast<const Self*>(e);
 		}
 
-		::itk::EventObject *
+		::itk::EventObject*
 		EventObject::
 		MakeObject() const
 		{
@@ -72,7 +72,7 @@ namespace map
 		}
 
 		EventObject::
-		EventObject(const Self &s) : Superclass(s)
+		EventObject(const Self& s) : Superclass(s)
 		{
 			_comment = s.getComment();
 			_pData = s.getData();
@@ -80,7 +80,7 @@ namespace map
 
 		void
 		EventObject::
-		Print(std::ostream &os) const
+		Print(std::ostream& os) const
 		{
 			Superclass::Print(os);
 			os << "Comment: " << _comment << std::endl;

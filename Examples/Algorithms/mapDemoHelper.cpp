@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoHelper.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -34,7 +34,7 @@
 
 #include <fstream>
 
-int parseArguments(int argc, char *argv[], AppGlobals &globals)
+int parseArguments(int argc, char* argv[], AppGlobals& globals)
 {
 	if ((argc < 8) || (argc < 12 && argc > 8))
 	{
@@ -75,9 +75,11 @@ int parseArguments(int argc, char *argv[], AppGlobals &globals)
 	return EXIT_SUCCESS;
 }
 
-int loadData(AppGlobals &globals)
+int loadData(AppGlobals& globals)
 {
-	globals.spTargetImage = lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(globals.targetImageFileName);
+	globals.spTargetImage =
+		lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(
+			globals.targetImageFileName);
 
 	if (globals.spTargetImage.IsNull())
 	{
@@ -85,7 +87,9 @@ int loadData(AppGlobals &globals)
 		return EXIT_FAILURE;
 	}
 
-	globals.spMovingImage = lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(globals.movingImageFileName);
+	globals.spMovingImage =
+		lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(
+			globals.movingImageFileName);
 
 	if (globals.spMovingImage.IsNull())
 	{
@@ -93,7 +97,9 @@ int loadData(AppGlobals &globals)
 		return EXIT_FAILURE;
 	}
 
-	globals.spMovingImage2 = lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(globals.movingImage2FileName);
+	globals.spMovingImage2 =
+		lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(
+			globals.movingImage2FileName);
 
 	if (globals.spMovingImage2.IsNull())
 	{
@@ -102,17 +108,21 @@ int loadData(AppGlobals &globals)
 	}
 
 	//load landmark files
-	globals.spMovingLandmarks = map::utilities::loadLandMarksFromFile<LandmarksType>(globals.movingLandmarksFileName);
+	globals.spMovingLandmarks = map::utilities::loadLandMarksFromFile<LandmarksType>
+								(globals.movingLandmarksFileName);
 
 	if (globals.spMovingLandmarks.IsNull())
 	{
-		std::cerr << "Error. Cannot load moving landmarks: " << globals.movingLandmarksFileName << std::endl;
+		std::cerr << "Error. Cannot load moving landmarks: " << globals.movingLandmarksFileName <<
+				  std::endl;
 		return EXIT_FAILURE;
 	}
 
 	if (globals.doTest)
 	{
-		globals.spReferenceImage = lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(globals.referenceImageFileName);
+		globals.spReferenceImage =
+			lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(
+				globals.referenceImageFileName);
 
 		if (globals.spReferenceImage.IsNull())
 		{
@@ -120,7 +130,9 @@ int loadData(AppGlobals &globals)
 			return EXIT_FAILURE;
 		}
 
-		globals.spReferenceImage2 = lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(globals.referenceImage2FileName);
+		globals.spReferenceImage2 =
+			lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::readImage(
+				globals.referenceImage2FileName);
 
 		if (globals.spReferenceImage2.IsNull())
 		{
@@ -129,11 +141,13 @@ int loadData(AppGlobals &globals)
 		}
 
 		//load landmark files
-		globals.spReferenceLandmarks = map::utilities::loadLandMarksFromFile<LandmarksType>(globals.referenceLandmarksFileName);
+		globals.spReferenceLandmarks = map::utilities::loadLandMarksFromFile<LandmarksType>
+									   (globals.referenceLandmarksFileName);
 
 		if (globals.spReferenceLandmarks.IsNull())
 		{
-			std::cerr << "Error. Cannot load reference landmarks: " << globals.referenceLandmarksFileName << std::endl;
+			std::cerr << "Error. Cannot load reference landmarks: " << globals.referenceLandmarksFileName <<
+					  std::endl;
 			return EXIT_FAILURE;
 		}
 
@@ -142,18 +156,21 @@ int loadData(AppGlobals &globals)
 	return EXIT_SUCCESS;
 }
 
-int saveResults(AppGlobals &globals)
+int saveResults(AppGlobals& globals)
 {
 	//save result data
 	std::cout << std::endl << "Save result data..." << std::endl;
 
-	lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::writeImage(globals.spResultImage, globals.resultImageFileName);
-	lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::writeImage(globals.spResultImage2, globals.resultImage2FileName);
+	lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::writeImage(
+		globals.spResultImage, globals.resultImageFileName);
+	lit::TestImageIO<unsigned char, map::core::discrete::Elements<2>::InternalImageType>::writeImage(
+		globals.spResultImage2, globals.resultImage2FileName);
 
 	std::ofstream resultPointsFile;
 	resultPointsFile.open(globals.resultLandmarksFileName.c_str());
 
-	for (LandmarksType::PointsContainer::Iterator it = globals.spResultLandmarks->GetPoints()->Begin(); it != globals.spResultLandmarks->GetPoints()->End(); ++it)
+	for (LandmarksType::PointsContainer::Iterator it = globals.spResultLandmarks->GetPoints()->Begin();
+		 it != globals.spResultLandmarks->GetPoints()->End(); ++it)
 	{
 		resultPointsFile << it.Value();
 	}
@@ -164,7 +181,7 @@ int saveResults(AppGlobals &globals)
 	return EXIT_SUCCESS;
 }
 
-int testResults(AppGlobals &globals)
+int testResults(AppGlobals& globals)
 {
 	PREPARE_DEFAULT_TEST_REPORTING;
 

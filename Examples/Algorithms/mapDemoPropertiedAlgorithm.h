@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoPropertiedAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 //----------------------------------------------------------
@@ -75,10 +75,12 @@ namespace map
 	{
 		namespace boxed
 		{
-			mapGenerateAlgorithmUIDPolicyMacro(DemoPropertiedAlgorithmUIDPolicy, "MatchPoint::Test", "DemoPropertiedAlgorithm.default", "1.0.0", "");
+			mapGenerateAlgorithmUIDPolicyMacro(DemoPropertiedAlgorithmUIDPolicy, "MatchPoint::Test",
+											   "DemoPropertiedAlgorithm.default", "1.0.0", "");
 
 			template <class TMovingImage, class TTargetImage = TMovingImage, typename TUIDPolicy = DemoRegistrationAlgorithmUIDPolicy>
-			class DemoPropertiedAlgorithm : public DemoRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy>
+			class DemoPropertiedAlgorithm : public
+				DemoRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy>
 			{
 			public:
 				typedef DemoPropertiedAlgorithm<TMovingImage, TTargetImage, TUIDPolicy> Self;
@@ -101,16 +103,16 @@ namespace map
 				DemoPropertiedAlgorithm();
 				virtual ~DemoPropertiedAlgorithm();
 
-				virtual void compileInfos(MetaPropertyVectorType &infos) const;
+				virtual void compileInfos(MetaPropertyVectorType& infos) const;
 
-				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const;
+				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
 
-				virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
+				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
 
 			private:
 
-				DemoPropertiedAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				DemoPropertiedAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

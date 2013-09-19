@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapThreadEvents.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -44,31 +44,31 @@ namespace map
 
 			static const ThreadIDType anyThreadID;
 
-			ThreadEventObject(ThreadIDType threadID, void *pData = NULL, const std::string &comment = "");
+			ThreadEventObject(ThreadIDType threadID, void* pData = NULL, const std::string& comment = "");
 
 			virtual ~ThreadEventObject();
 
 			ThreadIDType getThreadID() const;
 
-			virtual const char *GetEventName() const;
+			virtual const char* GetEventName() const;
 
 			/*! In addition to the normal event check the thread IDs will also be compared.
 			 * If the IDs are equal or one of the IDs equals anyThreadID the return of the check will be
 			 * true*/
-			virtual bool CheckEvent(const ::itk::EventObject *e) const;
+			virtual bool CheckEvent(const ::itk::EventObject* e) const;
 
-			virtual ::itk::EventObject *MakeObject() const;
+			virtual ::itk::EventObject* MakeObject() const;
 
-			ThreadEventObject(const Self &s);
+			ThreadEventObject(const Self& s);
 
-			virtual void Print(std::ostream &os) const;
+			virtual void Print(std::ostream& os) const;
 
 		private:
 			/*! The ID of the thread that called the event or, if this object is part of an observer,
 			 * the ID that should trigger the observer. In the later case use anyThreadID (value: -1)
 			 * to allow the CheckEvent() method to trigger without regarding the ID.*/
 			ThreadIDType _threadID;
-			void operator=(const Self &);
+			void operator=(const Self&);
 		};
 
 		/*! @def mapThreadEventMacro

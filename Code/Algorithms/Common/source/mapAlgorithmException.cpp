@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/source/mapAlgorithmException.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -28,15 +28,16 @@ namespace map
 	namespace algorithm
 	{
 
-		AlgorithmException::BaseExceptionType *
+		AlgorithmException::BaseExceptionType*
 		AlgorithmException::
 		clone() const throw()
 		{
-			BaseExceptionType *pResult = 0;
+			BaseExceptionType* pResult = 0;
 
 			try
 			{
-				pResult = new AlgorithmException(this->GetFile() , this->GetLine() , this->GetDescription() , this->GetLocation());
+				pResult = new AlgorithmException(this->GetFile() , this->GetLine() , this->GetDescription() ,
+												 this->GetLocation());
 			}
 			catch (...)
 			{
@@ -52,22 +53,23 @@ namespace map
 		{};
 
 		AlgorithmException::
-		AlgorithmException(const char *file, unsigned int lineNumber) : Superclass(file, lineNumber)
+		AlgorithmException(const char* file, unsigned int lineNumber) : Superclass(file, lineNumber)
 		{};
 
 		AlgorithmException::
-		AlgorithmException(const std::string &file, unsigned int lineNumber) : Superclass(file, lineNumber)
+		AlgorithmException(const std::string& file, unsigned int lineNumber) : Superclass(file, lineNumber)
 		{};
 
 		AlgorithmException::
-		AlgorithmException(const std::string &file, unsigned int lineNumber, const std::string &desc, const std::string &loc) : Superclass(file, lineNumber, desc, loc)
+		AlgorithmException(const std::string& file, unsigned int lineNumber, const std::string& desc,
+						   const std::string& loc) : Superclass(file, lineNumber, desc, loc)
 		{};
 
 		AlgorithmException::
 		~AlgorithmException() throw()
 		{};
 
-		const char *
+		const char*
 		AlgorithmException::
 		GetNameOfClass() const
 		{

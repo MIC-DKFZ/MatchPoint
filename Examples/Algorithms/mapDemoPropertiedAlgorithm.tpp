@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoPropertiedAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 //----------------------------------------------------------
@@ -67,48 +67,60 @@ namespace map
 			template <class TMovingImage, class TTargetImage, typename TUIDPolicy>
 			void
 			DemoPropertiedAlgorithm<TMovingImage, TTargetImage, TUIDPolicy>::
-			compileInfos(MetaPropertyVectorType &infos) const
+			compileInfos(MetaPropertyVectorType& infos) const
 			{
 #ifndef MAP_SEAL_ALGORITHMS
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("TransformParameters", typeid(ParametersType), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumStepLength", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MinimumStepLength", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("RelaxationFactor", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfIterations", typeid(unsigned long), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("GradientMagnitudeTolerance", typeid(double), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("TransformParameters", typeid(ParametersType),
+								true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumStepLength", typeid(double), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MinimumStepLength", typeid(double), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("RelaxationFactor", typeid(double), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfIterations", typeid(unsigned long),
+								true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("GradientMagnitudeTolerance", typeid(double),
+								true, true));
 #endif
 			};
 
 			template <class TMovingImage, class TTargetImage, typename TUIDPolicy>
 			typename DemoPropertiedAlgorithm<TMovingImage, TTargetImage, TUIDPolicy>::MetaPropertyPointer
 			DemoPropertiedAlgorithm<TMovingImage, TTargetImage, TUIDPolicy>::
-			doGetProperty(const MetaPropertyNameType &name) const
+			doGetProperty(const MetaPropertyNameType& name) const
 			{
 				MetaPropertyPointer spResult;
 
 				if (name == "TransformParameters")
 				{
-					spResult = map::core::MetaProperty<ParametersType>::New(this->getTransformInternal()->getTransform()->GetParameters());
+					spResult = map::core::MetaProperty<ParametersType>::New(
+								   this->getTransformInternal()->getTransform()->GetParameters());
 				}
 				else if (name == "MaximumStepLength")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetMaximumStepLength());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetMaximumStepLength());
 				}
 				else if (name == "MinimumStepLength")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetMinimumStepLength());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetMinimumStepLength());
 				}
 				else if (name == "RelaxationFactor")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetRelaxationFactor());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetRelaxationFactor());
 				}
 				else if (name == "NumberOfIterations")
 				{
-					spResult = map::core::MetaProperty<unsigned long>::New(this->getConcreteITKOptimizer()->GetNumberOfIterations());
+					spResult = map::core::MetaProperty<unsigned long>::New(
+								   this->getConcreteITKOptimizer()->GetNumberOfIterations());
 				}
 				else if (name == "GradientMagnitudeTolerance")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetGradientMagnitudeTolerance());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetGradientMagnitudeTolerance());
 				}
 				else
 				{
@@ -121,7 +133,7 @@ namespace map
 			template <class TMovingImage, class TTargetImage, typename TUIDPolicy>
 			void
 			DemoPropertiedAlgorithm<TMovingImage, TTargetImage, TUIDPolicy>::
-			doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
+			doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				if (name == "TransformParameters")
 				{

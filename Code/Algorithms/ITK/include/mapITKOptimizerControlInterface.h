@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKOptimizerControlInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -46,7 +46,8 @@ namespace map
 			or at least check if it can be stopped.
 			@ingroup ITK
 			*/
-			class MAPAlgorithmsITK_EXPORT ITKOptimizerControlInterface : public ::itk::Object, public OptimizerControlInterface
+			class MAPAlgorithmsITK_EXPORT ITKOptimizerControlInterface : public ::itk::Object,
+				public OptimizerControlInterface
 			{
 			public:
 				typedef ITKOptimizerControlInterface Self;
@@ -58,8 +59,8 @@ namespace map
 
 				typedef ::itk::Optimizer OptimizerBaseType;
 
-				virtual OptimizerBaseType *getOptimizer() = 0;
-				virtual const OptimizerBaseType *getOptimizer() const = 0;
+				virtual OptimizerBaseType* getOptimizer() = 0;
+				virtual const OptimizerBaseType* getOptimizer() const = 0;
 
 				/*! clones the optimizer control and the controlled optimizer.
 				 * @remark: The function guarantees that all settings of controlled optimizer
@@ -80,8 +81,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKOptimizerControlInterface(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKOptimizerControlInterface(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

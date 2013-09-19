@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapConvert.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,7 +35,7 @@ namespace map
 		namespace convert
 		{
 
-			String toStr(const double &value, const int precision)
+			String toStr(const double& value, const int precision)
 			{
 				String sResult;
 				OStringStream stream;
@@ -47,7 +47,7 @@ namespace map
 				return sResult;
 			};
 
-			String toStr(const float &value, const int precision)
+			String toStr(const float& value, const int precision)
 			{
 				String sResult;
 				OStringStream stream;
@@ -59,7 +59,7 @@ namespace map
 				return sResult;
 			};
 
-			String toStr(const bool &value)
+			String toStr(const bool& value)
 			{
 				if (value)
 				{
@@ -71,7 +71,7 @@ namespace map
 				}
 			};
 
-			String toStr(const int &value)
+			String toStr(const int& value)
 			{
 				String sResult;
 				OStringStream stream;
@@ -82,7 +82,7 @@ namespace map
 				return sResult;
 			};
 
-			String toStr(const unsigned int &value)
+			String toStr(const unsigned int& value)
 			{
 				String sResult;
 				OStringStream stream;
@@ -93,7 +93,7 @@ namespace map
 				return sResult;
 			};
 
-			String toStr(const long &value)
+			String toStr(const long& value)
 			{
 				String sResult;
 				OStringStream stream;
@@ -104,7 +104,7 @@ namespace map
 				return sResult;
 			};
 
-			String toStr(const unsigned long &value)
+			String toStr(const unsigned long& value)
 			{
 				String sResult;
 				OStringStream stream;
@@ -115,29 +115,29 @@ namespace map
 				return sResult;
 			};
 
-			String toStr(const String &str)
+			String toStr(const String& str)
 			{
 				return str;
 			};
 
-			double toDouble(const String &value)
+			double toDouble(const String& value)
 			{
-				char *pStopstring;
+				char* pStopstring;
 				double x;
 				x = strtod(value.c_str(), &pStopstring);
 				return x;
 			};
 
-			bool isADouble(const String &value)
+			bool isADouble(const String& value)
 			{
-				char *pStopstring;
+				char* pStopstring;
 				double x;
 				x = strtod(value.c_str(), &pStopstring);
 				String sTemp = pStopstring;
 				return (sTemp == "") & (value != "");
 			};
 
-			float toFloat(const String &value)
+			float toFloat(const String& value)
 			{
 				float result;
 				IStringStream strstrm(value);
@@ -145,19 +145,19 @@ namespace map
 				return result;
 			};
 
-			int toInt(const String &value)
+			int toInt(const String& value)
 			{
 				return atoi(value.c_str());
 			};
 
-			bool isAInt(const String &value)
+			bool isAInt(const String& value)
 			{
 				int iTest = toInt(value);
 				String sTest = toStr(iTest);
 				return value == sTest;
 			};
 
-			unsigned int toUInt(const String &value)
+			unsigned int toUInt(const String& value)
 			{
 				unsigned int iResult;
 
@@ -167,7 +167,7 @@ namespace map
 				return iResult;
 			};
 
-			long toLong(const String &value)
+			long toLong(const String& value)
 			{
 				long result;
 
@@ -177,14 +177,14 @@ namespace map
 				return result;
 			};
 
-			bool isALong(const String &value)
+			bool isALong(const String& value)
 			{
 				long lTest = toLong(value);
 				String sTest = toStr(lTest);
 				return value == sTest;
 			};
 
-			unsigned long toULong(const String &value)
+			unsigned long toULong(const String& value)
 			{
 				unsigned long result;
 
@@ -194,7 +194,7 @@ namespace map
 				return result;
 			};
 
-			bool toBool(const String &value)
+			bool toBool(const String& value)
 			{
 				if (value == "0")
 				{
@@ -219,7 +219,7 @@ namespace map
 				return true;
 			};
 
-			String fileContentToStr(const String &filePath)
+			String fileContentToStr(const String& filePath)
 			{
 				String result = "";
 				std::ifstream file;
@@ -231,7 +231,7 @@ namespace map
 				{
 					bool hasError = false;
 					std::streamsize filesize = itksys::SystemTools::FileLength(filePath.c_str());
-					char *buffer = new char [filesize];
+					char* buffer = new char [filesize];
 
 					try
 					{
@@ -251,7 +251,8 @@ namespace map
 
 					if (hasError)
 					{
-						mapDefaultExceptionStaticMacro( << "Error while reading file content into buffer. File path:" << filePath);
+						mapDefaultExceptionStaticMacro( << "Error while reading file content into buffer. File path:" <<
+														filePath);
 					}
 				}
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapSDElementTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 #include "mapSDElement.h"
 #include "mapSDExceptions.h"
@@ -37,7 +37,7 @@ namespace map
 			structuredData::Element::Pointer spSub3 = structuredData::Element::createElement("Sub", "3");
 			structuredData::Element::Pointer spSub4 = structuredData::Element::createElement("Sub", "4");
 
-			const structuredData::Element *pConstMain = spMain.GetPointer();
+			const structuredData::Element* pConstMain = spMain.GetPointer();
 
 			//check element init
 			CHECK_EQUAL("", spMain->getTag());

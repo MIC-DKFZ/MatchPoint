@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapSDElement.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -85,9 +85,9 @@ namespace map
 			* @param [in] index Index of the sub element
 			* @return Pointer to the sub element. If the function returns successfully
 			* the pointer is always valid.*/
-			const Self *getSubElement(SubElementIndexType index) const;
+			const Self* getSubElement(SubElementIndexType index) const;
 			/** @overload non const version*/
-			Self *getSubElement(SubElementIndexType index);
+			Self* getSubElement(SubElementIndexType index);
 
 			/**Removes the sub element that is located at the passed index.
 			* @pre Index must be within the range of the sub elements.
@@ -103,7 +103,7 @@ namespace map
 			* @pre pNewElement must not be NULL
 			* @param [in] pNewElement Pointer to the element that should be added
 			* @return Index of the added element*/
-			SubElementIndexType addSubElement(Self *pNewElement);
+			SubElementIndexType addSubElement(Self* pNewElement);
 
 			/**Adds the passed sub element at the location indicated by the iterator
 			* also passed with the function call.
@@ -111,7 +111,7 @@ namespace map
 			* @param [in] pNewElement Pointer to the element that should be added
 			* @param [in] location Iterator that designates the insert location
 			* @return Iterator that marks the location of the added element.*/
-			SubElementIteratorType insertSubElement(Self *pNewElement, SubElementIteratorType location);
+			SubElementIteratorType insertSubElement(Self* pNewElement, SubElementIteratorType location);
 
 			/**Adds the passed sub element at the location indicated by the location index
 			* also passed with the function call.
@@ -119,7 +119,7 @@ namespace map
 			* @pre location must be within the range of the current sub element vectors.
 			* @param [in] pNewElement Pointer to the element that should be added
 			* @param [in] location Index that indicates the insert location.*/
-			void insertSubElement(Self *pNewElement, SubElementIndexType location);
+			void insertSubElement(Self* pNewElement, SubElementIndexType location);
 
 			/**Removes all sub elements*/
 			void resetSubElements();
@@ -142,7 +142,7 @@ namespace map
 			  deleted (true) or could not be found (false). If the method was
 				  called recursively, the return will be true if at least one time
 					the attribute was found and removed.*/
-			bool removeAttribute(const core::String &name, bool recursively = false);
+			bool removeAttribute(const core::String& name, bool recursively = false);
 
 			/**Sets an existing attribute to the passed value,
 			  if the attribute does not exist, it will be added.
@@ -155,18 +155,18 @@ namespace map
 				  added by the call (false). If the method was called recursively,
 					the return will be true if at least one time
 				  the attribute was just set.*/
-			bool setAttribute(const core::String &name, const core::String &value, bool recursively = false);
+			bool setAttribute(const core::String& name, const core::String& value, bool recursively = false);
 
 			/**Returns the value of the specified attribute.
 			* If the attribute does not exist an exception (MissingIdentifierException) will be thrown.
 			* @param name The name of the attribute
 			* @return The value of the attribute.*/
-			const core::String &getAttribute(const core::String &name) const;
+			const core::String& getAttribute(const core::String& name) const;
 
 			/**Indicates if the elements owns the specified attribute.
 			* @param name The name of the attribute
 			* @return Indicates if the attribute exists for this instance.*/
-			bool attributeExists(const core::String &name) const;
+			bool attributeExists(const core::String& name) const;
 
 			/**Return the names of all existing attributes in a vector.*/
 			AttributeNameVectorType getAttributeNames() const;
@@ -174,13 +174,13 @@ namespace map
 			//All others
 			//////////////////////////////////////////////////////////////////
 
-			const TagType &getTag() const;
+			const TagType& getTag() const;
 
-			void setTag(const TagType &tag);
+			void setTag(const TagType& tag);
 
-			const ValueType &getValue() const;
+			const ValueType& getValue() const;
 
-			void setValue(const ValueType &value);
+			void setValue(const ValueType& value);
 
 			void reset();
 
@@ -190,13 +190,13 @@ namespace map
 			Pointer clone() const;
 
 			/** Convinience function that creates a simple value element.*/
-			static Pointer createElement(const TagType &tag, const ValueType &value);
+			static Pointer createElement(const TagType& tag, const ValueType& value);
 
 		protected:
 			Element();
 			~Element();
 
-			virtual void  PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+			virtual void  PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 			TagType _Tag;
 			ValueType _Value;
@@ -205,11 +205,11 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			Element(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			Element(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
-		MAPCore_EXPORT std::ostream &operator<<(std::ostream &os, const Element &element);
+		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os, const Element& element);
 
 		/** Helper function that takes an sub element iterator, an searches
 		 * for the first element that fits the search "description".\n
@@ -218,8 +218,14 @@ namespace map
 		 * searched elements.
 		 * @return iterator to a matching element or iterator that equals endPos.
 		 * @pre the passed iterators must be from the same container.*/
-		MAPCore_EXPORT Element::SubElementIteratorType findNextSubElement(const Element::SubElementIteratorType &beginPos, const structuredData::Element::SubElementIteratorType &endPos, const core::String &tag, const core::String &attrName = "", const core::String &attrValue = "");
-		MAPCore_EXPORT Element::ConstSubElementIteratorType findNextSubElement(const Element::ConstSubElementIteratorType &beginPos, const structuredData::Element::ConstSubElementIteratorType &endPos, const core::String &tag, const core::String &attrName = "", const core::String &attrValue = "");
+		MAPCore_EXPORT Element::SubElementIteratorType findNextSubElement(const
+				Element::SubElementIteratorType& beginPos,
+				const structuredData::Element::SubElementIteratorType& endPos, const core::String& tag,
+				const core::String& attrName = "", const core::String& attrValue = "");
+		MAPCore_EXPORT Element::ConstSubElementIteratorType findNextSubElement(
+			const Element::ConstSubElementIteratorType& beginPos,
+			const structuredData::Element::ConstSubElementIteratorType& endPos, const core::String& tag,
+			const core::String& attrName = "", const core::String& attrValue = "");
 
 
 	} //end of namespace structuredData

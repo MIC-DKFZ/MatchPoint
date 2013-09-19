@@ -3,8 +3,8 @@
   Program:   Insight Segmentation & Registration Toolkit
   Module:    $RCSfile: itkEuclideanPairDistancePointMetric.h,v $
   Language:  C++
-  Date:      $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $
-  Version:   $Revision: 4912 $
+  Date:      $Date$
+  Version:   $Revision$
 
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
@@ -33,7 +33,7 @@ namespace itk
 	 * \ingroup RegistrationMetrics
 	 */
 	template < class TFixedPointSet, class TMovingPointSet,
-	         class TDistanceMap = ::itk::Image<unsigned short, TMovingPointSet::PointDimension> >
+			 class TDistanceMap = ::itk::Image<unsigned short, TMovingPointSet::PointDimension> >
 	class ITK_EXPORT EuclideanPairDistancePointMetric :
 		public PointSetToPointSetMetric< TFixedPointSet, TMovingPointSet>
 	{
@@ -76,15 +76,15 @@ namespace itk
 		unsigned int GetNumberOfValues() const;
 
 		/** Get the derivatives of the match measure. */
-		void GetDerivative(const TransformParametersType &parameters,
-		                   DerivativeType &Derivative) const;
+		void GetDerivative(const TransformParametersType& parameters,
+						   DerivativeType& Derivative) const;
 
 		/**  Get the value for single valued optimizers. */
-		MeasureType GetValue(const TransformParametersType &parameters) const;
+		MeasureType GetValue(const TransformParametersType& parameters) const;
 
 		/**  Get value and derivatives for multiple valued optimizers. */
-		void GetValueAndDerivative(const TransformParametersType &parameters,
-		                           MeasureType &Value, DerivativeType &Derivative) const;
+		void GetValueAndDerivative(const TransformParametersType& parameters,
+								   MeasureType& Value, DerivativeType& Derivative) const;
 
 		/** Set/Get the distance map */
 		itkSetConstObjectMacro(DistanceMap, DistanceMapType);
@@ -100,11 +100,11 @@ namespace itk
 		virtual ~EuclideanPairDistancePointMetric() {};
 
 		/** PrintSelf funtion */
-		void PrintSelf(std::ostream &os, Indent indent) const;
+		void PrintSelf(std::ostream& os, Indent indent) const;
 
 	private:
-		EuclideanPairDistancePointMetric(const Self &); //purposely not implemented
-		void operator=(const Self &); //purposely not implemented
+		EuclideanPairDistancePointMetric(const Self&);  //purposely not implemented
+		void operator=(const Self&);  //purposely not implemented
 
 		DistanceMapPointer m_DistanceMap;
 		bool               m_ComputeSquaredDistance;

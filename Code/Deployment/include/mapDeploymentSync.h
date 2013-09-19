@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/include/mapDeploymentSync.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -51,9 +51,9 @@ namespace map
 			* the dll with global settings of the host.
 			* @param [in] pSync Pointer to the sync object that will be used by the function to realize the synchronization.
 			*/
-			static void synchronizeDeployment(SyncObject *pSync);
+			static void synchronizeDeployment(SyncObject* pSync);
 
-			static SyncObject *getSyncObject();
+			static SyncObject* getSyncObject();
 
 			Synchronizer();
 			~Synchronizer();
@@ -64,12 +64,12 @@ namespace map
 			/** Pointer is null if the synchronizer is used in the deployment dll. If used in the host (getSyncObject()) it will point
 			* to the SyncObject of the host.
 			* */
-			static SyncObject *_SyncObject;
+			static SyncObject* _SyncObject;
 
 			/** Pointer is null if the synchronizer is used in the host. If used in the deployment dll (synchronizeDeployment()) it will point
 			* to the SyncObject of the host.
 			* */
-			static SyncObject *_SyncedObject;
+			static SyncObject* _SyncedObject;
 		};
 
 	} // end namespace deployment

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Applications/Mapper/test/mapRBasicUsageTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #include "itksys/SystemTools.hxx"
@@ -34,9 +34,9 @@ namespace map
 		//defined by mapDeploymentTests.cpp. It is tha path to the current running executable.
 		//It is needed to bypass the problem that when using MS Visual Studio the actual binary
 		//path depends of the compile mode (release/debug) and is not the CMake binary path.
-		extern const char *_callingAppPath;
+		extern const char* _callingAppPath;
 
-		int mapRBasicUsageTest(int argc, char *argv[])
+		int mapRBasicUsageTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 

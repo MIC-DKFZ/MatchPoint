@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapFieldCombinationFunctorInterfaceTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -34,21 +34,23 @@ namespace map
 
 		// create derived class from interface to be able to instantiate interface class standalone
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		class TestFieldCombinationFunctorInterface: public core::functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+		class TestFieldCombinationFunctorInterface: public
+			core::functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
 		{
 		public:
-			typedef core::functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions> Superclass;
+			typedef core::functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			Superclass;
 
 			TestFieldCombinationFunctorInterface()
 			{}
 
-			virtual const typename Superclass::SourceKernel1BaseType *get1stSourceKernelBase(void) const
+			virtual const typename Superclass::SourceKernel1BaseType* get1stSourceKernelBase(void) const
 			{
 				//illegal post condition, but not relevant for this test class
 				return NULL;
 			};
 
-			virtual const typename Superclass::SourceKernel2BaseType *get2ndSourceKernelBase(void) const
+			virtual const typename Superclass::SourceKernel2BaseType* get2ndSourceKernelBase(void) const
 			{
 				//illegal post condition, but not relevant for this test class
 				return NULL;

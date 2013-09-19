@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKEuler3DMattesMIRegistrationAlgorithmTemplate.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -44,14 +44,17 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMattesMIRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "Euler3DMattesMIRegistrationAlgorithm.default", "1.0.0", "");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMattesMIRegistrationAlgorithmUIDPolicy,
+											   "de.dkfz.matchpoint", "Euler3DMattesMIRegistrationAlgorithm.default", "1.0.0", "");
 
 			/** @brief Boxing of a simple rigid mattes based image registration algorithm
 			@ingroup Boxed
 			*/
 			template < class TMovingImage, class TTargetImage = TMovingImage,
-			         typename TUIDPolicy = DefaultEuler3DMattesMIRegistrationAlgorithmUIDPolicy,
-			         class TInterpolatorPolicy = SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> > >
+					 typename TUIDPolicy = DefaultEuler3DMattesMIRegistrationAlgorithmUIDPolicy,
+					 class TInterpolatorPolicy =
+					 SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> >
+					 >
 			class ITKEuler3DMattesMIRegistrationAlgorithm :
 				public algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
 				TInterpolatorPolicy,
@@ -60,13 +63,16 @@ namespace map
 				SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<map::core::continuous::ScalarType> > >
 			{
 			public:
-				typedef ITKEuler3DMattesMIRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy, TInterpolatorPolicy> Self;
+				typedef ITKEuler3DMattesMIRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy, TInterpolatorPolicy>
+				Self;
 
-				typedef typename algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-				        TInterpolatorPolicy,
-				        SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
-				        SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer>,
-				        SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<map::core::continuous::ScalarType> > >  Superclass;
+				typedef typename algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+						TUIDPolicy,
+						TInterpolatorPolicy,
+						SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
+						SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer>,
+						SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<map::core::continuous::ScalarType> > >
+						Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -87,11 +93,11 @@ namespace map
 
 				virtual void configureAlgorithm();
 
-				virtual void compileInfos(MetaPropertyVectorType &infos) const;
+				virtual void compileInfos(MetaPropertyVectorType& infos) const;
 
-				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const;
+				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
 
-				virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
+				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
 
 				/*! Calls the super class version. Afterwards it preinitializes the transform of
 				* the algorithm as setup (no init, init by geometry or init by center of gravity).
@@ -107,8 +113,8 @@ namespace map
 
 			private:
 
-				ITKEuler3DMattesMIRegistrationAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ITKEuler3DMattesMIRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

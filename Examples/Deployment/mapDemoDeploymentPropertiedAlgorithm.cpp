@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Deployment/mapDemoDeploymentPropertiedAlgorithm.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 /*!@file
@@ -51,18 +51,21 @@
 #include "itkDynamicLoader.h"
 #include "itkCommand.h"
 
-void onRegistrationEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
+void onRegistrationEvent(itk::Object* pCaller, const itk::EventObject& e, void*)
 {
-	const map::events::AlgorithmEvent *pChangeEvent = dynamic_cast<const map::events::AlgorithmEvent *>(&e);
+	const map::events::AlgorithmEvent* pChangeEvent = dynamic_cast<const map::events::AlgorithmEvent*>
+			(&e);
 
 	if (pChangeEvent)
 	{
-		std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << pCaller << "): " << pChangeEvent->getComment() << std::endl;
+		std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << pCaller << "): " <<
+				  pChangeEvent->getComment() << std::endl;
 	}
 }
 
 
-int determinAndTestRegistration(map::deployment::RegistrationAlgorithmBase *pAlgorithmBase, AppGlobals &globals)
+int determinAndTestRegistration(map::deployment::RegistrationAlgorithmBase* pAlgorithmBase,
+								AppGlobals& globals)
 {
 	/***************************************************************
 	* Determine registration
@@ -76,7 +79,8 @@ int determinAndTestRegistration(map::deployment::RegistrationAlgorithmBase *pAlg
 
 	try
 	{
-		RegistrationAlgorithmType *pAlgorithmInterface = dynamic_cast<RegistrationAlgorithmType *>(pAlgorithmBase);
+		RegistrationAlgorithmType* pAlgorithmInterface = dynamic_cast<RegistrationAlgorithmType*>
+				(pAlgorithmBase);
 
 		if (!pAlgorithmInterface)
 		{
@@ -85,7 +89,7 @@ int determinAndTestRegistration(map::deployment::RegistrationAlgorithmBase *pAlg
 
 		spRegistration = pAlgorithmInterface->getRegistration();
 	}
-	catch (const map::core::ExceptionObject &e)
+	catch (const map::core::ExceptionObject& e)
 	{
 		std::cerr << "ERROR: Caught an MatchPoint exception:\n";
 		e.Print(std::cerr);
@@ -106,7 +110,8 @@ int determinAndTestRegistration(map::deployment::RegistrationAlgorithmBase *pAlg
 	//define registration tasks
 	std::cout << "Define registration task..." << std::endl;
 
-	typedef map::core::ImageMappingTask<RegistrationAlgorithmType::RegistrationType, ImageType, ImageType> ImageMappingTaskType;
+	typedef map::core::ImageMappingTask<RegistrationAlgorithmType::RegistrationType, ImageType, ImageType>
+	ImageMappingTaskType;
 
 	ImageMappingTaskType::Pointer spImageTask = ImageMappingTaskType::New();
 	spImageTask->setInputImage(globals.spMovingImage);
@@ -135,12 +140,12 @@ int determinAndTestRegistration(map::deployment::RegistrationAlgorithmBase *pAlg
 	return result;
 }
 
-void showProperties(map::deployment::RegistrationAlgorithmBase *pAlgorithmBase, AppGlobals &globals)
+void showProperties(map::deployment::RegistrationAlgorithmBase* pAlgorithmBase, AppGlobals& globals)
 {
 	try
 	{
 		typedef map::algorithm::facet::MetaPropertyAlgorithmInterface PropertyInterfaceType;
-		PropertyInterfaceType *pPropertyInterface = dynamic_cast<PropertyInterfaceType *>(pAlgorithmBase);
+		PropertyInterfaceType* pPropertyInterface = dynamic_cast<PropertyInterfaceType*>(pAlgorithmBase);
 
 		if (!pPropertyInterface)
 		{
@@ -161,8 +166,10 @@ void showProperties(map::deployment::RegistrationAlgorithmBase *pAlgorithmBase, 
 		}
 
 		//show number of iterations as on example for value access
-		std::cout << std::endl << std::endl << "Retrieve value of the property \"NumberOfIterations\"..." << std::endl;
-		map::core::MetaPropertyBase::Pointer spIterationCount = pPropertyInterface->getProperty("NumberOfIterations");
+		std::cout << std::endl << std::endl << "Retrieve value of the property \"NumberOfIterations\"..." <<
+				  std::endl;
+		map::core::MetaPropertyBase::Pointer spIterationCount =
+			pPropertyInterface->getProperty("NumberOfIterations");
 		unsigned long count = 0;
 
 		if (!::map::core::unwrapMetaProperty(spIterationCount, count))
@@ -172,7 +179,7 @@ void showProperties(map::deployment::RegistrationAlgorithmBase *pAlgorithmBase, 
 
 		std::cout << "NumberOfIterations: " << count << std::endl;
 	}
-	catch (const map::core::ExceptionObject &e)
+	catch (const map::core::ExceptionObject& e)
 	{
 		std::cerr << "ERROR: Caught an MatchPoint exception:\n";
 		e.Print(std::cerr);
@@ -181,7 +188,7 @@ void showProperties(map::deployment::RegistrationAlgorithmBase *pAlgorithmBase, 
 	}
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	AppGlobals globals;
 	int result = EXIT_FAILURE;
@@ -218,7 +225,8 @@ int main(int argc, char *argv[])
 		std::cout << "Load registration algorithm..." << std::endl;
 
 		std::string dllPath = itksys::SystemTools::GetProgramPath(argv[0]);
-		dllPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "demoPropertiedAlgorithm2D" + itksys::DynamicLoader::LibExtension();
+		dllPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "demoPropertiedAlgorithm2D" +
+				  itksys::DynamicLoader::LibExtension();
 
 		std::cout << "DLL location: " << dllPath << std::endl;
 
@@ -236,8 +244,10 @@ int main(int argc, char *argv[])
 
 		//Now cast to the right interface (ImageRegistrationAlgorithmBase)
 		//to set the images
-		typedef map::algorithm::facet::ImageRegistrationAlgorithmInterface<ImageType, ImageType> ImageRegistrationAlgorithmInterfaceType;
-		ImageRegistrationAlgorithmInterfaceType *pImageInterface = dynamic_cast<ImageRegistrationAlgorithmInterfaceType *>(spAlgorithmBase.GetPointer());
+		typedef map::algorithm::facet::ImageRegistrationAlgorithmInterface<ImageType, ImageType>
+		ImageRegistrationAlgorithmInterfaceType;
+		ImageRegistrationAlgorithmInterfaceType* pImageInterface =
+			dynamic_cast<ImageRegistrationAlgorithmInterfaceType*>(spAlgorithmBase.GetPointer());
 
 		if (pImageInterface)
 		{
@@ -253,7 +263,7 @@ int main(int argc, char *argv[])
 
 		//The algorithm is set up and ready to run...
 	}
-	catch (const map::core::ExceptionObject &e)
+	catch (const map::core::ExceptionObject& e)
 	{
 		std::cerr << "ERROR: Caught an MatchPoint exception:\n";
 		e.Print(std::cerr);
@@ -270,7 +280,8 @@ int main(int argc, char *argv[])
 	/***************************************************************
 	* Show properties
 	***************************************************************/
-	std::cout << "Show the properties of the algorithm directly loaded from DLL and bevor usage..." << std::endl;
+	std::cout << "Show the properties of the algorithm directly loaded from DLL and bevor usage..." <<
+			  std::endl;
 	showProperties(spAlgorithmBase, globals);
 
 	/***************************************************************
@@ -286,7 +297,8 @@ int main(int argc, char *argv[])
 	try
 	{
 		typedef map::algorithm::facet::MetaPropertyAlgorithmInterface PropertyInterfaceType;
-		PropertyInterfaceType *pPropertyInterface = dynamic_cast<PropertyInterfaceType *>(spAlgorithmBase.GetPointer());
+		PropertyInterfaceType* pPropertyInterface = dynamic_cast<PropertyInterfaceType*>
+				(spAlgorithmBase.GetPointer());
 
 		if (!pPropertyInterface)
 		{
@@ -294,10 +306,11 @@ int main(int argc, char *argv[])
 		}
 
 		//show number of iterations as on example for value access
-		map::core::MetaPropertyBase::Pointer spIterationCount = map::core::MetaProperty<unsigned long>::New(1).GetPointer();
+		map::core::MetaPropertyBase::Pointer spIterationCount = map::core::MetaProperty<unsigned long>::New(
+					1).GetPointer();
 		pPropertyInterface->setProperty("NumberOfIterations", spIterationCount);
 	}
-	catch (map::core::ExceptionObject &e)
+	catch (map::core::ExceptionObject& e)
 	{
 		std::cerr << "ERROR: Caught an MatchPoint exception:\n";
 		e.Print(std::cerr);
@@ -316,7 +329,9 @@ int main(int argc, char *argv[])
 	***************************************************************/
 	int tempResult = EXIT_FAILURE;
 
-	std::cout << std::endl << std::endl << "Now compute the registration again. This time it should fail, due to the new number of iterations (not enough to converge to a proper result). ..." << std::endl;
+	std::cout << std::endl << std::endl <<
+			  "Now compute the registration again. This time it should fail, due to the new number of iterations (not enough to converge to a proper result). ..."
+			  << std::endl;
 	globals.testShouldFail = true;
 	tempResult = determinAndTestRegistration(spAlgorithmBase, globals);
 

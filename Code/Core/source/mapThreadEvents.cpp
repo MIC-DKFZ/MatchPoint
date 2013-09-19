@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapThreadEvents.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -31,7 +31,8 @@ namespace map
 		const ThreadEventObject::ThreadIDType ThreadEventObject::anyThreadID = -1;
 
 		ThreadEventObject::
-		ThreadEventObject(ThreadIDType threadID, void *pData, const std::string &comment): Superclass(pData, comment), _threadID(threadID)
+		ThreadEventObject(ThreadIDType threadID, void* pData, const std::string& comment): Superclass(pData,
+					comment), _threadID(threadID)
 		{};
 
 		ThreadEventObject::
@@ -44,7 +45,7 @@ namespace map
 			return _threadID;
 		};
 
-		const char *
+		const char*
 		ThreadEventObject::
 		GetEventName() const
 		{
@@ -53,9 +54,9 @@ namespace map
 
 		bool
 		ThreadEventObject::
-		CheckEvent(const ::itk::EventObject *e) const
+		CheckEvent(const ::itk::EventObject* e) const
 		{
-			const Self *pE = dynamic_cast<const Self *>(e);
+			const Self* pE = dynamic_cast<const Self*>(e);
 			bool result = false;
 
 			if (pE)
@@ -66,7 +67,7 @@ namespace map
 			return result;
 		}
 
-		::itk::EventObject *
+		::itk::EventObject*
 		ThreadEventObject::
 		MakeObject() const
 		{
@@ -74,14 +75,14 @@ namespace map
 		}
 
 		ThreadEventObject::
-		ThreadEventObject(const Self &s) : Superclass(s)
+		ThreadEventObject(const Self& s) : Superclass(s)
 		{
 			_threadID = s.getThreadID();
 		};
 
 		void
 		ThreadEventObject::
-		Print(std::ostream &os) const
+		Print(std::ostream& os) const
 		{
 			Superclass::Print(os);
 			os << "Thread ID: " << _threadID << std::endl;

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMetaPropertyAccessor.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -33,9 +33,9 @@ namespace map
 		template<typename TValue>
 		bool
 		MetaPropertyAccessor<TValue>::
-		unwrapPropertyValue(const MetaPropertyBase *pProperty, ValueType &value)
+		unwrapPropertyValue(const MetaPropertyBase* pProperty, ValueType& value)
 		{
-			const InterfaceType *pAccessInterfaces = dynamic_cast<const InterfaceType *>(pProperty);
+			const InterfaceType* pAccessInterfaces = dynamic_cast<const InterfaceType*>(pProperty);
 			bool result = false;
 
 			if (pAccessInterfaces)
@@ -50,9 +50,9 @@ namespace map
 		template<typename TValue>
 		bool
 		MetaPropertyAccessor<TValue>::
-		wrapPropertyValue(MetaPropertyBase *pProperty, ValueType value)
+		wrapPropertyValue(MetaPropertyBase* pProperty, ValueType value)
 		{
-			InterfaceType *pAccessInterfaces = dynamic_cast<InterfaceType *>(pProperty);
+			InterfaceType* pAccessInterfaces = dynamic_cast<InterfaceType*>(pProperty);
 			bool result = false;
 
 			if (pAccessInterfaces)
@@ -70,10 +70,11 @@ namespace map
 
 		template<typename TValue>
 		bool
-		MetaPropertyAccessor<const TValue *>::
-		unwrapPropertyValue(const MetaPropertyBase *pProperty, ValueType &value)
+		MetaPropertyAccessor<const TValue*>::
+		unwrapPropertyValue(const MetaPropertyBase* pProperty, ValueType& value)
 		{
-			const ConstInterfaceType *pConstAccessInterfaces = dynamic_cast<const ConstInterfaceType *>(pProperty);
+			const ConstInterfaceType* pConstAccessInterfaces = dynamic_cast<const ConstInterfaceType*>
+					(pProperty);
 			bool result = false;
 
 			if (pConstAccessInterfaces)
@@ -86,7 +87,7 @@ namespace map
 				//we try to cast for the non const version, because it can also be used to get a const value
 				//this is a conviniece for the case a non const proprty value should only be unwrapped as const
 				//value
-				const InterfaceType *pAccessInterfaces = dynamic_cast<const InterfaceType *>(pProperty);
+				const InterfaceType* pAccessInterfaces = dynamic_cast<const InterfaceType*>(pProperty);
 
 				if (pAccessInterfaces)
 				{
@@ -100,10 +101,10 @@ namespace map
 
 		template<typename TValue>
 		bool
-		MetaPropertyAccessor<const TValue *>::
-		wrapPropertyValue(MetaPropertyBase *pProperty, ValueType value)
+		MetaPropertyAccessor<const TValue*>::
+		wrapPropertyValue(MetaPropertyBase* pProperty, ValueType value)
 		{
-			ConstInterfaceType *pAccessInterfaces = dynamic_cast<ConstInterfaceType *>(pProperty);
+			ConstInterfaceType* pAccessInterfaces = dynamic_cast<ConstInterfaceType*>(pProperty);
 			bool result = false;
 
 			if (pAccessInterfaces)
@@ -122,10 +123,10 @@ namespace map
 		template<typename TValue>
 		bool
 		MetaPropertyAccessor< itk::SmartPointer<TValue> >::
-		unwrapPropertyValue(const MetaPropertyBase *pProperty, SmartPointerType &spValue)
+		unwrapPropertyValue(const MetaPropertyBase* pProperty, SmartPointerType& spValue)
 		{
 			bool result = false;
-			const InterfaceType *pAccessInterfaces = dynamic_cast<const InterfaceType *>(pProperty);
+			const InterfaceType* pAccessInterfaces = dynamic_cast<const InterfaceType*>(pProperty);
 
 			if (pAccessInterfaces)
 			{
@@ -139,9 +140,9 @@ namespace map
 		template<typename TValue>
 		bool
 		MetaPropertyAccessor< itk::SmartPointer<TValue> >::
-		wrapPropertyValue(MetaPropertyBase *pProperty, ValueType value)
+		wrapPropertyValue(MetaPropertyBase* pProperty, ValueType value)
 		{
-			InterfaceType *pAccessInterfaces = dynamic_cast<InterfaceType *>(pProperty);
+			InterfaceType* pAccessInterfaces = dynamic_cast<InterfaceType*>(pProperty);
 			bool result = false;
 
 			if (pAccessInterfaces)
@@ -160,9 +161,10 @@ namespace map
 		template<typename TValue>
 		bool
 		MetaPropertyAccessor< itk::SmartPointer<const TValue> >::
-		unwrapPropertyValue(const MetaPropertyBase *pProperty, SmartPointerType &spValue)
+		unwrapPropertyValue(const MetaPropertyBase* pProperty, SmartPointerType& spValue)
 		{
-			const ConstInterfaceType *pConstAccessInterfaces = dynamic_cast<const ConstInterfaceType *>(pProperty);
+			const ConstInterfaceType* pConstAccessInterfaces = dynamic_cast<const ConstInterfaceType*>
+					(pProperty);
 			bool result = false;
 
 			if (pConstAccessInterfaces)
@@ -175,7 +177,7 @@ namespace map
 				//we try to cast for the non const version, because it can also be used to get a const value
 				//this is a conviniece for the case a non const proprty value should only be unwrapped as const
 				//value
-				const InterfaceType *pAccessInterfaces = dynamic_cast<const InterfaceType *>(pProperty);
+				const InterfaceType* pAccessInterfaces = dynamic_cast<const InterfaceType*>(pProperty);
 
 				if (pAccessInterfaces)
 				{
@@ -190,9 +192,9 @@ namespace map
 		template<typename TValue>
 		bool
 		MetaPropertyAccessor< itk::SmartPointer<const TValue> >::
-		wrapPropertyValue(MetaPropertyBase *pProperty, ValueType value)
+		wrapPropertyValue(MetaPropertyBase* pProperty, ValueType value)
 		{
-			ConstInterfaceType *pAccessInterfaces = dynamic_cast<ConstInterfaceType *>(pProperty);
+			ConstInterfaceType* pAccessInterfaces = dynamic_cast<ConstInterfaceType*>(pProperty);
 			bool result = false;
 
 			if (pAccessInterfaces)

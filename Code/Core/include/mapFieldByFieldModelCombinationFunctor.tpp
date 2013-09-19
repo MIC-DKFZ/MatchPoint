@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldByFieldModelCombinationFunctor.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FIELD_BY_FIELD_MODEL_COMBINATION_FUNCTOR_TPP
@@ -43,7 +43,8 @@ namespace map
 			{
 				FieldPointer spField = FieldType::New();
 
-				typename InFieldRepresentationType::ImageRegionType region = Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
+				typename InFieldRepresentationType::ImageRegionType region =
+					Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
 				spField->SetRegions(region);
 				spField->SetOrigin(Superclass::_spInFieldRepresentation->getOrigin());
 				spField->SetSpacing(Superclass::_spInFieldRepresentation->getSpacing());
@@ -53,7 +54,8 @@ namespace map
 				typedef itk::ImageRegionIterator<FieldType> IteratorType;
 				IteratorType iterator(spField, region);
 
-				typedef  itk::LinearInterpolateImageFunction<typename SourceFieldKernelType::FieldType , continuous::ScalarType> InterpolatorType;
+				typedef  itk::LinearInterpolateImageFunction<typename SourceFieldKernelType::FieldType , continuous::ScalarType>
+				InterpolatorType;
 				typename InterpolatorType::Pointer spInterpolator = InterpolatorType::New();
 				spInterpolator->SetInputImage(_spSourceFieldKernel->getField());
 
@@ -72,7 +74,9 @@ namespace map
 						if (! CombinationInterface::_usePadding)
 						{
 							//throw the exception
-							mapExceptionMacro(RepresentationException, << "Cannot combine kernels. Point is not inside supported region of first kernel (field). Point: " << inPoint);
+							mapExceptionMacro(RepresentationException,
+											  << "Cannot combine kernels. Point is not inside supported region of first kernel (field). Point: "
+											  << inPoint);
 						}
 
 						//otherwise just use padding vector
@@ -82,14 +86,18 @@ namespace map
 						firstVector = spInterpolator->Evaluate(inPoint);
 
 						typename SourceFieldKernelType::OutputPointType interimPoint;
-						PointVectorCombinationPolicy<VInputDimensions, VInterimDimensions>::mapPoint(inPoint, firstVector, interimPoint);
+						PointVectorCombinationPolicy<VInputDimensions, VInterimDimensions>::mapPoint(inPoint, firstVector,
+								interimPoint);
 
-						typename SourceModelKernelType::OutputPointType endPoint = _spSourceModelKernel->transformPoint(interimPoint);
+						typename SourceModelKernelType::OutputPointType endPoint = _spSourceModelKernel->transformPoint(
+									interimPoint);
 
 						typename SourceModelKernelType::OutputVectorType secondVector;
-						PointVectorCombinationPolicy<VInterimDimensions, VOutputDimensions>::computeVector(interimPoint, endPoint, secondVector);
+						PointVectorCombinationPolicy<VInterimDimensions, VOutputDimensions>::computeVector(interimPoint,
+								endPoint, secondVector);
 
-						PointVectorCombinationPolicy<VInterimDimensions, VOutputDimensions>::combineVectors(firstVector, secondVector, outVector);
+						PointVectorCombinationPolicy<VInterimDimensions, VOutputDimensions>::combineVectors(firstVector,
+								secondVector, outVector);
 					}
 
 					iterator.Set(outVector);
@@ -99,7 +107,9 @@ namespace map
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			const typename FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceFieldKernelType *
+			const typename
+			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceFieldKernelType*
+
 			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			getSourceFieldKernel(void) const
 			{
@@ -107,7 +117,9 @@ namespace map
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			const typename FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceModelKernelType *
+			const typename
+			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceModelKernelType*
+
 			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			getSourceModelKernel(void) const
 			{
@@ -115,7 +127,9 @@ namespace map
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			const typename FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceKernel1BaseType *
+			const typename
+			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceKernel1BaseType*
+
 			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			get1stSourceKernelBase(void) const
 			{
@@ -123,7 +137,9 @@ namespace map
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			const typename FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceKernel2BaseType *
+			const typename
+			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceKernel2BaseType*
+
 			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			get2ndSourceKernelBase(void) const
 			{
@@ -133,12 +149,13 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 			typename FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::Pointer
 			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			New(const SourceFieldKernelType &fieldKernel,
-			    const SourceModelKernelType &modelKernel,
-			    const InFieldRepresentationType *pInFieldRepresentation)
+			New(const SourceFieldKernelType& fieldKernel,
+				const SourceModelKernelType& modelKernel,
+				const InFieldRepresentationType* pInFieldRepresentation)
 			{
 				assert(pInFieldRepresentation);
-				Pointer spFieldByFieldModelCombinationFunctor = new Self(fieldKernel, modelKernel, pInFieldRepresentation);
+				Pointer spFieldByFieldModelCombinationFunctor = new Self(fieldKernel, modelKernel,
+						pInFieldRepresentation);
 				spFieldByFieldModelCombinationFunctor->UnRegister();
 				return spFieldByFieldModelCombinationFunctor;
 			}
@@ -149,17 +166,19 @@ namespace map
 			CreateAnother(void) const
 			{
 				::itk::LightObject::Pointer smartPtr;
-				Pointer spNew = Self::New(*_spSourceFieldKernel, *_spSourceModelKernel, Superclass::_spInFieldRepresentation).GetPointer();
+				Pointer spNew = Self::New(*_spSourceFieldKernel, *_spSourceModelKernel,
+										  Superclass::_spInFieldRepresentation).GetPointer();
 				smartPtr = spNew;
 				return smartPtr;
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			FieldByFieldModelCombinationFunctor(const SourceFieldKernelType &fieldKernel,
-			                                    const SourceModelKernelType &modelKernel,
-			                                    const InFieldRepresentationType *pInFieldRepresentation):
-				Superclass(pInFieldRepresentation), _spSourceFieldKernel(&fieldKernel), _spSourceModelKernel(&modelKernel)
+			FieldByFieldModelCombinationFunctor(const SourceFieldKernelType& fieldKernel,
+												const SourceModelKernelType& modelKernel,
+												const InFieldRepresentationType* pInFieldRepresentation):
+				Superclass(pInFieldRepresentation), _spSourceFieldKernel(&fieldKernel),
+				_spSourceModelKernel(&modelKernel)
 			{
 				assert(pInFieldRepresentation);
 			}
@@ -173,7 +192,7 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 			void
 			FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			PrintSelf(std::ostream &os, itk::Indent indent) const
+			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 				os << indent << "Source field kernel: " << _spSourceFieldKernel << std::endl;

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapTransformModelBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -58,16 +58,21 @@ namespace map
 			itkStaticConstMacro(MatrixInputDimensions, unsigned int, VInputDimensions + 1);
 			itkStaticConstMacro(MatrixOutputDimensions, unsigned int, VOutputDimensions + 1);
 
-			typedef TransformModelBase<TScalarType, VInputDimensions, VOutputDimensions>  TransformModelBaseType;
+			typedef TransformModelBase<TScalarType, VInputDimensions, VOutputDimensions>
+			TransformModelBaseType;
 			typedef typename TransformModelBaseType::Pointer TransformModelBasePointer;
 
 			typedef TScalarType ScalarType;
 			typedef itk::Transform<TScalarType, VInputDimensions, VOutputDimensions>      TransformBaseType;
 			typedef typename TransformBaseType::Pointer                                 TransformBasePointer;
-			typedef itk::Transform<TScalarType, VOutputDimensions, VInputDimensions>      InverseTransformBaseType;
-			typedef typename InverseTransformBaseType::Pointer                          InverseTransformBasePointer;
-			typedef TransformModelBase<TScalarType, VOutputDimensions, VInputDimensions>  InverseTransformModelBaseType;
-			typedef typename InverseTransformModelBaseType::Pointer                     InverseTransformModelBasePointer;
+			typedef itk::Transform<TScalarType, VOutputDimensions, VInputDimensions>
+			InverseTransformBaseType;
+			typedef typename InverseTransformBaseType::Pointer
+			InverseTransformBasePointer;
+			typedef TransformModelBase<TScalarType, VOutputDimensions, VInputDimensions>
+			InverseTransformModelBaseType;
+			typedef typename InverseTransformModelBaseType::Pointer
+			InverseTransformModelBasePointer;
 
 			typedef typename TransformBaseType::InputVectorType       InputVectorType;
 			typedef typename TransformBaseType::OutputVectorType      OutputVectorType;
@@ -78,8 +83,8 @@ namespace map
 			typedef itk::Matrix<TScalarType, VOutputDimensions, VInputDimensions> MatrixType;
 
 
-			virtual const TransformBaseType *getTransform() const = 0;
-			virtual TransformBaseType *getTransform() = 0;
+			virtual const TransformBaseType* getTransform() const = 0;
+			virtual TransformBaseType* getTransform() = 0;
 
 			/*! Inverts the transform model and returns the inverse transform model via the parameter
 			 * spInverseModel.
@@ -89,7 +94,7 @@ namespace map
 			 * any value referenced by the smart pointer before the function call will be overwritten.
 			 * @return Indicates if the transform could be inverted. If returns false, spInverseModel was
 			 * not changed and thus is likely to be and should assumed as incorrect.*/
-			virtual bool getInverse(InverseTransformModelBasePointer &spInverseModel) const = 0;
+			virtual bool getInverse(InverseTransformModelBasePointer& spInverseModel) const = 0;
 
 			/*! clones the transform model and copies all parameters.
 			 * spInverseModel.
@@ -108,14 +113,14 @@ namespace map
 			 * @param [out] offset Referenz to a vector that defines the translation offset.
 			 * @return Indicates if the transform model can be decomposed in a affine transformation matrix plus offset. If it returns false, it cannot be decomposed
 			 * and the referenced output parameters are invalid.*/
-			virtual bool getAffineMatrixDecomposition(MatrixType &matrix, OutputVectorType &offset) const = 0;
+			virtual bool getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const = 0;
 
 		protected:
-			operator const TransformBaseType &() const
+			operator const TransformBaseType& () const
 			{
 				return getTransform();
 			}
-			operator TransformBaseType &()
+			operator TransformBaseType& ()
 			{
 				return getTransform();
 			}
@@ -125,15 +130,16 @@ namespace map
 			virtual ~TransformModelBase();
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
-			TransformModelBase(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			TransformModelBase(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 		template<class TScalarType, unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		std::ostream &operator<<(std::ostream &os, const TransformModelBase<TScalarType, VInputDimensions, VOutputDimensions> &model);
+		std::ostream& operator<<(std::ostream& os,
+								 const TransformModelBase<TScalarType, VInputDimensions, VOutputDimensions>& model);
 
 	}
 }

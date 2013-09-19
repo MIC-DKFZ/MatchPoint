@@ -12,12 +12,12 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4910 $ (last changed revision)
-// @date    $Date: 2013-07-30 14:08:21 +0200 (Di, 30 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
 // @author  *none* (Reviewer)
 //
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Documentation/MatchPoint_info.txt $
+// Subversion HeadURL: $HeadURL$
 */
 
 /** \mainpage MatchPoint - DKFZ registration platform

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapLazyFieldBasedRegistrationKernelTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -39,7 +39,7 @@ namespace map
 		typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel KernelType;
 		typedef TestFieldGenerationFunctor<2, 2> FieldFunctorType;
 
-		void generateKernel(KernelType::Pointer &spKernel, FieldFunctorType::Pointer &spFunctor)
+		void generateKernel(KernelType::Pointer& spKernel, FieldFunctorType::Pointer& spFunctor)
 		{
 			spKernel = KernelType::New();
 
@@ -49,7 +49,8 @@ namespace map
 			FieldFunctorType::InFieldRepresentationType::SizeType size;
 			size.fill(10);
 
-			FieldFunctorType::InFieldRepresentationType::Pointer spInRep = FieldFunctorType::InFieldRepresentationType::New();
+			FieldFunctorType::InFieldRepresentationType::Pointer spInRep =
+				FieldFunctorType::InFieldRepresentationType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
@@ -85,8 +86,8 @@ namespace map
 			KernelType::OutputPointType resultPoint;
 
 			//TESTS #1
-			const KernelType::FieldType *pKernelGeneratedField = spKernel->getField();
-			const KernelType::FieldType *pReferenceField = spFunctor->_spCurrentFieldPointer.GetPointer();
+			const KernelType::FieldType* pKernelGeneratedField = spKernel->getField();
+			const KernelType::FieldType* pReferenceField = spFunctor->_spCurrentFieldPointer.GetPointer();
 
 			CHECK(NULL != pKernelGeneratedField);
 			CHECK_EQUAL(pReferenceField, pKernelGeneratedField);
@@ -101,8 +102,10 @@ namespace map
 			/// #3
 			generateKernel(spKernel, spFunctor);
 
-			KernelType::RepresentationDescriptorConstPointer spKernelRep = spKernel->getLargestPossibleRepresentation();
-			CHECK(NULL == spFunctor->_spCurrentFieldPointer.GetPointer()); //if not null, the kernel has illegally created the field
+			KernelType::RepresentationDescriptorConstPointer spKernelRep =
+				spKernel->getLargestPossibleRepresentation();
+			CHECK(NULL ==
+				  spFunctor->_spCurrentFieldPointer.GetPointer()); //if not null, the kernel has illegally created the field
 			//instead of just passing through the representation
 			CHECK_EQUAL(spFunctor->getInFieldRepresentation(), spKernelRep.GetPointer());
 

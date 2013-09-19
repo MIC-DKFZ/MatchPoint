@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKPointSetToPointSetMetricControlBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -46,11 +46,13 @@ namespace map
 			@ingroup MetricControl
 			*/
 			template<class TConcreteMetric>
-			class ITKPointSetToPointSetMetricControlBase : public ITKPointSetToPointSetMetricControlInterface<typename TConcreteMetric::MovingPointSetType, typename TConcreteMetric::FixedPointSetType>
+			class ITKPointSetToPointSetMetricControlBase : public
+				ITKPointSetToPointSetMetricControlInterface<typename TConcreteMetric::MovingPointSetType, typename TConcreteMetric::FixedPointSetType>
 			{
 			public:
 				typedef ITKPointSetToPointSetMetricControlBase<TConcreteMetric> Self;
-				typedef ITKPointSetToPointSetMetricControlInterface<typename TConcreteMetric::MovingPointSetType, typename TConcreteMetric::FixedPointSetType>    Superclass;
+				typedef ITKPointSetToPointSetMetricControlInterface<typename TConcreteMetric::MovingPointSetType, typename TConcreteMetric::FixedPointSetType>
+				Superclass;
 				typedef ::itk::SmartPointer<Self>         Pointer;
 				typedef ::itk::SmartPointer<const Self>   ConstPointer;
 
@@ -66,19 +68,19 @@ namespace map
 				@eguarantee no fail
 				@param pMetric the ConcreteMetricType object that has to be set. Must not be NULL (otherwise an exception will be thrown).
 				*/
-				virtual void setMetric(ConcreteMetricType *pMetric);
+				virtual void setMetric(ConcreteMetricType* pMetric);
 
-				virtual MetricBaseType *getMetric();
-				virtual const MetricBaseType *getMetric() const;
+				virtual MetricBaseType* getMetric();
+				virtual const MetricBaseType* getMetric() const;
 
-				virtual MVMetricBaseType *getMVMetric();
-				virtual const MVMetricBaseType *getMVMetric() const;
+				virtual MVMetricBaseType* getMVMetric();
+				virtual const MVMetricBaseType* getMVMetric() const;
 
-				virtual PointSetToPointSetMetricBaseType *getPointSetToPointSetMetric();
-				virtual const PointSetToPointSetMetricBaseType *getPointSetToPointSetMetric() const;
+				virtual PointSetToPointSetMetricBaseType* getPointSetToPointSetMetric();
+				virtual const PointSetToPointSetMetricBaseType* getPointSetToPointSetMetric() const;
 
-				virtual ConcreteMetricType *getConcreteMetric();
-				virtual const ConcreteMetricType *getConcreteMetric() const;
+				virtual ConcreteMetricType* getConcreteMetric();
+				virtual const ConcreteMetricType* getConcreteMetric() const;
 
 				/*! The modification time (MT) of an metric controler is the the maximum of his MT
 				 * and the MT of the controlled metric.  */
@@ -92,8 +94,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKPointSetToPointSetMetricControlBase(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKPointSetToPointSetMetricControlBase(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 		}
 	}

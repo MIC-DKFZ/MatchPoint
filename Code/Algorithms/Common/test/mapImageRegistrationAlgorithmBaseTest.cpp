@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/test/mapImageRegistrationAlgorithmBaseTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -36,7 +36,8 @@ namespace map
 		{
 
 			template<class TMovingImage, class TTargetImage>
-			class TestImageRegistrationAlgorithmInterface : public algorithm::ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
+			class TestImageRegistrationAlgorithmInterface : public
+				algorithm::ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
 			{
 			public:
 				TestImageRegistrationAlgorithmInterface() {};

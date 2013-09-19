@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Plastimatch/include/mapPlmAlgorithmHelper.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -52,10 +52,12 @@ namespace map
 				It is assumed that the first element of the configuration is the global configuration.
 				All other elements are the stages settings.
 				@pre param config must have at least to elements (global and stage 1).*/
-			MAPAlgorithmsPlastimatch_EXPORT void saveConfigurationToFile(const ConfigurationType &config, const map::core::String &fileName);
+			MAPAlgorithmsPlastimatch_EXPORT void saveConfigurationToFile(const ConfigurationType& config,
+					const map::core::String& fileName);
 
 			/**! Helper function that loads a configuration from a given file path.*/
-			MAPAlgorithmsPlastimatch_EXPORT ConfigurationType loadConfigurationFromFile(const map::core::String &fileName);
+			MAPAlgorithmsPlastimatch_EXPORT ConfigurationType loadConfigurationFromFile(
+				const map::core::String& fileName);
 
 
 			class MAPAlgorithmsPlastimatch_EXPORT ParamGenerator
@@ -65,7 +67,7 @@ namespace map
 				~ParamGenerator();
 
 				template <typename TElement>
-				ParamGenerator &add(const TElement &value)
+				ParamGenerator& add(const TElement& value)
 				{
 					this->_values.push_back(core::convert::toStrGeneric(value));
 					return *this;

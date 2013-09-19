@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapMatrixModelBasedKernelLoader.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_MATRIX_MODEL_BASED_KERNEL_LOADER_TPP
@@ -38,9 +38,11 @@ namespace map
 		template <unsigned int VInputDimensions>
 		bool
 		MatrixModelBasedKernelLoader<VInputDimensions>::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
-			structuredData::Element::ConstSubElementIteratorType typePos = structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(), tags::KernelType);
+			structuredData::Element::ConstSubElementIteratorType typePos = structuredData::findNextSubElement(
+						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
+						tags::KernelType);
 
 			if (!request._spKernelDescriptor->attributeExists(tags::InputDimensions))
 			{
@@ -52,14 +54,17 @@ namespace map
 				return false;
 			}
 
-			unsigned int iDim = core::convert::toUInt(request._spKernelDescriptor->getAttribute(tags::InputDimensions));
-			unsigned int oDim = core::convert::toUInt(request._spKernelDescriptor->getAttribute(tags::OutputDimensions));
+			unsigned int iDim = core::convert::toUInt(request._spKernelDescriptor->getAttribute(
+									tags::InputDimensions));
+			unsigned int oDim = core::convert::toUInt(request._spKernelDescriptor->getAttribute(
+									tags::OutputDimensions));
 
 			bool canHandle = false;
 
 			if (typePos != request._spKernelDescriptor->getSubElementEnd())
 			{
-				canHandle = ((*typePos)->getValue() == "MatrixModelKernel") && (iDim == VInputDimensions) && (oDim == VInputDimensions);
+				canHandle = ((*typePos)->getValue() == "MatrixModelKernel") && (iDim == VInputDimensions)
+							&& (oDim == VInputDimensions);
 			}
 
 			return canHandle;
@@ -91,7 +96,8 @@ namespace map
 		getDescription() const
 		{
 			core::OStringStream os;
-			os << "MatrixModelBasedKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: " << VInputDimensions << ".";
+			os << "MatrixModelBasedKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: "
+			   << VInputDimensions << ".";
 			return os.str();
 		}
 
@@ -99,15 +105,18 @@ namespace map
 		template <unsigned int VInputDimensions>
 		typename MatrixModelBasedKernelLoader<VInputDimensions>::GenericKernelPointer
 		MatrixModelBasedKernelLoader<VInputDimensions>::
-		loadKernel(const RequestType &request) const
+		loadKernel(const RequestType& request) const
 		{
 			if (!canHandleRequest(request))
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: cannot handle request.");
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot load kernel. Reason: cannot handle request.");
 			}
 
 			//establish matrix;
-			structuredData::Element::ConstSubElementIteratorType matrixPos = structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(), tags::Matrix);
+			structuredData::Element::ConstSubElementIteratorType matrixPos = structuredData::findNextSubElement(
+						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
+						tags::Matrix);
 
 			if (matrixPos == request._spKernelDescriptor->getSubElementEnd())
 			{
@@ -116,12 +125,15 @@ namespace map
 
 			if ((*matrixPos)->getSubElementsCount() != VInputDimensions * VInputDimensions)
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: matrix has wrong number of elements. Expexted: " << VInputDimensions * VInputDimensions << "; found: " << (*matrixPos)->getSubElementsCount());
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot load kernel. Reason: matrix has wrong number of elements. Expexted: " <<
+								  VInputDimensions * VInputDimensions << "; found: " << (*matrixPos)->getSubElementsCount());
 			}
 
 			typename KernelType::TransformType::MatrixType matrix;
 
-			for (structuredData::Element::ConstSubElementIteratorType pos = (*matrixPos)->getSubElementBegin(); pos != (*matrixPos)->getSubElementEnd(); ++pos)
+			for (structuredData::Element::ConstSubElementIteratorType pos = (*matrixPos)->getSubElementBegin();
+				 pos != (*matrixPos)->getSubElementEnd(); ++pos)
 			{
 				unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));
 				unsigned int colID = core::convert::toUInt((*pos)->getAttribute(tags::Column));
@@ -131,7 +143,9 @@ namespace map
 
 			//establish offset;
 
-			structuredData::Element::ConstSubElementIteratorType offsetPos = structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(), tags::Offset);
+			structuredData::Element::ConstSubElementIteratorType offsetPos = structuredData::findNextSubElement(
+						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
+						tags::Offset);
 
 			if (offsetPos == request._spKernelDescriptor->getSubElementEnd())
 			{
@@ -140,12 +154,15 @@ namespace map
 
 			if ((*offsetPos)->getSubElementsCount() != VInputDimensions)
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: offset has wrong number of elements. Expexted: " << VInputDimensions << "; found: " << (*offsetPos)->getSubElementsCount());
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot load kernel. Reason: offset has wrong number of elements. Expexted: " <<
+								  VInputDimensions << "; found: " << (*offsetPos)->getSubElementsCount());
 			}
 
 			typename KernelType::TransformType::OutputVectorType offset;
 
-			for (structuredData::Element::ConstSubElementIteratorType pos = (*offsetPos)->getSubElementBegin(); pos != (*offsetPos)->getSubElementEnd(); ++pos)
+			for (structuredData::Element::ConstSubElementIteratorType pos = (*offsetPos)->getSubElementBegin();
+				 pos != (*offsetPos)->getSubElementEnd(); ++pos)
 			{
 				unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));
 
@@ -170,7 +187,8 @@ namespace map
 		template <unsigned int VInputDimensions>
 		void
 		MatrixModelBasedKernelLoader<VInputDimensions>::
-		addAsInverseKernel(GenericKernelType *pKernel,  core::RegistrationBase::Pointer &spRegistration) const
+		addAsInverseKernel(GenericKernelType* pKernel,
+						   core::RegistrationBase::Pointer& spRegistration) const
 		{
 			typedef core::RegistrationKernelBase<VInputDimensions, VInputDimensions> KernelType;
 			typedef core::Registration<VInputDimensions, VInputDimensions> RegistrationType;
@@ -185,12 +203,13 @@ namespace map
 				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel pointer is null.");
 			}
 
-			RegistrationType *pCastedReg = dynamic_cast<RegistrationType *>(spRegistration.GetPointer());
-			KernelType *pCastedKernel = dynamic_cast<KernelType *>(pKernel);
+			RegistrationType* pCastedReg = dynamic_cast<RegistrationType*>(spRegistration.GetPointer());
+			KernelType* pCastedKernel = dynamic_cast<KernelType*>(pKernel);
 
 			if (!pCastedReg)
 			{
-				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Registration has not the correct dimension.");
+				mapDefaultExceptionMacro( <<
+										  "Error. Cannot add kernel. Registration has not the correct dimension.");
 			}
 
 			if (!pCastedKernel)
@@ -205,7 +224,8 @@ namespace map
 		template <unsigned int VInputDimensions>
 		void
 		MatrixModelBasedKernelLoader<VInputDimensions>::
-		addAsDirectKernel(GenericKernelType *pKernel,  core::RegistrationBase::Pointer &spRegistration) const
+		addAsDirectKernel(GenericKernelType* pKernel,
+						  core::RegistrationBase::Pointer& spRegistration) const
 		{
 			typedef core::RegistrationKernelBase<VInputDimensions, VInputDimensions> KernelType;
 			typedef core::Registration<VInputDimensions, VInputDimensions> RegistrationType;
@@ -220,12 +240,13 @@ namespace map
 				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel pointer is null.");
 			}
 
-			RegistrationType *pCastedReg = dynamic_cast<RegistrationType *>(spRegistration.GetPointer());
-			KernelType *pCastedKernel = dynamic_cast<KernelType *>(pKernel);
+			RegistrationType* pCastedReg = dynamic_cast<RegistrationType*>(spRegistration.GetPointer());
+			KernelType* pCastedKernel = dynamic_cast<KernelType*>(pKernel);
 
 			if (!pCastedReg)
 			{
-				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Registration has not the correct dimension.");
+				mapDefaultExceptionMacro( <<
+										  "Error. Cannot add kernel. Registration has not the correct dimension.");
 			}
 
 			if (!pCastedKernel)

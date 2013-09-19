@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Plastimatch/include/mapPlmCLIRegistrationAlgorithmBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -57,15 +57,17 @@ namespace map
 						@ingroup Plastimatch
 			 */
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			class CLIRegistrationAlgorithmBase : public IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-				public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
-				public MetaPropertyAlgorithmBase,
-				public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-        public TIdentificationPolicy
+			class CLIRegistrationAlgorithmBase : public
+				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+			public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
+			public MetaPropertyAlgorithmBase,
+			public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+			public TIdentificationPolicy
 			{
 			public:
 				typedef CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
-				typedef IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>  Superclass;
+				typedef IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>
+				Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -74,9 +76,12 @@ namespace map
 				typedef typename Superclass::UIDType UIDType;
 				typedef typename Superclass::UIDPointer UIDPointer;
 
-				typedef typename IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType OptimizerMeasureType;
+				typedef typename
+				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType
+				OptimizerMeasureType;
 
-				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage> ImageRegistrationAlgorithmBaseType;
+				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
+				ImageRegistrationAlgorithmBaseType;
 
 				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageType TargetImageType;
 				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageType MovingImageType;
@@ -91,7 +96,7 @@ namespace map
 				typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
 				typedef typename MetaPropertyAlgorithmBase::MetaPropertyNameType MetaPropertyNameType;
 
-        mapDefineAlgorithmIdentificationByPolicyMacro;
+				mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				// IterativeRegistrationAlgorithm
 				/*! @eguarantee strong*/
@@ -139,10 +144,14 @@ namespace map
 				typedef typename Superclass::InterimRegistrationType InterimRegistrationType;
 				typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
 				typedef typename Superclass::IterationCountType IterationCountType;
-				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer MovingImageConstPointer;
-				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer TargetImageConstPointer;
+				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer
+				MovingImageConstPointer;
+				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
+				TargetImageConstPointer;
 
-				typedef typename map::core::RegistrationTopology<Superclass::MovingDimensions, Superclass::TargetDimensions>::InverseFieldType FinalFieldType;
+				typedef typename
+				map::core::RegistrationTopology<Superclass::MovingDimensions, Superclass::TargetDimensions>::InverseFieldType
+				FinalFieldType;
 				typedef typename FinalFieldType::Pointer FinalFieldPointer;
 
 				/* @reimplemented*/
@@ -150,13 +159,13 @@ namespace map
 
 				// MetaPropertyAlgorithmBase
 				/*! @reimplemented*/
-				virtual void compileInfos(MetaPropertyVectorType &infos) const;
+				virtual void compileInfos(MetaPropertyVectorType& infos) const;
 
 				/*! @reimplemented*/
-				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const;
+				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
 
 				/*! @reimplemented*/
-				virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
+				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
 
 				// IterativeRegistrationAlgorithmInterface
 				/*! @brief gets the registration result that has been computed in the last iteration.
@@ -168,8 +177,9 @@ namespace map
 				  @retval a Registration object
 				  @sa Registration
 				 */
-				virtual InterimRegistrationPointer determineInterimRegistration(const MovingRepresentationDescriptorType *pMovingRepresentation,
-				                                                                const TargetRepresentationDescriptorType *pTargetRepresentation) const;
+				virtual InterimRegistrationPointer determineInterimRegistration(const
+						MovingRepresentationDescriptorType* pMovingRepresentation,
+						const TargetRepresentationDescriptorType* pTargetRepresentation) const;
 
 				/*!
 				 * Returns the final registration
@@ -258,7 +268,7 @@ namespace map
 				virtual OptimizerMeasureType doGetCurrentOptimizerValue() const;
 
 				/*! Methods invoked by derivated classes.  */
-				virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 				/*! Feature is not supported by this wrapper. Therefore the methods returns only a dummy value (0).
 				 * @eguarantee strong*/
@@ -321,7 +331,7 @@ namespace map
 				bool _deleteTempDirectory;
 
 				/*! This member function is called by the process executer, whenever Plastimatch generates an output on stdout.*/
-				void onPlmOutputEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onPlmOutputEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
 				/*! Helper method that removes the current temp dir (if it exists and _deleteTempDirectory is true).
 				 * @eguarantee no throw*/
@@ -338,8 +348,8 @@ namespace map
 				/*! The lock is used to manage the access to the member variable _currentIterationCount.*/
 				mutable ::itk::SimpleFastMutexLock _currentIterationLock;
 
-				CLIRegistrationAlgorithmBase(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				CLIRegistrationAlgorithmBase(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

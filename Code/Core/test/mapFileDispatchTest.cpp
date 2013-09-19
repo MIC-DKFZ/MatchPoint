@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapFileDispatchTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -32,7 +32,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapFileDispatchTest(int argc, char *argv[])
+		int mapFileDispatchTest(int argc, char* argv[])
 		{
 #ifdef _WIN32
 			const core::String sep = "\\";
@@ -74,7 +74,8 @@ namespace map
 			CHECK(map::core::FileDispatch::createFullPath("", "file.ext") == "file.ext");
 			CHECK(map::core::FileDispatch::createFullPath(path.c_str(), "") == path);
 
-			CHECK(map::core::FileDispatch::createFullPath(path2_wrong.c_str(), "file.ext") == map::core::FileDispatch::createFullPath(path2.c_str(), "file.ext"));
+			CHECK(map::core::FileDispatch::createFullPath(path2_wrong.c_str(),
+					"file.ext") == map::core::FileDispatch::createFullPath(path2.c_str(), "file.ext"));
 
 			CHECK(map::core::FileDispatch::ensureCorrectOSPathSeparator(wrongPath) == correctPath);
 			CHECK(map::core::FileDispatch::ensureCorrectOSPathSeparator(correctPath) == correctPath);

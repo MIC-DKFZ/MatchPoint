@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapRegistrationFileWriter.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -70,15 +70,21 @@ namespace map
 			itkStaticConstMacro(MovingDimensions, unsigned int, VMovingDimensions);
 			itkStaticConstMacro(TargetDimensions, unsigned int, VTargetDimensions);
 
-			typedef RegistrationKernelWriterBase<VMovingDimensions, VTargetDimensions> DirectKernelWriterBaseType;
-			typedef RegistrationKernelWriterBase<VTargetDimensions, VMovingDimensions> InverseKernelWriterBaseType;
+			typedef RegistrationKernelWriterBase<VMovingDimensions, VTargetDimensions>
+			DirectKernelWriterBaseType;
+			typedef RegistrationKernelWriterBase<VTargetDimensions, VMovingDimensions>
+			InverseKernelWriterBaseType;
 
 		protected:
-			typedef core::services::ServiceStack<DirectKernelWriterBaseType, KernelWriterLoadPolicy<VMovingDimensions, VTargetDimensions> > ConcreteDirectKernelWriterStackType;
-			typedef core::services::ServiceStack<InverseKernelWriterBaseType, KernelWriterLoadPolicy<VTargetDimensions, VMovingDimensions> > ConcreteInverseKernelWriterStackType;
+			typedef core::services::ServiceStack<DirectKernelWriterBaseType, KernelWriterLoadPolicy<VMovingDimensions, VTargetDimensions> >
+			ConcreteDirectKernelWriterStackType;
+			typedef core::services::ServiceStack<InverseKernelWriterBaseType, KernelWriterLoadPolicy<VTargetDimensions, VMovingDimensions> >
+			ConcreteInverseKernelWriterStackType;
 		public:
-			typedef core::services::StaticServiceStack<ConcreteDirectKernelWriterStackType>			 DirectKernelWriterStackType;
-			typedef core::services::StaticServiceStack<ConcreteInverseKernelWriterStackType>		 InverseKernelWriterStackType;
+			typedef core::services::StaticServiceStack<ConcreteDirectKernelWriterStackType>
+			DirectKernelWriterStackType;
+			typedef core::services::StaticServiceStack<ConcreteInverseKernelWriterStackType>
+			InverseKernelWriterStackType;
 
 			/*! Stores the passed registration in the specified path.
 			 * @eguarantee strong
@@ -88,7 +94,7 @@ namespace map
 			 * @pre registration must point to a valid instance.
 
 			 */
-			bool write(const RegistrationType *registration, const core::String &path) const;
+			bool write(const RegistrationType* registration, const core::String& path) const;
 
 			bool getExpandLazyKernels() const;
 			void setExpandLazyKernels(bool expandLazyKernels);
@@ -102,11 +108,11 @@ namespace map
 			bool _expandLazyKernels;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
-			RegistrationFileWriter(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			RegistrationFileWriter(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 	} // end namespace io
 } // end namespace map

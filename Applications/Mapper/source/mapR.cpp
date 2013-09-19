@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Applications/Mapper/source/mapR.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,7 +45,7 @@
 
 map::apps::MapR::ApplicationData appData;
 
-void onMAPEvent(::itk::Object *, const itk::EventObject &event, void *)
+void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
 {
 	std::cout << " > > > ";
 	event.Print(std::cout);
@@ -55,7 +55,8 @@ void onMAPEvent(::itk::Object *, const itk::EventObject &event, void *)
 
 
 template <typename TImageType>
-std::vector<itk::MetaDataDictionary *> generateDictionaries(TImageType *pImage, const map::core::String &uidPrefix)
+std::vector<itk::MetaDataDictionary*> generateDictionaries(TImageType* pImage,
+		const map::core::String& uidPrefix)
 {
 	// Copy the dictionary from the image
 	itk::MetaDataDictionary mappedDict;
@@ -66,7 +67,7 @@ std::vector<itk::MetaDataDictionary *> generateDictionaries(TImageType *pImage, 
 		mappedDict = appData._loadedMetaDataDictArray[0];
 	}
 
-	std::vector<itk::MetaDataDictionary *> outputArray;
+	std::vector<itk::MetaDataDictionary*> outputArray;
 
 	////////////////////////////////////////////
 	//Step 1: set everything that is valid for all slices
@@ -82,7 +83,8 @@ std::vector<itk::MetaDataDictionary *> generateDictionaries(TImageType *pImage, 
 	if (appData._loadedRefMetaDataDictArray.size())
 	{
 		//result has the same frame of reference UID then template image
-		itk::ExposeMetaData<std::string>(appData._loadedRefMetaDataDictArray[0], "0020|0052", frameOfReferenceUID);
+		itk::ExposeMetaData<std::string>(appData._loadedRefMetaDataDictArray[0], "0020|0052",
+										 frameOfReferenceUID);
 	}
 
 	// Set the UID's for the study, series and frame of reference
@@ -107,7 +109,9 @@ std::vector<itk::MetaDataDictionary *> generateDictionaries(TImageType *pImage, 
 
 	// Derivation Description - How this image was derived
 	stream.str("");
-	stream << "mapped by using \"" << map::core::FileDispatch::getFullName(appData._regFileName) << "\" registration file; software: mapR; MatchPoint version: " << MAP_SOURCE_VERSION << ", itk version:" << ITK_SOURCE_VERSION;
+	stream << "mapped by using \"" << map::core::FileDispatch::getFullName(
+			   appData._regFileName) << "\" registration file; software: mapR; MatchPoint version: " <<
+		   MAP_SOURCE_VERSION << ", itk version:" << ITK_SOURCE_VERSION;
 
 	lengthDesc = stream.str().length();
 	std::string derivationDesc(stream.str(), 0, lengthDesc > 1024 ? 1024 : lengthDesc);
@@ -126,10 +130,11 @@ std::vector<itk::MetaDataDictionary *> generateDictionaries(TImageType *pImage, 
 
 	itk::ImageRegion<3>::SizeValueType sliceCount = pImage->GetLargestPossibleRegion().GetSize(2);
 
-	for (itk::ImageRegion<3>::SizeValueType currentSliceIndex = 0; currentSliceIndex < sliceCount; ++currentSliceIndex)
+	for (itk::ImageRegion<3>::SizeValueType currentSliceIndex = 0; currentSliceIndex < sliceCount;
+		 ++currentSliceIndex)
 	{
 		// Create a new dictionary for this slice
-		itk::MetaDataDictionary *pDict = new itk::MetaDataDictionary;
+		itk::MetaDataDictionary* pDict = new itk::MetaDataDictionary;
 
 		// Copy the dictionary from the first slice
 		*pDict = mappedDict;
@@ -176,7 +181,7 @@ std::vector<itk::MetaDataDictionary *> generateDictionaries(TImageType *pImage, 
 
 
 template <typename TPixelType, unsigned int Dimensions>
-void doWriting(::itk::Image<TPixelType, Dimensions> *pImage)
+void doWriting(::itk::Image<TPixelType, Dimensions>* pImage)
 {
 	typedef ::itk::Image<TPixelType, Dimensions> ImageType;
 	std::cout << std::endl << "save output file ... ";
@@ -186,7 +191,9 @@ void doWriting(::itk::Image<TPixelType, Dimensions> *pImage)
 	* Thus 2D DICOM images are missed as well as 3D DICOM images that are stored as one image file (default series style).*/
 
 	if (appData._loadedDimensions > 2 &&
-	        (appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::Dicom || appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::Numeric || appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::GDCM))
+		(appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::Dicom
+		 || appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::Numeric
+		 || appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::GDCM))
 	{
 		typedef ::itk::Image < TPixelType, Dimensions - 1 > OutputImageType;
 		typedef ::itk::NumericSeriesFileNames OutputNamesGeneratorType;
@@ -197,11 +204,16 @@ void doWriting(::itk::Image<TPixelType, Dimensions> *pImage)
 		OutputNamesGeneratorType::Pointer outputNames = OutputNamesGeneratorType::New();
 
 		outputNames->SetStartIndex(1);
-		outputNames->SetEndIndex(pImage->GetLargestPossibleRegion().GetSize(pImage->GetImageDimension() - 1));
+		outputNames->SetEndIndex(pImage->GetLargestPossibleRegion().GetSize(pImage->GetImageDimension() -
+								 1));
 
 		// Generate the file names
 		map::core::String tempLen = map::core::convert::toStr(outputNames->GetEndIndex());
-		map::core::String seriesFormat = map::core::FileDispatch::createFullPath(map::core::FileDispatch::getPath(appData._outputFileName), map::core::FileDispatch::getName(appData._outputFileName) + ".%0" + map::core::convert::toStrGeneric(tempLen.length()) + "d" + map::core::FileDispatch::getExtension(appData._outputFileName));
+		map::core::String seriesFormat = map::core::FileDispatch::createFullPath(
+											 map::core::FileDispatch::getPath(appData._outputFileName),
+											 map::core::FileDispatch::getName(appData._outputFileName) + ".%0" +
+											 map::core::convert::toStrGeneric(tempLen.length()) + "d" + map::core::FileDispatch::getExtension(
+													 appData._outputFileName));
 
 		std::cout << "(" << seriesFormat << ")... ";
 
@@ -212,10 +224,11 @@ void doWriting(::itk::Image<TPixelType, Dimensions> *pImage)
 		spSeriesWriter->SetInput(pImage);
 		spSeriesWriter->SetFileNames(outputNames->GetFileNames());
 
-		std::vector<itk::MetaDataDictionary *> outputArray = generateDictionaries(pImage, spGDCMIO->GetUIDPrefix());
+		std::vector<itk::MetaDataDictionary*> outputArray = generateDictionaries(pImage,
+				spGDCMIO->GetUIDPrefix());
 
 		if ((appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::Dicom) ||
-		        (appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::GDCM))
+			(appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::GDCM))
 		{
 			spGDCMIO->KeepOriginalUIDOn();
 			spSeriesWriter->SetImageIO(spGDCMIO);
@@ -224,7 +237,8 @@ void doWriting(::itk::Image<TPixelType, Dimensions> *pImage)
 
 		spSeriesWriter->Update();
 
-		for (std::vector<itk::MetaDataDictionary *>::iterator pos = outputArray.begin(); pos != outputArray.end(); ++pos)
+		for (std::vector<itk::MetaDataDictionary*>::iterator pos = outputArray.begin();
+			 pos != outputArray.end(); ++pos)
 		{
 			delete *pos;
 		}
@@ -256,15 +270,16 @@ int doMapping()
 
 	typename MapperType::Pointer spMapper = MapperType::New();
 
-	ImageType *pCastedInput = dynamic_cast<ImageType *>(appData._spInputImage.GetPointer());
+	ImageType* pCastedInput = dynamic_cast<ImageType*>(appData._spInputImage.GetPointer());
 	typename ImageType::Pointer spResult;
-	RegistrationType *pCastedReg = dynamic_cast<RegistrationType *>(appData._spReg.GetPointer());
+	RegistrationType* pCastedReg = dynamic_cast<RegistrationType*>(appData._spReg.GetPointer());
 
 	typename MapperType::ResultImageDescriptorType::Pointer spResultDesc = NULL;
 
 	if (appData._spRefImage.IsNotNull())
 	{
-		TemplateImageType *pCastedTemplate = dynamic_cast<TemplateImageType *>(appData._spRefImage.GetPointer());
+		TemplateImageType* pCastedTemplate = dynamic_cast<TemplateImageType*>
+											 (appData._spRefImage.GetPointer());
 
 		spResultDesc = map::core::createFieldRepresentation(*pCastedTemplate);
 	}
@@ -283,13 +298,13 @@ int doMapping()
 
 		doWriting<TPixelType, Dimensions>(spResult);
 	}
-	catch (::itk::ExceptionObject &e)
+	catch (::itk::ExceptionObject& e)
 	{
 		std::cerr << "Error!!!" << std::endl;
 		std::cerr << e << std::endl;
 		result = 9;
 	}
-	catch (std::exception &e)
+	catch (std::exception& e)
 	{
 		std::cerr << "Error!!!" << std::endl;
 		std::cerr << e.what() << std::endl;
@@ -307,7 +322,7 @@ int doMapping()
 
 
 template <unsigned int IDimension>
-int handleGenericImage(::itk::ImageIOBase::IOComponentType &loadedComponentType)
+int handleGenericImage(::itk::ImageIOBase::IOComponentType& loadedComponentType)
 {
 	switch (loadedComponentType)
 	{
@@ -363,13 +378,14 @@ int handleGenericImage(::itk::ImageIOBase::IOComponentType &loadedComponentType)
 
 		default:
 		{
-			mapDefaultExceptionStaticMacro( << "The file uses a pixel component type that is not supported in this application.");
+			mapDefaultExceptionStaticMacro( <<
+											"The file uses a pixel component type that is not supported in this application.");
 		}
 	}
 }
 
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	int result = 0;
 
@@ -385,7 +401,8 @@ int main(int argc, char **argv)
 
 		case 2:
 		{
-			std::cerr << "Missing Parameters. Use one of the following flags for more information:" << std::endl;
+			std::cerr << "Missing Parameters. Use one of the following flags for more information:" <<
+					  std::endl;
 			std::cerr << "-? or --help" << std::endl;
 			return 2;
 		}
@@ -399,7 +416,8 @@ int main(int argc, char **argv)
 
 	if (appData._fileCount < 2)
 	{
-		std::cerr << "Missing Parameters. Use one of the following flags for more information:" << std::endl;
+		std::cerr << "Missing Parameters. Use one of the following flags for more information:" <<
+				  std::endl;
 		std::cerr << "-? or --help" << std::endl;
 		return 1;
 	}
@@ -435,7 +453,8 @@ int main(int argc, char **argv)
 	try
 	{
 		std::cout << std::endl << "read input file... ";
-		appData._spInputImage = spReader->GetOutput(appData._loadedDimensions, appData._loadedPixelType, appData._loadedComponentType);
+		appData._spInputImage = spReader->GetOutput(appData._loadedDimensions, appData._loadedPixelType,
+								appData._loadedComponentType);
 		appData._loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
 
 		if (appData._spInputImage.IsNotNull())
@@ -444,7 +463,9 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			std::cerr << "Error!!! unable to load input image. File is not existing or has an unsupported format." << std::endl;
+			std::cerr <<
+					  "Error!!! unable to load input image. File is not existing or has an unsupported format." <<
+					  std::endl;
 			return 4;
 		}
 
@@ -457,13 +478,13 @@ int main(int argc, char **argv)
 			std::cout << std::endl;
 		}
 	}
-	catch (::itk::ExceptionObject &e)
+	catch (::itk::ExceptionObject& e)
 	{
 		std::cerr << "Error!!!" << std::endl;
 		std::cerr << e << std::endl;
 		return 4;
 	}
-	catch (std::exception &e)
+	catch (std::exception& e)
 	{
 		std::cerr << "Error!!!" << std::endl;
 		std::cerr << e.what() << std::endl;
@@ -477,14 +498,18 @@ int main(int argc, char **argv)
 
 	if (appData._loadedPixelType != ::itk::ImageIOBase::SCALAR)
 	{
-		std::cerr << "Error!!! Unsupported input image. Only simple scalar images are supported in this version." << std::endl;
+		std::cerr <<
+				  "Error!!! Unsupported input image. Only simple scalar images are supported in this version." <<
+				  std::endl;
 
 		return 4;
 	}
 
 	if (appData._loadedDimensions < 2 || appData._loadedDimensions > 3)
 	{
-		std::cerr << "Error!!! Unsupported input image. Only 2D and 3D images are supported in this version." << std::endl;
+		std::cerr <<
+				  "Error!!! Unsupported input image. Only 2D and 3D images are supported in this version." <<
+				  std::endl;
 
 		return 4;
 	}
@@ -502,13 +527,13 @@ int main(int argc, char **argv)
 			std::cout << std::endl;
 		}
 	}
-	catch (::itk::ExceptionObject &e)
+	catch (::itk::ExceptionObject& e)
 	{
 		std::cerr << "Error!!!" << std::endl;
 		std::cerr << e << std::endl;
 		return 5;
 	}
-	catch (std::exception &e)
+	catch (std::exception& e)
 	{
 		std::cerr << "Error!!!" << std::endl;
 		std::cerr << e.what() << std::endl;
@@ -520,9 +545,12 @@ int main(int argc, char **argv)
 		return 5;
 	}
 
-	if (appData._spReg->getMovingDimensions() != appData._spReg->getTargetDimensions() || appData._spReg->getMovingDimensions() != appData._loadedDimensions)
+	if (appData._spReg->getMovingDimensions() != appData._spReg->getTargetDimensions()
+		|| appData._spReg->getMovingDimensions() != appData._loadedDimensions)
 	{
-		std::cerr << "Error!!! Loaded registration and loaded image have no equal dimensionality. Registration cannot be used to map the image." << std::endl;
+		std::cerr <<
+				  "Error!!! Loaded registration and loaded image have no equal dimensionality. Registration cannot be used to map the image."
+				  << std::endl;
 
 		return 5;
 	}
@@ -541,7 +569,8 @@ int main(int argc, char **argv)
 		try
 		{
 			std::cout << std::endl << std::endl << "read template file... ";
-			appData._spRefImage = spTemplateReader->GetOutput(_loadedTempDimensions, _loadedTempPixelType, _loadedTempComponentType);
+			appData._spRefImage = spTemplateReader->GetOutput(_loadedTempDimensions, _loadedTempPixelType,
+								  _loadedTempComponentType);
 			appData._loadedRefMetaDataDictArray = spReader->getMetaDictionaryArray();
 
 			if (appData._spRefImage.IsNotNull())
@@ -550,7 +579,9 @@ int main(int argc, char **argv)
 			}
 			else
 			{
-				std::cerr << "Error!!! unable to load template image. File is not existing or has an unsupported format." << std::endl;
+				std::cerr <<
+						  "Error!!! unable to load template image. File is not existing or has an unsupported format." <<
+						  std::endl;
 				return 4;
 			}
 
@@ -561,13 +592,13 @@ int main(int argc, char **argv)
 				std::cout << std::endl;
 			}
 		}
-		catch (::itk::ExceptionObject &e)
+		catch (::itk::ExceptionObject& e)
 		{
 			std::cerr << "Error!!!" << std::endl;
 			std::cerr << e << std::endl;
 			return 6;
 		}
-		catch (std::exception &e)
+		catch (std::exception& e)
 		{
 			std::cerr << "Error!!!" << std::endl;
 			std::cerr << e.what() << std::endl;
@@ -581,7 +612,9 @@ int main(int argc, char **argv)
 
 		if (_loadedTempDimensions != appData._spReg->getTargetDimensions())
 		{
-			std::cerr << "Error!!! Unsupported template image. Template image dimension does not match registration." << std::endl;
+			std::cerr <<
+					  "Error!!! Unsupported template image. Template image dimension does not match registration." <<
+					  std::endl;
 			return 6;
 		}
 

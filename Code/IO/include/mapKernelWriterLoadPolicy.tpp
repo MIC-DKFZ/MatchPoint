@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapKernelWriterLoadPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -41,7 +41,8 @@ namespace map
 		KernelWriterLoadPolicy<VInputDimensions, VOutputDimensions>::
 		doLoading()
 		{
-			core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(Superclass::_pLoadInterface);
+			core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(
+				Superclass::_pLoadInterface);
 
 			typedef MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions> ModelKernelWriterType;
 
@@ -52,9 +53,11 @@ namespace map
 				mapLogWarningObjMacro("MatrixModelBasedKernelWriter was not added because it was already on the service stack!");
 			}
 
-			typedef ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions> ExpandingFieldKernelWriterType;
+			typedef ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>
+			ExpandingFieldKernelWriterType;
 
-			typename ExpandingFieldKernelWriterType::Pointer spExpandingFieldWriter = ExpandingFieldKernelWriterType::New();
+			typename ExpandingFieldKernelWriterType::Pointer spExpandingFieldWriter =
+				ExpandingFieldKernelWriterType::New();
 
 			if (!loader.addProviderByPolicy(spExpandingFieldWriter))
 			{

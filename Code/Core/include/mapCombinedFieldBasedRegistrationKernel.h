@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapCombinedFieldBasedRegistrationKernel.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __COMBINED_FIELD_BASED_REGISTRATION_KERNEL_H
@@ -42,11 +42,14 @@ namespace map
 		 * @ingroup RegKernel
 		 */
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		class CombinedFieldBasedRegistrationKernel : public ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, LazyFieldPolicy>
+		class CombinedFieldBasedRegistrationKernel : public
+			ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, LazyFieldPolicy>
 		{
 		public:
-			typedef CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions> Self;
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, ::map::core::LazyFieldPolicy> Superclass; //an error in the VS2005 name lookup forces to define the policy explicitly with full namespace information
+			typedef CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			Self;
+			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, ::map::core::LazyFieldPolicy>
+			Superclass; //an error in the VS2005 name lookup forces to define the policy explicitly with full namespace information
 			typedef itk::SmartPointer<Self> Pointer;
 			typedef itk::SmartPointer<const Self> ConstPointer;
 			// typedef typename Superclass::FieldPolicyType FieldPolicyType;
@@ -58,7 +61,8 @@ namespace map
 			typedef typename Superclass::FieldRegionType FieldRegionType;
 			typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;
 			typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
-			typedef typename Superclass::RepresentationDescriptorConstPointer RepresentationDescriptorConstPointer;
+			typedef typename Superclass::RepresentationDescriptorConstPointer
+			RepresentationDescriptorConstPointer;
 			typedef typename Superclass::FieldPolicyType FieldPolicyType;
 			typedef typename FieldPolicyType::FieldGenerationFunctorType FieldGenerationFunctorType;
 			typedef typename Superclass::InputPointType  InputPointType;
@@ -69,14 +73,15 @@ namespace map
 			  @param functor Reference to the functor that is responsible for generating the field
 			  @pre Functor must have implemented FieldCombinationFunctorInterface
 			*/
-			virtual void setFieldFunctor(const FieldGenerationFunctorType &functor);
+			virtual void setFieldFunctor(const FieldGenerationFunctorType& functor);
 
 		protected:
-			typedef functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions> FieldCombinationFunctorInterfaceType;
+			typedef functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			FieldCombinationFunctorInterfaceType;
 			typedef typename FieldCombinationFunctorInterfaceType::SourceKernel1BaseType SourceKernel1BaseType;
 			typedef typename FieldCombinationFunctorInterfaceType::SourceKernel2BaseType SourceKernel2BaseType;
 
-			const FieldCombinationFunctorInterfaceType *_pCombinationInterface;
+			const FieldCombinationFunctorInterfaceType* _pCombinationInterface;
 
 			/*! maps a given point by using both source kernel. In contrast to other ConcreteFieldBasedRegistrationKernel classes,
 			 * calling this methos will not trigger the generation of the kernel field.
@@ -84,20 +89,20 @@ namespace map
 			  @param functor Reference to the functor that is responsible for generating the field
 			  @pre Functor must have implemented FieldCombinationFunctorInterface
 			*/
-			virtual bool doMapPoint(const InputPointType &inPoint, OutputPointType &outPoint) const;
+			virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const;
 
 			CombinedFieldBasedRegistrationKernel();
 			virtual ~CombinedFieldBasedRegistrationKernel();
 
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
 
 			//No copy constructor allowed
-			CombinedFieldBasedRegistrationKernel(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			CombinedFieldBasedRegistrationKernel(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

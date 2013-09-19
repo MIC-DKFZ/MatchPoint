@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoITKMultiResImageRegistration.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -36,28 +36,36 @@
 #include "mapITKTranslationTransform.h"
 #include "mapITKLinearInterpolateImageFunction.h"
 
-mapGenerateAlgorithmUIDPolicyMacro(DemoArbitraryMultiResImageRegUIDPolicy,"de.dkfz.matchpoint.demo","ArbitraryMultiResITKImageReg","1.0.0","");
-typedef map::algorithm::itk::ITKMultiResImageRegistrationAlgorithm<ImageType, ImageType, DemoArbitraryMultiResImageRegUIDPolicy> ArbitraryITKMultiResImageRegistrationAlgorithmType;
+mapGenerateAlgorithmUIDPolicyMacro(DemoArbitraryMultiResImageRegUIDPolicy,
+								   "de.dkfz.matchpoint.demo", "ArbitraryMultiResITKImageReg", "1.0.0", "");
+typedef map::algorithm::itk::ITKMultiResImageRegistrationAlgorithm<ImageType, ImageType, DemoArbitraryMultiResImageRegUIDPolicy>
+ArbitraryITKMultiResImageRegistrationAlgorithmType;
 
-void onRegistrationEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
+void onRegistrationEvent(itk::Object* pCaller, const itk::EventObject& e, void*)
 {
-	const map::events::AlgorithmEvent *pChangeEvent = dynamic_cast<const map::events::AlgorithmEvent *>(&e);
+	const map::events::AlgorithmEvent* pChangeEvent = dynamic_cast<const map::events::AlgorithmEvent*>
+			(&e);
 
 	if (pChangeEvent)
 	{
-		std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << pCaller << "): " << pChangeEvent->getComment() << std::endl;
+		std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << pCaller << "): " <<
+				  pChangeEvent->getComment() << std::endl;
 	}
 
-	const map::events::AlgorithmResolutionLevelEvent *pLevelEvent = dynamic_cast<const map::events::AlgorithmResolutionLevelEvent *>(&e);
+	const map::events::AlgorithmResolutionLevelEvent* pLevelEvent =
+		dynamic_cast<const map::events::AlgorithmResolutionLevelEvent*>(&e);
 
 	if (pLevelEvent)
 	{
-		ArbitraryITKMultiResImageRegistrationAlgorithmType *pAlg = dynamic_cast<ArbitraryITKMultiResImageRegistrationAlgorithmType *>(pCaller);
+		ArbitraryITKMultiResImageRegistrationAlgorithmType* pAlg =
+			dynamic_cast<ArbitraryITKMultiResImageRegistrationAlgorithmType*>(pCaller);
 
 		if (pAlg)
 		{
-			typedef map::algorithm::itk::ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer> OptimizerControlType;
-			OptimizerControlType *pOptimizerControl = dynamic_cast<OptimizerControlType *>(pAlg->getOptimizerControl());
+			typedef map::algorithm::itk::ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer>
+			OptimizerControlType;
+			OptimizerControlType* pOptimizerControl = dynamic_cast<OptimizerControlType*>
+					(pAlg->getOptimizerControl());
 
 			if (pAlg->getCurrentLevel() == 0)
 			{
@@ -66,25 +74,29 @@ void onRegistrationEvent(itk::Object *pCaller, const itk::EventObject &e, void *
 			}
 			else
 			{
-				pOptimizerControl->getConcreteOptimizer()->SetMaximumStepLength(pOptimizerControl->getConcreteOptimizer()->GetMaximumStepLength() / 4.0);
-				pOptimizerControl->getConcreteOptimizer()->SetMinimumStepLength(pOptimizerControl->getConcreteOptimizer()->GetMinimumStepLength() / 10.0);
+				pOptimizerControl->getConcreteOptimizer()->SetMaximumStepLength(
+					pOptimizerControl->getConcreteOptimizer()->GetMaximumStepLength() / 4.0);
+				pOptimizerControl->getConcreteOptimizer()->SetMinimumStepLength(
+					pOptimizerControl->getConcreteOptimizer()->GetMinimumStepLength() / 10.0);
 			}
 		}
 	}
 
 }
 
-void onBatchEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
+void onBatchEvent(itk::Object* pCaller, const itk::EventObject& e, void*)
 {
-	const map::events::AnyMatchPointThreadEvent *pMAPThreadEvent = dynamic_cast<const map::events::AnyMatchPointThreadEvent *>(&e);
+	const map::events::AnyMatchPointThreadEvent* pMAPThreadEvent =
+		dynamic_cast<const map::events::AnyMatchPointThreadEvent*>(&e);
 
 	if (pMAPThreadEvent)
 	{
-		std::cout << std::endl << pMAPThreadEvent->GetEventName() << " (@" << pCaller << "; Thread # " << pMAPThreadEvent->getThreadID() << "): " << pMAPThreadEvent->getComment() << std::endl;
+		std::cout << std::endl << pMAPThreadEvent->GetEventName() << " (@" << pCaller << "; Thread # " <<
+				  pMAPThreadEvent->getThreadID() << "): " << pMAPThreadEvent->getComment() << std::endl;
 	}
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	AppGlobals globals;
 
@@ -117,7 +129,8 @@ int main(int argc, char *argv[])
 
 	std::cout << "Establish registration algorithm..." << std::endl;
 
-	ArbitraryITKMultiResImageRegistrationAlgorithmType::Pointer spAlgorithm = ArbitraryITKMultiResImageRegistrationAlgorithmType::New();
+	ArbitraryITKMultiResImageRegistrationAlgorithmType::Pointer spAlgorithm =
+		ArbitraryITKMultiResImageRegistrationAlgorithmType::New();
 
 	typedef ArbitraryITKMultiResImageRegistrationAlgorithmType::RegistrationType RegistrationType;
 
@@ -129,10 +142,14 @@ int main(int argc, char *argv[])
 
 	//create registration algorithm components
 	//  typedef map::algorithm::itk::ITKMetricControl< ::itk::MeanSquaresImageToImageMetric<ImageType, ImageType> > MetricControlType;
-	typedef map::algorithm::itk::ITKMetricControl< ::itk::MattesMutualInformationImageToImageMetric<ImageType, ImageType> > MetricControlType;
-	typedef map::algorithm::itk::ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer> OptimizerControlType;
-	typedef ::itk::LinearInterpolateImageFunction<ImageType, map::core::continuous::ScalarType> InterpolatorType;
-	typedef map::algorithm::itk::ITKTransformModel< ::itk::TranslationTransform<map::core::continuous::ScalarType, 2> > TranformModelType;
+	typedef map::algorithm::itk::ITKMetricControl< ::itk::MattesMutualInformationImageToImageMetric<ImageType, ImageType> >
+	MetricControlType;
+	typedef map::algorithm::itk::ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer>
+	OptimizerControlType;
+	typedef ::itk::LinearInterpolateImageFunction<ImageType, map::core::continuous::ScalarType>
+	InterpolatorType;
+	typedef map::algorithm::itk::ITKTransformModel< ::itk::TranslationTransform<map::core::continuous::ScalarType, 2> >
+	TranformModelType;
 	typedef ::itk::MultiResolutionPyramidImageFilter<ImageType, ImageType> PyramideType;
 
 	OptimizerControlType::Pointer spOptimizer = OptimizerControlType::New();
@@ -186,7 +203,8 @@ int main(int argc, char *argv[])
 	std::cout << "Define mapping tasks..." << std::endl;
 
 	typedef map::core::ImageMappingTask<RegistrationType, ImageType, ImageType> ImageMappingTaskType;
-	typedef map::core::PointSetMappingTask<RegistrationType, LandmarksType, LandmarksType> PointSetMappingTaskType;
+	typedef map::core::PointSetMappingTask<RegistrationType, LandmarksType, LandmarksType>
+	PointSetMappingTaskType;
 
 	ImageMappingTaskType::Pointer spImageTask = ImageMappingTaskType::New();
 	spImageTask->setInputImage(globals.spMovingImage);
@@ -205,7 +223,8 @@ int main(int argc, char *argv[])
 	itk::CStyleCommand::Pointer spBatchCommand = itk::CStyleCommand::New();
 	spBatchCommand->SetCallback(&onBatchEvent);
 
-	spBatch->AddObserver(map::events::AnyMatchPointThreadEvent(map::events::NextTaskThreadEvent::anyThreadID), spBatchCommand);
+	spBatch->AddObserver(map::events::AnyMatchPointThreadEvent(
+							 map::events::NextTaskThreadEvent::anyThreadID), spBatchCommand);
 
 	//add tasks to batch
 	spBatch->addTask(spImageTask);

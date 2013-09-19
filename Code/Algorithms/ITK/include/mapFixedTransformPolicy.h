@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapFixedTransformPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -65,8 +65,8 @@ namespace map
 				  @eguarantee strong
 				  @return a pointer to the transform
 				*/
-				virtual TransformType *getTransformModel();
-				virtual const TransformType *getTransformModel() const;
+				virtual TransformType* getTransformModel();
+				virtual const TransformType* getTransformModel() const;
 
 				using Superclass::getConcreteTransformModel;
 
@@ -78,8 +78,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				FixedTransformPolicy(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				FixedTransformPolicy(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

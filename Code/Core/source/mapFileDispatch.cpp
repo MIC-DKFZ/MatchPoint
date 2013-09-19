@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapFileDispatch.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -32,7 +32,7 @@ namespace map
 	{
 		String
 		FileDispatch::
-		getName(const String &sFilePath)
+		getName(const String& sFilePath)
 		{
 			String result = itksys::SystemTools::GetFilenameWithoutLastExtension(sFilePath);
 			return result;
@@ -40,7 +40,7 @@ namespace map
 
 		String
 		FileDispatch::
-		getExtension(const String &sFilePath)
+		getExtension(const String& sFilePath)
 		{
 			String result = itksys::SystemTools::GetFilenameLastExtension(sFilePath);
 			return result;
@@ -48,7 +48,7 @@ namespace map
 
 		String
 		FileDispatch::
-		getFullName(const String &sFilePath)
+		getFullName(const String& sFilePath)
 		{
 			String result = itksys::SystemTools::GetFilenameName(sFilePath);
 			return result;
@@ -56,7 +56,7 @@ namespace map
 
 		String
 		FileDispatch::
-		getPath(const String &sFilePath)
+		getPath(const String& sFilePath)
 		{
 			String result = itksys::SystemTools::GetFilenamePath(sFilePath);
 			return ensureCorrectOSPathSeparator(result);
@@ -92,7 +92,7 @@ namespace map
 		};
 
 		FileDispatch::
-		FileDispatch(const String &filePath)
+		FileDispatch(const String& filePath)
 		{
 			_fileName = filePath;
 		};
@@ -103,7 +103,7 @@ namespace map
 		 */
 		String
 		FileDispatch::
-		createFullPath(const char *path, const char *file)
+		createFullPath(const char* path, const char* file)
 		{
 			String ret;
 
@@ -132,7 +132,7 @@ namespace map
 
 		String
 		FileDispatch::
-		createFullPath(const String &path, const String &file)
+		createFullPath(const String& path, const String& file)
 		{
 			String ret = createFullPath(path.c_str(), file.c_str());
 			return ret;
@@ -141,7 +141,7 @@ namespace map
 		/** Convertes all path seperators in the seperators used in the current OS.*/
 		String
 		FileDispatch::
-		ensureCorrectOSPathSeparator(const String &path)
+		ensureCorrectOSPathSeparator(const String& path)
 		{
 			String ret = path;
 

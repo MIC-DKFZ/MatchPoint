@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapSDXMLStrWriter.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -60,22 +60,22 @@ namespace map
 			* element designates the string itself. All found
 			* top level xml elements will be added as sub elements
 			* to the root StructuredData element.*/
-			core::String write(const Element *pElement) const;
+			core::String write(const Element* pElement) const;
 
 		protected:
 			typedef unsigned long ElementLevelType;
 
-			virtual core::String writeElement(const Element *pElement, const ElementLevelType &level) const;
-			virtual core::String writeAttributes(const Element *pElement, const ElementLevelType &level) const;
-			virtual core::String writeSubElements(const Element *pElement, const ElementLevelType &level) const;
+			virtual core::String writeElement(const Element* pElement, const ElementLevelType& level) const;
+			virtual core::String writeAttributes(const Element* pElement, const ElementLevelType& level) const;
+			virtual core::String writeSubElements(const Element* pElement, const ElementLevelType& level) const;
 
 			XMLStrWriter();
 			~XMLStrWriter();
 
 		private:
 			//No copy constructor allowed
-			XMLStrWriter(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			XMLStrWriter(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 		/** @class XMLIntendedStrWriter
@@ -98,15 +98,15 @@ namespace map
 		protected:
 			typedef Superclass::ElementLevelType ElementLevelType;
 
-			virtual core::String writeElement(const Element *pElement, const ElementLevelType &level) const;
+			virtual core::String writeElement(const Element* pElement, const ElementLevelType& level) const;
 
 			XMLIntendedStrWriter();
 			~XMLIntendedStrWriter();
 
 		private:
 			//No copy constructor allowed
-			XMLIntendedStrWriter(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			XMLIntendedStrWriter(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 		/**
@@ -115,7 +115,7 @@ namespace map
 		* @return sSrc encoded for insertion into xml.
 		* @ingroup SD
 		*/
-		MAPCore_EXPORT core::String encodeForXml(const core::String &sSrc);
+		MAPCore_EXPORT core::String encodeForXml(const core::String& sSrc);
 
 	} //end of namespace structuredData
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapPointSetMappingTask.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -64,7 +64,8 @@ namespace map
 			typedef typename ResultPointSetType::Pointer                            ResultPointSetPointer;
 			typedef typename ResultPointSetType::PixelType                          ErrorPointValueType;
 
-			typedef PointSetMappingPerformerRequest<RegistrationType, InputPointSetType, ResultPointSetType> PerformerRequestType;
+			typedef PointSetMappingPerformerRequest<RegistrationType, InputPointSetType, ResultPointSetType>
+			PerformerRequestType;
 
 			typedef MappingPerformerBase<PerformerRequestType> TaskPerformerBaseType;
 
@@ -74,24 +75,25 @@ namespace map
 #ifdef ITK_USE_CONCEPT_CHECKING
 			/** Begin concept checking */
 			itkConceptMacro(InputPointSetFitsRegistrationCheck,
-			                (itk::Concept::SameDimension<InputPointSetType::PointDimension, RegistrationType::MovingDimensions>));
+							(itk::Concept::SameDimension<InputPointSetType::PointDimension, RegistrationType::MovingDimensions>));
 			itkConceptMacro(ResultPointSetFitsRegistrationCheck,
-			                (itk::Concept::SameDimension<ResultPointSetType::PointDimension, RegistrationType::TargetDimensions>));
+							(itk::Concept::SameDimension<ResultPointSetType::PointDimension, RegistrationType::TargetDimensions>));
 			/** End concept checking */
 #endif
 
 		protected:
 			typedef TLoadPolicy<TaskPerformerBaseType> LoadPolicyType;
 
-			typedef services::ServiceStack<TaskPerformerBaseType, LoadPolicyType > ConcreteTaskPerformerStackType;
+			typedef services::ServiceStack<TaskPerformerBaseType, LoadPolicyType >
+			ConcreteTaskPerformerStackType;
 
 		public:
 			typedef services::StaticServiceStack<ConcreteTaskPerformerStackType>  TaskPerformerStackType;
 
 			/*! Sets _spInputPoints to inputPoints and sets _spResultPoints to null.
 			 * @param [in] inputPoints The pointer to the input points*/
-			void setInputPointSet(const InputPointSetType *inputPoints);
-			const InputPointSetType *getInputPointSet() const;
+			void setInputPointSet(const InputPointSetType* inputPoints);
+			const InputPointSetType* getInputPointSet() const;
 
 			/*! Returns _spResultPoints. If the smart pointer is null the method will call execute() to
 			 * register the input data.
@@ -102,8 +104,8 @@ namespace map
 			void setThrowOnMappingError(bool throwOnError);
 			bool getThrowOnMappingError() const;
 
-			void setErrorPointValue(const ErrorPointValueType &value);
-			const ErrorPointValueType &getErrorPointValue() const;
+			void setErrorPointValue(const ErrorPointValueType& value);
+			const ErrorPointValueType& getErrorPointValue() const;
 
 		protected:
 			PointSetMappingTask();
@@ -135,11 +137,11 @@ namespace map
 			virtual void clearInputs(void);
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
-			PointSetMappingTask(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			PointSetMappingTask(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 	} // end namespace core
 } // end namespace map

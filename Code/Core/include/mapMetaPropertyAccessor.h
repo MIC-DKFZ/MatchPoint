@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMetaPropertyAccessor.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -57,7 +57,7 @@ namespace map
 			* @param value The value that was unwrapped. Value is only valid if return method returns true.
 			* @eguarantee strong
 			*/
-			static bool unwrapPropertyValue(const MetaPropertyBase *pProperty, ValueType &value);
+			static bool unwrapPropertyValue(const MetaPropertyBase* pProperty, ValueType& value);
 
 			/**
 			* @brief Resets the value of a passed property.
@@ -67,36 +67,36 @@ namespace map
 			* @param value The value that should be wrapped into the property.
 			* @eguarantee strong
 			*/
-			static bool wrapPropertyValue(MetaPropertyBase *pProperty, ValueType value);
+			static bool wrapPropertyValue(MetaPropertyBase* pProperty, ValueType value);
 
 		private:
 			~MetaPropertyAccessor();//purposely not implemented
 			MetaPropertyAccessor();//purposely not implemented
 
-			MetaPropertyAccessor(const MetaPropertyAccessor<TValue> &);//purposely not implemented
-			void operator=(const MetaPropertyAccessor<TValue> &); //purposely not implemented
+			MetaPropertyAccessor(const MetaPropertyAccessor<TValue>&); //purposely not implemented
+			void operator=(const MetaPropertyAccessor<TValue>&);  //purposely not implemented
 		};
 
 		//specialized template version for const-type-pointer. This version also casts for InterfaceType
 		//if the cast for ConstInterfaceType fails.
 		template <typename TValue>
-		class MetaPropertyAccessor<const TValue *>
+		class MetaPropertyAccessor<const TValue*>
 		{
 		public:
-			typedef const TValue *ValueType;
-			typedef MetaPropertyAccessInterface<TValue *> InterfaceType;
-			typedef MetaPropertyAccessInterface<const TValue *> ConstInterfaceType;
+			typedef const TValue* ValueType;
+			typedef MetaPropertyAccessInterface<TValue*> InterfaceType;
+			typedef MetaPropertyAccessInterface<const TValue*> ConstInterfaceType;
 
-			static bool unwrapPropertyValue(const MetaPropertyBase *pProperty, ValueType &value);
+			static bool unwrapPropertyValue(const MetaPropertyBase* pProperty, ValueType& value);
 
-			static bool wrapPropertyValue(MetaPropertyBase *pProperty, ValueType value);
+			static bool wrapPropertyValue(MetaPropertyBase* pProperty, ValueType value);
 
 		private:
 			~MetaPropertyAccessor();//purposely not implemented
 			MetaPropertyAccessor();//purposely not implemented
 
-			MetaPropertyAccessor(const MetaPropertyAccessor<TValue *> &); //purposely not implemented
-			void operator=(const MetaPropertyAccessor<TValue *> &); //purposely not implemented
+			MetaPropertyAccessor(const MetaPropertyAccessor<TValue*>&);   //purposely not implemented
+			void operator=(const MetaPropertyAccessor<TValue*>&);   //purposely not implemented
 		};
 
 		//specialized template version for smart pointer. This version takes care if the
@@ -105,20 +105,22 @@ namespace map
 		class MetaPropertyAccessor< itk::SmartPointer<TValue> >
 		{
 		public:
-			typedef TValue *ValueType;
+			typedef TValue* ValueType;
 			typedef itk::SmartPointer<TValue> SmartPointerType;
 			typedef MetaPropertyAccessInterface<ValueType> InterfaceType;
 
-			static bool unwrapPropertyValue(const MetaPropertyBase *pProperty, SmartPointerType &spValue);
+			static bool unwrapPropertyValue(const MetaPropertyBase* pProperty, SmartPointerType& spValue);
 
-			static bool wrapPropertyValue(MetaPropertyBase *pProperty, ValueType value);
+			static bool wrapPropertyValue(MetaPropertyBase* pProperty, ValueType value);
 
 		private:
 			~MetaPropertyAccessor();//purposely not implemented
 			MetaPropertyAccessor();//purposely not implemented
 
-			MetaPropertyAccessor(const MetaPropertyAccessor< itk::SmartPointer<TValue> > &);//purposely not implemented
-			void operator=(const MetaPropertyAccessor< itk::SmartPointer<TValue> > &); //purposely not implemented
+			MetaPropertyAccessor(const MetaPropertyAccessor< itk::SmartPointer<TValue> >
+								 &); //purposely not implemented
+			void operator=(const MetaPropertyAccessor< itk::SmartPointer<TValue> >
+						   &);  //purposely not implemented
 		};
 
 		//specialized template version for const smart pointer.
@@ -130,21 +132,23 @@ namespace map
 		class MetaPropertyAccessor< itk::SmartPointer<const TValue> >
 		{
 		public:
-			typedef const TValue *ValueType;
+			typedef const TValue* ValueType;
 			typedef itk::SmartPointer<const TValue> SmartPointerType;
-			typedef MetaPropertyAccessInterface<TValue *> InterfaceType;
-			typedef MetaPropertyAccessInterface<const TValue *> ConstInterfaceType;
+			typedef MetaPropertyAccessInterface<TValue*> InterfaceType;
+			typedef MetaPropertyAccessInterface<const TValue*> ConstInterfaceType;
 
-			static bool unwrapPropertyValue(const MetaPropertyBase *pProperty, SmartPointerType &spValue);
+			static bool unwrapPropertyValue(const MetaPropertyBase* pProperty, SmartPointerType& spValue);
 
-			static bool wrapPropertyValue(MetaPropertyBase *pProperty, ValueType value);
+			static bool wrapPropertyValue(MetaPropertyBase* pProperty, ValueType value);
 
 		private:
 			~MetaPropertyAccessor();//purposely not implemented
 			MetaPropertyAccessor();//purposely not implemented
 
-			MetaPropertyAccessor(const MetaPropertyAccessor< itk::SmartPointer<const TValue> > &);//purposely not implemented
-			void operator=(const MetaPropertyAccessor< itk::SmartPointer<const TValue> > &); //purposely not implemented
+			MetaPropertyAccessor(const MetaPropertyAccessor< itk::SmartPointer<const TValue> >
+								 &); //purposely not implemented
+			void operator=(const MetaPropertyAccessor< itk::SmartPointer<const TValue> >
+						   &);  //purposely not implemented
 		};
 
 		/*!
@@ -159,7 +163,7 @@ namespace map
 		* @ingroup Core
 		*/
 		template <typename TValue>
-		bool unwrapMetaProperty(const MetaPropertyBase *pProperty, TValue &value)
+		bool unwrapMetaProperty(const MetaPropertyBase* pProperty, TValue& value)
 		{
 			return MetaPropertyAccessor<TValue>::unwrapPropertyValue(pProperty, value);
 		};
@@ -173,11 +177,12 @@ namespace map
 		*/
 		template <typename TValue, typename TRawPointer, typename TCastedPointer>
 		bool
-		castRawMetaProperty(const MetaPropertyBase *pProperty, TValue &spValue)
+		castRawMetaProperty(const MetaPropertyBase* pProperty, TValue& spValue)
 		{
 			bool result = false;
 
-			const MetaPropertyLightPointerAccessInterface *pInterface = dynamic_cast<const MetaPropertyLightPointerAccessInterface *>(pProperty);
+			const MetaPropertyLightPointerAccessInterface* pInterface =
+				dynamic_cast<const MetaPropertyLightPointerAccessInterface*>(pProperty);
 
 			if (pInterface)
 			{
@@ -220,7 +225,7 @@ namespace map
 		class MetaPropertyCaster
 		{
 		public:
-			static bool cast(const MetaPropertyBase *, TValue &)
+			static bool cast(const MetaPropertyBase*, TValue&)
 			{
 				return false;
 			};
@@ -228,18 +233,18 @@ namespace map
 			~MetaPropertyCaster();//purposely not implemented
 			MetaPropertyCaster();//purposely not implemented
 
-			MetaPropertyCaster(const MetaPropertyCaster< TValue > &);//purposely not implemented
-			void operator=(const MetaPropertyCaster< TValue > &); //purposely not implemented
+			MetaPropertyCaster(const MetaPropertyCaster< TValue >&); //purposely not implemented
+			void operator=(const MetaPropertyCaster< TValue >&);  //purposely not implemented
 		};
 
 		template <typename TValue>
-		class MetaPropertyCaster< TValue * >
+		class MetaPropertyCaster< TValue* >
 		{
 		public:
-			typedef TValue *ValueType;
+			typedef TValue* ValueType;
 			typedef MetaPropertyLightPointerAccessInterface::LightPointer LightPointerType;
 
-			static bool cast(const MetaPropertyBase *pProperty, ValueType &spValue)
+			static bool cast(const MetaPropertyBase* pProperty, ValueType& spValue)
 			{
 				return castRawMetaProperty<ValueType, LightPointerType, ValueType>(pProperty, spValue);
 			};
@@ -247,18 +252,19 @@ namespace map
 			~MetaPropertyCaster();//purposely not implemented
 			MetaPropertyCaster();//purposely not implemented
 
-			MetaPropertyCaster(const MetaPropertyCaster< itk::SmartPointer<TValue> > &);//purposely not implemented
-			void operator=(const MetaPropertyCaster< itk::SmartPointer<TValue> > &); //purposely not implemented
+			MetaPropertyCaster(const MetaPropertyCaster< itk::SmartPointer<TValue> >
+							   &); //purposely not implemented
+			void operator=(const MetaPropertyCaster< itk::SmartPointer<TValue> >&);  //purposely not implemented
 		};
 
 		template <typename TValue>
-		class MetaPropertyCaster< const TValue * >
+		class MetaPropertyCaster< const TValue* >
 		{
 		public:
-			typedef const TValue *ValueType;
+			typedef const TValue* ValueType;
 			typedef MetaPropertyLightPointerAccessInterface::ConstLightPointer LightPointerType;
 
-			static bool cast(const MetaPropertyBase *pProperty, ValueType &spValue)
+			static bool cast(const MetaPropertyBase* pProperty, ValueType& spValue)
 			{
 				return castRawMetaProperty<ValueType, LightPointerType, ValueType>(pProperty, spValue);
 			};
@@ -266,19 +272,20 @@ namespace map
 			~MetaPropertyCaster();//purposely not implemented
 			MetaPropertyCaster();//purposely not implemented
 
-			MetaPropertyCaster(const MetaPropertyCaster< itk::SmartPointer<TValue> > &);//purposely not implemented
-			void operator=(const MetaPropertyCaster< itk::SmartPointer<TValue> > &); //purposely not implemented
+			MetaPropertyCaster(const MetaPropertyCaster< itk::SmartPointer<TValue> >
+							   &); //purposely not implemented
+			void operator=(const MetaPropertyCaster< itk::SmartPointer<TValue> >&);  //purposely not implemented
 		};
 
 		template <typename TValue>
 		class MetaPropertyCaster< itk::SmartPointer<TValue> >
 		{
 		public:
-			typedef TValue *ValueType;
+			typedef TValue* ValueType;
 			typedef itk::SmartPointer<TValue> SmartPointerType;
 			typedef MetaPropertyLightPointerAccessInterface::LightPointer LightPointerType;
 
-			static bool cast(const MetaPropertyBase *pProperty, SmartPointerType &spValue)
+			static bool cast(const MetaPropertyBase* pProperty, SmartPointerType& spValue)
 			{
 				return castRawMetaProperty<SmartPointerType, LightPointerType, ValueType>(pProperty, spValue);
 			};
@@ -286,8 +293,9 @@ namespace map
 			~MetaPropertyCaster();//purposely not implemented
 			MetaPropertyCaster();//purposely not implemented
 
-			MetaPropertyCaster(const MetaPropertyCaster< itk::SmartPointer<TValue> > &);//purposely not implemented
-			void operator=(const MetaPropertyCaster< itk::SmartPointer<TValue> > &); //purposely not implemented
+			MetaPropertyCaster(const MetaPropertyCaster< itk::SmartPointer<TValue> >
+							   &); //purposely not implemented
+			void operator=(const MetaPropertyCaster< itk::SmartPointer<TValue> >&);  //purposely not implemented
 		};
 
 		//specialized template version for const smart pointer.
@@ -297,11 +305,11 @@ namespace map
 		class MetaPropertyCaster< itk::SmartPointer<const TValue> >
 		{
 		public:
-			typedef const TValue *ValueType;
+			typedef const TValue* ValueType;
 			typedef itk::SmartPointer<const TValue> SmartPointerType;
 			typedef MetaPropertyLightPointerAccessInterface::ConstLightPointer LightPointerType;
 
-			static bool cast(const MetaPropertyBase *pProperty, SmartPointerType &spValue)
+			static bool cast(const MetaPropertyBase* pProperty, SmartPointerType& spValue)
 			{
 				return castRawMetaProperty<SmartPointerType, LightPointerType, ValueType>(pProperty, spValue);
 			};
@@ -309,8 +317,10 @@ namespace map
 			~MetaPropertyCaster();//purposely not implemented
 			MetaPropertyCaster();//purposely not implemented
 
-			MetaPropertyCaster(const MetaPropertyCaster< itk::SmartPointer<const TValue> > &);//purposely not implemented
-			void operator=(const MetaPropertyCaster< itk::SmartPointer<const TValue> > &); //purposely not implemented
+			MetaPropertyCaster(const MetaPropertyCaster< itk::SmartPointer<const TValue> >
+							   &); //purposely not implemented
+			void operator=(const MetaPropertyCaster< itk::SmartPointer<const TValue> >
+						   &);  //purposely not implemented
 		};
 
 		/*!
@@ -323,7 +333,7 @@ namespace map
 		* @ingroup Core
 		*/
 		template <typename TValue>
-		bool unwrapCastedMetaProperty(const MetaPropertyBase *pProperty, TValue &value)
+		bool unwrapCastedMetaProperty(const MetaPropertyBase* pProperty, TValue& value)
 		{
 			bool result = false;
 			result = MetaPropertyAccessor<TValue>::unwrapPropertyValue(pProperty, value);

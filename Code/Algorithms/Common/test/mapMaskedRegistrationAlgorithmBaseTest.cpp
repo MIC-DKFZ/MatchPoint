@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/test/mapMaskedRegistrationAlgorithmBaseTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -38,7 +38,8 @@ namespace map
 		{
 
 			template<unsigned int VMovingDimension, unsigned int VTargetDimension>
-			class TestMaskedRegistrationAlgorithmBase : public algorithm::MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension>
+			class TestMaskedRegistrationAlgorithmBase : public
+				algorithm::MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension>
 			{
 			public:
 				TestMaskedRegistrationAlgorithmBase() {};
@@ -59,8 +60,8 @@ namespace map
 			Mask2DType::Pointer spMovingMask = Mask2DType::New();
 			Mask3DType::Pointer spTargetMask = Mask3DType::New();
 
-			const TestMaskedRegistrationAlgorithmBase<2, 3>::MovingMaskBaseType *pMovingBase = spMovingMask;
-			const TestMaskedRegistrationAlgorithmBase<2, 3>::TargetMaskBaseType *pTargetBase = spTargetMask;
+			const TestMaskedRegistrationAlgorithmBase<2, 3>::MovingMaskBaseType* pMovingBase = spMovingMask;
+			const TestMaskedRegistrationAlgorithmBase<2, 3>::TargetMaskBaseType* pTargetBase = spTargetMask;
 
 			CHECK_EQUAL(true, testInterface.getMovingMask().IsNull());
 			CHECK_EQUAL(true, testInterface.getTargetMask().IsNull());

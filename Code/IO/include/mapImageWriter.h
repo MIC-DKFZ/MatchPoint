@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapImageWriter.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -40,9 +40,9 @@ namespace map
 		{
 			enum Type
 			{
-			    Default = 0, //* - Depending on the file extension (meta images (*.mhd, *.mha): None; others: Numeric)
-			    None = 1, //* - No series writing, only the specified file
-			    Numeric = 3 //* - Use series writer and NumericSeriesFileNames
+				Default = 0, //* - Depending on the file extension (meta images (*.mhd, *.mha): None; others: Numeric)
+				None = 1, //* - No series writing, only the specified file
+				Numeric = 3 //* - Use series writer and NumericSeriesFileNames
 			};
 		};
 
@@ -111,7 +111,7 @@ namespace map
 
 			/** Function loads the image if needed and returns the data.
 			 * @return Pointer to loaded image.*/
-			void setInput(const InputImageType *pImage);
+			void setInput(const InputImageType* pImage);
 
 			/** Function saves the image. */
 			void update();
@@ -122,8 +122,8 @@ namespace map
 			virtual ~ImageWriter();
 
 		private:
-			ImageWriter(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			ImageWriter(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

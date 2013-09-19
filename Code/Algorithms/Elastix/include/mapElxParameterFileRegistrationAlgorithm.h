@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Elastix/include/mapElxParameterFileRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -47,7 +47,8 @@ namespace map
 						@ingroup Elastix
 			 */
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			class ParameterFileRegistrationAlgorithm : public CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
+			class ParameterFileRegistrationAlgorithm : public
+				CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
 			{
 			public:
 				typedef ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
@@ -78,13 +79,13 @@ namespace map
 				virtual ~ParameterFileRegistrationAlgorithm();
 
 				/*! @reimplemented*/
-				virtual void compileInfos(MetaPropertyVectorType &infos) const;
+				virtual void compileInfos(MetaPropertyVectorType& infos) const;
 
 				/*! @reimplemented*/
-				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const;
+				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
 
 				/*! @reimplemented*/
-				virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
+				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
 
 				/* @reimplemented*/
 				virtual void configureAlgorithm();
@@ -99,8 +100,8 @@ namespace map
 
 			private:
 
-				ParameterFileRegistrationAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ParameterFileRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

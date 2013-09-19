@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapSealedOptimizerPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -78,30 +78,30 @@ namespace map
 				@eguarantee strong
 				@return a pointer to an OptimizerType object
 				*/
-				InternalOptimizerControlType *getOptimizerInternal();
-				const InternalOptimizerControlType *getOptimizerInternal() const;
+				InternalOptimizerControlType* getOptimizerInternal();
+				const InternalOptimizerControlType* getOptimizerInternal() const;
 
 				/*! gets the concrete optimizer control
 				* @eguarantee strong
 				* @return a pointer to a ConcreteOptimizerControlType object
 				*/
-				ConcreteOptimizerControlType *getConcreteOptimizerControl();
+				ConcreteOptimizerControlType* getConcreteOptimizerControl();
 				/*! gets the concrete optimizer control
 				* @eguarantee strong
 				* @return a pointer to a ConcreteOptimizerControlType object
 				*/
-				const ConcreteOptimizerControlType *getConcreteOptimizerControl() const;
+				const ConcreteOptimizerControlType* getConcreteOptimizerControl() const;
 
 				/*! gets the concrete wrapped optimizer
 				* @eguarantee strong
 				* @return a pointer to a ConcreteOptimizerType object
 				*/
-				ConcreteOptimizerType *getConcreteITKOptimizer();
+				ConcreteOptimizerType* getConcreteITKOptimizer();
 				/*! gets a concrete optimizer
 				@eguarantee strong
 				@return a pointer to a ConcreteOptimizerType object
 				*/
-				const ConcreteOptimizerType *getConcreteITKOptimizer() const;
+				const ConcreteOptimizerType* getConcreteITKOptimizer() const;
 
 				/*! initializes the optimizer
 				Reimplement if you want to change the initialization of the optimizer
@@ -135,8 +135,8 @@ namespace map
 				ConcreteOptimizerControlPointer _spOptimizerControl;
 
 				//No copy constructor allowed
-				SealedOptimizerPolicy(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				SealedOptimizerPolicy(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

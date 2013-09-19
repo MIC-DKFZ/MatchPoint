@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapSDXMLFileReader.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -41,7 +41,7 @@ namespace map
 
 		XMLFileReader::ElementPointer
 		XMLFileReader::
-		read(const core::String &filePath)
+		read(const core::String& filePath)
 		{
 			ElementPointer spResult = NULL;
 
@@ -52,13 +52,14 @@ namespace map
 
 			if (!file.is_open())
 			{
-				mapDefaultExceptionMacro( << "Cannot open or create specified file to load. File path: " << filePath);
+				mapDefaultExceptionMacro( << "Cannot open or create specified file to load. File path: " <<
+										  filePath);
 			}
 
 			core::String data;
 			bool hasError = false;
 			std::streamsize filesize = itksys::SystemTools::FileLength(filePath.c_str());
-			char *buffer = new char [filesize];
+			char* buffer = new char [filesize];
 
 			try
 			{
@@ -78,7 +79,8 @@ namespace map
 
 			if (hasError)
 			{
-				mapDefaultExceptionMacro( << "Error while reading file content into buffer. File path:" << filePath);
+				mapDefaultExceptionMacro( << "Error while reading file content into buffer. File path:" <<
+										  filePath);
 			}
 
 
@@ -96,11 +98,12 @@ namespace map
 
 		void
 		XMLFileReader::
-		read(const core::String &filePath, StreamingInterface *pInterface)
+		read(const core::String& filePath, StreamingInterface* pInterface)
 		{
 			if (!pInterface)
 			{
-				mapDefaultExceptionMacro( << "Error, cannot read passed object from xml file. Passed interface is NULL.");
+				mapDefaultExceptionMacro( <<
+										  "Error, cannot read passed object from xml file. Passed interface is NULL.");
 			}
 
 			read(filePath);

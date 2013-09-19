@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapITKDimensionedTransformModel.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -40,12 +40,14 @@ namespace map
 		* @ingroup TransformModel
 		*/
 		template< template <typename> class TTransform, class TScalarType>
-		class ITKDimensionedTransformModel : public TransformModelBase<TScalarType, TTransform<TScalarType>::InputSpaceDimension, TTransform<TScalarType>::OutputSpaceDimension>
+		class ITKDimensionedTransformModel : public
+			TransformModelBase<TScalarType, TTransform<TScalarType>::InputSpaceDimension, TTransform<TScalarType>::OutputSpaceDimension>
 		{
 		public:
 			/*! Standard class typedefs. */
 			typedef ITKDimensionedTransformModel<TTransform, TScalarType>  Self;
-			typedef TransformModelBase<TScalarType, TTransform<TScalarType>::InputSpaceDimension, TTransform<TScalarType>::OutputSpaceDimension>  Superclass;
+			typedef TransformModelBase<TScalarType, TTransform<TScalarType>::InputSpaceDimension, TTransform<TScalarType>::OutputSpaceDimension>
+			Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
@@ -60,7 +62,7 @@ namespace map
 			typedef typename Superclass::InverseTransformModelBasePointer InverseTransformModelBasePointer;
 
 			typedef ITKDimensionedTransformModel < TTransform,
-			        TScalarType >          InverseTransformModelType;
+					TScalarType >          InverseTransformModelType;
 			typedef typename InverseTransformModelType::Pointer           InverseTransformModelPointer;
 
 			typedef typename Superclass::TransformBaseType                TransformBaseType;
@@ -73,13 +75,13 @@ namespace map
 			typedef typename InverseTransformModelType::TransformType     InverseTransformType;
 			typedef typename InverseTransformModelType::TransformPointer  InverseTransformPointer;
 
-			virtual const TransformBaseType *getTransform() const;
-			virtual TransformBaseType *getTransform();
+			virtual const TransformBaseType* getTransform() const;
+			virtual TransformBaseType* getTransform();
 
-			virtual const TransformType *getConcreteTransform() const;
-			virtual TransformType *getConcreteTransform();
+			virtual const TransformType* getConcreteTransform() const;
+			virtual TransformType* getConcreteTransform();
 
-			virtual bool getInverse(InverseTransformModelBasePointer &spInverseModel) const;
+			virtual bool getInverse(InverseTransformModelBasePointer& spInverseModel) const;
 
 			virtual TransformModelBasePointer clone() const;
 
@@ -92,11 +94,11 @@ namespace map
 			virtual void Modified() const;
 
 		protected:
-			operator const TransformType &() const
+			operator const TransformType& () const
 			{
 				return getConcreteTransform();
 			}
-			operator TransformType &()
+			operator TransformType& ()
 			{
 				return getConcreteTransform();
 			}
@@ -117,8 +119,8 @@ namespace map
 			virtual ~ITKDimensionedTransformModel();
 
 		private:
-			ITKDimensionedTransformModel(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			ITKDimensionedTransformModel(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

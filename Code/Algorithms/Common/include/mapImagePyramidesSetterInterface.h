@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapImagePyramidesSetterInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,13 +50,14 @@ namespace map
 
 				/** Type of the Fixed image multiresolution pyramid. */
 				typedef ::itk::MultiResolutionPyramidImageFilter < TargetImageType,
-				        TargetImageType >
-				        TargetImagePyramideBaseType;
+						TargetImageType >
+						TargetImagePyramideBaseType;
 				typedef typename TargetImagePyramideBaseType::Pointer  TargetImagePyramideBasePointer;
 				typedef typename TargetImagePyramideBaseType::ConstPointer  TargetImagePyramidConstPointer;
 
 				/** Type of the moving image multiresolution pyramid. */
-				typedef ::itk::MultiResolutionPyramidImageFilter< MovingImageType, MovingImageType > MovingImagePyramideBaseType;
+				typedef ::itk::MultiResolutionPyramidImageFilter< MovingImageType, MovingImageType >
+				MovingImagePyramideBaseType;
 				typedef typename MovingImagePyramideBaseType::Pointer MovingImagePyramideBasePointer;
 				typedef typename MovingImagePyramideBaseType::ConstPointer MovingImagePyramidConstPointer;
 
@@ -64,13 +65,13 @@ namespace map
 				@eguarantee strong
 				@param pMovingMask a pointer to the moving image pyramide
 				*/
-				virtual void setMovingImagePyramide(MovingImagePyramideBaseType *pMovingPyramide) = 0;
+				virtual void setMovingImagePyramide(MovingImagePyramideBaseType* pMovingPyramide) = 0;
 
 				/*! @brief sets the target image pyramide
 				@eguarantee strong
 				@param pTargetMask a pointer to the moving image pyramide
 				*/
-				virtual void setTargetImagePyramide(TargetImagePyramideBaseType *pTargetPyramide) = 0;
+				virtual void setTargetImagePyramide(TargetImagePyramideBaseType* pTargetPyramide) = 0;
 
 			protected:
 				ImagePyramidesSetterInterface() {};
@@ -78,8 +79,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ImagePyramidesSetterInterface(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ImagePyramidesSetterInterface(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 		}

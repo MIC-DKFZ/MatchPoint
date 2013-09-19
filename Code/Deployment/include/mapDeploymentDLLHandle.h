@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/include/mapDeploymentDLLHandle.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -78,12 +78,12 @@ namespace map
 #if MAC_OS_X_VERSION_MAX_ALLOWED < 1030
 			typedef NSModule LibraryHandleType;
 #else
-			typedef void *LibraryHandleType;
+			typedef void* LibraryHandleType;
 #endif
 #elif defined(__BEOS__)
 			typedef image_id LibraryHandleType;
 #else  // POSIX
-			typedef void *LibraryHandleType;
+			typedef void* LibraryHandleType;
 #endif
 
 			/** Run-time type information (and related methods). */
@@ -97,26 +97,26 @@ namespace map
 			* @param libraryFile File path of the DLL containing the algorithm
 			* @eguarantee strong
 			*/
-			static Pointer New(const LibraryHandleType &libraryHandle,
-			                   const map::algorithm::UID *pUID,
-			                   const core::String &libraryFile,
-              const core::String &profileStr);
+			static Pointer New(const LibraryHandleType& libraryHandle,
+							   const map::algorithm::UID* pUID,
+							   const core::String& libraryFile,
+							   const core::String& profileStr);
 
-			const LibraryHandleType &getLibraryHandle() const;
+			const LibraryHandleType& getLibraryHandle() const;
 
 		protected:
-			DLLHandle(const LibraryHandleType &libraryHandle,
-			          const map::algorithm::UID *pUID,
-			          const core::String &libraryFile,
-              const core::String &profileStr);
+			DLLHandle(const LibraryHandleType& libraryHandle,
+					  const map::algorithm::UID* pUID,
+					  const core::String& libraryFile,
+					  const core::String& profileStr);
 
 			~DLLHandle();
 
 			LibraryHandleType _libraryHandle;
 
 		private:
-			DLLHandle(const Self &);//purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			DLLHandle(const Self&); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

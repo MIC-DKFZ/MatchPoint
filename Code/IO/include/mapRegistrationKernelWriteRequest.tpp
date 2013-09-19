@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapRegistrationKernelWriteRequest.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_REGISTRATION_KERNEL_WRITE_REQUEST_TPP
@@ -32,7 +32,8 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions>::
-		RegistrationKernelWriteRequest(const KernelBaseType *pKernel, const core::String &path, const core::String &name, bool expandLazyKernels):
+		RegistrationKernelWriteRequest(const KernelBaseType* pKernel, const core::String& path,
+									   const core::String& name, bool expandLazyKernels):
 			_spKernel(pKernel), _path(path), _name(name), _expandLazyKernels(expandLazyKernels)
 		{
 			assert(pKernel);
@@ -40,7 +41,8 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions>::
-		RegistrationKernelWriteRequest(const KernelBaseType &kernel, const core::String &path, const core::String &name, bool expandLazyKernels):
+		RegistrationKernelWriteRequest(const KernelBaseType& kernel, const core::String& path,
+									   const core::String& name, bool expandLazyKernels):
 			_spKernel(&kernel), _path(path), _name(name), _expandLazyKernels(expandLazyKernels)
 		{
 		};
@@ -55,8 +57,9 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions>::
-		RegistrationKernelWriteRequest(const RegistrationKernelWriteRequest &req):
-			_spKernel(req._spKernel), _path(req._path), _name(req._name), _expandLazyKernels(req._expandLazyKernels)
+		RegistrationKernelWriteRequest(const RegistrationKernelWriteRequest& req):
+			_spKernel(req._spKernel), _path(req._path), _name(req._name),
+			_expandLazyKernels(req._expandLazyKernels)
 		{
 			assert(_spKernel.IsNotNull());
 		}
@@ -64,7 +67,7 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
 		RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions>::
-		operator=(const RegistrationKernelWriteRequest &req)
+		operator=(const RegistrationKernelWriteRequest& req)
 		{
 			if (&req != this)
 			{

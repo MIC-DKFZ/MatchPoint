@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKEuler3DICPRegistrationAlgorithmTemplate.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -42,17 +42,22 @@ namespace map
 	{
 		namespace boxed
 		{
-      const char *const DefaultITKEuler3DICPRegistrationAlgorithm_profile = "<Profile><Description>Simple 3D rigid (translation and euler angles) registration algorithm using point sets pairs and a ICP solution.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Points</DataType><DimMoving>3</DimMoving><DimTarget>3</DimTarget><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain><Optimization>ICP<Optimization/></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
+			const char* const DefaultITKEuler3DICPRegistrationAlgorithm_profile =
+				"<Profile><Description>Simple 3D rigid (translation and euler angles) registration algorithm using point sets pairs and a ICP solution.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Points</DataType><DimMoving>3</DimMoving><DimTarget>3</DimTarget><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain><Optimization>ICP<Optimization/></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKEuler3DICPRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKEuler3DICPRegistrationAlgorithm.default", "1.0.0", DefaultITKEuler3DICPRegistrationAlgorithm_profile);
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKEuler3DICPRegistrationAlgorithmUIDPolicy,
+											   "de.dkfz.matchpoint", "ITKEuler3DICPRegistrationAlgorithm.default", "1.0.0",
+											   DefaultITKEuler3DICPRegistrationAlgorithm_profile);
 
 			/** @brief Boxing of a simple rigid point set registration algorithm using Euler3D transform
 			@ingroup Boxed
 			*/
 			template < class TMovingPointSet, class TTargetPointSet = TMovingPointSet,
-			         class TIdentificationPolicy = DefaultITKEuler3DICPRegistrationAlgorithmUIDPolicy,
-			         class TDistanceMap = typename map::core::discrete::Elements<TMovingPointSet::PointDimension>::InternalImageType >
-			class ITKEuler3DICPRegistrationAlgorithm: public map::algorithm::itk::ITKPointSetRegistrationAlgorithm < TMovingPointSet,
+					 class TIdentificationPolicy = DefaultITKEuler3DICPRegistrationAlgorithmUIDPolicy,
+					 class TDistanceMap = typename
+					 map::core::discrete::Elements<TMovingPointSet::PointDimension>::InternalImageType >
+			class ITKEuler3DICPRegistrationAlgorithm: public
+				map::algorithm::itk::ITKPointSetRegistrationAlgorithm < TMovingPointSet,
 				TTargetPointSet,
 				TIdentificationPolicy,
 				SealedFixedPointSetToPointSetMetricPolicyMacro< ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap> >,
@@ -61,7 +66,8 @@ namespace map
 			{
 			public:
 				//optional
-				typedef ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap> MetricType;
+				typedef ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap>
+				MetricType;
 				typedef ::itk::LevenbergMarquardtOptimizer OptimizerType;
 				typedef ::itk::Euler3DTransform< map::core::continuous::ScalarType> TransformType;
 
@@ -72,11 +78,12 @@ namespace map
 				typedef ITKEuler3DICPRegistrationAlgorithm Self;
 
 				typedef map::algorithm::itk::ITKPointSetRegistrationAlgorithm < TMovingPointSet,
-				        TTargetPointSet,
-				        TIdentificationPolicy,
-				        SealedFixedPointSetToPointSetMetricPolicyMacro< ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap> >,
-				        SealedFixedMVNLOptimizerPolicyMacro< ::itk::LevenbergMarquardtOptimizer>,
-				        SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform< map::core::continuous::ScalarType> > >  Superclass;
+						TTargetPointSet,
+						TIdentificationPolicy,
+						SealedFixedPointSetToPointSetMetricPolicyMacro< ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap> >,
+						SealedFixedMVNLOptimizerPolicyMacro< ::itk::LevenbergMarquardtOptimizer>,
+						SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform< map::core::continuous::ScalarType> > >
+						Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -114,8 +121,8 @@ namespace map
 
 			private:
 
-				ITKEuler3DICPRegistrationAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ITKEuler3DICPRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

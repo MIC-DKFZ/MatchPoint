@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapExpandingFieldKernelLoader.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_EXPANDING_FIELD_KERNEL_LOADER_H
@@ -60,7 +60,7 @@ namespace map
 			 * @return Indicates if the provider offers the right solution.
 			 * @retval true Provider can handle the request.
 			 * @retval false Provider is not able to handle the request.*/
-			virtual bool canHandleRequest(const RequestType &request) const;
+			virtual bool canHandleRequest(const RequestType& request) const;
 
 			/*! Returns an ID of the provider as string. Calls getStaticProviderName().
 			 * @return Service provider ID.*/
@@ -84,7 +84,7 @@ namespace map
 				 * @return Smart pointer to the loaded kernel.
 				 * @pre request must be valid.
 				 */
-			virtual GenericKernelPointer loadKernel(const RequestType &request) const;
+			virtual GenericKernelPointer loadKernel(const RequestType& request) const;
 
 			/*! Adds a given generic kernel to the passed registration as inverse kernel.
 				 * @eguarantee strong
@@ -93,7 +93,8 @@ namespace map
 			* @pre pKernel must be valid and of correct dimensionality or NULL.
 			* @pre pRegistration must be valid and of correct dimensionality.
 				 */
-			virtual void addAsInverseKernel(GenericKernelType *pKernel,  core::RegistrationBase::Pointer &spRegistration) const;
+			virtual void addAsInverseKernel(GenericKernelType* pKernel,
+											core::RegistrationBase::Pointer& spRegistration) const;
 
 			/*! Adds a given generic kernel to the passed registration as direct kernel.
 				 * @eguarantee strong
@@ -102,7 +103,8 @@ namespace map
 				 * @pre pKernel must be valid and of correct dimensionality or NULL.
 			* @pre pRegistration must be valid and of correct dimensionality.
 				 */
-			virtual void addAsDirectKernel(GenericKernelType *pKernel,  core::RegistrationBase::Pointer &spRegistration) const;
+			virtual void addAsDirectKernel(GenericKernelType* pKernel,
+										   core::RegistrationBase::Pointer& spRegistration) const;
 
 		protected:
 
@@ -110,8 +112,8 @@ namespace map
 			virtual ~ExpandingFieldKernelLoader() {};
 
 		private:
-			ExpandingFieldKernelLoader(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			ExpandingFieldKernelLoader(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} // end namespace io

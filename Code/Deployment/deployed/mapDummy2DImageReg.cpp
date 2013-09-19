@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/deployed/mapDummy2DImageReg.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #include "mapDeploymentDLLHelper.h"
@@ -28,6 +28,7 @@
 #include "Dummy2DImageReg_ProfileResource.h"
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, ::map::algorithm::Dummy2DImageRegUIDPolicy> AlgorithmType;
+typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, ::map::algorithm::Dummy2DImageRegUIDPolicy>
+AlgorithmType;
 
 mapDeployAlgorithmMacro(AlgorithmType);

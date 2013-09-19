@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapImageReader.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_IMAGE_READER_TPP
@@ -97,7 +97,7 @@ namespace map
 		};
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
-		const typename ImageReader<TInputPixel, TOutputPixel, iDimension>::MetaDataDictionaryArrayType &
+		const typename ImageReader<TInputPixel, TOutputPixel, iDimension>::MetaDataDictionaryArrayType&
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		getMetaDictionaryArray()
 		{
@@ -107,7 +107,8 @@ namespace map
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
 		void
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
-		copyMetaDictionaryArray(const ITKMetaDataDictionaryArray *fromArray, MetaDataDictionaryArrayType &toArray)
+		copyMetaDictionaryArray(const ITKMetaDataDictionaryArray* fromArray,
+								MetaDataDictionaryArrayType& toArray)
 		{
 			toArray.clear();
 
@@ -141,10 +142,13 @@ namespace map
 
 			if (seriesReader->GetFileNames().size() == 0)
 			{
-				mapDefaultExceptionMacro( << "Image reader is not correctly configured. Preparing a series reading of a numeric source no(!) files were found. Pattern: " << _fileName << "; upperSeriesLimit: " << _upperSeriesLimit);
+				mapDefaultExceptionMacro( <<
+										  "Image reader is not correctly configured. Preparing a series reading of a numeric source no(!) files were found. Pattern: "
+										  << _fileName << "; upperSeriesLimit: " << _upperSeriesLimit);
 			}
 
-			typename itk::ImageSource<typename ImageReader<TInputPixel, TOutputPixel, iDimension>::InputImageType>::Pointer genericReader = seriesReader.GetPointer();
+			typename itk::ImageSource<typename ImageReader<TInputPixel, TOutputPixel, iDimension>::InputImageType>::Pointer
+			genericReader = seriesReader.GetPointer();
 			return genericReader;
 		};
 
@@ -190,7 +194,8 @@ namespace map
 				while (seriesUIDs.size() > 0)
 				{
 					fileNames = nameGenerator->GetFileNames(seriesUIDs.back());
-					mapLogDebugStaticMacro( << "Checking series: " << seriesUIDs.back() << " (file count: " << fileNames.size() << ")");
+					mapLogDebugStaticMacro( << "Checking series: " << seriesUIDs.back() << " (file count: " <<
+											fileNames.size() << ")");
 					seriesUIDs.pop_back();
 
 					for (itk::SerieUIDContainer::const_iterator pos = fileNames.begin(); pos != fileNames.end(); ++pos)
@@ -214,10 +219,13 @@ namespace map
 
 			if (seriesReader->GetFileNames().size() == 0)
 			{
-				mapDefaultExceptionMacro( << "Image reader is not correctly configured. Preparing a series reading of a DICOM source no(!) dicom files were found. search location: " << _fileName);
+				mapDefaultExceptionMacro( <<
+										  "Image reader is not correctly configured. Preparing a series reading of a DICOM source no(!) dicom files were found. search location: "
+										  << _fileName);
 			}
 
-			typename itk::ImageSource<typename ImageReader<TInputPixel, TOutputPixel, iDimension>::InputImageType>::Pointer genericReader = seriesReader.GetPointer();
+			typename itk::ImageSource<typename ImageReader<TInputPixel, TOutputPixel, iDimension>::InputImageType>::Pointer
+			genericReader = seriesReader.GetPointer();
 			return genericReader;
 		};
 
@@ -231,7 +239,8 @@ namespace map
 			typename ImageReaderType::Pointer  imageReader  = ImageReaderType::New();
 			imageReader->SetFileName(_fileName.c_str());
 
-			typename itk::ImageSource<typename ImageReader<TInputPixel, TOutputPixel, iDimension>::InputImageType>::Pointer genericReader = imageReader.GetPointer();
+			typename itk::ImageSource<typename ImageReader<TInputPixel, TOutputPixel, iDimension>::InputImageType>::Pointer
+			genericReader = imageReader.GetPointer();
 			return genericReader;
 		};
 
@@ -308,8 +317,8 @@ namespace map
 
 			typedef ::itk::ImageFileReader< InputImageType  > ImageReaderType;
 			typedef ::itk::ImageSeriesReader< InputImageType  > ImageSeriesReaderType;
-			ImageReaderType *pFileReader = dynamic_cast<ImageReaderType *>(spReader.GetPointer());
-			ImageSeriesReaderType *pSeriesReader = dynamic_cast<ImageSeriesReaderType *>(spReader.GetPointer());
+			ImageReaderType* pFileReader = dynamic_cast<ImageReaderType*>(spReader.GetPointer());
+			ImageSeriesReaderType* pSeriesReader = dynamic_cast<ImageSeriesReaderType*>(spReader.GetPointer());
 
 			if (pFileReader)
 			{
@@ -322,14 +331,15 @@ namespace map
 			}
 			else
 			{
-				mapDefaultExceptionMacro( << "Image reader is not valid. Internal reader seams not to be itk::ImageFileReader or itk::ImageSeriesReader.");
+				mapDefaultExceptionMacro( <<
+										  "Image reader is not valid. Internal reader seams not to be itk::ImageFileReader or itk::ImageSeriesReader.");
 			}
 
 			_upToDate = true;
 		};
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
-		const core::String &
+		const core::String&
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		getFileName() const
 		{
@@ -339,7 +349,7 @@ namespace map
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
 		void
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
-		setFileName(const core::String &fileName)
+		setFileName(const core::String& fileName)
 		{
 			if (fileName != _fileName)
 			{
@@ -349,7 +359,7 @@ namespace map
 		}
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
-		const typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType &
+		const typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType&
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		getRescaleMinimum() const
 		{
@@ -359,7 +369,7 @@ namespace map
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
 		void
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
-		setRescaleMinimum(const RescaleValueType &dRescaleMin)
+		setRescaleMinimum(const RescaleValueType& dRescaleMin)
 		{
 			if (dRescaleMin != _rescaleMin)
 			{
@@ -369,7 +379,7 @@ namespace map
 		};
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
-		const typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType &
+		const typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType&
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		getRescaleMaximum() const
 		{
@@ -379,7 +389,7 @@ namespace map
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
 		void
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
-		setRescaleMaximum(const RescaleValueType &dRescaleMax)
+		setRescaleMaximum(const RescaleValueType& dRescaleMax)
 		{
 			if (dRescaleMax != _rescaleMax)
 			{
@@ -449,7 +459,7 @@ namespace map
 		};
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
-		typename ImageReader<TInputPixel, TOutputPixel, iDimension>::OutputImageType *
+		typename ImageReader<TInputPixel, TOutputPixel, iDimension>::OutputImageType*
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		GetOutput(void)
 		{
@@ -495,13 +505,15 @@ namespace map
 
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
-		typename ImageReader<TInputPixel, TOutputPixel, iDimension>::OutputImageType::Pointer readImage(const core::String &fileName,
-		                                                                                                ImageSeriesReadStyle::Type readStyle,
-		                                                                                                bool rescaleImage,
-		                                                                                                typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType rescaleMin,
-		                                                                                                typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType rescaleMax,
-		                                                                                                unsigned int upperNumericSeriesLimit,
-		                                                                                                typename ImageReader<TInputPixel, TOutputPixel, iDimension>::MetaDataDictionaryArrayType *pLoadedDictArray)
+		typename ImageReader<TInputPixel, TOutputPixel, iDimension>::OutputImageType::Pointer readImage(
+			const core::String& fileName,
+			ImageSeriesReadStyle::Type readStyle,
+			bool rescaleImage,
+			typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType rescaleMin,
+			typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType rescaleMax,
+			unsigned int upperNumericSeriesLimit,
+			typename ImageReader<TInputPixel, TOutputPixel, iDimension>::MetaDataDictionaryArrayType*
+			pLoadedDictArray)
 		{
 			ImageReader<TInputPixel, TOutputPixel, iDimension> reader;
 
@@ -512,7 +524,8 @@ namespace map
 			reader.setRescaleMinimum(rescaleMin);
 			reader.setUpperSeriesLimit(upperNumericSeriesLimit);
 
-			typename ImageReader<TInputPixel, TOutputPixel, iDimension>::OutputImageType::Pointer spResult = reader.GetOutput();
+			typename ImageReader<TInputPixel, TOutputPixel, iDimension>::OutputImageType::Pointer spResult =
+				reader.GetOutput();
 
 			if (pLoadedDictArray)
 			{

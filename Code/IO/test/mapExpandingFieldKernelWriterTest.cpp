@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/test/mapExpandingFieldKernelWriterTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -41,7 +41,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapExpandingFieldKernelWriterTest(int argc, char *argv[])
+		int mapExpandingFieldKernelWriterTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: test storage path
 			//           2: ref path
@@ -69,7 +69,8 @@ namespace map
 			FieldFunctorType::InFieldRepresentationType::SizeType size;
 			size.fill(10);
 
-			FieldFunctorType::InFieldRepresentationType::Pointer spInRep = FieldFunctorType::InFieldRepresentationType::New();
+			FieldFunctorType::InFieldRepresentationType::Pointer spInRep =
+				FieldFunctorType::InFieldRepresentationType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
@@ -105,8 +106,10 @@ namespace map
 
 			WriterType::RequestType illegalRequest1(spModelKernel, "", "", false);
 			WriterType::RequestType illegalRequest2(spLazyKernel, "", "", false);
-			WriterType::RequestType requestLazy(spLazyKernel, testPath, "ExpandingFieldKernelWriterTest_lazy", true);
-			WriterType::RequestType requestCached(spCachedKernel, testPath, "ExpandingFieldKernelWriterTest_cached", true);
+			WriterType::RequestType requestLazy(spLazyKernel, testPath, "ExpandingFieldKernelWriterTest_lazy",
+												true);
+			WriterType::RequestType requestCached(spCachedKernel, testPath,
+												  "ExpandingFieldKernelWriterTest_cached", true);
 
 
 			//////////////////////////////////////
@@ -138,12 +141,14 @@ namespace map
 			structuredData::XMLStrWriter::Pointer spStrWriter = structuredData::XMLStrWriter::New();
 
 			core::String data = spStrWriter->write(spDataLazy);
-			core::String ref = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>ExpandingFieldKernelWriterTest_lazy_field.mhd</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
+			core::String ref =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>ExpandingFieldKernelWriterTest_lazy_field.mhd</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
 
 			CHECK_EQUAL(ref, data);
 
 			//test the fields
-			map::core::String refFieldPath = map::core::FileDispatch::createFullPath(refPath, "expandingFieldKernelWriterTest_ref.mhd");
+			map::core::String refFieldPath = map::core::FileDispatch::createFullPath(refPath,
+											 "expandingFieldKernelWriterTest_ref.mhd");
 			typedef ::itk::ImageFileReader<LazyKernelType::FieldType> ReaderType;
 			ReaderType::Pointer spReader = ReaderType::New();
 			spReader->SetFileName(refFieldPath);

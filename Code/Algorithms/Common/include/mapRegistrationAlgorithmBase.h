@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapRegistrationAlgorithmBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -59,7 +59,8 @@ namespace map
 		    RegistrationAlgorithm inherits from this.
 		    @ingroup Algorithms
 		 */
-		class MAPAlgorithms_EXPORT RegistrationAlgorithmBase: public ::itk::Object, public facet::AlgorithmIdentificationInterface
+		class MAPAlgorithms_EXPORT RegistrationAlgorithmBase: public ::itk::Object,
+			public facet::AlgorithmIdentificationInterface
 		{
 		public:
 			typedef RegistrationAlgorithmBase Self;
@@ -73,8 +74,8 @@ namespace map
 			 */
 			enum AlgorithmType
 			{
-			    ATAnalytic      /*!< analytic algorithm type */,
-			    ATIterative     /*!< iterative algorithm type */
+				ATAnalytic      /*!< analytic algorithm type */,
+				ATIterative     /*!< iterative algorithm type */
 			};
 
 			/*! @brief Defines the state the algorithm is in
@@ -83,13 +84,13 @@ namespace map
 			{
 				enum Type
 				{
-				    Pending      /*!< the algorithm has been instanziated and is waiting. */,
-				    Initializing /*!< the algorithm is about to be initialized, but not yet started*/,
-				    Running      /*!< the algorithm has been started and is running */,
-				    Stopping     /*!< the algorithm is ordered to stop */,
-				    Stopped      /*!< the algorithm has been stopped or is done with its processing */,
-				    Finalizing   /*!< the algorithm has been is done with its processing and and about to generate the results*/,
-				    Finalized    /*!< the algorithm has been is done with its processing and has a result*/,
+					Pending      /*!< the algorithm has been instanziated and is waiting. */,
+					Initializing /*!< the algorithm is about to be initialized, but not yet started*/,
+					Running      /*!< the algorithm has been started and is running */,
+					Stopping     /*!< the algorithm is ordered to stop */,
+					Stopped      /*!< the algorithm has been stopped or is done with its processing */,
+					Finalizing   /*!< the algorithm has been is done with its processing and and about to generate the results*/,
+					Finalized    /*!< the algorithm has been is done with its processing and has a result*/,
 				};
 			};
 
@@ -146,7 +147,7 @@ namespace map
 			and calls onStateChange before;
 			@eguarantee strong
 			*/
-			virtual void setCurrentState(const AlgorithmState::Type &state);
+			virtual void setCurrentState(const AlgorithmState::Type& state);
 
 			/*! Method is called when state is going to be changed via setAlgorithmState().
 			  Overwrite this method to create special algorithmic behavior. The default implementation
@@ -188,7 +189,7 @@ namespace map
 			virtual ~RegistrationAlgorithmBase();
 
 			/*! Methods invoked by ::itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 			/*! mutex used to secure all state changes.
 			 */
@@ -206,8 +207,8 @@ namespace map
 			bool _firstConfiguration;
 
 			//No copy constructor allowed
-			RegistrationAlgorithmBase(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			RegistrationAlgorithmBase(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

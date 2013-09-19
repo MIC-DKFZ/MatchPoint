@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/source/mapRegistrationKernelLoadRequest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #include "mapRegistrationKernelLoadRequest.h"
@@ -29,7 +29,9 @@ namespace map
 	{
 
 		RegistrationKernelLoadRequest::
-		RegistrationKernelLoadRequest(const structuredData::Element *pKernelDescriptor, bool preferLazyLoading): _spKernelDescriptor(pKernelDescriptor), _preferLazyLoading(preferLazyLoading)
+		RegistrationKernelLoadRequest(const structuredData::Element* pKernelDescriptor,
+									  bool preferLazyLoading): _spKernelDescriptor(pKernelDescriptor),
+			_preferLazyLoading(preferLazyLoading)
 		{
 			assert(pKernelDescriptor);
 		};
@@ -40,14 +42,15 @@ namespace map
 		};
 
 		RegistrationKernelLoadRequest::
-		RegistrationKernelLoadRequest(const RegistrationKernelLoadRequest &request): _spKernelDescriptor(request._spKernelDescriptor), _preferLazyLoading(request._preferLazyLoading)
+		RegistrationKernelLoadRequest(const RegistrationKernelLoadRequest& request): _spKernelDescriptor(
+				request._spKernelDescriptor), _preferLazyLoading(request._preferLazyLoading)
 		{
 			assert(_spKernelDescriptor.IsNotNull());
 		};
 
 		void
 		RegistrationKernelLoadRequest::
-		operator=(const RegistrationKernelLoadRequest &request)
+		operator=(const RegistrationKernelLoadRequest& request)
 		{
 			if (&request != this)
 			{
@@ -56,7 +59,7 @@ namespace map
 			}
 		};
 
-		std::ostream &operator<<(std::ostream &os, const RegistrationKernelLoadRequest &request)
+		std::ostream& operator<<(std::ostream& os, const RegistrationKernelLoadRequest& request)
 		{
 			os << "Data: " << request._spKernelDescriptor << std::endl;
 			os << "Lazy loading: " << request._preferLazyLoading << std::endl;

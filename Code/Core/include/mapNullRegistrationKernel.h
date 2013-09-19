@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapNullRegistrationKernel.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -57,7 +57,8 @@ namespace map
 
 			typedef typename Superclass::InputPointType InputPointType;
 			typedef typename Superclass::OutputPointType OutputPointType;
-			typedef typename Superclass::RepresentationDescriptorConstPointer RepresentationDescriptorConstPointer;
+			typedef typename Superclass::RepresentationDescriptorConstPointer
+			RepresentationDescriptorConstPointer;
 
 
 			/*! @brief gets the largest possible representation descriptor. The descriptor defines
@@ -78,27 +79,28 @@ namespace map
 		protected:
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			/*! Maps the point from input to output space. Is used by mapPoint()
 			 * It will always return false because a NullRegistrationKernel cannot map
 			 * any points
 			 * @eguarantee strong
 			 */
-			virtual bool doMapPoint(const InputPointType &inPoint, OutputPointType &outPoint) const;
+			virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const;
 
 			NullRegistrationKernel();
 			virtual ~NullRegistrationKernel();
 
 		private:
 			//No copy constructor allowed
-			NullRegistrationKernel(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			NullRegistrationKernel(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		std::ostream &operator<< (std::ostream &os, const NullRegistrationKernel<VInputDimensions, VOutputDimensions> &p)
+		std::ostream& operator<< (std::ostream& os,
+								  const NullRegistrationKernel<VInputDimensions, VOutputDimensions>& p)
 		{
 			p.Print(os);
 			return os;

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapKernelWriterLoadPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_KERNEL_WRITER_LOAD_POLICY_H
@@ -47,11 +47,13 @@ namespace map
 		* @tparam VOutputDimensions Output dimensions of the registration that should be stored to file.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class KernelWriterLoadPolicy : public core::services::GenericStaticLoadPolicyBase<RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions> >
+		class KernelWriterLoadPolicy : public
+			core::services::GenericStaticLoadPolicyBase<RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions> >
 		{
 		protected:
 			/*! Standard class typedefs. */
-			typedef core::services::GenericStaticLoadPolicyBase<RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions> > Superclass;
+			typedef core::services::GenericStaticLoadPolicyBase<RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions> >
+			Superclass;
 			typedef typename Superclass::ProviderBaseType      ProviderBaseType;
 			typedef typename Superclass::ProviderBasePointer   ProviderBasePointer;
 			typedef typename Superclass::LoadInterfaceType     LoadInterfaceType;
@@ -62,8 +64,8 @@ namespace map
 			~KernelWriterLoadPolicy();
 
 		private:
-			KernelWriterLoadPolicy(const KernelWriterLoadPolicy &); //purposely not implemented
-			void operator=(const KernelWriterLoadPolicy &); //purposely not implemented
+			KernelWriterLoadPolicy(const KernelWriterLoadPolicy&);  //purposely not implemented
+			void operator=(const KernelWriterLoadPolicy&);  //purposely not implemented
 		};
 
 	} // end namespace io

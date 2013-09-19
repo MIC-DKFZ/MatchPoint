@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapMetaPropertyAlgorithmBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -61,7 +61,7 @@ namespace map
 			if the passed property name is unkown.
 			@retval NULL-pointer Property is unknown
 			*/
-			virtual MetaPropertyInfo::Pointer getPropertyInfo(const MetaPropertyNameType &name) const;
+			virtual MetaPropertyInfo::Pointer getPropertyInfo(const MetaPropertyNameType& name) const;
 
 			/*! Returns a vector with smart pointer to MetaPropertyInfos for all known and therefor supported
 			* properties.
@@ -83,7 +83,7 @@ namespace map
 			* unknown, not readable or not supported the returned smart pointer will point to NULL.
 			* @param name Name that identifies the wanted property.
 			*/
-			virtual MetaPropertyPointer getProperty(const MetaPropertyNameType &name) const;
+			virtual MetaPropertyPointer getProperty(const MetaPropertyNameType& name) const;
 
 			/*! Returns a smart pointer to the MetaProperty identified by the passed name.
 			* This default implementation is:\n
@@ -101,7 +101,7 @@ namespace map
 			* @exception ::map::core::ExceptionObject Thrown if the precondition is not satisfied (pInfo is NULL or has wrong type).
 			* @overload
 			*/
-			virtual MetaPropertyPointer getProperty(const MetaPropertyInfo *pInfo) const;
+			virtual MetaPropertyPointer getProperty(const MetaPropertyInfo* pInfo) const;
 
 			/*! Allows the transferring and setting of instance properties via this generic interface.
 			* This base implementation will store the property in the cache (overwrites an already cached instance
@@ -117,7 +117,7 @@ namespace map
 			* @exception ::map::core::ExceptionObject Thrown if a precondition is not satisfied
 			* (pProperty is not valid).
 			*/
-			virtual bool setProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
+			virtual bool setProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
 
 			/*! Allows the transferring and setting of instance properties via this generic interface.
 			* This base implementation will store the property in the cache (overwrites an already cached instance
@@ -137,7 +137,7 @@ namespace map
 			* (pInfo is NULL or has wrong type; pProperty is not valid).
 			* @overload
 			*/
-			virtual bool setProperty(const MetaPropertyInfo *pInfo, const MetaPropertyType *pProperty);
+			virtual bool setProperty(const MetaPropertyInfo* pInfo, const MetaPropertyType* pProperty);
 
 		protected:
 			MetaPropertyAlgorithmBase();
@@ -154,7 +154,7 @@ namespace map
 			* @param infos Vector of MetaPropertyInfoPointer. The public MetaPropertyInfos
 			* will be added to this vector by the method.
 			*/
-			virtual void compileInfos(MetaPropertyVectorType &infos) const = 0;
+			virtual void compileInfos(MetaPropertyVectorType& infos) const = 0;
 
 			/*! This method configures the algorithm with the cached MetaProperties.
 			* The default implementation does this by calling
@@ -171,7 +171,7 @@ namespace map
 			@return Returns a smart pointer to the requested MetaProperty.
 			@param name Name that identifies the wanted property.
 			*/
-			virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const = 0;
+			virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const = 0;
 
 			/*! Implement this Method to realize the setting of a property specified by name.
 			@remark This method only is called by setProperty if getPropertyInfo has a valid return for the passed name
@@ -180,7 +180,7 @@ namespace map
 			@param pProperty Pointer to the MetaProperty that contains the value that should be set.
 			@pre Passed pointer pProperty is not NULL.
 			*/
-			virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty) = 0;
+			virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty) = 0;
 
 			void resetMetaPropertyCache();
 
@@ -199,8 +199,8 @@ namespace map
 			::itk::TimeStamp _cacheMTime;
 
 			//No copy constructor allowed
-			MetaPropertyAlgorithmBase(const Self &source); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			MetaPropertyAlgorithmBase(const Self& source); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKImageToImageMetricSetterInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,13 +45,14 @@ namespace map
 			public:
 				typedef ITKImageToImageMetricSetterInterface<TMovingImage, TTargetImage> Self;
 
-				typedef algorithm::itk::ITKImageToImageMetricControlInterface<TMovingImage, TTargetImage> MetricControlType;
+				typedef algorithm::itk::ITKImageToImageMetricControlInterface<TMovingImage, TTargetImage>
+				MetricControlType;
 
 				/*! sets the metric
 				  @eguarantee strong
 				  @param metric the metric
 				 */
-				virtual void setMetricControl(MetricControlType *metric) = 0;
+				virtual void setMetricControl(MetricControlType* metric) = 0;
 
 			protected:
 				ITKImageToImageMetricSetterInterface() {};
@@ -59,8 +60,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKImageToImageMetricSetterInterface(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKImageToImageMetricSetterInterface(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

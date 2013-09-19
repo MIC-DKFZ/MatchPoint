@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapMatrixModelBasedKernelWriter.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_MATRIX_MODEL_BASED_KERNEL_WRITER_TPP
@@ -36,10 +36,10 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
 		MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions>::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
 			// if the kernel "request" is a model-based kernel, then we can handle it.
-			const KernelType *pKernel = dynamic_cast<const KernelType *>(request._spKernel.GetPointer());
+			const KernelType* pKernel = dynamic_cast<const KernelType*>(request._spKernel.GetPointer());
 
 			bool canHandle = false;
 
@@ -88,7 +88,8 @@ namespace map
 		getDescription() const
 		{
 			core::OStringStream os;
-			os << "MatrixModelBasedKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: " << VOutputDimensions << ".";
+			os << "MatrixModelBasedKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: "
+			   << VOutputDimensions << ".";
 			return os.str();
 		}
 
@@ -96,13 +97,14 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		structuredData::Element::Pointer
 		MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions>::
-		storeKernel(const RequestType &request) const
+		storeKernel(const RequestType& request) const
 		{
-			const KernelType *pKernel = dynamic_cast<const KernelType *>(request._spKernel.GetPointer());
+			const KernelType* pKernel = dynamic_cast<const KernelType*>(request._spKernel.GetPointer());
 
 			if (pKernel == NULL)
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot store kernel. Reason: cannot cast to ModelBasedKernel: " << pKernel);
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot store kernel. Reason: cannot cast to ModelBasedKernel: " << pKernel);
 			}
 
 			typename KernelType::TransformType::MatrixType matrix;
@@ -112,12 +114,16 @@ namespace map
 
 			if (spModel.IsNull())
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot store kernel. Reason: Kernel seems to have no valid transform model instance. Kernel: " << pKernel);
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot store kernel. Reason: Kernel seems to have no valid transform model instance. Kernel: "
+								  << pKernel);
 			}
 
 			if (!spModel->getAffineMatrixDecomposition(matrix, offset))
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot store kernel. Reason: Kernel has no valid matrix decompostion. Kernel: " << pKernel);
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot store kernel. Reason: Kernel has no valid matrix decompostion. Kernel: " <<
+								  pKernel);
 			};
 
 			structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
@@ -128,9 +134,11 @@ namespace map
 
 			spKernelElement->setAttribute(tags::OutputDimensions, core::convert::toStr(VOutputDimensions));
 
-			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider, this->getProviderName()));
+			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
+										   this->getProviderName()));
 
-			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType, "MatrixModelKernel"));
+			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
+										   "MatrixModelKernel"));
 
 			//add matrix
 			structuredData::Element::Pointer spMatrixElement = structuredData::Element::New();
@@ -147,7 +155,8 @@ namespace map
 			//set matrix as seperated elements
 			for (unsigned int rowID = 0; rowID < KernelType::TransformType::MatrixType::RowDimensions; ++rowID)
 			{
-				for (unsigned int colID = 0; colID < KernelType::TransformType::MatrixType::ColumnDimensions; ++colID)
+				for (unsigned int colID = 0; colID < KernelType::TransformType::MatrixType::ColumnDimensions;
+					 ++colID)
 				{
 					structuredData::Element::Pointer spValueElement = structuredData::Element::New();
 					spValueElement->setTag(tags::Value);

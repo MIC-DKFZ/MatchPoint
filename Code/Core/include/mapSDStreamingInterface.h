@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapSDStreamingInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,21 +45,21 @@ namespace map
 
 			ElementPointer streamToStructuredData() const;
 
-			void streamFromStructuredData(const Element *pElement);
+			void streamFromStructuredData(const Element* pElement);
 
 		protected:
 
 			virtual ElementPointer streamToSDInternal() const = 0;
 
-			virtual void streamFromSDInternal(const Element *pElement) = 0;
+			virtual void streamFromSDInternal(const Element* pElement) = 0;
 
 			StreamingInterface();
 			virtual ~StreamingInterface();
 
 		private:
 			//No copy constructor allowed
-			StreamingInterface(const StreamingInterface &source);
-			void operator=(const StreamingInterface &); //purposely not implemented
+			StreamingInterface(const StreamingInterface& source);
+			void operator=(const StreamingInterface&);  //purposely not implemented
 		};
 
 

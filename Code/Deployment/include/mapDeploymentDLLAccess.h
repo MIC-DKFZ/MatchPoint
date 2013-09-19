@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/include/mapDeploymentDLLAccess.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -39,28 +39,33 @@ namespace map
 		 * @sa mapGetDLLInterfaceVersion
 		 * @ingroup DeployHost
 		 */
-		typedef void (* MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER)(unsigned int &major, unsigned int &minor);
+		typedef void (* MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER)(unsigned int& major,
+				unsigned int& minor);
 
 		/**
 		 * Function pointer for the mapGetRegistrationAlgorithmUID symbol in a deployment DLL.
 		 * @sa mapGetRegistrationAlgorithmUID
 		 * @ingroup DeployHost
 		 */
-		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER)(map::algorithm::UID::Pointer &spUID);
+		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER)(map::algorithm::UID::Pointer&
+				spUID);
 
 		/**
 		 * Function pointer for the mapGetRegistrationAlgorithmUID symbol in a deployment DLL.
 		 * @sa mapGetRegistrationAlgorithmUID
 		 * @ingroup DeployHost
 		 */
-		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER)(const map::core::String& profile);
+		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER)(
+			const map::core::String& profile);
 
-    /**
-		 * Function pointer for the mapGetRegistrationAlgorithmInstance symbol in a deployment DLL.
-		 * @sa mapGetRegistrationAlgorithmInstance
-		 * @ingroup DeployHost
-		 */
-		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER)(map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithmBase, map::deployment::SyncObject *pSyncObject);
+		/**
+			 * Function pointer for the mapGetRegistrationAlgorithmInstance symbol in a deployment DLL.
+			 * @sa mapGetRegistrationAlgorithmInstance
+			 * @ingroup DeployHost
+			 */
+		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER)(
+			map::algorithm::RegistrationAlgorithmBase::Pointer& spAlgorithmBase,
+			map::deployment::SyncObject* pSyncObject);
 
 		typedef map::algorithm::RegistrationAlgorithmBase RegistrationAlgorithmBase;
 		typedef RegistrationAlgorithmBase::Pointer RegistrationAlgorithmBasePointer;
@@ -75,8 +80,8 @@ namespace map
 		 * @exception InvalidInterfaceVersionException Thrown if the DLL has not a supported interface version.
 		 * @exception InvalidUIDException Thrown if the DLL returns no (valid) UID instance.
 		*/
-		MAPDeployment_EXPORT DLLHandle::Pointer openDeploymentDLL(const char *libraryFile);
-		MAPDeployment_EXPORT DLLHandle::Pointer openDeploymentDLL(const core::String &libraryFile);
+		MAPDeployment_EXPORT DLLHandle::Pointer openDeploymentDLL(const char* libraryFile);
+		MAPDeployment_EXPORT DLLHandle::Pointer openDeploymentDLL(const core::String& libraryFile);
 
 		/*! Method tries to close the DLL specified by the passed info instance.
 		  * @ingroup DeployHost
@@ -84,7 +89,7 @@ namespace map
 		 * @eguarantee strong
 		 * @exception InvalidDLLException Thrown if DLL cannot be closed.
 		*/
-		MAPDeployment_EXPORT void closeDeploymentDLL(const DLLHandle *pDLLHandle);
+		MAPDeployment_EXPORT void closeDeploymentDLL(const DLLHandle* pDLLHandle);
 
 		/*! Method tries to open the passed file (using openDeploymentDLL()), retrieves the UID of
 		 * the algorithm stored in the DLL and closes the DLL again (using closeDeploymentDLL()).
@@ -96,10 +101,13 @@ namespace map
 		 * @exception InvalidInterfaceVersionException Thrown if the DLL has not a supported interface version.
 		 * @exception InvalidUIDException Thrown if the DLL returns no (valid) UID instance.
 		*/
-		MAPDeployment_EXPORT algorithm::UID::ConstPointer peekDeploymentDLL(const char *libraryFile);
-		MAPDeployment_EXPORT algorithm::UID::ConstPointer peekDeploymentDLL(const core::String &libraryFile);
-    MAPDeployment_EXPORT void peekDeploymentDLL(const char *libraryFile, algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
-    MAPDeployment_EXPORT void peekDeploymentDLL(const core::String &libraryFile, algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
+		MAPDeployment_EXPORT algorithm::UID::ConstPointer peekDeploymentDLL(const char* libraryFile);
+		MAPDeployment_EXPORT algorithm::UID::ConstPointer peekDeploymentDLL(const core::String&
+				libraryFile);
+		MAPDeployment_EXPORT void peekDeploymentDLL(const char* libraryFile,
+				algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
+		MAPDeployment_EXPORT void peekDeploymentDLL(const core::String& libraryFile,
+				algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
 
 
 		/*! Method requests an algorithm instance of the DLL specified by the passed DLL info.
@@ -111,7 +119,8 @@ namespace map
 		 * @exception InvalidUIDException Thrown if the UID of the returned algorithm doesn't fit the UID of the DLL info instance.
 		 * @exception InvalidAlgorithmException Thrown if the returned algorithm pointer is not valid.
 		*/
-		MAPDeployment_EXPORT RegistrationAlgorithmBasePointer getRegistrationAlgorithm(const DLLHandle *pDLLHandle);
+		MAPDeployment_EXPORT RegistrationAlgorithmBasePointer getRegistrationAlgorithm(
+			const DLLHandle* pDLLHandle);
 
 		/**
 		 * A function to determine if a passed filename is compliant to the the naming conventions
@@ -121,7 +130,7 @@ namespace map
 		 * @pre fileName pointer must not be NULL.
 		 * @return Indicates if the file is compliant to the naming conventions.
 		 */
-		MAPDeployment_EXPORT bool checkFileNameIsMDRACompliant(const char *fileName);
+		MAPDeployment_EXPORT bool checkFileNameIsMDRACompliant(const char* fileName);
 
 		/**
 		 * A function to determine if a file has the shared library extension in its name,
@@ -131,7 +140,7 @@ namespace map
 		 * @pre name pointer must not be NULL.
 		 * @return Indicates if the file can be assumed to be a DLL by its (OS specific) extension
 		 */
-		MAPDeployment_EXPORT bool checkNameIsSharedLibrary(const char *name);
+		MAPDeployment_EXPORT bool checkNameIsSharedLibrary(const char* name);
 
 	} //end of namespace deployment;
 

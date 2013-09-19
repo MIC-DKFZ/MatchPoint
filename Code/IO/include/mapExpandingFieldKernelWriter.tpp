@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapExpandingFieldKernelWriter.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_EXPANDING_FIELD_KERNEL_WRITER_TPP
@@ -41,15 +41,21 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
 		ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
 			// if the kernel "request" is a field-based kernel, then we can maybe handle it.
 
-			typedef typename core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel CachedKernelType;
-			typedef typename core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel LazyKernelType;
+			typedef typename
+			core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
+			CachedKernelType;
+			typedef typename
+			core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
+			LazyKernelType;
 
-			const CachedKernelType *pCachedKernel = dynamic_cast<const CachedKernelType *>(request._spKernel.GetPointer());
-			const LazyKernelType *pLazyKernel = dynamic_cast<const LazyKernelType *>(request._spKernel.GetPointer());
+			const CachedKernelType* pCachedKernel = dynamic_cast<const CachedKernelType*>
+													(request._spKernel.GetPointer());
+			const LazyKernelType* pLazyKernel = dynamic_cast<const LazyKernelType*>
+												(request._spKernel.GetPointer());
 
 			bool canHandle = false;
 
@@ -91,7 +97,8 @@ namespace map
 		getDescription() const
 		{
 			core::OStringStream os;
-			os << "ExpandingFieldKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: " << VOutputDimensions << ".";
+			os << "ExpandingFieldKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
+			   VOutputDimensions << ".";
 			return os.str();
 		}
 
@@ -99,18 +106,21 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		structuredData::Element::Pointer
 		ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
-		storeKernel(const RequestType &request) const
+		storeKernel(const RequestType& request) const
 		{
 			if (!canHandleRequest(request))
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot store kernel. Reason: cannot handle request.");
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot store kernel. Reason: cannot handle request.");
 			}
 
-			const KernelType *pKernel = dynamic_cast<const KernelType *>(request._spKernel.GetPointer());
+			const KernelType* pKernel = dynamic_cast<const KernelType*>(request._spKernel.GetPointer());
 
 			if (pKernel == NULL)
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot store kernel. Reason: cannot cast to FieldBasedKernel: " << request._spKernel.GetPointer());
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot store kernel. Reason: cannot cast to FieldBasedKernel: " <<
+								  request._spKernel.GetPointer());
 			}
 
 
@@ -118,7 +128,8 @@ namespace map
 
 			if (spField.IsNull())
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot store kernel. Reason: Kernel seems to have no valid field. Kernel: " << pKernel);
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot store kernel. Reason: Kernel seems to have no valid field. Kernel: " << pKernel);
 			}
 
 			structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
@@ -128,8 +139,10 @@ namespace map
 			spKernelElement->setAttribute(tags::InputDimensions, core::convert::toStr(VInputDimensions));
 			spKernelElement->setAttribute(tags::OutputDimensions, core::convert::toStr(VOutputDimensions));
 
-			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider, this->getProviderName()));
-			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType, "ExpandedFieldKernel"));
+			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
+										   this->getProviderName()));
+			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
+										   "ExpandedFieldKernel"));
 
 			//generate file name and save field to file
 			if (request._path.empty())

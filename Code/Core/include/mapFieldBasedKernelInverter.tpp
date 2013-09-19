@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldBasedKernelInverter.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FIELD_BASED_KERNEL_INVERTER_TPP
@@ -68,10 +68,10 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
 		FieldBasedKernelInverter<VInputDimensions, VOutputDimensions>::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
 			// if the kernel "request" is a field-based kernel, then we can handle it.
-			const KernelType *pKernel = dynamic_cast<const KernelType *>(&request);
+			const KernelType* pKernel = dynamic_cast<const KernelType*>(&request);
 			return (pKernel != NULL);
 		}
 
@@ -101,7 +101,8 @@ namespace map
 		getDescription() const
 		{
 			OStringStream os;
-			os << "FieldBasedKernelInverter, InputDimension: " << VInputDimensions << ", OutputDimension: " << VOutputDimensions << ".";
+			os << "FieldBasedKernelInverter, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
+			   VOutputDimensions << ".";
 			return os.str();
 		}
 
@@ -110,23 +111,26 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		typename FieldBasedKernelInverter<VInputDimensions, VOutputDimensions>::InverseKernelBasePointer
 		FieldBasedKernelInverter<VInputDimensions, VOutputDimensions>::
-		invertKernel(const KernelBaseType &kernel,
-		             const FieldRepresentationType *pFieldRepresentation,
-		             const InverseFieldRepresentationType *pInverseFieldRepresentation) const
+		invertKernel(const KernelBaseType& kernel,
+					 const FieldRepresentationType* pFieldRepresentation,
+					 const InverseFieldRepresentationType* pInverseFieldRepresentation) const
 		{
-			const KernelType *pKernel = dynamic_cast<const KernelType *>(&kernel);
+			const KernelType* pKernel = dynamic_cast<const KernelType*>(&kernel);
 
 			if (pKernel == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot invert kernel. Reason: cannot cast to FieldBasedKernel: " << pKernel);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot invert kernel. Reason: cannot cast to FieldBasedKernel: " << pKernel);
 			}
 
 			if (pInverseFieldRepresentation == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot invert kernel. Reason: pInverseFieldRepresentation not present.");
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot invert kernel. Reason: pInverseFieldRepresentation not present.");
 			}
 
-			typedef typename FieldKernels<VOutputDimensions, VInputDimensions>::LazyFieldBasedRegistrationKernel LazyFieldKernelType;
+			typedef typename FieldKernels<VOutputDimensions, VInputDimensions>::LazyFieldBasedRegistrationKernel
+			LazyFieldKernelType;
 			typename LazyFieldKernelType::Pointer spInverseKernel = LazyFieldKernelType::New();
 
 			typedef functors::FieldByFieldInversionFunctor<VOutputDimensions, VInputDimensions> FunctorType;

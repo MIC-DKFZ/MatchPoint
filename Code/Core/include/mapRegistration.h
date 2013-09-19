@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistration.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -43,7 +43,8 @@ namespace map
 		This class is the class for the registration.
 		*/
 		template < unsigned int VMovingDimensions, unsigned int VTargetDimensions,
-		         template <unsigned int, unsigned int> class TRegistrationTopologyPolicy = DefaultRegistrationTopologyPolicy >
+				 template <unsigned int, unsigned int> class TRegistrationTopologyPolicy =
+				 DefaultRegistrationTopologyPolicy >
 		class Registration: public RegistrationBase,
 			public TRegistrationTopologyPolicy<VMovingDimensions, VTargetDimensions>
 		{
@@ -63,8 +64,10 @@ namespace map
 
 			typedef typename DirectMappingType::RepresentationDescriptorType  DirectFieldRepresentationType;
 			typedef typename InverseMappingType::RepresentationDescriptorType InverseFieldRepresentationType;
-			typedef typename DirectFieldRepresentationType::ConstPointer      DirectFieldRepresentationConstPointer;
-			typedef typename InverseFieldRepresentationType::ConstPointer     InverseFieldRepresentationConstPointer;
+			typedef typename DirectFieldRepresentationType::ConstPointer
+			DirectFieldRepresentationConstPointer;
+			typedef typename InverseFieldRepresentationType::ConstPointer
+			InverseFieldRepresentationConstPointer;
 
 			itkStaticConstMacro(MovingDimensions, unsigned int, VMovingDimensions);
 			itkStaticConstMacro(TargetDimensions, unsigned int, VTargetDimensions);
@@ -81,7 +84,7 @@ namespace map
 			@return success of operation
 			@pre direct mapping kerne must be defined
 			*/
-			virtual bool mapPoint(const MovingPointType &inPoint, TargetPointType &outPoint) const;
+			virtual bool mapPoint(const MovingPointType& inPoint, TargetPointType& outPoint) const;
 
 			/*! maps a point from target space to moving space
 			@eguarantee strong
@@ -91,19 +94,19 @@ namespace map
 			@param outPoint pointer to a MovingPointType
 			@return success of operation
 			*/
-			virtual bool mapPointInverse(const TargetPointType &inPoint, MovingPointType &outPoint) const;
+			virtual bool mapPointInverse(const TargetPointType& inPoint, MovingPointType& outPoint) const;
 
 			/*! returns the InverseMappingType of this registration
 			@eguarantee no fail
 			@return a const InverseMappingType
 			*/
-			const InverseMappingType &getInverseMapping() const;
+			const InverseMappingType& getInverseMapping() const;
 
 			/*! returns the DirectMappingType of this registration
 			@eguarantee no fail
 			@return a const DirectMappingType
 			*/
-			const DirectMappingType &getDirectMapping() const;
+			const DirectMappingType& getDirectMapping() const;
 
 			/*! returns the direct FieldRepresentationDescriptor which defines the part
 			of the moving space that is guaranteed to be mapped by the direct mapping kernel.
@@ -176,20 +179,21 @@ namespace map
 			typename DirectMappingType::Pointer _spDirectMapping;
 			typename InverseMappingType::Pointer _spInverseMapping;
 
-			virtual void setDirectMapping(DirectMappingType *pKernel);
+			virtual void setDirectMapping(DirectMappingType* pKernel);
 
-			virtual void setInverseMapping(InverseMappingType *pKernel);
+			virtual void setInverseMapping(InverseMappingType* pKernel);
 
 		private:
 
 			//No copy constructor allowed
-			Registration(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			Registration(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
-		std::ostream &operator<<(std::ostream &os, const Registration<VMovingDimensions, VTargetDimensions> &registration)
+		std::ostream& operator<<(std::ostream& os,
+								 const Registration<VMovingDimensions, VTargetDimensions>& registration)
 		{
 			registration.Print(os);
 			return os;

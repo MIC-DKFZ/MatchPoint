@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapImageMappingTask.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -36,7 +36,7 @@ namespace map
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		void
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		setInputImage(const InputImageType *inputImage)
+		setInputImage(const InputImageType* inputImage)
 		{
 			if (_spInputImage != inputImage)
 			{
@@ -47,7 +47,8 @@ namespace map
 		}
 
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
-		const typename ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy>::InputImageType *
+		const typename
+		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy>::InputImageType*
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
 		getInputImage() const
 		{
@@ -72,7 +73,7 @@ namespace map
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		void
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		setResultImageDescriptor(const ResultImageDescriptorType *pDescriptor)
+		setResultImageDescriptor(const ResultImageDescriptorType* pDescriptor)
 		{
 			if (_spResultDescriptor != pDescriptor)
 			{
@@ -83,7 +84,9 @@ namespace map
 		}
 
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
-		const typename ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::ResultImageDescriptorType *
+		const typename
+		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::ResultImageDescriptorType*
+
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
 		getResultImageDescriptor(void) const
 		{
@@ -93,7 +96,7 @@ namespace map
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		void
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		setImageInterpolator(InterpolateBaseType *pInterpolator)
+		setImageInterpolator(InterpolateBaseType* pInterpolator)
 		{
 			if (_spInterpolator != pInterpolator)
 			{
@@ -104,7 +107,8 @@ namespace map
 		}
 
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
-		const typename ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::InterpolateBaseType *
+		const typename
+		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::InterpolateBaseType*
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
 		getImageInterpolator(void) const
 		{
@@ -134,7 +138,7 @@ namespace map
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		void
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		setErrorValue(const ErrorValueType &value)
+		setErrorValue(const ErrorValueType& value)
 		{
 			if (value != _errorValue)
 			{
@@ -144,7 +148,8 @@ namespace map
 		};
 
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
-		const typename ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::ErrorValueType &
+		const typename
+		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::ErrorValueType&
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
 		getErrorValue() const
 		{
@@ -174,7 +179,7 @@ namespace map
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		void
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		setPaddingValue(const PaddingValueType &value)
+		setPaddingValue(const PaddingValueType& value)
 		{
 			if (value != _paddingValue)
 			{
@@ -184,7 +189,8 @@ namespace map
 		};
 
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
-		const typename ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::PaddingValueType &
+		const typename
+		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::PaddingValueType&
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
 		getPaddingValue() const
 		{
@@ -234,15 +240,17 @@ namespace map
 				spCurrentDescriptor = createFieldRepresentation(*_spInputImage);
 			}
 
-			PerformerRequestType request(Superclass::_spRegistration, _spInputImage, spCurrentDescriptor, _spInterpolator, _throwOnMappingError, _errorValue, _throwOnPaddingError, _paddingValue);
+			PerformerRequestType request(Superclass::_spRegistration, _spInputImage, spCurrentDescriptor,
+										 _spInterpolator, _throwOnMappingError, _errorValue, _throwOnPaddingError, _paddingValue);
 
 			mapLogInfoMacro( << "Register image. Request: " << request);
 
-			TaskPerformerBaseType *pPerformer = TaskPerformerStackType::getProvider(request);
+			TaskPerformerBaseType* pPerformer = TaskPerformerStackType::getProvider(request);
 
 			if (!pPerformer)
 			{
-				mapExceptionMacro(MissingProviderException, << "No responsible registration performer available for given request. Request:" << request);
+				mapExceptionMacro(MissingProviderException,
+								  << "No responsible registration performer available for given request. Request:" << request);
 			}
 
 			_spResultImage = pPerformer->performMapping(request);
@@ -269,7 +277,7 @@ namespace map
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		void
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 

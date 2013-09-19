@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Deployment/mapDemoRegistrationAlgorithm2DDLL.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 /*! @file
@@ -33,9 +33,11 @@
 
 /*! UID policy for the new reboxed algorithm. This policy gives the reboxed version of the algorithm a new
  * unique identifer to track the usage of the algorithm within any application.*/
-mapGenerateAlgorithmUIDPolicyMacro(DemoRegistrationAlgorithm2DUIDPolicy, "de.dkfz.matchpoint.test", "DemoRegistrationAlgorithm.2D", "1.0.0", DemoRegistrationAlgorithm_profile);
+mapGenerateAlgorithmUIDPolicyMacro(DemoRegistrationAlgorithm2DUIDPolicy, "de.dkfz.matchpoint.test",
+								   "DemoRegistrationAlgorithm.2D", "1.0.0", DemoRegistrationAlgorithm_profile);
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::boxed::DemoRegistrationAlgorithm<ImageType, ImageType, DemoRegistrationAlgorithm2DUIDPolicy> AlgorithmType;
+typedef map::algorithm::boxed::DemoRegistrationAlgorithm<ImageType, ImageType, DemoRegistrationAlgorithm2DUIDPolicy>
+AlgorithmType;
 
 mapDeployAlgorithmMacro(AlgorithmType);

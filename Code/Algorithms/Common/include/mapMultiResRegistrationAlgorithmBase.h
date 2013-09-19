@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapMultiResRegistrationAlgorithmBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -47,7 +47,9 @@ namespace map
 		to indicate the beginning of the next resolution level usage
 		@see map::events::AlgorithmIterationEvent
 		*/
-		class MAPAlgorithms_EXPORT MultiResRegistrationAlgorithmBase : public facet::MultiResRegistrationAlgorithmInterface, public facet::MultiResRegistrationAlgorithmSetterInterface
+		class MAPAlgorithms_EXPORT MultiResRegistrationAlgorithmBase : public
+			facet::MultiResRegistrationAlgorithmInterface,
+		public facet::MultiResRegistrationAlgorithmSetterInterface
 		{
 		public:
 			typedef MultiResRegistrationAlgorithmBase Self;
@@ -66,7 +68,7 @@ namespace map
 			at least one resolution level).
 			@eguarantee strong
 			*/
-			virtual void setSchedule(const ScheduleType &schedule);
+			virtual void setSchedule(const ScheduleType& schedule);
 
 			/*! @brief sets the moving and the target schedule as copies of the
 			passed schedules. Before the new schedule is set onScheduleChange will
@@ -78,15 +80,15 @@ namespace map
 			at least one resolution level).
 			@eguarantee strong
 			*/
-			virtual void setSchedule(const ScheduleType &movingSchedule, const ScheduleType &targetSchedule);
+			virtual void setSchedule(const ScheduleType& movingSchedule, const ScheduleType& targetSchedule);
 
 			/*! returns the current schedule for the moving information space
 			@eguarantee strong*/
-			virtual const ScheduleType &getMovingSchedule() const;
+			virtual const ScheduleType& getMovingSchedule() const;
 
 			/*! returns the current schedule for the target information space
 			@eguarantee strong*/
-			virtual const ScheduleType &getTargetSchedule() const;
+			virtual const ScheduleType& getTargetSchedule() const;
 
 			/*! returns the the resolution level count
 			@eguarantee strong*/
@@ -118,7 +120,9 @@ namespace map
 			2nd dimesion must be euqal to the dimension count of the according information space.
 			@eguarantee strong
 			*/
-			virtual void onScheduleChange(const ScheduleType &oldMovingSchedule, ScheduleType &newMovingSchedule, const ScheduleType &oldTargetSchedule, ScheduleType &newTargetMovingSchedule) const;
+			virtual void onScheduleChange(const ScheduleType& oldMovingSchedule,
+										  ScheduleType& newMovingSchedule, const ScheduleType& oldTargetSchedule,
+										  ScheduleType& newTargetMovingSchedule) const;
 
 			/*! return the current resolution level number.
 			Will be called by getCurrentLevel() if hasLevelCount() returns true.
@@ -132,8 +136,8 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			MultiResRegistrationAlgorithmBase(const Self &source); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			MultiResRegistrationAlgorithmBase(const Self& source); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

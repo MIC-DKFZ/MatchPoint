@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldBasedKernelInverter.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FIELD_BASED_KERNEL_INVERTER_H
@@ -44,7 +44,8 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class FieldBasedKernelInverter : public RegistrationKernelInverterBase<VInputDimensions, VOutputDimensions>
+		class FieldBasedKernelInverter : public
+			RegistrationKernelInverterBase<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
@@ -92,7 +93,7 @@ namespace map
 			 * @return Indicates if the provider offers the right solution.
 			 * @retval true Provider can handle the request.
 			 * @retval false Provider is not able to handle the request.*/
-			virtual bool canHandleRequest(const RequestType &request) const;
+			virtual bool canHandleRequest(const RequestType& request) const;
 
 			/*! Returns an ID of the provider as string. Calls getStaticProviderName().
 			 * @return Service provider ID.*/
@@ -123,9 +124,9 @@ namespace map
 				 * @remark This function might cause an exception/assertion if the responsible service provider needs
 				 * pInverseFieldRepresentation not to be NULL but it is.
 				 */
-			virtual InverseKernelBasePointer invertKernel(const KernelBaseType &kernel,
-			                                              const FieldRepresentationType *pFieldRepresentation,
-			                                              const InverseFieldRepresentationType *pInverseFieldRepresentation) const;
+			virtual InverseKernelBasePointer invertKernel(const KernelBaseType& kernel,
+					const FieldRepresentationType* pFieldRepresentation,
+					const InverseFieldRepresentationType* pInverseFieldRepresentation) const;
 
 		protected:
 			/*!Cached properties that should be used on the FieldByFieldInversionFunctor*/
@@ -137,8 +138,8 @@ namespace map
 			virtual ~FieldBasedKernelInverter() {};
 
 		private:
-			FieldBasedKernelInverter(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			FieldBasedKernelInverter(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} // end namespace core

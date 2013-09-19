@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapArbitrarySVNLOptimizerPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -52,7 +52,9 @@ namespace map
 			@sa FixedSVNLOptimizerPolicy
 			@ingroup ITKPolicies
 			*/
-			class MAPAlgorithmsITK_EXPORT ArbitrarySVNLOptimizerPolicy: public facet::ITKSVNLOptimizerSetterInterface, public facet::ITKSVNLOptimizerGetterInterface, public facet::OptimizerGetterInterface
+			class MAPAlgorithmsITK_EXPORT ArbitrarySVNLOptimizerPolicy: public
+				facet::ITKSVNLOptimizerSetterInterface, public facet::ITKSVNLOptimizerGetterInterface,
+			public facet::OptimizerGetterInterface
 			{
 			public:
 				typedef ArbitrarySVNLOptimizerPolicy      Self;
@@ -66,17 +68,17 @@ namespace map
 				@eguarantee strong
 				@return a pointer to an ITKSVNLOptimizerControlInterface object
 				*/
-				ITKOptimizerControlType *getITKOptimizerControl();
-				const ITKOptimizerControlType *getITKOptimizerControl() const;
+				ITKOptimizerControlType* getITKOptimizerControl();
+				const ITKOptimizerControlType* getITKOptimizerControl() const;
 
 				/*! gets an optimizer control object
 				@eguarantee strong
 				@return a pointer to an ITKSVNLOptimizerControlInterface object
 				*/
-				OptimizerControlType *getOptimizerControl();
-				const OptimizerControlType *getOptimizerControl() const;
+				OptimizerControlType* getOptimizerControl();
+				const OptimizerControlType* getOptimizerControl() const;
 
-				virtual void setITKOptimizerControl(ITKOptimizerControlType *pOptimizer);
+				virtual void setITKOptimizerControl(ITKOptimizerControlType* pOptimizer);
 
 				void setAutomaticOptimizationDirection(bool automatic);
 				bool getAutomaticOptimizationDirection() const;
@@ -107,8 +109,8 @@ namespace map
 				@eguarantee no fail
 				@return a pointer to an ITKOptimizerControlType object
 				*/
-				virtual ITKOptimizerControlType *getOptimizerInternal();
-				virtual const ITKOptimizerControlType *getOptimizerInternal() const;
+				virtual ITKOptimizerControlType* getOptimizerInternal();
+				virtual const ITKOptimizerControlType* getOptimizerInternal() const;
 
 				/*! initializes the optimizer
 				@eguarantee strong
@@ -134,8 +136,8 @@ namespace map
 				bool _automaticOptimizationDirection;
 
 				//No copy constructor allowed
-				ArbitrarySVNLOptimizerPolicy(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ArbitrarySVNLOptimizerPolicy(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

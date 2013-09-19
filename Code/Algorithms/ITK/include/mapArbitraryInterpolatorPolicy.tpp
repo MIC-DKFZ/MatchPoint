@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapArbitraryInterpolatorPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -56,7 +56,7 @@ namespace map
 
 
 			template<class TInputImage, class TCoordRep>
-			typename ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::InterpolatorType *
+			typename ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::InterpolatorType*
 			ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::
 			getInterpolatorInternal()
 			{
@@ -64,7 +64,7 @@ namespace map
 			}
 
 			template<class TInputImage, class TCoordRep>
-			const typename ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::InterpolatorType *
+			const typename ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::InterpolatorType*
 			ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::
 			getInterpolatorInternal() const
 			{
@@ -72,7 +72,7 @@ namespace map
 			}
 
 			template<class TInputImage, class TCoordRep>
-			typename ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::InterpolatorType *
+			typename ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::InterpolatorType*
 			ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::
 			getInterpolator()
 			{
@@ -80,7 +80,7 @@ namespace map
 			}
 
 			template<class TInputImage, class TCoordRep>
-			const typename ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::InterpolatorType *
+			const typename ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::InterpolatorType*
 			ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::
 			getInterpolator() const
 			{
@@ -90,15 +90,16 @@ namespace map
 			template<class TInputImage, class TCoordRep>
 			void
 			ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::
-			setInterpolator(InterpolatorType *pInterpolator)
+			setInterpolator(InterpolatorType* pInterpolator)
 			{
 				if (pInterpolator != _spInterpolator.GetPointer())
 				{
 					//there is really the need to change
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::UnregisterAlgorithmComponentEvent unRegEvent(_spInterpolator.GetPointer(), "Unregister current interpolator");
-						this->_spOnChange->Execute((::itk::Object *)NULL, unRegEvent);
+						events::UnregisterAlgorithmComponentEvent unRegEvent(_spInterpolator.GetPointer(),
+								"Unregister current interpolator");
+						this->_spOnChange->Execute((::itk::Object*)NULL, unRegEvent);
 					}
 
 					_spInterpolator  = pInterpolator;
@@ -106,8 +107,9 @@ namespace map
 
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::RegisterAlgorithmComponentEvent regEvent(_spInterpolator.GetPointer(), "Register new interpolator");
-						this->_spOnChange->Execute((::itk::Object *)NULL, regEvent);
+						events::RegisterAlgorithmComponentEvent regEvent(_spInterpolator.GetPointer(),
+								"Register new interpolator");
+						this->_spOnChange->Execute((::itk::Object*)NULL, regEvent);
 					}
 				}
 			}

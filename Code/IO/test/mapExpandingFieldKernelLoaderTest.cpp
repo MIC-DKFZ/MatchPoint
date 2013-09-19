@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/test/mapExpandingFieldKernelLoaderTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -42,7 +42,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapExpandingFieldKernelLoaderTest(int argc, char *argv[])
+		int mapExpandingFieldKernelLoaderTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: test storage path
 			//           2: ref path
@@ -71,7 +71,8 @@ namespace map
 			FieldFunctorType::InFieldRepresentationType::SizeType size;
 			size.fill(10);
 
-			FieldFunctorType::InFieldRepresentationType::Pointer spInRep = FieldFunctorType::InFieldRepresentationType::New();
+			FieldFunctorType::InFieldRepresentationType::Pointer spInRep =
+				FieldFunctorType::InFieldRepresentationType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
@@ -87,33 +88,59 @@ namespace map
 			//Loader and request setup
 			LoaderType::Pointer spLoader = LoaderType::New();
 
-			map::core::String testFilePath = map::structuredData::encodeForXml(map::core::FileDispatch::createFullPath(refPath, "expandingFieldKernelWriterTest_ref.mhd"));
+			map::core::String testFilePath = map::structuredData::encodeForXml(
+												 map::core::FileDispatch::createFullPath(refPath, "expandingFieldKernelWriterTest_ref.mhd"));
 
-			core::String validData = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>" + testFilePath + "</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
-			core::String validData_noNullVector = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>" + testFilePath + "</FieldPath><UseNullVector>1</UseNullVector></Kernel>";
-			core::String invalidData_wrongDim = "<Kernel InputDimensions='3' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType></Kernel>";
-			core::String invalidData_wrongDim2 = "<Kernel InputDimensions='2' OutputDimensions='3'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType></Kernel>";
-			core::String invalidData_wrongType = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>WrongKernel</KernelType></Kernel>";
-			core::String invalidData_noFile = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
-			core::String invalidData_noUseNullVector = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
-			core::String invalidData_wrongNullVector = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value></NullVector></Kernel>";
-			core::String invalidData_wrongFile = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>inexistantDummyFile.error</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
-			core::String invalidData_wrongDimFile = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>" + testFilePath + "</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
+			core::String validData =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>"
+				+ testFilePath +
+				"</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
+			core::String validData_noNullVector =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>"
+				+ testFilePath + "</FieldPath><UseNullVector>1</UseNullVector></Kernel>";
+			core::String invalidData_wrongDim =
+				"<Kernel InputDimensions='3' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType></Kernel>";
+			core::String invalidData_wrongDim2 =
+				"<Kernel InputDimensions='2' OutputDimensions='3'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType></Kernel>";
+			core::String invalidData_wrongType =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>WrongKernel</KernelType></Kernel>";
+			core::String invalidData_noFile =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
+			core::String invalidData_noUseNullVector =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
+			core::String invalidData_wrongNullVector =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value></NullVector></Kernel>";
+			core::String invalidData_wrongFile =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>inexistantDummyFile.error</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
+			core::String invalidData_wrongDimFile =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>"
+				+ testFilePath +
+				"</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
 
 			structuredData::XMLStrReader::Pointer spStrReader = structuredData::XMLStrReader::New();
 
 			LoaderType::RequestType validRequest(spStrReader->readXMLContent(validData), false);
 			LoaderType::RequestType validRequest_lazy(spStrReader->readXMLContent(validData), true);
-			LoaderType::RequestType validRequest_noNull(spStrReader->readXMLContent(validData_noNullVector), false);
-			LoaderType::RequestType validRequest_noNull_lazy(spStrReader->readXMLContent(validData_noNullVector), true);
-			LoaderType::RequestType invalidRequest_wrongDim(spStrReader->readXMLContent(invalidData_wrongDim), false);
-			LoaderType::RequestType invalidRequest_wrongDim2(spStrReader->readXMLContent(invalidData_wrongDim2), false);
-			LoaderType::RequestType invalidRequest_wrongType(spStrReader->readXMLContent(invalidData_wrongType), false);
-			LoaderType::RequestType invalidRequest_noFile(spStrReader->readXMLContent(invalidData_noFile), false);
-			LoaderType::RequestType invalidRequest_noUseNullVector(spStrReader->readXMLContent(invalidData_noUseNullVector), false);
-			LoaderType::RequestType invalidRequest_wrongNullVector(spStrReader->readXMLContent(invalidData_wrongNullVector), false);
-			LoaderType::RequestType invalidRequest_wrongFile(spStrReader->readXMLContent(invalidData_wrongFile), false);
-			LoaderType::RequestType invalidRequest_wrongFile_lazy(spStrReader->readXMLContent(invalidData_wrongFile), true);
+			LoaderType::RequestType validRequest_noNull(spStrReader->readXMLContent(validData_noNullVector),
+					false);
+			LoaderType::RequestType validRequest_noNull_lazy(spStrReader->readXMLContent(
+						validData_noNullVector), true);
+			LoaderType::RequestType invalidRequest_wrongDim(spStrReader->readXMLContent(invalidData_wrongDim),
+					false);
+			LoaderType::RequestType invalidRequest_wrongDim2(spStrReader->readXMLContent(invalidData_wrongDim2),
+					false);
+			LoaderType::RequestType invalidRequest_wrongType(spStrReader->readXMLContent(invalidData_wrongType),
+					false);
+			LoaderType::RequestType invalidRequest_noFile(spStrReader->readXMLContent(invalidData_noFile),
+					false);
+			LoaderType::RequestType invalidRequest_noUseNullVector(spStrReader->readXMLContent(
+						invalidData_noUseNullVector), false);
+			LoaderType::RequestType invalidRequest_wrongNullVector(spStrReader->readXMLContent(
+						invalidData_wrongNullVector), false);
+			LoaderType::RequestType invalidRequest_wrongFile(spStrReader->readXMLContent(invalidData_wrongFile),
+					false);
+			LoaderType::RequestType invalidRequest_wrongFile_lazy(spStrReader->readXMLContent(
+						invalidData_wrongFile), true);
 
 			////////////////////////////////////////////
 			// Start Tests
@@ -136,7 +163,8 @@ namespace map
 			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_noFile), core::ServiceException);
 			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_noUseNullVector), core::ServiceException);
 			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_wrongNullVector), core::ServiceException);
-			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_wrongFile), ::itk::ImageFileReaderException);
+			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_wrongFile),
+								 ::itk::ImageFileReaderException);
 
 			//test valid request
 			LoaderType::GenericKernelPointer spKernel;
@@ -154,25 +182,25 @@ namespace map
 			tester.setCheckThreshold(checkThreshold);
 			tester.setExpectedField(spRefFunctor->generateField());
 
-			PreCachedKernelType *pKernel = dynamic_cast<PreCachedKernelType *>(spKernel.GetPointer());
+			PreCachedKernelType* pKernel = dynamic_cast<PreCachedKernelType*>(spKernel.GetPointer());
 			CHECK(pKernel != NULL);
 			tester.setActualField(pKernel->getField());
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
-			LazyKernelType *pKernel_lazy = dynamic_cast<LazyKernelType *>(spKernel_lazy.GetPointer());
+			LazyKernelType* pKernel_lazy = dynamic_cast<LazyKernelType*>(spKernel_lazy.GetPointer());
 			CHECK(pKernel_lazy != NULL);
 			tester.setActualField(pKernel_lazy->getField());
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel_lazy->getLargestPossibleRepresentation()) == *spInRep);
 
-			pKernel = dynamic_cast<PreCachedKernelType *>(spKernel_noNull.GetPointer());
+			pKernel = dynamic_cast<PreCachedKernelType*>(spKernel_noNull.GetPointer());
 			CHECK(pKernel != NULL);
 			tester.setActualField(pKernel->getField());
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
-			pKernel_lazy = dynamic_cast<LazyKernelType *>(spKernel_noNull_lazy.GetPointer());
+			pKernel_lazy = dynamic_cast<LazyKernelType*>(spKernel_noNull_lazy.GetPointer());
 			CHECK(pKernel_lazy != NULL);
 			tester.setActualField(pKernel_lazy->getField());
 			CHECK_TESTER(tester);

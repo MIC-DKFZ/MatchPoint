@@ -3,8 +3,8 @@
   Program:   Insight Segmentation & Registration Toolkit
   Module:    $RCSfile: itkEuclideanPairDistancePointMetric.txx,v $
   Language:  C++
-  Date:      $Date: 2013-07-30 14:08:21 +0200 (Di, 30 Jul 2013) $
-  Version:   $Revision: 4910 $
+  Date:      $Date$
+  Version:   $Revision$
 
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.

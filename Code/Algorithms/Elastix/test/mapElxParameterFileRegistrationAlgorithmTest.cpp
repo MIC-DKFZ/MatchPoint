@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Elastix/test/mapElxParameterFileRegistrationAlgorithmTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -38,11 +38,12 @@ namespace map
 	namespace testing
 	{
 
-		mapGenerateAlgorithmUIDPolicyMacro(TestElx2DRegistrationUIDPolicy, "de.dkfz.matchpoint.elastix.test", "ProgramFileRegistration.2D.default", "1.0.0", "");
+		mapGenerateAlgorithmUIDPolicyMacro(TestElx2DRegistrationUIDPolicy,
+										   "de.dkfz.matchpoint.elastix.test", "ProgramFileRegistration.2D.default", "1.0.0", "");
 
 		typedef std::map<core::String, core::String> ArgumentMapType;
 
-		ArgumentMapType getLoggedArguments(const core::String &logFilePath)
+		ArgumentMapType getLoggedArguments(const core::String& logFilePath)
 		{
 			std::ifstream logFile;
 			logFile.open(logFilePath.c_str());
@@ -81,7 +82,7 @@ namespace map
 			return result;
 		}
 
-		core::String extractArg(const ArgumentMapType &args, const core::String &name)
+		core::String extractArg(const ArgumentMapType& args, const core::String& name)
 		{
 			ArgumentMapType::const_iterator finding = args.find(name);
 
@@ -95,17 +96,18 @@ namespace map
 			}
 		}
 
-		void onRegistrationEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
+		void onRegistrationEvent(itk::Object* pCaller, const itk::EventObject& e, void*)
 		{
-			const map::events::AlgorithmEvent *pEvent = dynamic_cast<const map::events::AlgorithmEvent *>(&e);
+			const map::events::AlgorithmEvent* pEvent = dynamic_cast<const map::events::AlgorithmEvent*>(&e);
 
 			if (pEvent)
 			{
-				std::cout << std::endl << pEvent->GetEventName() << " (@" << pCaller << "): " << pEvent->getComment() << std::endl;
+				std::cout << std::endl << pEvent->GetEventName() << " (@" << pCaller << "): " <<
+						  pEvent->getComment() << std::endl;
 			}
 		}
 
-		int mapElxParameterFileRegistrationAlgorithmTest(int argc, char *argv[])
+		int mapElxParameterFileRegistrationAlgorithmTest(int argc, char* argv[])
 		{
 
 			//ARGUMENTS: 1: moving image
@@ -136,10 +138,13 @@ namespace map
 			//load input data
 			typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
 
-			typedef algorithm::elastix::ParameterFileRegistrationAlgorithm<ImageType, ImageType, TestElx2DRegistrationUIDPolicy> Elx2DRegistrationAlgorithmType;
+			typedef algorithm::elastix::ParameterFileRegistrationAlgorithm<ImageType, ImageType, TestElx2DRegistrationUIDPolicy>
+			Elx2DRegistrationAlgorithmType;
 
-			ImageType::Pointer spMovingImage = lit::TestImageIO<unsigned char, ImageType>::readImage(movingImageFileName);
-			ImageType::Pointer spTargetImage = lit::TestImageIO<unsigned char, ImageType>::readImage(targetImageFileName);
+			ImageType::Pointer spMovingImage = lit::TestImageIO<unsigned char, ImageType>::readImage(
+												   movingImageFileName);
+			ImageType::Pointer spTargetImage = lit::TestImageIO<unsigned char, ImageType>::readImage(
+												   targetImageFileName);
 
 			Elx2DRegistrationAlgorithmType::Pointer spAlgorithm = Elx2DRegistrationAlgorithmType::New();
 
@@ -162,7 +167,8 @@ namespace map
 			//Test legal algorithm execution and registration result
 			Elx2DRegistrationAlgorithmType::RegistrationPointer spRegistration;
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
-			CHECK_EQUAL(Elx2DRegistrationAlgorithmType::AlgorithmState::Finalized, spAlgorithm->getCurrentState());
+			CHECK_EQUAL(Elx2DRegistrationAlgorithmType::AlgorithmState::Finalized,
+						spAlgorithm->getCurrentState());
 
 			//CHECK_CLOSE( 1.0574, parameters[0], 0.0001);
 			//CHECK_CLOSE( 0.0110152, parameters[1], 0.0001);

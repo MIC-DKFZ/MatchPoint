@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapImageReader.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -38,11 +38,11 @@ namespace map
 		{
 			enum Type
 			{
-			    Default = 0, //* - Depending on the file extension (DICOM images (*.dcm, *.ima): Dicom; others: None; No image file: Dicom)
-			    None = 1, //* - No series reading, only the specified file
-			    Dicom = 2, //* - Use series reader and DCMTKSeriesFileNames
-			    Numeric = 3, //* - Use series reader and NumericSeriesFileNames
-			    GDCM = 4 //* - Use series reader and GDCMSeriesFileNames
+				Default = 0, //* - Depending on the file extension (DICOM images (*.dcm, *.ima): Dicom; others: None; No image file: Dicom)
+				None = 1, //* - No series reading, only the specified file
+				Dicom = 2, //* - Use series reader and DCMTKSeriesFileNames
+				Numeric = 3, //* - Use series reader and NumericSeriesFileNames
+				GDCM = 4 //* - Use series reader and GDCMSeriesFileNames
 			};
 		};
 
@@ -80,7 +80,7 @@ namespace map
 			typedef TInputPixel RescaleValueType;
 			typedef std::vector<itk::MetaDataDictionary> MetaDataDictionaryArrayType;
 
-			virtual const char *GetNameOfClass() const
+			virtual const char* GetNameOfClass() const
 			{
 				return "ImageReader";
 			}
@@ -115,39 +115,40 @@ namespace map
 
 			void load3D();
 
-			typedef std::vector< ::itk::MetaDataDictionary *> ITKMetaDataDictionaryArray;
-			void copyMetaDictionaryArray(const ITKMetaDataDictionaryArray *fromArray, MetaDataDictionaryArrayType &toArray);
+			typedef std::vector< ::itk::MetaDataDictionary*> ITKMetaDataDictionaryArray;
+			void copyMetaDictionaryArray(const ITKMetaDataDictionaryArray* fromArray,
+										 MetaDataDictionaryArrayType& toArray);
 
 		public:
 			/** Function to access the member variable _FileName. _FileName represents the filename of the
 			* headerfile. The path must be included, the file extension may left away.
 			* @return File name of the header file.*/
-			const core::String  &getFileName() const;
+			const core::String&  getFileName() const;
 
 			/** Function to access the member variable _FileName. _FileName represents the filename of the
 			* headerfile. The path must be included, the file extension may left away.
 			* @param [in] sFileName The file name of the header file.*/
-			void setFileName(const core::String  &sFileName);
+			void setFileName(const core::String&  sFileName);
 
 			/** Function to access the member variable _rescaleMin. _rescaleMin represents
 			* the minimum of the intensity rescale filter.
 			* @return The minimum of the intensity rescale filter.*/
-			const RescaleValueType &getRescaleMinimum() const;
+			const RescaleValueType& getRescaleMinimum() const;
 
 			/** Function to access the member variable _rescaleMin. _rescaleMin represents
 			* the minimum of the intensity rescale filter. Changing the rescale minimum out dates the ImageReader.
 			* @param [in] dRescaleMin The minimum of the intensity rescale filter.*/
-			void setRescaleMinimum(const RescaleValueType &rescaleMin);
+			void setRescaleMinimum(const RescaleValueType& rescaleMin);
 
 			/** Function to access the member variable _rescaleMin. _rescaleMax represents
 			* the minimum of the intensity rescale filter.
 			* @return The minimum of the intensity rescale filter.*/
-			const RescaleValueType &getRescaleMaximum() const;
+			const RescaleValueType& getRescaleMaximum() const;
 
 			/** Function to access the member variable _rescaleMin. _rescaleMax represents
 			* the minimum of the intensity rescale filter. Changing the rescale maximum out dates the ImageReader.
 			* @param [in] dRescaleMax The minimum of the intensity rescale filter.*/
-			void setRescaleMaximum(const RescaleValueType &rescaleMax);
+			void setRescaleMaximum(const RescaleValueType& rescaleMax);
 
 			/** Function to access the member variable _rescaleImage. _rescaleImage indicates if a
 			* loaded image should be rescaled regarding its intensities.
@@ -179,11 +180,11 @@ namespace map
 
 			/** Function loads the image if needed and returns the data.
 			* @return Pointer to loaded image.*/
-			OutputImageType  *GetOutput(void);
+			OutputImageType*  GetOutput(void);
 
 			/** Function returns the reference to the meta data dictionary(ies) of the latest file(s) loaded by this class.
 			 * Array may be empty if no MetaDictionary exists.*/
-			const MetaDataDictionaryArrayType &getMetaDictionaryArray();
+			const MetaDataDictionaryArrayType& getMetaDictionaryArray();
 
 			ImageReader();
 
@@ -203,13 +204,14 @@ namespace map
 		*/
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
 		typename ImageReader<TInputPixel, TOutputPixel, iDimension>::OutputImageType::Pointer
-		readImage(const core::String &fileName,
-		          ImageSeriesReadStyle::Type readStyle = ImageSeriesReadStyle::Default,
-		          bool rescaleImage = false,
-		          typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType rescaleMin = 0,
-		          typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType rescaleMax = 255,
-		          unsigned int upperNumericSeriesLimit = 100,
-		          typename ImageReader<TInputPixel, TOutputPixel, iDimension>::MetaDataDictionaryArrayType *pLoadedDictArray = NULL);
+		readImage(const core::String& fileName,
+				  ImageSeriesReadStyle::Type readStyle = ImageSeriesReadStyle::Default,
+				  bool rescaleImage = false,
+				  typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType rescaleMin = 0,
+				  typename ImageReader<TInputPixel, TOutputPixel, iDimension>::RescaleValueType rescaleMax = 255,
+				  unsigned int upperNumericSeriesLimit = 100,
+				  typename ImageReader<TInputPixel, TOutputPixel, iDimension>::MetaDataDictionaryArrayType*
+				  pLoadedDictArray = NULL);
 	}
 }
 

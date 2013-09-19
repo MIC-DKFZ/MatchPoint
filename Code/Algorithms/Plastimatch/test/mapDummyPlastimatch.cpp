@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Plastimatch/test/mapDummyPlastimatch.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #include <fstream>
@@ -33,9 +33,11 @@
 #include "mapFieldByModelFunctor.h"
 #include "mapITKTranslationTransform.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-	std::cout << "MatchPoint Plastimatch testing dummy." << std::endl << "This is a mock up exe, used by MatchPoint to test its Plastimatch integration." << std::endl << std::endl;
+	std::cout << "MatchPoint Plastimatch testing dummy." << std::endl <<
+			  "This is a mock up exe, used by MatchPoint to test its Plastimatch integration." << std::endl <<
+			  std::endl;
 
 	std::cout << "Passed command line arguments:" << std::endl;
 
@@ -59,7 +61,8 @@ int main(int argc, char *argv[])
 
 	map::core::String configPath = argv[2];
 
-	map::algorithm::plastimatch::ConfigurationType config = map::algorithm::plastimatch::loadConfigurationFromFile(configPath);
+	map::algorithm::plastimatch::ConfigurationType config =
+		map::algorithm::plastimatch::loadConfigurationFromFile(configPath);
 
 	if (config.size() < 2)
 	{
@@ -74,7 +77,8 @@ int main(int argc, char *argv[])
 	//generate a result field
 
 	typedef map::core::functors::FieldByModelFunctor<3, 3> FunctorType;
-	typedef map::algorithm::itk::ITKTransformModel< itk::TranslationTransform<map::core::continuous::ScalarType, 3> > TransformType;
+	typedef map::algorithm::itk::ITKTransformModel< itk::TranslationTransform<map::core::continuous::ScalarType, 3> >
+	TransformType;
 
 	FunctorType::TransformModelType::Pointer spModel = TransformType::New().GetPointer();
 	FunctorType::TransformModelType::ParametersType params(3);
@@ -86,7 +90,8 @@ int main(int argc, char *argv[])
 	//load target image for field descriptor
 	typedef map::core::discrete::Elements<3>::InternalImageType ImageType;
 	ImageType::Pointer spTargetImage = lit::TestImageIO<float, ImageType>::readImage(targetPath);
-	FunctorType::InFieldRepresentationType::Pointer spInRep = map::core::createFieldRepresentation(*(spTargetImage.GetPointer()));
+	FunctorType::InFieldRepresentationType::Pointer spInRep = map::core::createFieldRepresentation(*
+			(spTargetImage.GetPointer()));
 
 	FunctorType::Pointer spFunc = FunctorType::New(*spModel, spInRep);
 	FunctorType::FieldPointer spField = spFunc->generateField();

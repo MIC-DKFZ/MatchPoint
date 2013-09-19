@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapDefaultSLStaticPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,7 +50,7 @@ namespace map
 				 * @eguarantee basic
 				 * @param [in] pStack Pointer to the stack. Pointer must point to a valid stack instance.
 				 */
-				static void finalizeStaticLoading(ConcreteServiceStackType *pStack);
+				static void finalizeStaticLoading(ConcreteServiceStackType* pStack);
 
 				/*! Registers the concrete stack that should be handled by the policy. Function will be called directly after the
 				 * stack was created.
@@ -58,15 +58,15 @@ namespace map
 				 * @param [in] pStack Pointer to the stack. Pointer must point to a valid stack instance.
 				 * @pre pStack must not be NULL
 				 */
-				static void registerConcreteStack(ConcreteServiceStackType *pStack);
+				static void registerConcreteStack(ConcreteServiceStackType* pStack);
 
 				DefaultSLStaticPolicy();
 				~DefaultSLStaticPolicy();
 
 			private:
 				typedef DefaultSLStaticPolicy<TConcreteServiceStack> Self;
-				DefaultSLStaticPolicy(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				DefaultSLStaticPolicy(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		} // end namespace services

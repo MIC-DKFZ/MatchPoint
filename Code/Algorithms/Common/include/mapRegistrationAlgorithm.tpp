@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -66,7 +66,8 @@ namespace map
 				if (registrationIsOutdated())
 				{
 					mapLogInfoMacro( << "Registration is outdated. Redetermine registration.");
-					this->InvokeEvent(events::AlgorithmEvent(this, "Registration is outdated. Redetermine registration."));
+					this->InvokeEvent(events::AlgorithmEvent(this,
+									  "Registration is outdated. Redetermine registration."));
 					doDetermineRegistration();
 				}
 			}
@@ -82,7 +83,8 @@ namespace map
 		};
 
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
-		const typename RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::MovingRepresentationDescriptorType *
+		const typename
+		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::MovingRepresentationDescriptorType*
 		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
 		getMovingRepresentation() const
 		{
@@ -93,7 +95,7 @@ namespace map
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		void
 		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
-		setMovingRepresentation(const MovingRepresentationDescriptorType *pDescriptor)
+		setMovingRepresentation(const MovingRepresentationDescriptorType* pDescriptor)
 		{
 			if (_spMovingRepresentation.GetPointer() != pDescriptor)
 			{
@@ -105,7 +107,8 @@ namespace map
 		};
 
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
-		const typename RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::TargetRepresentationDescriptorType *
+		const typename
+		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::TargetRepresentationDescriptorType*
 		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
 		getTargetRepresentation() const
 		{
@@ -116,7 +119,7 @@ namespace map
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		void
 		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
-		setTargetRepresentation(const TargetRepresentationDescriptorType *pDescriptor)
+		setTargetRepresentation(const TargetRepresentationDescriptorType* pDescriptor)
 		{
 			if (_spTargetRepresentation.GetPointer() != pDescriptor)
 			{
@@ -155,7 +158,7 @@ namespace map
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		void
 		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
-		doBeforeSetMovingRepresentation(const MovingRepresentationDescriptorType *pMovingRepresentation)
+		doBeforeSetMovingRepresentation(const MovingRepresentationDescriptorType* pMovingRepresentation)
 		{
 			//default implementation does nothing
 		};
@@ -171,7 +174,7 @@ namespace map
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		void
 		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
-		doBeforeSetTargetRepresentation(const TargetRepresentationDescriptorType *pTargetRepresentation)
+		doBeforeSetTargetRepresentation(const TargetRepresentationDescriptorType* pTargetRepresentation)
 		{
 			//default implementation does nothing
 		};

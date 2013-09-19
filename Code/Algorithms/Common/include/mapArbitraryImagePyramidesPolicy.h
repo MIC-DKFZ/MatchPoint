@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapArbitraryImagePyramidesPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -49,8 +49,9 @@ namespace map
 		*/
 
 		template<class TMovingImage, class TTargetImage>
-		class ArbitraryImagePyramidesPolicy : public facet::ImagePyramidesSetterInterface<TMovingImage, TTargetImage>,
-			public facet::ImagePyramidesGetterInterface<TMovingImage, TTargetImage>
+		class ArbitraryImagePyramidesPolicy : public
+			facet::ImagePyramidesSetterInterface<TMovingImage, TTargetImage>,
+		public facet::ImagePyramidesGetterInterface<TMovingImage, TTargetImage>
 		{
 		public:
 			typedef ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage>      Self;
@@ -71,38 +72,38 @@ namespace map
 			@eguarantee strong
 			@param pMovingMask a pointer to the moving image pyramide
 			*/
-			virtual void setMovingImagePyramide(MovingImagePyramideBaseType *pMovingPyramide);
+			virtual void setMovingImagePyramide(MovingImagePyramideBaseType* pMovingPyramide);
 
 			/*! @brief sets the target image pyramide
 			@eguarantee strong
 			@param pTargetMask a pointer to the moving image pyramide
 			*/
-			virtual void setTargetImagePyramide(TargetImagePyramideBaseType *pTargetPyramide);
+			virtual void setTargetImagePyramide(TargetImagePyramideBaseType* pTargetPyramide);
 
 			/*! @brief gets a  pointer to the moving image pyramide
 			@eguarantee strong
 			@return a pointer to the moving image pyramide
 			*/
-			virtual MovingImagePyramideBaseType *getMovingImagePyramide();
+			virtual MovingImagePyramideBaseType* getMovingImagePyramide();
 
 			/*! @brief gets a const pointer to the moving image pyramide
 			@eguarantee strong
 			@return a const pointer to the moving image pyramide
 			*/
-			virtual const MovingImagePyramideBaseType *getMovingImagePyramide() const;
+			virtual const MovingImagePyramideBaseType* getMovingImagePyramide() const;
 
 
 			/*! @brief gets a  pointer to the target image pyramide
 			@eguarantee strong
 			@return a pointer to the target image pyramide
 			*/
-			virtual TargetImagePyramideBaseType *getTargetImagePyramide();
+			virtual TargetImagePyramideBaseType* getTargetImagePyramide();
 
 			/*! @brief gets a const pointer to the target image pyramide
 			@eguarantee strong
 			@return a const pointer to the target image pyramide
 			*/
-			virtual const TargetImagePyramideBaseType *getTargetImagePyramide() const;
+			virtual const TargetImagePyramideBaseType* getTargetImagePyramide() const;
 
 		protected:
 			ArbitraryImagePyramidesPolicy();
@@ -134,10 +135,10 @@ namespace map
 			@eguarantee strong
 			@return a pointer to an pyramide type
 			*/
-			virtual MovingImagePyramideBaseType *getMovingPyramideInternal();
-			virtual const MovingImagePyramideBaseType *getMovingPyramideInternal() const;
-			virtual TargetImagePyramideBaseType *getTargetPyramideInternal();
-			virtual const TargetImagePyramideBaseType *getTargetPyramideInternal() const;
+			virtual MovingImagePyramideBaseType* getMovingPyramideInternal();
+			virtual const MovingImagePyramideBaseType* getMovingPyramideInternal() const;
+			virtual TargetImagePyramideBaseType* getTargetPyramideInternal();
+			virtual const TargetImagePyramideBaseType* getTargetPyramideInternal() const;
 
 			/*! initializes the pyramides
 			@eguarantee strong
@@ -170,8 +171,8 @@ namespace map
 			TargetImagePyramideBasePointer _spTargetPyramide;
 
 			//No copy constructor allowed
-			ArbitraryImagePyramidesPolicy(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			ArbitraryImagePyramidesPolicy(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

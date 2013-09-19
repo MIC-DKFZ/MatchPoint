@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapXMLLogger.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -64,7 +64,7 @@ namespace map
 			itkNewMacro(Self);
 
 			/** Provides a xml formatted log entry */
-			virtual std::string BuildFormattedEntry(PriorityLevelType level, std::string const &content);
+			virtual std::string BuildFormattedEntry(PriorityLevelType level, std::string const& content);
 
 		protected:
 
@@ -75,8 +75,8 @@ namespace map
 			virtual ~XMLLogger() {};
 
 		private:
-			XMLLogger(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			XMLLogger(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 		/*! Converts the passed content and "escapes" any special xml characters.

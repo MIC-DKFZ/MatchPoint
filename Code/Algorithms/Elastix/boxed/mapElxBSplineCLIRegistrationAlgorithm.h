@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Elastix/boxed/mapElxBSplineCLIRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -48,11 +48,13 @@ namespace map
 						@ingroup Boxed
 			 */
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			class ElxBSplineCLIRegistrationAlgorithm : public elastix::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
+			class ElxBSplineCLIRegistrationAlgorithm : public
+				elastix::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
 			{
 			public:
 				typedef ElxBSplineCLIRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
-				typedef elastix::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>  Superclass;
+				typedef elastix::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
+				Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -79,8 +81,8 @@ namespace map
 				virtual void prepParameterMaps();
 			private:
 
-				ElxBSplineCLIRegistrationAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ElxBSplineCLIRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

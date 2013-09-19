@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapFieldRepresentationDescriptorTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -76,7 +76,8 @@ namespace map
 			core::FieldRepresentationDescriptor<2>::ImageRegionType localRegion(localIndex, regionSize);
 
 			//Testing
-			core::FieldRepresentationDescriptor<2>::Pointer spFRD = core::FieldRepresentationDescriptor<2>::New();
+			core::FieldRepresentationDescriptor<2>::Pointer spFRD =
+				core::FieldRepresentationDescriptor<2>::New();
 
 			CHECK_NO_THROW(spFRD->setSize(size));
 			CHECK_NO_THROW(spFRD->setOrigin(origin));
@@ -90,13 +91,15 @@ namespace map
 
 			spFRD->setDirection(direct1);
 
-			core::FieldRepresentationDescriptor<2>::Pointer spFRDbyRegion = core::createFieldRepresentation(localRegion, spacing);
+			core::FieldRepresentationDescriptor<2>::Pointer spFRDbyRegion = core::createFieldRepresentation(
+						localRegion, spacing);
 
 			/*! @TODO Add correct test for new getRepresentedLocalImageRegion */
 			//CHECK_EQUAL(localRegion,spFRDbyRegion->getRepresentedLocalImageRegion(regionOrigin));
 			CHECK_EQUAL(localRegion, spFRDbyRegion->getRepresentedLocalImageRegion());
 
-			core::FieldRepresentationDescriptor<2>::Pointer spFRDbyVolume = core::createFieldRepresentation(volume, spacing);
+			core::FieldRepresentationDescriptor<2>::Pointer spFRDbyVolume = core::createFieldRepresentation(
+						volume, spacing);
 
 			CHECK_EQUAL(volume, spFRDbyVolume->getRepresentedVolume());
 

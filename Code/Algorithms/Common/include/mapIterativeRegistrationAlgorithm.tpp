@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapIterativeRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -36,11 +36,11 @@ namespace map
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		typename IterativeRegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::InterimRegistrationPointer
 		IterativeRegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
-		getInterimRegistration(const MovingRepresentationDescriptorType *pMovingRepresentation,
-		                       const TargetRepresentationDescriptorType *pTargetRepresentation) const
+		getInterimRegistration(const MovingRepresentationDescriptorType* pMovingRepresentation,
+							   const TargetRepresentationDescriptorType* pTargetRepresentation) const
 		{
-			const MovingRepresentationDescriptorType *pInterimMovingRepresentation = pMovingRepresentation;
-			const TargetRepresentationDescriptorType *pInterimTargetRepresentation = pTargetRepresentation;
+			const MovingRepresentationDescriptorType* pInterimMovingRepresentation = pMovingRepresentation;
+			const TargetRepresentationDescriptorType* pInterimTargetRepresentation = pTargetRepresentation;
 
 			if (!pInterimMovingRepresentation)
 			{
@@ -173,7 +173,7 @@ namespace map
 			bool result = false;
 
 			if (this->getCurrentState() == Superclass::AlgorithmState::Initializing ||
-			        this->getCurrentState() == Superclass::AlgorithmState::Running)
+				this->getCurrentState() == Superclass::AlgorithmState::Running)
 			{
 				result = doStopAlgorithm();
 
@@ -183,9 +183,9 @@ namespace map
 				}
 			}
 			else if (this->getCurrentState() == Superclass::AlgorithmState::Stopping ||
-			         this->getCurrentState() == Superclass::AlgorithmState::Stopped ||
-			         this->getCurrentState() == Superclass::AlgorithmState::Finalizing ||
-			         this->getCurrentState() == Superclass::AlgorithmState::Finalized)
+					 this->getCurrentState() == Superclass::AlgorithmState::Stopped ||
+					 this->getCurrentState() == Superclass::AlgorithmState::Finalizing ||
+					 this->getCurrentState() == Superclass::AlgorithmState::Finalized)
 			{
 				result = true;
 			}

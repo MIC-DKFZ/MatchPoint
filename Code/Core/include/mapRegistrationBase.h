@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __REGISTRATION_BASE_H
@@ -97,13 +97,13 @@ namespace map
 			@eguarantee no fail
 			@return a TagMapType containing tags
 			*/
-			const TagMapType &getTags() const;
+			const TagMapType& getTags() const;
 
 			/*! @brief returns the tag value for a specific tag
 			@eguarantee strong
 			@return the success of the operation
 			*/
-			bool getTagValue(const TagType &tag, ValueType &value) const;
+			bool getTagValue(const TagType& tag, ValueType& value) const;
 
 			/*! @brief convinience function that retrieves the registration UID from the tags and returns it.
 			@eguarantee strong
@@ -130,17 +130,17 @@ namespace map
 			 * If it is present it stays untouched. If you define your own UID ensure that it is unique.
 			@eguarantee strong
 			*/
-			virtual void setTagValues(const RegistrationBase::TagMapType &tags);
+			virtual void setTagValues(const RegistrationBase::TagMapType& tags);
 
-			virtual RegistrationBase::TagMapType &getTagValues();
+			virtual RegistrationBase::TagMapType& getTagValues();
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
 			//No copy constructor allowed
-			RegistrationBase(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			RegistrationBase(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 
@@ -148,8 +148,8 @@ namespace map
 
 	namespace tags
 	{
-		const char *const AlgorithmUID = "AlgorithmUID";
-		const char *const RegistrationUID = "RegistrationUID";
+		const char* const AlgorithmUID = "AlgorithmUID";
+		const char* const RegistrationUID = "RegistrationUID";
 	}
 }
 

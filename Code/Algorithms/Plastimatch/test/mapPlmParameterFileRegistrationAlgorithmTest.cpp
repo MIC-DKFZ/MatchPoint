@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Plastimatch/test/mapPlmParameterFileRegistrationAlgorithmTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -41,11 +41,12 @@ namespace map
 	namespace testing
 	{
 
-		mapGenerateAlgorithmUIDPolicyMacro(TestPlm3DRegistrationUIDPolicy, "de.dkfz.matchpoint.plastimatch.test", "ProgramFileRegistration.3D.default", "1.0.0", "");
+		mapGenerateAlgorithmUIDPolicyMacro(TestPlm3DRegistrationUIDPolicy,
+										   "de.dkfz.matchpoint.plastimatch.test", "ProgramFileRegistration.3D.default", "1.0.0", "");
 
 		typedef std::vector<core::String> ArgumentsType;
 
-		ArgumentsType getLoggedArguments(const core::String &logFilePath)
+		ArgumentsType getLoggedArguments(const core::String& logFilePath)
 		{
 			std::ifstream logFile;
 			logFile.open(logFilePath.c_str());
@@ -66,13 +67,14 @@ namespace map
 			return list;
 		}
 
-		core::String getLoggedTempDir(const ArgumentsType &loggedArguments)
+		core::String getLoggedTempDir(const ArgumentsType& loggedArguments)
 		{
 			//the temp dir should be deduced by the 3rd line (plastimatch configuration file)
 
 			if (loggedArguments.size() < 3)
 			{
-				mapDefaultExceptionStaticMacro( << "Error. PlastimatchDummyCall.log seems to be invalid, line with configuration file is missing.");
+				mapDefaultExceptionStaticMacro( <<
+												"Error. PlastimatchDummyCall.log seems to be invalid, line with configuration file is missing.");
 			}
 
 			core::String dir = loggedArguments[2];
@@ -81,17 +83,19 @@ namespace map
 			return dir;
 		}
 
-		void onRegistrationEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
+		void onRegistrationEvent(itk::Object* pCaller, const itk::EventObject& e, void*)
 		{
-			const map::events::AlgorithmEvent *pEvent = dynamic_cast<const map::events::AlgorithmEvent *>(&e);
+			const map::events::AlgorithmEvent* pEvent = dynamic_cast<const map::events::AlgorithmEvent*>(&e);
 
 			if (pEvent)
 			{
-				std::cout << std::endl << pEvent->GetEventName() << " (@" << pCaller << "): " << pEvent->getComment() << std::endl;
+				std::cout << std::endl << pEvent->GetEventName() << " (@" << pCaller << "): " <<
+						  pEvent->getComment() << std::endl;
 			}
 		}
 
-		typedef map::algorithm::itk::ITKTransformModel< itk::TranslationTransform<map::core::continuous::ScalarType, 3> > TransformModelType;
+		typedef map::algorithm::itk::ITKTransformModel< itk::TranslationTransform<map::core::continuous::ScalarType, 3> >
+		TransformModelType;
 
 		TransformModelType::Pointer generateInverseReferenceTransformModel()
 		{
@@ -112,7 +116,7 @@ namespace map
 			return spInvModel;
 		}
 
-		int mapPlmParameterFileRegistrationAlgorithmTest(int argc, char *argv[])
+		int mapPlmParameterFileRegistrationAlgorithmTest(int argc, char* argv[])
 		{
 
 			//ARGUMENTS: 1: moving image
@@ -143,10 +147,13 @@ namespace map
 			//load input data
 			typedef map::core::discrete::Elements<3>::InternalImageType ImageType;
 
-			typedef algorithm::plastimatch::ParameterFileRegistrationAlgorithm<ImageType, ImageType, TestPlm3DRegistrationUIDPolicy> Plm3DRegistrationAlgorithmType;
+			typedef algorithm::plastimatch::ParameterFileRegistrationAlgorithm<ImageType, ImageType, TestPlm3DRegistrationUIDPolicy>
+			Plm3DRegistrationAlgorithmType;
 
-			ImageType::Pointer spMovingImage = lit::TestImageIO<unsigned char, ImageType>::readImage(movingImageFileName);
-			ImageType::Pointer spTargetImage = lit::TestImageIO<unsigned char, ImageType>::readImage(targetImageFileName);
+			ImageType::Pointer spMovingImage = lit::TestImageIO<unsigned char, ImageType>::readImage(
+												   movingImageFileName);
+			ImageType::Pointer spTargetImage = lit::TestImageIO<unsigned char, ImageType>::readImage(
+												   targetImageFileName);
 
 			Plm3DRegistrationAlgorithmType::Pointer spAlgorithm = Plm3DRegistrationAlgorithmType::New();
 
@@ -178,13 +185,16 @@ namespace map
 			//Test legal algorithm execution and registration result
 			Plm3DRegistrationAlgorithmType::RegistrationPointer spRegistration;
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
-			CHECK_EQUAL(Plm3DRegistrationAlgorithmType::AlgorithmState::Finalized, spAlgorithm->getCurrentState());
+			CHECK_EQUAL(Plm3DRegistrationAlgorithmType::AlgorithmState::Finalized,
+						spAlgorithm->getCurrentState());
 
 			// test result
-			typedef lit::TransformFieldTester<map::core::discrete::Elements<3>::VectorFieldType, TransformModelType::TransformBaseType> TesterType;
+			typedef lit::TransformFieldTester<map::core::discrete::Elements<3>::VectorFieldType, TransformModelType::TransformBaseType>
+			TesterType;
 			TesterType tester;
 			typedef map::core::FieldBasedRegistrationKernel<3, 3> KernelBaseType;
-			const KernelBaseType *pKernel = dynamic_cast<const KernelBaseType *>(&(spRegistration->getInverseMapping()));
+			const KernelBaseType* pKernel = dynamic_cast<const KernelBaseType*>(&
+											(spRegistration->getInverseMapping()));
 			CHECK(pKernel != NULL);
 
 			tester.setReferenceTransform(generateInverseReferenceTransformModel()->getTransform());
@@ -218,8 +228,12 @@ namespace map
 			//Test the correct temp storage of target and moving image
 			//use date of the last run (where the temp dir was not deleted).
 
-			ImageType::Pointer spStoredMovingImage = lit::TestImageIO<core::discrete::InternalPixelType, ImageType>::readImage(core::FileDispatch::createFullPath(tempDir, "moving.mhd"));
-			ImageType::Pointer spStoredTargetImage = lit::TestImageIO<core::discrete::InternalPixelType, ImageType>::readImage(core::FileDispatch::createFullPath(tempDir, "target.mhd"));
+			ImageType::Pointer spStoredMovingImage =
+				lit::TestImageIO<core::discrete::InternalPixelType, ImageType>::readImage(
+					core::FileDispatch::createFullPath(tempDir, "moving.mhd"));
+			ImageType::Pointer spStoredTargetImage =
+				lit::TestImageIO<core::discrete::InternalPixelType, ImageType>::readImage(
+					core::FileDispatch::createFullPath(tempDir, "target.mhd"));
 
 			lit::ImageTester<ImageType, ImageType> imageTester;
 

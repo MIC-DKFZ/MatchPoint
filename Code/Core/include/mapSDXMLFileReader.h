@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapSDXMLFileReader.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -61,14 +61,14 @@ namespace map
 			 * element designates the file itself. All found
 			 * top level xml elements will be added as sub elements
 			 * to the root StructuredData element.*/
-			ElementPointer read(const core::String &filePath);
+			ElementPointer read(const core::String& filePath);
 
 			/**Reads StructuredData elements from the the specified filepath and streams it to the passed instance of the StreamingInterface
 			 * @param [in] filePath String that defines the location of the file.
 			 * @param [in] pInterface Pointer to the streamable interface instance. The pointer must not be NULL.
 			 * @pre The Pointer pInterface must not be NULL.
 			 * @pre The specified file path must specify a file location within an existing directory.*/
-			void read(const core::String &filePath, StreamingInterface *pInterface);
+			void read(const core::String& filePath, StreamingInterface* pInterface);
 
 			/**Returns the xml top level element read from the file.
 			 * @return SmartPointer to the top level element of the read file. If no file has been read
@@ -83,8 +83,8 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			XMLFileReader(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			XMLFileReader(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 

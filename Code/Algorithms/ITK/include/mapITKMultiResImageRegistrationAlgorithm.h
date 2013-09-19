@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKMultiResImageRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -51,23 +51,30 @@ namespace map
 			@ingroup Algorithms
 			*/
 			template < class TMovingImage, class TTargetImage,
-			         class TIdentificationPolicy,
-			         class TInterpolatorPolicy = ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
-			         class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
-			         class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,
-			         class TTransformPolicy = ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-			         class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage>,
-			         class TInternalRegistrationMethod = ::itk::MultiResolutionImageRegistrationMethod<TTargetImage, TMovingImage> >
-			class ITKMultiResImageRegistrationAlgorithm : public ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>,
-				public MultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy>
+					 class TIdentificationPolicy,
+					 class TInterpolatorPolicy = ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
+					 class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
+					 class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,
+					 class TTransformPolicy =
+					 ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+					 class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage>,
+					 class TInternalRegistrationMethod =
+					 ::itk::MultiResolutionImageRegistrationMethod<TTargetImage, TMovingImage> >
+			class ITKMultiResImageRegistrationAlgorithm : public
+				ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>,
+			public MultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy>
 			{
 			public:
-				typedef ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy,
-				        TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy, TInternalRegistrationMethod > Self;
-				typedef ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod> Superclass;
+				typedef ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
+						TInterpolatorPolicy, TMetricPolicy,
+						TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy, TInternalRegistrationMethod > Self;
+				typedef ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>
+				Superclass;
 
-				typedef ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType> ITKRegistrationType;
-				typedef MultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy> MultiResRegistrationAlgorithmType;
+				typedef ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType>
+				ITKRegistrationType;
+				typedef MultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy>
+				MultiResRegistrationAlgorithmType;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -91,14 +98,22 @@ namespace map
 				typedef typename ITKRegistrationType::TransformBaseType TransformBaseType;
 				typedef typename ITKRegistrationType::InterpolatorBaseType InterpolatorBaseType;
 				typedef typename MultiResRegistrationAlgorithmType::ScheduleType ScheduleType;
-				typedef typename MultiResRegistrationAlgorithmType::ResolutionLevelCountType ResolutionLevelCountType;
-				typedef typename MultiResRegistrationAlgorithmType::TargetImagePyramideBaseType TargetImagePyramideBaseType;
-				typedef typename MultiResRegistrationAlgorithmType::MovingImagePyramideBaseType MovingImagePyramideBaseType;
-				typedef typename MultiResRegistrationAlgorithmType::TargetImagePyramideBasePointer TargetImagePyramideBasePointer;
-				typedef typename MultiResRegistrationAlgorithmType::MovingImagePyramideBasePointer MovingImagePyramideBasePointer;
+				typedef typename MultiResRegistrationAlgorithmType::ResolutionLevelCountType
+				ResolutionLevelCountType;
+				typedef typename MultiResRegistrationAlgorithmType::TargetImagePyramideBaseType
+				TargetImagePyramideBaseType;
+				typedef typename MultiResRegistrationAlgorithmType::MovingImagePyramideBaseType
+				MovingImagePyramideBaseType;
+				typedef typename MultiResRegistrationAlgorithmType::TargetImagePyramideBasePointer
+				TargetImagePyramideBasePointer;
+				typedef typename MultiResRegistrationAlgorithmType::MovingImagePyramideBasePointer
+				MovingImagePyramideBasePointer;
 
-				typedef typename IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType OptimizerMeasureType;
-				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage> ImageRegistrationAlgorithmBaseType;
+				typedef typename
+				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType
+				OptimizerMeasureType;
+				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
+				ImageRegistrationAlgorithmBaseType;
 
 				typedef typename Superclass::MovingRepresentationDescriptorType MovingRepresentationDescriptorType;
 				typedef typename Superclass::TargetRepresentationDescriptorType TargetRepresentationDescriptorType;
@@ -107,8 +122,10 @@ namespace map
 				typedef typename Superclass::IterationCountType IterationCountType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
-				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer MovingImageConstPointer;
-				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer TargetImageConstPointer;
+				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer
+				MovingImageConstPointer;
+				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
+				TargetImageConstPointer;
 
 				/*! Indicates if the current processed level can be deduced
 				@eguarantee no fail
@@ -178,7 +195,8 @@ namespace map
 				*/
 				virtual void prepFinalizePreparation();
 
-				typedef typename TransformPolicyType::TransformType::TransformBaseType::ParametersType TransformParametersType;
+				typedef typename TransformPolicyType::TransformType::TransformBaseType::ParametersType
+				TransformParametersType;
 
 				/*! return the current resolution level number.
 				Will be called by getCurrentLevel() if hasLevelCount() returns true.
@@ -200,7 +218,7 @@ namespace map
 				virtual bool doStopAlgorithm();
 
 				/*! Methods invoked by derivated classes.  */
-				virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 			private:
 				/*! The count of the levels, since starting the registration algorithm the last time.
@@ -218,16 +236,16 @@ namespace map
 				mutable core::ObserverSentinel::Pointer _onGeneralMovingPyramideObserver;
 
 				/*! This member function is called by the observer of the optimizer, when ever a LevelEvent is invoked.*/
-				void onLevelEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onLevelEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the transform policy if the transform model instance changes.*/
-				void onTargetImagePyramideChange(const ::itk::EventObject &eventObject);
+				void onTargetImagePyramideChange(const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the transform policy if the transform model instance changes.*/
-				void onMovingImagePyramideChange(const ::itk::EventObject &eventObject);
+				void onMovingImagePyramideChange(const ::itk::EventObject& eventObject);
 
-				ITKMultiResImageRegistrationAlgorithm(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKMultiResImageRegistrationAlgorithm(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

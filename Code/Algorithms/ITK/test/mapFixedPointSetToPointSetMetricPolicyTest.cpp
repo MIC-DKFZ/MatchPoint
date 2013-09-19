@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapFixedPointSetToPointSetMetricPolicyTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -52,18 +52,19 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef ::itk::EuclideanDistancePointMetric<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType> MetricType;
+			typedef ::itk::EuclideanDistancePointMetric<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			MetricType;
 			typedef algorithm::itk::ITKMetricControl<MetricType> MetricControlType;
 			typedef TestPolicy< MetricType > PolicyType;
 
 			PolicyType policy;
-			const PolicyType &constPolicy = policy;
+			const PolicyType& constPolicy = policy;
 
-			MetricControlType *pConcreteMetricControl = NULL;
-			const MetricControlType *pConstConcreteMetricControl = NULL;
+			MetricControlType* pConcreteMetricControl = NULL;
+			const MetricControlType* pConstConcreteMetricControl = NULL;
 
-			PolicyType::MetricType *pMetricControl = NULL;
-			const PolicyType::MetricType *pConstMetricControl = NULL;
+			PolicyType::MetricType* pMetricControl = NULL;
+			const PolicyType::MetricType* pConstMetricControl = NULL;
 
 			CHECK_NO_THROW(pConcreteMetricControl = policy.getConcreteMetricControl());
 			CHECK_NO_THROW(pConstConcreteMetricControl = constPolicy.getConcreteMetricControl());

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapLogbook.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -59,10 +59,10 @@ namespace map
 
 			/*! Passes the content to normal and error logger.
 			 * @eguarantee strong*/
-			static void write(PriorityLevelType level, const String &content);
+			static void write(PriorityLevelType level, const String& content);
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "debug". */
-			static void debug(const String &message)
+			static void debug(const String& message)
 			{
 				if (_currentPriorityLevel == itk::LoggerBase::DEBUG)
 				{
@@ -73,7 +73,7 @@ namespace map
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "info". */
-			static void info(const String &message)
+			static void info(const String& message)
 			{
 				if (_currentPriorityLevel != itk::LoggerBase::CRITICAL)
 				{
@@ -84,7 +84,7 @@ namespace map
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "warning". */
-			static void warning(const String &message)
+			static void warning(const String& message)
 			{
 				if (_currentPriorityLevel != itk::LoggerBase::CRITICAL)
 				{
@@ -95,19 +95,19 @@ namespace map
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "critical". */
-			static void critical(const String &message)
+			static void critical(const String& message)
 			{
 				write(itk::LoggerBase::CRITICAL, message);
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "critical". */
-			static void error(const String &message)
+			static void error(const String& message)
 			{
 				write(itk::LoggerBase::CRITICAL, message);
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "fatal". */
-			static void fatal(const String &message)
+			static void fatal(const String& message)
 			{
 				write(itk::LoggerBase::FATAL, message);
 			}
@@ -117,12 +117,12 @@ namespace map
 
 			/*! opens file stream to the new file. If it succeeds the the current default file stream will be closed and exchanged.
 			 * @eguarantee strong*/
-			static void setDefaultLogFileName(const String &fileName);
+			static void setDefaultLogFileName(const String& fileName);
 
 			/*! adds additional log outputs to the logbook.
 			 * @eguarantee strong
 			 * @pre pOuput must not be a NULL pointer.*/
-			static void addAdditionalLogOutput(OutputType *pOutput);
+			static void addAdditionalLogOutput(OutputType* pOutput);
 
 
 			/*! Attaches the central itk output window to the MatchPoint logging, by setting the OutputWindow to
@@ -155,10 +155,10 @@ namespace map
 
 			/** This function is called to add all information to pSyncObject
 			 * that are needed to performe a synchronisation of an other instance*/
-			static void getSynchronization(deployment::SyncObject &pSyncObject);
+			static void getSynchronization(deployment::SyncObject& pSyncObject);
 			/** This function is called to synchronize the instance with
 			 * the information of pSyncObject.*/
-			static void setSynchronization(const deployment::SyncObject &pSyncObject);
+			static void setSynchronization(const deployment::SyncObject& pSyncObject);
 			/** This function is called to desynchronize the instance.*/
 			static void deSynchronize();
 
@@ -171,7 +171,7 @@ namespace map
 			 * @eguarantee strong
 			 * @pre pImpl must be a valid pointer to an implmentation.
 			 * @param [in,out] pImpl Pointer to the new implementation.*/
-			static void swapImplementations(LogbookImplementation *pImpl);
+			static void swapImplementations(LogbookImplementation* pImpl);
 
 			typedef itk::SmartPointer<LogbookImplementation> LogImplPointer;
 			static LogImplPointer _spLoggerImpl;
@@ -192,8 +192,8 @@ namespace map
 
 			virtual ~Logbook(); //purposely not implemented
 
-			Logbook(const Logbook &); //purposely not implemented
-			void operator=(const Logbook &); //purposely not implemented
+			Logbook(const Logbook&);  //purposely not implemented
+			void operator=(const Logbook&);  //purposely not implemented
 		};
 
 	} // end namespace core

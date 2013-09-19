@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldCombinationFunctorInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,7 +50,8 @@ namespace map
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>  Self;
+				typedef FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+				Self;
 				typedef itk::SmartPointer<Self>        Pointer;
 				typedef itk::SmartPointer<const Self>  ConstPointer;
 
@@ -58,12 +59,13 @@ namespace map
 				itkStaticConstMacro(InterimDimensions, unsigned int, VInterimDimensions);
 				itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);
 
-				virtual const char *GetNameOfClass() const
+				virtual const char* GetNameOfClass() const
 				{
 					return "FieldGenerationFunctor";
 				};
 
-				typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType PaddingVectorType;
+				typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType
+				PaddingVectorType;
 
 				typedef RegistrationKernelBase<VInputDimensions, VInterimDimensions> SourceKernel1BaseType;
 				typedef RegistrationKernelBase<VInterimDimensions, VOutputDimensions> SourceKernel2BaseType;
@@ -74,7 +76,7 @@ namespace map
 				 * @return Pointer to the source field kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				virtual const SourceKernel1BaseType *get1stSourceKernelBase(void) const = 0;
+				virtual const SourceKernel1BaseType* get1stSourceKernelBase(void) const = 0;
 
 				/*! Returns a const pointer to the second source kernel base that will be used in order
 				 * to generate the field.
@@ -82,7 +84,7 @@ namespace map
 				 * @return Pointer to the source field kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				virtual const SourceKernel2BaseType *get2ndSourceKernelBase(void) const = 0;
+				virtual const SourceKernel2BaseType* get2ndSourceKernelBase(void) const = 0;
 
 				/* gets _usePadding
 				  @eguarantee no fail
@@ -97,12 +99,12 @@ namespace map
 				/* gets _paddingVector
 				 * @eguarantee no fail
 				 */
-				const PaddingVectorType &getPaddingVector() const;
+				const PaddingVectorType& getPaddingVector() const;
 
 				/*! Sets _paddingVector by vector and _usePadding to true.
 				* @eguarantee basic
 				 * @param [in] vector The new value for _paddingVector*/
-				void setPaddingVector(const PaddingVectorType &vector);
+				void setPaddingVector(const PaddingVectorType& vector);
 
 			protected:
 
@@ -120,11 +122,11 @@ namespace map
 				virtual ~FieldCombinationFunctorInterface();
 
 				/*! Methods invoked by itk::LightObject::Print().  */
-				virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			private:
-				FieldCombinationFunctorInterface(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				FieldCombinationFunctorInterface(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		} // end namespace functors

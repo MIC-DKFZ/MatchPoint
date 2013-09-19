@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapInverseRegistrationKernelGenerator.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_INVERSE_REGISTRATION_KERNEL_GENERATOR_H
@@ -70,7 +70,8 @@ namespace map
 			typedef typename InverterBaseType::InverseFieldRepresentationType   InverseFieldRepresentationType;
 
 		protected:
-			typedef services::ServiceStack<InverterBaseType, KernelInverterLoadPolicy<VInputDimensions, VOutputDimensions> > ConcreteInverterStackType;
+			typedef services::ServiceStack<InverterBaseType, KernelInverterLoadPolicy<VInputDimensions, VOutputDimensions> >
+			ConcreteInverterStackType;
 		public:
 			typedef services::StaticServiceStack<ConcreteInverterStackType>			 InverterStackType;
 
@@ -90,8 +91,8 @@ namespace map
 			* can be used as pFieldRepresentation.\n This function might cause an exception/assertion if the responsible service provider needs
 				 * a missing field representation descriptor. Also if no suitable provider is available an exception will be thrown.
 				 */
-			InverseKernelBasePointer generateInverse(const KernelBaseType &kernel,
-			                                         const InverseFieldRepresentationType *pInverseFieldRepresentation) const;
+			InverseKernelBasePointer generateInverse(const KernelBaseType& kernel,
+					const InverseFieldRepresentationType* pInverseFieldRepresentation) const;
 
 
 		protected:
@@ -113,16 +114,17 @@ namespace map
 				 * @remark This function might cause an exception/assertion if the responsible service provider needs
 				 * a missing field representation descriptor. Also if no suitable provider is available an exception will be thrown.
 				 */
-			InverseKernelBasePointer generateInverse(const KernelBaseType &kernel, const FieldRepresentationType *pFieldRepresentation,
-			                                         const InverseFieldRepresentationType *pInverseFieldRepresentation) const;
+			InverseKernelBasePointer generateInverse(const KernelBaseType& kernel,
+					const FieldRepresentationType* pFieldRepresentation,
+					const InverseFieldRepresentationType* pInverseFieldRepresentation) const;
 
 
 			InverseRegistrationKernelGenerator();
 			virtual ~InverseRegistrationKernelGenerator();
 
 		private:
-			InverseRegistrationKernelGenerator(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			InverseRegistrationKernelGenerator(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 	} // end namespace core
 } // end namespace map

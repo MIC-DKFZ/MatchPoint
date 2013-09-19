@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapFieldByModelFieldCombinationFunctorTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -51,20 +51,23 @@ namespace map
 			origin.Fill(0);
 			ModelKernelType::RepresentationDescriptorType::SizeType size;
 			size.fill(10);
-			ModelKernelType::RepresentationDescriptorType::Pointer spInRep = ModelKernelType::RepresentationDescriptorType::New();
+			ModelKernelType::RepresentationDescriptorType::Pointer spInRep =
+				ModelKernelType::RepresentationDescriptorType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
 
 			ModelKernelType::RepresentationDescriptorType::PointType illegalOrigin;
 			illegalOrigin.Fill(100);
-			ModelKernelType::RepresentationDescriptorType::Pointer spIllegalInRep = ModelKernelType::RepresentationDescriptorType::New();
+			ModelKernelType::RepresentationDescriptorType::Pointer spIllegalInRep =
+				ModelKernelType::RepresentationDescriptorType::New();
 			spIllegalInRep->setSize(size);
 			spIllegalInRep->setSpacing(spacing);
 			spIllegalInRep->setOrigin(illegalOrigin);
 
 			//Model kernel generation
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> > TransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
+			TransformType;
 
 			ModelKernelType::Pointer spModelKernel = ModelKernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
@@ -92,7 +95,8 @@ namespace map
 
 			//Establish combination functor for test
 			typedef core::functors::FieldByModelFieldCombinationFunctor<2, 2, 2> CombinatorFunctorType;
-			CombinatorFunctorType::Pointer spTestFunctor = CombinatorFunctorType::New(*(spModelKernel.GetPointer()), *(spFieldKernel.GetPointer()), spInRep);
+			CombinatorFunctorType::Pointer spTestFunctor = CombinatorFunctorType::New(*
+					(spModelKernel.GetPointer()), *(spFieldKernel.GetPointer()), spInRep);
 
 
 			//Test the functor io
@@ -103,7 +107,8 @@ namespace map
 			CHECK(spModelKernel.GetPointer() == spTestFunctor->get1stSourceKernelBase());
 			CHECK(spFieldKernel.GetPointer() == spTestFunctor->get2ndSourceKernelBase());
 
-			CombinatorFunctorType::Pointer spFuncAnother = dynamic_cast<CombinatorFunctorType *>(spTestFunctor->CreateAnother().GetPointer());
+			CombinatorFunctorType::Pointer spFuncAnother = dynamic_cast<CombinatorFunctorType*>
+					(spTestFunctor->CreateAnother().GetPointer());
 			CHECK(spFuncAnother->getSourceFieldKernel() == spTestFunctor->getSourceFieldKernel());
 			CHECK(spFuncAnother->getSourceModelKernel() == spTestFunctor->getSourceModelKernel());
 			CHECK(spFuncAnother->getInFieldRepresentation() == spTestFunctor->getInFieldRepresentation());
@@ -116,7 +121,8 @@ namespace map
 			CHECK_NO_THROW(spResultField = spTestFunctor->generateField());
 			CHECK(spResultField.IsNotNull());
 
-			lit::TransformFieldTester<CombinatorFunctorType::FieldType, ModelKernelType::TransformType::TransformBaseType> tester;
+			lit::TransformFieldTester<CombinatorFunctorType::FieldType, ModelKernelType::TransformType::TransformBaseType>
+			tester;
 			typedef itk::IdentityTransform<core::continuous::ScalarType, 2> IdentityTransformType;
 
 			IdentityTransformType::Pointer spIdentityTransform = IdentityTransformType::New();
@@ -129,11 +135,13 @@ namespace map
 
 			//Test invalid mapping request: In field representation descriptor specifies unsupported region
 			typedef core::functors::FieldByModelFieldCombinationFunctor<2, 2, 2> CombinatorFunctorType;
-			CombinatorFunctorType::Pointer spIllegalTestFunctor = CombinatorFunctorType::New(*(spModelKernel.GetPointer()), *(spFieldKernel.GetPointer()), spIllegalInRep);
+			CombinatorFunctorType::Pointer spIllegalTestFunctor = CombinatorFunctorType::New(*
+					(spModelKernel.GetPointer()), *(spFieldKernel.GetPointer()), spIllegalInRep);
 
 			CombinatorFunctorType::FieldPointer spIllegalResultField = NULL;
 
-			CHECK_THROW_EXPLICIT(spIllegalResultField = spIllegalTestFunctor->generateField(), core::RepresentationException);
+			CHECK_THROW_EXPLICIT(spIllegalResultField = spIllegalTestFunctor->generateField(),
+								 core::RepresentationException);
 
 			//now activiate padding to avoid the exception and get a padded field
 

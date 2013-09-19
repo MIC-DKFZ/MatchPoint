@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/test/mapDeploymentDLLConfigTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -38,9 +38,9 @@ namespace map
 		//defined by mapDeploymentTests.cpp. It is tha path to the current running executable.
 		//It is needed to bypass the problem that when using MS Visual Studio the actual binary
 		//path depends of the compile mode (release/debug) and is not the CMake binary path.
-		extern const char *_callingAppPath;
+		extern const char* _callingAppPath;
 
-		int mapDeploymentDLLConfigTest(int argc, char *argv[])
+		int mapDeploymentDLLConfigTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -65,7 +65,9 @@ namespace map
 			//Test open special test dll that should post a special log entryfile in the test log
 			deployment::DLLHandle::Pointer spHandle1 = NULL;
 
-			std::string validDLLPath = map::core::FileDispatch::createFullPath(dllPath, map::core::String(itksys::DynamicLoader::LibPrefix()) + "mapTestAlgorithmConfig" + itksys::DynamicLoader::LibExtension());
+			std::string validDLLPath = map::core::FileDispatch::createFullPath(dllPath,
+									   map::core::String(itksys::DynamicLoader::LibPrefix()) + "mapTestAlgorithmConfig" +
+									   itksys::DynamicLoader::LibExtension());
 
 			spHandle1 = map::deployment::openDeploymentDLL(validDLLPath);
 

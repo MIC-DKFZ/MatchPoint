@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapAlgorithmIdentificationInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -57,35 +57,35 @@ namespace map
 				typedef UIDType::Pointer UIDPointer;
 
 				/*! Returns the unique ID (UID) of the algorithm.
-          @remark The same information may also be defined in the
-          profile string (getAlgorithmProfile()). But this is a convinient access to this information.
+				@remark The same information may also be defined in the
+				profile string (getAlgorithmProfile()). But this is a convinient access to this information.
 				  @eguarantee strong
 				  @return returns SmartPointer to the UID object.
 				 */
 				virtual UIDPointer getUID() const = 0;
 
 				/*! Returns the profile string of the algorithm. The string contains within a xml structure
-          all general given informations (e.g. supported dimensions, description, used transform model, ...).
-          Use AlgorithmProfileHelper to parse the profile string.
+				all general given informations (e.g. supported dimensions, description, used transform model, ...).
+				Use AlgorithmProfileHelper to parse the profile string.
 				  @eguarantee strong
 				 */
-        virtual map::core::String getAlgorithmProfile() const = 0;
+				virtual map::core::String getAlgorithmProfile() const = 0;
 
 				/*! Returns the description string of the algorithm.
-          @remark The same information may also be defined in the
-          profile string (getAlgorithmProfile()). But this is a convinient access to this information.
+				@remark The same information may also be defined in the
+				profile string (getAlgorithmProfile()). But this is a convinient access to this information.
 				  @eguarantee strong
-          */
-        virtual map::core::String getAlgorithmDescription() const = 0;
+				*/
+				virtual map::core::String getAlgorithmDescription() const = 0;
 
-      protected:
+			protected:
 				AlgorithmIdentificationInterface() {};
 				virtual ~AlgorithmIdentificationInterface() {};
 
 			private:
 				//No copy constructor allowed
-				AlgorithmIdentificationInterface(const Self &source); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				AlgorithmIdentificationInterface(const Self& source); //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}
@@ -100,14 +100,14 @@ namespace map
 	{ \
 		return this->UID();\
 	}\
-  virtual map::core::String getAlgorithmProfile() const\
-  { \
-  return this->AlgorithmProfile();\
-  }\
-  virtual map::core::String getAlgorithmDescription() const\
-  {\
-  return this->AlgorithmDescription();\
-  }
+	virtual map::core::String getAlgorithmProfile() const\
+	{ \
+		return this->AlgorithmProfile();\
+	}\
+	virtual map::core::String getAlgorithmDescription() const\
+	{\
+		return this->AlgorithmDescription();\
+	}
 
 /*! Helper macro that generates a policy struct used by algorithm templates (e.g. ITKImageRegistrationAlgorithm)
  * to specify the algorithm UID, profile and description.
@@ -118,9 +118,9 @@ namespace map
  * @param ns Namespace of the algorithm (part of the algorithm UID; should be a string)
  * @param name Name of the algorithm (part of the algorithm UID; should be a string)
  * @param version Version of the algorithm (part of the algorithm UID; should be a string)
- * @param profile Profile string of the algorithm (xml encoded profile).
+ * @param profileStr Profile string of the algorithm (xml encoded profile).
  */
-#define mapGenerateAlgorithmUIDPolicyMacro(policyName, ns, name, version, profile) \
+#define mapGenerateAlgorithmUIDPolicyMacro(policyName, ns, name, version, profileStr) \
 	struct policyName\
 	{\
 	public:\
@@ -132,16 +132,15 @@ namespace map
 			::map::algorithm::UID::Pointer spResult = ::map::algorithm::UID::New(ns,name,version,tag);\
 			return spResult;\
 		}\
-    static const ::map::core::String AlgorithmDescription()\
-    {\
-      ::map::core::String tmpProfile = policyName::AlgorithmProfile();\
-      ::map::structuredData::Element::Pointer spProfile = ::map::algorithm::parseProfileString(tmpProfile);\
-      return ::map::algorithm::getAlgorithmDescription(spProfile);\
-    }\
-    static const ::map::core::String AlgorithmProfile()\
-    {\
-      return profile;\
-    }\
+		static const ::map::core::String AlgorithmDescription()\
+		{\
+			::map::core::String tmpProfile = policyName::AlgorithmProfile();\
+			return ::map::algorithm::profile::getDescription(tmpProfile);\
+		}\
+		static const ::map::core::String AlgorithmProfile()\
+		{\
+			return profileStr;\
+		}\
 	}
 
 #endif

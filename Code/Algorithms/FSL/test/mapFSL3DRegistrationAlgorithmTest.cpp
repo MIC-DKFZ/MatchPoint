@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/FSL/test/mapFSL3DRegistrationAlgorithmTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -37,7 +37,8 @@ namespace map
 	namespace testing
 	{
 
-		mapGenerateAlgorithmUIDPolicyMacro(TestFSL3DRegistrationUIDPolicy, "de.dkfz.matchpoint.test", "FSL.3D.default", "1.0.0", "");
+		mapGenerateAlgorithmUIDPolicyMacro(TestFSL3DRegistrationUIDPolicy, "de.dkfz.matchpoint.test",
+										   "FSL.3D.default", "1.0.0", "");
 
 		typedef std::map<core::String, core::String> ArgumentMapType;
 
@@ -80,7 +81,7 @@ namespace map
 			return result;
 		}
 
-		core::String extractArg(const ArgumentMapType &args, const core::String &name)
+		core::String extractArg(const ArgumentMapType& args, const core::String& name)
 		{
 			ArgumentMapType::const_iterator finding = args.find(name);
 
@@ -94,17 +95,18 @@ namespace map
 			}
 		}
 
-		void onRegistrationEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
+		void onRegistrationEvent(itk::Object* pCaller, const itk::EventObject& e, void*)
 		{
-			const map::events::AlgorithmEvent *pEvent = dynamic_cast<const map::events::AlgorithmEvent *>(&e);
+			const map::events::AlgorithmEvent* pEvent = dynamic_cast<const map::events::AlgorithmEvent*>(&e);
 
 			if (pEvent)
 			{
-				std::cout << std::endl << pEvent->GetEventName() << " (@" << pCaller << "): " << pEvent->getComment() << std::endl;
+				std::cout << std::endl << pEvent->GetEventName() << " (@" << pCaller << "): " <<
+						  pEvent->getComment() << std::endl;
 			}
 		}
 
-		int mapFSL3DRegistrationAlgorithmTest(int argc, char *argv[])
+		int mapFSL3DRegistrationAlgorithmTest(int argc, char* argv[])
 		{
 
 			//ARGUMENTS: 1: moving image
@@ -128,10 +130,13 @@ namespace map
 			//load input data
 			typedef map::core::discrete::Elements<3>::InternalImageType ImageType;
 
-			typedef algorithm::fsl::FSLRegistrationAlgorithm<ImageType, ImageType, TestFSL3DRegistrationUIDPolicy> FSL3DRegistrationAlgorithmType;
+			typedef algorithm::fsl::FSLRegistrationAlgorithm<ImageType, ImageType, TestFSL3DRegistrationUIDPolicy>
+			FSL3DRegistrationAlgorithmType;
 
-			ImageType::Pointer spMovingImage = lit::TestImageIO<unsigned char, ImageType>::readImage(movingImageFileName);
-			ImageType::Pointer spTargetImage = lit::TestImageIO<unsigned char, ImageType>::readImage(targetImageFileName);
+			ImageType::Pointer spMovingImage = lit::TestImageIO<unsigned char, ImageType>::readImage(
+												   movingImageFileName);
+			ImageType::Pointer spTargetImage = lit::TestImageIO<unsigned char, ImageType>::readImage(
+												   targetImageFileName);
 
 			FSL3DRegistrationAlgorithmType::Pointer spAlgorithm = FSL3DRegistrationAlgorithmType::New();
 
@@ -153,10 +158,14 @@ namespace map
 			//Test legal algorithm execution and registration result
 			FSL3DRegistrationAlgorithmType::RegistrationPointer spRegistration;
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
-			CHECK_EQUAL(FSL3DRegistrationAlgorithmType::AlgorithmState::Finalized, spAlgorithm->getCurrentState());
+			CHECK_EQUAL(FSL3DRegistrationAlgorithmType::AlgorithmState::Finalized,
+						spAlgorithm->getCurrentState());
 
-			const core::ModelBasedRegistrationKernel<3, 3> *pInverseKernel = dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&(spRegistration->getInverseMapping()));
-			core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters = pInverseKernel->getParameters();
+			const core::ModelBasedRegistrationKernel<3, 3>* pInverseKernel =
+				dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&
+						(spRegistration->getInverseMapping()));
+			core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
+				pInverseKernel->getParameters();
 
 			CHECK_CLOSE(1.0574, parameters[0], 0.0001);
 			CHECK_CLOSE(0.0110152, parameters[1], 0.0001);

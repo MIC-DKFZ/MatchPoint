@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapMetaPropertyAccessorTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -47,8 +47,8 @@ namespace map
 			itk::Object::Pointer refObj2 = itk::Object::New();
 
 			typedef map::core::MetaProperty<int> IntProperty;
-			typedef map::core::MetaProperty<itk::LightObject *> PObjProperty;
-			typedef map::core::MetaProperty<const itk::LightObject *> PConstObjProperty;
+			typedef map::core::MetaProperty<itk::LightObject*> PObjProperty;
+			typedef map::core::MetaProperty<const itk::LightObject*> PConstObjProperty;
 			typedef map::core::SmartMetaProperty<itk::LightObject> SPObjProperty;
 			typedef map::core::SmartMetaProperty<const itk::LightObject> SPConstObjProperty;
 
@@ -56,11 +56,12 @@ namespace map
 			map::core::MetaPropertyBase::Pointer spPObjProp = PObjProperty::New(refObj).GetPointer();
 			map::core::MetaPropertyBase::Pointer spPConstObjProp = PConstObjProperty::New(refObj).GetPointer();
 			map::core::MetaPropertyBase::Pointer spSPObjProp = SPObjProperty::New(refObj).GetPointer();
-			map::core::MetaPropertyBase::Pointer spSPConstObjProp = SPConstObjProperty::New(refObj).GetPointer();
+			map::core::MetaPropertyBase::Pointer spSPConstObjProp = SPConstObjProperty::New(
+						refObj).GetPointer();
 
 			int intValue = 0;
-			itk::LightObject *pObj = NULL;
-			const itk::LightObject *pConstObj = NULL;
+			itk::LightObject* pObj = NULL;
+			const itk::LightObject* pConstObj = NULL;
 			itk::LightObject::Pointer spObj;
 			itk::LightObject::ConstPointer spConstObj;
 
@@ -157,9 +158,11 @@ namespace map
 			typedef map::core::SmartMetaProperty<const itk::Object> SPConstObj2Property;
 
 			map::core::MetaPropertyBase::Pointer spSPObj2Prop = SPObj2Property::New(refObj2).GetPointer();
-			map::core::MetaPropertyBase::Pointer spSPConstObj2Prop = SPConstObj2Property::New(refObj2).GetPointer();
+			map::core::MetaPropertyBase::Pointer spSPConstObj2Prop = SPConstObj2Property::New(
+						refObj2).GetPointer();
 			map::core::MetaPropertyBase::Pointer spSPObj2AsLightProp = SPObjProperty::New(refObj2).GetPointer();
-			map::core::MetaPropertyBase::Pointer spSPConstObj2AsLightProp = SPConstObjProperty::New(refObj2).GetPointer();
+			map::core::MetaPropertyBase::Pointer spSPConstObj2AsLightProp = SPConstObjProperty::New(
+						refObj2).GetPointer();
 
 			//test  unwrapMetaPropert: Object (wrapped as Object) -> LigthObject : it should faile
 			CHECK(!map::core::unwrapMetaProperty(spSPObj2Prop, spObj));

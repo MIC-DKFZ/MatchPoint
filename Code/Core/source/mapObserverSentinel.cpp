@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapObserverSentinel.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,10 +35,10 @@ namespace map
 
 		ObserverSentinel::Pointer
 		ObserverSentinel::
-		New(::itk::Object *pObserverOwner, const ::itk::EventObject &event, itk::Command *pCmd)
+		New(::itk::Object* pObserverOwner, const ::itk::EventObject& event, itk::Command* pCmd)
 		{
 			Pointer smartPtr;
-			Self *rawPtr = new Self(pObserverOwner, event, pCmd);
+			Self* rawPtr = new Self(pObserverOwner, event, pCmd);
 			smartPtr = rawPtr;
 			rawPtr->UnRegister();
 			return smartPtr;
@@ -59,7 +59,7 @@ namespace map
 		};
 
 		ObserverSentinel::
-		ObserverSentinel(::itk::Object *pObserverOwner, const ::itk::EventObject &event, itk::Command *pCmd)
+		ObserverSentinel(::itk::Object* pObserverOwner, const ::itk::EventObject& event, itk::Command* pCmd)
 		{
 			assert(pObserverOwner);
 			assert(pCmd);

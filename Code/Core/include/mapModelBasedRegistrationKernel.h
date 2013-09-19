@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapModelBasedRegistrationKernel.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MODEL_BASED_REGISTRATION_KERNEL_H
@@ -45,7 +45,8 @@ namespace map
 		{
 
 		public:
-			typedef TransformModelBase<continuous::ScalarType, VInputDimensions, VOutputDimensions> TransformType;
+			typedef TransformModelBase<continuous::ScalarType, VInputDimensions, VOutputDimensions>
+			TransformType;
 
 			typedef ModelBasedRegistrationKernel<VInputDimensions, VOutputDimensions> Self;
 			typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions> Superclass;
@@ -61,7 +62,8 @@ namespace map
 			typedef typename Superclass::OutputPointType OutputPointType;
 			typedef typename Superclass::RepresentationDescriptorType        RepresentationDescriptorType;
 			typedef typename Superclass::RepresentationDescriptorPointer        RepresentationDescriptorPointer;
-			typedef typename Superclass::RepresentationDescriptorConstPointer   RepresentationDescriptorConstPointer;
+			typedef typename Superclass::RepresentationDescriptorConstPointer
+			RepresentationDescriptorConstPointer;
 
 			virtual String getModelName() const;
 
@@ -78,7 +80,7 @@ namespace map
 			@return pointer to a TargetPointType
 			@pre transform model must be set and not null.
 			*/
-			virtual OutputPointType transformPoint(const InputPointType &inPoint) const;
+			virtual OutputPointType transformPoint(const InputPointType& inPoint) const;
 
 			/*! transforms a vector
 			@eguarantee strong
@@ -86,19 +88,19 @@ namespace map
 			@return pointer to a OutputVectorType
 			@pre transform model must be set and not null.
 			*/
-			virtual OutputVectorType transformVector(const InputVectorType &inVector) const;
+			virtual OutputVectorType transformVector(const InputVectorType& inVector) const;
 
 			/*! Returns pointer to the transform model used by the kernel
 			@eguarantee no fail
 			@return pointer to the tranform model
 			*/
-			const TransformType *getTransformModel() const;
+			const TransformType* getTransformModel() const;
 
 			/*! sets the transform model used by the kernel
 			@eguarantee no fail
 			@param pTransform Pointer to the transform model
 			*/
-			void setTransformModel(TransformType *pTransform);
+			void setTransformModel(TransformType* pTransform);
 
 			/*! @brief gets the largest possible representation descriptor. The descriptor defines
 			 * the space the kernel guarantees to map.
@@ -120,15 +122,15 @@ namespace map
 			TransformConstPointer _spTransformModel;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
-			virtual bool doMapPoint(const InputPointType &inPoint, OutputPointType &outPoint) const;
+			virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const;
 
 		private:
 
 			//No copy constructor allowed
-			ModelBasedRegistrationKernel(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			ModelBasedRegistrationKernel(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

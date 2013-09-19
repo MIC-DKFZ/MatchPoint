@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapSealedPointSetToPointSetMetricPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -58,7 +58,8 @@ namespace map
 				typedef TConcreteMetric ConcreteMetricType;
 				typedef ITKMetricControl<ConcreteMetricType> ConcreteMetricControlType;
 				typedef typename ConcreteMetricControlType::Pointer ConcreteMetricControlPointer;
-				typedef ITKPointSetToPointSetMetricControlInterface<typename ConcreteMetricType::MovingPointSetType, typename ConcreteMetricType::FixedPointSetType>  MetricControlType;
+				typedef ITKPointSetToPointSetMetricControlInterface<typename ConcreteMetricType::MovingPointSetType, typename ConcreteMetricType::FixedPointSetType>
+				MetricControlType;
 
 			protected:
 				SealedPointSetToPointSetMetricPolicy();
@@ -77,19 +78,19 @@ namespace map
 				  @eguarantee strong
 				  @return a pointer to a metric type
 				*/
-				MetricControlType *getMetricInternal();
-				const MetricControlType *getMetricInternal() const;
+				MetricControlType* getMetricInternal();
+				const MetricControlType* getMetricInternal() const;
 
 				/*! gets the concrete interpolator
 				  @eguarantee strong
 				  @return a pointer to a ConcreteInterpolatorType object
 				*/
-				virtual const ConcreteMetricControlType *getConcreteMetricControl() const;
+				virtual const ConcreteMetricControlType* getConcreteMetricControl() const;
 				/*! gets the concrete metric
 				 * @eguarantee strong
 				 * @return a pointer to a ConcreteMetricControlType object
 				*/
-				virtual ConcreteMetricControlType *getConcreteMetricControl();
+				virtual ConcreteMetricControlType* getConcreteMetricControl();
 
 				/*! initializes the metric
 				  @eguarantee strong
@@ -121,8 +122,8 @@ namespace map
 				mutable ::itk::TimeStamp _mTime;
 
 				//No copy constructor allowed
-				SealedPointSetToPointSetMetricPolicy(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				SealedPointSetToPointSetMetricPolicy(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

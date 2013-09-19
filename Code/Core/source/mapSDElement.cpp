@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapSDElement.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -59,25 +59,29 @@ namespace map
 			return _SubElements.end();
 		};
 
-		const Element::Self *
+		const Element::Self*
 		Element::
 		getSubElement(SubElementIndexType index) const
 		{
 			if (index >= _SubElements.size())
 			{
-				mapExceptionMacro(core::OutOfRangeException, << "Error. Cannot get element. Passed index is out of sub elements vector range. Index: " << index << "; vector size: " << _SubElements.size());
+				mapExceptionMacro(core::OutOfRangeException,
+								  << "Error. Cannot get element. Passed index is out of sub elements vector range. Index: " << index
+								  << "; vector size: " << _SubElements.size());
 			}
 
 			return _SubElements[index].GetPointer();
 		};
 
-		Element::Self *
+		Element::Self*
 		Element::
 		getSubElement(SubElementIndexType index)
 		{
 			if (index >= _SubElements.size())
 			{
-				mapExceptionMacro(core::OutOfRangeException, << "Error. Cannot get element. Passed index is out of sub elements vector range. Index: " << index << "; vector size: " << _SubElements.size());
+				mapExceptionMacro(core::OutOfRangeException,
+								  << "Error. Cannot get element. Passed index is out of sub elements vector range. Index: " << index
+								  << "; vector size: " << _SubElements.size());
 			}
 
 			return _SubElements[index].GetPointer();
@@ -89,7 +93,9 @@ namespace map
 		{
 			if (index >= _SubElements.size())
 			{
-				mapExceptionMacro(core::OutOfRangeException, << "Error. Cannot remove element. Passed index is out of sub elements vector range. Index: " << index << "; vector size: " << _SubElements.size());
+				mapExceptionMacro(core::OutOfRangeException,
+								  << "Error. Cannot remove element. Passed index is out of sub elements vector range. Index: " <<
+								  index << "; vector size: " << _SubElements.size());
 			}
 
 			_SubElements.erase(_SubElements.begin() + index);
@@ -108,7 +114,7 @@ namespace map
 		* @return Index of the added element*/
 		Element::SubElementIndexType
 		Element::
-		addSubElement(Self *pNewElement)
+		addSubElement(Self* pNewElement)
 		{
 			if (!pNewElement)
 			{
@@ -124,7 +130,7 @@ namespace map
 
 		Element::SubElementIteratorType
 		Element::
-		insertSubElement(Self *pNewElement, SubElementIteratorType location)
+		insertSubElement(Self* pNewElement, SubElementIteratorType location)
 		{
 			if (!pNewElement)
 			{
@@ -138,11 +144,13 @@ namespace map
 
 		void
 		Element::
-		insertSubElement(Self *pNewElement, SubElementIndexType location)
+		insertSubElement(Self* pNewElement, SubElementIndexType location)
 		{
 			if (location >= _SubElements.size())
 			{
-				mapExceptionMacro(core::OutOfRangeException, << "Error. Cannot insert element. Passed index is out of sub elements vector range. Index: " << location << "; vector size: " << _SubElements.size());
+				mapExceptionMacro(core::OutOfRangeException,
+								  << "Error. Cannot insert element. Passed index is out of sub elements vector range. Index: " <<
+								  location << "; vector size: " << _SubElements.size());
 			}
 
 			if (!pNewElement)
@@ -181,7 +189,7 @@ namespace map
 
 		bool
 		Element::
-		removeAttribute(const core::String &name, bool recursively)
+		removeAttribute(const core::String& name, bool recursively)
 		{
 			bool result = false;
 			AttributeMapType::iterator pos = _Attributes.find(name);
@@ -206,7 +214,7 @@ namespace map
 
 		bool
 		Element::
-		setAttribute(const core::String &name, const core::String &value, bool recursively)
+		setAttribute(const core::String& name, const core::String& value, bool recursively)
 		{
 			bool result = _Attributes.find(name) != _Attributes.end();
 
@@ -224,15 +232,16 @@ namespace map
 			return result;
 		};
 
-		const core::String &
+		const core::String&
 		Element::
-		getAttribute(const core::String &name) const
+		getAttribute(const core::String& name) const
 		{
 			AttributeMapType::const_iterator pos = _Attributes.find(name);
 
 			if (pos == _Attributes.end())
 			{
-				mapExceptionMacro(core::MissingIdentifierException, << "Error. Requested attribute does not exist. Attribute name: " << name);
+				mapExceptionMacro(core::MissingIdentifierException,
+								  << "Error. Requested attribute does not exist. Attribute name: " << name);
 			}
 
 			return pos->second;
@@ -240,7 +249,7 @@ namespace map
 
 		bool
 		Element::
-		attributeExists(const core::String &name) const
+		attributeExists(const core::String& name) const
 		{
 			bool result = _Attributes.find(name) != _Attributes.end();
 			return result;
@@ -264,7 +273,7 @@ namespace map
 		//All others
 		//////////////////////////////////////////////////////////////////
 
-		const Element::TagType &
+		const Element::TagType&
 		Element::
 		getTag() const
 		{
@@ -273,12 +282,12 @@ namespace map
 
 		void
 		Element::
-		setTag(const TagType &tag)
+		setTag(const TagType& tag)
 		{
 			_Tag = tag;
 		};
 
-		const Element::ValueType &
+		const Element::ValueType&
 		Element::
 		getValue() const
 		{
@@ -287,7 +296,7 @@ namespace map
 
 		void
 		Element::
-		setValue(const ValueType &value)
+		setValue(const ValueType& value)
 		{
 			_Value = value;
 		};
@@ -315,7 +324,7 @@ namespace map
 
 		Element::Pointer
 		Element::
-		createElement(const TagType &tag, const ValueType &value)
+		createElement(const TagType& tag, const ValueType& value)
 		{
 			Pointer smpNew = Self::New();
 			smpNew->setTag(tag);
@@ -340,7 +349,8 @@ namespace map
 			}
 
 			//sub elements
-			for (SubElementVectorType::const_iterator pos = _SubElements.begin(); pos != _SubElements.end(); ++pos)
+			for (SubElementVectorType::const_iterator pos = _SubElements.begin(); pos != _SubElements.end();
+				 ++pos)
 			{
 				spNew->addSubElement((*pos)->clone());
 			}
@@ -350,7 +360,7 @@ namespace map
 
 		void
 		Element::
-		PrintSelf(std::ostream &os, ::itk::Indent indent) const
+		PrintSelf(std::ostream& os, ::itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 			os << indent << "Tag: " << _Tag << std::endl;
@@ -368,13 +378,16 @@ namespace map
 
 		};
 
-		std::ostream &operator<<(std::ostream &os, const Element &element)
+		std::ostream& operator<<(std::ostream& os, const Element& element)
 		{
 			element.Print(os);
 			return os;
 		};
 
-		structuredData::Element::SubElementIteratorType findNextSubElement(const structuredData::Element::SubElementIteratorType &beginPos, const structuredData::Element::SubElementIteratorType &endPos, const core::String &tag, const core::String &attrName, const core::String &attrValue)
+		structuredData::Element::SubElementIteratorType findNextSubElement(const
+				structuredData::Element::SubElementIteratorType& beginPos,
+				const structuredData::Element::SubElementIteratorType& endPos, const core::String& tag,
+				const core::String& attrName, const core::String& attrValue)
 		{
 			structuredData::Element::SubElementIteratorType result = endPos;
 			structuredData::Element::SubElementIteratorType current = beginPos;
@@ -405,7 +418,10 @@ namespace map
 			return result;
 		};
 
-		structuredData::Element::ConstSubElementIteratorType findNextSubElement(const structuredData::Element::ConstSubElementIteratorType &beginPos, const structuredData::Element::ConstSubElementIteratorType &endPos, const core::String &tag, const core::String &attrName, const core::String &attrValue)
+		structuredData::Element::ConstSubElementIteratorType findNextSubElement(
+			const structuredData::Element::ConstSubElementIteratorType& beginPos,
+			const structuredData::Element::ConstSubElementIteratorType& endPos, const core::String& tag,
+			const core::String& attrName, const core::String& attrValue)
 		{
 			structuredData::Element::ConstSubElementIteratorType result = endPos;
 			structuredData::Element::ConstSubElementIteratorType current = beginPos;

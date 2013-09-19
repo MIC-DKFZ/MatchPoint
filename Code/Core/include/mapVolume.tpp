@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapVolume.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -47,19 +47,19 @@ namespace map
 
 			template <unsigned int VDimensions>
 			Volume<VDimensions>::
-			Volume(const Self &volume): _origin(volume._origin), _size(volume._size)
+			Volume(const Self& volume): _origin(volume._origin), _size(volume._size)
 			{};
 
 			template <unsigned int VDimensions>
 			Volume<VDimensions>::
-			Volume(const OriginType &origin, const SizeType &size): _origin(origin), _size(size)
+			Volume(const OriginType& origin, const SizeType& size): _origin(origin), _size(size)
 			{
 				assert(size.isPositive()); //size must be positive
 			};
 
 			template <unsigned int VDimensions>
 			Volume<VDimensions>::
-			Volume(const SizeType &size): _size(size)
+			Volume(const SizeType& size): _size(size)
 			{
 				assert(size.isPositive()); //size must be positive
 				_origin.Fill(0);
@@ -68,7 +68,7 @@ namespace map
 			template <unsigned int VDimensions>
 			void
 			Volume<VDimensions>::
-			operator=(const Self &volume)
+			operator=(const Self& volume)
 			{
 				_origin = volume._origin;
 				_size = volume._size;
@@ -77,13 +77,13 @@ namespace map
 			template <unsigned int VDimensions>
 			void
 			Volume<VDimensions>::
-			setOrigin(const OriginType &origin)
+			setOrigin(const OriginType& origin)
 			{
 				_origin = origin;
 			};
 
 			template <unsigned int VDimensions>
-			const typename Volume<VDimensions>::OriginType &
+			const typename Volume<VDimensions>::OriginType&
 			Volume<VDimensions>::
 			getOrigin() const
 			{
@@ -93,14 +93,14 @@ namespace map
 			template <unsigned int VDimensions>
 			void
 			Volume<VDimensions>::
-			setSize(const SizeType &size)
+			setSize(const SizeType& size)
 			{
 				assert(size.isPositive()); //size must be positive
 				_size = size;
 			};
 
 			template <unsigned int VDimensions>
-			const typename Volume<VDimensions>::SizeType &
+			const typename Volume<VDimensions>::SizeType&
 			Volume<VDimensions>::
 			getSize() const
 			{
@@ -147,7 +147,7 @@ namespace map
 			template <unsigned int VDimensions>
 			bool
 			Volume<VDimensions>::
-			operator==(const Self &volume) const
+			operator==(const Self& volume) const
 			{
 				bool same = 1;
 				same = (_origin == volume._origin);
@@ -158,7 +158,7 @@ namespace map
 			template <unsigned int VDimensions>
 			bool
 			Volume<VDimensions>::
-			operator!=(const Self &volume) const
+			operator!=(const Self& volume) const
 			{
 				bool same = 1;
 				same = (_origin == _origin);
@@ -169,7 +169,7 @@ namespace map
 			template <unsigned int VDimensions>
 			bool
 			Volume<VDimensions>::
-			isInside(const PointType &point) const
+			isInside(const PointType& point) const
 			{
 				for (unsigned int i = 0; i < VolumeDimension; ++i)
 				{
@@ -190,7 +190,7 @@ namespace map
 			template <unsigned int VDimensions>
 			bool
 			Volume<VDimensions>::
-			isInside(const Self &volume) const
+			isInside(const Self& volume) const
 			{
 				OriginType beginCorner = volume.GetIndex();
 
@@ -218,7 +218,7 @@ namespace map
 			template <unsigned int VDimensions>
 			bool
 			Volume<VDimensions>::
-			crop(const Self &region)
+			crop(const Self& region)
 			{
 				double crop;
 				unsigned int i;
@@ -230,7 +230,7 @@ namespace map
 					// Is left edge of current region to the right of the right edge
 					// of the region to crop with? (if so, we cannot crop)
 					if (_origin[i] >= region.GetIndex()[i]
-					        + static_cast<double>(region.GetSize()[i]))
+						+ static_cast<double>(region.GetSize()[i]))
 					{
 						cropPossible = false;
 					}
@@ -265,11 +265,11 @@ namespace map
 
 					// now check the final size
 					if (_origin[i] + static_cast<double>(_size[i])
-					        > region.GetIndex()[i] + static_cast<double>(region.GetSize()[i]))
+						> region.GetIndex()[i] + static_cast<double>(region.GetSize()[i]))
 					{
 						// how much do we need to adjust
 						crop = _origin[i] + static_cast<double>(_size[i])
-						       - region.GetIndex()[i] - static_cast<double>(region.GetSize()[i]);
+							   - region.GetIndex()[i] - static_cast<double>(region.GetSize()[i]);
 
 						// adjust the size
 						_size[i] -= static_cast<double>(crop);
@@ -283,7 +283,7 @@ namespace map
 			template <unsigned int VDimensions>
 			typename Volume<VDimensions>::Self
 			Volume<VDimensions>::
-			expand(const PointType &point) const
+			expand(const PointType& point) const
 			{
 				OriginType origin = this->getOrigin();
 				SizeType size = this->getSize();
@@ -307,12 +307,12 @@ namespace map
 			template <unsigned int VDimensions>
 			typename Volume<VDimensions>::Self
 			Volume<VDimensions>::
-			expand(const Self &volume2) const
+			expand(const Self& volume2) const
 			{
-				const OriginType &origin = this->getOrigin();
-				const SizeType &size = this->getSize();
-				const OriginType &origin2 = volume2.getOrigin();
-				const SizeType &size2 = volume2.getSize();
+				const OriginType& origin = this->getOrigin();
+				const SizeType& size = this->getSize();
+				const OriginType& origin2 = volume2.getOrigin();
+				const SizeType& size2 = volume2.getSize();
 				OriginType blP(origin); //bottom left point
 				OriginType trP;  //top right point
 				SizeType resultSize;
@@ -341,7 +341,7 @@ namespace map
 			};
 
 			template<unsigned int VDimensions>
-			std::ostream &operator<<(std::ostream &os, const Volume<VDimensions> &volume)
+			std::ostream& operator<<(std::ostream& os, const Volume<VDimensions>& volume)
 			{
 				os << "Dimension: " << volume.getVolumeDimension() << std::endl;
 				os << "Origin: " << volume.getOrigin() << std::endl;
@@ -350,9 +350,10 @@ namespace map
 			}
 
 			template<unsigned int VDimensions>
-			Volume<VDimensions> convertToVolume(const PMVolume &pmVolume)
+			Volume<VDimensions> convertToVolume(const PMVolume& pmVolume)
 			{
-				assert(pmVolume.getVolumeDimension() == VDimensions); //PMVolume must have the same dimension to be convertible
+				assert(pmVolume.getVolumeDimension() ==
+					   VDimensions); //PMVolume must have the same dimension to be convertible
 				typedef Volume<VDimensions> VolumeType;
 				typename VolumeType::OriginType origin;
 				typename VolumeType::SizeType size;
@@ -367,7 +368,7 @@ namespace map
 			};
 
 			template<unsigned int VDimensions>
-			PMVolume convertToPMVolume(const Volume<VDimensions> &volume)
+			PMVolume convertToPMVolume(const Volume<VDimensions>& volume)
 			{
 				typedef Volume<VDimensions> VolumeType;
 				PMVolume::OriginType origin;

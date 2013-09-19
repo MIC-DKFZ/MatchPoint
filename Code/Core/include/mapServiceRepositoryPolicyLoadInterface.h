@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapServiceRepositoryPolicyLoadInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_SERVICE_REPOSITORY_POLICY_LOAD_INTERFACE_H
@@ -66,7 +66,7 @@ namespace map
 				 * @retval false The provider was already on the stack. Stack is unchanged.
 				 * @post Stack is unchanged or added provider is the topmost element on the stack.
 				 */
-				virtual bool addProviderByPolicy(ProviderBaseType *pProvider) = 0;
+				virtual bool addProviderByPolicy(ProviderBaseType* pProvider) = 0;
 
 				/*! Removes the provider (identified by the pointer address) from the stack.
 				 * \n Function is supposed to be used by loading policies of the repository (e.g. stack).
@@ -77,15 +77,15 @@ namespace map
 				 * @retval true The provider instance was on the stack and was removed.
 				 * @retval false The provider instance is not a part of the stack.
 				 */
-				virtual bool removeProviderByPolicy(ProviderBaseType *pProvider) = 0;
+				virtual bool removeProviderByPolicy(ProviderBaseType* pProvider) = 0;
 
 			protected:
 				ServiceRepositoryPolicyLoadInterface() {};
 				virtual ~ServiceRepositoryPolicyLoadInterface() {};
 
 			private:
-				ServiceRepositoryPolicyLoadInterface(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ServiceRepositoryPolicyLoadInterface(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 
@@ -103,17 +103,17 @@ namespace map
 				typedef TInterface InterfaceType;
 				typedef typename InterfaceType::ProviderBaseType  ProviderBaseType;
 
-				virtual bool addProviderByPolicy(ProviderBaseType *pProvider)
+				virtual bool addProviderByPolicy(ProviderBaseType* pProvider)
 				{
 					return _pInterface->addProviderByPolicy(pProvider);
 				};
 
-				virtual bool removeProviderByPolicy(ProviderBaseType *pProvider)
+				virtual bool removeProviderByPolicy(ProviderBaseType* pProvider)
 				{
 					return _pInterface->removeProviderByPolicy(pProvider);
 				};
 
-				ServiceRepositoryPolicyLoader(InterfaceType *pInterface): _pInterface(pInterface)
+				ServiceRepositoryPolicyLoader(InterfaceType* pInterface): _pInterface(pInterface)
 				{
 					assert(pInterface);
 				};
@@ -121,12 +121,12 @@ namespace map
 				virtual ~ServiceRepositoryPolicyLoader() {};
 
 			protected:
-				InterfaceType *_pInterface;
+				InterfaceType* _pInterface;
 
 			private:
 				typedef ServiceRepositoryPolicyLoader<TInterface> Self;
-				ServiceRepositoryPolicyLoader(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ServiceRepositoryPolicyLoader(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 

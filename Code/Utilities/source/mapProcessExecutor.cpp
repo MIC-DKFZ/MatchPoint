@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Utilities/source/mapProcessExecutor.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -37,7 +37,7 @@ namespace map
 
 		core::String
 		ProcessExecutor::
-		getOSDependendExecutableName(const core::String &name)
+		getOSDependendExecutableName(const core::String& name)
 		{
 #if defined(_WIN32)
 
@@ -73,10 +73,10 @@ namespace map
 
 		bool
 		ProcessExecutor::
-		execute(const core::String &executionPath, const ArgumentListType &argumentList)
+		execute(const core::String& executionPath, const ArgumentListType& argumentList)
 		{
 			//convert to char* array with terminating null element;
-			const char **pArguments = new const char*[argumentList.size() + 1];
+			const char** pArguments = new const char*[argumentList.size() + 1];
 			pArguments[argumentList.size()] = 0;
 
 			for (ArgumentListType::size_type index = 0; index < argumentList.size(); ++index)
@@ -88,7 +88,7 @@ namespace map
 
 			try
 			{
-				itksysProcess *processID = itksysProcess_New();
+				itksysProcess* processID = itksysProcess_New();
 				itksysProcess_SetCommand(processID, pArguments);
 
 				itksysProcess_SetWorkingDirectory(processID, executionPath.c_str());
@@ -101,7 +101,7 @@ namespace map
 
 				itksysProcess_Execute(processID);
 
-				char *rawOutput = NULL;
+				char* rawOutput = NULL;
 				int outputLength = 0;
 
 				while (true)
@@ -144,7 +144,8 @@ namespace map
 
 		bool
 		ProcessExecutor::
-		execute(const core::String &executionPath, const core::String &executableName, ArgumentListType argumentList)
+		execute(const core::String& executionPath, const core::String& executableName,
+				ArgumentListType argumentList)
 		{
 			core::String executableName_OS = getOSDependendExecutableName(executableName);
 

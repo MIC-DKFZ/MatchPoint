@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKEuler3DMattesMIMultiResRegistrationAlgorithmTemplate.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -41,36 +41,36 @@ namespace map
 		{
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy >
 			ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                TInterpolatorPolicy,
-			                                                TPyramideInitializationPolicy >::
-			                                                ITKEuler3DMattesMIMultiResRegistrationAlgorithm()
+															TInterpolatorPolicy,
+															TPyramideInitializationPolicy >::
+															ITKEuler3DMattesMIMultiResRegistrationAlgorithm()
 			{
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy >
 			ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                TInterpolatorPolicy,
-			                                                TPyramideInitializationPolicy >::
-			                                                ~ITKEuler3DMattesMIMultiResRegistrationAlgorithm()
+															TInterpolatorPolicy,
+															TPyramideInitializationPolicy >::
+															~ITKEuler3DMattesMIMultiResRegistrationAlgorithm()
 			{
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy >
 			void
 			ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                TInterpolatorPolicy,
-			                                                TPyramideInitializationPolicy >::
-			                                                configureAlgorithm()
+															TInterpolatorPolicy,
+															TPyramideInitializationPolicy >::
+															configureAlgorithm()
 			{
 				Superclass::configureAlgorithm();
 
@@ -99,14 +99,14 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy >
 			void
 			ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                TInterpolatorPolicy,
-			                                                TPyramideInitializationPolicy >::
-			                                                compileInfos(MetaPropertyVectorType &infos) const
+															TInterpolatorPolicy,
+															TPyramideInitializationPolicy >::
+															compileInfos(MetaPropertyVectorType& infos) const
 			{
 				Superclass::compileInfos(infos);
 
@@ -114,31 +114,40 @@ namespace map
 				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
 
 #ifndef MAP_SEAL_ALGORITHMS
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("TransformParameters", typeid(ParametersType), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("TransformParameters", typeid(ParametersType),
+								true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("Scales", typeid(ScalesType), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumStepLength", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MinimumStepLength", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("RelaxationFactor", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfIterations", typeid(unsigned long), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("GradientMagnitudeTolerance", typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfHistogramBins", typeid(unsigned long), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfSpatialSamples", typeid(unsigned long), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumStepLength", typeid(double), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MinimumStepLength", typeid(double), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("RelaxationFactor", typeid(double), true,
+								true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfIterations", typeid(unsigned long),
+								true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("GradientMagnitudeTolerance", typeid(double),
+								true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfHistogramBins",
+								typeid(unsigned long), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfSpatialSamples",
+								typeid(unsigned long), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("UseAllPixels", typeid(bool), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("ResolutionLevels", typeid(typename Superclass::ResolutionLevelCountType), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("ResolutionLevels",
+								typeid(typename Superclass::ResolutionLevelCountType), true, true));
 #endif
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy >
 			typename ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			         TInterpolatorPolicy,
-			         TPyramideInitializationPolicy >::MetaPropertyPointer
-			         ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			         TInterpolatorPolicy,
-			         TPyramideInitializationPolicy >::
-			         doGetProperty(const MetaPropertyNameType &name) const
+					 TInterpolatorPolicy,
+					 TPyramideInitializationPolicy >::MetaPropertyPointer
+					 ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
+					 TInterpolatorPolicy,
+					 TPyramideInitializationPolicy >::
+					 doGetProperty(const MetaPropertyNameType& name) const
 			{
 				MetaPropertyPointer spResult;
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
@@ -146,7 +155,8 @@ namespace map
 
 				if (name == "TransformParameters")
 				{
-					spResult = map::core::MetaProperty<ParametersType>::New(this->getTransformInternal()->getTransform()->GetParameters());
+					spResult = map::core::MetaProperty<ParametersType>::New(
+								   this->getTransformInternal()->getTransform()->GetParameters());
 				}
 				else if (name == "Scales")
 				{
@@ -154,39 +164,48 @@ namespace map
 				}
 				else if (name == "MaximumStepLength")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetMaximumStepLength());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetMaximumStepLength());
 				}
 				else if (name == "MinimumStepLength")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetMinimumStepLength());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetMinimumStepLength());
 				}
 				else if (name == "RelaxationFactor")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetRelaxationFactor());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetRelaxationFactor());
 				}
 				else if (name == "NumberOfIterations")
 				{
-					spResult = map::core::MetaProperty<unsigned long>::New(this->getConcreteITKOptimizer()->GetNumberOfIterations());
+					spResult = map::core::MetaProperty<unsigned long>::New(
+								   this->getConcreteITKOptimizer()->GetNumberOfIterations());
 				}
 				else if (name == "GradientMagnitudeTolerance")
 				{
-					spResult = map::core::MetaProperty<double>::New(this->getConcreteITKOptimizer()->GetGradientMagnitudeTolerance());
+					spResult = map::core::MetaProperty<double>::New(
+								   this->getConcreteITKOptimizer()->GetGradientMagnitudeTolerance());
 				}
 				else if (name == "NumberOfHistogramBins")
 				{
-					spResult = map::core::MetaProperty<unsigned long>::New(this->getConcreteMetricControl()->getConcreteMetric()->GetNumberOfHistogramBins());
+					spResult = map::core::MetaProperty<unsigned long>::New(
+								   this->getConcreteMetricControl()->getConcreteMetric()->GetNumberOfHistogramBins());
 				}
 				else if (name == "NumberOfSpatialSamples")
 				{
-					spResult = map::core::MetaProperty<unsigned long>::New(this->getConcreteMetricControl()->getConcreteMetric()->GetNumberOfFixedImageSamples());
+					spResult = map::core::MetaProperty<unsigned long>::New(
+								   this->getConcreteMetricControl()->getConcreteMetric()->GetNumberOfFixedImageSamples());
 				}
 				else if (name == "UseAllPixels")
 				{
-					spResult = map::core::MetaProperty<bool>::New(this->getConcreteMetricControl()->getConcreteMetric()->GetUseAllPixels());
+					spResult = map::core::MetaProperty<bool>::New(
+								   this->getConcreteMetricControl()->getConcreteMetric()->GetUseAllPixels());
 				}
 				else if (name == "ResolutionLevels")
 				{
-					spResult = map::core::MetaProperty<typename Superclass::ResolutionLevelCountType>::New(this->getResolutionLevels());
+					spResult = map::core::MetaProperty<typename Superclass::ResolutionLevelCountType>::New(
+								   this->getResolutionLevels());
 				}
 				else
 				{
@@ -198,14 +217,14 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolicy >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolicy >
 			void
 			ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                TInterpolatorPolicy,
-			                                                TPyramideInitializationPolicy >::
-			                                                doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
+															TInterpolatorPolicy,
+															TPyramideInitializationPolicy >::
+															doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
 				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
@@ -284,19 +303,21 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-			         typename TUIDPolicy,
-			         class TInterpolatorPolicy,
-			         class TPyramideInitializationPolic >
+					 typename TUIDPolicy,
+					 class TInterpolatorPolicy,
+					 class TPyramideInitializationPolic >
 			void
 			ITKEuler3DMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-			                                                TInterpolatorPolicy,
-			                                                TPyramideInitializationPolic >::
-			                                                doInterLevelSetup()
+															TInterpolatorPolicy,
+															TPyramideInitializationPolic >::
+															doInterLevelSetup()
 			{
 				if (this->getCurrentLevel() > 0)
 				{
-					this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetMaximumStepLength(this->getConcreteOptimizerControl()->getConcreteOptimizer()->GetCurrentStepLength() * 2.0);
-					this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetMinimumStepLength(this->getConcreteOptimizerControl()->getConcreteOptimizer()->GetMinimumStepLength() / 10.0);
+					this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetMaximumStepLength(
+						this->getConcreteOptimizerControl()->getConcreteOptimizer()->GetCurrentStepLength() * 2.0);
+					this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetMinimumStepLength(
+						this->getConcreteOptimizerControl()->getConcreteOptimizer()->GetMinimumStepLength() / 10.0);
 				}
 			};
 

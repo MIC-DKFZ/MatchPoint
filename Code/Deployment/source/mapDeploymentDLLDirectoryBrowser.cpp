@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/source/mapDeploymentDLLDirectoryBrowser.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -36,18 +36,19 @@ namespace map
 	namespace deployment
 	{
 		//implemented in mapDeploymentDLLAccess.cpp
-		extern bool checkNameIsSharedLibrary(const char *name);
+		extern bool checkNameIsSharedLibrary(const char* name);
 
 		void
 		DLLDirectoryBrowser::
-		addDLLSearchLocation(const core::String &location)
+		addDLLSearchLocation(const core::String& location)
 		{
-			core::String fullPath = core::FileDispatch::ensureCorrectOSPathSeparator(itksys::SystemTools::CollapseFullPath(location.c_str(), _basePath.c_str()));
+			core::String fullPath = core::FileDispatch::ensureCorrectOSPathSeparator(
+										itksys::SystemTools::CollapseFullPath(location.c_str(), _basePath.c_str()));
 
 			_pathList.push_back(fullPath);
 		};
 
-		const DLLDirectoryBrowser::PathListType &
+		const DLLDirectoryBrowser::PathListType&
 		DLLDirectoryBrowser::
 		getDLLSearchLocations() const
 		{
@@ -64,12 +65,12 @@ namespace map
 
 		void
 		DLLDirectoryBrowser::
-		setSearchBase(const core::String &base)
+		setSearchBase(const core::String& base)
 		{
 			_basePath = base;
 		};
 
-		const core::String &
+		const core::String&
 		DLLDirectoryBrowser::
 		getSearchBase() const
 		{
@@ -78,7 +79,7 @@ namespace map
 
 		bool
 		DLLDirectoryBrowser::
-		libraryIsInList(const core::String &libraryFilePath, const PathListType &touchedFiles) const
+		libraryIsInList(const core::String& libraryFilePath, const PathListType& touchedFiles) const
 		{
 			bool result = false;
 			PathListType::const_iterator pos;
@@ -98,7 +99,7 @@ namespace map
 
 		DLLDirectoryBrowser::PathListType
 		DLLDirectoryBrowser::
-		getCandidatesInPath(const core::String &libraryPath) const
+		getCandidatesInPath(const core::String& libraryPath) const
 		{
 			PathListType result;
 
@@ -111,7 +112,7 @@ namespace map
 				*/
 				for (unsigned int i = 0; i < dir->GetNumberOfFiles(); i++)
 				{
-					const char *file = dir->GetFile(i);
+					const char* file = dir->GetFile(i);
 
 					if (checkFileNameIsMDRACompliant(file))
 					{
@@ -166,21 +167,22 @@ namespace map
 
 		void
 		DLLDirectoryBrowser::
-		peekLibrary(const core::String &libraryFilePath, DLLInfoListType &list, PathListType &touchedFiles) const
+		peekLibrary(const core::String& libraryFilePath, DLLInfoListType& list,
+					PathListType& touchedFiles) const
 		{
 			if (!libraryIsInList(libraryFilePath, touchedFiles))
 			{
 				try
 				{
 					algorithm::UID::ConstPointer spUID;
-          core::String profileStr;
-          map::deployment::peekDeploymentDLL(libraryFilePath,spUID,profileStr);
+					core::String profileStr;
+					map::deployment::peekDeploymentDLL(libraryFilePath, spUID, profileStr);
 					DLLInfo::Pointer spInfo = DLLInfo::New(spUID, libraryFilePath, profileStr);
 					list.push_back(spInfo);
 					core::String sComment = "Valid DLL: " + libraryFilePath;
 					this->InvokeEvent(map::events::ValidDLLEvent(spInfo.GetPointer(), sComment));
 				}
-				catch (const map::core::ExceptionObject &e)
+				catch (const map::core::ExceptionObject& e)
 				{
 					core::String sComment = e.GetDescription();
 					this->InvokeEvent(map::events::InvalidDLLEvent(NULL, sComment));
@@ -233,12 +235,12 @@ namespace map
 		{
 		};
 
-		DLLInfoListType peekDeploymentDLLDirectory(const char *directoryPath)
+		DLLInfoListType peekDeploymentDLLDirectory(const char* directoryPath)
 		{
 			return peekDeploymentDLLDirectory(core::String(directoryPath));
 		};
 
-		DLLInfoListType peekDeploymentDLLDirectory(const core::String &directoryPath)
+		DLLInfoListType peekDeploymentDLLDirectory(const core::String& directoryPath)
 		{
 			DLLDirectoryBrowser::Pointer spBrowser = DLLDirectoryBrowser::New();
 			spBrowser->addDLLSearchLocation(directoryPath);
@@ -246,7 +248,8 @@ namespace map
 			return spBrowser->getLibraryInfos();
 		};
 
-		DLLInfoListType selectDLLInfosByUID(const DLLInfoListType &infoList, const algorithm::UID *uid, bool wcNamespace, bool wcName, bool wcVersion, bool wcBuild)
+		DLLInfoListType selectDLLInfosByUID(const DLLInfoListType& infoList, const algorithm::UID* uid,
+											bool wcNamespace, bool wcName, bool wcVersion, bool wcBuild)
 		{
 			if (!uid)
 			{

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapSealedTransformPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -58,7 +58,8 @@ namespace map
 
 				typedef ITKTransformModel<TConcreteITKTransform> ConcreteTransformType;
 				typedef typename ConcreteTransformType::Pointer ConcreteTransformPointer;
-				typedef core::TransformModelBase<typename ConcreteTransformType::ScalarType, ConcreteTransformType::InputDimensions, ConcreteTransformType::OutputDimensions> TransformType;
+				typedef core::TransformModelBase<typename ConcreteTransformType::ScalarType, ConcreteTransformType::InputDimensions, ConcreteTransformType::OutputDimensions>
+				TransformType;
 				typedef typename TransformType::ScalarType TransformScalarType;
 
 			protected:
@@ -77,19 +78,19 @@ namespace map
 				  @eguarantee strong
 				  @return a pointer to an transform type
 				*/
-				TransformType *getTransformInternal();
-				const TransformType *getTransformInternal() const;
+				TransformType* getTransformInternal();
+				const TransformType* getTransformInternal() const;
 
 				/*! gets the concrete transform
 				 * @eguarantee strong
 				 * @return a pointer to a ConcreteTransformType object
 				*/
-				ConcreteTransformType *getConcreteTransformModel();
+				ConcreteTransformType* getConcreteTransformModel();
 				/*! gets the concrete transform
 				  @eguarantee strong
 				  @return a pointer to a ConcreteTransformType object
 				*/
-				const ConcreteTransformType *getConcreteTransformModel() const;
+				const ConcreteTransformType* getConcreteTransformModel() const;
 
 				/*! initializes the transform
 				  @eguarantee strong
@@ -122,8 +123,8 @@ namespace map
 				ConcreteTransformPointer _spTransformModel;
 
 				//No copy constructor allowed
-				SealedTransformPolicy(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				SealedTransformPolicy(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

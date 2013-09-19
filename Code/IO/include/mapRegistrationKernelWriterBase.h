@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapRegistrationKernelWriterBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -42,7 +42,8 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the second kernel.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class RegistrationKernelWriterBase : public core::services::ServiceProvider< RegistrationKernelWriteRequest< VInputDimensions, VOutputDimensions> >
+		class RegistrationKernelWriterBase : public
+			core::services::ServiceProvider< RegistrationKernelWriteRequest< VInputDimensions, VOutputDimensions> >
 		{
 		public:
 			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>			KernelBaseType;
@@ -73,19 +74,19 @@ namespace map
 				 * @param [in] request Referenz to the request that contains the kernel and all relevant information for the storing process.
 				 * @return Smart pointer to structured date element containing the stored information.
 				 */
-			virtual structuredData::Element::Pointer storeKernel(const RequestType &request) const = 0;
+			virtual structuredData::Element::Pointer storeKernel(const RequestType& request) const = 0;
 
 		protected:
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			RegistrationKernelWriterBase();
 			virtual ~RegistrationKernelWriterBase();
 
 		private:
-			RegistrationKernelWriterBase(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			RegistrationKernelWriterBase(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} // end namespace io

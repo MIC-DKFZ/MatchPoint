@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/source/mapUID.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -31,37 +31,38 @@ namespace map
 
 		UID::Pointer
 		UID::
-		New(const NamespaceType &ns, const NameType &name, const VersionType &version, const BuildTagType &buildTag)
+		New(const NamespaceType& ns, const NameType& name, const VersionType& version,
+			const BuildTagType& buildTag)
 		{
 			Pointer smartPtr;
-			Self *rawPtr = new Self(ns, name, version, buildTag);
+			Self* rawPtr = new Self(ns, name, version, buildTag);
 			smartPtr = rawPtr;
 			rawPtr->UnRegister();
 			return smartPtr;
 		};
 
-		const UID::NamespaceType &
+		const UID::NamespaceType&
 		UID::
 		getNamespace() const
 		{
 			return this->_namespace;
 		};
 
-		const UID::NameType &
+		const UID::NameType&
 		UID::
 		getName() const
 		{
 			return this->_name;
 		};
 
-		const UID::VersionType &
+		const UID::VersionType&
 		UID::
 		getVersion() const
 		{
 			return this->_version;
 		};
 
-		const UID::BuildTagType &
+		const UID::BuildTagType&
 		UID::
 		getBuildTag() const
 		{
@@ -73,7 +74,8 @@ namespace map
 		toStr() const
 		{
 			core::OStringStream stream;
-			stream << this->_namespace << "::" << this->_name << "::" << this->_version << "::" << this->_buildTag;
+			stream << this->_namespace << "::" << this->_name << "::" << this->_version << "::" <<
+				   this->_buildTag;
 			core::String result = stream.str();
 
 			return result;
@@ -82,7 +84,7 @@ namespace map
 
 		void
 		UID::
-		PrintSelf(std::ostream &os, ::itk::Indent indent) const
+		PrintSelf(std::ostream& os, ::itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 			os << indent << "Namespace:    " << this->_namespace << std::endl;
@@ -97,11 +99,13 @@ namespace map
 		};
 
 		UID::
-		UID(const NamespaceType &ns, const NameType &name, const VersionType &version, const BuildTagType &buildTag) :
+		UID(const NamespaceType& ns, const NameType& name, const VersionType& version,
+			const BuildTagType& buildTag) :
 			_namespace(ns), _name(name), _version(version), _buildTag(buildTag)
 		{};
 
-		bool compareUIDs(const UID &uid1, const UID &uid2, bool wcNamespace, bool wcName, bool wcVersion, bool wcBuild)
+		bool compareUIDs(const UID& uid1, const UID& uid2, bool wcNamespace, bool wcName, bool wcVersion,
+						 bool wcBuild)
 		{
 			if ((uid1.getNamespace() != uid2.getNamespace()) && (! wcNamespace))
 			{
@@ -126,7 +130,8 @@ namespace map
 			return true;
 		};
 
-		bool compareUIDs(const UID *uid1, const UID *uid2, bool wcNamespace, bool wcName, bool wcVersion, bool wcBuild)
+		bool compareUIDs(const UID* uid1, const UID* uid2, bool wcNamespace, bool wcName, bool wcVersion,
+						 bool wcBuild)
 		{
 			if (!uid1 || !uid2)
 			{

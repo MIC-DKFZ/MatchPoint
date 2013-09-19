@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/test/mapArbitraryImagePyramidesPolicyTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -71,7 +71,7 @@ namespace map
 				};
 
 				void
-				onMChange(const ::itk::EventObject &eventObject)
+				onMChange(const ::itk::EventObject& eventObject)
 				{
 					map::events::UnregisterAlgorithmComponentEvent unregEvent;
 					map::events::RegisterAlgorithmComponentEvent regEvent;
@@ -88,7 +88,7 @@ namespace map
 				};
 
 				void
-				onTChange(const ::itk::EventObject &eventObject)
+				onTChange(const ::itk::EventObject& eventObject)
 				{
 					map::events::UnregisterAlgorithmComponentEvent unregEvent;
 					map::events::RegisterAlgorithmComponentEvent regEvent;
@@ -115,7 +115,7 @@ namespace map
 			typedef core::discrete::Elements<3>::InternalImageType ImageType;
 			typedef core::discrete::Elements<2>::InternalImageType Image2Type;
 			TestPolicy<ImageType, Image2Type> policy;
-			const TestPolicy<ImageType, Image2Type> &constPolicy = policy;
+			const TestPolicy<ImageType, Image2Type>& constPolicy = policy;
 
 			typedef itk::MultiResolutionPyramidImageFilter<ImageType, ImageType> Pyramide1Type;
 			typedef itk::RecursiveMultiResolutionPyramidImageFilter<Image2Type, Image2Type> Pyramide2Type;
@@ -126,10 +126,10 @@ namespace map
 			Pyramide2Type::Pointer spTargetPyramide1 = Pyramide2Type::New();
 			Pyramide2Type::Pointer spTargetPyramide2 = Pyramide2Type::New();
 
-			TestPolicy<ImageType, Image2Type>::MovingImagePyramideBaseType *pPyramide = NULL;
-			const TestPolicy<ImageType, Image2Type>::MovingImagePyramideBaseType *pConstPyramide = NULL;
-			TestPolicy<ImageType, Image2Type>::TargetImagePyramideBaseType *pTargetPyramide = NULL;
-			const TestPolicy<ImageType, Image2Type>::TargetImagePyramideBaseType *pConstTargetPyramide = NULL;
+			TestPolicy<ImageType, Image2Type>::MovingImagePyramideBaseType* pPyramide = NULL;
+			const TestPolicy<ImageType, Image2Type>::MovingImagePyramideBaseType* pConstPyramide = NULL;
+			TestPolicy<ImageType, Image2Type>::TargetImagePyramideBaseType* pTargetPyramide = NULL;
+			const TestPolicy<ImageType, Image2Type>::TargetImagePyramideBaseType* pConstTargetPyramide = NULL;
 
 			CHECK_NO_THROW(pPyramide = policy.getMovingPyramideInternal());
 			CHECK_NO_THROW(pConstPyramide = constPolicy.getMovingPyramideInternal());

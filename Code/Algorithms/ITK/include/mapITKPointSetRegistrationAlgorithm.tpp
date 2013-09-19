@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKPointSetRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -48,7 +48,7 @@ namespace map
 			isStoppable() const
 			{
 				bool result = false;
-				const OptimizerBaseType *pOptimizer = this->getOptimizerInternal();
+				const OptimizerBaseType* pOptimizer = this->getOptimizerInternal();
 
 				if (pOptimizer)
 				{
@@ -72,7 +72,7 @@ namespace map
 			doGetMaxIterations() const
 			{
 				IterationCountType result = 0;
-				const OptimizerBaseType *pOptimizer = this->getOptimizerInternal();
+				const OptimizerBaseType* pOptimizer = this->getOptimizerInternal();
 
 				if (pOptimizer)
 				{
@@ -96,7 +96,7 @@ namespace map
 			hasMaxIterationCount() const
 			{
 				bool result = false;
-				const OptimizerBaseType *pOptimizer = this->getOptimizerInternal();
+				const OptimizerBaseType* pOptimizer = this->getOptimizerInternal();
 
 				if (pOptimizer)
 				{
@@ -112,7 +112,7 @@ namespace map
 			hasCurrentOptimizerValue() const
 			{
 				bool result = false;
-				const OptimizerBaseType *pOptimizer = this->getOptimizerInternal();
+				const OptimizerBaseType* pOptimizer = this->getOptimizerInternal();
 
 				if (pOptimizer)
 				{
@@ -208,7 +208,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			setCurrentTransformParameters(const TransformParametersType &param)
+			setCurrentTransformParameters(const TransformParametersType& param)
 			{
 				typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock> LockHolderType;
 				LockHolderType holder(this->_currentIterationLock);
@@ -219,19 +219,20 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			typename ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::InterimRegistrationPointer
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			determineInterimRegistration(const MovingRepresentationDescriptorType *pMovingRepresentation,
-			                             const TargetRepresentationDescriptorType *pTargetRepresentation) const
+			determineInterimRegistration(const MovingRepresentationDescriptorType* pMovingRepresentation,
+										 const TargetRepresentationDescriptorType* pTargetRepresentation) const
 			{
 				InterimRegistrationPointer spResult = NULL;
 
 				if (this->_currentIterationCount > 0)
 				{
 					//the algorithm has iterated at least once so we can determin an interim registration
-					const TransformBaseType *pTransformModel = this->getTransformInternal();
+					const TransformBaseType* pTransformModel = this->getTransformInternal();
 
 					if (!pTransformModel)
 					{
-						mapExceptionMacro(AlgorithmException, << "Error. Cannot determine interim registration. No transform model present on internal level (getTransformInternal(). Pleas ensure proper setup of algorithm.");
+						mapExceptionMacro(AlgorithmException,
+										  << "Error. Cannot determine interim registration. No transform model present on internal level (getTransformInternal(). Pleas ensure proper setup of algorithm.");
 					}
 
 					//clone the transform model
@@ -239,30 +240,38 @@ namespace map
 
 					if (spInterimTransformModel.IsNull())
 					{
-						mapExceptionMacro(AlgorithmException, << "Error. Cannot determine interim registration. Unable to clone transform model. Current model: " << *pTransformModel);
+						mapExceptionMacro(AlgorithmException,
+										  << "Error. Cannot determine interim registration. Unable to clone transform model. Current model: "
+										  << *pTransformModel);
 					}
 
 					//set the parameter of the interim transform model to the current transform parameters of the algorithm
 					//We set the parameter by Value and not by using SetParameter() because otherwise
 					//it could cause errors with itk transforms that only keep a pointer to their parameters (e.g. itk::BSplineDeformableTransform).
 					//This transforms would be invalid as soon as we leave this method.
-					spInterimTransformModel->getTransform()->SetParametersByValue(this->getCurrentTransformParameters());
+					spInterimTransformModel->getTransform()->SetParametersByValue(
+						this->getCurrentTransformParameters());
 
 					//now build the direct kernel (main kernel of a point set based registration algorithm)
-					typedef core::ModelBasedRegistrationKernel<InterimRegistrationType::MovingDimensions, InterimRegistrationType::TargetDimensions> DirectKernelType;
+					typedef core::ModelBasedRegistrationKernel<InterimRegistrationType::MovingDimensions, InterimRegistrationType::TargetDimensions>
+					DirectKernelType;
 
 					typename DirectKernelType::Pointer spDKernel = DirectKernelType::New();
 					spDKernel->setTransformModel(spInterimTransformModel);
 
 					//now build the inverse kernel via inversion of the direct kernel
-					typedef core::InverseRegistrationKernelGenerator<InterimRegistrationType::MovingDimensions, InterimRegistrationType::TargetDimensions> GeneratorType;
+					typedef core::InverseRegistrationKernelGenerator<InterimRegistrationType::MovingDimensions, InterimRegistrationType::TargetDimensions>
+					GeneratorType;
 					typename GeneratorType::Pointer spGenerator = GeneratorType::New();
 					typedef typename GeneratorType::InverseKernelBaseType InverseKernelType;
-					typename InverseKernelType::Pointer spIKernel = spGenerator->generateInverse(*(spDKernel.GetPointer()), this->getTargetRepresentation());
+					typename InverseKernelType::Pointer spIKernel = spGenerator->generateInverse(*
+							(spDKernel.GetPointer()), this->getTargetRepresentation());
 
 					if (spIKernel.IsNull())
 					{
-						mapExceptionMacro(AlgorithmException, << "Error. Cannot determine inverse mapping kernel of interim registration. Current direct kernel: " << spDKernel);
+						mapExceptionMacro(AlgorithmException,
+										  << "Error. Cannot determine inverse mapping kernel of interim registration. Current direct kernel: "
+										  << spDKernel);
 					}
 
 					//now create the registration an set the kernels
@@ -284,7 +293,7 @@ namespace map
 			doStopAlgorithm()
 			{
 				bool result = false;
-				OptimizerBaseType *pOptimizer = this->getOptimizerInternal();
+				OptimizerBaseType* pOptimizer = this->getOptimizerInternal();
 
 				if (pOptimizer)
 				{
@@ -301,7 +310,8 @@ namespace map
 			{
 				if (!this->getTransformInternal())
 				{
-					mapExceptionMacro(AlgorithmException, << "Cannot start algorithm; no transformation model available.");
+					mapExceptionMacro(AlgorithmException,
+									  << "Cannot start algorithm; no transformation model available.");
 				}
 
 				if (!this->getOptimizerInternal())
@@ -342,7 +352,8 @@ namespace map
 
 				//assemble registration components
 				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing itk registration method."));
-				this->_internalRegistrationMethod->SetMetric(this->getMetricInternal()->getPointSetToPointSetMetric());
+				this->_internalRegistrationMethod->SetMetric(
+					this->getMetricInternal()->getPointSetToPointSetMetric());
 				this->_internalRegistrationMethod->SetOptimizer(this->getOptimizerInternal()->getMVNLOptimizer());
 				this->_internalRegistrationMethod->SetTransform(this->getTransformInternal()->getTransform());
 				this->prepInitializeTransformation();
@@ -362,28 +373,32 @@ namespace map
 				{
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onIterationEvent);
-					_onIterationObserver = core::ObserverSentinel::New(this->getOptimizerInternal()->getMVNLOptimizer(), ::itk::IterationEvent(), spCommand);
+					_onIterationObserver = core::ObserverSentinel::New(this->getOptimizerInternal()->getMVNLOptimizer(),
+										   ::itk::IterationEvent(), spCommand);
 				}
 
 				if (_onGeneralOptimizerObserver.IsNull())
 				{
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onGeneralOptimizerEvent);
-					_onGeneralOptimizerObserver = core::ObserverSentinel::New(this->getOptimizerInternal()->getMVNLOptimizer(), ::itk::AnyEvent(), spCommand);
+					_onGeneralOptimizerObserver = core::ObserverSentinel::New(
+													  this->getOptimizerInternal()->getMVNLOptimizer(), ::itk::AnyEvent(), spCommand);
 				}
 
 				if (_onGeneralMetricObserver.IsNull())
 				{
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onGeneralMetricEvent);
-					_onGeneralMetricObserver = core::ObserverSentinel::New(this->getMetricInternal()->getPointSetToPointSetMetric(), ::itk::AnyEvent(), spCommand);
+					_onGeneralMetricObserver = core::ObserverSentinel::New(
+												   this->getMetricInternal()->getPointSetToPointSetMetric(), ::itk::AnyEvent(), spCommand);
 				}
 
 				if (_onGeneralTransformObserver.IsNull())
 				{
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onGeneralTransformEvent);
-					_onGeneralTransformObserver = core::ObserverSentinel::New(this->getTransformInternal()->getTransform(), ::itk::AnyEvent(), spCommand);
+					_onGeneralTransformObserver = core::ObserverSentinel::New(
+													  this->getTransformInternal()->getTransform(), ::itk::AnyEvent(), spCommand);
 				}
 
 				typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
@@ -418,17 +433,20 @@ namespace map
 				MetricPolicyType::GetMTime();
 				TransformPolicyType::GetMTime();
 
-				TransformBaseType *pTransformModel = this->getTransformInternal();
+				TransformBaseType* pTransformModel = this->getTransformInternal();
 
 				if (!pTransformModel)
 				{
-					mapExceptionMacro(AlgorithmException, << "Error. Cannot determine final registration. No transform model present on internal level (getTransformInternal()). Please ensure proper setup of algorithm.");
+					mapExceptionMacro(AlgorithmException,
+									  << "Error. Cannot determine final registration. No transform model present on internal level (getTransformInternal()). Please ensure proper setup of algorithm.");
 				}
 
-				TransformParametersType lastTransformParameters = this->_internalRegistrationMethod->GetLastTransformParameters();
+				TransformParametersType lastTransformParameters =
+					this->_internalRegistrationMethod->GetLastTransformParameters();
 
 				//clone the transform model
-				pTransformModel->getTransform()->SetParametersByValue(lastTransformParameters); //this line is need to ensure correct cloning for
+				pTransformModel->getTransform()->SetParametersByValue(
+					lastTransformParameters); //this line is need to ensure correct cloning for
 				//itk transforms that only keep a pointer to their parameters (e.g. itk::BSplineDeformableTransform).
 				//Thoose transforms can cause problems with optimizers that only keep the parameters localy (e.g. itk::LBFGSOptimizer).
 				//Excplicit resetting the parameters is a work arround to this problem.
@@ -436,7 +454,9 @@ namespace map
 
 				if (spFinalTransformModel.IsNull())
 				{
-					mapExceptionMacro(AlgorithmException, << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " << *pTransformModel);
+					mapExceptionMacro(AlgorithmException,
+									  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " <<
+									  *pTransformModel);
 				}
 
 				//set the parameter of the final transform model to the final transform parameters of the algorithm
@@ -446,20 +466,25 @@ namespace map
 				spFinalTransformModel->getTransform()->SetParametersByValue(lastTransformParameters);
 
 				//now build the direct kernel (main kernel of a point set based registration algorithm)
-				typedef core::ModelBasedRegistrationKernel<RegistrationType::MovingDimensions, RegistrationType::TargetDimensions> DirectKernelType;
+				typedef core::ModelBasedRegistrationKernel<RegistrationType::MovingDimensions, RegistrationType::TargetDimensions>
+				DirectKernelType;
 
 				typename DirectKernelType::Pointer spDKernel = DirectKernelType::New();
 				spDKernel->setTransformModel(spFinalTransformModel);
 
 				//now build the inverse kernel via inversion of the direct kernel
-				typedef core::InverseRegistrationKernelGenerator<RegistrationType::MovingDimensions, RegistrationType::TargetDimensions> GeneratorType;
+				typedef core::InverseRegistrationKernelGenerator<RegistrationType::MovingDimensions, RegistrationType::TargetDimensions>
+				GeneratorType;
 				typename GeneratorType::Pointer spGenerator = GeneratorType::New();
 				typedef typename GeneratorType::InverseKernelBaseType InverseKernelType;
-				typename InverseKernelType::Pointer spIKernel = spGenerator->generateInverse(*(spDKernel.GetPointer()), this->getTargetRepresentation());
+				typename InverseKernelType::Pointer spIKernel = spGenerator->generateInverse(*
+						(spDKernel.GetPointer()), this->getTargetRepresentation());
 
 				if (spIKernel.IsNull())
 				{
-					mapExceptionMacro(AlgorithmException, << "Error. Cannot determine inverse mapping kernel of final registration. Current direct kernel: " << spDKernel);
+					mapExceptionMacro(AlgorithmException,
+									  << "Error. Cannot determine inverse mapping kernel of final registration. Current direct kernel: "
+									  << spDKernel);
 				}
 
 				//now create the registration an set the kernels
@@ -483,18 +508,21 @@ namespace map
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
 			prepInitializeTransformation()
 			{
-				const TransformBaseType *pTransformModel = this->getTransformInternal();
+				const TransformBaseType* pTransformModel = this->getTransformInternal();
 
 				if (!pTransformModel)
 				{
-					mapExceptionMacro(AlgorithmException, << "Error. Cannot determine interim registration. No transform model present on internal level (getTransformInternal(). Pleas ensure proper setup of algorithm.");
+					mapExceptionMacro(AlgorithmException,
+									  << "Error. Cannot determine interim registration. No transform model present on internal level (getTransformInternal(). Pleas ensure proper setup of algorithm.");
 				}
 
 				::map::core::OStringStream os;
-				os << "Set start transformation parameters to: " << pTransformModel->getTransform()->GetParameters();
+				os << "Set start transformation parameters to: " <<
+				   pTransformModel->getTransform()->GetParameters();
 				//set the parameter of the transform model to the current transform parameters of the algorithm
 				this->setCurrentTransformParameters(pTransformModel->getTransform()->GetParameters());
-				this->_internalRegistrationMethod->SetInitialTransformParameters(pTransformModel->getTransform()->GetParameters());
+				this->_internalRegistrationMethod->SetInitialTransformParameters(
+					pTransformModel->getTransform()->GetParameters());
 
 				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
 			};
@@ -511,18 +539,21 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			onIterationEvent(::itk::Object *caller, const ::itk::EventObject &eventObject)
+			onIterationEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
 				::map::core::OStringStream os;
-				TransformParametersType currentParams = this->getTransformInternal()->getTransform()->GetParameters();
+				TransformParametersType currentParams =
+					this->getTransformInternal()->getTransform()->GetParameters();
 
 				bool hasCurrentValue = this->getOptimizerInternal()->hasCurrentValue();
-				typename OptimizerBaseType::MVNLMeasureType currentValue = this->getOptimizerInternal()->getCurrentMeasure();
+				typename OptimizerBaseType::MVNLMeasureType currentValue =
+					this->getOptimizerInternal()->getCurrentMeasure();
 
 				this->_currentIterationLock.Lock();
 				++_currentIterationCount;
 				_currentTransformParameters = currentParams;
-				os << "Iteration #" << _currentIterationCount << "; params: " << currentParams << "; metric value: ";
+				os << "Iteration #" << _currentIterationCount << "; params: " << currentParams <<
+				   "; metric value: ";
 
 				if (hasCurrentValue)
 				{
@@ -542,7 +573,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			onGeneralOptimizerEvent(::itk::Object *caller, const ::itk::EventObject &eventObject)
+			onGeneralOptimizerEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
 				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal optimizer event");
 				this->InvokeEvent(wrappedEvent);
@@ -551,7 +582,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			onGeneralMetricEvent(::itk::Object *caller, const ::itk::EventObject &eventObject)
+			onGeneralMetricEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
 				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal metric event");
 				this->InvokeEvent(wrappedEvent);
@@ -560,7 +591,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			onGeneralTransformEvent(::itk::Object *caller, const ::itk::EventObject &eventObject)
+			onGeneralTransformEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
 				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal transform event");
 				this->InvokeEvent(wrappedEvent);
@@ -569,16 +600,17 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			onGeneralRegistrationMethodEvent(::itk::Object *caller, const ::itk::EventObject &eventObject)
+			onGeneralRegistrationMethodEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal registration method event");
+				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
+						"internal registration method event");
 				this->InvokeEvent(wrappedEvent);
 			};
 
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			onOptimizerChange(const ::itk::EventObject &eventObject)
+			onOptimizerChange(const ::itk::EventObject& eventObject)
 			{
 				map::events::UnregisterAlgorithmComponentEvent unregEvent;
 
@@ -592,7 +624,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			onMetricChange(const ::itk::EventObject &eventObject)
+			onMetricChange(const ::itk::EventObject& eventObject)
 			{
 				map::events::UnregisterAlgorithmComponentEvent unregEvent;
 
@@ -606,7 +638,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			onTransformChange(const ::itk::EventObject &eventObject)
+			onTransformChange(const ::itk::EventObject& eventObject)
 			{
 				map::events::UnregisterAlgorithmComponentEvent unregEvent;
 
@@ -669,7 +701,7 @@ namespace map
 			{
 				OptimizerMeasureType result;
 
-				const OptimizerBaseType *pOptimizer = this->getOptimizerInternal();
+				const OptimizerBaseType* pOptimizer = this->getOptimizerInternal();
 
 				if (pOptimizer)
 				{
@@ -685,7 +717,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			PrintSelf(std::ostream &os, ::itk::Indent indent) const
+			PrintSelf(std::ostream& os, ::itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 
@@ -700,7 +732,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			compileInfos(MetaPropertyVectorType &infos) const
+			compileInfos(MetaPropertyVectorType& infos) const
 			{
 				//default implementation does nothing.
 			};
@@ -708,7 +740,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			typename ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::MetaPropertyPointer
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			doGetProperty(const MetaPropertyNameType &name) const
+			doGetProperty(const MetaPropertyNameType& name) const
 			{
 				//default implementation does nothing.
 				MetaPropertyPointer spDummy;
@@ -718,7 +750,7 @@ namespace map
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
 			void
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
-			doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
+			doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				//default implementation does nothing.
 			};

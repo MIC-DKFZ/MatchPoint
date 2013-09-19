@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/include/mapDeploymentDLLInfo.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -59,32 +59,32 @@ namespace map
 			* @param libraryFilePath File path of the DLL containing the algorithm
 			* @eguarantee strong
 			*/
-			static Pointer New(const map::algorithm::UID *pUID,
-			                   const core::String &libraryFilePath,
-              const core::String &profileStr);
+			static Pointer New(const map::algorithm::UID* pUID,
+							   const core::String& libraryFilePath,
+							   const core::String& profileStr);
 
-			const map::algorithm::UID &getAlgorithmUID() const;
-			const core::String &getAlgorithmProfileStr() const;
+			const map::algorithm::UID& getAlgorithmUID() const;
+			const core::String& getAlgorithmProfileStr() const;
 
-			const core::String &getLibraryFilePath() const;
+			const core::String& getLibraryFilePath() const;
 
 		protected:
-			DLLInfo(const map::algorithm::UID *pUID,
-			        const core::String &libraryFilePath,
-              const core::String &profileStr);
+			DLLInfo(const map::algorithm::UID* pUID,
+					const core::String& libraryFilePath,
+					const core::String& profileStr);
 
 			~DLLInfo();
 
 			map::algorithm::UID::ConstPointer _spAlgorithmUID;
 			core::String _libraryFilePath;
-      /** Profile string (xml structured) associated with the algorithm*/
-      core::String _profileStr;
-      /** Description string associated with the algorithm*/
-      core::String _description;
+			/** Profile string (xml structured) associated with the algorithm*/
+			core::String _profileStr;
+			/** Description string associated with the algorithm*/
+			core::String _description;
 
 		private:
-			DLLInfo(const Self &);//purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			DLLInfo(const Self&); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

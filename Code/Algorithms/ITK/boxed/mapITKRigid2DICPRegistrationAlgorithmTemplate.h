@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKRigid2DICPRegistrationAlgorithmTemplate.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -41,16 +41,21 @@ namespace map
 	{
 		namespace boxed
 		{
-      const char *const DefaultITKRigid2DICPRegistrationAlgorithm_profile = "<Profile><Description>Simple 2D rigid (translation and euler angles) registration algorithm using point sets pairs and a ICP solution.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Points</DataType><DimMoving>2</DimMoving><DimTarget>2</DimTarget><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain><Optimization>ICP<Optimization/></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKRigid2DICPRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint", "ITKRigid2DICPRegistrationAlgorithm.default", "1.0.0", DefaultITKRigid2DICPRegistrationAlgorithm_profile);
+			const char* const DefaultITKRigid2DICPRegistrationAlgorithm_profile =
+				"<Profile><Description>Simple 2D rigid (translation and euler angles) registration algorithm using point sets pairs and a ICP solution.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Points</DataType><DimMoving>2</DimMoving><DimTarget>2</DimTarget><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain><Optimization>ICP<Optimization/></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKRigid2DICPRegistrationAlgorithmUIDPolicy,
+											   "de.dkfz.matchpoint", "ITKRigid2DICPRegistrationAlgorithm.default", "1.0.0",
+											   DefaultITKRigid2DICPRegistrationAlgorithm_profile);
 
 			/** @brief Boxing of a simple rigid point set registration algorithm using Rigid3D transform
 			@ingroup Boxed
 			*/
 			template < class TMovingPointSet, class TTargetPointSet = TMovingPointSet,
-			         class TIdentificationPolicy = DefaultITKRigid2DICPRegistrationAlgorithmUIDPolicy,
-			         class TDistanceMap = typename map::core::discrete::Elements<TMovingPointSet::PointDimension>::InternalImageType >
-			class ITKRigid2DICPRegistrationAlgorithm: public map::algorithm::itk::ITKPointSetRegistrationAlgorithm < TMovingPointSet,
+					 class TIdentificationPolicy = DefaultITKRigid2DICPRegistrationAlgorithmUIDPolicy,
+					 class TDistanceMap = typename
+					 map::core::discrete::Elements<TMovingPointSet::PointDimension>::InternalImageType >
+			class ITKRigid2DICPRegistrationAlgorithm: public
+				map::algorithm::itk::ITKPointSetRegistrationAlgorithm < TMovingPointSet,
 				TTargetPointSet,
 				TIdentificationPolicy,
 				SealedFixedPointSetToPointSetMetricPolicyMacro< ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap> >,
@@ -59,7 +64,8 @@ namespace map
 			{
 			public:
 				//optional
-				typedef ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap> MetricType;
+				typedef ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap>
+				MetricType;
 				typedef ::itk::LevenbergMarquardtOptimizer OptimizerType;
 				typedef ::itk::Rigid2DTransform< map::core::continuous::ScalarType> TransformType;
 
@@ -70,11 +76,12 @@ namespace map
 				typedef ITKRigid2DICPRegistrationAlgorithm Self;
 
 				typedef map::algorithm::itk::ITKPointSetRegistrationAlgorithm < TMovingPointSet,
-				        TTargetPointSet,
-				        TIdentificationPolicy,
-				        SealedFixedPointSetToPointSetMetricPolicyMacro< ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap> >,
-				        SealedFixedMVNLOptimizerPolicyMacro< ::itk::LevenbergMarquardtOptimizer>,
-				        SealedFixedTransformPolicyMacro< ::itk::Rigid2DTransform< map::core::continuous::ScalarType> > >  Superclass;
+						TTargetPointSet,
+						TIdentificationPolicy,
+						SealedFixedPointSetToPointSetMetricPolicyMacro< ::itk::EuclideanDistancePointMetric<TTargetPointSet, TMovingPointSet, TDistanceMap> >,
+						SealedFixedMVNLOptimizerPolicyMacro< ::itk::LevenbergMarquardtOptimizer>,
+						SealedFixedTransformPolicyMacro< ::itk::Rigid2DTransform< map::core::continuous::ScalarType> > >
+						Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -110,8 +117,8 @@ namespace map
 
 			private:
 
-				ITKRigid2DICPRegistrationAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				ITKRigid2DICPRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoAutoSealedAlgorithm.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -52,22 +52,26 @@
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
 typedef map::algorithm::RegistrationAlgorithm<2, 2> AlgorithmBaseType;
-typedef map::algorithm::itk::ITKImageRegistrationAlgorithmInterface<ImageType, ImageType, map::core::continuous::ScalarType, map::core::continuous::ScalarType> ITKRegistrationAlgorithmInterface;
+typedef map::algorithm::itk::ITKImageRegistrationAlgorithmInterface<ImageType, ImageType, map::core::continuous::ScalarType, map::core::continuous::ScalarType>
+ITKRegistrationAlgorithmInterface;
 
 /*! function used to test the accessibility of an algorithm*/
-int testAccess(AlgorithmBaseType *pAlgorithm, bool accessExpected)
+int testAccess(AlgorithmBaseType* pAlgorithm, bool accessExpected)
 {
 	//we just get the algorithm as a base type, now we try to get access to the internal components
 	//of the algorithm by casting to the according interface...
-	typedef ITKRegistrationAlgorithmInterface::OptimizerGetterInterfaceType OptimizerGetterInterfaceType;
-	typedef ITKRegistrationAlgorithmInterface::TransformGetterInterfaceType TransformGetterInterfaceType;
-	typedef ITKRegistrationAlgorithmInterface::InterpolatorGetterInterfaceType InterpolatorGetterInterfaceType;
+	typedef ITKRegistrationAlgorithmInterface::OptimizerGetterInterfaceType
+	OptimizerGetterInterfaceType;
+	typedef ITKRegistrationAlgorithmInterface::TransformGetterInterfaceType
+	TransformGetterInterfaceType;
+	typedef ITKRegistrationAlgorithmInterface::InterpolatorGetterInterfaceType
+	InterpolatorGetterInterfaceType;
 	typedef ITKRegistrationAlgorithmInterface::MetricGetterInterfaceType MetricGetterInterfaceType;
 
 	int result = EXIT_SUCCESS;
 
 	//test access to the optimizer
-	OptimizerGetterInterfaceType *pOGetter = dynamic_cast<OptimizerGetterInterfaceType *>(pAlgorithm);
+	OptimizerGetterInterfaceType* pOGetter = dynamic_cast<OptimizerGetterInterfaceType*>(pAlgorithm);
 
 	if (pOGetter)
 	{
@@ -91,7 +95,7 @@ int testAccess(AlgorithmBaseType *pAlgorithm, bool accessExpected)
 	}
 
 	//test access to the transform
-	TransformGetterInterfaceType *pTGetter = dynamic_cast<TransformGetterInterfaceType *>(pAlgorithm);
+	TransformGetterInterfaceType* pTGetter = dynamic_cast<TransformGetterInterfaceType*>(pAlgorithm);
 
 	if (pTGetter)
 	{
@@ -114,7 +118,8 @@ int testAccess(AlgorithmBaseType *pAlgorithm, bool accessExpected)
 	}
 
 	//test access to the interpolator
-	InterpolatorGetterInterfaceType *pIGetter = dynamic_cast<InterpolatorGetterInterfaceType *>(pAlgorithm);
+	InterpolatorGetterInterfaceType* pIGetter = dynamic_cast<InterpolatorGetterInterfaceType*>
+			(pAlgorithm);
 
 	if (pIGetter)
 	{
@@ -138,7 +143,7 @@ int testAccess(AlgorithmBaseType *pAlgorithm, bool accessExpected)
 	}
 
 	//test access to the metric
-	MetricGetterInterfaceType *pMGetter = dynamic_cast<MetricGetterInterfaceType *>(pAlgorithm);
+	MetricGetterInterfaceType* pMGetter = dynamic_cast<MetricGetterInterfaceType*>(pAlgorithm);
 
 	if (pMGetter)
 	{
@@ -164,9 +169,10 @@ int testAccess(AlgorithmBaseType *pAlgorithm, bool accessExpected)
 	return result;
 }
 
-mapGenerateAlgorithmUIDPolicyMacro(DemoAutoSealedRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "DemoAutoSealedRegistrationAlgorithm", "1.0.0", "");
+mapGenerateAlgorithmUIDPolicyMacro(DemoAutoSealedRegistrationAlgorithmUIDPolicy,
+								   "de.dkfz.matchpoint.test", "DemoAutoSealedRegistrationAlgorithm", "1.0.0", "");
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	/***************************************************************
 	 * Establish registration algorithm
@@ -183,7 +189,8 @@ int main(int argc, char *argv[])
 
 	typedef ::itk::MeanSquaresImageToImageMetric<ImageType, ImageType> MetricType;
 	typedef ::itk::RegularStepGradientDescentOptimizer OptimizerType;
-	typedef ::itk::LinearInterpolateImageFunction<ImageType, map::core::continuous::ScalarType> InterpolatorType;
+	typedef ::itk::LinearInterpolateImageFunction<ImageType, map::core::continuous::ScalarType>
+	InterpolatorType;
 	typedef ::itk::TranslationTransform<map::core::continuous::ScalarType, 2> TranformType;
 
 	typedef SealedFixedImageToImageMetricPolicyMacro<MetricType> MetricPolicyType;
@@ -192,11 +199,11 @@ int main(int argc, char *argv[])
 	typedef SealedFixedTransformPolicyMacro<TranformType> TransformPolicyType;
 
 	typedef map::algorithm::itk::ITKImageRegistrationAlgorithm < ImageType, ImageType,
-	        DemoAutoSealedRegistrationAlgorithmUIDPolicy,
-	        InterpolatorPolicyType,
-	        MetricPolicyType,
-	        OptimizerPolicyType,
-	        TransformPolicyType > ITKImageRegistrationAlgorithmType;
+			DemoAutoSealedRegistrationAlgorithmUIDPolicy,
+			InterpolatorPolicyType,
+			MetricPolicyType,
+			OptimizerPolicyType,
+			TransformPolicyType > ITKImageRegistrationAlgorithmType;
 
 	AlgorithmBaseType::Pointer spAlgorithm = ITKImageRegistrationAlgorithmType::New().GetPointer();
 
@@ -207,7 +214,8 @@ int main(int argc, char *argv[])
 	int result = EXIT_FAILURE;
 
 #ifdef MAP_SEAL_ALGORITHMS
-	std::cout << "Check algorithm (created with MAP_SEAL_ALGORITHMS defined)..." << std::endl << std::endl;
+	std::cout << "Check algorithm (created with MAP_SEAL_ALGORITHMS defined)..." << std::endl <<
+			  std::endl;
 	std::cout << "This algorithm should NOT be accessible..." << std::endl << std::endl;
 
 	result = testAccess(spAlgorithm, false);
@@ -220,8 +228,12 @@ int main(int argc, char *argv[])
 	result = testAccess(spAlgorithm, true);
 #endif
 
-	std::cout << "Algorithm are identical on the algorithmical level (s.a. demoFixedITKImageRegistration)." << std::endl;
-	std::cout << "but they differ in the accessibility they offer to their internals, depending on MAP_SEAL_ALGORITHMS." << std::endl;
+	std::cout <<
+			  "Algorithm are identical on the algorithmical level (s.a. demoFixedITKImageRegistration)." <<
+			  std::endl;
+	std::cout <<
+			  "but they differ in the accessibility they offer to their internals, depending on MAP_SEAL_ALGORITHMS."
+			  << std::endl;
 
 	return result;
 }

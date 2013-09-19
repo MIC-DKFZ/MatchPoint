@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/ITK/include/mapIterativeInverseTransformToDisplacementFieldSource.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -79,8 +79,8 @@ namespace itk
 			typedef typename OutputImageType::DirectionType  OutputImageDirectionType;
 
 			typedef itk::Transform < TTransformScalarType,
-			        OutputImageType::ImageDimension,
-			        OutputImageType::ImageDimension > TransformType;
+					OutputImageType::ImageDimension,
+					OutputImageType::ImageDimension > TransformType;
 			typedef typename TransformType::Pointer        TransformPointer;
 			typedef typename TransformType::ConstPointer   TransformConstPointer;
 
@@ -103,38 +103,38 @@ namespace itk
 			itkSetMacro(StopValue, double);
 			itkGetMacro(StopValue, double);
 
-			char *GetReport()
+			char* GetReport()
 			{
 				return this->m_Report;
 			}
 
-			virtual void SetTransform(const TransformType *transform);
-			virtual const TransformType *GetTransform(void) const;
+			virtual void SetTransform(const TransformType* transform);
+			virtual const TransformType* GetTransform(void) const;
 
 			/** Specify the size of the output image. */
-			virtual void SetSize(const OutputImageSizeType &size);
+			virtual void SetSize(const OutputImageSizeType& size);
 			/** Get the size of the output image. */
 			itkGetMacro(Size, const OutputImageSizeType);
 
 			/** Specify the spacing of the output image. */
-			virtual void SetSpacing(const OutputImageSpacingType &spacing);
+			virtual void SetSpacing(const OutputImageSpacingType& spacing);
 			/** Get the spacing of the output image. */
 			itkGetMacro(Spacing, const OutputImageSpacingType);
 
 			/** Specify the origin of the output image. */
-			virtual void SetOrigin(const OutputImagePointType &origin);
+			virtual void SetOrigin(const OutputImagePointType& origin);
 			/** Get the origin of the output image. */
 			itkGetMacro(Origin, OutputImagePointType);
 
 			/** Specify the origin of the output image. */
-			virtual void SetDirection(const OutputImageDirectionType &direction);
+			virtual void SetDirection(const OutputImageDirectionType& direction);
 			/** Get the origin of the output image. */
 			itkGetMacro(Direction, OutputImageDirectionType);
 
 #ifdef ITK_USE_CONCEPT_CHECKING
 			/** Begin concept checking */
 			itkConceptMacro(OutputHasNumericTraitsCheck,
-			                (Concept::HasNumericTraits<OutputImageValueType>));
+							(Concept::HasNumericTraits<OutputImageValueType>));
 			/** End concept checking */
 #endif
 
@@ -142,7 +142,7 @@ namespace itk
 			IterativeInverseTransformToDisplacementFieldSource();
 			~IterativeInverseTransformToDisplacementFieldSource() {}
 
-			void PrintSelf(std::ostream &os, Indent indent) const;
+			void PrintSelf(std::ostream& os, Indent indent) const;
 			void MakeReport();
 
 			void GenerateData();
@@ -161,8 +161,8 @@ namespace itk
 			OutputImagePointType      m_Origin;  //origin of the output image
 			OutputImageDirectionType  m_Direction;//direction of the output image
 
-			IterativeInverseTransformToDisplacementFieldSource(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			IterativeInverseTransformToDisplacementFieldSource(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} // end namespace map

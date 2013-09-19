@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapConvert.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -36,23 +36,23 @@ namespace map
 	{
 		namespace convert
 		{
-			MAPCore_EXPORT String toStr(const double &value, const int precision = 10);
-			MAPCore_EXPORT String toStr(const float &value, const int precision = 10);
-			MAPCore_EXPORT String toStr(const bool &value);
-			MAPCore_EXPORT String toStr(const int &value);
-			MAPCore_EXPORT String toStr(const unsigned int &value);
-			MAPCore_EXPORT String toStr(const long &value);
-			MAPCore_EXPORT String toStr(const unsigned long &value);
+			MAPCore_EXPORT String toStr(const double& value, const int precision = 10);
+			MAPCore_EXPORT String toStr(const float& value, const int precision = 10);
+			MAPCore_EXPORT String toStr(const bool& value);
+			MAPCore_EXPORT String toStr(const int& value);
+			MAPCore_EXPORT String toStr(const unsigned int& value);
+			MAPCore_EXPORT String toStr(const long& value);
+			MAPCore_EXPORT String toStr(const unsigned long& value);
 
 			/** This function only passes the sting through. Nothing will be changed.
 			* It is needed by some template classes to handle the strings like every other
 			* simple type*/
-			MAPCore_EXPORT String toStr(const String &value);
+			MAPCore_EXPORT String toStr(const String& value);
 
 			/**Helper function for types that should be converted and do not need special
 			* conversion handling or are unkown when writing the code e.g. std::size_type*/
 			template <typename TElement>
-			String toStrGeneric(const TElement &value)
+			String toStrGeneric(const TElement& value)
 			{
 				String sResult;
 				OStringStream stream;
@@ -63,27 +63,27 @@ namespace map
 				return sResult;
 			};
 
-			MAPCore_EXPORT double toDouble(const String &value);
-			MAPCore_EXPORT bool isADouble(const String &value);
+			MAPCore_EXPORT double toDouble(const String& value);
+			MAPCore_EXPORT bool isADouble(const String& value);
 
-			MAPCore_EXPORT float toFloat(const String &value);
+			MAPCore_EXPORT float toFloat(const String& value);
 
-			MAPCore_EXPORT int toInt(const String &value);
-			MAPCore_EXPORT bool isAInt(const String &value);
+			MAPCore_EXPORT int toInt(const String& value);
+			MAPCore_EXPORT bool isAInt(const String& value);
 
-			MAPCore_EXPORT unsigned int toUInt(const String &value);
+			MAPCore_EXPORT unsigned int toUInt(const String& value);
 
-			MAPCore_EXPORT long toLong(const String &value);
-			MAPCore_EXPORT bool isALong(const String &value);
+			MAPCore_EXPORT long toLong(const String& value);
+			MAPCore_EXPORT bool isALong(const String& value);
 
-			MAPCore_EXPORT unsigned long toULong(const String &value);
+			MAPCore_EXPORT unsigned long toULong(const String& value);
 
-			MAPCore_EXPORT bool toBool(const String &value);
+			MAPCore_EXPORT bool toBool(const String& value);
 
 			/** Converts a std::vector in any type based on itk::Array
 			* @param v Reference to the data source (vector)
 			* @return Array containing the values*/
-			template< class TArray, typename TValue> static TArray vectorToArray(const ::std::vector<TValue> &v)
+			template< class TArray, typename TValue> static TArray vectorToArray(const ::std::vector<TValue>& v)
 			{
 				TArray newArray(v.size());
 
@@ -98,7 +98,7 @@ namespace map
 			/** Converts any type based on itk::Array in a std::vector
 			* @param v Reference to the data source (vector)
 			* @return Array containing the values*/
-			template< class TArray, typename TValue> static ::std::vector<TValue> vectorToArray(const TArray &a)
+			template< class TArray, typename TValue> static ::std::vector<TValue> vectorToArray(const TArray& a)
 			{
 				::std::vector<TValue> newV;
 
@@ -113,7 +113,7 @@ namespace map
 			/** Loads the specified file and streams its content into a string.
 			 * If the file does not exists or cannot be read, an empty string
 			 * will be returned.*/
-			MAPCore_EXPORT String fileContentToStr(const String &filePath);
+			MAPCore_EXPORT String fileContentToStr(const String& filePath);
 
 		}
 	}

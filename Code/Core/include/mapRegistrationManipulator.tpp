@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationManipulator.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -34,7 +34,7 @@ namespace map
 		template<typename TRegistration>
 		void
 		RegistrationManipulator<TRegistration>::
-		setDirectMapping(typename RegistrationType::DirectMappingType *pKernel)
+		setDirectMapping(typename RegistrationType::DirectMappingType* pKernel)
 		{
 			_pInterface->setDirectMapping(pKernel);
 		};
@@ -42,7 +42,7 @@ namespace map
 		template<typename TRegistration>
 		void
 		RegistrationManipulator<TRegistration>::
-		setInverseMapping(typename RegistrationType::InverseMappingType *pKernel)
+		setInverseMapping(typename RegistrationType::InverseMappingType* pKernel)
 		{
 			_pInterface->setInverseMapping(pKernel);
 		};
@@ -50,13 +50,13 @@ namespace map
 		template<typename TRegistration>
 		void
 		RegistrationManipulator<TRegistration>::
-		setTagValues(const TagMapType &tags)
+		setTagValues(const TagMapType& tags)
 		{
 			_pInterface->setTagValues(tags);
 		};
 
 		template<typename TRegistration>
-		typename RegistrationManipulator<TRegistration>::TagMapType &
+		typename RegistrationManipulator<TRegistration>::TagMapType&
 		RegistrationManipulator<TRegistration>::
 		getTagValues()
 		{
@@ -65,7 +65,7 @@ namespace map
 
 		template<typename TRegistration>
 		RegistrationManipulator<TRegistration>::
-		RegistrationManipulator(RegistrationType *pI): _pInterface(pI)
+		RegistrationManipulator(RegistrationType* pI): _pInterface(pI)
 		{
 			assert(pI);
 		};

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFastLockedThreadingPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FAST_LOCKED_THREADING_POLICY_H
@@ -48,7 +48,7 @@ namespace map
 				/*! Initialize a sentinel and implicitly lock the mutex.
 				 * @eguarantee strong
 				 */
-				void activateSentinel(SentinelType &sentinel) const;
+				void activateSentinel(SentinelType& sentinel) const;
 
 				/*! Used by the policy owner to lock part of its code.
 				 * @eguarantee strong
@@ -67,8 +67,8 @@ namespace map
 				/*! This policy uses this mutex to lock critical code by the policy user.*/
 				mutable MutexType _mutex;
 
-				FastLockedThreadingPolicy(const FastLockedThreadingPolicy &); //purposely not implemented
-				void operator=(const FastLockedThreadingPolicy &); //purposely not implemented
+				FastLockedThreadingPolicy(const FastLockedThreadingPolicy&);  //purposely not implemented
+				void operator=(const FastLockedThreadingPolicy&);  //purposely not implemented
 			};
 
 		} // end namespace services

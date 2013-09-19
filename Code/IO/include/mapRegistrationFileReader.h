@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapRegistrationFileReader.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -66,7 +66,8 @@ namespace map
 			typedef  core::RegistrationBase::Pointer	LoadedRegistrationPointer;
 
 		protected:
-			typedef core::services::ServiceStack<KernelLoaderBaseType, KernelLoaderLoadPolicy > ConcreteLoaderStackType;
+			typedef core::services::ServiceStack<KernelLoaderBaseType, KernelLoaderLoadPolicy >
+			ConcreteLoaderStackType;
 		public:
 			typedef core::services::StaticServiceStack<ConcreteLoaderStackType>			 LoaderStackType;
 
@@ -78,7 +79,7 @@ namespace map
 			 * @param [in] registrationFile string that specifies the location of the registration file.
 			 * @return Smart pointer to the loaded registration.
 			 */
-			LoadedRegistrationPointer read(const  core::String &registrationFile) const;
+			LoadedRegistrationPointer read(const  core::String& registrationFile) const;
 
 			/*! gets _preferLazyLoading */
 			bool getPreferLazyLoading() const;
@@ -97,12 +98,12 @@ namespace map
 			bool _preferLazyLoading;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
 
-			RegistrationFileReader(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			RegistrationFileReader(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 	} // end namespace io
 } // end namespace map

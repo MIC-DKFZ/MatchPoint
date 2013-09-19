@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapPreCachedFieldPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __DIRECT_FIELD_POLICY_TPP
@@ -31,7 +31,7 @@ namespace map
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
 		PreCachedFieldPolicy<VInputDimensions, VOutputDimensions>::
-		setField(FieldType &field)
+		setField(FieldType& field)
 		{
 			_spField = &field;
 		};
@@ -62,14 +62,15 @@ namespace map
 		getRepresentationDescriptor() const
 		{
 			assert(_spField.IsNotNull());
-			RepresentationDescriptorConstPointer spRepresentation = createFieldRepresentation(*_spField).GetPointer();
+			RepresentationDescriptorConstPointer spRepresentation = createFieldRepresentation(
+						*_spField).GetPointer();
 			return spRepresentation;
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
 		PreCachedFieldPolicy<VInputDimensions, VOutputDimensions>::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			if (_spField.IsNotNull())
 			{

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapArbitraryImageToImageMetricPolicyTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -37,7 +37,8 @@ namespace map
 		namespace
 		{
 			template<class TTargetImage, class TMovingImage>
-			class TestPolicy : public algorithm::itk::ArbitraryImageToImageMetricPolicy<TTargetImage, TMovingImage>
+			class TestPolicy : public
+				algorithm::itk::ArbitraryImageToImageMetricPolicy<TTargetImage, TMovingImage>
 			{
 				//derivered a test class to generate public constructors (The policy itsself cannot
 				//be instantiated directly), to set the visibility of getMetricInternal to
@@ -62,7 +63,7 @@ namespace map
 				};
 
 				void
-				onChange(const ::itk::EventObject &eventObject)
+				onChange(const ::itk::EventObject& eventObject)
 				{
 					map::events::UnregisterAlgorithmComponentEvent unregEvent;
 					map::events::RegisterAlgorithmComponentEvent regEvent;
@@ -85,16 +86,21 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			TestPolicy<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> policy;
-			const TestPolicy<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> &constPolicy = policy;
+			TestPolicy<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			policy;
+			const TestPolicy<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			& constPolicy = policy;
 
-			typedef algorithm::itk::ITKMetricControl< ::itk::MeanSquaresImageToImageMetric<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> > MetricType;
+			typedef algorithm::itk::ITKMetricControl< ::itk::MeanSquaresImageToImageMetric<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> >
+			MetricType;
 
 			MetricType::Pointer spMetricControl1 = MetricType::New();
 			MetricType::Pointer spMetricControl2 = MetricType::New();
 
-			algorithm::itk::ITKImageToImageMetricControlInterface<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> *pMetricControl = NULL;
-			const algorithm::itk::ITKImageToImageMetricControlInterface<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> *pConstMetricControl = NULL;
+			algorithm::itk::ITKImageToImageMetricControlInterface<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			* pMetricControl = NULL;
+			const algorithm::itk::ITKImageToImageMetricControlInterface<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			* pConstMetricControl = NULL;
 
 			CHECK_NO_THROW(pMetricControl = policy.getMetricInternal());
 			CHECK_NO_THROW(pConstMetricControl = policy.getMetricInternal());

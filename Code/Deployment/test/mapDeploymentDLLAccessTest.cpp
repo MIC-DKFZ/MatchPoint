@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/test/mapDeploymentDLLAccessTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,9 +35,9 @@ namespace map
 		//defined by mapDeploymentTests.cpp. It is tha path to the current running executable.
 		//It is needed to bypass the problem that when using MS Visual Studio the actual binary
 		//path depends of the compile mode (release/debug) and is not the CMake binary path.
-		extern const char *_callingAppPath;
+		extern const char* _callingAppPath;
 
-		int mapDeploymentDLLAccessTest(int, char *argv[])
+		int mapDeploymentDLLAccessTest(int, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -50,16 +50,19 @@ namespace map
 			CHECK_THROW(map::deployment::openDeploymentDLL(NULL));
 
 			//Test open non existing file
-			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL("nonExistingFile.???"), deployment::InvalidDLLException);
+			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL("nonExistingFile.???"),
+								 deployment::InvalidDLLException);
 
 			//Test open file with wrong file extension
-			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL("nonExistingFile.???"), deployment::InvalidDLLException);
+			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL("nonExistingFile.???"),
+								 deployment::InvalidDLLException);
 
 
 			//Test open file regular DLL
 			deployment::DLLHandle::Pointer spHandle1 = NULL;
 
-			std::string validDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithm" + itksys::DynamicLoader::LibExtension();
+			std::string validDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithm" +
+									   itksys::DynamicLoader::LibExtension();
 
 			CHECK_NO_THROW(spHandle1 = map::deployment::openDeploymentDLL(validDLLPath));
 			//now check the returned information
@@ -68,7 +71,7 @@ namespace map
 			CHECK_EQUAL("de.dkfz.matchpoint", spHandle1->getAlgorithmUID().getNamespace());
 			CHECK_EQUAL("TestAlgorithm", spHandle1->getAlgorithmUID().getName());
 			CHECK_EQUAL("1.0.0", spHandle1->getAlgorithmUID().getVersion());
-      CHECK_EQUAL("testprofile", spHandle1->getAlgorithmProfileStr());
+			CHECK_EQUAL("testprofile", spHandle1->getAlgorithmProfileStr());
 
 
 			map::algorithm::RegistrationAlgorithmBase::Pointer spInstance = NULL;
@@ -78,32 +81,44 @@ namespace map
 			spInstance = NULL; //Enforce the destruction of the instance before the DLL is closed!
 
 			CHECK_NO_THROW(map::deployment::closeDeploymentDLL(spHandle1));
-			
+
 			//Test open file invalid DLL (missing mapGetDLLInterfaceVersion symbol)
-			std::string invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid1" + itksys::DynamicLoader::LibExtension();
-			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::MissingSymbolException);
+			std::string invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() +
+										 "mapTestAlgorithmInvalid1" + itksys::DynamicLoader::LibExtension();
+			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
+								 deployment::MissingSymbolException);
 
 			//Test open file invalid DLL (missing mapGetRegistrationAlgorithmUID symbol)
-			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid2" + itksys::DynamicLoader::LibExtension();
-			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::MissingSymbolException);
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid2" +
+							 itksys::DynamicLoader::LibExtension();
+			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
+								 deployment::MissingSymbolException);
 
 			//Test open file invalid DLL (missing mapGetRegistrationAlgorithmInstance symbol)
-			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid3" + itksys::DynamicLoader::LibExtension();
-			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::MissingSymbolException);
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid3" +
+							 itksys::DynamicLoader::LibExtension();
+			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
+								 deployment::MissingSymbolException);
 
-      //Test open file invalid DLL (missing mapGetRegistrationAlgorithmProfile symbol)
-      invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid7" + itksys::DynamicLoader::LibExtension();
-      CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::MissingSymbolException);
+			//Test open file invalid DLL (missing mapGetRegistrationAlgorithmProfile symbol)
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid7" +
+							 itksys::DynamicLoader::LibExtension();
+			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
+								 deployment::MissingSymbolException);
 
-      //Test open file invalid DLL (wrong version)
-			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid4" + itksys::DynamicLoader::LibExtension();
-			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::InvalidInterfaceVersionException);
+			//Test open file invalid DLL (wrong version)
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid4" +
+							 itksys::DynamicLoader::LibExtension();
+			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
+								 deployment::InvalidInterfaceVersionException);
 
 			//Test open file invalid DLL (invalid UID when calling mapGetRegistrationAlgorithmUID)
-			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid5" + itksys::DynamicLoader::LibExtension();
-			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath), deployment::InvalidUIDException);
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid5" +
+							 itksys::DynamicLoader::LibExtension();
+			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
+								 deployment::InvalidUIDException);
 
-      //////////////////////////////////////////////////
+			//////////////////////////////////////////////////
 			// Test: getRegistrationAlgorithm errors
 			CHECK_THROW(map::deployment::getRegistrationAlgorithm(NULL));
 
@@ -116,10 +131,12 @@ namespace map
 			CHECK_THROW(map::deployment::peekDeploymentDLL(NULL));
 
 			//Test peek non existing file
-			CHECK_THROW_EXPLICIT(map::deployment::peekDeploymentDLL("nonExistingFile.???"), deployment::InvalidDLLException);
+			CHECK_THROW_EXPLICIT(map::deployment::peekDeploymentDLL("nonExistingFile.???"),
+								 deployment::InvalidDLLException);
 
 			//Test peek file with wrong file extension
-			CHECK_THROW_EXPLICIT(map::deployment::peekDeploymentDLL("nonExistingFile.???"), deployment::InvalidDLLException);
+			CHECK_THROW_EXPLICIT(map::deployment::peekDeploymentDLL("nonExistingFile.???"),
+								 deployment::InvalidDLLException);
 
 			//Test peek with valid DLL (using String)
 			CHECK_NO_THROW(spUID = map::deployment::peekDeploymentDLL(validDLLPath));
@@ -128,33 +145,33 @@ namespace map
 			CHECK_EQUAL("TestAlgorithm", spUID->getName());
 			CHECK_EQUAL("1.0.0", spUID->getVersion());
 
-      //Test peek with valid DLL (using char*)
-      CHECK_NO_THROW(spUID = map::deployment::peekDeploymentDLL(validDLLPath.c_str()));
-      CHECK(spUID.IsNotNull());
-      CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
-      CHECK_EQUAL("TestAlgorithm", spUID->getName());
-      CHECK_EQUAL("1.0.0", spUID->getVersion());
+			//Test peek with valid DLL (using char*)
+			CHECK_NO_THROW(spUID = map::deployment::peekDeploymentDLL(validDLLPath.c_str()));
+			CHECK(spUID.IsNotNull());
+			CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
+			CHECK_EQUAL("TestAlgorithm", spUID->getName());
+			CHECK_EQUAL("1.0.0", spUID->getVersion());
 
-      //Test alternative peek with valid dll
-      spUID = NULL;
-      core::String testProfile = "";
-      CHECK_NO_THROW(map::deployment::peekDeploymentDLL(validDLLPath,spUID,testProfile));
-      CHECK(spUID.IsNotNull());
-      CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
-      CHECK_EQUAL("TestAlgorithm", spUID->getName());
-      CHECK_EQUAL("1.0.0", spUID->getVersion());
-      CHECK_EQUAL("testprofile", testProfile);
+			//Test alternative peek with valid dll
+			spUID = NULL;
+			core::String testProfile = "";
+			CHECK_NO_THROW(map::deployment::peekDeploymentDLL(validDLLPath, spUID, testProfile));
+			CHECK(spUID.IsNotNull());
+			CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
+			CHECK_EQUAL("TestAlgorithm", spUID->getName());
+			CHECK_EQUAL("1.0.0", spUID->getVersion());
+			CHECK_EQUAL("testprofile", testProfile);
 
-      spUID = NULL;
-      testProfile = "";
-      CHECK_NO_THROW(map::deployment::peekDeploymentDLL(validDLLPath.c_str(), spUID, testProfile));
-      CHECK(spUID.IsNotNull());
-      CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
-      CHECK_EQUAL("TestAlgorithm", spUID->getName());
-      CHECK_EQUAL("1.0.0", spUID->getVersion());
-      CHECK_EQUAL("testprofile", testProfile);
+			spUID = NULL;
+			testProfile = "";
+			CHECK_NO_THROW(map::deployment::peekDeploymentDLL(validDLLPath.c_str(), spUID, testProfile));
+			CHECK(spUID.IsNotNull());
+			CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
+			CHECK_EQUAL("TestAlgorithm", spUID->getName());
+			CHECK_EQUAL("1.0.0", spUID->getVersion());
+			CHECK_EQUAL("testprofile", testProfile);
 
-      //skipped testing other errors with peekDeploymentDLL because it just calls openDeploymentDLL and closeDeploymentDLL, which have been tested above
+			//skipped testing other errors with peekDeploymentDLL because it just calls openDeploymentDLL and closeDeploymentDLL, which have been tested above
 
 			//////////////////////////////////////////////////
 			// Test: checkNameIsSharedLibrary
@@ -177,8 +194,10 @@ namespace map
 			ostr << "-" << MAP_VERSION_MAJOR << "-" << MAP_VERSION_MINOR << "_";
 			core::String versionPart = ostr.str();
 
-			core::String invalidMDRA_DFlag = core::String("mdra-B") + versionPart + "MyInvalidDFlagAlgorithm" + itksys::DynamicLoader::LibExtension();
-			core::String invalidMDRA_Version = validMDRA + "0-0_" + "MyInvalidVersionAlgorithm" + itksys::DynamicLoader::LibExtension();
+			core::String invalidMDRA_DFlag = core::String("mdra-B") + versionPart + "MyInvalidDFlagAlgorithm" +
+											 itksys::DynamicLoader::LibExtension();
+			core::String invalidMDRA_Version = validMDRA + "0-0_" + "MyInvalidVersionAlgorithm" +
+											   itksys::DynamicLoader::LibExtension();
 			core::String invalidMDRA_Extension = validMDRA + "0-0_" + "MyInvalidExtensionAlgorithm.other";
 			validMDRA = validMDRA + versionPart + "MyValidAlgorithm" + itksys::DynamicLoader::LibExtension();
 			core::String validMDRA_withPath = core::String("./myPath/") + validMDRA;

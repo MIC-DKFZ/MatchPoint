@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapITKRigid2DICPRegistrationAlgorithmTemplateTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -51,13 +51,14 @@ namespace map
 				itkNewMacro(Self);
 
 			protected:
-				virtual void checkEvent(const ::itk::Object *caller, const ::itk::EventObject &e)
+				virtual void checkEvent(const ::itk::Object* caller, const ::itk::EventObject& e)
 				{
-					const events::AlgorithmEvent *pChangeEvent = dynamic_cast<const events::AlgorithmEvent *>(&e);
+					const events::AlgorithmEvent* pChangeEvent = dynamic_cast<const events::AlgorithmEvent*>(&e);
 
 					if (pChangeEvent)
 					{
-						std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << caller << "): " << pChangeEvent->getComment() << std::endl;
+						std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << caller << "): " <<
+								  pChangeEvent->getComment() << std::endl;
 					}
 					else
 					{
@@ -69,14 +70,14 @@ namespace map
 				virtual ~RegTestCommand() {};
 
 			private:
-				RegTestCommand(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				RegTestCommand(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 		}
 
 		typedef core::continuous::Elements<2>::InternalPointSetType LandmarksType;
 
-		int mapITKRigid2DICPRegistrationAlgorithmTemplateTest(int argc, char *argv[])
+		int mapITKRigid2DICPRegistrationAlgorithmTemplateTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: moving land marks
 			//           2: target land marks
@@ -97,13 +98,18 @@ namespace map
 			}
 
 			//load input data
-			LandmarksType::Pointer spMovingLMs = utilities::loadLandMarksFromFile<LandmarksType>(movingLMFileName);
-			LandmarksType::Pointer spTargetLMs = utilities::loadLandMarksFromFile<LandmarksType>(targetLMFileName);
-			LandmarksType::Pointer spMovingLMs2 = utilities::loadLandMarksFromFile<LandmarksType>(movingLMFileName);
-			LandmarksType::Pointer spTargetLMs2 = utilities::loadLandMarksFromFile<LandmarksType>(targetLMFileName);
+			LandmarksType::Pointer spMovingLMs = utilities::loadLandMarksFromFile<LandmarksType>
+												 (movingLMFileName);
+			LandmarksType::Pointer spTargetLMs = utilities::loadLandMarksFromFile<LandmarksType>
+												 (targetLMFileName);
+			LandmarksType::Pointer spMovingLMs2 = utilities::loadLandMarksFromFile<LandmarksType>
+												  (movingLMFileName);
+			LandmarksType::Pointer spTargetLMs2 = utilities::loadLandMarksFromFile<LandmarksType>
+												  (targetLMFileName);
 
 
-			typedef algorithm::boxed::ITKRigid2DICPRegistrationAlgorithm<LandmarksType, LandmarksType> RegistrationAlgorithmType;
+			typedef algorithm::boxed::ITKRigid2DICPRegistrationAlgorithm<LandmarksType, LandmarksType>
+			RegistrationAlgorithmType;
 
 			RegistrationAlgorithmType::Pointer spAlgorithm = RegistrationAlgorithmType::New();
 
@@ -120,8 +126,11 @@ namespace map
 			RegistrationAlgorithmType::RegistrationPointer spRegistration;
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
 
-			const core::ModelBasedRegistrationKernel<2, 2> *pInverseKernel = dynamic_cast<const core::ModelBasedRegistrationKernel<2, 2>* >(&(spRegistration->getInverseMapping()));
-			core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters = pInverseKernel->getParameters();
+			const core::ModelBasedRegistrationKernel<2, 2>* pInverseKernel =
+				dynamic_cast<const core::ModelBasedRegistrationKernel<2, 2>* >(&
+						(spRegistration->getInverseMapping()));
+			core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters =
+				pInverseKernel->getParameters();
 
 			CHECK_CLOSE(0.0, parameters[0], 0.01);
 			CHECK_CLOSE(13.0, parameters[1], 0.01);

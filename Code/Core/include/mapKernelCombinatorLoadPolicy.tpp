@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapKernelCombinatorLoadPolicy.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -42,17 +42,23 @@ namespace map
 		KernelCombinatorLoadPolicy<TProviderBase>::
 		doLoading()
 		{
-			typedef ModelModelKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions> ModelModelCombinatorType;
-			typedef FieldModelKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions> FieldModelCombinatorType;
-			typedef ModelFieldKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions> ModelFieldCombinatorType;
-			typedef FieldFieldKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions> FieldFieldCombinatorType;
-			typedef NullRegistrationKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions> NullRegistrationKernelCombinatorType;
+			typedef ModelModelKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
+			ModelModelCombinatorType;
+			typedef FieldModelKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
+			FieldModelCombinatorType;
+			typedef ModelFieldKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
+			ModelFieldCombinatorType;
+			typedef FieldFieldKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
+			FieldFieldCombinatorType;
+			typedef NullRegistrationKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
+			NullRegistrationKernelCombinatorType;
 
 			typename ModelModelCombinatorType::Pointer spModelModelCombinator = ModelModelCombinatorType::New();
 			typename FieldModelCombinatorType::Pointer spFieldModelCombinator = FieldModelCombinatorType::New();
 			typename ModelFieldCombinatorType::Pointer spModelFieldCombinator = ModelFieldCombinatorType::New();
 			typename FieldFieldCombinatorType::Pointer spFieldFieldCombinator = FieldFieldCombinatorType::New();
-			typename NullRegistrationKernelCombinatorType::Pointer spNullCombinator = NullRegistrationKernelCombinatorType::New();
+			typename NullRegistrationKernelCombinatorType::Pointer spNullCombinator =
+				NullRegistrationKernelCombinatorType::New();
 
 			services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(Superclass::_pLoadInterface);
 

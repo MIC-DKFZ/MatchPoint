@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapImageRegistrationAlgorithmBase.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -51,7 +51,7 @@ namespace map
 		template<class TMovingImage, class TTargetImage>
 		void
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
-		setMovingImage(const MovingImageType *pMovingImage)
+		setMovingImage(const MovingImageType* pMovingImage)
 		{
 			_spMovingImage = pMovingImage;
 		}
@@ -59,7 +59,7 @@ namespace map
 		template<class TMovingImage, class TTargetImage>
 		void
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
-		setTargetImage(const TargetImageType *pTargetImage)
+		setTargetImage(const TargetImageType* pTargetImage)
 		{
 			_spTargetImage = pTargetImage;
 		}
@@ -79,7 +79,7 @@ namespace map
 		template<class TMovingImage, class TTargetImage>
 		void
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
-		PrintSelf(std::ostream &os, ::itk::Indent indent) const
+		PrintSelf(std::ostream& os, ::itk::Indent indent) const
 		{
 			os << indent << "Moving image: " << _spMovingImage.GetPointer() << std::endl;
 			os << indent << "Target image: " << _spTargetImage.GetPointer() << std::endl;

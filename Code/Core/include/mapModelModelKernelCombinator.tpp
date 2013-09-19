@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapModelModelKernelCombinator.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,22 +35,26 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		typename ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::CombinedKernelBasePointer
 		ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
-		combineKernels(const RequestType &request,
-		               const InputFieldRepresentationType *pInputFieldRepresentation,
-		               bool usePadding,
-		               const PaddingVectorType &paddingVector) const
+		combineKernels(const RequestType& request,
+					   const InputFieldRepresentationType* pInputFieldRepresentation,
+					   bool usePadding,
+					   const PaddingVectorType& paddingVector) const
 		{
-			const Kernel1Type *pKernel1 = dynamic_cast<const Kernel1Type *>(request._spKernel1.GetPointer());
-			const Kernel2Type *pKernel2 = dynamic_cast<const Kernel2Type *>(request._spKernel2.GetPointer());
+			const Kernel1Type* pKernel1 = dynamic_cast<const Kernel1Type*>(request._spKernel1.GetPointer());
+			const Kernel2Type* pKernel2 = dynamic_cast<const Kernel2Type*>(request._spKernel2.GetPointer());
 
 			if (pKernel1 == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot combine kernels. Reason: cannot cast first kernel to ModelBasedRegistrationKernel: " << pKernel1);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot combine kernels. Reason: cannot cast first kernel to ModelBasedRegistrationKernel: "
+								  << pKernel1);
 			}
 
 			if (pKernel2 == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot combine kernels. Reason: cannot cast second kernel to ModelBasedRegistrationKernel: " << pKernel2);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot combine kernels. Reason: cannot cast second kernel to ModelBasedRegistrationKernel: "
+								  << pKernel2);
 			}
 
 
@@ -67,12 +71,12 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		bool
 		ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
 			// get the two kernels from the request (which is a RegistrationCombinationRequest object)
 			// and check if they are both FieldKernels
-			const Kernel1Type *pKernel1 = dynamic_cast<const Kernel1Type *>(request._spKernel1.GetPointer());
-			const Kernel2Type *pKernel2 = dynamic_cast<const Kernel2Type *>(request._spKernel2.GetPointer());
+			const Kernel1Type* pKernel1 = dynamic_cast<const Kernel1Type*>(request._spKernel1.GetPointer());
+			const Kernel2Type* pKernel2 = dynamic_cast<const Kernel2Type*>(request._spKernel2.GetPointer());
 
 			return ((pKernel1 != NULL) && (pKernel2 != NULL));
 		}
@@ -91,7 +95,8 @@ namespace map
 		getStaticProviderName()
 		{
 			OStringStream os;
-			os << "ModelModelKernelCombinator<" << VInputDimensions << "," << VInterimDimensions << "," << VOutputDimensions << ">";
+			os << "ModelModelKernelCombinator<" << VInputDimensions << "," << VInterimDimensions << "," <<
+			   VOutputDimensions << ">";
 			return os.str();
 		}
 
@@ -101,7 +106,9 @@ namespace map
 		getDescription() const
 		{
 			OStringStream os;
-			os << "ModelModelKernelCombinator, VInputDimensions: " << VInputDimensions << ", VInterimDimensions: " << VInterimDimensions << ", VOutputDimensions: " << VOutputDimensions << ".";
+			os << "ModelModelKernelCombinator, VInputDimensions: " << VInputDimensions <<
+			   ", VInterimDimensions: " << VInterimDimensions << ", VOutputDimensions: " << VOutputDimensions <<
+			   ".";
 			return os.str();
 		}
 

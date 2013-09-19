@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationTopology.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -61,7 +61,8 @@ namespace map
 			itkStaticConstMacro(InverseInputDimension, unsigned int, VTargetDimensions);
 			itkStaticConstMacro(InverseOutputDimension, unsigned int, VMovingDimensions);
 
-			typedef typename continuous::Elements< InverseOutputDimension >::VectorType InverseMappingVectorType;
+			typedef typename continuous::Elements< InverseOutputDimension >::VectorType
+			InverseMappingVectorType;
 			typedef itk::Image< InverseMappingVectorType, InverseInputDimension > InverseFieldType;
 			typedef typename InverseFieldType::Pointer InverseFieldPointer;
 			typedef typename InverseFieldType::RegionType InverseFieldRegionType;
@@ -72,9 +73,9 @@ namespace map
 			//purposely not implemented
 			RegistrationTopology();
 			//purposely not implemented
-			RegistrationTopology(const Self &source);
+			RegistrationTopology(const Self& source);
 			//purposely not implemented
-			virtual Self &operator = (const Self &source) = 0;
+			virtual Self& operator = (const Self& source) = 0;
 		};
 
 	} // end namespace core

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoRegistrationAlgorithmTemplate.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 //----------------------------------------------------------
@@ -61,8 +61,10 @@
 
 namespace
 {
-  const char *const DemoRegistrationAlgorithm_profile = "<Profile><Description>A simple Mattes MI based image registration algorithm just supporting translation.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Image</DataType><TransformModel>translation</TransformModel><TransformDomain>global</TransformDomain><Metric>Mean square difference</Metric><Optimization>Regular Step Gradient Descent</Optimization></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
-	mapGenerateAlgorithmUIDPolicyMacro(DemoRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "DemoRegistrationAlgorithm", "1.0.0", DemoRegistrationAlgorithm_profile);
+	const char* const DemoRegistrationAlgorithm_profile =
+		"<Profile><Description>A simple Mattes MI based image registration algorithm just supporting translation.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Image</DataType><TransformModel>translation</TransformModel><TransformDomain>global</TransformDomain><Metric>Mean square difference</Metric><Optimization>Regular Step Gradient Descent</Optimization></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
+	mapGenerateAlgorithmUIDPolicyMacro(DemoRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test",
+									   "DemoRegistrationAlgorithm", "1.0.0", DemoRegistrationAlgorithm_profile);
 }
 
 namespace map
@@ -79,12 +81,15 @@ namespace map
 			* UID policy is changed, because the reboxed algorithm should have its own unique identifier.
 			*/
 			template <class TMovingImage, class TTargetImage = TMovingImage, typename TUIDPolicy = DemoRegistrationAlgorithmUIDPolicy>
-			class DemoRegistrationAlgorithm: public map::algorithm::boxed::TransMSRegistrationAlgorithmTemplate<TMovingImage, TTargetImage, TUIDPolicy>::Type
+			class DemoRegistrationAlgorithm: public
+				map::algorithm::boxed::TransMSRegistrationAlgorithmTemplate<TMovingImage, TTargetImage, TUIDPolicy>::Type
 			{
 			public:
 				typedef DemoRegistrationAlgorithm Self;
 
-				typedef typename map::algorithm::boxed::TransMSRegistrationAlgorithmTemplate<TMovingImage, TTargetImage, TUIDPolicy>::Type  Superclass;
+				typedef typename
+				map::algorithm::boxed::TransMSRegistrationAlgorithmTemplate<TMovingImage, TTargetImage, TUIDPolicy>::Type
+				Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -111,8 +116,8 @@ namespace map
 
 			private:
 
-				DemoRegistrationAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				DemoRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

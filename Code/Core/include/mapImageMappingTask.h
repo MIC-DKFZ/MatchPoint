@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapImageMappingTask.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -65,7 +65,8 @@ namespace map
 			typedef TResultImage                                                    ResultImageType;
 			typedef typename ResultImageType::Pointer	                              ResultImagePointer;
 
-			typedef ImageMappingPerformerBase<RegistrationType, InputImageType, ResultImageType> TaskPerformerBaseType;
+			typedef ImageMappingPerformerBase<RegistrationType, InputImageType, ResultImageType>
+			TaskPerformerBaseType;
 			typedef typename TaskPerformerBaseType::RequestType                     PerformerRequestType;
 
 			typedef typename PerformerRequestType::ErrorValueType                   ErrorValueType;
@@ -79,24 +80,25 @@ namespace map
 #ifdef ITK_USE_CONCEPT_CHECKING
 			/** Begin concept checking */
 			itkConceptMacro(InputImageFitsRegistrationCheck,
-			                (itk::Concept::SameDimension<InputImageType::ImageDimension, RegistrationType::MovingDimensions>));
+							(itk::Concept::SameDimension<InputImageType::ImageDimension, RegistrationType::MovingDimensions>));
 			itkConceptMacro(ResultImageFitsRegistrationCheck,
-			                (itk::Concept::SameDimension<ResultImageType::ImageDimension, RegistrationType::TargetDimensions>));
+							(itk::Concept::SameDimension<ResultImageType::ImageDimension, RegistrationType::TargetDimensions>));
 			/** End concept checking */
 #endif
 
 		protected:
 			typedef TLoadPolicy<TaskPerformerBaseType> LoadPolicyType;
 
-			typedef services::ServiceStack<TaskPerformerBaseType, LoadPolicyType >  ConcreteTaskPerformerStackType;
+			typedef services::ServiceStack<TaskPerformerBaseType, LoadPolicyType >
+			ConcreteTaskPerformerStackType;
 
 		public:
 			typedef services::StaticServiceStack<ConcreteTaskPerformerStackType> TaskPerformerStackType;
 
 			/*! Sets _spInputImage to inputPoints and sets _spResultImage to null.
 			 * @param [in] inputPoints The pointer to the input image*/
-			void setInputImage(const InputImageType *inputImage);
-			const InputImageType *getInputImage() const;
+			void setInputImage(const InputImageType* inputImage);
+			const InputImageType* getInputImage() const;
 
 			/*! Returns _spResultImage. If the smart pointer is null the method will call execute() to
 			 * register the input data.
@@ -107,23 +109,23 @@ namespace map
 			/*! Sets the result image descriptor.
 			 * @param [in] pDescriptor Pointer to the descriptor. If set to NULL the task will generate one
 			 * by using the input image as template.*/
-			void setResultImageDescriptor(const ResultImageDescriptorType *pDescriptor);
-			const ResultImageDescriptorType *getResultImageDescriptor(void) const;
+			void setResultImageDescriptor(const ResultImageDescriptorType* pDescriptor);
+			const ResultImageDescriptorType* getResultImageDescriptor(void) const;
 
 			void setThrowOnMappingError(bool throwOnError);
 			bool getThrowOnMappingError() const;
 
-			void setErrorValue(const ErrorValueType &value);
-			const ErrorValueType &getErrorValue() const;
+			void setErrorValue(const ErrorValueType& value);
+			const ErrorValueType& getErrorValue() const;
 
 			void setThrowOnPaddingError(bool throwOnError);
 			bool getThrowOnPaddingError() const;
 
-			void setPaddingValue(const PaddingValueType &value);
-			const PaddingValueType &getPaddingValue() const;
+			void setPaddingValue(const PaddingValueType& value);
+			const PaddingValueType& getPaddingValue() const;
 
-			void setImageInterpolator(InterpolateBaseType *pInterpolator);
-			const InterpolateBaseType *getImageInterpolator() const;
+			void setImageInterpolator(InterpolateBaseType* pInterpolator);
+			const InterpolateBaseType* getImageInterpolator() const;
 
 		protected:
 			ImageMappingTask();
@@ -136,7 +138,8 @@ namespace map
 			 * after the task execution (till clearResults)*/
 			mutable ResultImagePointer _spResultImage;
 
-			typedef itk::LinearInterpolateImageFunction<InputImageType, continuous::ScalarType> DefaultInterpolatorType;
+			typedef itk::LinearInterpolateImageFunction<InputImageType, continuous::ScalarType>
+			DefaultInterpolatorType;
 			typedef typename PerformerRequestType::InterpolateBasePointer InterpolateBasePointer;
 			/*! Smart pointer to the interpolator instance that should be used to generate the result image*/
 			InterpolateBasePointer _spInterpolator;
@@ -184,11 +187,11 @@ namespace map
 			virtual void clearInputs(void);
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
-			ImageMappingTask(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			ImageMappingTask(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 	} // end namespace core
 } // end namespace map

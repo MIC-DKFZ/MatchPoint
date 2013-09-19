@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapImageMappingTaskTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -42,9 +42,12 @@ namespace map
 			typedef core::Registration<2, 2> RegistrationType;
 			typedef core::discrete::Elements<2>::InternalImageType InputDataType;
 			typedef core::discrete::Elements<2>::InternalImageType OutputDataType;
-			typedef core::ImageMappingTask<RegistrationType, InputDataType, OutputDataType, core::NoneMappingPerformerLoadPolicy> MappingTaskType;
-			typedef TestMappingPerformer<MappingTaskType::PerformerRequestType, core::ImageMappingPerformerBase<RegistrationType, InputDataType, OutputDataType> > TestPerformerType;
-			typedef itk::LinearInterpolateImageFunction<InputDataType, core::continuous::ScalarType> InterpolatorType;
+			typedef core::ImageMappingTask<RegistrationType, InputDataType, OutputDataType, core::NoneMappingPerformerLoadPolicy>
+			MappingTaskType;
+			typedef TestMappingPerformer<MappingTaskType::PerformerRequestType, core::ImageMappingPerformerBase<RegistrationType, InputDataType, OutputDataType> >
+			TestPerformerType;
+			typedef itk::LinearInterpolateImageFunction<InputDataType, core::continuous::ScalarType>
+			InterpolatorType;
 
 			MappingTaskType::Pointer spTask = MappingTaskType::New();
 			TestPerformerType::Pointer spPerformer = TestPerformerType::New();
@@ -52,10 +55,13 @@ namespace map
 			OutputDataType::Pointer spReference = OutputDataType::New();
 			RegistrationType::Pointer spRegistration = RegistrationType::New();
 			MappingTaskType::InterpolateBaseType::Pointer spInterpolator = InterpolatorType::New().GetPointer();
-			MappingTaskType::ResultImageDescriptorType::Pointer spResultDescriptor = core::createFieldRepresentation(*spInput);
+			MappingTaskType::ResultImageDescriptorType::Pointer spResultDescriptor =
+				core::createFieldRepresentation(*spInput);
 
-			MappingTaskType::ErrorValueType errorReference = itk::NumericTraits<MappingTaskType::ErrorValueType>::Zero;
-			MappingTaskType::PaddingValueType paddingReference = itk::NumericTraits<MappingTaskType::PaddingValueType>::Zero;
+			MappingTaskType::ErrorValueType errorReference =
+				itk::NumericTraits<MappingTaskType::ErrorValueType>::Zero;
+			MappingTaskType::PaddingValueType paddingReference =
+				itk::NumericTraits<MappingTaskType::PaddingValueType>::Zero;
 
 			//Setting up test performer and adding to stack
 			spPerformer->_spCurrentResult = spReference;
@@ -107,9 +113,11 @@ namespace map
 			CHECK_EQUAL(errorReference, spPerformer->_pCurrentRequest->_errorValue);
 			CHECK_EQUAL(true, spPerformer->_pCurrentRequest->_throwOnOutOfInputAreaError);
 			CHECK_EQUAL(paddingReference, spPerformer->_pCurrentRequest->_paddingValue);
-			CHECK_EQUAL(spRegistration.GetPointer(), spPerformer->_pCurrentRequest->_spRegistration.GetPointer());
+			CHECK_EQUAL(spRegistration.GetPointer(),
+						spPerformer->_pCurrentRequest->_spRegistration.GetPointer());
 			CHECK_EQUAL(spInput.GetPointer(), spPerformer->_pCurrentRequest->_spInputData.GetPointer());
-			CHECK_EQUAL(spInterpolator.GetPointer(), spPerformer->_pCurrentRequest->_spInterpolateFunction.GetPointer());
+			CHECK_EQUAL(spInterpolator.GetPointer(),
+						spPerformer->_pCurrentRequest->_spInterpolateFunction.GetPointer());
 			CHECK((*spResultDescriptor) == *(spPerformer->_pCurrentRequest->_spResultDescriptor.GetPointer()));
 
 			//check if registration is reperformed when input, representation, and interpolator is unchanged
@@ -142,10 +150,12 @@ namespace map
 			CHECK_NO_THROW(spTask->setResultImageDescriptor(NULL));
 			CHECK_NO_THROW(spResult = spTask->getResultImage());
 
-			CHECK_EQUAL(3, spPerformer->_performanceCount); // no reperforming because result representation was not realy changed
+			CHECK_EQUAL(3,
+						spPerformer->_performanceCount); // no reperforming because result representation was not realy changed
 
 
-			MappingTaskType::InterpolateBaseType::Pointer spInterpolator2 = InterpolatorType::New().GetPointer();
+			MappingTaskType::InterpolateBaseType::Pointer spInterpolator2 =
+				InterpolatorType::New().GetPointer();
 			CHECK_NO_THROW(spTask->setImageInterpolator(spInterpolator2));
 			CHECK_NO_THROW(spResult = spTask->getResultImage());
 
@@ -154,7 +164,8 @@ namespace map
 			CHECK_NO_THROW(spTask->setImageInterpolator(spInterpolator2));
 			CHECK_NO_THROW(spResult = spTask->getResultImage());
 
-			CHECK_EQUAL(4, spPerformer->_performanceCount); // no reperforming because result representation was not realy changed
+			CHECK_EQUAL(4,
+						spPerformer->_performanceCount); // no reperforming because result representation was not realy changed
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

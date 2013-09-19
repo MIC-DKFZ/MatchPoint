@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapExceptionObject.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -51,18 +51,19 @@ namespace map
 			ExceptionObject();
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			ExceptionObject(const char *file, unsigned int lineNumber);
+			ExceptionObject(const char* file, unsigned int lineNumber);
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			ExceptionObject(const std::string &file, unsigned int lineNumber);
+			ExceptionObject(const std::string& file, unsigned int lineNumber);
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
-			ExceptionObject(const std::string &file, unsigned int lineNumber, const std::string &desc, const std::string &loc);
+			ExceptionObject(const std::string& file, unsigned int lineNumber, const std::string& desc,
+							const std::string& loc);
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
 			virtual ~ExceptionObject() throw();
 
-			virtual const char *GetNameOfClass() const;
+			virtual const char* GetNameOfClass() const;
 
 			/*! Clones the exception object and returns a pointer to a copy of the exception object.
 			  * The cloned object is created on the heap and should function caller has to take care about
@@ -73,10 +74,10 @@ namespace map
 			  * and every task is processed (or failed through an exception).
 			  * @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			  * @eguarantee no throw*/
-			virtual BaseExceptionType *clone() const throw();
+			virtual BaseExceptionType* clone() const throw();
 		};
 
-		MAPCore_EXPORT std::ostream &operator<<(std::ostream &os, const ExceptionObject &e);
+		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os, const ExceptionObject& e);
 
 	} // end namespace core
 } // end namespace map

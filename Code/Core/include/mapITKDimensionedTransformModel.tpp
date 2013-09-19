@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapITKDimensionedTransformModel.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,7 +35,7 @@ namespace map
 	{
 
 		template< template <typename> class TTransform, class TScalarType>
-		const typename ITKDimensionedTransformModel<TTransform, TScalarType>::TransformBaseType *
+		const typename ITKDimensionedTransformModel<TTransform, TScalarType>::TransformBaseType*
 		ITKDimensionedTransformModel<TTransform, TScalarType>::
 		getTransform() const
 		{
@@ -44,7 +44,7 @@ namespace map
 		};
 
 		template< template <typename> class TTransform, class TScalarType>
-		typename ITKDimensionedTransformModel<TTransform, TScalarType>::TransformBaseType *
+		typename ITKDimensionedTransformModel<TTransform, TScalarType>::TransformBaseType*
 		ITKDimensionedTransformModel<TTransform, TScalarType>::
 		getTransform()
 		{
@@ -53,7 +53,7 @@ namespace map
 		};
 
 		template< template <typename> class TTransform, class TScalarType>
-		const typename ITKDimensionedTransformModel<TTransform, TScalarType>::TransformType *
+		const typename ITKDimensionedTransformModel<TTransform, TScalarType>::TransformType*
 		ITKDimensionedTransformModel<TTransform, TScalarType>::
 		getConcreteTransform() const
 		{
@@ -62,7 +62,7 @@ namespace map
 		};
 
 		template< template <typename> class TTransform, class TScalarType>
-		typename ITKDimensionedTransformModel<TTransform, TScalarType>::TransformType *
+		typename ITKDimensionedTransformModel<TTransform, TScalarType>::TransformType*
 		ITKDimensionedTransformModel<TTransform, TScalarType>::
 		getConcreteTransform()
 		{
@@ -73,13 +73,13 @@ namespace map
 		template< template <typename> class TTransform, class TScalarType>
 		bool
 		ITKDimensionedTransformModel<TTransform, TScalarType>::
-		getInverse(InverseTransformModelBasePointer &spInverseModel) const
+		getInverse(InverseTransformModelBasePointer& spInverseModel) const
 		{
 			assert(_spInternalTransform.IsNotNull());
 
 			InverseTransformModelPointer spInternalInverse = this->createInverse();
 
-			InverseTransformType *pInverse = spInternalInverse->getConcreteTransform();
+			InverseTransformType* pInverse = spInternalInverse->getConcreteTransform();
 			bool result = _spInternalTransform->GetInverse(pInverse);
 
 			spInverseModel = spInternalInverse.GetPointer();
@@ -94,7 +94,8 @@ namespace map
 		clone() const
 		{
 			::itk::LightObject::Pointer spClone = this->createAnotherInstance().GetPointer();
-			TransformModelBasePointer spClonedModel = dynamic_cast<TransformModelBaseType *>(spClone.GetPointer());
+			TransformModelBasePointer spClonedModel = dynamic_cast<TransformModelBaseType*>
+					(spClone.GetPointer());
 
 			if (spClonedModel.IsNull())
 			{

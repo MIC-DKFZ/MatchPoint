@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapPointSetByModelPerformer.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,28 +35,35 @@ namespace map
 		template <class TRegistration, class TInputData, class TResultData>
 		typename PointSetByModelPerformer<TRegistration, TInputData, TResultData>::ResultDataPointer
 		PointSetByModelPerformer<TRegistration, TInputData, TResultData>::
-		performMapping(const RequestType &request) const
+		performMapping(const RequestType& request) const
 		{
-			const DirectKernelBaseType &directKernelBase = request._spRegistration->getDirectMapping();
-			const ModelKernelType *pDirectKernel = dynamic_cast<const ModelKernelType *>(&directKernelBase);
+			const DirectKernelBaseType& directKernelBase = request._spRegistration->getDirectMapping();
+			const ModelKernelType* pDirectKernel = dynamic_cast<const ModelKernelType*>(&directKernelBase);
 
 			if (pDirectKernel == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot map point set. Reason: direct mapping kernel of registration is not model based. Registration: " << request._spRegistration);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot map point set. Reason: direct mapping kernel of registration is not model based. Registration: "
+								  << request._spRegistration);
 			}
 
 			if (pDirectKernel->getTransformModel() == NULL)
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot map point set. Reason: direct model based mapping kernel has no transform model. Check correct creation of the registration. Registration: " << request._spRegistration);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot map point set. Reason: direct model based mapping kernel has no transform model. Check correct creation of the registration. Registration: "
+								  << request._spRegistration);
 			}
 
 			if (request._spInputData.IsNull())
 			{
-				mapExceptionMacro(ServiceException, << "Error: cannot map point set. Reason: no input point set defined in request. Request: " << request);
+				mapExceptionMacro(ServiceException,
+								  << "Error: cannot map point set. Reason: no input point set defined in request. Request: " <<
+								  request);
 			}
 
 			//get direct access to the transform model
-			const typename ModelKernelType::TransformType::TransformBaseType *transform = pDirectKernel->getTransformModel()->getTransform();
+			const typename ModelKernelType::TransformType::TransformBaseType* transform =
+				pDirectKernel->getTransformModel()->getTransform();
 
 			//create result point set
 			ResultDataPointer spResultPointSet = ResultDataType::New();
@@ -81,7 +88,8 @@ namespace map
 
 				if (ownPointData)
 				{
-					spResultPointSet->SetPointData(pointID, static_cast<typename ResultDataType::PixelType>(currentPointData));
+					spResultPointSet->SetPointData(pointID,
+												   static_cast<typename ResultDataType::PixelType>(currentPointData));
 				}
 
 				++pointIter;
@@ -93,10 +101,10 @@ namespace map
 		template <class TRegistration, class TInputData, class TResultData>
 		bool
 		PointSetByModelPerformer<TRegistration, TInputData, TResultData>::
-		canHandleRequest(const RequestType &request) const
+		canHandleRequest(const RequestType& request) const
 		{
-			const DirectKernelBaseType &directKernelBase = request._spRegistration->getDirectMapping();
-			const ModelKernelType *pDirectKernel = dynamic_cast<const ModelKernelType *>(&directKernelBase);
+			const DirectKernelBaseType& directKernelBase = request._spRegistration->getDirectMapping();
+			const ModelKernelType* pDirectKernel = dynamic_cast<const ModelKernelType*>(&directKernelBase);
 
 			return (pDirectKernel != NULL) && (request._spInputData.IsNotNull());
 		}
@@ -115,7 +123,8 @@ namespace map
 		getStaticProviderName()
 		{
 			OStringStream os;
-			os << "PointSetByModelPerformer<Registration<" << RegistrationType::MovingDimensions << "," << RegistrationType::TargetDimensions << ">>";
+			os << "PointSetByModelPerformer<Registration<" << RegistrationType::MovingDimensions << "," <<
+			   RegistrationType::TargetDimensions << ">>";
 			return os.str();
 		};
 
@@ -125,7 +134,8 @@ namespace map
 		getDescription() const
 		{
 			OStringStream os;
-			os << "PointSetByModelPerformer, Registration<" << RegistrationType::MovingDimensions << "," << RegistrationType::TargetDimensions << ">";
+			os << "PointSetByModelPerformer, Registration<" << RegistrationType::MovingDimensions << "," <<
+			   RegistrationType::TargetDimensions << ">";
 			return os.str();
 		}
 

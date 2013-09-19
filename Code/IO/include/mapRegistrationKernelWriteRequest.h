@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapRegistrationKernelWriteRequest.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_REGISTRATION_KERNEL_WRITE_REQUEST_H
@@ -61,16 +61,19 @@ namespace map
 
 			/*! Constructor
 			 * \pre pKernel1 and pKernel2 must not be NULL*/
-			RegistrationKernelWriteRequest(const KernelBaseType *pKernel, const core::String &path, const core::String &name, bool expandLazyKernels);
-			RegistrationKernelWriteRequest(const KernelBaseType &kernel, const core::String &path, const core::String &name, bool expandLazyKernels);
+			RegistrationKernelWriteRequest(const KernelBaseType* pKernel, const core::String& path,
+										   const core::String& name, bool expandLazyKernels);
+			RegistrationKernelWriteRequest(const KernelBaseType& kernel, const core::String& path,
+										   const core::String& name, bool expandLazyKernels);
 			~RegistrationKernelWriteRequest();
 
-			RegistrationKernelWriteRequest(const RegistrationKernelWriteRequest &);
-			void operator=(const RegistrationKernelWriteRequest &);
+			RegistrationKernelWriteRequest(const RegistrationKernelWriteRequest&);
+			void operator=(const RegistrationKernelWriteRequest&);
 		};
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		std::ostream &operator<<(std::ostream &os, const RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions> &request)
+		std::ostream& operator<<(std::ostream& os,
+								 const RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions>& request)
 		{
 			os << "Kernel: " << request._spKernel << std::endl;
 			os << "Path: " << request._path << std::endl;

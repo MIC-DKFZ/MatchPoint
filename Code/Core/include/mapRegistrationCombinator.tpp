@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationCombinator.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -35,41 +35,55 @@ namespace map
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy >
 		typename RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::CombinedRegistrationPointer
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::
-		process(const PreRegistrationType &preRegistration, const RegistrationType &registration, InitialisationStyleType initStyle) const
+		process(const PreRegistrationType& preRegistration, const RegistrationType& registration,
+				InitialisationStyleType initStyle) const
 		{
-			return process(preRegistration, registration, preRegistration.getDirectFieldRepresentation().GetPointer(), registration.getInverseFieldRepresentation().GetPointer(), initStyle);
+			return process(preRegistration, registration,
+						   preRegistration.getDirectFieldRepresentation().GetPointer(),
+						   registration.getInverseFieldRepresentation().GetPointer(), initStyle);
 		}
 
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy >
 		typename RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::CombinedRegistrationPointer
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::
-		process(const PreRegistrationType &preRegistration, const RegistrationType &registration,
-		        const CombinedDirectFieldRepresentationType *pDirectRepresentation,
-		        const CombinedInverseFieldRepresentationType *pInverseRepresentation,
-		        InitialisationStyleType initStyle) const
+		process(const PreRegistrationType& preRegistration, const RegistrationType& registration,
+				const CombinedDirectFieldRepresentationType* pDirectRepresentation,
+				const CombinedInverseFieldRepresentationType* pInverseRepresentation,
+				InitialisationStyleType initStyle) const
 		{
-			typename DirectKernelCombinatorBaseType::RequestType directRequest(preRegistration.getDirectMapping(), registration.getDirectMapping());
-			typename InverseKernelCombinatorBaseType::RequestType inverseRequest(registration.getInverseMapping(), preRegistration.getInverseMapping());
+			typename DirectKernelCombinatorBaseType::RequestType directRequest(
+				preRegistration.getDirectMapping(), registration.getDirectMapping());
+			typename InverseKernelCombinatorBaseType::RequestType inverseRequest(
+				registration.getInverseMapping(), preRegistration.getInverseMapping());
 
-			DirectKernelCombinatorBaseType *pDirectCombinator = DirectKernelCombinatorStackType::getProvider(directRequest);
-			InverseKernelCombinatorBaseType *pInverseCombinator = InverseKernelCombinatorStackType::getProvider(inverseRequest);
+			DirectKernelCombinatorBaseType* pDirectCombinator = DirectKernelCombinatorStackType::getProvider(
+						directRequest);
+			InverseKernelCombinatorBaseType* pInverseCombinator = InverseKernelCombinatorStackType::getProvider(
+						inverseRequest);
 
-			mapLogInfoMacro( << "Combine registrations. Registration 1: " << preRegistration << std::endl << " Registration 2:" << registration);
+			mapLogInfoMacro( << "Combine registrations. Registration 1: " << preRegistration << std::endl <<
+							 " Registration 2:" << registration);
 
 			if (!pDirectCombinator)
 			{
-				mapExceptionMacro(MissingProviderException, << "No responsible combinator available for given direct request. Request:" << directRequest);
+				mapExceptionMacro(MissingProviderException,
+								  << "No responsible combinator available for given direct request. Request:" << directRequest);
 			}
 
 			if (!pInverseCombinator)
 			{
-				mapExceptionMacro(MissingProviderException, << "No responsible combinator available for given inverse request. Request:" << inverseRequest);
+				mapExceptionMacro(MissingProviderException,
+								  << "No responsible combinator available for given inverse request. Request:" << inverseRequest);
 			}
 
 			CombinedRegistrationPointer spCombinedRegistration = CombinedRegistrationType::New();
 
-			typename CombinedRegistrationType::DirectMappingType::Pointer spDirectKernel = pDirectCombinator->combineKernels(directRequest, pDirectRepresentation, _useDirectPadding, _directPaddingVector);
-			typename CombinedRegistrationType::InverseMappingType::Pointer spInverseKernel = pInverseCombinator->combineKernels(inverseRequest, pInverseRepresentation, _useInversePadding, _inversePaddingVector);
+			typename CombinedRegistrationType::DirectMappingType::Pointer spDirectKernel =
+				pDirectCombinator->combineKernels(directRequest, pDirectRepresentation, _useDirectPadding,
+												  _directPaddingVector);
+			typename CombinedRegistrationType::InverseMappingType::Pointer spInverseKernel =
+				pInverseCombinator->combineKernels(inverseRequest, pInverseRepresentation, _useInversePadding,
+												   _inversePaddingVector);
 
 			assert(spDirectKernel.IsNotNull());
 			assert(spInverseKernel.IsNotNull());
@@ -78,13 +92,15 @@ namespace map
 			manipulator.setDirectMapping(spDirectKernel);
 			manipulator.setInverseMapping(spInverseKernel);
 
-			if (initStyle == InitialisationStyle::DirectMapping || initStyle == InitialisationStyle::CompleteRegistration)
+			if (initStyle == InitialisationStyle::DirectMapping
+				|| initStyle == InitialisationStyle::CompleteRegistration)
 			{
 				mapLogInfoMacro( << "precompute direct kernel of combined registration");
 				spDirectKernel->precomputeKernel();
 			}
 
-			if (initStyle == InitialisationStyle::InverseMapping || initStyle == InitialisationStyle::CompleteRegistration)
+			if (initStyle == InitialisationStyle::InverseMapping
+				|| initStyle == InitialisationStyle::CompleteRegistration)
 			{
 				mapLogInfoMacro( << "precompute inverse kernel of combined registration");
 				spInverseKernel->precomputeKernel();
@@ -127,7 +143,8 @@ namespace map
 		}
 
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy>
-		const typename RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::DirectMappingVectorType &
+		const typename
+		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::DirectMappingVectorType&
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::
 		getDirectPaddingVector() const
 		{
@@ -137,13 +154,14 @@ namespace map
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy>
 		void
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::
-		setDirectPaddingVector(const DirectMappingVectorType &vector)
+		setDirectPaddingVector(const DirectMappingVectorType& vector)
 		{
 			_directPaddingVector = vector;
 		}
 
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy>
-		const typename RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::InverseMappingVectorType &
+		const typename
+		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::InverseMappingVectorType&
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::
 		getInversePaddingVector() const
 		{
@@ -153,7 +171,7 @@ namespace map
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy >
 		void
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::
-		setInversePaddingVector(const InverseMappingVectorType &vector)
+		setInversePaddingVector(const InverseMappingVectorType& vector)
 		{
 			_inversePaddingVector = vector;
 		}
@@ -161,7 +179,7 @@ namespace map
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy >
 		void
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 
@@ -173,7 +191,8 @@ namespace map
 
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy >
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::
-		RegistrationCombinator(): _useDirectPadding(false), _useInversePadding(false), _directPaddingVector(0.0), _inversePaddingVector(0.0)
+		RegistrationCombinator(): _useDirectPadding(false), _useInversePadding(false),
+			_directPaddingVector(0.0), _inversePaddingVector(0.0)
 		{}
 
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy >

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapMappingTaskBatchTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -56,21 +56,24 @@ namespace map
 				itkNewMacro(Self);
 
 			protected:
-				virtual void checkEvent(const ::itk::Object *caller, const ::itk::EventObject &e)
+				virtual void checkEvent(const ::itk::Object* caller, const ::itk::EventObject& e)
 				{
-					const events::AnyMatchPointThreadEvent *pThreadEvent = dynamic_cast<const events::AnyMatchPointThreadEvent *>(&e);
+					const events::AnyMatchPointThreadEvent* pThreadEvent =
+						dynamic_cast<const events::AnyMatchPointThreadEvent*>(&e);
 
 					if (pThreadEvent)
 					{
-						std::cout << std::endl << pThreadEvent->GetEventName() << " (@" << caller << "; Thread # " << pThreadEvent->getThreadID() << "): " << pThreadEvent->getComment() << std::endl;
+						std::cout << std::endl << pThreadEvent->GetEventName() << " (@" << caller << "; Thread # " <<
+								  pThreadEvent->getThreadID() << "): " << pThreadEvent->getComment() << std::endl;
 					}
 					else
 					{
-						const events::AnyMatchPointEvent *pEvent = dynamic_cast<const events::AnyMatchPointEvent *>(&e);
+						const events::AnyMatchPointEvent* pEvent = dynamic_cast<const events::AnyMatchPointEvent*>(&e);
 
 						if (pEvent)
 						{
-							std::cout << std::endl << pEvent->GetEventName() << " (@" << caller << "): " << pEvent->getComment() << std::endl;
+							std::cout << std::endl << pEvent->GetEventName() << " (@" << caller << "): " << pEvent->getComment()
+									  << std::endl;
 						}
 						else
 						{
@@ -83,8 +86,8 @@ namespace map
 				virtual ~BatchTestCommand() {};
 
 			private:
-				BatchTestCommand(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				BatchTestCommand(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 		}
 
@@ -104,9 +107,12 @@ namespace map
 			lit::TestCommand::Pointer spNextCommand = lit::TestCommand::New();
 			lit::TestCommand::Pointer spSuccesCommand = lit::TestCommand::New();
 			lit::TestCommand::Pointer spFailedCommand = lit::TestCommand::New();
-			spBatch->AddObserver(events::NextTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID), spNextCommand);
-			spBatch->AddObserver(events::ProcessedTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID), spSuccesCommand);
-			spBatch->AddObserver(events::FailedTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID), spFailedCommand);
+			spBatch->AddObserver(events::NextTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID),
+								 spNextCommand);
+			spBatch->AddObserver(events::ProcessedTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID),
+								 spSuccesCommand);
+			spBatch->AddObserver(events::FailedTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID),
+								 spFailedCommand);
 
 			MappingTaskType::Pointer spTask1 = MappingTaskType::New();
 			MappingTaskType::Pointer spTask2 = MappingTaskType::New();
@@ -169,8 +175,10 @@ namespace map
 			CHECK_EQUAL(false, spBatch->process(spRegistration2));
 			CHECK_EQUAL(2, spBatch->getFailedTasks().size());
 
-			bool spTask2_in_failedList = std::find(spBatch->getFailedTasks().begin(), spBatch->getFailedTasks().end(), spTask2.GetPointer()) != spBatch->getFailedTasks().end();
-			bool spTask4_in_failedList = std::find(spBatch->getFailedTasks().begin(), spBatch->getFailedTasks().end(), spTask4.GetPointer()) != spBatch->getFailedTasks().end();
+			bool spTask2_in_failedList = std::find(spBatch->getFailedTasks().begin(),
+												   spBatch->getFailedTasks().end(), spTask2.GetPointer()) != spBatch->getFailedTasks().end();
+			bool spTask4_in_failedList = std::find(spBatch->getFailedTasks().begin(),
+												   spBatch->getFailedTasks().end(), spTask4.GetPointer()) != spBatch->getFailedTasks().end();
 
 			CHECK(spTask2_in_failedList == true);
 			CHECK(spTask4_in_failedList == true);

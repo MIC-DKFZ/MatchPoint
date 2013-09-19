@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldGenerationFunctor.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -34,7 +34,8 @@ namespace map
 		{
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			const typename FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType *
+			const typename
+			FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType*
 			FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::
 			getInFieldRepresentation(void) const
 			{
@@ -43,7 +44,7 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::
-			FieldGenerationFunctor(const InFieldRepresentationType *pInFieldRepresentation):
+			FieldGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation):
 				_spInFieldRepresentation(pInFieldRepresentation)
 			{
 			};
@@ -57,7 +58,7 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			void
 			FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::
-			PrintSelf(std::ostream &os, itk::Indent indent) const
+			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 				os << indent << "In field representation: " << std::endl << _spInFieldRepresentation << std::endl;

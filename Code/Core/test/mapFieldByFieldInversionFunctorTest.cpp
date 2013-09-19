@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapFieldByFieldInversionFunctorTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -38,7 +38,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapFieldByFieldInversionFunctorTest(int argc, char *argv[])
+		int mapFieldByFieldInversionFunctorTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: Number of iterations
 			//           2: Stop value
@@ -76,7 +76,8 @@ namespace map
 
 			// We need a field, so we build one here using the FieldByModelFunctor
 			typedef core::functors::FieldByModelFunctor<2, 2> ModelFunctorType;
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> > TransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
+			TransformType;
 
 			TransformType::Pointer spModel = TransformType::New();
 
@@ -89,7 +90,8 @@ namespace map
 			params.fill(3.0);
 			spModel->getTransform()->SetParameters(params);
 
-			ModelFunctorType::InFieldRepresentationType::Pointer spInRep = ModelFunctorType::InFieldRepresentationType::New();
+			ModelFunctorType::InFieldRepresentationType::Pointer spInRep =
+				ModelFunctorType::InFieldRepresentationType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
@@ -101,7 +103,8 @@ namespace map
 
 
 			// we use the source model for analytic inversion
-			TransformType::InverseTransformModelBasePointer spInverseModel; //barra = TransformType::InverseTransformModelType::New();
+			TransformType::InverseTransformModelBasePointer
+			spInverseModel; //barra = TransformType::InverseTransformModelType::New();
 			spModel->getInverse(spInverseModel);
 
 
@@ -112,7 +115,8 @@ namespace map
 			spSourceKernel->setField(*(spSourceField.GetPointer()));
 
 			// reuse of spInRep
-			FieldInversionFunctorType::Pointer spFieldInversionFunc = FieldInversionFunctorType::New(*spSourceKernel, spInRep);
+			FieldInversionFunctorType::Pointer spFieldInversionFunc = FieldInversionFunctorType::New(
+						*spSourceKernel, spInRep);
 			spFieldInversionFunc->setStopValue(stopValue);
 			spFieldInversionFunc->setNumberOfIterations(nrOfIterations);
 
@@ -123,12 +127,16 @@ namespace map
 			CHECK(spSourceKernel == spFieldInversionFunc->getSourceFieldKernel());
 
 			// test CreateAnother
-			FieldInversionFunctorType::Pointer spFieldInversionFuncAnother = dynamic_cast<FieldInversionFunctorType *>(spFieldInversionFunc->CreateAnother().GetPointer());
-			CHECK(spFieldInversionFuncAnother->getSourceFieldKernel() == spFieldInversionFunc->getSourceFieldKernel());
-			CHECK(spFieldInversionFuncAnother->getInFieldRepresentation() == spFieldInversionFunc->getInFieldRepresentation());
+			FieldInversionFunctorType::Pointer spFieldInversionFuncAnother =
+				dynamic_cast<FieldInversionFunctorType*>(spFieldInversionFunc->CreateAnother().GetPointer());
+			CHECK(spFieldInversionFuncAnother->getSourceFieldKernel() ==
+				  spFieldInversionFunc->getSourceFieldKernel());
+			CHECK(spFieldInversionFuncAnother->getInFieldRepresentation() ==
+				  spFieldInversionFunc->getInFieldRepresentation());
 			CHECK(spFieldInversionFuncAnother->GetNameOfClass() == spFieldInversionFunc->GetNameOfClass());
 			CHECK(spFieldInversionFuncAnother->getStopValue() == spFieldInversionFunc->getStopValue());
-			CHECK(spFieldInversionFuncAnother->getNumberOfIterations() == spFieldInversionFunc->getNumberOfIterations());
+			CHECK(spFieldInversionFuncAnother->getNumberOfIterations() ==
+				  spFieldInversionFunc->getNumberOfIterations());
 
 			// test generateField
 			FieldInversionFunctorType::FieldPointer spGeneratedField = NULL;
@@ -137,7 +145,8 @@ namespace map
 
 			// use the inverted model spInverseModel to compare results
 
-			lit::TransformFieldTester<FieldInversionFunctorType::FieldType, ModelFunctorType::TransformModelType::TransformBaseType> tester;
+			lit::TransformFieldTester<FieldInversionFunctorType::FieldType, ModelFunctorType::TransformModelType::TransformBaseType>
+			tester;
 			tester.setReferenceTransform(spInverseModel->getTransform());
 			tester.setActualField(spGeneratedField);
 			tester.setCheckThreshold(checkThreshold);

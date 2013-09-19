@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/test/mapMatrixModelBasedKernelLoaderTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -40,7 +40,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapMatrixModelBasedKernelLoaderTest(int argc, char *argv[])
+		int mapMatrixModelBasedKernelLoaderTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -50,25 +50,40 @@ namespace map
 
 			LoaderType::Pointer spLoader = LoaderType::New();
 
-			core::String validData = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>0</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>0</Value></Matrix><MatrixStr>0 -1 1 0 </MatrixStr><Offset><Value Row='0'>5.000000000</Value><Value Row='1'>2.000000000</Value></Offset><OffsetStr>5 2 </OffsetStr></Kernel>";
-			core::String invalidData_wrongDim = "<Kernel InputDimensions='2' OutputDimensions='3'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType></Kernel>";
-			core::String invalidData_wrongDim2 = "<Kernel InputDimensions='3' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType></Kernel>";
-			core::String invalidData_wrongType = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>WrongKernelType</KernelType></Kernel>";
-			core::String invalidData_noMatrix = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType></Kernel>";
-			core::String invalidData_wrongMatrix = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value></Matrix></Kernel>";
-			core::String invalidData_noOffset = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>-3.673205103e-006</Value></Matrix><MatrixStr>-3.67321e-006 -1 1 -3.67321e-006 </MatrixStr><OffsetStr>5 2 </OffsetStr></Kernel>";
-			core::String invalidData_wrongOffset = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>-3.673205103e-006</Value></Matrix><MatrixStr>-3.67321e-006 -1 1 -3.67321e-006 </MatrixStr><Offset><Value Row='0'>5.000000000</Value></Offset><OffsetStr>5 2 </OffsetStr></Kernel>";
+			core::String validData =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>0</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>0</Value></Matrix><MatrixStr>0 -1 1 0 </MatrixStr><Offset><Value Row='0'>5.000000000</Value><Value Row='1'>2.000000000</Value></Offset><OffsetStr>5 2 </OffsetStr></Kernel>";
+			core::String invalidData_wrongDim =
+				"<Kernel InputDimensions='2' OutputDimensions='3'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType></Kernel>";
+			core::String invalidData_wrongDim2 =
+				"<Kernel InputDimensions='3' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType></Kernel>";
+			core::String invalidData_wrongType =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>WrongKernelType</KernelType></Kernel>";
+			core::String invalidData_noMatrix =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType></Kernel>";
+			core::String invalidData_wrongMatrix =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value></Matrix></Kernel>";
+			core::String invalidData_noOffset =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>-3.673205103e-006</Value></Matrix><MatrixStr>-3.67321e-006 -1 1 -3.67321e-006 </MatrixStr><OffsetStr>5 2 </OffsetStr></Kernel>";
+			core::String invalidData_wrongOffset =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>-3.673205103e-006</Value></Matrix><MatrixStr>-3.67321e-006 -1 1 -3.67321e-006 </MatrixStr><Offset><Value Row='0'>5.000000000</Value></Offset><OffsetStr>5 2 </OffsetStr></Kernel>";
 
 			structuredData::XMLStrReader::Pointer spStrReader = structuredData::XMLStrReader::New();
 
 			LoaderType::RequestType validRequest(spStrReader->readXMLContent(validData), false);
-			LoaderType::RequestType invalidRequest_wrongDim(spStrReader->readXMLContent(invalidData_wrongDim), false);
-			LoaderType::RequestType invalidRequest_wrongDim2(spStrReader->readXMLContent(invalidData_wrongDim2), false);
-			LoaderType::RequestType invalidRequest_wrongType(spStrReader->readXMLContent(invalidData_wrongType), false);
-			LoaderType::RequestType invalidRequest_noMatrix(spStrReader->readXMLContent(invalidData_noMatrix), false);
-			LoaderType::RequestType invalidRequest_wrongMatrix(spStrReader->readXMLContent(invalidData_wrongMatrix), false);
-			LoaderType::RequestType invalidRequest_noOffset(spStrReader->readXMLContent(invalidData_noOffset), false);
-			LoaderType::RequestType invalidRequest_wrongOffset(spStrReader->readXMLContent(invalidData_wrongOffset), false);
+			LoaderType::RequestType invalidRequest_wrongDim(spStrReader->readXMLContent(invalidData_wrongDim),
+					false);
+			LoaderType::RequestType invalidRequest_wrongDim2(spStrReader->readXMLContent(invalidData_wrongDim2),
+					false);
+			LoaderType::RequestType invalidRequest_wrongType(spStrReader->readXMLContent(invalidData_wrongType),
+					false);
+			LoaderType::RequestType invalidRequest_noMatrix(spStrReader->readXMLContent(invalidData_noMatrix),
+					false);
+			LoaderType::RequestType invalidRequest_wrongMatrix(spStrReader->readXMLContent(
+						invalidData_wrongMatrix), false);
+			LoaderType::RequestType invalidRequest_noOffset(spStrReader->readXMLContent(invalidData_noOffset),
+					false);
+			LoaderType::RequestType invalidRequest_wrongOffset(spStrReader->readXMLContent(
+						invalidData_wrongOffset), false);
 
 
 			////////////////////////////////////////////
@@ -94,7 +109,7 @@ namespace map
 			//test valid request
 			LoaderType::GenericKernelPointer spKernel;
 			CHECK_NO_THROW(spKernel = spLoader->loadKernel(validRequest));
-			KernelType *pMKernel = dynamic_cast<KernelType *>(spKernel.GetPointer());
+			KernelType* pMKernel = dynamic_cast<KernelType*>(spKernel.GetPointer());
 			CHECK(pMKernel != NULL);
 
 			KernelType::TransformType::MatrixType matrix;

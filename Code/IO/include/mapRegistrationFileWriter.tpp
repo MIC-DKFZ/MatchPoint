@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/IO/include/mapRegistrationFileWriter.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -39,7 +39,7 @@ namespace map
 		template <unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		bool
 		RegistrationFileWriter<VMovingDimensions, VTargetDimensions>::
-		write(const RegistrationType *registration, const core::String &path) const
+		write(const RegistrationType* registration, const core::String& path) const
 		{
 			if (!registration)
 			{
@@ -49,26 +49,32 @@ namespace map
 			core::String fileName = core::FileDispatch::getName(path);
 			core::String dir = core::FileDispatch::getPath(path);
 
-			typename DirectKernelWriterBaseType::RequestType directRequest(registration->getDirectMapping(), dir, fileName, _expandLazyKernels);
-			typename InverseKernelWriterBaseType::RequestType inverseRequest(registration->getInverseMapping(), dir, fileName, _expandLazyKernels);
+			typename DirectKernelWriterBaseType::RequestType directRequest(registration->getDirectMapping(),
+					dir, fileName, _expandLazyKernels);
+			typename InverseKernelWriterBaseType::RequestType inverseRequest(registration->getInverseMapping(),
+					dir, fileName, _expandLazyKernels);
 
-			DirectKernelWriterBaseType *pDirectWriter = DirectKernelWriterStackType::getProvider(directRequest);
-			InverseKernelWriterBaseType *pInverseWriter = InverseKernelWriterStackType::getProvider(inverseRequest);
+			DirectKernelWriterBaseType* pDirectWriter = DirectKernelWriterStackType::getProvider(directRequest);
+			InverseKernelWriterBaseType* pInverseWriter = InverseKernelWriterStackType::getProvider(
+						inverseRequest);
 
 			mapLogInfoMacro( << "Write registration. Registration: " << registration << std::endl);
 
 			if (!pDirectWriter)
 			{
-				mapExceptionMacro(core::MissingProviderException, << "No responsible writer available for given direct request. Request:" << directRequest);
+				mapExceptionMacro(core::MissingProviderException,
+								  << "No responsible writer available for given direct request. Request:" << directRequest);
 			}
 
 			if (!pInverseWriter)
 			{
-				mapExceptionMacro(core::MissingProviderException, << "No responsible writer available for given inverse request. Request:" << inverseRequest);
+				mapExceptionMacro(core::MissingProviderException,
+								  << "No responsible writer available for given inverse request. Request:" << inverseRequest);
 			}
 
 			structuredData::Element::Pointer spDirectKernelStream = pDirectWriter->storeKernel(directRequest);
-			structuredData::Element::Pointer spInverseKernelStream = pInverseWriter->storeKernel(inverseRequest);
+			structuredData::Element::Pointer spInverseKernelStream = pInverseWriter->storeKernel(
+						inverseRequest);
 
 			assert(spDirectKernelStream.IsNotNull());
 			assert(spInverseKernelStream.IsNotNull());
@@ -91,8 +97,10 @@ namespace map
 			}
 
 			//add dimensions
-			spRegElement->addSubElement(structuredData::Element::createElement(tags::MovingDimensions, core::convert::toStr(registration->getMovingDimensions())));
-			spRegElement->addSubElement(structuredData::Element::createElement(tags::TargetDimensions, core::convert::toStr(registration->getTargetDimensions())));
+			spRegElement->addSubElement(structuredData::Element::createElement(tags::MovingDimensions,
+										core::convert::toStr(registration->getMovingDimensions())));
+			spRegElement->addSubElement(structuredData::Element::createElement(tags::TargetDimensions,
+										core::convert::toStr(registration->getTargetDimensions())));
 
 			//add kernels
 			spDirectKernelStream->setAttribute(tags::KernelID, tags::direct);
@@ -111,7 +119,7 @@ namespace map
 		template <unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		void
 		RegistrationFileWriter<VMovingDimensions, VTargetDimensions>::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 

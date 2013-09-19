@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMappingTaskBase.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -41,7 +41,8 @@ namespace map
 
 			if (_spRegistration.IsNull())
 			{
-				mapDefaultExceptionMacro( << "Cannot execute registration task. Registration is undefined. Pleas set registration.");
+				mapDefaultExceptionMacro( <<
+										  "Cannot execute registration task. Registration is undefined. Pleas set registration.");
 			}
 
 			mapLogInfoMacro( << "Start registration task execution");
@@ -55,7 +56,7 @@ namespace map
 				success = true;
 				this->Modified();
 			}
-			catch (ExceptionObject &ex)
+			catch (ExceptionObject& ex)
 			{
 				_pException = ex.clone();
 
@@ -64,7 +65,7 @@ namespace map
 					throw;
 				}
 			}
-			catch (itk::ExceptionObject &ex)
+			catch (itk::ExceptionObject& ex)
 			{
 				_pException = new ExceptionObject(__FILE__, __LINE__, ex.what(), MAP_FUNCTION_SIGNATURE);
 
@@ -75,7 +76,8 @@ namespace map
 			}
 			catch (...)
 			{
-				_pException = new ExceptionObject(__FILE__, __LINE__, "Unknown exception while prosessing registration task.", MAP_FUNCTION_SIGNATURE);
+				_pException = new ExceptionObject(__FILE__, __LINE__,
+												  "Unknown exception while prosessing registration task.", MAP_FUNCTION_SIGNATURE);
 
 				if (_isExceptionNeutral)
 				{
@@ -89,7 +91,7 @@ namespace map
 		template <class TRegistration>
 		void
 		MappingTaskBase<TRegistration>::
-		setRegistration(const RegistrationType *pRegistration)
+		setRegistration(const RegistrationType* pRegistration)
 		{
 			if (pRegistration != _spRegistration.GetPointer())
 			{
@@ -100,7 +102,7 @@ namespace map
 		}
 
 		template <class TRegistration>
-		const typename MappingTaskBase<TRegistration>::RegistrationType *
+		const typename MappingTaskBase<TRegistration>::RegistrationType*
 		MappingTaskBase<TRegistration>::
 		getRegistration(void) const
 		{
@@ -108,7 +110,7 @@ namespace map
 		}
 
 		template <class TRegistration>
-		const ExceptionObject *
+		const ExceptionObject*
 		MappingTaskBase<TRegistration>::
 		getRegistrationException(void) const
 		{
@@ -151,7 +153,7 @@ namespace map
 		template <class TRegistration>
 		void
 		MappingTaskBase<TRegistration>::
-		PrintSelf(std::ostream &os, itk::Indent indent) const
+		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
 

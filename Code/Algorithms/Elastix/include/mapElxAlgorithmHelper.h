@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Elastix/include/mapElxAlgorithmHelper.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -48,7 +48,8 @@ namespace map
 			/**! Helper function that stores the passed parameter map to the given file path.
 			  If the file already exists it is overwritten. The parameter map is stored
 				in the elastix format: (<ParameterName> <Value1> [<Value2> [...]]).*/
-			MAPAlgorithmsElastix_EXPORT void saveParameterMapToFile(const ParameterMapType &parameterMap, const map::core::String &fileName);
+			MAPAlgorithmsElastix_EXPORT void saveParameterMapToFile(const ParameterMapType& parameterMap,
+					const map::core::String& fileName);
 
 			class MAPAlgorithmsElastix_EXPORT ParamGenerator
 			{
@@ -56,10 +57,10 @@ namespace map
 				ParamGenerator();
 				~ParamGenerator();
 
-				ParamGenerator &addStr(const core::String &value);
+				ParamGenerator& addStr(const core::String& value);
 
 				template <typename TElement>
-				ParamGenerator &add(const TElement &value)
+				ParamGenerator& add(const TElement& value)
 				{
 					this->_values.push_back(core::convert::toStrGeneric(value));
 					return *this;

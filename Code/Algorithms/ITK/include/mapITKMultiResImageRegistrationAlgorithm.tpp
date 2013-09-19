@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKMultiResImageRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -81,12 +81,14 @@ namespace map
 
 				if (!this->getMovingPyramideInternal())
 				{
-					mapExceptionMacro(AlgorithmException, << "Cannot start algorithm; no moving image pyramide available.");
+					mapExceptionMacro(AlgorithmException,
+									  << "Cannot start algorithm; no moving image pyramide available.");
 				}
 
 				if (!this->getTargetPyramideInternal())
 				{
-					mapExceptionMacro(AlgorithmException, << "Cannot start algorithm; no target image pyramide available.");
+					mapExceptionMacro(AlgorithmException,
+									  << "Cannot start algorithm; no target image pyramide available.");
 				}
 			}
 
@@ -118,8 +120,10 @@ namespace map
 			{
 				Superclass::prepSetInternalInputData();
 
-				this->InvokeEvent(events::AlgorithmEvent(this, "Pass resolution schedules to itk registration method."));
-				this->getInternalRegistrationMethod().SetSchedules(this->getTargetSchedule(), this->getMovingSchedule());
+				this->InvokeEvent(events::AlgorithmEvent(this,
+								  "Pass resolution schedules to itk registration method."));
+				this->getInternalRegistrationMethod().SetSchedules(this->getTargetSchedule(),
+						this->getMovingSchedule());
 			}
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TPyramidesPolicy, class TInternalRegistrationMethod>
@@ -154,7 +158,7 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TPyramidesPolicy, class TInternalRegistrationMethod>
 			void
 			ITKMultiResImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy, TInternalRegistrationMethod>::
-			onLevelEvent(::itk::Object *caller, const ::itk::EventObject &eventObject)
+			onLevelEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
 				if (!(::itk::IterationEvent().CheckEvent(&eventObject)))
 				{
@@ -170,13 +174,16 @@ namespace map
 
 				if (!this->_firstLevelEvent)
 				{
-					TransformParametersType currentParams = this->getTransformInternal()->getTransform()->GetParameters();
+					TransformParametersType currentParams =
+						this->getTransformInternal()->getTransform()->GetParameters();
 
 					bool hasCurrentPosition = this->getOptimizerInternal()->hasCurrentPosition();
-					typename OptimizerBaseType::OptimizerPositionType currentPosition = this->getOptimizerInternal()->getCurrentPosition();
+					typename OptimizerBaseType::OptimizerPositionType currentPosition =
+						this->getOptimizerInternal()->getCurrentPosition();
 
 					bool hasCurrentValue = this->getOptimizerInternal()->hasCurrentValue();
-					typename OptimizerBaseType::SVNLMeasureType currentValue = this->getOptimizerInternal()->getCurrentMeasure();
+					typename OptimizerBaseType::SVNLMeasureType currentValue =
+						this->getOptimizerInternal()->getCurrentMeasure();
 
 					++_currentLevelCount;
 					this->_currentIterationCount = 0;
@@ -233,7 +240,7 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TPyramidesPolicy, class TInternalRegistrationMethod>
 			void
 			ITKMultiResImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy, TInternalRegistrationMethod>::
-			onTargetImagePyramideChange(const ::itk::EventObject &eventObject)
+			onTargetImagePyramideChange(const ::itk::EventObject& eventObject)
 			{
 				map::events::UnregisterAlgorithmComponentEvent unregEvent;
 
@@ -247,7 +254,7 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TPyramidesPolicy, class TInternalRegistrationMethod>
 			void
 			ITKMultiResImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy, TInternalRegistrationMethod>::
-			onMovingImagePyramideChange(const ::itk::EventObject &eventObject)
+			onMovingImagePyramideChange(const ::itk::EventObject& eventObject)
 			{
 				map::events::UnregisterAlgorithmComponentEvent unregEvent;
 
@@ -282,7 +289,7 @@ namespace map
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TPyramidesPolicy, class TInternalRegistrationMethod>
 			void
 			ITKMultiResImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy, TInternalRegistrationMethod>::
-			PrintSelf(std::ostream &os, ::itk::Indent indent) const
+			PrintSelf(std::ostream& os, ::itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 

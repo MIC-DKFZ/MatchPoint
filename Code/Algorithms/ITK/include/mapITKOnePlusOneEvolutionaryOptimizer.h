@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKOnePlusOneEvolutionaryOptimizer.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -43,7 +43,8 @@ namespace map
 			@ingroup OptimizerControl
 			*/
 			template<>
-			class ITKOptimizerControl< ::itk::OnePlusOneEvolutionaryOptimizer> : public ITKSVNLOptimizerControlBase< ::itk::OnePlusOneEvolutionaryOptimizer>
+			class ITKOptimizerControl< ::itk::OnePlusOneEvolutionaryOptimizer> : public
+				ITKSVNLOptimizerControlBase< ::itk::OnePlusOneEvolutionaryOptimizer>
 			{
 			public:
 				typedef ITKOptimizerControl< ::itk::OnePlusOneEvolutionaryOptimizer>     Self;
@@ -63,8 +64,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKOptimizerControl(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKOptimizerControl(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			public:
 				virtual bool isStoppable() const
@@ -144,7 +145,8 @@ namespace map
 					return _spOptimizer->GetCurrentCost();
 				};
 
-				virtual void copyProperties(const ConcreteOptimizerType *source, ConcreteOptimizerType *destination) const
+				virtual void copyProperties(const ConcreteOptimizerType* source,
+											ConcreteOptimizerType* destination) const
 				{
 					Superclass::copyProperties(source, destination);
 
@@ -157,7 +159,8 @@ namespace map
 					destination->SetCatchGetValueException(source->GetCatchGetValueException());
 					destination->SetMetricWorstPossibleValue(source->GetMetricWorstPossibleValue());
 
-					mapLogInfoMacro( << "Cloning assumes that the OnePlusOne optimizer should be cloned with default variate generator, because there is no possibility to deduce the style of the source instance.");
+					mapLogInfoMacro( <<
+									 "Cloning assumes that the OnePlusOne optimizer should be cloned with default variate generator, because there is no possibility to deduce the style of the source instance.");
 				};
 
 				virtual Superclass::Pointer doCloneControl() const
@@ -168,7 +171,8 @@ namespace map
 				};
 			};
 
-			typedef ITKOptimizerControl< ::itk::OnePlusOneEvolutionaryOptimizer> OnePlusOneEvolutionaryOptimizerControl;
+			typedef ITKOptimizerControl< ::itk::OnePlusOneEvolutionaryOptimizer>
+			OnePlusOneEvolutionaryOptimizerControl;
 
 		}
 	}

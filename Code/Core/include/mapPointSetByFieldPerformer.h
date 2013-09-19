@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapPointSetByFieldPerformer.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -41,7 +41,8 @@ namespace map
 		* @tparam TResultData Type of the data in the target space.
 		*/
 		template <class TRegistration, class TInputData, class TResultData>
-		class PointSetByFieldPerformer : public MappingPerformerBase< PointSetMappingPerformerRequest<TRegistration, TInputData, TResultData> >
+		class PointSetByFieldPerformer : public
+			MappingPerformerBase< PointSetMappingPerformerRequest<TRegistration, TInputData, TResultData> >
 		{
 		public:
 			typedef PointSetMappingPerformerRequest<TRegistration, TInputData, TResultData> RequestType;
@@ -67,14 +68,14 @@ namespace map
 			 * @param [in] request Referenz to the request that contains the registration and the input data
 			 * @return Smart pointer to the result image.
 			 */
-			virtual ResultDataPointer performMapping(const RequestType &request) const;
+			virtual ResultDataPointer performMapping(const RequestType& request) const;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request.
 			 * @return Indicates if the provider offers the right solution.
 			 * @retval true Provider can handle the request.
 			 * @retval false Provider is not able to handle the request.*/
-			virtual bool canHandleRequest(const RequestType &request) const;
+			virtual bool canHandleRequest(const RequestType& request) const;
 
 			/*! Returns an ID of the provider as string. Calls getStaticProviderName().
 			 * @return Service provider ID.*/
@@ -93,22 +94,23 @@ namespace map
 #ifdef ITK_USE_CONCEPT_CHECKING
 			/** Begin concept checking */
 			itkConceptMacro(InputDataFitsRegistrationCheck,
-			                (itk::Concept::SameDimension<InputDataType::PointDimension, RegistrationType::MovingDimensions>));
+							(itk::Concept::SameDimension<InputDataType::PointDimension, RegistrationType::MovingDimensions>));
 			itkConceptMacro(ResultDataFitsRegistrationCheck,
-			                (itk::Concept::SameDimension<ResultDataType::PointDimension, RegistrationType::TargetDimensions>));
+							(itk::Concept::SameDimension<ResultDataType::PointDimension, RegistrationType::TargetDimensions>));
 			/** End concept checking */
 #endif
 
 		protected:
 			typedef typename RegistrationType::DirectMappingType DirectKernelBaseType;
-			typedef FieldBasedRegistrationKernel<DirectKernelBaseType::InputDimensions, DirectKernelBaseType::OutputDimensions> FieldBasedKernelType;
+			typedef FieldBasedRegistrationKernel<DirectKernelBaseType::InputDimensions, DirectKernelBaseType::OutputDimensions>
+			FieldBasedKernelType;
 
 			PointSetByFieldPerformer();
 			virtual ~PointSetByFieldPerformer();
 
 		private:
-			PointSetByFieldPerformer(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			PointSetByFieldPerformer(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} // end namespace core

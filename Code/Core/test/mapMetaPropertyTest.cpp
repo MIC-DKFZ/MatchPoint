@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapMetaPropertyTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -36,20 +36,20 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 
-			const std::type_info &intTypeInfo = typeid(int);
-			const std::type_info &boolPointerTypeInfo = typeid(bool *);
-			const std::type_info &constBoolPointerTypeInfo = typeid(const bool *);
+			const std::type_info& intTypeInfo = typeid(int);
+			const std::type_info& boolPointerTypeInfo = typeid(bool*);
+			const std::type_info& constBoolPointerTypeInfo = typeid(const bool*);
 
 			int refValue1 = 45;
 			int refValue2 = 12;
 			bool refValue3 = false;
 			bool refValue4 = true;
-			bool *refPointer1 = &refValue3;
-			const bool *refPointer2 = &refValue4;
+			bool* refPointer1 = &refValue3;
+			const bool* refPointer2 = &refValue4;
 
 			typedef map::core::MetaProperty<int> IntProperty;
-			typedef map::core::MetaProperty<bool *> BoolPointerProperty;
-			typedef map::core::MetaProperty<const bool *> ConstBoolPointerProperty;
+			typedef map::core::MetaProperty<bool*> BoolPointerProperty;
+			typedef map::core::MetaProperty<const bool*> ConstBoolPointerProperty;
 
 			IntProperty::Pointer smpIntProp1 = IntProperty::New(refValue1);
 			IntProperty::Pointer smpIntProp2 = IntProperty::New(refValue2);

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapLazyFieldPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -43,21 +43,23 @@ namespace map
 		class LazyFieldPolicy
 		{
 		public:
-			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectFieldType FieldType;
-			typedef functors::FieldGenerationFunctor<VInputDimensions, VOutputDimensions> FieldGenerationFunctorType;
+			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectFieldType
+			FieldType;
+			typedef functors::FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
+			FieldGenerationFunctorType;
 			typedef typename FieldGenerationFunctorType::ConstPointer FieldGenerationFunctorConstPointer;
 
 			/*! sets the field's functor
 			  @eguarantee no fail
 			  @param functor Reference to the functor that is responsible for generating the field
 			*/
-			virtual void setFieldFunctor(const FieldGenerationFunctorType &functor);
+			virtual void setFieldFunctor(const FieldGenerationFunctorType& functor);
 
 			/*! gets the field's functor
 			  @eguarantee no fail
 			  @return Pointer to the field functor that is used to generate the field on demand.
 			*/
-			virtual const FieldGenerationFunctorType  *getFieldFunctor() const;
+			virtual const FieldGenerationFunctorType*  getFieldFunctor() const;
 
 
 			/*! Returns if the field was already created or if the generation still is pending / wasn't necessary.
@@ -92,7 +94,7 @@ namespace map
 			RepresentationDescriptorConstPointer getRepresentationDescriptor() const;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
 			typedef ::itk::SimpleFastMutexLock MutexType;
@@ -103,8 +105,8 @@ namespace map
 			mutable MutexType _generateMutex;
 
 			//No copy constructor allowed
-			LazyFieldPolicy(const LazyFieldPolicy &);
-			void operator=(const LazyFieldPolicy &); //purposely not implemented
+			LazyFieldPolicy(const LazyFieldPolicy&);
+			void operator=(const LazyFieldPolicy&);  //purposely not implemented
 
 		};
 

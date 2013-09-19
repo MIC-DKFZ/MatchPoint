@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Deployment/mapDemoDeploymentDLLDirectoryBrowser.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 /*********************************************************
@@ -45,9 +45,10 @@
 #include "itksys/SystemTools.hxx"
 #include "itkCommand.h"
 
-void onValidDLLFound(const itk::Object *pCaller, const itk::EventObject &e, void *)
+void onValidDLLFound(const itk::Object* pCaller, const itk::EventObject& e, void*)
 {
-	const map::events::DeploymentEvent *pFoundEvent = dynamic_cast<const map::events::DeploymentEvent *>(&e);
+	const map::events::DeploymentEvent* pFoundEvent = dynamic_cast<const map::events::DeploymentEvent*>
+			(&e);
 
 	if (pFoundEvent)
 	{
@@ -55,9 +56,10 @@ void onValidDLLFound(const itk::Object *pCaller, const itk::EventObject &e, void
 	}
 }
 
-void onInvalidDLLFound(const itk::Object *pCaller, const itk::EventObject &e, void *)
+void onInvalidDLLFound(const itk::Object* pCaller, const itk::EventObject& e, void*)
 {
-	const map::events::DeploymentEvent *pFoundEvent = dynamic_cast<const map::events::DeploymentEvent *>(&e);
+	const map::events::DeploymentEvent* pFoundEvent = dynamic_cast<const map::events::DeploymentEvent*>
+			(&e);
 
 	if (pFoundEvent)
 	{
@@ -65,11 +67,12 @@ void onInvalidDLLFound(const itk::Object *pCaller, const itk::EventObject &e, vo
 	}
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	int result = EXIT_SUCCESS;
 
-	map::deployment::DLLDirectoryBrowser::Pointer spBrowser = map::deployment::DLLDirectoryBrowser::New();
+	map::deployment::DLLDirectoryBrowser::Pointer spBrowser =
+		map::deployment::DLLDirectoryBrowser::New();
 
 	/***************************************************************
 	 * Set the search paths

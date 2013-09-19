@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapMappingTaskBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -76,13 +76,13 @@ namespace map
 
 			/*! Sets the pointer to the registration that should be used. Calls clearResults().
 				 */
-			void setRegistration(const RegistrationType *pRegistration);
-			const RegistrationType *getRegistration(void) const;
+			void setRegistration(const RegistrationType* pRegistration);
+			const RegistrationType* getRegistration(void) const;
 
 			/*! Returns the pointer to the exception, if any has occured while registering the data.
 			 * @result Pointer to the exception.
 			 * @retval NULL No exception has occured yet.*/
-			const ExceptionObject *getRegistrationException(void) const;
+			const ExceptionObject* getRegistrationException(void) const;
 
 			void setIsExceptionNeutral(bool neutral);
 			bool getIsExceptionNeutral(void) const;
@@ -121,7 +121,7 @@ namespace map
 			virtual ~MappingTaskBase();
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
 			/*! Indicates if the task should act exception-neutral (thus passing all exceptions
@@ -130,10 +130,10 @@ namespace map
 			bool _isExceptionNeutral;
 
 			/*! Pointer to the cloned excpetion if any exception occurred.*/
-			mutable ExceptionObject *_pException;
+			mutable ExceptionObject* _pException;
 
-			MappingTaskBase(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			MappingTaskBase(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 	} // end namespace core
 } // end namespace map

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoFixedITKImageRegistration.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -42,29 +42,34 @@
 #include "mapFixedSVNLOptimizerPolicy.h"
 #include "mapFixedTransformPolicy.h"
 
-void onRegistrationEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
+void onRegistrationEvent(itk::Object* pCaller, const itk::EventObject& e, void*)
 {
-	const map::events::AlgorithmEvent *pChangeEvent = dynamic_cast<const map::events::AlgorithmEvent *>(&e);
+	const map::events::AlgorithmEvent* pChangeEvent = dynamic_cast<const map::events::AlgorithmEvent*>
+			(&e);
 
 	if (pChangeEvent)
 	{
-		std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << pCaller << "): " << pChangeEvent->getComment() << std::endl;
+		std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << pCaller << "): " <<
+				  pChangeEvent->getComment() << std::endl;
 	}
 }
 
-void onBatchEvent(itk::Object *pCaller, const itk::EventObject &e, void *)
+void onBatchEvent(itk::Object* pCaller, const itk::EventObject& e, void*)
 {
-	const map::events::AnyMatchPointThreadEvent *pMAPThreadEvent = dynamic_cast<const map::events::AnyMatchPointThreadEvent *>(&e);
+	const map::events::AnyMatchPointThreadEvent* pMAPThreadEvent =
+		dynamic_cast<const map::events::AnyMatchPointThreadEvent*>(&e);
 
 	if (pMAPThreadEvent)
 	{
-		std::cout << std::endl << pMAPThreadEvent->GetEventName() << " (@" << pCaller << "; Thread # " << pMAPThreadEvent->getThreadID() << "): " << pMAPThreadEvent->getComment() << std::endl;
+		std::cout << std::endl << pMAPThreadEvent->GetEventName() << " (@" << pCaller << "; Thread # " <<
+				  pMAPThreadEvent->getThreadID() << "): " << pMAPThreadEvent->getComment() << std::endl;
 	}
 }
 
-mapGenerateAlgorithmUIDPolicyMacro(DemoFixedRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "DemoFixedITKImageRegistrationAlgorithm", "1.0.0", "");
+mapGenerateAlgorithmUIDPolicyMacro(DemoFixedRegistrationAlgorithmUIDPolicy,
+								   "de.dkfz.matchpoint.test", "DemoFixedITKImageRegistrationAlgorithm", "1.0.0", "");
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	AppGlobals globals;
 	int result = EXIT_FAILURE;
@@ -98,7 +103,8 @@ int main(int argc, char *argv[])
 
 	typedef ::itk::MeanSquaresImageToImageMetric<ImageType, ImageType> MetricType;
 	typedef ::itk::RegularStepGradientDescentOptimizer OptimizerType;
-	typedef ::itk::LinearInterpolateImageFunction<ImageType, map::core::continuous::ScalarType> InterpolatorType;
+	typedef ::itk::LinearInterpolateImageFunction<ImageType, map::core::continuous::ScalarType>
+	InterpolatorType;
 	typedef ::itk::TranslationTransform<map::core::continuous::ScalarType, 2> TransformType;
 
 	typedef map::algorithm::itk::FixedImageToImageMetricPolicy<MetricType> MetricPolicyType;
@@ -107,13 +113,14 @@ int main(int argc, char *argv[])
 	typedef map::algorithm::itk::FixedTransformPolicy<TransformType> TransformPolicyType;
 
 	typedef map::algorithm::itk::ITKImageRegistrationAlgorithm < ImageType, ImageType,
-	        DemoFixedRegistrationAlgorithmUIDPolicy,
-	        InterpolatorPolicyType,
-	        MetricPolicyType,
-	        OptimizerPolicyType,
-	        TransformPolicyType > FixedITKImageRegistrationAlgorithmType;
+			DemoFixedRegistrationAlgorithmUIDPolicy,
+			InterpolatorPolicyType,
+			MetricPolicyType,
+			OptimizerPolicyType,
+			TransformPolicyType > FixedITKImageRegistrationAlgorithmType;
 
-	FixedITKImageRegistrationAlgorithmType::Pointer spAlgorithm = FixedITKImageRegistrationAlgorithmType::New();
+	FixedITKImageRegistrationAlgorithmType::Pointer spAlgorithm =
+		FixedITKImageRegistrationAlgorithmType::New();
 
 	typedef FixedITKImageRegistrationAlgorithmType::RegistrationType RegistrationType;
 
@@ -151,7 +158,8 @@ int main(int argc, char *argv[])
 	std::cout << "Define mapping tasks..." << std::endl;
 
 	typedef map::core::ImageMappingTask<RegistrationType, ImageType, ImageType> ImageMappingTaskType;
-	typedef map::core::PointSetMappingTask<RegistrationType, LandmarksType, LandmarksType> PointSetMappingTaskType;
+	typedef map::core::PointSetMappingTask<RegistrationType, LandmarksType, LandmarksType>
+	PointSetMappingTaskType;
 
 	ImageMappingTaskType::Pointer spImageTask = ImageMappingTaskType::New();
 	spImageTask->setInputImage(globals.spMovingImage);
@@ -170,7 +178,8 @@ int main(int argc, char *argv[])
 	itk::CStyleCommand::Pointer spBatchCommand = itk::CStyleCommand::New();
 	spBatchCommand->SetCallback(&onBatchEvent);
 
-	spBatch->AddObserver(map::events::AnyMatchPointThreadEvent(map::events::NextTaskThreadEvent::anyThreadID), spBatchCommand);
+	spBatch->AddObserver(map::events::AnyMatchPointThreadEvent(
+							 map::events::NextTaskThreadEvent::anyThreadID), spBatchCommand);
 
 	//add tasks to batch
 	spBatch->addTask(spImageTask);

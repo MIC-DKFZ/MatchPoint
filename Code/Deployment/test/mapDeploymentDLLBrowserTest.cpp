@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/test/mapDeploymentDLLBrowserTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -41,7 +41,7 @@ namespace map
 	namespace testing
 	{
 		deployment::DLLDirectoryBrowser::PathListType
-		getFilesInPath(const core::String &libraryPath)
+		getFilesInPath(const core::String& libraryPath)
 		{
 			deployment::DLLDirectoryBrowser::PathListType result;
 
@@ -54,7 +54,7 @@ namespace map
 				*/
 				for (unsigned int i = 0; i < dir->GetNumberOfFiles(); i++)
 				{
-					const char *file = dir->GetFile(i);
+					const char* file = dir->GetFile(i);
 					core::String fullpath = core::FileDispatch::createFullPath(libraryPath.c_str(), file);
 					result.push_back(fullpath);
 				}
@@ -64,7 +64,8 @@ namespace map
 		};
 
 		bool
-		checkLocationInInfos(const deployment::DLLDirectoryBrowser::DLLInfoListType &infos, const core::String &libraryPath)
+		checkLocationInInfos(const deployment::DLLDirectoryBrowser::DLLInfoListType& infos,
+							 const core::String& libraryPath)
 		{
 			bool result = false;
 
@@ -97,12 +98,12 @@ namespace map
 				return "DirDeploymentDLLBroserTester";
 			};
 
-			void setResult(const deployment::DLLDirectoryBrowser::DLLInfoListType &infos)
+			void setResult(const deployment::DLLDirectoryBrowser::DLLInfoListType& infos)
 			{
 				_infos = infos;
 			};
 
-			void setActualFileList(const deployment::DLLDirectoryBrowser::PathListType &candidates)
+			void setActualFileList(const deployment::DLLDirectoryBrowser::PathListType& candidates)
 			{
 				_candidates = candidates;
 			};
@@ -125,8 +126,9 @@ namespace map
 				_falsePositives.clear();
 
 				_pResults->onTestStart(getCurrentTestLabel());
-				
-				for (deployment::DLLDirectoryBrowser::PathListType::const_iterator pos = _candidates.begin(); pos != _candidates.end(); ++pos)
+
+				for (deployment::DLLDirectoryBrowser::PathListType::const_iterator pos = _candidates.begin();
+					 pos != _candidates.end(); ++pos)
 				{
 					bool foundByBrowser = checkLocationInInfos(_infos, *pos);
 					bool validCandidate = deployment::checkFileNameIsMDRACompliant(pos->c_str());
@@ -147,7 +149,8 @@ namespace map
 
 			virtual void handleSuccess(void) const
 			{
-				_pResults->onTestSuccess(getCurrentTestLabel(), "Directory browser identified the deployed algorithms correctly.");
+				_pResults->onTestSuccess(getCurrentTestLabel(),
+										 "Directory browser identified the deployed algorithms correctly.");
 			};
 
 			/*! Function will be called be check() if test was a failure.
@@ -159,14 +162,16 @@ namespace map
 				stream << "Directory browser misidentified the deployed algorithms." << std::endl;
 				stream << "False positives (wrongly assumed to be deployed algorithms)" << std::endl;
 
-				for (deployment::DLLDirectoryBrowser::PathListType::const_iterator pos = _falsePositives.begin(); pos != _falsePositives.end(); ++pos)
+				for (deployment::DLLDirectoryBrowser::PathListType::const_iterator pos = _falsePositives.begin();
+					 pos != _falsePositives.end(); ++pos)
 				{
 					stream << " - " << *pos << std::endl;
 				}
 
 				stream << "False negatives (wrongly assumed to be no deployed algorithms)" << std::endl;
 
-				for (deployment::DLLDirectoryBrowser::PathListType::const_iterator pos = _falseNegatives.begin(); pos != _falseNegatives.end(); ++pos)
+				for (deployment::DLLDirectoryBrowser::PathListType::const_iterator pos = _falseNegatives.begin();
+					 pos != _falseNegatives.end(); ++pos)
 				{
 					stream << " - " << *pos << std::endl;
 				}
@@ -175,16 +180,16 @@ namespace map
 			};
 
 		private:
-			DirBrowserTester(Self &source); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			DirBrowserTester(Self& source); //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 		//defined by mapDeploymentTests.cpp. It is the path to the current running executable.
 		//It is needed to bypass the problem that when using MS Visual Studio the actual binary
 		//path depends of the compile mode (release/debug) and is not the CMake binary path.
-		extern const char *_callingAppPath;
+		extern const char* _callingAppPath;
 
-		int mapDeploymentDLLBrowserTest(int argc, char *argv[])
+		int mapDeploymentDLLBrowserTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -226,7 +231,8 @@ namespace map
 			CHECK_NO_THROW(spBrowser->update());
 			CHECK_NO_THROW(infos = spBrowser->getLibraryInfos());
 
-			deployment::DLLDirectoryBrowser::PathListType candidates = getFilesInPath(spBrowser->getDLLSearchLocations()[0]);
+			deployment::DLLDirectoryBrowser::PathListType candidates = getFilesInPath(
+						spBrowser->getDLLSearchLocations()[0]);
 
 			DirBrowserTester tester;
 			tester.setActualFileList(candidates);
@@ -234,7 +240,9 @@ namespace map
 
 			CHECK_TESTER(tester);
 
-			core::String wrongFile = core::FileDispatch::createFullPath(searchPath, itksys::DynamicLoader::LibPrefix() + core::String("mapTestAlgorithm") + itksys::DynamicLoader::LibExtension());
+			core::String wrongFile = core::FileDispatch::createFullPath(searchPath,
+									 itksys::DynamicLoader::LibPrefix() + core::String("mapTestAlgorithm") +
+									 itksys::DynamicLoader::LibExtension());
 			spBrowser->addDLLSearchLocation(wrongFile);
 			CHECK_NO_THROW(spBrowser->update());
 			CHECK_NO_THROW(infos = spBrowser->getLibraryInfos());

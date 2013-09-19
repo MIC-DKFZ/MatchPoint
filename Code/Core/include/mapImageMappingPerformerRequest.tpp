@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapImageMappingPerformerRequest.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -32,11 +32,11 @@ namespace map
 	{
 		template <class TRegistration, class TInputData, class TResultData>
 		ImageMappingPerformerRequest<TRegistration, TInputData, TResultData>::
-		ImageMappingPerformerRequest(const RegistrationType *pRegistration,
-		                             const InputDataType *pInputData, const ResultImageDescriptorType *pResultDescriptor,
-		                             InterpolateBaseType *pInterpolateFunction,
-		                             bool throwOnMappingError, const ErrorValueType &errorValue,
-		                             bool throwOnOutOfInputAreaError, PaddingValueType paddingValue):
+		ImageMappingPerformerRequest(const RegistrationType* pRegistration,
+									 const InputDataType* pInputData, const ResultImageDescriptorType* pResultDescriptor,
+									 InterpolateBaseType* pInterpolateFunction,
+									 bool throwOnMappingError, const ErrorValueType& errorValue,
+									 bool throwOnOutOfInputAreaError, PaddingValueType paddingValue):
 			Superclass(pRegistration, pInputData), _spResultDescriptor(pResultDescriptor),
 			_spInterpolateFunction(pInterpolateFunction),
 			_throwOnMappingError(throwOnMappingError), _errorValue(errorValue),
@@ -53,7 +53,7 @@ namespace map
 
 		template <class TRegistration, class TInputData, class TResultData>
 		ImageMappingPerformerRequest<TRegistration, TInputData, TResultData>::
-		ImageMappingPerformerRequest(const ImageMappingPerformerRequest &other):
+		ImageMappingPerformerRequest(const ImageMappingPerformerRequest& other):
 			Superclass(other._spRegistration, other._spInputData),
 			_spResultDescriptor(other._spResultDescriptor),
 			_spInterpolateFunction(other._spInterpolateFunction),
@@ -69,7 +69,7 @@ namespace map
 		template <class TRegistration, class TInputData, class TResultData>
 		void
 		ImageMappingPerformerRequest<TRegistration, TInputData, TResultData>::
-		operator=(const ImageMappingPerformerRequest &other)
+		operator=(const ImageMappingPerformerRequest& other)
 		{
 			Superclass::_spRegistration = other._spRegistration;
 			Superclass::_spInputData = other._spInputData;

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/ITK/include/mapNULLVectorAwareLinearInterpolateImageFunction.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __NULL_VECTOR_AWARE_LINEAR_INTERPOLATE_IMAGE_FUNCTION_TPP
@@ -47,7 +47,8 @@ namespace itk
 		*/
 		template<class TInputImage, class TCoordRep>
 		NULLVectorAwareLinearInterpolateImageFunction< TInputImage, TCoordRep >
-		::NULLVectorAwareLinearInterpolateImageFunction() : _useNullVector(true), _nullVector(::itk::NumericTraits<typename OutputType::ValueType>::NonpositiveMin())
+		::NULLVectorAwareLinearInterpolateImageFunction() : _useNullVector(true),
+			 _nullVector(::itk::NumericTraits<typename OutputType::ValueType>::NonpositiveMin())
 		{
 
 		}
@@ -59,7 +60,7 @@ namespace itk
 		template<class TInputImage, class TCoordRep>
 		void
 		NULLVectorAwareLinearInterpolateImageFunction< TInputImage, TCoordRep >
-		::PrintSelf(std::ostream &os, Indent indent) const
+		::PrintSelf(std::ostream& os, Indent indent) const
 		{
 			this->Superclass::PrintSelf(os, indent);
 		}
@@ -73,7 +74,7 @@ namespace itk
 		::OutputType
 		NULLVectorAwareLinearInterpolateImageFunction< TInputImage, TCoordRep >
 		::EvaluateAtContinuousIndex(
-		    const ContinuousIndexType &index) const
+			const ContinuousIndexType& index) const
 		{
 			unsigned int dim;  // index over dimension
 

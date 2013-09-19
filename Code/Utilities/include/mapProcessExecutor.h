@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Utilities/include/mapProcessExecutor.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -81,15 +81,16 @@ namespace map
 
 			typedef std::vector<core::String> ArgumentListType;
 
-			bool execute(const core::String &executionPath, const core::String &executableName, ArgumentListType argumentList);
+			bool execute(const core::String& executionPath, const core::String& executableName,
+						 ArgumentListType argumentList);
 
 			/**Executes the process. This version assumes that the executable name is the first argument in the argument list
 			* and has already been converted to its OS dependent name via the static convert function of this class.*/
-			bool execute(const core::String &executionPath, const ArgumentListType &argumentList);
+			bool execute(const core::String& executionPath, const ArgumentListType& argumentList);
 
 			int getExitValue();
 
-			static core::String getOSDependendExecutableName(const core::String &name);
+			static core::String getOSDependendExecutableName(const core::String& name);
 
 		protected:
 			ProcessExecutor();
@@ -102,8 +103,8 @@ namespace map
 			 * @remark The events will only be invoked if the pipes are NOT(!) shared.*/
 			bool _SharedOutputPipes;
 		private:
-			ProcessExecutor(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			ProcessExecutor(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

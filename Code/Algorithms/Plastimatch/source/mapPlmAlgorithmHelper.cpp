@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Plastimatch/source/mapPlmAlgorithmHelper.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -37,11 +37,13 @@ namespace map
 		{
 
 
-			void saveConfigurationToFile(const ConfigurationType &config, const map::core::String &fileName)
+			void saveConfigurationToFile(const ConfigurationType& config, const map::core::String& fileName)
 			{
 				if (config.size() < 2)
 				{
-					mapDefaultExceptionStaticMacro( << "Cannot save configuration. Config seems to be invalid, containing less then two parts (GLOBAL and one STAGE is mandatory). File path: " << fileName);
+					mapDefaultExceptionStaticMacro( <<
+													"Cannot save configuration. Config seems to be invalid, containing less then two parts (GLOBAL and one STAGE is mandatory). File path: "
+													<< fileName);
 				}
 
 				std::ofstream file;
@@ -51,10 +53,12 @@ namespace map
 
 				if (!file.is_open())
 				{
-					mapDefaultExceptionStaticMacro( << "Cannot open or create parameter map file to save. File path: " << fileName);
+					mapDefaultExceptionStaticMacro( << "Cannot open or create parameter map file to save. File path: "
+													<< fileName);
 				}
 
-				for (ConfigurationType::const_iterator stagePos = config.begin(); stagePos != config.end(); ++stagePos)
+				for (ConfigurationType::const_iterator stagePos = config.begin(); stagePos != config.end();
+					 ++stagePos)
 				{
 					if (stagePos == config.begin())
 					{
@@ -69,7 +73,8 @@ namespace map
 					{
 						file << pos->first << "=";
 
-						for (ParameterValuesType::const_iterator posValues = pos->second.begin(); posValues != pos->second.end(); ++posValues)
+						for (ParameterValuesType::const_iterator posValues = pos->second.begin();
+							 posValues != pos->second.end(); ++posValues)
 						{
 							if (posValues != pos->second.begin())
 							{
@@ -86,7 +91,7 @@ namespace map
 				file.close();
 			};
 
-			ConfigurationType loadConfigurationFromFile(const map::core::String &fileName)
+			ConfigurationType loadConfigurationFromFile(const map::core::String& fileName)
 			{
 				ConfigurationType result;
 				ParameterStageType stage;
@@ -123,7 +128,8 @@ namespace map
 								if (valueTemp.size() != 2)
 								{
 									// there only should be two lines, everything else means more then one '=' thus is strange
-									mapDefaultExceptionStaticMacro( << "ERROR: invalid configuration file. Seems to be more then one '=' per line. Invalid line" << line);
+									mapDefaultExceptionStaticMacro( <<
+																	"ERROR: invalid configuration file. Seems to be more then one '=' per line. Invalid line" << line);
 								}
 
 								ParameterNameType name = valueTemp[0];

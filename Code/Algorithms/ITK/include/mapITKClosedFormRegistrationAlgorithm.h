@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKClosedFormRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -55,15 +55,18 @@ namespace map
 			@ingroup Algorithms
 			*/
 			template < class TMovingPointSet, class TTargetPointSet, class TITKTransform,
-			         class TIdentificationPolicy >
-			class ITKClosedFormRegistrationAlgorithm : public RegistrationAlgorithm<TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>,
-				public PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>,
-				public facet::AnalyticAlgorithmInterface,
-        public TIdentificationPolicy
+					 class TIdentificationPolicy >
+			class ITKClosedFormRegistrationAlgorithm : public
+				RegistrationAlgorithm<TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>,
+			public PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>,
+			public facet::AnalyticAlgorithmInterface,
+			public TIdentificationPolicy
 			{
 			public:
-				typedef ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy> Self;
-				typedef RegistrationAlgorithm<TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>  Superclass;
+				typedef ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>
+				Self;
+				typedef RegistrationAlgorithm<TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>
+				Superclass;
 				typedef TIdentificationPolicy IdentificationPolicyType;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
@@ -82,7 +85,7 @@ namespace map
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
-        mapDefineAlgorithmIdentificationByPolicyMacro;
+				mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				/*! @brief Returns the algorithm type for this registration algorithm
 				@eguarantee strong
@@ -102,8 +105,9 @@ namespace map
 				virtual ~ITKClosedFormRegistrationAlgorithm();
 
 				typedef ::itk::LandmarkBasedTransformInitializer < typename TransformModelType::TransformType,
-				        typename core::discrete::Elements<TTargetPointSet::PointDimension>::InternalImageType,
-				        typename core::discrete::Elements<TMovingPointSet::PointDimension>::InternalImageType >  InternalSolverMethodType;
+						typename core::discrete::Elements<TTargetPointSet::PointDimension>::InternalImageType,
+						typename core::discrete::Elements<TMovingPointSet::PointDimension>::InternalImageType >
+						InternalSolverMethodType;
 
 				/* @reimplemented*/
 				virtual void configureAlgorithm();
@@ -122,7 +126,7 @@ namespace map
 				virtual RegistrationPointer doGetRegistration() const;
 
 				template <typename TPointSet, typename TLandmarks>
-				static void convertPointSetToLandmarks(const TPointSet *pointSet, TLandmarks &lms)
+				static void convertPointSetToLandmarks(const TPointSet* pointSet, TLandmarks& lms)
 				{
 					lms.clear();
 
@@ -148,7 +152,7 @@ namespace map
 				virtual bool registrationIsOutdated() const;
 
 				/*! Methods invoked by derivated classes.  */
-				virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 			private:
 				typename InternalSolverMethodType::Pointer _internalSolver;
@@ -157,8 +161,8 @@ namespace map
 				typename RegistrationType::Pointer _spFinalizedRegistration;
 				typename TransformModelType::Pointer _spTransform;
 
-				ITKClosedFormRegistrationAlgorithm(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKClosedFormRegistrationAlgorithm(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

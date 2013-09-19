@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationManipulator.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __REGISTRATION_MANIPULATOR_H
@@ -43,7 +43,7 @@ namespace map
 			/*! @brief sets the tags of a registration
 			@eguarantee strong
 			*/
-			void setTagValues(const TagMapType &tags)
+			void setTagValues(const TagMapType& tags)
 			{
 				_pBase->setTagValues(tags);
 			};
@@ -51,23 +51,23 @@ namespace map
 			/*! @brief allows non const access to the registration tags.
 			@eguarantee no fail
 			*/
-			TagMapType &getTagValues()
+			TagMapType& getTagValues()
 			{
 				return _pBase->getTagValues();
 			};
 
-			RegistrationBaseManipulator(RegistrationBase *pBase): _pBase(pBase)
+			RegistrationBaseManipulator(RegistrationBase* pBase): _pBase(pBase)
 			{
 				assert(pBase);
 			};
 
 		protected:
-			RegistrationBase *_pBase;
+			RegistrationBase* _pBase;
 
 		private:
 			//No copy constructor allowed
-			RegistrationBaseManipulator(const RegistrationBaseManipulator &source);
-			void operator=(const RegistrationBaseManipulator &); //purposely not implemented
+			RegistrationBaseManipulator(const RegistrationBaseManipulator& source);
+			void operator=(const RegistrationBaseManipulator&);  //purposely not implemented
 		};
 
 		/*! @class RegistrationManipulator
@@ -83,13 +83,13 @@ namespace map
 			  @param pKernel the kernel for direct mapping
 			  @eguarantee no fail
 			 */
-			virtual void setDirectMapping(typename RegistrationType::DirectMappingType *pKernel);
+			virtual void setDirectMapping(typename RegistrationType::DirectMappingType* pKernel);
 
 			/*! sets the InverseMapping kernel
 			  @param pKernel the kernel for inverse mapping
 			  @eguarantee no fail
 			 */
-			virtual void setInverseMapping(typename RegistrationType::InverseMappingType *pKernel);
+			virtual void setInverseMapping(typename RegistrationType::InverseMappingType* pKernel);
 
 			typedef typename RegistrationType::TagMapType TagMapType;
 
@@ -98,22 +98,22 @@ namespace map
 			 * If it is present it stays untouched. If you define your own UID ensure that it is unique.
 			@eguarantee strong
 			*/
-			virtual void setTagValues(const TagMapType &tags);
+			virtual void setTagValues(const TagMapType& tags);
 
 			/*! @brief allows non const access to the registration tags.
 			@eguarantee no fail
 			*/
-			virtual TagMapType &getTagValues();
+			virtual TagMapType& getTagValues();
 
-			RegistrationManipulator(RegistrationType *pI);
+			RegistrationManipulator(RegistrationType* pI);
 
 		protected:
-			RegistrationType *_pInterface;
+			RegistrationType* _pInterface;
 
 		private:
 			//No copy constructor allowed
-			RegistrationManipulator(const RegistrationManipulator &source);
-			void operator=(const RegistrationManipulator &); //purposely not implemented
+			RegistrationManipulator(const RegistrationManipulator& source);
+			void operator=(const RegistrationManipulator&);  //purposely not implemented
 		};
 
 	}

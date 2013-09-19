@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapModelModelKernelCombinatorTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -36,7 +36,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapModelModelKernelCombinatorTest(int argc, char *argv[])
+		int mapModelModelKernelCombinatorTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -55,7 +55,8 @@ namespace map
 			ModelKernelType::RepresentationDescriptorType::SizeType size;
 			size.fill(20);
 
-			ModelKernelType::RepresentationDescriptorType::Pointer spInRep = ModelKernelType::RepresentationDescriptorType::New();
+			ModelKernelType::RepresentationDescriptorType::Pointer spInRep =
+				ModelKernelType::RepresentationDescriptorType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
@@ -93,9 +94,12 @@ namespace map
 			CHECK_EQUAL("ModelModelKernelCombinator<2,2,3>", Combinator4Type::getStaticProviderName());
 			CHECK_EQUAL(CombinatorType::getStaticProviderName(), spCombinator->getProviderName());
 
-			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest1, spInRep), core::ServiceException);
-			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest2, spInRep), core::ServiceException);
-			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest3, spInRep), core::ServiceException);
+			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest1, spInRep),
+								 core::ServiceException);
+			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest2, spInRep),
+								 core::ServiceException);
+			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest3, spInRep),
+								 core::ServiceException);
 
 			// this should not be thrown any more as soon as the ModelModelKernelCombinator has been finished
 			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(request, spInRep), core::ServiceException);

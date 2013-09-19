@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapModelBasedKernelInverterTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -39,7 +39,8 @@ namespace map
 	{
 
 		template< template <typename, unsigned int> class TTransform, class TScalarType, unsigned int VDimensions>
-		class TestNumericTransformModel : public core::ITKUnaryTransformModel<TTransform, TScalarType, VDimensions>
+		class TestNumericTransformModel : public
+			core::ITKUnaryTransformModel<TTransform, TScalarType, VDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
@@ -53,12 +54,13 @@ namespace map
 
 			typedef typename Superclass::ScalarType                       ScalarType;
 
-			virtual bool getInverse(typename Superclass::InverseTransformModelBasePointer &spInverseModel) const
+			virtual bool getInverse(typename Superclass::InverseTransformModelBasePointer& spInverseModel) const
 			{
 				return false;
 			};
 
-			virtual bool getAffineMatrixDecomposition(typename Superclass::MatrixType &matrix, typename Superclass::OutputVectorType &offset) const
+			virtual bool getAffineMatrixDecomposition(typename Superclass::MatrixType& matrix,
+					typename Superclass::OutputVectorType& offset) const
 			{
 				return false;
 			};
@@ -79,7 +81,7 @@ namespace map
 
 		};
 
-		int mapModelBasedKernelInverterTest(int argc, char *argv[])
+		int mapModelBasedKernelInverterTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: Number of iterations
 			//           2: Stop value
@@ -116,8 +118,10 @@ namespace map
 			typedef core::ModelBasedRegistrationKernel<2, 2> InverseKernelType;
 
 			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel IllegalKernelType;
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> > TransformType;
-			typedef TestNumericTransformModel<itk::TranslationTransform, core::continuous::ScalarType, 2> NumericTransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
+			TransformType;
+			typedef TestNumericTransformModel<itk::TranslationTransform, core::continuous::ScalarType, 2>
+			NumericTransformType;
 			typedef core::ModelBasedKernelInverter<2, 2> InverterType;
 			typedef core::ModelBasedKernelInverter<2, 3> Inverter2Type;
 
@@ -140,7 +144,8 @@ namespace map
 			InverseKernelType::RepresentationDescriptorType::SizeType size;
 			size.fill(2);
 
-			InverseKernelType::RepresentationDescriptorType::Pointer spInverseRep = InverseKernelType::RepresentationDescriptorType::New();
+			InverseKernelType::RepresentationDescriptorType::Pointer spInverseRep =
+				InverseKernelType::RepresentationDescriptorType::New();
 			spInverseRep->setSize(size);
 			spInverseRep->setSpacing(spacing);
 			spInverseRep->setOrigin(origin);
@@ -164,7 +169,8 @@ namespace map
 			CHECK_EQUAL("ModelBasedKernelInverter<2,2>", spInverter->getProviderName());
 			CHECK_EQUAL("ModelBasedKernelInverter<2,3>", spInverter2->getProviderName());
 
-			CHECK_THROW_EXPLICIT(spInverter->invertKernel(*(spIllegalKernel.GetPointer()), NULL, NULL), core::ServiceException);
+			CHECK_THROW_EXPLICIT(spInverter->invertKernel(*(spIllegalKernel.GetPointer()), NULL, NULL),
+								 core::ServiceException);
 
 			InverterType::InverseKernelBasePointer spInverseKernel;
 			CHECK_NO_THROW(spInverseKernel = spInverter->invertKernel(*(spKernel.GetPointer()), NULL, NULL));
@@ -172,7 +178,8 @@ namespace map
 			//test if the kernel was really inverted analytically
 
 			CHECK(spInverseKernel.IsNotNull());
-			InverseKernelType *pInverseConcreteKernel = dynamic_cast<InverseKernelType *>(spInverseKernel.GetPointer());
+			InverseKernelType* pInverseConcreteKernel = dynamic_cast<InverseKernelType*>
+					(spInverseKernel.GetPointer());
 			CHECK(NULL != pInverseConcreteKernel);
 
 			//check correct inversion by transform parameters
@@ -182,18 +189,22 @@ namespace map
 			//test if the kernel was really inverted numerically, thus a lazy field kernel was established
 
 			InverterType::InverseKernelBasePointer spInverseNumericKernel;
-			CHECK_THROW_EXPLICIT(spInverseNumericKernel = spInverter->invertKernel(*(spNumericKernel.GetPointer()), NULL, NULL), core::ServiceException);
-			CHECK_NO_THROW(spInverseNumericKernel = spInverter->invertKernel(*(spNumericKernel.GetPointer()), NULL, spInverseRep));
+			CHECK_THROW_EXPLICIT(spInverseNumericKernel = spInverter->invertKernel(*
+								 (spNumericKernel.GetPointer()), NULL, NULL), core::ServiceException);
+			CHECK_NO_THROW(spInverseNumericKernel = spInverter->invertKernel(*(spNumericKernel.GetPointer()),
+													NULL, spInverseRep));
 
 			//test if the kernel was really inverted numerically
 
 			CHECK(spInverseNumericKernel.IsNotNull());
 			typedef core::FieldBasedRegistrationKernel<2, 2> FieldBasedRegistrationKernelType;
-			FieldBasedRegistrationKernelType *pInverseConcreteNumericKernel = dynamic_cast<FieldBasedRegistrationKernelType *>(spInverseNumericKernel.GetPointer());
+			FieldBasedRegistrationKernelType* pInverseConcreteNumericKernel =
+				dynamic_cast<FieldBasedRegistrationKernelType*>(spInverseNumericKernel.GetPointer());
 			CHECK(NULL != pInverseConcreteNumericKernel);
 
 			//check correct inversion
-			lit::TransformFieldTester<FieldBasedRegistrationKernelType::FieldType, NumericTransformType::TransformBaseType> tester;
+			lit::TransformFieldTester<FieldBasedRegistrationKernelType::FieldType, NumericTransformType::TransformBaseType>
+			tester;
 			tester.setReferenceTransform(pInverseConcreteKernel->getTransformModel()->getTransform());
 			tester.setActualField(pInverseConcreteNumericKernel->getField());
 			tester.setCheckThreshold(0.1);

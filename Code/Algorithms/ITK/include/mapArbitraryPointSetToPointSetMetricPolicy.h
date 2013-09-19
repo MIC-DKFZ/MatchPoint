@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapArbitraryPointSetToPointSetMetricPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,28 +50,32 @@ namespace map
 			*/
 
 			template<class TMovingPointSet, class TTargetPointSet>
-			class ArbitraryPointSetToPointSetMetricPolicy : public facet::ITKPointSetToPointSetMetricSetterInterface<TMovingPointSet, TTargetPointSet>,
-				public facet::ITKPointSetToPointSetMetricGetterInterface<TMovingPointSet, TTargetPointSet>
+			class ArbitraryPointSetToPointSetMetricPolicy : public
+				facet::ITKPointSetToPointSetMetricSetterInterface<TMovingPointSet, TTargetPointSet>,
+			public facet::ITKPointSetToPointSetMetricGetterInterface<TMovingPointSet, TTargetPointSet>
 			{
 			public:
 				typedef ArbitraryPointSetToPointSetMetricPolicy<TMovingPointSet, TTargetPointSet>      Self;
-				typedef facet::ITKPointSetToPointSetMetricSetterInterface<TMovingPointSet, TTargetPointSet>   Superclass;
-				itkTypeMacro(ArbitraryPointSetToPointSetMetricPolicy, facet::ITKPointSetToPointSetMetricSetterInterface);
+				typedef facet::ITKPointSetToPointSetMetricSetterInterface<TMovingPointSet, TTargetPointSet>
+				Superclass;
+				itkTypeMacro(ArbitraryPointSetToPointSetMetricPolicy,
+							 facet::ITKPointSetToPointSetMetricSetterInterface);
 
-				typedef ITKPointSetToPointSetMetricControlInterface<TMovingPointSet, TTargetPointSet> MetricControlType;
+				typedef ITKPointSetToPointSetMetricControlInterface<TMovingPointSet, TTargetPointSet>
+				MetricControlType;
 
 				/*! gets the metric controll
 				@eguarantee strong
 				@param pMetric the metric instance
 				*/
-				virtual const MetricControlType *getMetricControl() const;
-				virtual MetricControlType *getMetricControl();
+				virtual const MetricControlType* getMetricControl() const;
+				virtual MetricControlType* getMetricControl();
 
 				/*! sets the metric
 				@eguarantee strong
 				@param pMetric the metric instance
 				*/
-				virtual void setMetricControl(MetricControlType *pMetric);
+				virtual void setMetricControl(MetricControlType* pMetric);
 
 				/*! Returns the modification time of the policy (and its controlled component).
 				 * In this case the modification time is a pass through of the internal component.
@@ -99,8 +103,8 @@ namespace map
 				  @eguarantee strong
 				  @return a pointer to a metric type
 				*/
-				virtual MetricControlType *getMetricInternal();
-				virtual const MetricControlType *getMetricInternal() const;
+				virtual MetricControlType* getMetricInternal();
+				virtual const MetricControlType* getMetricInternal() const;
 
 				/*! initializes the metric
 				  @eguarantee strong
@@ -121,8 +125,8 @@ namespace map
 				mutable core::ModificationTimeValidator _mTime;
 
 				//No copy constructor allowed
-				ArbitraryPointSetToPointSetMetricPolicy(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ArbitraryPointSetToPointSetMetricPolicy(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

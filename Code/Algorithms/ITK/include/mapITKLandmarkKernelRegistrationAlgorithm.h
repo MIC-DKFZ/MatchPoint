@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKLandmarkKernelRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -54,14 +54,16 @@ namespace map
 			@ingroup Algorithms
 			*/
 			template < class TPointSet, class TITKTransform,
-			         class TIdentificationPolicy >
-			class ITKLandmarkKernelRegistrationAlgorithm : public RegistrationAlgorithm<TPointSet::PointDimension, TPointSet::PointDimension>,
-				public PointSetRegistrationAlgorithmBase<TPointSet, TPointSet>,
-        public TIdentificationPolicy,
-				public facet::AnalyticAlgorithmInterface
+					 class TIdentificationPolicy >
+			class ITKLandmarkKernelRegistrationAlgorithm : public
+				RegistrationAlgorithm<TPointSet::PointDimension, TPointSet::PointDimension>,
+			public PointSetRegistrationAlgorithmBase<TPointSet, TPointSet>,
+			public TIdentificationPolicy,
+			public facet::AnalyticAlgorithmInterface
 			{
 			public:
-				typedef ITKLandmarkKernelRegistrationAlgorithm<TPointSet, TITKTransform, TIdentificationPolicy> Self;
+				typedef ITKLandmarkKernelRegistrationAlgorithm<TPointSet, TITKTransform, TIdentificationPolicy>
+				Self;
 				typedef RegistrationAlgorithm<TPointSet::PointDimension, TPointSet::PointDimension>  Superclass;
 				typedef TIdentificationPolicy IdentificationPolicyType;
 
@@ -80,7 +82,7 @@ namespace map
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
-        mapDefineAlgorithmIdentificationByPolicyMacro;
+				mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				/*! @brief Returns the algorithm type for this registration algorithm
 				@eguarantee strong
@@ -149,17 +151,18 @@ namespace map
 				virtual bool registrationIsOutdated() const;
 
 				/*! Methods invoked by derivated classes.  */
-				virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
-				static void convertPointSetToKernelPointSet(const TPointSet *ps, typename TITKTransform::PointSetPointer &kernelPS);
+				static void convertPointSetToKernelPointSet(const TPointSet* ps,
+						typename TITKTransform::PointSetPointer& kernelPS);
 
 			private:
 				/*! Smartpointer to the finalized registration. Will be set by finalizeAlgorithm()*/
 				typename RegistrationType::Pointer _spFinalizedRegistration;
 				typename TransformModelType::Pointer _spTransform;
 
-				ITKLandmarkKernelRegistrationAlgorithm(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKLandmarkKernelRegistrationAlgorithm(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

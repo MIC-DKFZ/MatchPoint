@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/test/mapMetaPropertyAlgorithmBaseTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -56,7 +56,8 @@ namespace map
 
 			CHECK_NO_THROW(spCountInfo = testInterface.getPropertyInfo("Count"));
 			CHECK(spCountInfo.IsNotNull());
-			CHECK("Count" == spCountInfo->getName()); //just ensure that it is realy the right info, correct setting
+			CHECK("Count" ==
+				  spCountInfo->getName()); //just ensure that it is realy the right info, correct setting
 			//and getting of info attributes is tested in MetaPropertInfoTest
 
 			//now the compile methods must have been executed 2 times
@@ -117,9 +118,11 @@ namespace map
 			//test overloaded version: MetaPropertyInfo
 			testInterface.recorder.resetRecorder();
 
-			algorithm::MetaPropertyInfo::Pointer spHoleInfo = algorithm::MetaPropertyInfo::New("BlackHole", typeid(void *), false, true);
+			algorithm::MetaPropertyInfo::Pointer spHoleInfo = algorithm::MetaPropertyInfo::New("BlackHole",
+					typeid(void*), false, true);
 			spUnkownInfo = algorithm::MetaPropertyInfo::New("UnkownProperty", typeid(int));
-			algorithm::MetaPropertyInfo::Pointer spIllegalSizeInfo = algorithm::MetaPropertyInfo::New("Size", typeid(void *), true, true);
+			algorithm::MetaPropertyInfo::Pointer spIllegalSizeInfo = algorithm::MetaPropertyInfo::New("Size",
+					typeid(void*), true, true);
 
 			TestInterfaceType::MetaPropertyPointer spCount;
 
@@ -150,7 +153,8 @@ namespace map
 			//check behaviour in case of illegal property
 			spUnkown = NULL;
 
-			CHECK_THROW_EXPLICIT(spUnkown = testInterface.getProperty(spIllegalSizeInfo), core::ExceptionObject);
+			CHECK_THROW_EXPLICIT(spUnkown = testInterface.getProperty(spIllegalSizeInfo),
+								 core::ExceptionObject);
 
 			//check behaviour in case of illegal property pointer
 			CHECK_THROW_EXPLICIT(spUnkown = testInterface.getProperty(NULL), core::ExceptionObject);
@@ -203,7 +207,8 @@ namespace map
 			CHECK_EQUAL(refTime, testInterface.GetMTime());
 
 			//check behavior in case of property pointer with wrong type
-			core::MetaPropertyBase::Pointer spWrongTypedValue = core::MetaProperty<bool>::New(false).GetPointer();
+			core::MetaPropertyBase::Pointer spWrongTypedValue = core::MetaProperty<bool>::New(
+						false).GetPointer();
 			CHECK_THROW_EXPLICIT(testInterface.setProperty("Size", spWrongTypedValue), core::ExceptionObject);
 			CHECK_EQUAL(5, testInterface.recorder.getRecordValueCount(TestInterfaceType::compileInfosID));
 			CHECK_EQUAL(1, testInterface.recorder.getRecordValueCount(TestInterfaceType::doSetPropertyID));
@@ -211,7 +216,8 @@ namespace map
 
 
 			//test overloaded version: MetaPropertyInfo
-			algorithm::MetaPropertyInfo::Pointer spSizeInfo = algorithm::MetaPropertyInfo::New("Size", typeid(int), true, true);
+			algorithm::MetaPropertyInfo::Pointer spSizeInfo = algorithm::MetaPropertyInfo::New("Size",
+					typeid(int), true, true);
 			spSize = core::MetaProperty<int>::New(21);
 
 			CHECK(testInterface.setProperty(spSizeInfo, spSize));
@@ -220,7 +226,8 @@ namespace map
 			CHECK(refTime < testInterface.GetMTime());
 			refTime = testInterface.GetMTime();
 
-			CHECK_EQUAL(testInt, testInterface._size); //it is not changed because it is currently stored in the cache
+			CHECK_EQUAL(testInt,
+						testInterface._size); //it is not changed because it is currently stored in the cache
 
 			CHECK_NO_THROW(spCachedSize = testInterface.getProperty("Size"));
 			CHECK(core::unwrapMetaProperty(spCachedSize, testCachedInt));

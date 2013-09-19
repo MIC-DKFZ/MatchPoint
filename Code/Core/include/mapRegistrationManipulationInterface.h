@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationManipulationInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __REGISTRATION_MANIPULATION_INTERFACE_H
@@ -56,17 +56,17 @@ namespace map
 			/*! @brief sets the tags of a registration
 			@eguarantee strong
 			*/
-			virtual void setTagValues(const TagMapType &tags) = 0;
+			virtual void setTagValues(const TagMapType& tags) = 0;
 
 			/*! @brief allows non const access to the registration tags.
 			@eguarantee no fail
 			*/
-			virtual TagMapType &getTagValues() = 0;
+			virtual TagMapType& getTagValues() = 0;
 
 		private:
 			//No copy constructor allowed
-			RegistrationBaseManipulationInterface(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			RegistrationBaseManipulationInterface(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 
@@ -101,18 +101,18 @@ namespace map
 			@param pKernel the kernel for direct mapping
 			@eguarantee no fail
 			*/
-			virtual void setDirectMapping(DirectMappingType *pKernel) = 0;
+			virtual void setDirectMapping(DirectMappingType* pKernel) = 0;
 
 			/*! sets the InverseMapping kernel
 			@param pKernel the kernel for inverse mapping
 			@eguarantee no fail
 			*/
-			virtual void setInverseMapping(InverseMappingType *pKernel) = 0;
+			virtual void setInverseMapping(InverseMappingType* pKernel) = 0;
 
 		private:
 			//No copy constructor allowed
-			RegistrationManipulationInterface(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			RegistrationManipulationInterface(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

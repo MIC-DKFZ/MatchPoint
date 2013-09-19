@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapFieldBasedKernelInverterTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -38,7 +38,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapFieldBasedKernelInverterTest(int argc, char *argv[])
+		int mapFieldBasedKernelInverterTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: Number of iterations
 			//           2: Stop value
@@ -76,7 +76,8 @@ namespace map
 
 			typedef core::ModelBasedRegistrationKernel<2, 2> IllegalKernelType;
 
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> > TransformType;
+			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
+			TransformType;
 
 			typedef core::FieldBasedKernelInverter<2, 2> InverterType;
 			typedef core::FieldBasedKernelInverter<2, 3> Inverter2Type;
@@ -96,7 +97,8 @@ namespace map
 			params.fill(0.3);
 			spModel->getTransform()->SetParameters(params);
 
-			ModelFunctorType::InFieldRepresentationType::Pointer spInRep = ModelFunctorType::InFieldRepresentationType::New();
+			ModelFunctorType::InFieldRepresentationType::Pointer spInRep =
+				ModelFunctorType::InFieldRepresentationType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
@@ -133,17 +135,20 @@ namespace map
 			CHECK_EQUAL("FieldBasedKernelInverter<2,2>", spInverter->getProviderName());
 			CHECK_EQUAL("FieldBasedKernelInverter<2,3>", spInverter2->getProviderName());
 
-			CHECK_THROW_EXPLICIT(spInverter->invertKernel(*(spIllegalKernel.GetPointer()), NULL, NULL), core::ServiceException);
+			CHECK_THROW_EXPLICIT(spInverter->invertKernel(*(spIllegalKernel.GetPointer()), NULL, NULL),
+								 core::ServiceException);
 
 			InverterType::InverseKernelBasePointer spInverseKernel;
-			CHECK_THROW_EXPLICIT(spInverter->invertKernel(*(spKernel.GetPointer()), NULL, NULL), core::ServiceException);
+			CHECK_THROW_EXPLICIT(spInverter->invertKernel(*(spKernel.GetPointer()), NULL, NULL),
+								 core::ServiceException);
 			CHECK_NO_THROW(spInverseKernel = spInverter->invertKernel(*(spKernel.GetPointer()), NULL, spInRep));
 
 			//check correct inversion
 			typedef core::FieldBasedRegistrationKernel<2, 2> FieldBasedRegistrationKernelType;
 			typedef FieldBasedRegistrationKernelType::FieldType::RegionType TestRegionType;
 
-			FieldBasedRegistrationKernelType *pInverseConcreteKernel = dynamic_cast<FieldBasedRegistrationKernelType *>(spInverseKernel.GetPointer());
+			FieldBasedRegistrationKernelType* pInverseConcreteKernel =
+				dynamic_cast<FieldBasedRegistrationKernelType*>(spInverseKernel.GetPointer());
 
 			//define test region
 			TestRegionType::IndexType testIndex;
@@ -152,7 +157,8 @@ namespace map
 			testSize.Fill(38);
 			TestRegionType testRegion(testIndex, testSize);
 
-			lit::TransformFieldTester<FieldBasedRegistrationKernelType::FieldType, TransformType::InverseTransformBaseType> tester;
+			lit::TransformFieldTester<FieldBasedRegistrationKernelType::FieldType, TransformType::InverseTransformBaseType>
+			tester;
 			tester.setReferenceTransform(spInverseModel->getTransform());
 			tester.setActualField(pInverseConcreteKernel->getField());
 			tester.setTestRegion(testRegion);

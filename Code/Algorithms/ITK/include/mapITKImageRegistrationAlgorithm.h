@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKImageRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -60,28 +60,33 @@ namespace map
 			@ingroup ITK
 			*/
 			template < class TMovingImage, class TTargetImage,
-			         class TIdentificationPolicy,
-			         class TInterpolatorPolicy = ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
-			         class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
-			         class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,
-			         class TTransformPolicy = ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-			         class TInternalRegistrationMethod = ::itk::ImageRegistrationMethod<TTargetImage, TMovingImage> >
-			class ITKImageRegistrationAlgorithm : public IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-				public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
-				public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-				public MetaPropertyAlgorithmBase,
-				public ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType>,
-				public TIdentificationPolicy,
-        public TInterpolatorPolicy,
-				public TMetricPolicy,
-				public TOptimizerPolicy,
-				public TTransformPolicy
+					 class TIdentificationPolicy,
+					 class TInterpolatorPolicy = ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
+					 class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
+					 class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,
+					 class TTransformPolicy =
+					 ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+					 class TInternalRegistrationMethod = ::itk::ImageRegistrationMethod<TTargetImage, TMovingImage> >
+			class ITKImageRegistrationAlgorithm : public
+				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+			public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
+			public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+			public MetaPropertyAlgorithmBase,
+			public ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType>,
+			public TIdentificationPolicy,
+			public TInterpolatorPolicy,
+			public TMetricPolicy,
+			public TOptimizerPolicy,
+			public TTransformPolicy
 			{
 			public:
-				typedef ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy,
-				        TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod > Self;
-				typedef IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>  Superclass;
-				typedef ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType> ITKRegistrationType;
+				typedef ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
+						TInterpolatorPolicy, TMetricPolicy,
+						TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod > Self;
+				typedef IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>
+				Superclass;
+				typedef ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType>
+				ITKRegistrationType;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -102,13 +107,18 @@ namespace map
 				typedef typename ITKRegistrationType::TransformBaseType TransformBaseType;
 				typedef typename ITKRegistrationType::InterpolatorBaseType InterpolatorBaseType;
 
-				typedef typename IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType OptimizerMeasureType;
-				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage> ImageRegistrationAlgorithmBaseType;
+				typedef typename
+				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType
+				OptimizerMeasureType;
+				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
+				ImageRegistrationAlgorithmBaseType;
 
 				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageType TargetImageType;
 				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageType MovingImageType;
-				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer MovingImageConstPointer;
-				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer TargetImageConstPointer;
+				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer
+				MovingImageConstPointer;
+				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
+				TargetImageConstPointer;
 
 				typedef typename Superclass::MovingRepresentationDescriptorType MovingRepresentationDescriptorType;
 				typedef typename Superclass::TargetRepresentationDescriptorType TargetRepresentationDescriptorType;
@@ -168,13 +178,13 @@ namespace map
 				// MetaPropertyAlgorithmBase
 
 				/*! @reimplemented*/
-				virtual void compileInfos(MetaPropertyVectorType &infos) const;
+				virtual void compileInfos(MetaPropertyVectorType& infos) const;
 
 				/*! @reimplemented*/
-				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const;
+				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
 
 				/*! @reimplemented*/
-				virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
+				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
 
 				// IterativeRegistrationAlgorithmInterface
 
@@ -187,8 +197,9 @@ namespace map
 				@retval a Registration object
 				@sa Registration
 				*/
-				virtual InterimRegistrationPointer determineInterimRegistration(const MovingRepresentationDescriptorType *pMovingRepresentation,
-				                                                                const TargetRepresentationDescriptorType *pTargetRepresentation) const;
+				virtual InterimRegistrationPointer determineInterimRegistration(const
+						MovingRepresentationDescriptorType* pMovingRepresentation,
+						const TargetRepresentationDescriptorType* pTargetRepresentation) const;
 
 				/*!
 				* Returns the final registration
@@ -285,7 +296,8 @@ namespace map
 				*/
 				virtual void finalizeAlgorithm();
 
-				typedef typename TransformPolicyType::TransformType::TransformBaseType::ParametersType TransformParametersType;
+				typedef typename TransformPolicyType::TransformType::TransformBaseType::ParametersType
+				TransformParametersType;
 
 				/*! Gets the member variable _currentTransformParameters secured via _currentIterationLock.
 				@return Copy of the current transform parameters.
@@ -295,7 +307,7 @@ namespace map
 				/*! Sets the member variable _currentTransformParameters secured via _currentIterationLock.
 				@param [in] Reference to the new current parameters.
 				*/
-				void setCurrentTransformParameters(const TransformParametersType &param);
+				void setCurrentTransformParameters(const TransformParametersType& param);
 
 				/*! return the optimizer value(s) of the current iteration step.
 				Will be called by getCurrentOptimizerValue() if hasCurrentValue() returns true.
@@ -305,7 +317,7 @@ namespace map
 				virtual OptimizerMeasureType doGetCurrentOptimizerValue() const;
 
 				/*! Methods invoked by derivated classes.  */
-				virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+				virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 				/*! @eguarantee strong*/
 				virtual IterationCountType doGetCurrentIteration() const;
@@ -317,7 +329,7 @@ namespace map
 				virtual IterationCountType doGetMaxIterations() const;
 
 				/*! Offers access to the internal registration method */
-				InternalRegistrationMethodType &getInternalRegistrationMethod();
+				InternalRegistrationMethodType& getInternalRegistrationMethod();
 
 				/*!Pointer to the moving image used by the algorithm internally. This is used to allow the algorithm
 				* or its derived classes to modify the moving image with out changing the public moving image pointer.
@@ -359,37 +371,37 @@ namespace map
 				mutable core::ObserverSentinel::Pointer _onGeneralTransformObserver;
 
 				/*! This member function is called by the observer of the optimizer, when ever a IterationEvent is invoked.*/
-				void onIterationEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onIterationEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the observer of the optimizer for all kind of events. It serves as a pass through.*/
-				void onGeneralOptimizerEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onGeneralOptimizerEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the observer of the metric for all kind of events. It serves as a pass through.*/
-				void onGeneralMetricEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onGeneralMetricEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the observer of the interpolator for all kind of events. It serves as a pass through.*/
-				void onGeneralInterpolatorEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onGeneralInterpolatorEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the observer of the transform for all kind of events. It serves as a pass through.*/
-				void onGeneralTransformEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onGeneralTransformEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the observer of the transform for all kind of events. It serves as a pass through.*/
-				void onGeneralRegistrationMethodEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				void onGeneralRegistrationMethodEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the optimizer policy if the optimizer instance changes.*/
-				void onOptimizerChange(const ::itk::EventObject &eventObject);
+				void onOptimizerChange(const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the metric policy if the metric instance changes.*/
-				void onMetricChange(const ::itk::EventObject &eventObject);
+				void onMetricChange(const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the interpolator policy if the interpolator instance changes.*/
-				void onInterpolatorChange(const ::itk::EventObject &eventObject);
+				void onInterpolatorChange(const ::itk::EventObject& eventObject);
 
 				/*! This member function is called by the transform policy if the transform model instance changes.*/
-				void onTransformChange(const ::itk::EventObject &eventObject);
+				void onTransformChange(const ::itk::EventObject& eventObject);
 
-				ITKImageRegistrationAlgorithm(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKImageRegistrationAlgorithm(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

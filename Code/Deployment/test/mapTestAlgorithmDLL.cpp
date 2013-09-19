@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/test/mapTestAlgorithmDLL.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 /*! @file
@@ -31,9 +31,11 @@
 #include "mapDummyImageRegistrationAlgorithm.h"
 #include "mapConfigure.h"
 
-mapGenerateAlgorithmUIDPolicyMacro(TestAlgorithmDLLPolicy, "de.dkfz.matchpoint", "TestAlgorithm", "1.0.0", "testprofile");
+mapGenerateAlgorithmUIDPolicyMacro(TestAlgorithmDLLPolicy, "de.dkfz.matchpoint", "TestAlgorithm",
+								   "1.0.0", "testprofile");
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, TestAlgorithmDLLPolicy> AlgorithmType;
+typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, TestAlgorithmDLLPolicy>
+AlgorithmType;
 
 mapDeployAlgorithmMacro(AlgorithmType);

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldByFileLoadFunctor.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FIELD_BY_FILE_LOAD_FUNCTOR_TPP
@@ -55,18 +55,21 @@ namespace map
 					spField = spFieldReader->GetOutput();
 					spFieldReader->Update();
 				}
-				catch (itk::ExceptionObject &e)
+				catch (itk::ExceptionObject& e)
 				{
-					e.SetDescription(String("Error in FieldByFileLoadFunctor while loading field. Description: ") + e.GetDescription());
+					e.SetDescription(String("Error in FieldByFileLoadFunctor while loading field. Description: ") +
+									 e.GetDescription());
 					throw;
 				}
-				catch (const std::exception &e)
+				catch (const std::exception& e)
 				{
-					mapDefaultExceptionMacro( << "Error in FieldByFileLoadFunctor while loading field. Description: " << e.what());
+					mapDefaultExceptionMacro( << "Error in FieldByFileLoadFunctor while loading field. Description: " <<
+											  e.what());
 				}
 				catch (...)
 				{
-					mapDefaultExceptionMacro( << "Unknown error in FieldByFileLoadFunctor while loading field. File name: " << _filePath);
+					mapDefaultExceptionMacro( <<
+											  "Unknown error in FieldByFileLoadFunctor while loading field. File name: " << _filePath);
 				}
 
 				/**@TODO Have to add check of the field representation (the specified one and the one set
@@ -77,7 +80,7 @@ namespace map
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			const String &
+			const String&
 			FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::
 			getFieldFilePath(void) const
 			{
@@ -87,8 +90,8 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			typename FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::Pointer
 			FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::
-			New(const String &filepath,
-			    const InFieldRepresentationType *pInFieldRepresentation)
+			New(const String& filepath,
+				const InFieldRepresentationType* pInFieldRepresentation)
 			{
 				Pointer spFieldByFileLoadFunctor = new Self(filepath, pInFieldRepresentation);
 				spFieldByFileLoadFunctor->UnRegister();
@@ -107,8 +110,8 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::
-			FieldByFileLoadFunctor(const String &filepath,
-			                       const InFieldRepresentationType *pInFieldRepresentation):
+			FieldByFileLoadFunctor(const String& filepath,
+								   const InFieldRepresentationType* pInFieldRepresentation):
 				Superclass(pInFieldRepresentation), _filePath(filepath)
 			{
 			}
@@ -120,7 +123,7 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			void
 			FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::
-			PrintSelf(std::ostream &os, itk::Indent indent) const
+			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);
 				os << indent << "File path: " << _filePath << std::endl;
@@ -131,7 +134,7 @@ namespace map
 
 		template <unsigned int VDimensions>
 		typename FieldRepresentationDescriptor<VDimensions>::Pointer
-		createFieldRepresentationOfMetaImageFile(const String &filePath)
+		createFieldRepresentationOfMetaImageFile(const String& filePath)
 		{
 			if (filePath.empty())
 			{
@@ -139,7 +142,9 @@ namespace map
 
 			if (! itksys::SystemTools::FileExists(filePath.c_str()))
 			{
-				mapExceptionStaticMacro(::itk::ImageFileReaderException, << "The file doesn't exist. Cannot create field description." << std::endl << "Filename = " << filePath);
+				mapExceptionStaticMacro(::itk::ImageFileReaderException,
+										<< "The file doesn't exist. Cannot create field description." << std::endl << "Filename = " <<
+										filePath);
 			}
 
 			::itk::MetaImageIO::Pointer spImageIO = ::itk::MetaImageIO::New();
@@ -150,7 +155,9 @@ namespace map
 
 			if (numberOfDimensionsIO != VDimensions)
 			{
-				mapExceptionStaticMacro(DimRepresentationException, << "Cannot create field description. Invalid dimensionality. Dimension of meta image: " << numberOfDimensionsIO << "; expected Dimension: " << VDimensions);
+				mapExceptionStaticMacro(DimRepresentationException,
+										<< "Cannot create field description. Invalid dimensionality. Dimension of meta image: " <<
+										numberOfDimensionsIO << "; expected Dimension: " << VDimensions);
 			}
 
 			typedef FieldRepresentationDescriptor<VDimensions> FRDType;
@@ -163,7 +170,8 @@ namespace map
 			for (unsigned int i = 0; i < VDimensions; i++)
 			{
 				fieldSpacing[i] = spImageIO->GetSpacing(i);
-				fieldSize[i] =  static_cast<typename FRDType::SizeType::SizeValueType>(spImageIO->GetDimensions(i) * fieldSpacing[i]);
+				fieldSize[i] =  static_cast<typename FRDType::SizeType::SizeValueType>(spImageIO->GetDimensions(
+									i) * fieldSpacing[i]);
 				origin[i]  = spImageIO->GetOrigin(i);
 
 				// Please note: direction cosines are stored as columns of the

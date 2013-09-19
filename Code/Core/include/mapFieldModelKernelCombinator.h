@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapFieldModelKernelCombinator.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_FIELD_MODEL_KERNEL_COMBINATOR_H
@@ -40,12 +40,14 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the second kernel.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		class FieldModelKernelCombinator : public RegistrationKernelCombinatorBase< VInputDimensions, VInterimDimensions, VOutputDimensions >
+		class FieldModelKernelCombinator : public
+			RegistrationKernelCombinatorBase< VInputDimensions, VInterimDimensions, VOutputDimensions >
 		{
 		public:
 			/*! Standard class typedefs. */
 			typedef FieldModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >  Self;
-			typedef RegistrationKernelCombinatorBase< VInputDimensions, VInterimDimensions, VOutputDimensions >	 Superclass;
+			typedef RegistrationKernelCombinatorBase< VInputDimensions, VInterimDimensions, VOutputDimensions >
+			Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
@@ -88,17 +90,17 @@ namespace map
 				 * representation of the second kernel.
 			* @pre pInputFieldRepresentation must be set and not NULL.
 				 */
-			virtual CombinedKernelBasePointer combineKernels(const RequestType &request,
-			                                                 const InputFieldRepresentationType *pInputFieldRepresentation,
-			                                                 bool usePadding = false,
-			                                                 const PaddingVectorType &paddingVector = PaddingVectorType(0.0)) const;
+			virtual CombinedKernelBasePointer combineKernels(const RequestType& request,
+					const InputFieldRepresentationType* pInputFieldRepresentation,
+					bool usePadding = false,
+					const PaddingVectorType& paddingVector = PaddingVectorType(0.0)) const;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request.
 			 * @return Indicates if the provider offers the right solution.
 			 * @retval true Provider can handle the request.
 			 * @retval false Provider is not able to handle the request.*/
-			virtual bool canHandleRequest(const RequestType &request) const;
+			virtual bool canHandleRequest(const RequestType& request) const;
 
 			/*! Returns an ID of the provider as string. Calls getStaticProviderName().
 			 * @return Service provider ID.*/
@@ -119,8 +121,8 @@ namespace map
 			virtual ~FieldModelKernelCombinator() {};
 
 		private:
-			FieldModelKernelCombinator(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			FieldModelKernelCombinator(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} // end namespace core

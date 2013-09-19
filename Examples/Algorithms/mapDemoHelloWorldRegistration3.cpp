@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Examples/Algorithms/mapDemoHelloWorldRegistration3.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 /*!@file
@@ -63,7 +63,7 @@
 #include "mapPointSetMappingTask.h"
 #include "mapMappingTaskBatch.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	//Parts of the code that are simelar to
 	//demoHelloWorldRegistration2.cpp have
@@ -122,8 +122,10 @@ int main(int argc, char *argv[])
 	//define mapping tasks
 	std::cout << "Define mapping tasks..." << std::endl;
 
-	typedef map::core::ImageMappingTask<AlgorithmType::RegistrationType, ImageType, ImageType> ImageMappingTaskType;
-	typedef map::core::PointSetMappingTask<AlgorithmType::RegistrationType, LandmarksType, LandmarksType> PointSetMappingTaskType;
+	typedef map::core::ImageMappingTask<AlgorithmType::RegistrationType, ImageType, ImageType>
+	ImageMappingTaskType;
+	typedef map::core::PointSetMappingTask<AlgorithmType::RegistrationType, LandmarksType, LandmarksType>
+	PointSetMappingTaskType;
 
 	ImageMappingTaskType::Pointer spImageTask = ImageMappingTaskType::New();
 	spImageTask->setInputImage(globals.spMovingImage);

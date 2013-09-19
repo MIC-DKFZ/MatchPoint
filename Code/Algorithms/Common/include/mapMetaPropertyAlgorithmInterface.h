@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapMetaPropertyAlgorithmInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -67,7 +67,7 @@ namespace map
 				if the passed property name is unkown.
 				@retval NULL-pointer Property is unknown
 				*/
-				virtual MetaPropertyInfo::Pointer getPropertyInfo(const MetaPropertyNameType &name) const = 0;
+				virtual MetaPropertyInfo::Pointer getPropertyInfo(const MetaPropertyNameType& name) const = 0;
 
 				/*! Returns a vector with smart pointer to MetaPropertyInfos for all known and therefor supported
 				* properties.
@@ -85,7 +85,7 @@ namespace map
 				* unkown, not readable or not supported the returned smart pointer will point to NULL.
 				* @param name Name that identifies the wanted property.
 				*/
-				virtual MetaPropertyPointer getProperty(const MetaPropertyNameType &name) const = 0;
+				virtual MetaPropertyPointer getProperty(const MetaPropertyNameType& name) const = 0;
 
 				/*! Returns a smart pointer to the MetaProperty identified by the passed name.
 				* @remark Implement doGetProperty() to realize the handling and forwarding of properties
@@ -98,7 +98,7 @@ namespace map
 				* will be raised.
 				* @overload
 				*/
-				virtual MetaPropertyPointer getProperty(const MetaPropertyInfo *pInfo) const = 0;
+				virtual MetaPropertyPointer getProperty(const MetaPropertyInfo* pInfo) const = 0;
 
 				/*! Allows the transfering and setting of instance properties via this generic interface.
 				* @remark Implement doSetProperty() to realize the handling of passed new property values.
@@ -109,7 +109,7 @@ namespace map
 				* @remark The function may raise exceptions. It depends on the implementation of the class setters
 				* that will be used to finally integrate the passed and unwrapped property value into the instance.
 				*/
-				virtual bool setProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty) = 0;
+				virtual bool setProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty) = 0;
 
 				/*! Allows the transfering and setting of instance properties via this generic interface.
 				* @remark Implement doSetProperty() to realize the handling of passed new property values.
@@ -124,7 +124,7 @@ namespace map
 				* will be raised.
 				* @overload
 				*/
-				virtual bool setProperty(const MetaPropertyInfo *pInfo, const MetaPropertyType *pProperty) = 0;
+				virtual bool setProperty(const MetaPropertyInfo* pInfo, const MetaPropertyType* pProperty) = 0;
 
 			protected:
 				MetaPropertyAlgorithmInterface() {};
@@ -132,8 +132,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				MetaPropertyAlgorithmInterface(const Self &source); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				MetaPropertyAlgorithmInterface(const Self& source); //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 		}

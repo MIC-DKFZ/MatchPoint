@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapSDExceptions.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -37,11 +37,13 @@ namespace map
 		{};
 
 		MissingIdentifierException::
-		MissingIdentifierException(const String &file, unsigned int lineNumber) : Superclass(file, lineNumber)
+		MissingIdentifierException(const String& file, unsigned int lineNumber) : Superclass(file,
+					lineNumber)
 		{}  ;
 
 		MissingIdentifierException::
-		MissingIdentifierException(const String &file, unsigned int lineNumber, const String &desc, const String &loc) : Superclass(file, lineNumber, desc, loc)
+		MissingIdentifierException(const String& file, unsigned int lineNumber, const String& desc,
+								   const String& loc) : Superclass(file, lineNumber, desc, loc)
 		{};
 
 		MissingIdentifierException::
@@ -50,15 +52,16 @@ namespace map
 
 
 
-		MissingIdentifierException::BaseExceptionType *
+		MissingIdentifierException::BaseExceptionType*
 		MissingIdentifierException::
 		clone() const throw()
 		{
-			BaseExceptionType *pResult = 0;
+			BaseExceptionType* pResult = 0;
 
 			try
 			{
-				pResult = new MissingIdentifierException(this->GetFile() , this->GetLine() , this->GetDescription() , this->GetLocation());
+				pResult = new MissingIdentifierException(this->GetFile() , this->GetLine() ,
+						this->GetDescription() , this->GetLocation());
 			}
 			catch (...)
 			{
@@ -68,7 +71,7 @@ namespace map
 			return pResult;
 		};
 
-		std::ostream &operator<<(std::ostream &os, const MissingIdentifierException &exception)
+		std::ostream& operator<<(std::ostream& os, const MissingIdentifierException& exception)
 		{
 			exception.Print(os);
 			return os;
@@ -83,11 +86,12 @@ namespace map
 		{};
 
 		OutOfRangeException::
-		OutOfRangeException(const String &file, unsigned int lineNumber) : Superclass(file, lineNumber)
+		OutOfRangeException(const String& file, unsigned int lineNumber) : Superclass(file, lineNumber)
 		{}  ;
 
 		OutOfRangeException::
-		OutOfRangeException(const String &file, unsigned int lineNumber, const String &desc, const String &loc) : Superclass(file, lineNumber, desc, loc)
+		OutOfRangeException(const String& file, unsigned int lineNumber, const String& desc,
+							const String& loc) : Superclass(file, lineNumber, desc, loc)
 		{};
 
 		OutOfRangeException::
@@ -96,15 +100,16 @@ namespace map
 
 
 
-		OutOfRangeException::BaseExceptionType *
+		OutOfRangeException::BaseExceptionType*
 		OutOfRangeException::
 		clone() const throw()
 		{
-			BaseExceptionType *pResult = 0;
+			BaseExceptionType* pResult = 0;
 
 			try
 			{
-				pResult = new OutOfRangeException(this->GetFile() , this->GetLine() , this->GetDescription() , this->GetLocation());
+				pResult = new OutOfRangeException(this->GetFile() , this->GetLine() , this->GetDescription() ,
+												  this->GetLocation());
 			}
 			catch (...)
 			{
@@ -114,7 +119,7 @@ namespace map
 			return pResult;
 		};
 
-		std::ostream &operator<<(std::ostream &os, const OutOfRangeException &exception)
+		std::ostream& operator<<(std::ostream& os, const OutOfRangeException& exception)
 		{
 			exception.Print(os);
 			return os;
@@ -129,11 +134,12 @@ namespace map
 		{};
 
 		SDStreamingException::
-		SDStreamingException(const String &file, unsigned int lineNumber) : Superclass(file, lineNumber)
+		SDStreamingException(const String& file, unsigned int lineNumber) : Superclass(file, lineNumber)
 		{}  ;
 
 		SDStreamingException::
-		SDStreamingException(const String &file, unsigned int lineNumber, const String &desc, const String &loc) : Superclass(file, lineNumber, desc, loc)
+		SDStreamingException(const String& file, unsigned int lineNumber, const String& desc,
+							 const String& loc) : Superclass(file, lineNumber, desc, loc)
 		{};
 
 		SDStreamingException::
@@ -142,15 +148,16 @@ namespace map
 
 
 
-		SDStreamingException::BaseExceptionType *
+		SDStreamingException::BaseExceptionType*
 		SDStreamingException::
 		clone() const throw()
 		{
-			BaseExceptionType *pResult = 0;
+			BaseExceptionType* pResult = 0;
 
 			try
 			{
-				pResult = new SDStreamingException(this->GetFile() , this->GetLine() , this->GetDescription() , this->GetLocation());
+				pResult = new SDStreamingException(this->GetFile() , this->GetLine() , this->GetDescription() ,
+												   this->GetLocation());
 			}
 			catch (...)
 			{
@@ -160,7 +167,7 @@ namespace map
 			return pResult;
 		};
 
-		std::ostream &operator<<(std::ostream &os, const SDStreamingException &exception)
+		std::ostream& operator<<(std::ostream& os, const SDStreamingException& exception)
 		{
 			exception.Print(os);
 			return os;

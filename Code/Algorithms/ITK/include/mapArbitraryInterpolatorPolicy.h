@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapArbitraryInterpolatorPolicy.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -50,8 +50,9 @@ namespace map
 			*/
 
 			template<class TInputImage, class TCoordRep = core::continuous::ScalarType>
-			class ArbitraryInterpolatorPolicy : public facet::ITKInterpolatorSetterInterface<TInputImage, TCoordRep>,
-				public facet::ITKInterpolatorGetterInterface<TInputImage, TCoordRep>
+			class ArbitraryInterpolatorPolicy : public
+				facet::ITKInterpolatorSetterInterface<TInputImage, TCoordRep>,
+			public facet::ITKInterpolatorGetterInterface<TInputImage, TCoordRep>
 			{
 			public:
 				typedef ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>      Self;
@@ -66,14 +67,14 @@ namespace map
 				@eguarantee strong
 				@param pInterpolator the interpolator
 				*/
-				virtual void setInterpolator(InterpolatorType *pInterpolator);
+				virtual void setInterpolator(InterpolatorType* pInterpolator);
 
 				/*! gets the interpolator
 				@eguarantee strong
 				@return a pointer to the interpolator
 				*/
-				virtual InterpolatorType *getInterpolator();
-				virtual const InterpolatorType *getInterpolator() const;
+				virtual InterpolatorType* getInterpolator();
+				virtual const InterpolatorType* getInterpolator() const;
 
 				/*! Returns the modification time of the policy (and its controlled component).
 				 * In this case the modification time is a pass through of the internal component.
@@ -101,8 +102,8 @@ namespace map
 				@eguarantee strong
 				@return a pointer to an interpolator type
 				*/
-				virtual InterpolatorType *getInterpolatorInternal();
-				virtual const InterpolatorType *getInterpolatorInternal() const;
+				virtual InterpolatorType* getInterpolatorInternal();
+				virtual const InterpolatorType* getInterpolatorInternal() const;
 
 				/*! initializes the interpolator
 				@eguarantee strong
@@ -123,8 +124,8 @@ namespace map
 				mutable core::ModificationTimeValidator _mTime;
 
 				//No copy constructor allowed
-				ArbitraryInterpolatorPolicy(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ArbitraryInterpolatorPolicy(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 
 		}

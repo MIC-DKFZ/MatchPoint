@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapEvents.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,28 +45,28 @@ namespace map
 		public:
 			typedef EventObject Self;
 			typedef itk::AnyEvent Superclass;
-			EventObject(void *pData = NULL, const std::string &comment = "");
+			EventObject(void* pData = NULL, const std::string& comment = "");
 
 			virtual ~EventObject();
 
-			void *getData() const;
+			void* getData() const;
 
-			const std::string &getComment() const;
+			const std::string& getComment() const;
 
-			virtual const char *GetEventName() const;
+			virtual const char* GetEventName() const;
 
-			virtual bool CheckEvent(const ::itk::EventObject *e) const;
+			virtual bool CheckEvent(const ::itk::EventObject* e) const;
 
-			virtual ::itk::EventObject *MakeObject() const;
+			virtual ::itk::EventObject* MakeObject() const;
 
-			EventObject(const Self &s);
+			EventObject(const Self& s);
 
-			virtual void Print(std::ostream &os) const;
+			virtual void Print(std::ostream& os) const;
 
 		private:
-			void *_pData;
+			void* _pData;
 			std::string _comment;
-			void operator=(const Self &);
+			void operator=(const Self&);
 		};
 
 		/*! @def mapEventMacro

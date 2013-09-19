@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Plastimatch/deployed/mapPlmBSplineCLI2DRegistration.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #include "mapDeploymentDLLHelper.h"
@@ -28,6 +28,7 @@
 #include "PlmBSplineCLI2DRegistration_ProfileResource.h"
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::boxed::PlmBSplineCLIRegistrationAlgorithm<ImageType, ImageType, map::algorithm::PlmBSplineCLI2DRegistrationUIDPolicy> AlgorithmType;
+typedef map::algorithm::boxed::PlmBSplineCLIRegistrationAlgorithm<ImageType, ImageType, map::algorithm::PlmBSplineCLI2DRegistrationUIDPolicy>
+AlgorithmType;
 
 mapDeployAlgorithmMacro(AlgorithmType);

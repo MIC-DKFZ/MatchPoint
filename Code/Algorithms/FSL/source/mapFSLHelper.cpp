@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4910 $ (last changed revision)
-// @date    $Date: 2013-07-30 14:08:21 +0200 (Di, 30 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/FSL/include/mapFSLRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -34,7 +34,8 @@ namespace map
 		{
 			MatrixConverter<3>::MatrixType
 			MatrixConverter<3>::
-			convertFSLToRAS(const MatrixType &fslMatrix, const DescriptorType *targetDesc, const DescriptorType *movingDesc)
+			convertFSLToRAS(const MatrixType& fslMatrix, const DescriptorType* targetDesc,
+							const DescriptorType* movingDesc)
 			{
 				MatrixType tSpacing, mSpacing, tSwap, mSwap, tRSAMatrix, mRSAMatrix, result;
 
@@ -70,16 +71,16 @@ namespace map
 				}
 
 				result =
-				    mRSAMatrix * vnl_inverse(mSpacing) * mSwap *
-				    vnl_inverse(fslMatrix) *
-				    tSwap * tSpacing * vnl_inverse(tRSAMatrix);
+					mRSAMatrix * vnl_inverse(mSpacing) * mSwap *
+					vnl_inverse(fslMatrix) *
+					tSwap * tSpacing * vnl_inverse(tRSAMatrix);
 
 				return result;
 			}
 
 			MatrixConverter<3>::MatrixType
 			MatrixConverter<3>::
-			convertRASToITKTrans(const MatrixType &rsaMatrix)
+			convertRASToITKTrans(const MatrixType& rsaMatrix)
 			{
 				// Get the current matrix
 				MatrixType result = rsaMatrix;
@@ -98,7 +99,8 @@ namespace map
 
 			MatrixConverter<2>::MatrixType
 			MatrixConverter<2>::
-			convertFSLToRAS(const MatrixType &fslMatrix, const DescriptorType *targetDesc, const DescriptorType *movingDesc)
+			convertFSLToRAS(const MatrixType& fslMatrix, const DescriptorType* targetDesc,
+							const DescriptorType* movingDesc)
 			{
 				MatrixType tSpacing, mSpacing, tSwap, mSwap, tRSAMatrix, mRSAMatrix, result;
 
@@ -132,16 +134,16 @@ namespace map
 				}
 
 				result =
-				    mRSAMatrix * vnl_inverse(mSpacing) * mSwap *
-				    vnl_inverse(fslMatrix) *
-				    tSwap * tSpacing * vnl_inverse(tRSAMatrix);
+					mRSAMatrix * vnl_inverse(mSpacing) * mSwap *
+					vnl_inverse(fslMatrix) *
+					tSwap * tSpacing * vnl_inverse(tRSAMatrix);
 
 				return result;
 			}
 
 			MatrixConverter<2>::MatrixType
 			MatrixConverter<2>::
-			convertRASToITKTrans(const MatrixType &rsaMatrix)
+			convertRASToITKTrans(const MatrixType& rsaMatrix)
 			{
 				// Get the current matrix
 				MatrixType result = rsaMatrix;

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/boxed/mapDummyImageRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -48,15 +48,16 @@ namespace map
 		    @ingroup Boxed
 		 */
 		template < class TMovingImage, class TTargetImage,
-		         class TIdentificationPolicy >
+				 class TIdentificationPolicy >
 		class DummyImageRegistrationAlgorithm : public facet::AnalyticAlgorithmInterface,
 			public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
 			public RegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-      public TIdentificationPolicy
+			public TIdentificationPolicy
 		{
 		public:
 			typedef DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
-			typedef RegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension> Superclass;
+			typedef RegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>
+			Superclass;
 
 			typedef ::itk::SmartPointer<Self>                                     Pointer;
 			typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -111,14 +112,14 @@ namespace map
 			virtual bool registrationIsOutdated() const;
 
 			/*! Methods invoked by derivated classes.  */
-			virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 		private:
 
 			RegistrationPointer _spFinalizedRegistration;
 
-			DummyImageRegistrationAlgorithm(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			DummyImageRegistrationAlgorithm(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	}

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/source/mapMetaPropertyAlgorithmBase.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -31,7 +31,7 @@ namespace map
 
 		MetaPropertyInfo::Pointer
 		MetaPropertyAlgorithmBase::
-		getPropertyInfo(const MetaPropertyNameType &name) const
+		getPropertyInfo(const MetaPropertyNameType& name) const
 		{
 			MetaPropertyVectorType infos = getPropertyInfos();
 
@@ -64,7 +64,7 @@ namespace map
 
 		MetaPropertyAlgorithmBase::MetaPropertyPointer
 		MetaPropertyAlgorithmBase::
-		getProperty(const MetaPropertyNameType &name) const
+		getProperty(const MetaPropertyNameType& name) const
 		{
 			MetaPropertyPointer spResult = NULL;
 
@@ -97,7 +97,7 @@ namespace map
 
 		MetaPropertyAlgorithmBase::MetaPropertyPointer
 		MetaPropertyAlgorithmBase::
-		getProperty(const MetaPropertyInfo *pInfo) const
+		getProperty(const MetaPropertyInfo* pInfo) const
 		{
 			MetaPropertyPointer spResult = NULL;
 
@@ -112,7 +112,9 @@ namespace map
 			{
 				if (!(spResult->getMetaPropertyTypeInfo() == pInfo->getTypeInfo()))
 				{
-					mapDefaultExceptionStaticMacro( << "Error while getting property. Property value type differs from specified type in the property info. value type: " << spResult->getMetaPropertyTypeInfo().name() << "; info type: " <<  pInfo->getTypeInfo().name());
+					mapDefaultExceptionStaticMacro( <<
+													"Error while getting property. Property value type differs from specified type in the property info. value type: "
+													<< spResult->getMetaPropertyTypeInfo().name() << "; info type: " <<  pInfo->getTypeInfo().name());
 				}
 			}
 
@@ -121,13 +123,14 @@ namespace map
 
 		bool
 		MetaPropertyAlgorithmBase::
-		setProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
+		setProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 		{
 			bool result = false;
 
 			if (!pProperty)
 			{
-				mapDefaultExceptionStaticMacro( << "Error while setting property. Passed property pointer is NULL. Property name: " << name);
+				mapDefaultExceptionStaticMacro( <<
+												"Error while setting property. Passed property pointer is NULL. Property name: " << name);
 			}
 
 			MetaPropertyInfo::Pointer spInfo = getPropertyInfo(name);
@@ -136,7 +139,9 @@ namespace map
 			{
 				if (!(pProperty->getMetaPropertyTypeInfo() == spInfo->getTypeInfo()))
 				{
-					mapDefaultExceptionStaticMacro("Error while setting property. Property value type differs from type specified by the algorithm. value type: " << pProperty->getMetaPropertyTypeInfo().name() << "; internal type: " <<  spInfo->getTypeInfo().name());
+					mapDefaultExceptionStaticMacro("Error while setting property. Property value type differs from type specified by the algorithm. value type: "
+												   << pProperty->getMetaPropertyTypeInfo().name() << "; internal type: " <<
+												   spInfo->getTypeInfo().name());
 				}
 
 				if (spInfo->isWritable())
@@ -152,7 +157,7 @@ namespace map
 
 		bool
 		MetaPropertyAlgorithmBase::
-		setProperty(const MetaPropertyInfo *pInfo, const MetaPropertyType *pProperty)
+		setProperty(const MetaPropertyInfo* pInfo, const MetaPropertyType* pProperty)
 		{
 			bool result = false;
 
@@ -163,12 +168,15 @@ namespace map
 
 			if (!pProperty)
 			{
-				mapDefaultExceptionStaticMacro( << "Error while setting property. Passed property pointer is NULL. Property name: " << pInfo->getName());
+				mapDefaultExceptionStaticMacro( <<
+												"Error while setting property. Passed property pointer is NULL. Property name: " <<
+												pInfo->getName());
 			}
 
 			if (!(pProperty->getMetaPropertyTypeInfo() == pInfo->getTypeInfo()))
 			{
-				mapDefaultExceptionStaticMacro("Error while setting property. Property value type differs from specified type in the property info. value type: " << pProperty->getMetaPropertyTypeInfo().name() << "; info type: " <<  pInfo->getTypeInfo().name());
+				mapDefaultExceptionStaticMacro("Error while setting property. Property value type differs from specified type in the property info. value type: "
+											   << pProperty->getMetaPropertyTypeInfo().name() << "; info type: " <<  pInfo->getTypeInfo().name());
 			}
 
 			result = setProperty(pInfo->getName(), pProperty);
@@ -180,7 +188,8 @@ namespace map
 		MetaPropertyAlgorithmBase::
 		configureAlgorithmByMetaProperties()
 		{
-			for (MetaPropertyCacheType::iterator pos = _metaPropertyCache.begin(); pos != _metaPropertyCache.end(); ++pos)
+			for (MetaPropertyCacheType::iterator pos = _metaPropertyCache.begin();
+				 pos != _metaPropertyCache.end(); ++pos)
 			{
 				mapLogDebugObjMacro("Set property: " << pos->first);
 

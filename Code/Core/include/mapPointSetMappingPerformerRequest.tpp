@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapPointSetMappingPerformerRequest.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -33,8 +33,10 @@ namespace map
 
 		template <class TRegistration, class TInputData, class TResultData>
 		PointSetMappingPerformerRequest<TRegistration, TInputData, TResultData>::
-		PointSetMappingPerformerRequest(const RegistrationType *pRegistration, const InputDataType *pInputData, bool throwOnMappingError, const ErrorPointValueType &errorValue):
-			Superclass(pRegistration, pInputData), _throwOnMappingError(throwOnMappingError), _errorValue(errorValue)
+		PointSetMappingPerformerRequest(const RegistrationType* pRegistration,
+										const InputDataType* pInputData, bool throwOnMappingError, const ErrorPointValueType& errorValue):
+			Superclass(pRegistration, pInputData), _throwOnMappingError(throwOnMappingError),
+			_errorValue(errorValue)
 		{}
 
 
@@ -45,8 +47,9 @@ namespace map
 
 		template <class TRegistration, class TInputData, class TResultData>
 		PointSetMappingPerformerRequest<TRegistration, TInputData, TResultData>::
-		PointSetMappingPerformerRequest(const PointSetMappingPerformerRequest &other):
-			Superclass(other._spRegistration, other._spInputData), _throwOnMappingError(other._throwOnMappingError), _errorValue(other._errorValue)
+		PointSetMappingPerformerRequest(const PointSetMappingPerformerRequest& other):
+			Superclass(other._spRegistration, other._spInputData),
+			_throwOnMappingError(other._throwOnMappingError), _errorValue(other._errorValue)
 		{
 			assert(other._spRegistration.IsNotNull());
 			assert(other._spInputData.IsNotNull());
@@ -55,7 +58,7 @@ namespace map
 		template <class TRegistration, class TInputData, class TResultData>
 		void
 		PointSetMappingPerformerRequest<TRegistration, TInputData, TResultData>::
-		operator=(const PointSetMappingPerformerRequest &other)
+		operator=(const PointSetMappingPerformerRequest& other)
 		{
 			Superclass::_spRegistration = other._spRegistration;
 			Superclass::_spInputData = other._spInputData;

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Deployment/test/mapTestAlgorithmInvalid1DLL.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 /*! @file
@@ -30,10 +30,12 @@
 #include "mapDummyImageRegistrationAlgorithm.h"
 #include "mapConfigure.h"
 
-mapGenerateAlgorithmUIDPolicyMacro(InvalidTestAlgUIDPolicy,"de.dkfz.matchpoint.test", "InvalidAlgorithm1_missingSymbol", "1.0", "InvalidAlgorithm1_missingSymbol");
+mapGenerateAlgorithmUIDPolicyMacro(InvalidTestAlgUIDPolicy, "de.dkfz.matchpoint.test",
+								   "InvalidAlgorithm1_missingSymbol", "1.0", "InvalidAlgorithm1_missingSymbol");
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType,InvalidTestAlgUIDPolicy> AlgorithmType;
+typedef map::algorithm::DummyImageRegistrationAlgorithm<ImageType, ImageType, InvalidTestAlgUIDPolicy>
+AlgorithmType;
 
 typedef map::deployment::DeploymentDLLHelper<AlgorithmType> DLLHelperType;
 
@@ -52,25 +54,26 @@ extern "C"
 #ifdef _WIN32
 __declspec(dllexport)
 #endif
-void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer &spUID)
+void mapGetRegistrationAlgorithmUID(map::algorithm::UID::Pointer& spUID)
 {
 	spUID = InvalidTestAlgUIDPolicy::UID();
 };
 
 extern "C"
 #ifdef _WIN32
-  __declspec(dllexport)
+__declspec(dllexport)
 #endif
-  void mapGetRegistrationAlgorithmProfile(map::core::String& profile)
+void mapGetRegistrationAlgorithmProfile(map::core::String& profile)
 {
-  profile = InvalidTestAlgUIDPolicy::AlgorithmProfile();
+	profile = InvalidTestAlgUIDPolicy::AlgorithmProfile();
 };
 
 extern "C"
 #ifdef _WIN32
 __declspec(dllexport)
 #endif
-void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer &spAlgorithm, map::deployment::SyncObject *pSyncObject)
+void mapGetRegistrationAlgorithmInstance(map::algorithm::RegistrationAlgorithmBase::Pointer&
+		spAlgorithm, map::deployment::SyncObject* pSyncObject)
 {
 	spAlgorithm = DLLHelperType::mapGetRegistrationAlgorithmInstance(pSyncObject);
 };

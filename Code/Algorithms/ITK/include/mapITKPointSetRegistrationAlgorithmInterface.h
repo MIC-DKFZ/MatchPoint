@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKPointSetRegistrationAlgorithmInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -56,18 +56,25 @@ namespace map
 			class ITKPointSetRegistrationAlgorithmInterface
 			{
 			public:
-				typedef ITKPointSetRegistrationAlgorithmInterface<TMovingPointSet, TTargetPointSet, TTransformScalar> Self;
+				typedef ITKPointSetRegistrationAlgorithmInterface<TMovingPointSet, TTargetPointSet, TTransformScalar>
+				Self;
 
 				typedef ITKMVNLOptimizerControlInterface OptimizerBaseType;
-				typedef ITKPointSetToPointSetMetricControlInterface<TMovingPointSet, TTargetPointSet> MetricBaseType;
-				typedef core::TransformModelBase<TTransformScalar, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension> TransformBaseType;
+				typedef ITKPointSetToPointSetMetricControlInterface<TMovingPointSet, TTargetPointSet>
+				MetricBaseType;
+				typedef core::TransformModelBase<TTransformScalar, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>
+				TransformBaseType;
 
 				typedef facet::ITKMVNLOptimizerSetterInterface OptimizerSetterInterfaceType;
 				typedef facet::ITKMVNLOptimizerGetterInterface OptimizerGetterInterfaceType;
-				typedef facet::ITKTransformSetterInterface<TTransformScalar, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension> TransformSetterInterfaceType;
-				typedef facet::ITKTransformGetterInterface<TTransformScalar, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension> TransformGetterInterfaceType;
-				typedef facet::ITKPointSetToPointSetMetricSetterInterface<TMovingPointSet, TTargetPointSet> MetricSetterInterfaceType;
-				typedef facet::ITKPointSetToPointSetMetricGetterInterface<TMovingPointSet, TTargetPointSet> MetricGetterInterfaceType;
+				typedef facet::ITKTransformSetterInterface<TTransformScalar, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>
+				TransformSetterInterfaceType;
+				typedef facet::ITKTransformGetterInterface<TTransformScalar, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>
+				TransformGetterInterfaceType;
+				typedef facet::ITKPointSetToPointSetMetricSetterInterface<TMovingPointSet, TTargetPointSet>
+				MetricSetterInterfaceType;
+				typedef facet::ITKPointSetToPointSetMetricGetterInterface<TMovingPointSet, TTargetPointSet>
+				MetricGetterInterfaceType;
 
 			protected:
 				ITKPointSetRegistrationAlgorithmInterface();
@@ -75,8 +82,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKPointSetRegistrationAlgorithmInterface(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKPointSetRegistrationAlgorithmInterface(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapITKPointSetRegistrationAlgorithmTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -54,13 +54,14 @@ namespace map
 				itkNewMacro(Self);
 
 			protected:
-				virtual void checkEvent(const ::itk::Object *caller, const ::itk::EventObject &e)
+				virtual void checkEvent(const ::itk::Object* caller, const ::itk::EventObject& e)
 				{
-					const events::AlgorithmEvent *pChangeEvent = dynamic_cast<const events::AlgorithmEvent *>(&e);
+					const events::AlgorithmEvent* pChangeEvent = dynamic_cast<const events::AlgorithmEvent*>(&e);
 
 					if (pChangeEvent)
 					{
-						std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << caller << "): " << pChangeEvent->getComment() << std::endl;
+						std::cout << std::endl << pChangeEvent->GetEventName() << " (@" << caller << "): " <<
+								  pChangeEvent->getComment() << std::endl;
 					}
 					else
 					{
@@ -72,17 +73,18 @@ namespace map
 				virtual ~RegTestCommand() {};
 
 			private:
-				RegTestCommand(const Self &); //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				RegTestCommand(const Self&);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 
-      mapGenerateAlgorithmUIDPolicyMacro(ArbitraryITKPointSetRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "ArbitraryITKPointSetRegistrationAlgorithm.Test", "1.0.0","");
+			mapGenerateAlgorithmUIDPolicyMacro(ArbitraryITKPointSetRegistrationAlgorithmUIDPolicy,
+											   "de.dkfz.matchpoint.test", "ArbitraryITKPointSetRegistrationAlgorithm.Test", "1.0.0", "");
 
 		}
 
 		typedef core::continuous::Elements<2>::InternalPointSetType LandmarksType;
 
-		int mapITKPointSetRegistrationAlgorithmTest(int argc, char *argv[])
+		int mapITKPointSetRegistrationAlgorithmTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: moving land marks
 			//           2: target land marks
@@ -103,13 +105,19 @@ namespace map
 			}
 
 			//load input data
-			LandmarksType::Pointer spMovingLMs = utilities::loadLandMarksFromFile<LandmarksType>(movingLMFileName);
-			LandmarksType::Pointer spTargetLMs = utilities::loadLandMarksFromFile<LandmarksType>(targetLMFileName);
-			LandmarksType::Pointer spMovingLMs2 = utilities::loadLandMarksFromFile<LandmarksType>(movingLMFileName);
-			LandmarksType::Pointer spTargetLMs2 = utilities::loadLandMarksFromFile<LandmarksType>(targetLMFileName);
+			LandmarksType::Pointer spMovingLMs = utilities::loadLandMarksFromFile<LandmarksType>
+												 (movingLMFileName);
+			LandmarksType::Pointer spTargetLMs = utilities::loadLandMarksFromFile<LandmarksType>
+												 (targetLMFileName);
+			LandmarksType::Pointer spMovingLMs2 = utilities::loadLandMarksFromFile<LandmarksType>
+												  (movingLMFileName);
+			LandmarksType::Pointer spTargetLMs2 = utilities::loadLandMarksFromFile<LandmarksType>
+												  (targetLMFileName);
 
-			typedef algorithm::itk::ITKPointSetRegistrationAlgorithm<LandmarksType, LandmarksType, ArbitraryITKPointSetRegistrationAlgorithmUIDPolicy> ArbitraryITKPointSetRegistrationAlgorithmType;
-			ArbitraryITKPointSetRegistrationAlgorithmType::Pointer spAlgorithm = ArbitraryITKPointSetRegistrationAlgorithmType::New();
+			typedef algorithm::itk::ITKPointSetRegistrationAlgorithm<LandmarksType, LandmarksType, ArbitraryITKPointSetRegistrationAlgorithmUIDPolicy>
+			ArbitraryITKPointSetRegistrationAlgorithmType;
+			ArbitraryITKPointSetRegistrationAlgorithmType::Pointer spAlgorithm =
+				ArbitraryITKPointSetRegistrationAlgorithmType::New();
 
 			//Add observer for algorithm events.
 			RegTestCommand::Pointer spTestCommand = RegTestCommand::New();
@@ -118,18 +126,23 @@ namespace map
 			spAlgorithm->AddObserver(::itk::AnyEvent(), spTestCommand);
 
 			//create registration algorithm components
-			typedef algorithm::itk::ITKMetricControl< ::itk::EuclideanDistancePointMetric<LandmarksType, LandmarksType> > MetricControlType;
-			typedef algorithm::itk::ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer> OptimizerControlType;
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> > TranformModelType;
+			typedef algorithm::itk::ITKMetricControl< ::itk::EuclideanDistancePointMetric<LandmarksType, LandmarksType> >
+			MetricControlType;
+			typedef algorithm::itk::ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer>
+			OptimizerControlType;
+			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
+			TranformModelType;
 
 			OptimizerControlType::Pointer spOptimizer = OptimizerControlType::New();
 			MetricControlType::Pointer spMetric = MetricControlType::New();
 			TranformModelType::Pointer spTransformModel = TranformModelType::New();
 
-			CHECK_EQUAL(ArbitraryITKPointSetRegistrationAlgorithmType::AlgorithmState::Pending, spAlgorithm->getCurrentState());
+			CHECK_EQUAL(ArbitraryITKPointSetRegistrationAlgorithmType::AlgorithmState::Pending,
+						spAlgorithm->getCurrentState());
 			CHECK_THROW_EXPLICIT(spAlgorithm->determineRegistration(), algorithm::AlgorithmException);
 			CHECK_THROW_EXPLICIT(spAlgorithm->getRegistration(), algorithm::AlgorithmException);
-			CHECK_EQUAL(ArbitraryITKPointSetRegistrationAlgorithmType::AlgorithmState::Pending, spAlgorithm->getCurrentState());
+			CHECK_EQUAL(ArbitraryITKPointSetRegistrationAlgorithmType::AlgorithmState::Pending,
+						spAlgorithm->getCurrentState());
 
 			//Set optimizer values
 			spOptimizer->getConcreteOptimizer()->SetValueTolerance(1e-5);
@@ -150,10 +163,14 @@ namespace map
 
 			ArbitraryITKPointSetRegistrationAlgorithmType::RegistrationPointer spRegistration;
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
-			CHECK_EQUAL(ArbitraryITKPointSetRegistrationAlgorithmType::AlgorithmState::Finalized, spAlgorithm->getCurrentState());
+			CHECK_EQUAL(ArbitraryITKPointSetRegistrationAlgorithmType::AlgorithmState::Finalized,
+						spAlgorithm->getCurrentState());
 
-			const core::ModelBasedRegistrationKernel<2, 2> *pInverseKernel = dynamic_cast<const core::ModelBasedRegistrationKernel<2, 2>* >(&(spRegistration->getInverseMapping()));
-			core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters = pInverseKernel->getParameters();
+			const core::ModelBasedRegistrationKernel<2, 2>* pInverseKernel =
+				dynamic_cast<const core::ModelBasedRegistrationKernel<2, 2>* >(&
+						(spRegistration->getInverseMapping()));
+			core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters =
+				pInverseKernel->getParameters();
 
 			CHECK_CLOSE(13.0, parameters[0], 0.01);
 			CHECK_CLOSE(17.0, parameters[1], 0.01);

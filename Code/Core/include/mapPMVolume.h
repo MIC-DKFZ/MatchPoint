@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapPMVolume.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -85,7 +85,7 @@ namespace map
 				/*! Copy constructor. PMVolume is a lightweight object that is not
 				* reference counted, so the copy constructor is public.
 				* @eguarantee strong */
-				PMVolume(const Self &volume);
+				PMVolume(const Self& volume);
 
 				/*! Constructor that takes an origin and size. PMVolume is a lightweight
 				* object that is not reference counted, so this constructor is public.
@@ -93,39 +93,39 @@ namespace map
 				* @param [in] origin Values of the volume origin.
 				* @param [in] size Values of the volume size.
 				* @pre Origin and size must have the same vector size.*/
-				PMVolume(const OriginType &origin, const SizeType &size);
+				PMVolume(const OriginType& origin, const SizeType& size);
 
 				/*! Constructor that takes a size and assumes an origin of zero. PMVolume
 				* is lightweight object that is not reference counted so this constructor
 				* is public.
 				* @eguarantee strong */
-				PMVolume(const SizeType &size);
+				PMVolume(const SizeType& size);
 
 				/*! operator=. PMVolume is a lightweight object that is not reference
 				* counted, so operator= is public.
 				* @eguarantee basic */
-				void operator=(const Self &volume);
+				void operator=(const Self& volume);
 
 				/*! operator==. Checks if two PMVolume instance define the same volume.
 				* @eguarantee basic */
-				bool operator==(const Self &volume) const;
+				bool operator==(const Self& volume) const;
 
 				/*! Set the origin defining the corner of the region.
 				* @eguarantee strong */
-				void setOrigin(const OriginType &origin);
+				void setOrigin(const OriginType& origin);
 
 				/*! Get the point defining the origin of the volume.
 				* @eguarantee strong */
-				const OriginType &getOrigin() const;
+				const OriginType& getOrigin() const;
 
 				/*! Set the size of the volume. This plus the origin determines the
 				* rectangular shape, or extent, of the volume.
 				* @eguarantee strong */
-				void setSize(const SizeType &size);
+				void setSize(const SizeType& size);
 
 				/*! Get the size of the volume.
 				* @eguarantee strong */
-				const SizeType &getSize() const;
+				const SizeType& getSize() const;
 
 				/*! Convenience methods to set the size of the particular dimension i.
 				* @param [in] i Index of the particular dimension; must be within the range
@@ -156,7 +156,7 @@ namespace map
 				SizeType   _size;
 			};
 
-			MAPCore_EXPORT std::ostream &operator<<(std::ostream &os, const PMVolume &volume);
+			MAPCore_EXPORT std::ostream& operator<<(std::ostream& os, const PMVolume& volume);
 
 		} // end namespace continuous
 	} // end namespace core

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/include/mapRegistrationAlgorithmInterface.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -74,14 +74,14 @@ namespace map
 				{
 					enum Type
 					{
-					    No = 0     /*!< the field representation is not required by the algorithm. */,
-					    Unkown = 1 /*!< it is not known or can not be determined if a field representation is required. Should, if not sure, be treated like "Yes".*/,
-					    Yes = 2    /*!< the field representation is required by the algorithm. */,
+						No = 0     /*!< the field representation is not required by the algorithm. */,
+						Unkown = 1 /*!< it is not known or can not be determined if a field representation is required. Should, if not sure, be treated like "Yes".*/,
+						Yes = 2    /*!< the field representation is required by the algorithm. */,
 					};
 				};
 
-				virtual const MovingRepresentationDescriptorType *getMovingRepresentation() const = 0;
-				virtual void setMovingRepresentation(const MovingRepresentationDescriptorType *pDescriptor) = 0;
+				virtual const MovingRepresentationDescriptorType* getMovingRepresentation() const = 0;
+				virtual void setMovingRepresentation(const MovingRepresentationDescriptorType* pDescriptor) = 0;
 
 				/*! The field representation indicates the support region in the moving space
 				    required by the algorithm user. In addition some algorithm need this information
@@ -89,8 +89,8 @@ namespace map
 				    This method allows to deduce if the algorithm needs the representation for the moving space to be defined by the user.*/
 				virtual typename FieldRepRequirement::Type isMovingRepresentationRequired() const = 0;
 
-				virtual const TargetRepresentationDescriptorType *getTargetRepresentation() const = 0;
-				virtual void setTargetRepresentation(const TargetRepresentationDescriptorType *pDescriptor) = 0;
+				virtual const TargetRepresentationDescriptorType* getTargetRepresentation() const = 0;
+				virtual void setTargetRepresentation(const TargetRepresentationDescriptorType* pDescriptor) = 0;
 
 				/*! The field representation indicates the support region in the moving space
 				    required by the algorithm user. In addition some algorithm need this information
@@ -126,8 +126,8 @@ namespace map
 				virtual ~RegistrationAlgorithmInterface() {};
 
 			private:
-				RegistrationAlgorithmInterface(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				RegistrationAlgorithmInterface(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 
 			};
 

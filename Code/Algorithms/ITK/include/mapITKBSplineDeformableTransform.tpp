@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKBSplineDeformableTransform.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -33,7 +33,9 @@ namespace map
 		{
 
 			template<class TScalarType, unsigned int VDimensions, unsigned int VSplineOrder>
-			const typename ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::TransformBaseType *
+			const typename
+			ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::TransformBaseType*
+
 			ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::
 			getTransform() const
 			{
@@ -42,7 +44,8 @@ namespace map
 			};
 
 			template<class TScalarType, unsigned int VDimensions, unsigned int VSplineOrder>
-			typename ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::TransformBaseType *
+			typename ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::TransformBaseType*
+
 			ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::
 			getTransform()
 			{
@@ -51,7 +54,9 @@ namespace map
 			};
 
 			template<class TScalarType, unsigned int VDimensions, unsigned int VSplineOrder>
-			const typename ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::TransformType *
+			const typename
+			ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::TransformType*
+
 			ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::
 			getConcreteTransform() const
 			{
@@ -60,7 +65,8 @@ namespace map
 			};
 
 			template<class TScalarType, unsigned int VDimensions, unsigned int VSplineOrder>
-			typename ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::TransformType *
+			typename ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::TransformType*
+
 			ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::
 			getConcreteTransform()
 			{
@@ -71,13 +77,13 @@ namespace map
 			template<class TScalarType, unsigned int VDimensions, unsigned int VSplineOrder>
 			bool
 			ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::
-			getInverse(InverseTransformModelBasePointer &spInverseModel) const
+			getInverse(InverseTransformModelBasePointer& spInverseModel) const
 			{
 				assert(_spInternalTransform.IsNotNull());
 
 				InverseTransformModelPointer spInternalInverse = InverseTransformModelType::New();
 
-				InverseTransformType *pInverse = spInternalInverse->getConcreteTransform();
+				InverseTransformType* pInverse = spInternalInverse->getConcreteTransform();
 				bool result = _spInternalTransform->GetInverse(pInverse);
 
 				spInverseModel = spInternalInverse.GetPointer();
@@ -88,7 +94,7 @@ namespace map
 			template<class TScalarType, unsigned int VDimensions, unsigned int VSplineOrder>
 			bool
 			ITKTransformModel< ::itk::BSplineDeformableTransform<TScalarType, VDimensions, VSplineOrder> >::
-			getAffineMatrixDecomposition(MatrixType &matrix, OutputVectorType &offset) const
+			getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const
 			{
 				return false;
 			};
@@ -98,7 +104,8 @@ namespace map
 			clone() const
 			{
 				::itk::LightObject::Pointer spClone = CreateAnother();
-				TransformModelBasePointer spClonedModel = dynamic_cast<typename Superclass::TransformModelBaseType *>(spClone.GetPointer());
+				TransformModelBasePointer spClonedModel =
+					dynamic_cast<typename Superclass::TransformModelBaseType*>(spClone.GetPointer());
 
 				if (spClonedModel.IsNull())
 				{

@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapExceptionObject.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -27,15 +27,16 @@ namespace map
 {
 	namespace core
 	{
-		ExceptionObject::BaseExceptionType *
+		ExceptionObject::BaseExceptionType*
 		ExceptionObject::
 		clone() const throw()
 		{
-			BaseExceptionType *pResult = 0;
+			BaseExceptionType* pResult = 0;
 
 			try
 			{
-				pResult = new ExceptionObject(this->GetFile() , this->GetLine() , this->GetDescription() , this->GetLocation());
+				pResult = new ExceptionObject(this->GetFile() , this->GetLine() , this->GetDescription() ,
+											  this->GetLocation());
 			}
 			catch (...)
 			{
@@ -50,17 +51,20 @@ namespace map
 		{
 		}
 
-		ExceptionObject::ExceptionObject(const char *file, unsigned int lineNumber) : Superclass(file, lineNumber)
+		ExceptionObject::ExceptionObject(const char* file, unsigned int lineNumber) : Superclass(file,
+					lineNumber)
 		{
 
 		}
 
-		ExceptionObject::ExceptionObject(const std::string &file, unsigned int lineNumber) : Superclass(file, lineNumber)
+		ExceptionObject::ExceptionObject(const std::string& file,
+										 unsigned int lineNumber) : Superclass(file, lineNumber)
 		{
 
 		}
 
-		ExceptionObject::ExceptionObject(const std::string &file, unsigned int lineNumber, const std::string &desc, const std::string &loc) : Superclass(file, lineNumber, desc, loc)
+		ExceptionObject::ExceptionObject(const std::string& file, unsigned int lineNumber,
+										 const std::string& desc, const std::string& loc) : Superclass(file, lineNumber, desc, loc)
 		{
 
 		}
@@ -69,12 +73,12 @@ namespace map
 		{
 		}
 
-		const char *ExceptionObject::GetNameOfClass() const
+		const char* ExceptionObject::GetNameOfClass() const
 		{
 			return "map::ExceptionObject";
 		}
 
-		std::ostream &operator<<(std::ostream &os, const ExceptionObject &e)
+		std::ostream& operator<<(std::ostream& os, const ExceptionObject& e)
 		{
 			e.Print(os);
 			return os;

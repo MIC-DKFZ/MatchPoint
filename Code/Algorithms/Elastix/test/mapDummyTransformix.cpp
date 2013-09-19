@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Elastix/test/mapDummyTransformix.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #include <fstream>
@@ -30,9 +30,11 @@
 #include "test/mapTestFieldGenerationFunctor.h"
 #include "mapFileDispatch.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-	std::cout << "MatchPoint Transformix testing dummy." << std::endl << "This is a mock up exe, used by MatchPoint to test its Transformix integration." << std::endl << std::endl;
+	std::cout << "MatchPoint Transformix testing dummy." << std::endl <<
+			  "This is a mock up exe, used by MatchPoint to test its Transformix integration." << std::endl <<
+			  std::endl;
 
 	std::cout << "Passed command line arguments:" << std::endl;
 
@@ -66,7 +68,8 @@ int main(int argc, char *argv[])
 	FieldFunctorType::InFieldRepresentationType::SizeType size;
 	size.fill(10);
 
-	FieldFunctorType::InFieldRepresentationType::Pointer spInRep = FieldFunctorType::InFieldRepresentationType::New();
+	FieldFunctorType::InFieldRepresentationType::Pointer spInRep =
+		FieldFunctorType::InFieldRepresentationType::New();
 	spInRep->setSize(size);
 	spInRep->setSpacing(spacing);
 	spInRep->setOrigin(origin);
@@ -76,7 +79,8 @@ int main(int argc, char *argv[])
 	typedef ::itk::ImageFileWriter< FieldFunctorType::FieldType  > FieldWriterType;
 	FieldWriterType::Pointer  spFieldWriter  = FieldWriterType::New();
 
-	spFieldWriter->SetFileName(map::core::FileDispatch::createFullPath(outputPath, "deformationField.mhd").c_str());
+	spFieldWriter->SetFileName(map::core::FileDispatch::createFullPath(outputPath,
+							   "deformationField.mhd").c_str());
 	spFieldWriter->SetInput(spField);
 	spFieldWriter->Update();
 

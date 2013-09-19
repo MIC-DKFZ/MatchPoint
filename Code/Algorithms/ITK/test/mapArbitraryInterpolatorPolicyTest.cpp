@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/test/mapArbitraryInterpolatorPolicyTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -66,7 +66,7 @@ namespace map
 				};
 
 				void
-				onChange(const ::itk::EventObject &eventObject)
+				onChange(const ::itk::EventObject& eventObject)
 				{
 					map::events::UnregisterAlgorithmComponentEvent unregEvent;
 					map::events::RegisterAlgorithmComponentEvent regEvent;
@@ -92,16 +92,20 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			TestPolicy<core::discrete::Elements<3>::InternalImageType> policy;
-			const TestPolicy<core::discrete::Elements<3>::InternalImageType> &constPolicy = policy;
+			const TestPolicy<core::discrete::Elements<3>::InternalImageType>& constPolicy = policy;
 
-			typedef itk::LinearInterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType> Interpolator1Type;
-			typedef itk::NearestNeighborInterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType> Interpolator2Type;
+			typedef itk::LinearInterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
+			Interpolator1Type;
+			typedef itk::NearestNeighborInterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
+			Interpolator2Type;
 
 			Interpolator1Type::Pointer spInterpolator1 = Interpolator1Type::New();
 			Interpolator2Type::Pointer spInterpolator2 = Interpolator2Type::New();
 
-			itk::InterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType> *pInterpolator = NULL;
-			const itk::InterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType> *pConstInterpolator = NULL;
+			itk::InterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
+			* pInterpolator = NULL;
+			const itk::InterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
+			* pConstInterpolator = NULL;
 
 			CHECK_NO_THROW(pInterpolator = policy.getInterpolatorInternal());
 			CHECK_NO_THROW(pConstInterpolator = constPolicy.getInterpolatorInternal());

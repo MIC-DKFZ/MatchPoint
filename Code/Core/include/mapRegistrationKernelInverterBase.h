@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapRegistrationKernelInverterBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __MAP_REGISTRATION_KERNEL_INVERTER_BASE_H
@@ -38,7 +38,8 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class RegistrationKernelInverterBase : public services::ServiceProvider< RegistrationKernelBase<VInputDimensions, VOutputDimensions> >
+		class RegistrationKernelInverterBase : public
+			services::ServiceProvider< RegistrationKernelBase<VInputDimensions, VOutputDimensions> >
 		{
 		public:
 			typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions>	KernelBaseType;
@@ -78,17 +79,17 @@ namespace map
 				 * @remark This function might cause an exception/assertion if the responsible service provider needs
 				 * a missing field representation descriptor. Also if no suitable provider is available an exception will be thrown.
 				 */
-			virtual InverseKernelBasePointer invertKernel(const KernelBaseType &kernel,
-			                                              const FieldRepresentationType *pFieldRepresentation,
-			                                              const InverseFieldRepresentationType *pInverseFieldRepresentation) const = 0;
+			virtual InverseKernelBasePointer invertKernel(const KernelBaseType& kernel,
+					const FieldRepresentationType* pFieldRepresentation,
+					const InverseFieldRepresentationType* pInverseFieldRepresentation) const = 0;
 
 		protected:
 			RegistrationKernelInverterBase() {};
 			virtual ~RegistrationKernelInverterBase() {};
 
 		private:
-			RegistrationKernelInverterBase(const Self &); //purposely not implemented
-			void operator=(const Self &); //purposely not implemented
+			RegistrationKernelInverterBase(const Self&);  //purposely not implemented
+			void operator=(const Self&);  //purposely not implemented
 		};
 
 	} // end namespace core

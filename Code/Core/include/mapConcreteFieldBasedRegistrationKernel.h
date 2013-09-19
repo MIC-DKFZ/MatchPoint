@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/include/mapConcreteFieldBasedRegistrationKernel.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #ifndef __CONCRETE_FIELD_BASED_REGISTRATION_KERNEL_H
@@ -39,10 +39,13 @@ namespace map
 		 * @ingroup RegKernel
 		 */
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions, template <unsigned int, unsigned int> class TFieldPolicy >
-		class ConcreteFieldBasedRegistrationKernel : public FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>, public TFieldPolicy <VInputDimensions, VOutputDimensions>
+		class ConcreteFieldBasedRegistrationKernel : public
+			FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>,
+		public TFieldPolicy <VInputDimensions, VOutputDimensions>
 		{
 		public:
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy> Self;
+			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>
+			Self;
 			typedef FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions> Superclass;
 			typedef itk::SmartPointer<Self> Pointer;
 			typedef itk::SmartPointer<const Self> ConstPointer;
@@ -55,7 +58,8 @@ namespace map
 			typedef typename Superclass::FieldRegionType FieldRegionType;
 			typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;
 			typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
-			typedef typename Superclass::RepresentationDescriptorConstPointer RepresentationDescriptorConstPointer;
+			typedef typename Superclass::RepresentationDescriptorConstPointer
+			RepresentationDescriptorConstPointer;
 			typedef typename Superclass::InputPointType  InputPointType;
 			typedef typename Superclass::OutputPointType OutputPointType;
 
@@ -72,13 +76,13 @@ namespace map
 			  @eguarantee strong
 			  @return const pointer to a FieldType
 			 */
-			virtual const FieldType *getField() const;
+			virtual const FieldType* getField() const;
 
 			/*! gets the field
 			  @eguarantee strong
 			  @return pointer to a FieldType
 			 */
-			virtual FieldType *getField();
+			virtual FieldType* getField();
 
 			/*! @brief forces kernel to precompute, even if it is a LazyFieldKernel
 			  @eguarantee strong
@@ -89,16 +93,16 @@ namespace map
 			ConcreteFieldBasedRegistrationKernel();
 			virtual ~ConcreteFieldBasedRegistrationKernel();
 
-			virtual bool doMapPoint(const InputPointType &inPoint, OutputPointType &outPoint) const;
+			virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream &os, itk::Indent indent) const;
+			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 		private:
 
 			//No copy constructor allowed
-			ConcreteFieldBasedRegistrationKernel(const Self &source);
-			void operator=(const Self &); //purposely not implemented
+			ConcreteFieldBasedRegistrationKernel(const Self& source);
+			void operator=(const Self&);  //purposely not implemented
 
 		};
 

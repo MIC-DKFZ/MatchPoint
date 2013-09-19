@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKImageToImageMetricControlBase.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -46,11 +46,13 @@ namespace map
 			@ingroup MetricControl
 			*/
 			template<class TConcreteMetric>
-			class ITKImageToImageMetricControlBase : public ITKImageToImageMetricControlInterface<typename TConcreteMetric::MovingImageType, typename TConcreteMetric::FixedImageType>
+			class ITKImageToImageMetricControlBase : public
+				ITKImageToImageMetricControlInterface<typename TConcreteMetric::MovingImageType, typename TConcreteMetric::FixedImageType>
 			{
 			public:
 				typedef ITKImageToImageMetricControlBase<TConcreteMetric> Self;
-				typedef ITKImageToImageMetricControlInterface<typename TConcreteMetric::MovingImageType, typename TConcreteMetric::FixedImageType>    Superclass;
+				typedef ITKImageToImageMetricControlInterface<typename TConcreteMetric::MovingImageType, typename TConcreteMetric::FixedImageType>
+				Superclass;
 				typedef typename TConcreteMetric::MovingImageType MovingImageType;
 				typedef typename TConcreteMetric::FixedImageType TargetImageType;
 
@@ -69,19 +71,19 @@ namespace map
 				@eguarantee no fail
 				@param pMetric the ConcreteMetricType object that has to be set. Must not be NULL (otherwise an exception will be thrown).
 				*/
-				virtual void setMetric(ConcreteMetricType *pMetric);
+				virtual void setMetric(ConcreteMetricType* pMetric);
 
-				virtual MetricBaseType *getMetric();
-				virtual const MetricBaseType *getMetric() const;
+				virtual MetricBaseType* getMetric();
+				virtual const MetricBaseType* getMetric() const;
 
-				virtual SVMetricBaseType *getSVMetric();
-				virtual const SVMetricBaseType *getSVMetric() const;
+				virtual SVMetricBaseType* getSVMetric();
+				virtual const SVMetricBaseType* getSVMetric() const;
 
-				virtual ImageToImageMetricBaseType *getImageToImageMetric();
-				virtual const ImageToImageMetricBaseType *getImageToImageMetric() const;
+				virtual ImageToImageMetricBaseType* getImageToImageMetric();
+				virtual const ImageToImageMetricBaseType* getImageToImageMetric() const;
 
-				virtual ConcreteMetricType *getConcreteMetric();
-				virtual const ConcreteMetricType *getConcreteMetric() const;
+				virtual ConcreteMetricType* getConcreteMetric();
+				virtual const ConcreteMetricType* getConcreteMetric() const;
 
 				/*! The modification time (MT) of an metric controler is the the maximum of his MT
 				 * and the MT of the controlled metric.  */
@@ -95,8 +97,8 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				ITKImageToImageMetricControlBase(const Self &source);
-				void operator=(const Self &); //purposely not implemented
+				ITKImageToImageMetricControlBase(const Self& source);
+				void operator=(const Self&);  //purposely not implemented
 			};
 		}
 	}

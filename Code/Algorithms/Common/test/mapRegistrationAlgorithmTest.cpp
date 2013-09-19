@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/test/mapRegistrationAlgorithmTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -33,10 +33,13 @@ namespace map
 	{
 		namespace
 		{
-      mapGenerateAlgorithmUIDPolicyMacro(TestRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test", "TestRegistrationAlgorithm", "1", "");
+			mapGenerateAlgorithmUIDPolicyMacro(TestRegistrationAlgorithmUIDPolicy, "de.dkfz.matchpoint.test",
+											   "TestRegistrationAlgorithm", "1", "");
 
 			template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
-			class TestRegistrationAlgorithm: public algorithm::RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>, public TestRegistrationAlgorithmUIDPolicy
+			class TestRegistrationAlgorithm: public
+				algorithm::RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>,
+			public TestRegistrationAlgorithmUIDPolicy
 			{
 			public:
 				typedef TestRegistrationAlgorithm<VMovingDimensions, VTargetDimensions> Self;
@@ -51,7 +54,7 @@ namespace map
 				itkTypeMacro(TestRegistrationAlgorithm, RegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
-        mapDefineAlgorithmIdentificationByPolicyMacro;
+				mapDefineAlgorithmIdentificationByPolicyMacro;
 
 				virtual AlgorithmType getAlgorithmType() const
 				{
@@ -111,8 +114,8 @@ namespace map
 				};
 
 			private:
-				TestRegistrationAlgorithm(const Self &source);  //purposely not implemented
-				void operator=(const Self &); //purposely not implemented
+				TestRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				void operator=(const Self&);  //purposely not implemented
 			};
 		}
 
@@ -124,8 +127,10 @@ namespace map
 
 			AlgorithmType::Pointer spRegAlg = AlgorithmType::New();
 			AlgorithmType::RegistrationPointer spReg = AlgorithmType::RegistrationType::New();
-			AlgorithmType::MovingRepresentationDescriptorType::Pointer spMovingRep = AlgorithmType::MovingRepresentationDescriptorType::New();
-			AlgorithmType::TargetRepresentationDescriptorType::Pointer spTargetRep = AlgorithmType::TargetRepresentationDescriptorType::New();
+			AlgorithmType::MovingRepresentationDescriptorType::Pointer spMovingRep =
+				AlgorithmType::MovingRepresentationDescriptorType::New();
+			AlgorithmType::TargetRepresentationDescriptorType::Pointer spTargetRep =
+				AlgorithmType::TargetRepresentationDescriptorType::New();
 
 			CHECK_EQUAL(2, spRegAlg->getMovingDimensions());
 			CHECK_EQUAL(3, spRegAlg->getTargetDimensions());

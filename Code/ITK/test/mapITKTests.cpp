@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/ITK/test/mapITKTests.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 // this file defines the mapCoreTests for the test driver
@@ -43,7 +43,7 @@ namespace map
 	} //namespace testing
 } //namespace map
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 	int result = 0;
 
@@ -53,14 +53,14 @@ int main(int argc, char *argv[])
 	{
 		result = lit::multiTestsMain(argc, argv);
 	}
-	catch (const itk::ExceptionObject &e)
+	catch (const itk::ExceptionObject& e)
 	{
 		std::cerr << "MatchPoint test driver caught an ITK exception:\n";
 		std::cerr << e.GetFile() << ":" << e.GetLine() << ":\n"
-		          << e.GetDescription() << "\n";
+				  << e.GetDescription() << "\n";
 		result = -1;
 	}
-	catch (const std::exception &e)
+	catch (const std::exception& e)
 	{
 		std::cerr << "MatchPoint test driver caught an exception:\n";
 		std::cerr << e.what() << "\n";

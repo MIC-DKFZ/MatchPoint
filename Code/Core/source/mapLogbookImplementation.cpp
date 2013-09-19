@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/source/mapLogbookImplementation.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -52,12 +52,12 @@ namespace map
 			itkTypeMacro(SharedDefaultLogFileStream, itk::LightObject);
 			itkNewMacro(Self);
 
-			std::ofstream &getStream()
+			std::ofstream& getStream()
 			{
 				return _stream;
 			};
 
-			const std::ofstream &getStream() const
+			const std::ofstream& getStream() const
 			{
 				return _stream;
 			};
@@ -73,8 +73,8 @@ namespace map
 
 		private:
 
-			SharedDefaultLogFileStream(const SharedDefaultLogFileStream &); //purposely not implemented
-			void operator=(const SharedDefaultLogFileStream &); //purposely not implemented
+			SharedDefaultLogFileStream(const SharedDefaultLogFileStream&);  //purposely not implemented
+			void operator=(const SharedDefaultLogFileStream&);  //purposely not implemented
 		};
 
 
@@ -83,7 +83,7 @@ namespace map
 		//*************************************************************************************************
 
 
-		LogbookImplementation::LoggerType &
+		LogbookImplementation::LoggerType&
 		LogbookImplementation::
 		getLogger(void)
 		{
@@ -92,7 +92,7 @@ namespace map
 
 		void
 		LogbookImplementation::
-		initializeOutputs(const String &defaultOutputFileName)
+		initializeOutputs(const String& defaultOutputFileName)
 		{
 			SharedDefaultLogFileStream::Pointer spNewStream = SharedDefaultLogFileStream::New();
 
@@ -100,7 +100,9 @@ namespace map
 
 			if (!(spNewStream->getStream().is_open()))
 			{
-				mapLogbookCheckDefaultExceptionMacro( << "Error: cannot open specified file as default logbook output file. Filename: " << defaultOutputFileName);
+				mapLogbookCheckDefaultExceptionMacro( <<
+													  "Error: cannot open specified file as default logbook output file. Filename: " <<
+													  defaultOutputFileName);
 			}
 
 			_spDefaultFileStream = spNewStream;
@@ -117,7 +119,7 @@ namespace map
 
 		void
 		LogbookImplementation::
-		addAdditionalLogOutput(OutputType *pOutput)
+		addAdditionalLogOutput(OutputType* pOutput)
 		{
 			assert(pOutput); //output may not be null.
 			std::pair<OutputContainerType::iterator, bool> result;
@@ -153,7 +155,7 @@ namespace map
 
 		LogbookImplementation::Pointer
 		LogbookImplementation::
-		clone(const String &newDefaultOutputFileName) const
+		clone(const String& newDefaultOutputFileName) const
 		{
 			Pointer spNewImpl = LogbookImplementation::New();
 			spNewImpl->_additionalOutputs = this->_additionalOutputs;
@@ -168,7 +170,8 @@ namespace map
 		LogbookImplementation::
 		initializeAdditionalOutputs()
 		{
-			for (OutputContainerType::iterator pos = _additionalOutputs.begin(); pos != _additionalOutputs.end(); ++pos)
+			for (OutputContainerType::iterator pos = _additionalOutputs.begin();
+				 pos != _additionalOutputs.end(); ++pos)
 			{
 				_spLogger->AddLogOutput(*pos);
 			}

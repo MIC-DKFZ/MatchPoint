@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Core/test/mapImageByFieldPerformerTest.cpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 #if defined(_MSC_VER)
@@ -66,7 +66,7 @@ namespace map
 			}
 		}
 
-		int mapImageByFieldPerformerTest(int argc, char *argv[])
+		int mapImageByFieldPerformerTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: input image
 			//           2: reference image
@@ -124,7 +124,8 @@ namespace map
 			typedef TestKernelBase<2, 2> IllegalKernelType;
 
 			typedef core::ImageByFieldPerformer<RegistrationType, InputDataType, ResultDataType> PerformerType;
-			typedef core::ImageByFieldPerformer<Registration2Type, InputDataType, ResultData2Type> Performer2Type;
+			typedef core::ImageByFieldPerformer<Registration2Type, InputDataType, ResultData2Type>
+			Performer2Type;
 
 			//Now we create the kernels
 			FieldKernelType::Pointer spKernel = FieldKernelType::New();
@@ -145,14 +146,25 @@ namespace map
 			manipulator2.setInverseMapping(spIllegalKernel);
 
 			//load input and reference data
-			InputDataType::Pointer spInputImage = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(inputImageFileName);
-			ResultDataType::Pointer spReferenceImage = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(referenceImageFileName);
-			ResultDataType::Pointer spReferenceImage2 = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(referenceImageFile2Name);
-			ResultDataType::Pointer spReferenceImage3 = lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(referenceImageFile3Name);
+			InputDataType::Pointer spInputImage =
+				lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(
+					inputImageFileName);
+			ResultDataType::Pointer spReferenceImage =
+				lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(
+					referenceImageFileName);
+			ResultDataType::Pointer spReferenceImage2 =
+				lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(
+					referenceImageFile2Name);
+			ResultDataType::Pointer spReferenceImage3 =
+				lit::TestImageIO<unsigned char, core::discrete::Elements<2>::InternalImageType>::readImage(
+					referenceImageFile3Name);
 
-			PerformerType::RequestType::ResultImageDescriptorType::Pointer spFieldRep = core::createFieldRepresentation(*spInputImage);
-			PerformerType::RequestType::ResultImageDescriptorType::Pointer spFieldRep2 = core::createFieldRepresentation(*spInputImage);
-			PerformerType::RequestType::ResultImageDescriptorType::Pointer spFieldRep3 = core::createFieldRepresentation(*spInputImage);
+			PerformerType::RequestType::ResultImageDescriptorType::Pointer spFieldRep =
+				core::createFieldRepresentation(*spInputImage);
+			PerformerType::RequestType::ResultImageDescriptorType::Pointer spFieldRep2 =
+				core::createFieldRepresentation(*spInputImage);
+			PerformerType::RequestType::ResultImageDescriptorType::Pointer spFieldRep3 =
+				core::createFieldRepresentation(*spInputImage);
 
 			PerformerType::RequestType::ResultImageDescriptorType::PointType newOrigin;
 			newOrigin[0] = 10.0;
@@ -161,31 +173,41 @@ namespace map
 
 			spFieldRep3->setSpacing(PerformerType::RequestType::ResultImageDescriptorType::SpacingType(4.0));
 
-			typedef itk::LinearInterpolateImageFunction<InputDataType, core::continuous::ScalarType> InterpolatorType;
+			typedef itk::LinearInterpolateImageFunction<InputDataType, core::continuous::ScalarType>
+			InterpolatorType;
 			InterpolatorType::Pointer spInterpolator = InterpolatorType::New();
 
 			//Create requests
 			// valid request
-			PerformerType::RequestType request(spRegistration.GetPointer(), spInputImage.GetPointer(), spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
+			PerformerType::RequestType request(spRegistration.GetPointer(), spInputImage.GetPointer(),
+											   spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
 			// valid request
-			PerformerType::RequestType request2(spRegistration.GetPointer(), spInputImage.GetPointer(), spFieldRep2.GetPointer(), spInterpolator, false, 50, false, 0);
+			PerformerType::RequestType request2(spRegistration.GetPointer(), spInputImage.GetPointer(),
+												spFieldRep2.GetPointer(), spInterpolator, false, 50, false, 0);
 			// valid request
-			PerformerType::RequestType request3(spRegistration.GetPointer(), spInputImage.GetPointer(), spFieldRep3.GetPointer(), spInterpolator, false, 50, false, 0);
+			PerformerType::RequestType request3(spRegistration.GetPointer(), spInputImage.GetPointer(),
+												spFieldRep3.GetPointer(), spInterpolator, false, 50, false, 0);
 			// valid request
-			PerformerType::RequestType request4(spRegistration.GetPointer(), spInputImage.GetPointer(), spFieldRep2.GetPointer(), spInterpolator, true, 0, false, 0);
+			PerformerType::RequestType request4(spRegistration.GetPointer(), spInputImage.GetPointer(),
+												spFieldRep2.GetPointer(), spInterpolator, true, 0, false, 0);
 			// illegal request
-			PerformerType::RequestType illegalRequest1(spRegistration.GetPointer(), spInputImage.GetPointer(), spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
+			PerformerType::RequestType illegalRequest1(spRegistration.GetPointer(), spInputImage.GetPointer(),
+					spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
 			illegalRequest1._spInputData = NULL;
 			// illegal request
-			PerformerType::RequestType illegalRequest2(spIllegalRegistration1.GetPointer(), spInputImage.GetPointer(), spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
+			PerformerType::RequestType illegalRequest2(spIllegalRegistration1.GetPointer(),
+					spInputImage.GetPointer(), spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
 			// illegal request
-			PerformerType::RequestType illegalRequest3(spRegistration.GetPointer(), spInputImage.GetPointer(), spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
+			PerformerType::RequestType illegalRequest3(spRegistration.GetPointer(), spInputImage.GetPointer(),
+					spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
 			illegalRequest3._spResultDescriptor = NULL;
 			// illegal request
-			PerformerType::RequestType illegalRequest4(spRegistration.GetPointer(), spInputImage.GetPointer(), spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
+			PerformerType::RequestType illegalRequest4(spRegistration.GetPointer(), spInputImage.GetPointer(),
+					spFieldRep.GetPointer(), spInterpolator, true, 0, false, 0);
 			illegalRequest4._spInterpolateFunction = NULL;
 			// "illegal request" as long there is no implementation that supports exception throwing in the case of mapping outside of the input image
-			PerformerType::RequestType illegalRequest5(spRegistration.GetPointer(), spInputImage.GetPointer(), spFieldRep.GetPointer(), spInterpolator, true, 0, true, 0);
+			PerformerType::RequestType illegalRequest5(spRegistration.GetPointer(), spInputImage.GetPointer(),
+					spFieldRep.GetPointer(), spInterpolator, true, 0, true, 0);
 
 			//creating the combinator
 			PerformerType::Pointer spPerformer = PerformerType::New();
@@ -193,9 +215,12 @@ namespace map
 			//TEST
 			CHECK_EQUAL(false, spPerformer->canHandleRequest(illegalRequest1));
 			CHECK_EQUAL(false, spPerformer->canHandleRequest(illegalRequest2));
-			CHECK_EQUAL(true, spPerformer->canHandleRequest(illegalRequest3)); //is illegal because result descriptor is invalid, but theoretically it can be handled by the performer
-			CHECK_EQUAL(true, spPerformer->canHandleRequest(illegalRequest4)); //is illegal because interpolate function is invalid, but theoretically it can be handled by the performer
-			CHECK_EQUAL(true, spPerformer->canHandleRequest(illegalRequest5)); //is illegal because parts are not implemented yet (see performer documentation), but theoretically it can be handled by the performer
+			CHECK_EQUAL(true, spPerformer->canHandleRequest(
+							illegalRequest3)); //is illegal because result descriptor is invalid, but theoretically it can be handled by the performer
+			CHECK_EQUAL(true, spPerformer->canHandleRequest(
+							illegalRequest4)); //is illegal because interpolate function is invalid, but theoretically it can be handled by the performer
+			CHECK_EQUAL(true, spPerformer->canHandleRequest(
+							illegalRequest5)); //is illegal because parts are not implemented yet (see performer documentation), but theoretically it can be handled by the performer
 			CHECK_EQUAL(true, spPerformer->canHandleRequest(request));
 			CHECK_EQUAL(true, spPerformer->canHandleRequest(request2));
 			CHECK_EQUAL(true, spPerformer->canHandleRequest(request3));
