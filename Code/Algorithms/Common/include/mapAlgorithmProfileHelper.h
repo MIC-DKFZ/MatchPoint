@@ -65,7 +65,7 @@ namespace map
 	{
 		namespace profile
 		{
-			typedef std::vector<::map::core::String> ValueListType;
+			typedef std::vector< ::map::core::String> ValueListType;
 
 			/** Helper function that takes an algorithm profile string and converts it into structuredData
 			 * elements.
