@@ -9,3 +9,4 @@ MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigid3DClosedForm PROFILE "deployed/ITKRigid3DC
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKFastSymmetricForcesDemons3D PROFILE "deployed/ITKFastSymmetricForcesDemons3D.profile" FILES "deployed/mapITKFastSymmetricForcesDemons3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKPDEDemons3D PROFILE "deployed/ITKPDEDemons3D.profile" FILES "deployed/mapITKPDEDemons3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKLevelSetMotion3D PROFILE "deployed/ITKLevelSetMotion3D.profile" FILES "deployed/mapITKLevelSetMotion3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(ITKSymmetricForcesDemons3D PROFILE "deployed/ITKSymmetricForcesDemons3D.profile" FILES "deployed/mapITKSymmetricForcesDemons3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
