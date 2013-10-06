@@ -37,6 +37,7 @@ include/mapMetaPropertyAlgorithmBase.h
 include/mapMetaPropertyAlgorithmInterface.h
 include/mapMetaPropertyInfo.h
 include/mapMultiResImageRegistrationAlgorithmBase.h
+include/mapModifiableMultiResImageRegistrationAlgorithmBase.h
 include/mapMultiResRegistrationAlgorithmBase.h
 include/mapMultiResRegistrationAlgorithmInterface.h
 include/mapMultiResRegistrationAlgorithmSetterInterface.h
@@ -59,6 +60,7 @@ include/mapImageRegistrationAlgorithmBase.tpp
 include/mapPointSetRegistrationAlgorithmBase.tpp
 include/mapMaskedRegistrationAlgorithmBase.tpp
 include/mapMultiResImageRegistrationAlgorithmBase.tpp
+include/mapModifiableMultiResImageRegistrationAlgorithmBase.tpp
 include/mapRegistrationAlgorithm.tpp
 include/mapIterativeRegistrationAlgorithm.tpp
 include/mapArbitraryImagePyramidesPolicy.tpp

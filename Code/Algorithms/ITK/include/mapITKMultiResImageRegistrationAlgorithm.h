@@ -30,7 +30,7 @@
 
 #include "mapITKImageRegistrationAlgorithm.h"
 #include "mapArbitraryImagePyramidesPolicy.h"
-#include "mapMultiResImageRegistrationAlgorithmBase.h"
+#include "mapModifiableMultiResImageRegistrationAlgorithmBase.h"
 
 #include "itkMultiResolutionImageRegistrationMethod.h"
 #include "itkSimpleFastMutexLock.h"
@@ -59,7 +59,7 @@ namespace map
 			         class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage>,
 			         class TInternalRegistrationMethod = ::itk::MultiResolutionImageRegistrationMethod<TTargetImage, TMovingImage> >
 			class ITKMultiResImageRegistrationAlgorithm : public ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>,
-				public MultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy>
+				public ModifiableMultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy>
 			{
 			public:
 				typedef ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy,
@@ -67,7 +67,7 @@ namespace map
 				typedef ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod> Superclass;
 
 				typedef ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType> ITKRegistrationType;
-				typedef MultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy> MultiResRegistrationAlgorithmType;
+				typedef ModifiableMultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy> MultiResRegistrationAlgorithmType;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;

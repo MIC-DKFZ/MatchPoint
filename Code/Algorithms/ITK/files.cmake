@@ -126,6 +126,7 @@ include/mapITKLandmarkKernelRegistrationAlgorithm.h
 include/mapITKPointSetRegistrationAlgorithm.h
 include/mapITKPDEDeformableRegistrationAlgorithmBase.h
 include/mapITKPDEDeformableRegistrationAlgorithm.h
+include/mapITKMultiResPDEDeformableRegistrationAlgorithm.h
 boxed/mapITKDemonsRegistrationAlgorithm.h
 boxed/mapITKEuler3DICPRegistrationAlgorithmTemplate.h
 boxed/mapITKEuler3DMattesMIMultiResRegistrationAlgorithmTemplate.h
@@ -142,6 +143,7 @@ boxed/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.h
 boxed/mapITKPDEDemonsRegistrationAlgorithm.h
 boxed/mapITKLevelSetMotionRegistrationAlgorithm.h
 boxed/mapITKSymmetricForcesDemonsRegistrationAlgorithm.h
+boxed/mapITKLevelSetMotionMultiResRegistrationAlgorithm.h
 )
 
 SET(TPP_FILES
@@ -175,6 +177,7 @@ include/mapITKLandmarkKernelRegistrationAlgorithm.tpp
 include/mapITKPointSetRegistrationAlgorithm.tpp
 include/mapITKPDEDeformableRegistrationAlgorithmBase.tpp
 include/mapITKPDEDeformableRegistrationAlgorithm.tpp
+include/mapITKMultiResPDEDeformableRegistrationAlgorithm.tpp
 boxed/mapITKDemonsRegistrationAlgorithm.tpp
 boxed/mapITKEuler3DMattesMIMultiResRegistrationAlgorithmTemplate.tpp
 boxed/mapITKEuler3DMattesMIRegistrationAlgorithmTemplate.tpp
@@ -185,6 +188,7 @@ boxed/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.tpp
 boxed/mapITKPDEDemonsRegistrationAlgorithm.tpp
 boxed/mapITKLevelSetMotionRegistrationAlgorithm.tpp
 boxed/mapITKSymmetricForcesDemonsRegistrationAlgorithm.tpp
+boxed/mapITKLevelSetMotionMultiResRegistrationAlgorithm.tpp
 )
 
 SET(TEST_CPP_FILES

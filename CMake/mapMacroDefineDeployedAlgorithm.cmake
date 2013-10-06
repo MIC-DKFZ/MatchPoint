@@ -67,7 +67,7 @@ MACRO(MAP_DEFINE_DEPLOYED_ALGORITHM algName)
     IF(NOT _MISSING_DEP)
       IF(ALG_IS_ENABLED)
 		
-        MESSAGE(STATUS "... generate MRDA profile (from ${ALG_PROFILE})...")
+        MESSAGE(STATUS "... generate MDRA profile (from ${ALG_PROFILE})...")
 		
 		CREATE_ALGORITHM_PROFILE(${algName} ${ALG_PROFILE})
 		

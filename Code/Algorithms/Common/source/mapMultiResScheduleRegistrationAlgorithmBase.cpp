@@ -17,12 +17,12 @@
 // @version $Revision: 4912 $ (last changed revision)
 // @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
 // @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/source/mapMultiResRegistrationAlgorithmBase.cpp $
+// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/Common/source/mapMultiResScheduleRegistrationAlgorithmBase.cpp $
 */
 
 
 
-#include "mapMultiResRegistrationAlgorithmBase.h"
+#include "mapMultiResScheduleRegistrationAlgorithmBase.h"
 #include "mapExceptionObjectMacros.h"
 
 namespace map
@@ -30,18 +30,25 @@ namespace map
 	namespace algorithm
 	{
 
-		MultiResRegistrationAlgorithmBase::
-		MultiResRegistrationAlgorithmBase()
+		MultiResScheduleRegistrationAlgorithmBase::
+		MultiResScheduleRegistrationAlgorithmBase()
 		{
 		};
 
-		MultiResRegistrationAlgorithmBase::
-		~MultiResRegistrationAlgorithmBase()
+		MultiResScheduleRegistrationAlgorithmBase::
+		~MultiResScheduleRegistrationAlgorithmBase()
 		{
 		};
 
 		void
-		MultiResRegistrationAlgorithmBase::
+		MultiResScheduleRegistrationAlgorithmBase::
+		setSchedule(const ScheduleType &schedule)
+		{
+			setSchedule(schedule, schedule);
+		};
+
+		void
+		MultiResScheduleRegistrationAlgorithmBase::
 		setSchedule(const ScheduleType &movingSchedule, const ScheduleType &targetSchedule)
 		{
 			if (movingSchedule.columns() != this->getMovingResolutionDimensions())
@@ -68,29 +75,29 @@ namespace map
 			this->_targetResSchedule = tempTargetSchedule;
 		};
 
-		const MultiResRegistrationAlgorithmBase::ScheduleType &
-		MultiResRegistrationAlgorithmBase::
+		const MultiResScheduleRegistrationAlgorithmBase::ScheduleType &
+		MultiResScheduleRegistrationAlgorithmBase::
 		getMovingSchedule() const
 		{
 			return this->_movingResSchedule;
 		};
 
-		const MultiResRegistrationAlgorithmBase::ScheduleType &
-		MultiResRegistrationAlgorithmBase::
+		const MultiResScheduleRegistrationAlgorithmBase::ScheduleType &
+		MultiResScheduleRegistrationAlgorithmBase::
 		getTargetSchedule() const
 		{
 			return this->_targetResSchedule;
 		};
 
-		MultiResRegistrationAlgorithmBase::ResolutionLevelCountType
-		MultiResRegistrationAlgorithmBase::
+		MultiResScheduleRegistrationAlgorithmBase::ResolutionLevelCountType
+		MultiResScheduleRegistrationAlgorithmBase::
 		getResolutionLevels() const
 		{
 			return _movingResSchedule.rows(); //both schedules must have the same number of rows.
 		};
 
 		void
-		MultiResRegistrationAlgorithmBase::
+		MultiResScheduleRegistrationAlgorithmBase::
 		setResolutionLevels(ResolutionLevelCountType levels)
 		{
 			if (!(levels > 0))
@@ -112,8 +119,8 @@ namespace map
 			this->setSchedule(newMSched, newTSched);
 		};
 
-		MultiResRegistrationAlgorithmBase::ResolutionLevelCountType
-		MultiResRegistrationAlgorithmBase::
+		MultiResScheduleRegistrationAlgorithmBase::ResolutionLevelCountType
+		MultiResScheduleRegistrationAlgorithmBase::
 		getCurrentLevel() const
 		{
 			ResolutionLevelCountType result = 0;
@@ -127,7 +134,7 @@ namespace map
 		};
 
 		void
-		MultiResRegistrationAlgorithmBase::
+		MultiResScheduleRegistrationAlgorithmBase::
 		onScheduleChange(const ScheduleType &oldMovingSchedule, ScheduleType &newMovingSchedule, const ScheduleType &oldTargetSchedule, ScheduleType &newTargetMovingSchedule) const
 		{
 			//default implementation does nothing.

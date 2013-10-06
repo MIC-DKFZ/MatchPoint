@@ -40,9 +40,13 @@ namespace map
 	{
 
 		/*! @class MultiResImageRegistrationAlgorithmBase
-		 *@brief This is the default implementation of the interface for image registration algorithms that implement a multi resolution approach.
+		 *@brief This is the default implementation/extension of the MultiResRegistrationAlgorithmBase
+		 * for image based algorithms.
 		 *
-		 * The resolution number and scaling is defined by schedules
+		 * You can use this base class when you want to implement a image based algorithm that supports
+		 * multiple resolutions / scales. The resolution number and scaling is defined by schedules.
+		 * This implementation is read only and offers no public interfaces to set resolution levels or
+		 * schedule. If you need this feature, please see ModifiableMultiResImageRegistrationAlgorithmBase.
 		 * This base class allows depending on the used pyramide policy to set the pyramide types. (see ImagePyramideSetterInterface and ImagePyramideSetterInterface
 		 * added by TPyramidesPolicy; e.g. ArbitraryImagePyramidePolicy)
 		 *

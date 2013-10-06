@@ -23,13 +23,13 @@
 
 
 
-#ifndef __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_H
-#define __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_H
+#ifndef __ITK_MULTI_RES_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_H
+#define __ITK_MULTI_RES_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_H
 
 #include "mapContinuous.h"
 #include "mapDiscreteElements.h"
 
-#include "mapITKPDEDeformableRegistrationAlgorithm.h"
+#include "mapITKPDEDeformableRegistrationAlgorithmBase.h"
 #include "mapObserverSentinel.h"
 #include "mapModificationTimeValidator.h"
 #include "mapMultiResImageRegistrationAlgorithmBase.h"
@@ -54,14 +54,13 @@ namespace map
 			         class TIdentificationPolicy,
                class TInternalRegistrationFilter,
 							 class TDisplacementField = core::discrete::Elements<typename TImageType::ImageDimension>::VectorFieldType ,
-							 class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TImageType, TImageType>,
-			         >
-			class ITKMultiResPDEDeformableRegistrationAlgorithm : public ITKPDEDeformableRegistrationAlgorithm < TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter >,
+							 class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TImageType, TImageType> >
+			class ITKMultiResPDEDeformableRegistrationAlgorithm : public ITKPDEDeformableRegistrationAlgorithmBase< TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter >,
 				public MultiResImageRegistrationAlgorithmBase<TImageType, TImageType, TPyramidesPolicy>
 			{
 			public:
 				typedef ITKMultiResPDEDeformableRegistrationAlgorithm < TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy > Self;
-				typedef ITKPDEDeformableRegistrationAlgorithm < TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter >  Superclass;
+				typedef ITKPDEDeformableRegistrationAlgorithmBase < TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter >  Superclass;
 
 				typedef MultiResImageRegistrationAlgorithmBase<TImageType, TImageType, TPyramidesPolicy> MultiResRegistrationAlgorithmType;
 
@@ -116,20 +115,16 @@ namespace map
 				typedef typename Superclass::InterimRegistrationType InterimRegistrationType;
 				typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
 
-				/*! @overwrite
-				 * This default implementation does nothing.*/
-				virtual void configureAlgorithm();
+				virtual bool doStopAlgorithm();
 
-				// MetaPropertyAlgorithmBase
+				/*! This method should just execute the iteration loop.
+				* @remark If you want to change the initialization or the finalization, then overwrite prepareAlgorithm() or finalizeAlgorithm().
+				* @return Indicates of the registration was successfully determined (e.g. could be
+				* false if an iterative algorithm was stopped prematurely by the user).
+				* @eguarantee strong
+				*/
+				virtual bool runAlgorithm();
 
-				/*! @reimplemented*/
-				virtual void compileInfos(MetaPropertyVectorType &infos) const;
-
-				/*! @reimplemented*/
-				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const;
-
-				/*! @reimplemented*/
-				virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
 
 				/*! Returns if the registration should be computed. The registration is outdated if doGetRegistration returns null
 				* or the modification times of at least one policy is newer then the modification time of the registration.
@@ -216,18 +211,8 @@ namespace map
 				*/
 				virtual void doInterLevelSetup();
 
-				/*! return the optimizer value(s) of the current iteration step.
-				Will be called by getCurrentOptimizerValue() if hasCurrentValue() returns true.
-				@eguarantee strong
-				@return current measure
-				*/
-				virtual OptimizerMeasureType doGetCurrentOptimizerValue() const;
-
 				/*! Methods invoked by derivated classes.  */
 				virtual void PrintSelf(std::ostream &os, ::itk::Indent indent) const;
-
-				/*! @eguarantee strong*/
-				virtual IterationCountType doGetCurrentIteration() const;
 
 				/*! @brief gets the maximum number of the algorithm's iterations
 				@eguarantee strong
@@ -235,48 +220,34 @@ namespace map
 				*/
 				virtual IterationCountType doGetMaxIterations() const;
 
-				/*! Offers access to the internal registration method */
-				InternalRegistrationMethodType &getInternalRegistrationMethod();
-
-				/*!Pointer to the moving image used by the algorithm internally. This is used to allow the algorithm
-				* or its derived classes to modify the moving image with out changing the public moving image pointer.
-				* The variable is set by prepareAlgorithm() to _spMovingImage before calling prepPerpareInternalInputData().
-				* (e.g.: An algorithm always normalizes an image before registration. Then the algorithm can use the prepPerpareInternalInputData()
-				* function to manipulate _spInternalMovingImage before it is used by prepareAlgorithm() to set the internal algorithm)*/
-				MovingImageConstPointer _spInternalMovingImage;
-
-				/*!Pointer to the target image used by the algorithm internally. This is used to allow the algorithm
-				* or its derived classes to modify the target image with out changing the public target image pointer.
-				* The variable is set by prepareAlgorithm() to _spTargetImage before calling prepPerpareInternalInputData().
-				* (e.g.: An algorithm always normalizes an image before registration. Then the algorithm can use the prepPerpareInternalInputData()
-				* function to manipulate _spInternalTargetImage before it is used by prepareAlgorithm() to set the internal algorithm)*/
-				TargetImageConstPointer _spInternalTargetImage;
-
-				/*! The count if the iterations, since starting the registration algorithm the last time.
-				* 0 indicates that no iteration has been processed yet.*/
-				IterationCountType _currentIterationCount;
-
-				/*! The lock is used to manage the access to the member variable _currentIterationCount.*/
-				mutable ::itk::SimpleFastMutexLock _currentIterationLock;
-
-				/*! Smartpointer to the finalized registration. Will be set by finalizeAlgorithm()*/
-				typename RegistrationType::Pointer _spFinalizedRegistration;
-
 			private:
-				typename InternalRegistrationMethodType::Pointer _internalRegistrationMethod;
+				typedef ::itk::MultiResolutionPDEDeformableRegistration<TImageType, TImageType, TDisplacementField> InternalMultiResRegFilterType;
 
-        bool _matchHistograms;
-        bool _thresholdAtMeanIntensity;
-        unsigned int _numberOfHistogramLevels;
-        unsigned int _numberOfHistogramMatchPoints;
+				/*! Wrapping class that manage the multi resolution approach with PDEDeformable filter*/
+				typename InternalMultiResRegFilterType::Pointer _multiResFilter;
 
-				mutable core::ObserverSentinel::Pointer _onIterationObserver;
+				/*! The count of the levels, since starting the registration algorithm the last time.
+				* 0 indicates that no level has been processed yet.*/
+				ResolutionLevelCountType _currentLevelCount;
 
-				/*! This member function is called by the observer of the optimizer, when ever a IterationEvent is invoked.*/
-				void onIterationEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				/*!Indicates if there was any level event before*/
+				bool _firstLevelEvent;
 
-				/*! This member function is called by the observer of the transform for all kind of events. It serves as a pass through.*/
-				void onGeneralRegistrationMethodEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+				/*! The lock is used to manage the access to the member variable _currentLevelCount.*/
+				mutable ::itk::SimpleFastMutexLock _currentLevelLock;
+
+				mutable core::ObserverSentinel::Pointer _onLevelObserver;
+				mutable core::ObserverSentinel::Pointer _onGeneralTargePyramideObserver;
+				mutable core::ObserverSentinel::Pointer _onGeneralMovingPyramideObserver;
+
+				/*! This member function is called by the observer of the optimizer, when ever a LevelEvent is invoked.*/
+				void onLevelEvent(::itk::Object *caller, const ::itk::EventObject &eventObject);
+
+				/*! This member function is called by the transform policy if the transform model instance changes.*/
+				void onTargetImagePyramideChange(const ::itk::EventObject &eventObject);
+
+				/*! This member function is called by the transform policy if the transform model instance changes.*/
+				void onMovingImagePyramideChange(const ::itk::EventObject &eventObject);
 
 				ITKMultiResPDEDeformableRegistrationAlgorithm(const Self &source);
 				void operator=(const Self &); //purposely not implemented
