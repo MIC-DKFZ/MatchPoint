@@ -142,7 +142,7 @@ namespace map
 				{
 					spResult = map::core::MetaProperty<double>::New(_lvlIntensityDifferenceThreshold[2]);
 				}
-        else if (name == "Alpha.1")
+        else if (name == "Alpha.3")
 				{
 					spResult = map::core::MetaProperty<double>::New(_lvlAlpha[2]);
 				}

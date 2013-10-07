@@ -549,7 +549,7 @@ namespace map
 				{
 					spResult = map::core::MetaProperty<bool>::New(this->_internalRegistrationMethod->GetSmoothDisplacementField());
 				}
-				else if (name == "DisplacementFieldStandardDeviations ")
+				else if (name == "DisplacementFieldStandardDeviations")
 				{
 					spResult = map::core::MetaProperty<double>::New(static_cast<double>((this->_internalRegistrationMethod->GetStandardDeviations())[0]));
 				}
@@ -557,7 +557,7 @@ namespace map
 				{
 					spResult = map::core::MetaProperty<bool>::New(this->_internalRegistrationMethod->GetSmoothUpdateField());
 				}
-				else if (name == "UpdateFieldStandardDeviations ")
+				else if (name == "UpdateFieldStandardDeviations")
 				{
 					spResult = map::core::MetaProperty<double>::New(static_cast<double>((this->_internalRegistrationMethod->GetUpdateFieldStandardDeviations())[0]));
 				}
