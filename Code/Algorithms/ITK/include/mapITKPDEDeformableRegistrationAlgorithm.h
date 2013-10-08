@@ -104,6 +104,8 @@ namespace map
 				*/
 				virtual bool runAlgorithm();
 
+        virtual typename TDisplacementField::Pointer getFinalDisplacementField();
+
 			private:
 
 				ITKPDEDeformableRegistrationAlgorithm(const Self &source);

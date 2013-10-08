@@ -91,8 +91,7 @@ namespace map
 				ITKLevelSetMotionMultiResRegistrationAlgorithm();
 				virtual ~ITKLevelSetMotionMultiResRegistrationAlgorithm();
 
-				/*! @overwrite
-				 * This default implementation does nothing.*/
+        /*! @reimplemented*/
 				virtual void configureAlgorithm();
 
 				/*! @reimplemented*/

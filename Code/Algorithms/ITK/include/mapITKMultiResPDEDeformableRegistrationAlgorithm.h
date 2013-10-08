@@ -115,6 +115,15 @@ namespace map
 				typedef typename Superclass::InterimRegistrationType InterimRegistrationType;
 				typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
 
+				/*! @reimplemented*/
+				virtual void configureAlgorithm();
+
+        /*! @reimplemented*/
+        virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType &name) const;
+
+        /*! @reimplemented*/
+        virtual void doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty);
+
 				virtual bool doStopAlgorithm();
 
 				/*! This method should just execute the iteration loop.
@@ -220,6 +229,8 @@ namespace map
 				*/
 				virtual IterationCountType doGetMaxIterations() const;
 
+        virtual typename TDisplacementField::Pointer getFinalDisplacementField();
+
 			private:
 				typedef ::itk::MultiResolutionPDEDeformableRegistration<TImageType, TImageType, TDisplacementField> InternalMultiResRegFilterType;
 
@@ -230,8 +241,8 @@ namespace map
 				* 0 indicates that no level has been processed yet.*/
 				ResolutionLevelCountType _currentLevelCount;
 
-				/*!Indicates if there was any level event before*/
-				bool _firstLevelEvent;
+        /*! Cache for the number of iterations, defined by the user/developer.*/
+        unsigned long _numberOfIterations;
 
 				/*! The lock is used to manage the access to the member variable _currentLevelCount.*/
 				mutable ::itk::SimpleFastMutexLock _currentLevelLock;

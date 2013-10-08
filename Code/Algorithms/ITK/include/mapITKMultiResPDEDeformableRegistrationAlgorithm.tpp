@@ -72,6 +72,18 @@ namespace map
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TInternalRegistrationFilter, class TDisplacementField, class TPyramidesPolicy>
+			void
+			ITKMultiResPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy>::
+			configureAlgorithm()
+			{
+			    Superclass::configureAlgorithm();
+
+  				this->setResolutionLevels(3);
+ 				  this->_multiResFilter = InternalMultiResRegFilterType::New();
+					this->_numberOfIterations = 10;
+			}
+
+			template < class TImageType, class TIdentificationPolicy, class TInternalRegistrationFilter, class TDisplacementField, class TPyramidesPolicy>
 			typename ITKMultiResPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy>::ResolutionLevelCountType
 				ITKMultiResPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy>::
 			doGetCurrentLevel() const
@@ -135,6 +147,7 @@ namespace map
 			{
 				Superclass::prepAssembleSubComponents();
 
+        this->_multiResFilter->SetRegistrationFilter(&(this->getInternalRegistrationMethod()));
 				this->_multiResFilter->SetMovingImagePyramid(this->getMovingPyramideInternal());
 				this->_multiResFilter->SetFixedImagePyramid(this->getTargetPyramideInternal());
 			}
@@ -174,6 +187,11 @@ namespace map
 			{
 				Superclass::prepFinalizePreparation();
 
+        typename InternalMultiResRegFilterType::NumberOfIterationsType iterations;
+        iterations.SetSize(this->getResolutionLevels());
+        iterations.Fill(this->_numberOfIterations);
+        this->_multiResFilter->SetNumberOfIterations(iterations);
+
 				this->preparePyramidesAfterAssembly();
 			};
 
@@ -185,7 +203,6 @@ namespace map
 				/*check once before start to change internal state*/
 				this->prepCheckValidity();
 
-				this->_firstLevelEvent = true;
 				this->_currentLevelCount = 0;
 
 				Superclass::prepareAlgorithm();
@@ -193,7 +210,7 @@ namespace map
 				//Register level observers
 				typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 				spCommand->SetCallbackFunction(this, &Self::onLevelEvent);
-				this->getInternalRegistrationMethod().AddObserver(::itk::IterationEvent(), spCommand);
+				this->_multiResFilter->AddObserver(::itk::IterationEvent(), spCommand);
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TInternalRegistrationFilter, class TDisplacementField, class TPyramidesPolicy>
@@ -222,32 +239,24 @@ namespace map
 
 				::map::core::OStringStream os;
 
-				if (!this->_firstLevelEvent)
+				bool hasCurrentValue = this->hasCurrentOptimizerValue();
+				OptimizerMeasureType currentValue = this->getCurrentOptimizerValue();
+
+				++_currentLevelCount;
+				this->_currentIterationCount = 0;
+
+				os << "Resolution level finished: final level metric value: ";
+
+				if (hasCurrentValue)
 				{
-
-					bool hasCurrentValue = this->hasCurrentOptimizerValue();
-					OptimizerMeasureType currentValue = this->getCurrentOptimizerValue();
-
-					++_currentLevelCount;
-					this->_currentIterationCount = 0;
-
-					os << "Resolution level finished: final level metric value: ";
-
-					if (hasCurrentValue)
-					{
-						os << currentValue[0];
-					}
-					else
-					{
-						os << "unkown";
-					}
-
-					os << std::endl;
+					os << currentValue[0];
 				}
 				else
 				{
-					this->_firstLevelEvent = false;
+					os << "unkown";
 				}
+
+				os << std::endl;
 
 				os << "New Level #" << _currentLevelCount;
 
@@ -325,6 +334,50 @@ namespace map
 
 				os << indent << "Current level count: " << _currentLevelCount << std::endl;
 			};
+
+			template < class TImageType, class TIdentificationPolicy, class TInternalRegistrationFilter, class TDisplacementField, class TPyramidesPolicy>
+			typename ITKMultiResPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy>::MetaPropertyPointer
+				ITKMultiResPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy>::
+			doGetProperty(const MetaPropertyNameType &name) const
+			{
+				MetaPropertyPointer spResult;
+
+				if (name == "NumberOfIterations")
+				{
+					spResult = map::core::MetaProperty<unsigned long>::New(_numberOfIterations);
+				}
+				else
+				{
+					spResult = Superclass::doGetProperty(name);
+				}
+
+				return spResult;
+			};
+
+			template < class TImageType, class TIdentificationPolicy, class TInternalRegistrationFilter, class TDisplacementField, class TPyramidesPolicy>
+			void
+				ITKMultiResPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy>::
+			doSetProperty(const MetaPropertyNameType &name, const MetaPropertyType *pProperty)
+			{
+				if (name == "NumberOfIterations")
+				{
+					unsigned long num;
+					map::core::unwrapMetaProperty(pProperty, num);
+					_numberOfIterations = num;
+				}
+				else
+				{
+					Superclass::doSetProperty(name,pProperty);
+				}
+			};
+
+			template < class TImageType, class TIdentificationPolicy, class TInternalRegistrationFilter, class TDisplacementField, class TPyramidesPolicy>
+			 typename TDisplacementField::Pointer
+				ITKMultiResPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy>::
+        getFinalDisplacementField()
+       {
+         return this->_multiResFilter->GetOutput();
+       };
 
 		} // end namespace itk
 	} // end namespace algorithm

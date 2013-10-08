@@ -265,6 +265,10 @@ namespace map
 				/*! Offers access to the internal registration method */
 				InternalRegistrationMethodType &getInternalRegistrationMethod();
 
+        /*! Helper function used by finalizeAlgorithm to access the final displacement field.
+         * implemented by derived classes regarding there implementation.*/
+        virtual typename TDisplacementField::Pointer getFinalDisplacementField() = 0;
+
 				/*!Pointer to the moving image used by the algorithm internally. This is used to allow the algorithm
 				* or its derived classes to modify the moving image with out changing the public moving image pointer.
 				* The variable is set by prepareAlgorithm() to _spMovingImage before calling prepPerpareInternalInputData().

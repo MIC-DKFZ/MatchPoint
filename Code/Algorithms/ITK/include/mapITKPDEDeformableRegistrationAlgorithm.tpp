@@ -81,6 +81,15 @@ namespace map
 				return true;
 			};
 
+			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
+			 typename TDisplacementField::Pointer
+			ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
+        getFinalDisplacementField()
+       {
+         return this->getInternalRegistrationMethod().GetDisplacementField();
+       };
+
+
 		} // end namespace itk
 	} // end namespace algorithm
 } // end namespace map

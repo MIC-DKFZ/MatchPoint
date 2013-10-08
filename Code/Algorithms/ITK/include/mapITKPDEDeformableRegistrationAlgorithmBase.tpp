@@ -337,7 +337,7 @@ namespace map
 				typedef core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel InverseKernelType;
 
 				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
-				spIKernel->setField(*(_internalRegistrationMethod->GetDisplacementField()));
+				spIKernel->setField(*(this->getFinalDisplacementField()));
 
 				//now build the direct kernel via inversion of the inverse kernel
 				typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> GeneratorType;
