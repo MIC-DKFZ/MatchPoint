@@ -14,27 +14,29 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 4912 $ (last changed revision)
+// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKMultiResPDEDeformableRegistrationAlgorithm.h $
 */
 
 
 
 
-#ifndef __ITK_MULTI_RES_IMAGE_REGISTRATION_ALGORITHM_H
-#define __ITK_MULTI_RES_IMAGE_REGISTRATION_ALGORITHM_H
+#ifndef __ITK_MULTI_RES_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_H
+#define __ITK_MULTI_RES_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_H
 
 #include "mapContinuous.h"
+#include "mapDiscreteElements.h"
 
-#include "mapITKImageRegistrationAlgorithm.h"
+#include "mapITKPDEDeformableRegistrationAlgorithmBase.h"
+#include "mapObserverSentinel.h"
+#include "mapModificationTimeValidator.h"
+#include "mapMultiResImageRegistrationAlgorithmBase.h"
 #include "mapArbitraryImagePyramidesPolicy.h"
-#include "mapModifiableMultiResImageRegistrationAlgorithmBase.h"
 
-#include "itkMultiResolutionImageRegistrationMethod.h"
+#include "itkMultiResolutionPDEDeformableRegistration.h"
 #include "itkSimpleFastMutexLock.h"
-
 
 namespace map
 {
@@ -43,60 +45,52 @@ namespace map
 		namespace itk
 		{
 
-			/*! @class ITKMultiResImageRegistrationAlgorithm
-			@brief The class is used for image registration algorithm based on ITK and using a multi resolution approach.
-			If you need to react on level changes (e.g. to adapt certain algorithm parameters) you can observe the object
-			for AlgorithmResolutionLevelEvent. If you derive from this class you may also reimplement the method
-			doInterLevelSetup to directly react on level changes within the class implementation.
+			/*! @class ITKMultiResPDEDeformableRegistrationAlgorithm
+			@brief The class for an image registration algorithm based on ITK
 			@ingroup Algorithms
+			@ingroup ITK
 			*/
-			template < class TMovingImage, class TTargetImage,
+			template < class TImageType,
 					 class TIdentificationPolicy,
-					 class TInterpolatorPolicy = ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
-					 class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
-					 class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,
-					 class TTransformPolicy =
-					 ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-					 class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage>,
-					 class TInternalRegistrationMethod =
-					 ::itk::MultiResolutionImageRegistrationMethod<TTargetImage, TMovingImage> >
-			class ITKMultiResImageRegistrationAlgorithm : public
-				ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>,
-			public ModifiableMultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy>
+					 class TInternalRegistrationFilter,
+					 class TDisplacementField =
+					 core::discrete::Elements<typename TImageType::ImageDimension>::VectorFieldType ,
+					 class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TImageType, TImageType> >
+			class ITKMultiResPDEDeformableRegistrationAlgorithm : public
+				ITKPDEDeformableRegistrationAlgorithmBase< TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter >,
+			public MultiResImageRegistrationAlgorithmBase<TImageType, TImageType, TPyramidesPolicy>
 			{
 			public:
-				typedef ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-						TInterpolatorPolicy, TMetricPolicy,
-						TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy, TInternalRegistrationMethod > Self;
-				typedef ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>
-				Superclass;
+				typedef ITKMultiResPDEDeformableRegistrationAlgorithm
+				< TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy >
+				Self;
+				typedef ITKPDEDeformableRegistrationAlgorithmBase
+				< TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter >  Superclass;
 
-				typedef ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType>
-				ITKRegistrationType;
-				typedef ModifiableMultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy>
+				typedef MultiResImageRegistrationAlgorithmBase<TImageType, TImageType, TPyramidesPolicy>
 				MultiResRegistrationAlgorithmType;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
-				itkTypeMacro(ITKMultiResImageRegistrationAlgorithm, ITKImageRegistrationAlgorithm);
+				itkTypeMacro(ITKMultiResPDEDeformableRegistrationAlgorithm, ITKPDEDeformableRegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
 				typedef typename Superclass::UIDType UIDType;
 				typedef typename Superclass::UIDPointer UIDPointer;
 
-				typedef TMovingImage          MovingImageType;
-				typedef TTargetImage          TargetImageType;
-				typedef TInterpolatorPolicy   InterpolatorPolicyType;
-				typedef TMetricPolicy         MetricPolicyType;
-				typedef TOptimizerPolicy      OptimizerPolicyType;
-				typedef TTransformPolicy      TransformPolicyType;
 				typedef TIdentificationPolicy IdentificationPolicyType;
 				typedef TPyramidesPolicy      PyramidesPolicyType;
 
-				typedef typename ITKRegistrationType::OptimizerBaseType OptimizerBaseType;
-				typedef typename ITKRegistrationType::MetricBaseType MetricBaseType;
-				typedef typename ITKRegistrationType::TransformBaseType TransformBaseType;
-				typedef typename ITKRegistrationType::InterpolatorBaseType InterpolatorBaseType;
+				typedef typename
+				IterativeRegistrationAlgorithm<TImageType::ImageDimension, TImageType::ImageDimension>::OptimizerMeasureType
+				OptimizerMeasureType;
+				typedef ImageRegistrationAlgorithmBase<TImageType, TImageType> ImageRegistrationAlgorithmBaseType;
+
+				typedef typename Superclass::TargetImageType TargetImageType;
+				typedef typename Superclass::MovingImageType MovingImageType;
+				typedef typename Superclass::MovingImageConstPointer MovingImageConstPointer;
+				typedef typename Superclass::TargetImageConstPointer TargetImageConstPointer;
+
 				typedef typename MultiResRegistrationAlgorithmType::ScheduleType ScheduleType;
 				typedef typename MultiResRegistrationAlgorithmType::ResolutionLevelCountType
 				ResolutionLevelCountType;
@@ -109,23 +103,17 @@ namespace map
 				typedef typename MultiResRegistrationAlgorithmType::MovingImagePyramideBasePointer
 				MovingImagePyramideBasePointer;
 
-				typedef typename
-				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType
-				OptimizerMeasureType;
-				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
-				ImageRegistrationAlgorithmBaseType;
-
 				typedef typename Superclass::MovingRepresentationDescriptorType MovingRepresentationDescriptorType;
 				typedef typename Superclass::TargetRepresentationDescriptorType TargetRepresentationDescriptorType;
+
 				typedef typename Superclass::RegistrationPointer RegistrationPointer;
 				typedef typename Superclass::RegistrationType RegistrationType;
-				typedef typename Superclass::IterationCountType IterationCountType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
+				typedef typename Superclass::IterationCountType IterationCountType;
 
-				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer
-				MovingImageConstPointer;
-				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
-				TargetImageConstPointer;
+				typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
+				typedef typename MetaPropertyAlgorithmBase::MetaPropertyNameType MetaPropertyNameType;
+				typedef typename MetaPropertyAlgorithmBase::MetaPropertyVectorType MetaPropertyVectorType;
 
 				/*! Indicates if the current processed level can be deduced
 				@eguarantee no fail
@@ -133,12 +121,32 @@ namespace map
 				virtual bool hasLevelCount() const;
 
 			protected:
-				ITKMultiResImageRegistrationAlgorithm();
-				virtual ~ITKMultiResImageRegistrationAlgorithm();
+				ITKMultiResPDEDeformableRegistrationAlgorithm();
+				virtual ~ITKMultiResPDEDeformableRegistrationAlgorithm();
 
-				typedef typename Superclass::InternalRegistrationMethodType InternalRegistrationMethodType;
+				typedef TInternalRegistrationFilter InternalRegistrationMethodType;
 				typedef typename Superclass::InterimRegistrationType InterimRegistrationType;
 				typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
+
+				/*! @reimplemented*/
+				virtual void configureAlgorithm();
+
+				/*! @reimplemented*/
+				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
+
+				/*! @reimplemented*/
+				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
+
+				virtual bool doStopAlgorithm();
+
+				/*! This method should just execute the iteration loop.
+				* @remark If you want to change the initialization or the finalization, then overwrite prepareAlgorithm() or finalizeAlgorithm().
+				* @return Indicates of the registration was successfully determined (e.g. could be
+				* false if an iterative algorithm was stopped prematurely by the user).
+				* @eguarantee strong
+				*/
+				virtual bool runAlgorithm();
+
 
 				/*! Returns if the registration should be computed. The registration is outdated if doGetRegistration returns null
 				* or the modification times of at least one policy is newer then the modification time of the registration.
@@ -160,8 +168,8 @@ namespace map
 				* - prepInitializeTransformation
 				* - prepFinalizePreparation
 				* @remark If you want to change the execution style, then overwrite runAlgorithm().
-				@remark If you want to alter settings of optimzer, metric or interpolator depending on
-				the resolution level use the method doInterLevelSetup()
+				@remark If you want to alter settings depending on the resolution level use the method doInterLevelSetup()
+				@remark configureAlgorithmByMetaProperties is called after preCheckValidity and before prepPerpareSubComponent.
 				@eguarantee strong
 				*/
 				virtual void prepareAlgorithm();
@@ -175,12 +183,22 @@ namespace map
 
 				/*! This method is the slot where sub components can be configured before(!) they are set to the
 				* internal registration method.
-				* @remark The default implementation just calls the preparation methods of the component policies.*/
+				* @remark The default implementation does nothing.*/
 				virtual void prepPrepareSubComponents();
 
 				/*! This method is the slot where sub components are set to the internal registration method.
-				* @remark The default implementation just calls the preparation methods of the component policies.*/
+				* @remark The default implementation does nothing.*/
 				virtual void prepAssembleSubComponents();
+
+				/*! This method is the slot for internal preprocessing of input data. This method should
+				* be reimplemented if you want to prepare the input data before they go into the internal
+				* registration method. E.g. blurring or normalizing the moving and target image before registration.
+				* @remark The default implementation uses an itk::HistogrammMatchingFilter to normalize the gray values of the input image.
+				* @remark Implementations of this method should work on _spInternalMoving and _spInternalTargetImage. In the default
+				* implementation of prepSetInternalInputData() these member will be passed to the internal algorithm.
+				@eguarantee strong
+				*/
+				virtual void prepPerpareInternalInputData();
 
 				/*! This method is the slot for passing relevant input data to the internal algorithm or its components.
 				* @remark The default implementation passes _spInternalMoving and _spInternalTargetImage, sets the schedules, the fixed image region of the registration and the metric masks.
@@ -188,15 +206,18 @@ namespace map
 				*/
 				virtual void prepSetInternalInputData();
 
+				/*! This method is a slot that is used for the initialization of the transformation model used
+				* by the internal registration algorithm.
+				* @remark By default it just sets the initial transformation parameter for the internal registration methods to the current values of the transform.
+				@eguarantee strong
+				*/
+				virtual void prepInitializeTransformation();
 
-				/*! This method is the slot for final steps in the preperation process
+				/*! This method is the slot for final steps in the preparation process
 				* @remark The default implementation calls the prepareAfterAssembly methods of the sub component policies.
 				@eguarantee strong
 				*/
 				virtual void prepFinalizePreparation();
-
-				typedef typename TransformPolicyType::TransformType::TransformBaseType::ParametersType
-				TransformParametersType;
 
 				/*! return the current resolution level number.
 				Will be called by getCurrentLevel() if hasLevelCount() returns true.
@@ -212,21 +233,30 @@ namespace map
 				*/
 				virtual void doInterLevelSetup();
 
-				/*! Overloaded member that also stops on the registration method
-				 * level
-				 */
-				virtual bool doStopAlgorithm();
-
 				/*! Methods invoked by derivated classes.  */
 				virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
+				/*! @brief gets the maximum number of the algorithm's iterations
+				@eguarantee strong
+				@return returns the algorithm's maximum iterations count
+				*/
+				virtual IterationCountType doGetMaxIterations() const;
+
+				virtual typename TDisplacementField::Pointer getFinalDisplacementField();
+
 			private:
+				typedef ::itk::MultiResolutionPDEDeformableRegistration<TImageType, TImageType, TDisplacementField>
+				InternalMultiResRegFilterType;
+
+				/*! Wrapping class that manage the multi resolution approach with PDEDeformable filter*/
+				typename InternalMultiResRegFilterType::Pointer _multiResFilter;
+
 				/*! The count of the levels, since starting the registration algorithm the last time.
 				* 0 indicates that no level has been processed yet.*/
 				ResolutionLevelCountType _currentLevelCount;
 
-				/*!Indicates if there was any level event before*/
-				bool _firstLevelEvent;
+				/*! Cache for the number of iterations, defined by the user/developer.*/
+				unsigned long _numberOfIterations;
 
 				/*! The lock is used to manage the access to the member variable _currentLevelCount.*/
 				mutable ::itk::SimpleFastMutexLock _currentLevelLock;
@@ -244,7 +274,7 @@ namespace map
 				/*! This member function is called by the transform policy if the transform model instance changes.*/
 				void onMovingImagePyramideChange(const ::itk::EventObject& eventObject);
 
-				ITKMultiResImageRegistrationAlgorithm(const Self& source);
+				ITKMultiResPDEDeformableRegistrationAlgorithm(const Self& source);
 				void operator=(const Self&);  //purposely not implemented
 			};
 
@@ -253,7 +283,7 @@ namespace map
 }
 
 #ifndef MatchPoint_MANUAL_TPP
-#include "mapITKMultiResImageRegistrationAlgorithm.tpp"
+#include "mapITKMultiResPDEDeformableRegistrationAlgorithm.tpp"
 #endif
 
 #endif

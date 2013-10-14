@@ -47,32 +47,7 @@ namespace map
 			public:
 				typedef MultiResRegistrationAlgorithmSetterInterface Self;
 
-				typedef MultiResRegistrationAlgorithmInterface::DimensionCountType DimensionCountType;
-				typedef MultiResRegistrationAlgorithmInterface::ScalingType ScalingType;
 				typedef MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType ResolutionLevelCountType;
-				typedef MultiResRegistrationAlgorithmInterface::ScheduleType ScheduleType;
-
-				/*! @brief sets the moving and the target schedule as copies of the
-				passed schedule.
-				@pre the 2nd Dimension of the passed schedule must equal the
-				resolution dimension of moving and target information space.
-				@pre the 1st Dimension of the schedule must be >1 (hence it must have
-				at least one resolution level).
-				@eguarantee strong
-				*/
-				virtual void setSchedule(const ScheduleType& schedule) = 0;
-
-				/*! @brief sets the moving and the target schedule as copies of the
-				passed schedules.
-				@pre the 2nd Dimension of the passed schedules must equal the
-				resolution dimension of their information spaces.
-				@pre the 1st Dimension of the passed schedules must be equal
-				@pre the 1st Dimension of the schedule must be >1 (hence it must have
-				at least one resolution level).
-				@eguarantee strong
-				*/
-				virtual void setSchedule(const ScheduleType& movingSchedule,
-										 const ScheduleType& targetSchedule) = 0;
 
 				/*! resets the both schedules to the passed level count.
 				The sub sampling rate of a level is 2^(levels - n). n is the

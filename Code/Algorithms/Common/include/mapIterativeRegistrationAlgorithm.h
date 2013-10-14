@@ -123,7 +123,7 @@ namespace map
 			*/
 			virtual bool doDetermineRegistration();
 
-			/*! This method should do all preperation tasks right befor the algorithms execution. At the and of this method
+			/*! This method should do all preperation tasks right before the algorithms execution. At the and of this method
 			* the algorithm should be set up and ready to use.
 			* @remark If you want to change the execution style, then overwrite runAlgorithm().
 			@eguarantee strong

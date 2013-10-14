@@ -27,7 +27,7 @@
 #define __MULTI_RES_REGISTRATION_ALGORITHM_BASE_H
 
 #include "mapMultiResRegistrationAlgorithmInterface.h"
-#include "mapMultiResRegistrationAlgorithmSetterInterface.h"
+
 #include "mapMacros.h"
 #include "mapMAPAlgorithmsExports.h"
 
@@ -40,47 +40,28 @@ namespace map
 	{
 
 		/*! @class MultiResRegistrationAlgorithmBase
-		This is the default implementation of the interface for multi resolution / multi scale algorithms that also support the setting of the resolution schedule.
+		This is the default implementation of the interface for multi resolution / multi scale algorithms.
 		@ingroup AlgorithmFacets
+		@remark This base class only implements setter as protected methods. It gives developers the
+		freedom to decide wether a algorithm supports the setting resolution levels / schedules or not,
+		by implementing the "setter" facets (facet::MultiResRegistrationAlgorithmSetterInterface or
+		facet::MultiResScheduleSetterInterface)and calling the prepared protected implementations.
 		@remark Algorithms that want to support resolution events and
 		implement this interface should use the ResolutionChangedEventt
 		to indicate the beginning of the next resolution level usage
 		@see map::events::AlgorithmIterationEvent
 		*/
 		class MAPAlgorithms_EXPORT MultiResRegistrationAlgorithmBase : public
-			facet::MultiResRegistrationAlgorithmInterface,
-		public facet::MultiResRegistrationAlgorithmSetterInterface
+			facet::MultiResRegistrationAlgorithmInterface
 		{
 		public:
 			typedef MultiResRegistrationAlgorithmBase Self;
 
-			typedef unsigned int DimensionCountType;
-			typedef unsigned int ScalingType;
-			typedef unsigned int ResolutionLevelCountType;
-			typedef ::itk::Array2D<ScalingType> ScheduleType;
-
-			/*! @brief sets the moving and the target schedule as copies of the
-			passed schedule. Before the new schedule is set onScheduleChange will
-			be called.
-			@pre the 2nd Dimension of the passed schedule must equal the
-			resolution dimension of moving and target information space.
-			@pre the 1st Dimension of the schedule must be >=1 (hence it must have
-			at least one resolution level).
-			@eguarantee strong
-			*/
-			virtual void setSchedule(const ScheduleType& schedule);
-
-			/*! @brief sets the moving and the target schedule as copies of the
-			passed schedules. Before the new schedule is set onScheduleChange will
-			be called.
-			@pre the 2nd Dimension of the passed schedules must equal the
-			resolution dimension of their information spaces.
-			@pre the 1st Dimension of the passed schedules must be equal
-			@pre the 1st Dimension of the schedule must be >1 (hence it must have
-			at least one resolution level).
-			@eguarantee strong
-			*/
-			virtual void setSchedule(const ScheduleType& movingSchedule, const ScheduleType& targetSchedule);
+			typedef facet::MultiResRegistrationAlgorithmInterface::DimensionCountType DimensionCountType;
+			typedef facet::MultiResRegistrationAlgorithmInterface::ScalingType ScalingType;
+			typedef facet::MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType
+			ResolutionLevelCountType;
+			typedef facet::MultiResRegistrationAlgorithmInterface::ScheduleType ScheduleType;
 
 			/*! returns the current schedule for the moving information space
 			@eguarantee strong*/
@@ -94,15 +75,7 @@ namespace map
 			@eguarantee strong*/
 			virtual ResolutionLevelCountType getResolutionLevels() const;
 
-			/*! resets the both schedules to the passed level count.
-			The sub sampling rate of a level is 2^(levels - n). n is the
-			current level (starting with 1).\n
-			Passing 4 will therefore generate 8, 4, 2, 1.
-			@pre "levels" must be >0.
-			*/
-			virtual void setResolutionLevels(ResolutionLevelCountType levels);
-
-			/*! @brief gets the number of the algorithm's current resolution levekiteration
+			/*! @brief gets the number of the algorithm's current resolution level iteration
 			@eguarantee strong
 			@return returns the algorithm's current level. If the algorithm is not able to deduce (hasLevelCount()==false) this information, 0 will be returned.
 			@retval an IterationCountType specifying the current iteration
@@ -113,6 +86,26 @@ namespace map
 		protected:
 			MultiResRegistrationAlgorithmBase();
 			virtual ~MultiResRegistrationAlgorithmBase();
+
+			/*! resets the both schedules to the passed level count.
+			The sub sampling rate of a level is 2^(levels - n). n is the
+			current level (starting with 1).\n
+			Passing 4 will therefore generate 8, 4, 2, 1.
+			@pre "levels" must be >0.
+			*/
+			virtual void setResolutionLevels(ResolutionLevelCountType levels);
+
+			/*! @brief sets the moving and the target schedule as copies of the
+			passed schedules. Before the new schedule is set onScheduleChange will
+			be called.
+			@pre the 2nd Dimension of the passed schedules must equal the
+			resolution dimension of their information spaces.
+			@pre the 1st Dimension of the passed schedules must be equal
+			@pre the 1st Dimension of the schedule must be >1 (hence it must have
+			at least one resolution level).
+			@eguarantee strong
+			*/
+			virtual void setSchedule(const ScheduleType& movingSchedule, const ScheduleType& targetSchedule);
 
 			/*! Method is called when the schedules are going to be changed.
 			Overwrite this method to create special algorithmic behaviour.

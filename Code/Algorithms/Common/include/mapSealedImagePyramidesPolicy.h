@@ -27,9 +27,12 @@
 #define __SEALED_IMAGE_PYRAMIDES_POLICY_H
 
 #include "itkMultiResolutionPyramidImageFilter.h"
+#include "itkCommand.h"
+
 #include "mapNoComponentInitializationPolicy.h"
 
-#include "itkCommand.h"
+#include "mapModificationTimeValidator.h"
+
 
 namespace map
 {

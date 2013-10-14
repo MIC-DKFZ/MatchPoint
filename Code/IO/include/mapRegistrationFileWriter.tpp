@@ -50,9 +50,9 @@ namespace map
 			core::String dir = core::FileDispatch::getPath(path);
 
 			typename DirectKernelWriterBaseType::RequestType directRequest(registration->getDirectMapping(),
-					dir, fileName+"_D", _expandLazyKernels);
+					dir, fileName + "_D", _expandLazyKernels);
 			typename InverseKernelWriterBaseType::RequestType inverseRequest(registration->getInverseMapping(),
-					dir, fileName+"_I", _expandLazyKernels);
+					dir, fileName + "_I", _expandLazyKernels);
 
 			DirectKernelWriterBaseType* pDirectWriter = DirectKernelWriterStackType::getProvider(directRequest);
 			InverseKernelWriterBaseType* pInverseWriter = InverseKernelWriterStackType::getProvider(
