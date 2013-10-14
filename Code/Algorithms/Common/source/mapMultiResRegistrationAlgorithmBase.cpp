@@ -132,7 +132,7 @@ namespace map
 		{
 			//default implementation does nothing.
 			//reimplement if you want to react on level changes
-			//or want to modify the new schedules befor they are set
+			//or want to modify the new schedules before they are set
 		};
 
 	}

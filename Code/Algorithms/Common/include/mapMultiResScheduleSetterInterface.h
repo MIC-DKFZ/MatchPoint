@@ -38,7 +38,7 @@ namespace map
 		namespace facet
 		{
 			/*! @class MultiResRegistrationAlgorithmSetterInterface
-			This is the interface for multi resolution/ multi scale algorithms that allow the setting of there resolution schedule.
+			This is the interface for multi resolution/ multi scale algorithms that allow the setting of their resolution schedule.
 			@ingroup AlgorithmFacets
 			@see map::algorithm::facet::MultiResRegistrationAlgorithmInterface
 			*/

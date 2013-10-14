@@ -306,7 +306,7 @@ namespace map
 
 				if (unregEvent.CheckEvent(&eventObject))
 				{
-					//we can directly reset the observer sentinel befor the target pyramide will be unregistered
+					//we can directly reset the observer sentinel before the target pyramide will be unregistered
 					this->_onGeneralTargePyramideObserver = NULL;
 				}
 			};
@@ -320,7 +320,7 @@ namespace map
 
 				if (unregEvent.CheckEvent(&eventObject))
 				{
-					//we can directly reset the observer sentinel befor the moving pyramide will be unregistered
+					//we can directly reset the observer sentinel before the moving pyramide will be unregistered
 					this->_onGeneralMovingPyramideObserver = NULL;
 				}
 			};
