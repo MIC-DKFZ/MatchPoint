@@ -68,8 +68,8 @@ namespace map
 			{
 				//Connect images
 				this->InvokeEvent(events::AlgorithmEvent(this, "Connect images to itk registration method."));
-				this->getInternalRegistrationMethod().SetFixedImage(_spInternalTargetImage);
-				this->getInternalRegistrationMethod().SetMovingImage(_spInternalMovingImage);
+                this->getInternalRegistrationMethod().SetFixedImage(this->_spInternalTargetImage);
+                this->getInternalRegistrationMethod().SetMovingImage(this->_spInternalMovingImage);
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>

@@ -26,6 +26,9 @@
 #ifndef __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_BASE_H
 #define __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_BASE_H
 
+#include "itkSimpleFastMutexLock.h"
+#include "itkPDEDeformableRegistrationFilter.h"
+
 #include "mapContinuous.h"
 #include "mapDiscreteElements.h"
 
@@ -34,8 +37,6 @@
 #include "mapMetaPropertyAlgorithmBase.h"
 #include "mapObserverSentinel.h"
 #include "mapModificationTimeValidator.h"
-
-#include "itkSimpleFastMutexLock.h"
 
 namespace map
 {
@@ -52,9 +53,9 @@ namespace map
 			template < class TImageType,
 					 class TIdentificationPolicy,
 					 class TDisplacementField =
-					 core::discrete::Elements<typename TImageType::ImageDimension>::VectorFieldType ,
+                     typename core::discrete::Elements<TImageType::ImageDimension>::VectorFieldType ,
 					 class TInternalRegistrationFilter =
-					 ::itk::PDEDeformableRegistrationFilter<TImageType, TImageType, TDisplacementField> >
+                     typename ::itk::PDEDeformableRegistrationFilter< TImageType, TImageType, TDisplacementField> >
 			class ITKPDEDeformableRegistrationAlgorithmBase : public
 				IterativeRegistrationAlgorithm<TImageType::ImageDimension, TImageType::ImageDimension>,
 			public ImageRegistrationAlgorithmBase<TImageType, TImageType>,

@@ -44,7 +44,7 @@ namespace map
 			*/
 			template < class TImageType,
 					 class TIdentificationPolicy,
-					 class TDisplacementField = core::discrete::Elements<TImageType::ImageDimension>::VectorFieldType >
+                     class TDisplacementField = typename core::discrete::Elements<TImageType::ImageDimension>::VectorFieldType >
 			class ITKFastSymmetricForcesDemonsRegistrationAlgorithm : public
 				itk::ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, ::itk::FastSymmetricForcesDemonsRegistrationFilter<TImageType, TImageType, TDisplacementField> >
 			{
@@ -67,12 +67,10 @@ namespace map
 				IterativeRegistrationAlgorithm<TImageType::ImageDimension, TImageType::ImageDimension>::OptimizerMeasureType
 				OptimizerMeasureType;
 
-				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageType TargetImageType;
-				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageType MovingImageType;
-				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer
-				MovingImageConstPointer;
-				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
-				TargetImageConstPointer;
+                typedef typename Superclass::TargetImageType TargetImageType;
+                typedef typename Superclass::MovingImageType MovingImageType;
+                typedef typename Superclass::MovingImageConstPointer MovingImageConstPointer;
+                typedef typename Superclass::TargetImageConstPointer TargetImageConstPointer;
 
 				typedef typename Superclass::MovingRepresentationDescriptorType MovingRepresentationDescriptorType;
 				typedef typename Superclass::TargetRepresentationDescriptorType TargetRepresentationDescriptorType;
@@ -82,9 +80,10 @@ namespace map
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 				typedef typename Superclass::IterationCountType IterationCountType;
 
-				typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
-				typedef typename MetaPropertyAlgorithmBase::MetaPropertyNameType MetaPropertyNameType;
-				typedef typename MetaPropertyAlgorithmBase::MetaPropertyVectorType MetaPropertyVectorType;
+                typedef typename Superclass::MetaPropertyPointer MetaPropertyPointer;
+                typedef typename Superclass::MetaPropertyNameType MetaPropertyNameType;
+                typedef typename Superclass::MetaPropertyVectorType MetaPropertyVectorType;
+                typedef typename Superclass::MetaPropertyType MetaPropertyType;
 
 			protected:
 				ITKFastSymmetricForcesDemonsRegistrationAlgorithm();

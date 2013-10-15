@@ -50,10 +50,11 @@ namespace map
 		public:
 			typedef MetaPropertyAlgorithmBase Self;
 
-			typedef std::vector<MetaPropertyInfo::Pointer> MetaPropertyVectorType;
-			typedef core::MetaPropertyBase MetaPropertyType;
-			typedef MetaPropertyType::Pointer MetaPropertyPointer;
-			typedef core::String MetaPropertyNameType;
+            typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyVectorType MetaPropertyVectorType;
+            typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyType MetaPropertyType;
+            typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyPointer MetaPropertyPointer;
+            typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyNameType MetaPropertyNameType;
+
 
 			/*! Returns the MetaPropertyInfo for the property identified by the passed name
 			@eguarantee strong

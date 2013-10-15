@@ -467,7 +467,7 @@ namespace map
 				{
 					//add moving mask
 					typedef ::itk::Image<unsigned char, TMovingImage::ImageDimension> MaskImageType;
-					MaskImageType::Pointer spMovingMaskImage = generateMaskImage<Superclass::MovingDimensions>
+                    typename MaskImageType::Pointer spMovingMaskImage = generateMaskImage<Superclass::MovingDimensions>
 							(this->getMovingMask(), core::createFieldRepresentation(*(_spInternalMovingImage)).GetPointer());
 
 					_movingMaskTempPath = core::FileDispatch::createFullPath(_currentTempDir, "movingMask.mhd");
@@ -480,7 +480,7 @@ namespace map
 				{
 					//add target mask
 					typedef ::itk::Image<unsigned char, TTargetImage::ImageDimension> MaskImageType;
-					MaskImageType::Pointer spTargetMaskImage = generateMaskImage<Superclass::TargetDimensions>
+                    typename MaskImageType::Pointer spTargetMaskImage = generateMaskImage<Superclass::TargetDimensions>
 							(this->getTargetMask(), core::createFieldRepresentation(*(_spInternalTargetImage)).GetPointer());
 
 					_targetMaskTempPath = core::FileDispatch::createFullPath(_currentTempDir, "targetMask.mhd");
@@ -534,7 +534,7 @@ namespace map
 			{
 				typedef map::core::functors::FieldByFileLoadFunctor<Superclass::TargetDimensions, Superclass::MovingDimensions>
 				FunctorType;
-				FunctorType::Pointer spFunctor = FunctorType::New(_finalFieldTempPath);
+                typename FunctorType::Pointer spFunctor = FunctorType::New(_finalFieldTempPath);
 
 				FinalFieldPointer spField = spFunctor->generateField();
 
@@ -585,7 +585,7 @@ namespace map
 				{
 					_spFinalizedField = this->generateField();
 
-					typedef map::core::FieldKernels<Superclass::TargetDimensions, Superclass::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
+                    typedef typename map::core::FieldKernels<Superclass::TargetDimensions, Superclass::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
 					InverseKernelType;
 					typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
 
@@ -597,7 +597,7 @@ namespace map
 					typename GeneratorType::Pointer spGenerator = GeneratorType::New();
 					typedef typename GeneratorType::InverseKernelBaseType DirectKernelType;
 					typename Superclass::MovingRepresentationDescriptorType::ConstPointer spMovingRep =
-						core::createFieldRepresentation(*(this->getMovingImage()));
+                            core::createFieldRepresentation(*(this->getMovingImage())).GetPointer();
 
 					if (this->getMovingRepresentation())
 					{
