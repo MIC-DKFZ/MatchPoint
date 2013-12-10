@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 303 $ (last changed revision)
+// @date    $Date: 2013-09-19 18:06:33 +0200 (Do, 19 Sep 2013) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/Algorithms/ITK/test/mapITKEuler3DMattesMIRegistrationAlgorithmTemplateTest.cpp $
 */
 
 #if defined(_MSC_VER)
@@ -26,8 +26,9 @@
 
 #include "litCheckMacros.h"
 #include "litTestCommand.h"
+#include "litTestImageIO.h"
 
-#include "mapITKRigid3DClosedFormRegistrationAlgorithmTemplate.h"
+#include "mapITKEuler3DMattesMIRegistrationAlgorithmTemplate.h"
 #include "mapSimpleLandMarkFileReader.h"
 
 namespace map
@@ -75,41 +76,36 @@ namespace map
 			};
 		}
 
-		typedef core::continuous::Elements<3>::InternalPointSetType LandmarksType;
+		typedef map::core::discrete::Elements<3>::InternalImageType ImageType;
 
-		int mapITKRigid3DClosedFormRegistrationAlgorithmTemplateTest(int argc, char* argv[])
+		int mapITKEuler3DMattesMIRegistrationAlgorithmTemplateTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: moving land marks
 			//           2: target land marks
 
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			std::string movingLMFileName = "";
-			std::string targetLMFileName = "";
+			std::string movingFileName = "";
+			std::string targetFileName = "";
 
 			if (argc > 1)
 			{
-				movingLMFileName = argv[1];
+				movingFileName = argv[1];
 			}
 
 			if (argc > 2)
 			{
-				targetLMFileName = argv[2];
+				targetFileName = argv[2];
 			}
 
 			//load input data
-			LandmarksType::Pointer spMovingLMs = utilities::loadLandMarksFromFile<LandmarksType>
-												 (movingLMFileName);
-			LandmarksType::Pointer spTargetLMs = utilities::loadLandMarksFromFile<LandmarksType>
-												 (targetLMFileName);
-			LandmarksType::Pointer spMovingLMs2 = utilities::loadLandMarksFromFile<LandmarksType>
-												  (movingLMFileName);
-			LandmarksType::Pointer spTargetLMs2 = utilities::loadLandMarksFromFile<LandmarksType>
-												  (targetLMFileName);
+      ImageType::Pointer spTargetImage =
+        lit::TestImageIO<unsigned char, ImageType>::readImage(targetFileName);
 
+      ImageType::Pointer spMovingImage =
+        lit::TestImageIO<unsigned char, ImageType>::readImage(movingFileName);
 
-			typedef algorithm::boxed::ITKRigid3DClosedFormRegistrationAlgorithmTemplate<>::Type
-			RegistrationAlgorithmType;
+			typedef algorithm::boxed::ITKEuler3DMattesMIRegistrationAlgorithm<ImageType> RegistrationAlgorithmType;
 
 			RegistrationAlgorithmType::Pointer spAlgorithm = RegistrationAlgorithmType::New();
 
@@ -120,9 +116,11 @@ namespace map
 			spAlgorithm->AddObserver(::itk::AnyEvent(), spTestCommand);
 
 			//Set land marks
-			spAlgorithm->setMovingPointSet(spMovingLMs);
-			spAlgorithm->setTargetPointSet(spTargetLMs);
+      spAlgorithm->setMovingImage(spMovingImage);
+			spAlgorithm->setTargetImage(spTargetImage);
 
+      spAlgorithm->setProperty("PreinitByCenterOfGravity", core::MetaProperty<bool>::New(true));
+      
 			RegistrationAlgorithmType::RegistrationPointer spRegistration;
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
 
@@ -132,18 +130,20 @@ namespace map
 			core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
 				pInverseKernel->getParameters();
 
-			CHECK_CLOSE(0.0, parameters[0], 0.01);
-			CHECK_CLOSE(0.0, parameters[1], 0.01);
-			CHECK_CLOSE(0.0, parameters[2], 0.01);
-			CHECK_CLOSE(13.0, parameters[3], 0.01);
-			CHECK_CLOSE(17.0, parameters[4], 0.01);
-			CHECK_CLOSE(5.0, parameters[5], 0.01);
+			CHECK_CLOSE(0.0, parameters[0], 0.05);
+			CHECK_CLOSE(0.0, parameters[1], 0.05);
+			CHECK_CLOSE(0.0, parameters[2], 0.05);
+			CHECK_CLOSE(-10.0, parameters[3], 0.05);
+			CHECK_CLOSE(16.0, parameters[4], 0.05);
+			CHECK_CLOSE(5.0, parameters[5], 0.05);
 
       RegistrationAlgorithmType::RegistrationPointer spRegistration2nd;
       CHECK_NO_THROW(spRegistration2nd = spAlgorithm->getRegistration());
       /** Check for same MTimes because there is no reason to determine the reg again*/
       CHECK(spRegistration->GetMTime() == spRegistration2nd->GetMTime());
 
+      int x;
+      std::cin >> x;
       RETURN_AND_REPORT_TEST_SUCCESS;
 		}
 	} //namespace testing

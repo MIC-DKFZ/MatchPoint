@@ -20,8 +20,6 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-// this file defines the mapCoreTests for the test driver
-// and all it expects is that you have a function called registerTests()
 #if defined(_MSC_VER)
 #pragma warning ( disable : 4786 )
 #endif
@@ -60,6 +58,7 @@ namespace map
 			LIT_REGISTER_TEST(mapITKRigid2DClosedFormRegistrationAlgorithmTemplateTest);
 			LIT_REGISTER_TEST(mapITKRigid3DClosedFormRegistrationAlgorithmTemplateTest);
 			LIT_REGISTER_TEST(mapITKLandmarkKernelRegistrationAlgorithmTest);
+      LIT_REGISTER_TEST(mapITKEuler3DMattesMIRegistrationAlgorithmTemplateTest);
 		}
 
 	} //namespace testing
