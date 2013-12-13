@@ -142,8 +142,6 @@ namespace map
       /** Check for same MTimes because there is no reason to determine the reg again*/
       CHECK(spRegistration->GetMTime() == spRegistration2nd->GetMTime());
 
-      int x;
-      std::cin >> x;
       RETURN_AND_REPORT_TEST_SUCCESS;
 		}
 	} //namespace testing
