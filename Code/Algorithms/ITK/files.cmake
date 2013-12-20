@@ -222,4 +222,5 @@ test/mapITKEuler3DICPRegistrationAlgorithmTemplateTest.cpp
 test/mapITKRigid2DClosedFormRegistrationAlgorithmTemplateTest.cpp
 test/mapITKRigid3DClosedFormRegistrationAlgorithmTemplateTest.cpp
 test/mapITKLandmarkKernelRegistrationAlgorithmTest.cpp
+test/mapITKEuler3DMattesMIRegistrationAlgorithmTemplateTest.cpp
 )

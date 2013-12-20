@@ -487,6 +487,9 @@ namespace map
 									  << spDKernel);
 				}
 
+				//ensure that settings changed to the registration determination process are reseted to default
+				this->configureAlgorithm();
+
 				//now create the registration an set the kernels
 				spResult = RegistrationType::New();
 				core::RegistrationManipulator<RegistrationType> manipulator(spResult);
@@ -495,10 +498,7 @@ namespace map
 				manipulator.setInverseMapping(spIKernel);
 				manipulator.getTagValues()[tags::AlgorithmUID] = this->getUID()->toStr();
 
-				//ensure that settings changed to the registration determination process are reseted to default
-				this->configureAlgorithm();
-
-				//store the final results
+  			//store the final results
 				_spFinalizedRegistration = spResult;
 				_finalizedTransformParameters = lastTransformParameters;
 			};
