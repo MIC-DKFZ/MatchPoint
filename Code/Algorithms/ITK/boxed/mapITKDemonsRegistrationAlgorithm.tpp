@@ -1,12 +1,15 @@
 // -----------------------------------------------------------------------
+// MatchPoint - DKFZ translational registration framework
 //
-// (c) Copyright 2008, DKFZ, Heidelberg, Germany
-// ALL RIGHTS RESERVED
+// Copyright (c) German Cancer Research Center (DKFZ),
+// Software development for Integrated Diagnostics and Therapy (SIDT).
+// ALL RIGHTS RESERVED.
+// See mapCopyright.txt or
+// http://www.dkfz.de/en/sidt/projects/MatchPoint/copyright.html
 //
-// THIS FILE CONTAINS CONFIDENTIAL AND PROPRIETARY INFORMATION OF DKFZ.
-// ANY DUPLICATION, MODIFICATION, DISTRIBUTION, OR
-// DISCLOSURE IN ANY FORM, IN WHOLE, OR IN PART, IS STRICTLY PROHIBITED
-// WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF DKFZ.
+// This software is distributed WITHOUT ANY WARRANTY; without even
+// the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+// PURPOSE.  See the above copyright notices for more information.
 //
 //------------------------------------------------------------------------
 /*!
@@ -14,23 +17,8 @@
 // @version $Revision$ (last changed revision)
 // @date    $Date$ (last change date)
 // @author  $Author$ (last changed by)
-// @author  *none* (Reviewer)
 // Subversion HeadURL: $HeadURL$
 */
-
-//----------------------------------------------------------
-// !!!EXPERIMENTAL CODE!!!
-//
-// This code may not be used for release.
-// Add #define SIDT_ENFORCE_MATURE_CODE to any release module
-// to ensure this policy.
-//----------------------------------------------------------
-#ifdef SIDT_ENFORCE_MATURE_CODE
-#error "This code is marked as experimental code. It must not be used because this build enforces mature code."
-#endif
-#ifndef SIDT_CONTAINS_EXPERIMENTAL_CODE
-#define SIDT_CONTAINS_EXPERIMENTAL_CODE 1
-#endif
 
 #ifndef __MAP_IMAGE_REGISTRATION_ALGORITHM_TPP
 #define __MAP_IMAGE_REGISTRATION_ALGORITHM_TPP
