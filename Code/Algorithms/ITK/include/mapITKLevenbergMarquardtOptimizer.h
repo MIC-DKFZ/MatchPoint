@@ -77,12 +77,12 @@ namespace map
 
 				virtual bool hasIterationCount() const
 				{
-					return false;
+					return true;
 				};
 
 				virtual bool hasMaxIterationCount() const
 				{
-					return false;
+					return true;
 				};
 
 				virtual bool canMinimize() const
@@ -137,12 +137,26 @@ namespace map
 
 				virtual IterationCountType doGetCurrentIteration() const
 				{
-					return 0;
+          if (_spOptimizer->GetOptimizer())
+          {
+            return _spOptimizer->GetOptimizer()->get_num_iterations();
+          }
+          else
+          {
+            return 0;
+          }
 				};
 
 				virtual IterationCountType doGetMaxIterations() const
 				{
-					return 0;
+          if (_spOptimizer->GetOptimizer())
+          {
+            return _spOptimizer->GetOptimizer()->get_max_function_evals();
+          }
+          else
+          {
+            return 0;
+          }
 				};
 
 				virtual MVNLMeasureType doGetCurrentMeasure() const
