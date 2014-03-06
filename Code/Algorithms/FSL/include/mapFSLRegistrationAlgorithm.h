@@ -113,6 +113,8 @@ namespace map
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
+                        typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
+
 				// IterativeRegistrationAlgorithm
 				/*! @eguarantee strong*/
 				virtual bool isStoppable() const;

@@ -25,7 +25,7 @@
 #include "mapExceptionObject.h"
 #include "mapLogbook.h"
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) && !defined(__APPLE__)
 #include <auto_ptr.h>
 #endif
 
