@@ -101,6 +101,8 @@ namespace map
 													TInterpolatorPolicy >::
 													compileInfos(MetaPropertyVectorType& infos) const
 			{
+        Superclass::compileInfos(infos);
+
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
 				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
 
@@ -125,10 +127,6 @@ namespace map
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfSpatialSamples",
 								typeid(unsigned long), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("UseAllPixels", typeid(bool), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitTransform", typeid(bool), true,
-								true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitByCenterOfGravity", typeid(bool),
-								true, true));
 #endif
 			};
 
@@ -199,17 +197,9 @@ namespace map
 					spResult = map::core::MetaProperty<bool>::New(
 								   this->getConcreteMetricControl()->getConcreteMetric()->GetUseAllPixels());
 				}
-				else if (name == "PreinitTransform")
-				{
-					spResult = map::core::MetaProperty<bool>::New(this->_preInitialize);
-				}
-				else if (name == "PreinitByCenterOfGravity")
-				{
-					spResult = map::core::MetaProperty<bool>::New(this->_useCenterOfGravity);
-				}
 				else
 				{
-					assert(false); //any other property name should have been excluded by the calling function.
+					spResult = Superclass::doGetProperty(name);
 				}
 
 
@@ -293,80 +283,12 @@ namespace map
 					map::core::unwrapMetaProperty(pProperty, useAll);
 					this->getConcreteMetricControl()->getConcreteMetric()->SetUseAllPixels(useAll);
 				}
-				else if (name == "PreinitTransform")
-				{
-					bool init;
-					map::core::unwrapMetaProperty(pProperty, init);
-					this->_preInitialize = init;
-				}
-				else if (name == "PreinitByCenterOfGravity")
-				{
-					bool init;
-					map::core::unwrapMetaProperty(pProperty, init);
-					this->_useCenterOfGravity = init;
-				}
 				else
 				{
-					assert(false); //any other property name should have been excluded by the calling function.
+					Superclass::doSetProperty(name, pProperty);
 				}
 
 			};
-
-			template < class TMovingImage, class TTargetImage,
-					 typename TUIDPolicy,
-					 class TInterpolatorPolicy >
-			void
-			ITKRigid2DMattesMIRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-													TInterpolatorPolicy >::
-													prepInitializeTransformation()
-			{
-				Superclass::prepInitializeTransformation();
-
-				if (this->_preInitialize)
-				{
-					this->InvokeEvent(events::AlgorithmEvent(this, "Preinitialize transform."));
-
-					typedef ::itk::CenteredTransformInitializer<typename Superclass::ConcreteTransformType::TransformType, typename Superclass::TargetImageType, typename Superclass::MovingImageType>
-					InitializerType;
-
-					typename InitializerType::Pointer spInitializer = InitializerType::New();
-
-					spInitializer->SetMovingImage(this->_spInternalMovingImage);
-					spInitializer->SetFixedImage(this->_spInternalTargetImage);
-					spInitializer->SetTransform(this->getConcreteTransformModel()->getConcreteTransform());
-
-					if (this->_useCenterOfGravity)
-					{
-						this->InvokeEvent(events::AlgorithmEvent(this, "Preinitialize by moments."));
-						spInitializer->MomentsOn();
-					}
-					else
-					{
-						this->InvokeEvent(events::AlgorithmEvent(this, "Preinitialize by image geometry."));
-						spInitializer->GeometryOn();
-					}
-
-					spInitializer->InitializeTransform();
-				}
-
-				typename Superclass::ConcreteTransformType::MatrixType matrix;
-				typename Superclass::ConcreteTransformType::OutputVectorType offset;
-
-				this->getConcreteTransformModel()->getAffineMatrixDecomposition(matrix, offset);
-
-				core::OStringStream os;
-
-				os << "Preinitialized transform to: " <<
-				   this->getConcreteTransformModel()->getConcreteTransform()->GetParameters();
-				//set the parameter of the transform model to the current transform parameters of the algorithm
-				this->setCurrentTransformParameters(
-					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
-				this->getInternalRegistrationMethod().SetInitialTransformParameters(
-					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
-
-				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
-			};
-
 
 		}
 	}

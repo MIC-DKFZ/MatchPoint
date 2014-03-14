@@ -24,7 +24,7 @@
 #ifndef __MAP_ITK_RIGID2D_MATTES_MI_REGISTRATION_ALGORITHM_TEMPLATE_H
 #define __MAP_ITK_RIGID2D_MATTES_MI_REGISTRATION_ALGORITHM_TEMPLATE_H
 
-#include "mapITKImageRegistrationAlgorithm.h"
+#include "mapITKInitializedImageRegistrationAlgorithm.h"
 
 #include "mapITKRegularStepGradientDescentOptimizer.h"
 #include "mapITKMattesMutualInformationImageToImageMetric.h"
@@ -48,7 +48,7 @@ namespace map
 		{
 
 			mapGenerateAlgorithmUIDPolicyMacro(DefaultRigid2DMattesMIRegistrationAlgorithmUIDPolicy,
-											   "de.dkfz.matchpoint", "Rigid2DMattesMIRegistrationAlgorithm.default", "1.0.0", "");
+											   "de.dkfz.matchpoint", "Rigid2DMattesMIRegistrationAlgorithm.default", "1.0.1", "");
 
 			template < class TMovingImage, class TTargetImage = TMovingImage,
 					 typename TUIDPolicy = DefaultRigid2DMattesMIRegistrationAlgorithmUIDPolicy,
@@ -56,7 +56,7 @@ namespace map
 					 SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> >
 					 >
 			class ITKRigid2DMattesMIRegistrationAlgorithm :
-				public algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
+				public algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
 				TInterpolatorPolicy,
 				SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
 				SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer >,
@@ -66,7 +66,7 @@ namespace map
 				typedef ITKRigid2DMattesMIRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
 						TInterpolatorPolicy > Self;
 
-				typedef typename algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+				typedef typename algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
 						TUIDPolicy,
 						TInterpolatorPolicy,
 						SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
@@ -98,18 +98,6 @@ namespace map
 				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
 
 				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
-
-				/*! Calls the super class version. Afterwards it preinitializes the transform of
-				* the algorithm as setup (no init, init by geometry or init by center of gravity).
-				@eguarantee strong
-				*/
-				virtual void prepInitializeTransformation();
-
-				/*! Indicates if the transform should be pre initialized */
-				bool _preInitialize;
-				/*! Indicates if for a pre initialization the center of gravity (true) or the image geometry center (false)
-				* should be used.*/
-				bool _useCenterOfGravity;
 
 			private:
 

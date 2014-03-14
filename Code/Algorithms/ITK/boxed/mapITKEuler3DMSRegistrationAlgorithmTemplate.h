@@ -24,7 +24,7 @@
 #ifndef __MAP_ITK_EULER3D_MS_REGISTRATION_ALGORITHM_TEMPLATE_H
 #define __MAP_ITK_EULER3D_MS_REGISTRATION_ALGORITHM_TEMPLATE_H
 
-#include "mapITKImageRegistrationAlgorithm.h"
+#include "mapITKInitializedImageRegistrationAlgorithm.h"
 
 #include "mapITKRegularStepGradientDescentOptimizer.h"
 #include "mapITKMeanSquaresImageToImageMetric.h"
@@ -45,7 +45,7 @@ namespace map
 		{
 
 			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMSRegistrationAlgorithmUIDPolicy,
-											   "de.dkfz.matchpoint", "Euler3DMSRegistrationAlgorithm.default", "1.0.0", "");
+											   "de.dkfz.matchpoint", "Euler3DMSRegistrationAlgorithm.default", "1.0.1", "");
 
 			template < class TMovingImage, class TTargetImage = TMovingImage,
 					 typename TUIDPolicy = DefaultEuler3DMSRegistrationAlgorithmUIDPolicy,
@@ -53,7 +53,7 @@ namespace map
 					 SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> >
 					 >
 			class ITKEuler3DMSRegistrationAlgorithm :
-				public algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
+				public algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
 				TInterpolatorPolicy,
 				SealedFixedImageToImageMetricPolicyMacro< ::itk::MeanSquaresImageToImageMetric<TMovingImage, TTargetImage> >,
 				SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer >,
@@ -63,7 +63,7 @@ namespace map
 				typedef ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
 						TInterpolatorPolicy > Self;
 
-				typedef typename algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+				typedef typename algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
 						TUIDPolicy,
 						TInterpolatorPolicy,
 						SealedFixedImageToImageMetricPolicyMacro< ::itk::MeanSquaresImageToImageMetric<TMovingImage, TTargetImage> >,
@@ -95,18 +95,6 @@ namespace map
 				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
 
 				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
-
-				/*! Calls the super class version. Afterwards it preinitializes the transform of
-				* the algorithm as setup (no init, init by geometry or init by center of gravity).
-				@eguarantee strong
-				*/
-				virtual void prepInitializeTransformation();
-
-				/*! Indicates if the transform should be pre initialized */
-				bool _preInitialize;
-				/*! Indicates if for a pre initialization the center of gravity (true) or the image geometry center (false)
-				* should be used.*/
-				bool _useCenterOfGravity;
 
 			private:
 

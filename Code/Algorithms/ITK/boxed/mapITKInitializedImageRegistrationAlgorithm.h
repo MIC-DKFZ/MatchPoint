@@ -14,17 +14,17 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 303 $ (last changed revision)
+// @date    $Date: 2013-09-19 18:06:33 +0200 (Do, 19 Sep 2013) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKInitializedImageRegistrationAlgorithm.h $
 */
 
 
-#ifndef __MAP_ITK_INITIALIZING_MULTI_RES_IMAGE_REGISTRATION_ALGORITHM_H
-#define __MAP_ITK_INITIALIZING_MULTI_RES_IMAGE_REGISTRATION_ALGORITHM_H
+#ifndef __MAP_ITK_INITIALIZING_IMAGE_REGISTRATION_ALGORITHM_H
+#define __MAP_ITK_INITIALIZING_IMAGE_REGISTRATION_ALGORITHM_H
 
-#include "mapITKMultiResImageRegistrationAlgorithm.h"
+#include "mapITKImageRegistrationAlgorithm.h"
 
 namespace map
 {
@@ -33,37 +33,35 @@ namespace map
 		namespace boxed
 		{
 
-			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKInitializingMultiResImageRegistrationUIDPolicy,
-											   "MatchPoint.ITK", "ITKInitializedMultiResImageRegistrationAlgorithm.default", "1.0.0", "");
+			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKInitializingImageRegistrationUIDPolicy,
+											   "MatchPoint.ITK", "ITKInitializedImageRegistrationAlgorithm.default", "1.0.0", "");
 
-			template < class TMovingImage, class TTargetImage,
-					 class TUIDPolicy = DefaultITKInitializingMultiResImageRegistrationUIDPolicy,
-					 class TInterpolatorPolicy =
-					 itk::ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
-					 class TMetricPolicy = itk::ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
-					 class TOptimizerPolicy = itk::ArbitrarySVNLOptimizerPolicy,
-					 class TTransformPolicy =
-					 itk::ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-					 class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage> >
-			class ITKInitializedMultiResImageRegistrationAlgorithm :
-				public algorithm::itk::ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage,
-				TUIDPolicy,
-				TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy >
+      template < class TMovingImage, class TTargetImage,
+      class TIdentificationPolicy,
+      class TInterpolatorPolicy = ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
+      class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
+      class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,
+      class TTransformPolicy =
+        ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+      class TInternalRegistrationMethod = ::itk::ImageRegistrationMethod<TTargetImage, TMovingImage> >
+			class ITKInitializedImageRegistrationAlgorithm :
+				public algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+				TIdentificationPolicy,
+				TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod >
 			{
 			public:
-				typedef ITKInitializedMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TPyramidesPolicy > Self;
+				typedef ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
+						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod > Self;
 
-				typedef typename algorithm::itk::ITKMultiResImageRegistrationAlgorithm < TMovingImage, TTargetImage,
-						TUIDPolicy,
+				typedef typename algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+						TIdentificationPolicy,
 						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy,
-						TPyramidesPolicy >  Superclass;
+						TInternalRegistrationMethod >  Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
 
-				itkTypeMacro(ITKInitializedMultiResImageRegistrationAlgorithm,
-							 ITKMultiResImageRegistrationAlgorithm);
+				itkTypeMacro(ITKInitializedImageRegistrationAlgorithm, ITKImageRegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
 				typedef ::itk::Array<double> ParametersType;
@@ -74,8 +72,8 @@ namespace map
 				typedef typename Superclass::MetaPropertyVectorType MetaPropertyVectorType;
 
 			protected:
-				ITKInitializedMultiResImageRegistrationAlgorithm();
-				virtual ~ITKInitializedMultiResImageRegistrationAlgorithm();
+				ITKInitializedImageRegistrationAlgorithm();
+				virtual ~ITKInitializedImageRegistrationAlgorithm();
 
 				virtual void configureAlgorithm();
 
@@ -99,7 +97,7 @@ namespace map
 
 			private:
 
-				ITKInitializedMultiResImageRegistrationAlgorithm(const Self& source);  //purposely not implemented
+				ITKInitializedImageRegistrationAlgorithm(const Self& source);  //purposely not implemented
 				void operator=(const Self&);  //purposely not implemented
 			};
 
@@ -108,7 +106,7 @@ namespace map
 }
 
 #ifndef MatchPoint_MANUAL_TPP
-#include "mapITKInitializedMultiResImageRegistrationAlgorithm.tpp"
+#include "mapITKInitializedImageRegistrationAlgorithm.tpp"
 #endif
 
 #endif
