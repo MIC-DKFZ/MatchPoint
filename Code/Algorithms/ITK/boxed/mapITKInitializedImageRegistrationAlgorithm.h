@@ -38,11 +38,11 @@ namespace map
 
       template < class TMovingImage, class TTargetImage,
       class TIdentificationPolicy,
-      class TInterpolatorPolicy = ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
-      class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
-      class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,
+      class TInterpolatorPolicy = itk::ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
+      class TMetricPolicy = itk::ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
+      class TOptimizerPolicy = itk::ArbitrarySVNLOptimizerPolicy,
       class TTransformPolicy =
-        ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+        itk::ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
       class TInternalRegistrationMethod = ::itk::ImageRegistrationMethod<TTargetImage, TMovingImage> >
 			class ITKInitializedImageRegistrationAlgorithm :
 				public algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,

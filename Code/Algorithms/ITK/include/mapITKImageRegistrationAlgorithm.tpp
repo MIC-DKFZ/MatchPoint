@@ -21,8 +21,8 @@
 */
 
 
-#ifndef __ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
-#define __ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
+#ifndef __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
+#define __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
 
 #include "mapAlgorithmException.h"
 #include "mapModelBasedRegistrationKernel.h"

@@ -66,8 +66,8 @@ namespace map
 													TInterpolatorPolicy >::
 													configureAlgorithm()
 			{
-				_preInitialize = true;
-				_useCenterOfGravity = false;
+                this->_preInitialize = true;
+                this->_useCenterOfGravity = false;
 
 				typename Superclass::ConcreteOptimizerType::ScalesType scales(3);
 				scales[0] = 1.0;

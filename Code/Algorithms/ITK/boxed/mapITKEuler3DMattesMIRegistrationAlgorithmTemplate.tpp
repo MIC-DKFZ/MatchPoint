@@ -55,8 +55,8 @@ namespace map
 			ITKEuler3DMattesMIRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy, TInterpolatorPolicy>::
 			configureAlgorithm()
 			{
-				_preInitialize = true;
-				_useCenterOfGravity = false;
+                this->_preInitialize = true;
+                this->_useCenterOfGravity = false;
 
 				typename Superclass::ConcreteOptimizerType::ScalesType scales(6);
 				scales[0] = 1.0;
