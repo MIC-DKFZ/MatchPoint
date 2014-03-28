@@ -80,11 +80,11 @@ namespace map
         {
           //there is really a bounding box
           typename MaskBaseType::BoundingBoxType::Pointer spBBox = mask->GetBoundingBox();
-          typename const MaskBaseType::BoundingBoxType::PointsContainer* cornerPoints = spBBox->GetCorners();
+          const typename MaskBaseType::BoundingBoxType::PointsContainer* cornerPoints = spBBox->GetCorners();
 
-          ImageBaseType::IndexType minIndex;
+          typename ImageBaseType::IndexType minIndex;
           minIndex.Fill(::itk::NumericTraits<typename ImageBaseType::IndexType::IndexValueType>::max());
-          ImageBaseType::IndexType maxIndex;
+          typename ImageBaseType::IndexType maxIndex;
           maxIndex.Fill(::itk::NumericTraits<typename ImageBaseType::IndexType::IndexValueType>::NonpositiveMin());
 
           for (typename MaskBaseType::BoundingBoxType::PointsContainer::ConstIterator pos = cornerPoints->Begin(); pos != cornerPoints->End(); ++pos)
