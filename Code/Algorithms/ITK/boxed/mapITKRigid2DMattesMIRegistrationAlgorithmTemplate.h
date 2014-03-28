@@ -48,7 +48,7 @@ namespace map
 		{
 
 			mapGenerateAlgorithmUIDPolicyMacro(DefaultRigid2DMattesMIRegistrationAlgorithmUIDPolicy,
-											   "de.dkfz.matchpoint", "Rigid2DMattesMIRegistrationAlgorithm.default", "1.0.1", "");
+											   "de.dkfz.matchpoint", "Rigid2DMattesMIRegistrationAlgorithm.default", "1.1.0", "");
 
 			template < class TMovingImage, class TTargetImage = TMovingImage,
 					 typename TUIDPolicy = DefaultRigid2DMattesMIRegistrationAlgorithmUIDPolicy,

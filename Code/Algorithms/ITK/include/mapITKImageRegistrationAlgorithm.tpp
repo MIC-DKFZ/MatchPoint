@@ -24,6 +24,9 @@
 #ifndef __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
 #define __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
 
+#include "itkMutexLockHolder.h"
+#include "itkExtractImageFilter.h"
+
 #include "mapAlgorithmException.h"
 #include "mapModelBasedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
@@ -32,7 +35,7 @@
 
 #include "mapITKMVNLOptimizerControlInterface.h"
 #include "mapITKSVNLOptimizerControlInterface.h"
-#include "itkMutexLockHolder.h"
+#include "mapMaskBoundingBoxHelper.h"
 
 namespace map
 {
@@ -154,6 +157,7 @@ namespace map
 				_currentIterationCount = 0;
 				_spInternalMovingImage = NULL;
 				_spInternalTargetImage = NULL;
+        _CropInputImagesByMask = true;
 
 				//now set the policy event slots
 				typedef ::itk::ReceptorMemberCommand<Self> AlgorithmCommandType;
@@ -362,7 +366,85 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			prepPerpareInternalInputData()
 			{
-				//default implementation does nothing
+        typedef ::itk::ExtractImageFilter<MovingImageType,MovingImageType> MovingExtractFilterType;
+        typedef ::itk::ExtractImageFilter<TargetImageType,TargetImageType> TargetExtractFilterType;
+
+        typename MovingExtractFilterType::Pointer movingFilter = MovingExtractFilterType::New();
+
+				::map::core::OStringStream os;
+				::map::core::OStringStream os2;
+
+        if (this->getCropInputImagesByMask())
+        {
+				  if (this->getTargetMask().IsNotNull())
+				  {
+					  //we have a mask -> so construct the image region
+            typename TargetImageType::RegionType boundedRegion;
+					  if (map::algorithm::MaskBoundingBoxHelper<TargetImageType::ImageDimension>::computeBoundingImageRegion(this->getTargetMask(), this->getInternalTargetImage(), boundedRegion))
+					  {
+						  if (boundedRegion.Crop(this->getInternalTargetImage()->GetLargestPossibleRegion()))
+						  {
+							  os << "Target mask: set -> target image space region is set to: " <<::std::endl << boundedRegion;
+                typename TargetExtractFilterType::Pointer targetFilter = TargetExtractFilterType::New();
+                targetFilter->SetExtractionRegion(boundedRegion);
+                targetFilter->SetInput(this->getInternalTargetImage());
+                targetFilter->Update();
+                typename TargetImageType::Pointer newTarget = targetFilter->GetOutput();
+                newTarget->DisconnectPipeline();
+                this->setInternalTargetImage(newTarget);
+						  }
+						  else
+						  {
+							  os << "Target mask: set, but invalid (not within the bufferd target image) -> use complete target image.";
+						  }
+					  }
+					  else
+					  {
+						  os << "Target mask: set, but invalid (cannot compute bounding box) -> use complete target image.";
+					  }
+				  }
+				  else
+				  {
+					  os << "Target mask: none -> use complete target image.";
+				  }
+
+  				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
+
+          if (this->getMovingMask().IsNotNull())
+				  {
+					  //we have a mask -> so construct the image region
+            typename MovingImageType::RegionType boundedRegion;
+					  if (map::algorithm::MaskBoundingBoxHelper<MovingImageType::ImageDimension>::computeBoundingImageRegion(this->getMovingMask(), this->getInternalMovingImage(), boundedRegion))
+					  {
+						  if (boundedRegion.Crop(this->getInternalMovingImage()->GetLargestPossibleRegion()))
+						  {
+							  os2 << "Moving mask: set -> moving image space region is set to: " <<::std::endl << boundedRegion;
+                typename MovingExtractFilterType::Pointer movingFilter = MovingExtractFilterType::New();
+                movingFilter->SetExtractionRegion(boundedRegion);
+                movingFilter->SetInput(this->getInternalMovingImage());
+                movingFilter->Update();
+                typename MovingImageType::Pointer newMoving = movingFilter->GetOutput();
+                newMoving->DisconnectPipeline();
+                this->setInternalMovingImage(newMoving);
+						  }
+						  else
+						  {
+							  os2 << "Moving mask: set, but invalid (not within the bufferd moving image) -> use complete moving image.";
+						  }
+					  }
+					  else
+					  {
+						  os2 << "Moving mask: set, but invalid (cannot compute bounding box) -> use complete moving image.";
+					  }
+				  }
+				  else
+				  {
+					  os2 << "Moving mask: none -> use complete moving image.";
+				  }
+
+  				this->InvokeEvent(events::AlgorithmEvent(this, os2.str()));
+
+        }
 			}
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
@@ -372,8 +454,8 @@ namespace map
 			{
 				//Connect images
 				this->InvokeEvent(events::AlgorithmEvent(this, "Connect images to itk registration method."));
-				this->_internalRegistrationMethod->SetFixedImage(_spInternalTargetImage);
-				this->_internalRegistrationMethod->SetMovingImage(_spInternalMovingImage);
+				this->_internalRegistrationMethod->SetFixedImage(this->getInternalTargetImage());
+				this->_internalRegistrationMethod->SetMovingImage(this->getInternalMovingImage());
 
 				//Connect masks if present
 				this->InvokeEvent(events::AlgorithmEvent(this, "Connect masks to registration metric."));
@@ -390,65 +472,7 @@ namespace map
 					this->getMetricInternal()->getImageToImageMetric()->SetFixedImageMask(this->getTargetMask());
 				}
 
-				typename core::discrete::Elements<TTargetImage::ImageDimension>::ImageRegionType region =
-					this->getTargetImage()->GetBufferedRegion();
-
-				::map::core::OStringStream os;
-
-				//set the fixed image region
-				if (this->getTargetMask().IsNotNull())
-				{
-					//we have a mask -> so construct the image region
-					if (this->getTargetMask()->ComputeBoundingBox())
-					{
-						//there is really a bounding box
-						typename MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::TargetMaskBaseType::BoundingBoxType::Pointer
-						spBBox = this->getTargetMask()->GetBoundingBox();
-
-						typedef typename TargetImageType::RegionType RegionType;
-						typedef typename RegionType::IndexType IndexType;
-						typedef typename RegionType::SizeType SizeType;
-
-						IndexType minIndex;
-						IndexType maxIndex;
-
-						this->getTargetImage()->TransformPhysicalPointToIndex(spBBox->GetMinimum(), minIndex);
-						this->getTargetImage()->TransformPhysicalPointToIndex(spBBox->GetMaximum(), maxIndex);
-
-						SizeType size;
-
-						for (unsigned int i = 0; i < size.GetSizeDimension(); ++i)
-						{
-							size[i] = maxIndex[i] - minIndex[i];
-						}
-
-						typename core::discrete::Elements<TTargetImage::ImageDimension>::ImageRegionType tempRegion(
-							minIndex, size);
-
-						if (tempRegion.Crop(region))
-						{
-							region = tempRegion;
-
-							os << "Target mask: set -> target image space region is set to: " <<::std::endl << region;
-						}
-						else
-						{
-							os << "Target mask: set, but invalid (not within the bufferd target image) -> use complete image.";
-						}
-					}
-					else
-					{
-						os << "Target mask: mask without bounding box -> no target image space region";
-					}
-				}
-				else
-				{
-					os << "Target mask: none -> no target image space region";
-				}
-
-				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
-
-				this->_internalRegistrationMethod->SetFixedImageRegion(region);
+				this->_internalRegistrationMethod->SetFixedImageRegion(this->getInternalTargetImage()->GetLargestPossibleRegion());
 			}
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
@@ -496,6 +520,9 @@ namespace map
 
 				this->_currentIterationCount = 0;
 				this->_spFinalizedRegistration = NULL;
+        this->_spInternalMovingImage = NULL;
+				this->_spInternalTargetImage = NULL;
+
 				this->_finalizedTransformParameters.Fill(0);
 
 				//create method
@@ -515,8 +542,6 @@ namespace map
 				this->prepAssembleSubComponents();
 
 				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing/Preparing input data."));
-				_spInternalMovingImage = this->getMovingImage();
-				_spInternalTargetImage = this->getTargetImage();
 
 				this->prepPerpareInternalInputData();
 
@@ -867,14 +892,12 @@ namespace map
 
 					if (!outdated)
 					{
-						//check if the inputs have been changed
-						outdated = _internalRegistrationMethod->GetMovingImage() != this->getMovingImage();
+						outdated = _spFinalizedRegistration->GetMTime() < this->getMovingImageMTime();
 					}
 
 					if (!outdated)
 					{
-						//check if the inputs have been changed
-						outdated = _internalRegistrationMethod->GetFixedImage() != this->getTargetImage();
+						outdated = _spFinalizedRegistration->GetMTime() < this->getTargetImageMTime();
 					}
 
 					if (!outdated)
@@ -945,7 +968,10 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			compileInfos(MetaPropertyVectorType& infos) const
 			{
-				//default implementation does nothing.
+#ifndef MAP_SEAL_ALGORITHMS
+        infos.push_back(map::algorithm::MetaPropertyInfo::New("CropInputImagesByMasks", typeid(bool), true,
+          true));
+#endif
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
@@ -953,9 +979,12 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			doGetProperty(const MetaPropertyNameType& name) const
 			{
-				//default implementation does nothing.
-				MetaPropertyPointer spDummy;
-				return spDummy;
+        MetaPropertyPointer spResult;
+        if (name == "CropInputImagesByMasks")
+        {
+          spResult = map::core::MetaProperty<bool>::New(this->_CropInputImagesByMask);
+        }
+        return spResult;
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
@@ -963,8 +992,61 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
-				//default implementation does nothing.
+        if (name == "CropInputImagesByMasks")
+        {
+          bool crop;
+          map::core::unwrapMetaProperty(pProperty, crop);
+          this->_CropInputImagesByMask = crop;
+        }
+        else
+        {
+          assert(false); //any other property name should have been excluded or allready handled by the calling function.
+        }
 			};
+
+
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
+			typename ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::MovingImageConstPointer
+			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
+        getInternalMovingImage() const
+        {
+          MovingImageConstPointer result = this->getMovingImage();
+          if (this->_spInternalMovingImage.IsNotNull())
+          {
+            result = _spInternalMovingImage;
+          }
+          return result;
+      };
+
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
+			typename ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::TargetImageConstPointer
+			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
+        getInternalTargetImage() const
+        {
+          TargetImageConstPointer result = this->getTargetImage();
+          if (this->_spInternalTargetImage.IsNotNull())
+          {
+            result = _spInternalTargetImage;
+          }
+          return result;
+      };
+
+
+			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
+			void
+			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
+        setInternalMovingImage(MovingImageType* image) 
+        {
+          _spInternalMovingImage = image;
+      };
+
+      template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
+			void
+			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
+        setInternalTargetImage(TargetImageType* image)
+        {
+          _spInternalTargetImage = image;
+      };
 
 		} // end namespace itk
 	} // end namespace algorithm

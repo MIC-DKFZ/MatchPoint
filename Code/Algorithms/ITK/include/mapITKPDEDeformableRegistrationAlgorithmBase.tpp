@@ -257,8 +257,8 @@ namespace map
 						 this->_numberOfHistogramMatchPoints;
 					this->InvokeEvent(events::AlgorithmEvent(this, strm.str()));
 
-                    typedef typename ::itk::HistogramMatchingImageFilter< TImageType, TImageType>   MatchingFilterType;
-                    typename MatchingFilterType::Pointer matcher = MatchingFilterType::New();
+          typedef typename ::itk::HistogramMatchingImageFilter< TImageType, TImageType>   MatchingFilterType;
+          typename MatchingFilterType::Pointer matcher = MatchingFilterType::New();
 
 					matcher->SetInput(this->_spInternalMovingImage);
 					matcher->SetReferenceImage(this->_spInternalTargetImage);

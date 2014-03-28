@@ -45,7 +45,7 @@ namespace map
 		{
 
 			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMattesMIRegistrationAlgorithmUIDPolicy,
-											   "de.dkfz.matchpoint", "Euler3DMattesMIRegistrationAlgorithm.default", "1.0.1", "");
+											   "de.dkfz.matchpoint", "Euler3DMattesMIRegistrationAlgorithm.default", "1.1.0", "");
 
 			/** @brief Boxing of a simple rigid mattes based image registration algorithm
 			@ingroup Boxed

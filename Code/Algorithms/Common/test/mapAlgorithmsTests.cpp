@@ -50,6 +50,7 @@ namespace map
 			LIT_REGISTER_TEST(mapArbitraryImagePyramidesPolicyTest);
 			LIT_REGISTER_TEST(mapMultiResImageRegistrationAlgorithmBaseTest);
 			LIT_REGISTER_TEST(mapAlgorithmProfileHelperTest);
+      LIT_REGISTER_TEST(mapMaskBoundingBoxHelperTest);
 		}
 
 	} //namespace testing
