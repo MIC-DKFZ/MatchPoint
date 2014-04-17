@@ -34,11 +34,11 @@
 
 namespace map
 {
-	namespace testing
-	{
-		int mapMaskBoundingBoxHelperTest(int, char* [])
-		{
-			PREPARE_DEFAULT_TEST_REPORTING;
+  namespace testing
+  {
+    int mapMaskBoundingBoxHelperTest(int, char* [])
+    {
+      PREPARE_DEFAULT_TEST_REPORTING;
 
       typedef ::itk::Image<int,2> ImageType;
       ImageType::Pointer image = ImageType::New();
@@ -61,8 +61,8 @@ namespace map
       MaskType::Pointer mask = MaskType::New();
 
       MaskType::SizeType maskSize;
-      maskSize[0]= 10;
-      maskSize[1]= 15;
+      maskSize[0] = 10;
+      maskSize[1] = 15;
       mask->SetSize(maskSize);
 
       ImageType::RegionType region;
@@ -78,7 +78,7 @@ namespace map
       CHECK_EQUAL(17,region.GetSize(0));
       CHECK_EQUAL(19,region.GetSize(1));
 
-			RETURN_AND_REPORT_TEST_SUCCESS;
-		}
-	} //namespace testing
+      RETURN_AND_REPORT_TEST_SUCCESS;
+    }
+  } //namespace testing
 } //namespace map
