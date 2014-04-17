@@ -47,7 +47,7 @@ namespace map
 			const char* const DefaultTransMattesRegistrationAlgorithm_profile =
 				"<Profile><Description>A simple Mattes MI based image registration algorithm just supporting translation.</Description><Contact>Ralf Floca; sbr@dkfz-heidelberg.de</Contact><Characteristics><DataType>Image</DataType><TransformModel>translation</TransformModel><TransformDomain>global</TransformDomain><Metric>Mattes mutual information</Metric><Optimization>Regular Step Gradient Descent</Optimization></Characteristics><Keywords><Keyword>basic</Keyword></Keywords></Profile>";
 			mapGenerateAlgorithmUIDPolicyMacro(DefaultTransMattesRegistrationAlgorithmUIDPolicy,
-											   "de.dkfz.matchpoint", "TransMIRegistrationAlgorithm.default", "1.0.0",
+											   "de.dkfz.matchpoint", "TransMIRegistrationAlgorithm.default", "1.1.0",
 											   DefaultTransMattesRegistrationAlgorithm_profile);
 
 

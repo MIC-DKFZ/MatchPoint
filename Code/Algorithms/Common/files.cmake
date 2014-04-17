@@ -52,6 +52,7 @@ include/mapRegistrationAlgorithmInterface.h
 include/mapSealedImagePyramidesPolicy.h
 include/mapStoppableAlgorithmInterface.h
 include/mapUID.h
+include/mapMaskBoundingBoxHelper.h
 boxed/mapDummyImageRegistrationAlgorithm.h	
 )
 
@@ -87,4 +88,5 @@ test/mapRegistrationAlgorithmTest.cpp
 test/mapUIDTest.cpp 
 test/mapStateTestCommand.cpp
 test/mapAlgorithmProfileHelperTest.cpp
+test/mapMaskBoundingBoxHelperTest.cpp
 )

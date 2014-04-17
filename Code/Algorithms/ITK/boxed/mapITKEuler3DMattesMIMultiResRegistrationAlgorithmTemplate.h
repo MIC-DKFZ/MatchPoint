@@ -47,7 +47,7 @@ namespace map
 		{
 
 			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMattesMultiResRegistrationAlgorithmUIDPolicy,
-											   "de.dkfz.matchpoint", "Euler3DMattesMIMultiResRegistrationAlgorithm.default", "1.0.0", "");
+											   "de.dkfz.matchpoint", "Euler3DMattesMIMultiResRegistrationAlgorithm.default", "1.1.0", "");
 
 			template < class TMovingImage, class TTargetImage = TMovingImage,
 					 typename TUIDPolicy = DefaultEuler3DMattesMultiResRegistrationAlgorithmUIDPolicy,

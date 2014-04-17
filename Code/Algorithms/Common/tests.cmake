@@ -17,3 +17,4 @@ ADD_TEST(mapAlgorithmIdentificationBaseTest ${MODULE_TESTS} mapAlgorithmIdentifi
 ADD_TEST(mapAlgorithmProfileHelperTest ${MODULE_TESTS} mapAlgorithmProfileHelperTest)
 ADD_TEST(mapArbitraryImagePyramidesPolicyTest ${MODULE_TESTS} mapArbitraryImagePyramidesPolicyTest)
 ADD_TEST(mapMultiResImageRegistrationAlgorithmBaseTest ${MODULE_TESTS} mapMultiResImageRegistrationAlgorithmBaseTest)
+ADD_TEST(mapMaskBoundingBoxHelperTest ${MODULE_TESTS} mapMaskBoundingBoxHelperTest)

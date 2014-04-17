@@ -106,6 +106,8 @@ namespace map
         TTransformInitializationPolicy, TInternalRegistrationMethod>::
         compileInfos(MetaPropertyVectorType& infos) const
       {
+        Superclass::compileInfos(infos);
+
 #ifndef MAP_SEAL_ALGORITHMS
         infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitTransform", typeid(bool), true,
           true));
@@ -145,9 +147,11 @@ namespace map
         }
         else
         {
-          assert(false); //any other property name should have been excluded by the calling function.
+          spResult = Superclass::doGetProperty(name);
         }
 
+        assert(spResult.IsNotNull()); //any other property name should have been excluded by the calling function.
+        
         return spResult;
       };
 
@@ -180,9 +184,8 @@ namespace map
         }
         else
         {
-          assert(false); //any other property name should have been excluded by the calling function.
+          Superclass::doSetProperty(name,pProperty);
         }
-
       };
 
       template < class TMovingImage, class TTargetImage,
@@ -211,8 +214,8 @@ namespace map
 
           typename InitializerType::Pointer spInitializer = InitializerType::New();
 
-          spInitializer->SetMovingImage(this->_spInternalMovingImage);
-          spInitializer->SetFixedImage(this->_spInternalTargetImage);
+          spInitializer->SetMovingImage(this->getInternalMovingImage());
+          spInitializer->SetFixedImage(this->getInternalTargetImage());
           spInitializer->SetTransform(this->getConcreteTransformModel()->getConcreteTransform());
 
           if (this->_useCenterOfGravity)

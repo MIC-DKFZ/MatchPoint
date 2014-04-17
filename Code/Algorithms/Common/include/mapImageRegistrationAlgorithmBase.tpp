@@ -29,8 +29,6 @@ namespace map
 	namespace algorithm
 	{
 
-		// **** public methods ****
-		// ************************
 		template<class TMovingImage, class TTargetImage>
 		typename ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::MovingImageConstPointer
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
@@ -47,13 +45,16 @@ namespace map
 			return _spTargetImage;
 		}
 
-
 		template<class TMovingImage, class TTargetImage>
 		void
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
 		setMovingImage(const MovingImageType* pMovingImage)
 		{
-			_spMovingImage = pMovingImage;
+		  if (this->_spMovingImage != pMovingImage)
+		  {
+			  this->_spMovingImage = pMovingImage;
+			  this->_movingImageMTime.Modified();
+		  }
 		}
 
 		template<class TMovingImage, class TTargetImage>
@@ -61,12 +62,13 @@ namespace map
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
 		setTargetImage(const TargetImageType* pTargetImage)
 		{
-			_spTargetImage = pTargetImage;
+		  if (this->_spTargetImage != pTargetImage)
+		  {
+			  this->_spTargetImage = pTargetImage;
+			  this->_targetImageMTime.Modified();
+		  }
 		}
 
-
-		// **** protected methods ****
-		// ***************************
 
 		template<class TMovingImage, class TTargetImage>
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
@@ -84,6 +86,23 @@ namespace map
 			os << indent << "Moving image: " << _spMovingImage.GetPointer() << std::endl;
 			os << indent << "Target image: " << _spTargetImage.GetPointer() << std::endl;
 		}
+
+   template<class TMovingImage, class TTargetImage>
+		   unsigned long
+         ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
+         getTargetImageMTime() const
+       {
+         return _targetImageMTime.GetMTime();
+       };
+
+   template<class TMovingImage, class TTargetImage>
+		   unsigned long
+         ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
+         getMovingImageMTime() const
+       {
+         return _movingImageMTime.GetMTime();
+       };
+
 
 	} // end namespace algorithms
 } // end namespace map
