@@ -351,14 +351,14 @@ namespace map
 				/*! Smartpointer to the finalized registration. Will be set by finalizeAlgorithm()*/
 				typename RegistrationType::Pointer _spFinalizedRegistration;
 
-				/*!Method returns pointer to the moving image used by the algorithm internally. This is used to allow the algorithm
+				/*! Method returns pointer to the moving image used by the algorithm internally. This is used to allow the algorithm
 				* or its derived classes to modify the moving image with out changing the public moving image pointer.
 				* It returns _spMovingImage if setInternalMovingImage was never called (thus no special internal image was defined).
         * Otherwise it will return _spInternalMovingImage.
 				* (e.g.: An algorithm always normalizes an image before registration. Then the algorithm can use the prepPerpareInternalInputData()
 				* function to manipulate the internal moving image before it is used by prepareAlgorithm() to set the internal algorithm)*/
         MovingImageConstPointer getInternalMovingImage() const;
-				/*!Method returns pointer to the target image used by the algorithm internally. This is used to allow the algorithm
+				/*! Method returns pointer to the target image used by the algorithm internally. This is used to allow the algorithm
 				* or its derived classes to modify the target image with out changing the public target image pointer.
 				* It returns _spTargetImage if setInternalTargetImage was never called (thus no special internal image was defined).
         * Otherwise it will return _spInternalTargetImage.
