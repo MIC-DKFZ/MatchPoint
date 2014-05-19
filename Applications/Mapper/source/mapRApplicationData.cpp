@@ -30,7 +30,7 @@ namespace map
 {
 	namespace apps
 	{
-		namespace MapR
+		namespace mapR
 		{
 
 			int unknown_argument(const char* argument, void* call_data)

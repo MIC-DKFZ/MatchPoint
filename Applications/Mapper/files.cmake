@@ -15,4 +15,5 @@ SET(TPP_FILES
 SET(TEST_CPP_FILES
 test/mapRTests.cpp
 test/mapRBasicUsageTest.cpp
+test/mapRSimpleMappingTest.cpp
 )

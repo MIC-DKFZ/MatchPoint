@@ -34,7 +34,7 @@ namespace map
 {
 	namespace apps
 	{
-		namespace MapR
+		namespace mapR
 		{
 
 			class ApplicationData
