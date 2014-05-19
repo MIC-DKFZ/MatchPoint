@@ -23,8 +23,10 @@
 #include "itksys/SystemTools.hxx"
 
 #include "litCheckMacros.h"
+#include "litImageTester.h"
 
 #include "mapProcessExecutor.h"
+#include "mapImageReader.h"
 
 namespace map
 {
@@ -45,8 +47,14 @@ namespace map
 			std::string inputPath = "Input Data path not set.";
       std::string regPath = "Reg data path not set.";
       std::string outputPath = "Output data path not set.";
+      std::string refPath = "Reference data path not set.";
 
-			if (argc > 1)
+			map::utilities::ProcessExecutor::Pointer spExec = map::utilities::ProcessExecutor::New();
+      spExec->setSharedOutputPipes(true);
+
+			map::utilities::ProcessExecutor::ArgumentListType args;
+
+      if (argc > 1)
 			{
 				inputPath = argv[1];
 			}
@@ -61,22 +69,40 @@ namespace map
         outputPath = argv[3];
       }
 
-			map::utilities::ProcessExecutor::Pointer spExec = map::utilities::ProcessExecutor::New();
-      spExec->setSharedOutputPipes(true);
-
-			map::utilities::ProcessExecutor::ArgumentListType args;
-
-			//////////////////////////////////////////////////
-			// Test: behavior on simple mapping task (2D).
+      if (argc > 4)
+      {
+        refPath = argv[4];
+      }
 
       args.push_back(inputPath);
       args.push_back(regPath);
       args.push_back("-o");
       args.push_back(outputPath);
 
-			//Test not enough parameters
+      unsigned int index = 5;
+      while (index < argc)
+      {
+        args.push_back(argv[index++]);
+      }
+
+			//////////////////////////////////////////////////
+			// Test: behavior on simple mapping task.
+
 			CHECK(spExec->execute(mapRPath, "mapR", args));
 			CHECK_EQUAL(0, spExec->getExitValue());
+
+      // Check result against reference
+      typedef itk::Image<unsigned char, 3> TestImageType;
+
+      TestImageType::Pointer refImage = map::io::readImage<unsigned char, unsigned char, 3>(refPath);
+      TestImageType::Pointer outputImage = map::io::readImage<unsigned char, unsigned char, 3>(outputPath);
+
+	    lit::ImageTester<TestImageType, TestImageType> tester;
+	    tester.setExpectedImage(refImage);
+	    tester.setActualImage(outputImage);
+	    tester.setCheckThreshold(0.0);
+
+	    CHECK_TESTER(tester);
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}
