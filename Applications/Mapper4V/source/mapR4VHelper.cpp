@@ -25,6 +25,25 @@
 
 #include "vioitkCTXImageLoader.h"
 
+
+bool
+  map::apps::mapR4V::isVirtuosFile(const map::core::String& filePath)
+{
+  bool result = false;
+
+  if (filePath.find(".ctx") != map::core::String::npos)
+  {
+    result = true;
+  };
+
+  if (filePath.find(".ctx.gz") != map::core::String::npos)
+  {
+    result = true;
+  };
+
+  return result;
+}
+
 map::apps::mapR4V::LoadingLogic::LoadingLogic(map::apps::mapR::ApplicationData& appData): _appData(appData), _legacyLogic(appData)
 {
 };

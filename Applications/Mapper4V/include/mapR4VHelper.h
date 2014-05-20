@@ -37,22 +37,7 @@ namespace map
     namespace mapR4V
     {
 
-      bool isVirtuosFile(const map::core::String& filePath)
-      {
-        bool result = false;
-
-        if (filePath.find(".ctx") != map::core::String::npos)
-        {
-          result = true;
-        };
-
-        if (filePath.find(".ctx.gz") != map::core::String::npos)
-        {
-          result = true;
-        };
-
-        return result;
-      }
+      bool isVirtuosFile(const map::core::String& filePath);
 
       /** Helper class that contains the logic that handles the data loading according to the settings in appData.
       * the loaded data will be stored in app data. */
@@ -89,6 +74,29 @@ namespace map
           if (isVirtuosFile(appData._outputFileName))
           {
             std::cout << std::endl << "save output file as Virtuos CTX... ";
+
+            std::string metaValue;
+            if (itk::ExposeMetaData<std::string>(appData._spInputImage->GetMetaDataDictionary(),"Virtuos.PatientName",metaValue))
+            {
+              itk::EncapsulateMetaData<std::string>(pImage->GetMetaDataDictionary(),"Virtuos.PatientName",metaValue);
+            };
+            if (itk::ExposeMetaData<std::string>(appData._spInputImage->GetMetaDataDictionary(),"Virtuos.CreatedBy",metaValue))
+            {
+              itk::EncapsulateMetaData<std::string>(pImage->GetMetaDataDictionary(),"Virtuos.CreatedBy",metaValue);
+            };
+            if (!itk::ExposeMetaData<std::string>(appData._spInputImage->GetMetaDataDictionary(),"Virtuos.CreationInfo",metaValue))
+            {
+              metaValue = "";
+            };
+            metaValue += "Mapped by MatchPoint. Used "+ appData._regFileName;
+            itk::EncapsulateMetaData<std::string>(pImage->GetMetaDataDictionary(),"Virtuos.CreatedBy",metaValue);
+
+            int metaIntValue;
+
+            if (itk::ExposeMetaData<int>(appData._spInputImage->GetMetaDataDictionary(),"Virtuos.ModalityID",metaIntValue))
+            {
+              itk::EncapsulateMetaData<int>(pImage->GetMetaDataDictionary(),"Virtuos.ModalityID",metaIntValue);
+            };
 
             vioitk::CTXImageWriter::ImageIntType* intImage = dynamic_cast<vioitk::CTXImageWriter::ImageIntType*>(pImage);
             vioitk::CTXImageWriter::ImageFloatType* floatImage = dynamic_cast<vioitk::CTXImageWriter::ImageFloatType*>(pImage);
