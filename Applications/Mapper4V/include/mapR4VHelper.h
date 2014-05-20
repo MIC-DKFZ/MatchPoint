@@ -89,7 +89,7 @@ namespace map
               metaValue = "";
             };
             metaValue += "Mapped by MatchPoint. Used "+ appData._regFileName;
-            itk::EncapsulateMetaData<std::string>(pImage->GetMetaDataDictionary(),"Virtuos.CreatedBy",metaValue);
+            itk::EncapsulateMetaData<std::string>(pImage->GetMetaDataDictionary(),"Virtuos.CreationInfo",metaValue);
 
             int metaIntValue;
 
