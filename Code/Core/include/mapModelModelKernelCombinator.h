@@ -119,6 +119,13 @@ namespace map
 			ModelModelKernelCombinator() {};
 			virtual ~ModelModelKernelCombinator() {};
 
+      /* Member tries to combine the given kernels as matrices and generate a new matrix
+       * based combined kernel. This will only be successfull if both support matrix
+       * decomposition.
+       * @return Null if kernels cannot be combined as matrices. Otherwise it returns the pointer
+         to the combination result.*/
+			CombinedKernelBasePointer combineAsMatrixKernels(const Kernel1Type* kernel1, const Kernel2Type* kernel2) const;
+
 		private:
 			ModelModelKernelCombinator(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented
