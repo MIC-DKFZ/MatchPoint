@@ -25,7 +25,6 @@
 #define __MAP_COMBINER_PLICATION_DATA_H
 
 #include "mapString.h"
-#include "mapGenericImageReader.h"
 #include "mapRegistrationBase.h"
 
 #include "itksys/CommandLineArguments.hxx"

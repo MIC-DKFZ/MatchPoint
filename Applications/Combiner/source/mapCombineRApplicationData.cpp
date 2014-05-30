@@ -60,17 +60,54 @@ namespace map
 				_detailedOutput = false;
 			}
 
-			unsigned int
+      bool containsHelpTag(int argc, char** argv)
+      {
+        while(argc)
+        {
+          map::core::String value = argv[0];
+
+          if (value == "--help" || value == "-h" || value == "-?")
+          {
+            return true;
+          }
+
+          ++argv;
+          --argc;
+        }
+        return false;
+      }
+
+      bool containsVersionTag(int argc, char** argv)
+      {
+        while(argc)
+        {
+          map::core::String value = argv[0];
+
+          if (value == "--version" || value == "-v")
+          {
+            return true;
+          }
+
+          ++argv;
+          --argc;
+        }
+        return false;
+      }
+
+      unsigned int
 			ParseArguments(int argc, char** argv, ApplicationData& appData)
 			{
 				appData.Reset();
 
+        appData._showHelp = containsHelpTag(argc,argv);
+        appData._showVersion = containsVersionTag(argc,argv);
+
         if (appData._showHelp)
         {
           std::cout << std::endl << "Usage: " << std::endl << std::endl;
-          std::cout << "  combiner <Output> [-] <Reg1> [ [+|-] <Reg2> [... [+|-] <RegN>]]" << std::endl << std::endl;
+          std::cout << " combineR <Output> [-] <Reg1> [ [+|-] <Reg2> [... [+|-] <RegN>]]" << std::endl << std::endl;
           std::cout << "     Output: File path to the output registration file that will" << std::endl;
-          std::cout << "             be generated." << std::endl <<
+          std::cout << "             be generated." << std::endl;
           std::cout << "     RegN: File path to the n-th registration file that should" << std::endl;
           std::cout << "           be combined. You may invert the registration by" << std::endl;
           std::cout << "           putting \" - \" in front of the reg file. " << std::endl;
@@ -78,10 +115,14 @@ namespace map
           std::cout << "           same then using no sign at all: the registration" << std::endl;
           std::cout << "           will be combined as it is" << std::endl << std::endl;
           std::cout << " Command-Line Options:" << std::endl << std::endl;
+          std::cout << "    -h:        Display this help" << std::endl;
+          std::cout << "    --help:    Display this help" << std::endl;
+          std::cout << "    -?:        Display this help" << std::endl;
+          std::cout << "    -v:        Show version information" << std::endl;
+          std::cout << "    --version: Show version information" << std::endl<< std::endl;
           std::cout << " Example:" << std::endl << std::endl;
           std::cout << " combineR ouput.mapr input1.mapr input2.mapr - input3.mapr" << std::endl << std::endl;
-          std::cout <<
-            " This will map \"input.png\" by using \"reg.mapr\". The field of view of the output image is defined by \"target.dcm\". The output will be in the directory of the input. The output file name will be \"input_reg.dcm\"."
+          std::cout << " This will combine \"input1.mapr\", \"input2.mapr\" and the inverted \"input3.mapr\". The output file name will be \"output.mapr\"."
             << std::endl;
           return 1;
         }
