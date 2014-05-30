@@ -24,5 +24,19 @@
 #ifndef __MAP_COMBINER_HELPER_H
 #define __MAP_COMBINER_HELPER_H
 
+#include "mapRegistrationBase.h"
+
+namespace map
+{
+  namespace apps
+  {
+    namespace combineR
+    {
+      map::core::RegistrationBase::Pointer invertRegistration(map::core::RegistrationBase* reg);
+      map::core::RegistrationBase::Pointer combineRegistration(map::core::RegistrationBase* reg1, map::core::RegistrationBase* reg2);
+      bool writeRegistration(map::core::RegistrationBase* reg, const map::core::String& fileName);
+    }
+  }
+}
 
 #endif

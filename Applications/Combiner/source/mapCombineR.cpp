@@ -22,19 +22,13 @@
 
 
 #include "mapCombineRApplicationData.h"
-#include "mapImageMappingTask.h"
-#include "mapGenericImageReader.h"
+#include "mapCombineRHelper.h"
 #include "mapRegistrationFileReader.h"
+#include "mapRegistrationFileWriter.h"
 #include "mapConvert.h"
 
-#include "itkImageFileWriter.h"
 #include "itkStdStreamLogOutput.h"
-#include "itkImageSeriesWriter.h"
-#include "itkNumericSeriesFileNames.h"
-#include "itkGDCMImageIO.h"
 #include "itkVersion.h"
-
-#include "gdcmUIDGenerator.h"
 
 #ifdef MAP_DISABLE_ITK_IO_FACTORY_AUTO_REGISTER
 /* The mapR needs the IO factories to be registered in cases where
@@ -45,139 +39,6 @@
 
 map::apps::combineR::ApplicationData appData;
 
-void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
-{
-	std::cout << " > > > ";
-	event.Print(std::cout);
-	std::cout << std::endl;
-}
-
-
-
-template <typename TImageType>
-std::vector<itk::MetaDataDictionary*> generateDictionaries(TImageType* pImage,
-		const map::core::String& uidPrefix)
-{
-	// Copy the dictionary from the image
-	itk::MetaDataDictionary mappedDict;
-	mappedDict = pImage->GetMetaDataDictionary();
-
-	if (appData._loadedMetaDataDictArray.size())
-	{
-		mappedDict = appData._loadedMetaDataDictArray[0];
-	}
-
-	std::vector<itk::MetaDataDictionary*> outputArray;
-
-	////////////////////////////////////////////
-	//Step 1: set everything that is valid for all slices
-
-	// To keep the new series in the same study as the original we need
-	// to keep the same study UID. But we need new series and frame of
-	// reference UID's.
-	gdcm::UIDGenerator suid;
-	std::string seriesUID = suid.Generate();
-	gdcm::UIDGenerator fuid;
-	std::string frameOfReferenceUID = fuid.Generate();
-
-	if (appData._loadedRefMetaDataDictArray.size())
-	{
-		//result has the same frame of reference UID then template image
-		itk::ExposeMetaData<std::string>(appData._loadedRefMetaDataDictArray[0], "0020|0052",
-										 frameOfReferenceUID);
-	}
-
-	// Set the UID's for the study, series and frame of reference
-	itk::EncapsulateMetaData<std::string>(mappedDict, "0020|000e", seriesUID);
-	itk::EncapsulateMetaData<std::string>(mappedDict, "0020|0052", frameOfReferenceUID);
-
-	map::core::OStringStream stream;
-	// Series Description - Append new description to current series
-	// description
-	std::string oldSeriesDesc;
-	itk::ExposeMetaData<std::string>(mappedDict, "0008|103e", oldSeriesDesc);
-
-	stream.str("");
-	stream << "regd_" << oldSeriesDesc;
-	// This is an long string and there is a 64 character limit in the
-	// standard
-	unsigned lengthDesc = stream.str().length();
-
-	std::string seriesDesc(stream.str(), 0, lengthDesc > 64 ? 64 : lengthDesc);
-	itk::EncapsulateMetaData<std::string>(mappedDict, "0008|103e", seriesDesc);
-
-
-	// Derivation Description - How this image was derived
-	stream.str("");
-	stream << "mapped by using \"" << map::core::FileDispatch::getFullName(
-			   appData._regFileName) << "\" registration file; software: mapR; MatchPoint version: " <<
-		   MAP_SOURCE_VERSION << ", itk version:" << ITK_SOURCE_VERSION;
-
-	lengthDesc = stream.str().length();
-	std::string derivationDesc(stream.str(), 0, lengthDesc > 1024 ? 1024 : lengthDesc);
-	itk::EncapsulateMetaData<std::string>(mappedDict, "0008|2111", derivationDesc);
-
-	// Slice Thickness: For now, we store the z spacing
-	stream.str("");
-	stream << pImage->GetSpacing()[2];
-	itk::EncapsulateMetaData<std::string>(mappedDict, "0018|0050", stream.str());
-	// Spacing Between Slices
-	itk::EncapsulateMetaData<std::string>(mappedDict, "0018|0088", stream.str());
-
-	///////////////////////////////////////////////
-	//Step 2: Generate a dictionary per slice and
-	//        adapt slice specific values
-
-	itk::ImageRegion<3>::SizeValueType sliceCount = pImage->GetLargestPossibleRegion().GetSize(2);
-
-	for (itk::ImageRegion<3>::SizeValueType currentSliceIndex = 0; currentSliceIndex < sliceCount;
-		 ++currentSliceIndex)
-	{
-		// Create a new dictionary for this slice
-		itk::MetaDataDictionary* pDict = new itk::MetaDataDictionary;
-
-		// Copy the dictionary from the first slice
-		*pDict = mappedDict;
-
-		// Set the UID's for the SOP
-		gdcm::UIDGenerator sopuid;
-		std::string sopInstanceUID = sopuid.Generate();
-
-		itk::EncapsulateMetaData<std::string>(*pDict, "0008|0018", sopInstanceUID);
-		itk::EncapsulateMetaData<std::string>(*pDict, "0002|0003", sopInstanceUID);
-
-		// Change fields that are slice specific
-		map::core::OStringStream value;
-		value.str("");
-		value << currentSliceIndex + 1;
-
-		// Image Number
-		itk::EncapsulateMetaData<std::string>(*pDict, "0020|0013", value.str());
-
-		// Image Position Patient: This is calculated by computing the
-		// physical coordinate of the first pixel in each slice.
-		typename TImageType::PointType position;
-		typename TImageType::IndexType index;
-		index[0] = 0;
-		index[1] = 0;
-		index[2] = currentSliceIndex;
-		pImage->TransformIndexToPhysicalPoint(index, position);
-
-		value.str("");
-		value << position[0] << "\\" << position[1] << "\\" << position[2];
-		itk::EncapsulateMetaData<std::string>(*pDict, "0020|0032", value.str());
-		// Slice Location: For now, we store the z component of the Image
-		// Position Patient.
-		value.str("");
-		value << position[2];
-		itk::EncapsulateMetaData<std::string>(*pDict, "0020|1041", value.str());
-
-		// Save the dictionary
-		outputArray.push_back(pDict);
-	}
-
-	return outputArray;
-}
 
 
 template <typename TPixelType, unsigned int Dimensions>
@@ -319,79 +180,13 @@ int doMapping()
 	return result;
 };
 
-
-
-template <unsigned int IDimension>
-int handleGenericImage(::itk::ImageIOBase::IOComponentType& loadedComponentType)
-{
-	switch (loadedComponentType)
-	{
-		case ::itk::ImageIOBase::UCHAR:
-		{
-			return doMapping<unsigned char, IDimension>();
-		}
-
-		case ::itk::ImageIOBase::CHAR:
-		{
-			return doMapping<char, IDimension>();
-		}
-
-		case ::itk::ImageIOBase::USHORT:
-		{
-			return doMapping<unsigned short, IDimension>();
-		}
-
-		case ::itk::ImageIOBase::SHORT:
-		{
-			return doMapping<short, IDimension>();
-		}
-
-		case ::itk::ImageIOBase::UINT:
-		{
-			return doMapping<unsigned int, IDimension>();
-		}
-
-		case ::itk::ImageIOBase::INT:
-		{
-			return doMapping<int, IDimension>();
-		}
-
-		case ::itk::ImageIOBase::ULONG:
-		{
-			return doMapping<unsigned long, IDimension>();
-		}
-
-		case ::itk::ImageIOBase::LONG:
-		{
-			return doMapping<long, IDimension>();
-		}
-
-		case ::itk::ImageIOBase::FLOAT:
-		{
-			return doMapping<float, IDimension>();
-		}
-
-		case ::itk::ImageIOBase::DOUBLE:
-		{
-			return doMapping<double, IDimension>();
-		}
-
-		default:
-		{
-			mapDefaultExceptionStaticMacro( <<
-											"The file uses a pixel component type that is not supported in this application.");
-		}
-	}
-}
-
-
 int main(int argc, char** argv)
 {
 	int result = 0;
 
-	std::cout << "mapR - Generic image mapping tool for MatchPoint." << std::endl;
+	std::cout << "combineR - Generic registration combination tool for MatchPoint." << std::endl;
 
-	switch (appData.ParseArguments(argc, argv))
+	switch (map::apps::combineR::ParseArguments(argc, argv, appData))
 	{
 		case 1:
 		{
@@ -414,14 +209,6 @@ int main(int argc, char** argv)
 		}
 	}
 
-	if (appData._fileCount < 2)
-	{
-		std::cerr << "Missing Parameters. Use one of the following flags for more information:" <<
-				  std::endl;
-		std::cerr << "-? or --help" << std::endl;
-		return 1;
-	}
-
 	::itk::StdStreamLogOutput::Pointer spStreamLogOutput = ::itk::StdStreamLogOutput::New();
 	spStreamLogOutput->SetStream(std::cout);
 	map::core::Logbook::addAdditionalLogOutput(spStreamLogOutput);
@@ -432,100 +219,32 @@ int main(int argc, char** argv)
 	}
 
 	std::cout << std::endl << "*******************************************" << std::endl;
-	std::cout << "Input file:        " << appData._inputFileName << std::endl;
-	std::cout << "Registration file: " << appData._regFileName << std::endl;
-	std::cout << "Series read style: " << appData._seriesReadStyleStr << std::endl;
-	std::cout << "Series write style: " << appData._seriesWriteStyleStr << std::endl;
+  std::vector<map::core::String>::const_iterator fileListPos;
+  std::vector<bool>::const_iterator invListPos = appData._inversionList.begin();
+  for (fileListPos = appData._regFileList.begin(); fileListPos != appData._regFileList.end(); ++fileListPos, ++invListPos)
+  {
+    std::cout << "Reg file 1:      " << *fileListPos;
+    if (*invListPos)
+    {
+        std::cout << "(inverted)";
+    }
+    std::cout << std::endl;
+  }
+	std::cout << "Output reg file:        " << appData._outputFileName << std::endl;
 
-	if (!(appData._refFileName.empty()))
-	{
-		std::cout << "Template file:     " << appData._refFileName << std::endl;
-	}
-
-	map::io::GenericImageReader::Pointer spReader = map::io::GenericImageReader::New();
-
-	spReader->setSeriesReadStyle(appData._seriesReadStyle);
-	spReader->setFileName(appData._inputFileName);
-	spReader->setUpperSeriesLimit(appData._upperSeriesLimit);
-
-	map::io::RegistrationFileReader::Pointer spRegReader = map::io::RegistrationFileReader::New();
-
+  //load registrations
+  appData._spRegList.clear();
 	try
 	{
-		std::cout << std::endl << "read input file... ";
-		appData._spInputImage = spReader->GetOutput(appData._loadedDimensions, appData._loadedPixelType,
-								appData._loadedComponentType);
-		appData._loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
+    for (fileListPos = appData._regFileList.begin(); fileListPos != appData._regFileList.end(); ++fileListPos)
+    {
+      std::cout << std::endl << "read registration file "<< fileListPos - appData._regFileList.begin() +1 << "... ";
+      map::io::RegistrationFileReader::Pointer spRegReader = map::io::RegistrationFileReader::New();
+      map::io::RegistrationFileReader::LoadedRegistrationPointer spReg = spRegReader->read(*fileListPos);
+      appData._spRegList.push_back(spReg);
+      std::cout << "done." << std::endl;
+    }
 
-		if (appData._spInputImage.IsNotNull())
-		{
-			std::cout << "done." << std::endl;
-		}
-		else
-		{
-			std::cerr <<
-					  "Error!!! unable to load input image. File is not existing or has an unsupported format." <<
-					  std::endl;
-			return 4;
-		}
-
-		if (appData._detailedOutput)
-		{
-			std::cout << "Input image info:" << std::endl;
-			appData._spInputImage->Print(std::cout);
-			std::cout << std::endl << "Input image meta properties:" << std::endl;
-			appData._spInputImage->Print(std::cout);
-			std::cout << std::endl;
-		}
-	}
-	catch (::itk::ExceptionObject& e)
-	{
-		std::cerr << "Error!!!" << std::endl;
-		std::cerr << e << std::endl;
-		return 4;
-	}
-	catch (std::exception& e)
-	{
-		std::cerr << "Error!!!" << std::endl;
-		std::cerr << e.what() << std::endl;
-		return 4;
-	}
-	catch (...)
-	{
-		std::cerr << "Error!!! unknown error while reading input image." << std::endl;
-		return 4;
-	}
-
-	if (appData._loadedPixelType != ::itk::ImageIOBase::SCALAR)
-	{
-		std::cerr <<
-				  "Error!!! Unsupported input image. Only simple scalar images are supported in this version." <<
-				  std::endl;
-
-		return 4;
-	}
-
-	if (appData._loadedDimensions < 2 || appData._loadedDimensions > 3)
-	{
-		std::cerr <<
-				  "Error!!! Unsupported input image. Only 2D and 3D images are supported in this version." <<
-				  std::endl;
-
-		return 4;
-	}
-
-	try
-	{
-		std::cout << std::endl << "read registration file... ";
-		appData._spReg = spRegReader->read(appData._regFileName);
-		std::cout << "done." << std::endl;
-
-		if (appData._detailedOutput)
-		{
-			std::cout << std::endl << "Registration info:" << std::endl;
-			appData._spReg->Print(std::cout);
-			std::cout << std::endl;
-		}
 	}
 	catch (::itk::ExceptionObject& e)
 	{
@@ -545,89 +264,122 @@ int main(int argc, char** argv)
 		return 5;
 	}
 
-	if (appData._spReg->getMovingDimensions() != appData._spReg->getTargetDimensions()
-		|| appData._spReg->getMovingDimensions() != appData._loadedDimensions)
-	{
-		std::cerr <<
-				  "Error!!! Loaded registration and loaded image have no equal dimensionality. Registration cannot be used to map the image."
-				  << std::endl;
+  //invert registrations
+  try
+  {
+    invListPos = appData._inversionList.begin();
 
-		return 5;
-	}
+    for (map::apps::combineR::ApplicationData::RegistrationListType::iterator regPos = appData._spRegList.begin(); regPos != appData._spRegList.end(); ++regPos, ++invListPos)
+    {
+      if (*invListPos)
+      {
+        std::cout << std::endl << "invert registration #"<< regPos - appData._spRegList.begin() + 1 << "... ";
+        map::core::RegistrationBase::Pointer invertedReg = map::apps::combineR::invertRegistration(regPos->GetPointer());
+        if (invertedReg.IsNotNull())
+        {
+          *regPos = invertedReg;
+          std::cout << "done." << std::endl;
+        }
+        else
+        {
+          std::cerr << "Error!!! Unable to invert registration.unknown Unsupported dimensionality." << std::endl;
+          return 5;
+        }
+      }
+    }
+  }
+  catch (::itk::ExceptionObject& e)
+  {
+    std::cerr << "Error!!!" << std::endl;
+    std::cerr << e << std::endl;
+    return 5;
+  }
+  catch (std::exception& e)
+  {
+    std::cerr << "Error!!!" << std::endl;
+    std::cerr << e.what() << std::endl;
+    return 5;
+  }
+  catch (...)
+  {
+    std::cerr << "Error!!! unknown error while inverting registration." << std::endl;
+    return 5;
+  }
 
-	if (!(appData._refFileName.empty()))
-	{
-		map::io::GenericImageReader::Pointer spTemplateReader = map::io::GenericImageReader::New();
-		spTemplateReader->setSeriesReadStyle(appData._seriesReadStyle);
-		spTemplateReader->setFileName(appData._refFileName);
-		spTemplateReader->setUpperSeriesLimit(appData._upperSeriesLimit);
+  //combine registrations
 
-		map::io::GenericImageReader::LoadedPixelType _loadedTempPixelType;
-		map::io::GenericImageReader::LoadedComponentType _loadedTempComponentType;
-		unsigned int _loadedTempDimensions;
+  map::core::RegistrationBase::Pointer combinedReg = appData._spRegList.front();
 
-		try
-		{
-			std::cout << std::endl << std::endl << "read template file... ";
-			appData._spRefImage = spTemplateReader->GetOutput(_loadedTempDimensions, _loadedTempPixelType,
-								  _loadedTempComponentType);
-			appData._loadedRefMetaDataDictArray = spReader->getMetaDictionaryArray();
+  try
+  {
+     for (map::apps::combineR::ApplicationData::RegistrationListType::iterator regPos = appData._spRegList.begin()+1; regPos != appData._spRegList.end(); ++regPos)
+    {
+        std::cout << std::endl << "combine registration #"<< regPos - appData._spRegList.begin() + 1 << "... ";
 
-			if (appData._spRefImage.IsNotNull())
-			{
-				std::cout << "done." << std::endl;
-			}
-			else
-			{
-				std::cerr <<
-						  "Error!!! unable to load template image. File is not existing or has an unsupported format." <<
-						  std::endl;
-				return 4;
-			}
+        map::core::RegistrationBase::Pointer interimReg = map::apps::combineR::combineRegistration(combinedReg, regPos->GetPointer());
+        if (interimReg.IsNotNull())
+        {
+          combinedReg = interimReg;
+          std::cout << "done." << std::endl;
+        }
+        else
+        {
+          std::cerr << "Error!!! Unable to combine registration." << std::endl;
+          return 6;
+        }
+    }
+  }
+  catch (::itk::ExceptionObject& e)
+  {
+    std::cerr << "Error!!!" << std::endl;
+    std::cerr << e << std::endl;
+    return 6;
+  }
+  catch (std::exception& e)
+  {
+    std::cerr << "Error!!!" << std::endl;
+    std::cerr << e.what() << std::endl;
+    return 6;
+  }
+  catch (...)
+  {
+    std::cerr << "Error!!! unknown error while inverting registration." << std::endl;
+    return 6;
+  }
 
-			if (appData._detailedOutput)
-			{
-				std::cout << "Template image info:" << std::endl;
-				appData._spRefImage->Print(std::cout);
-				std::cout << std::endl;
-			}
-		}
-		catch (::itk::ExceptionObject& e)
-		{
-			std::cerr << "Error!!!" << std::endl;
-			std::cerr << e << std::endl;
-			return 6;
-		}
-		catch (std::exception& e)
-		{
-			std::cerr << "Error!!!" << std::endl;
-			std::cerr << e.what() << std::endl;
-			return 6;
-		}
-		catch (...)
-		{
-			std::cerr << "Error!!! unknown error while reading template image." << std::endl;
-			return 6;
-		}
 
-		if (_loadedTempDimensions != appData._spReg->getTargetDimensions())
-		{
-			std::cerr <<
-					  "Error!!! Unsupported template image. Template image dimension does not match registration." <<
-					  std::endl;
-			return 6;
-		}
+  try
+  {
+    std::cout << std::endl << "write final combine registration... ";
 
-	}
+    if (!map::apps::combineR::writeRegistration(combinedReg, appData._outputFileName))
+    {
+      std::cerr << "Error!!! Unable to write combined registration." << std::endl;
+      return 7;
+    }
+    else
+    {
+      std::cout << "done." << std::endl;
+    }
 
-	if (appData._loadedDimensions == 2)
-	{
-		result = handleGenericImage<2>(appData._loadedComponentType);
-	}
-	else if (appData._loadedDimensions == 3)
-	{
-		result = handleGenericImage<3>(appData._loadedComponentType);
-	}
+  }
+  catch (::itk::ExceptionObject& e)
+  {
+    std::cerr << "Error!!!" << std::endl;
+    std::cerr << e << std::endl;
+    return 7;
+  }
+  catch (std::exception& e)
+  {
+    std::cerr << "Error!!!" << std::endl;
+    std::cerr << e.what() << std::endl;
+    return 7;
+  }
+  catch (...)
+  {
+    std::cerr << "Error!!! unknown error while inverting registration." << std::endl;
+    return 7;
+  }
 
 	std::cout << std::endl;
 
