@@ -88,6 +88,7 @@ namespace map
 				 * @return Smart pointer to the inverse kernel.
 				 * @pre input representation must be coverd by the first kernel and the mapped input representation must be covered by the input
 				 * representation of the second kernel.
+				 * @pre in its current implementation matrix combination is only possible when input, interim and output dimension are equal.
 				 */
 			virtual CombinedKernelBasePointer combineKernels(const RequestType& request,
 					const InputFieldRepresentationType* pInputFieldRepresentation,
