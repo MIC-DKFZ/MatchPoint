@@ -28,37 +28,37 @@
 
 namespace map
 {
-	namespace apps
-	{
-		namespace combineR
-		{
+  namespace apps
+  {
+    namespace combineR
+    {
 
-			int unknown_argument(const char* argument, void* call_data)
-			{
-				std::cout << "Got unknown argument: \"" << argument << "\"" << std::endl;
-				return 0;
-			}
+      int unknown_argument(const char* argument, void* call_data)
+      {
+        std::cout << "Got unknown argument: \"" << argument << "\"" << std::endl;
+        return 0;
+      }
 
-			ApplicationData::
-			ApplicationData()
-			{
-				this->Reset();
-			}
+      ApplicationData::
+        ApplicationData()
+      {
+        this->Reset();
+      }
 
-			void
-			ApplicationData::
-			Reset()
-			{
+      void
+        ApplicationData::
+        Reset()
+      {
         _spRegList.clear();
         _regFileList.clear();
         _inversionList.clear();
 
         _outputFileName = "";
-				
+
         _showVersion = false;
-				_showHelp = false;
-				_detailedOutput = false;
-			}
+        _showHelp = false;
+        _detailedOutput = false;
+      }
 
       bool containsHelpTag(int argc, char** argv)
       {
@@ -95,9 +95,9 @@ namespace map
       }
 
       unsigned int
-			ParseArguments(int argc, char** argv, ApplicationData& appData)
-			{
-				appData.Reset();
+        ParseArguments(int argc, char** argv, ApplicationData& appData)
+      {
+        appData.Reset();
 
         appData._showHelp = containsHelpTag(argc,argv);
         appData._showVersion = containsVersionTag(argc,argv);
@@ -158,17 +158,25 @@ namespace map
           }
           else if (value != "+") //per default it is always plus, so ignore "+"
           {         
-             appData._regFileList.push_back(value);
-             appData._inversionList.push_back(invertReg);
-             invertReg = false;
+            appData._regFileList.push_back(value);
+            appData._inversionList.push_back(invertReg);
+            invertReg = false;
           }
           --argc;
           ++argv;
         }
 
-				return 0;
-			};
+        if (appData._regFileList.empty())
+        {
+          std::cerr << "Wrong command line option or insufficient number of arguments." << std::endl;
+          std::cerr << "Use one of the following flags for more information:" << std::endl;
+          std::cerr << "-? or --help" << std::endl;
+          return 3;
+        }
 
-		}
-	}
+        return 0;
+      };
+
+    }
+  }
 }

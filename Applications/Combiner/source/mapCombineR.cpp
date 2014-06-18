@@ -39,6 +39,16 @@
 
 map::apps::combineR::ApplicationData appData;
 
+/** Main function/entry point of the program. When execute use "-?" to get the usage instructions.
+ * See CombineRApplicationData::ParseArguments for the codes segement that specifies the instructions.
+ * @retval 0 normal exit.
+ * @retval 1 showed version info or help.
+ * @retval 2 Invalid usage. No arguments given.
+ * @retval 3 Invalid usage. Wrong arguments given.
+ * @retval 5 Error while loading (or inverting) registrations.
+ * @retval 6 Error while combining registrations.
+ * @retval 7 Error while saving combined registration.
+ */
 int main(int argc, char** argv)
 {
 	int result = 0;

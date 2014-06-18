@@ -36,10 +36,8 @@ namespace map
 		namespace combineR
 		{
 
-			class ApplicationData
+			struct ApplicationData
 			{
-			public:
-
 				/** Loaded Registrations.*/
 				typedef std::vector<core::RegistrationBase::Pointer> RegistrationListType;
         RegistrationListType _spRegList;

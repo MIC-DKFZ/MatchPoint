@@ -31,24 +31,16 @@ namespace map
 	namespace testing
 	{
 
-		//defined by mapDeploymentTests.cpp. It is tha path to the current running executable.
+		//defined by mapCombineRTests.cpp. It is the path to the current running executable.
 		//It is needed to bypass the problem that when using MS Visual Studio the actual binary
 		//path depends of the compile mode (release/debug) and is not the CMake binary path.
 		extern const char* _callingAppPath;
 
-		int mapRBasicUsageTest(int argc, char* argv[])
+		int combineRBasicUsageTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			std::string mapRPath = itksys::SystemTools::GetProgramPath(_callingAppPath);
-
-			std::string dataPath = "Data path not set.";
-
-			if (argc > 1)
-			{
-				dataPath = argv[1];
-			}
-
+			std::string combineRPath = itksys::SystemTools::GetProgramPath(_callingAppPath);
 
 			map::utilities::ProcessExecutor::Pointer spExec = map::utilities::ProcessExecutor::New();
 
@@ -57,42 +49,32 @@ namespace map
 			// Test: behavior on basic usage.
 
 			//Test not enough parameters
-			CHECK(spExec->execute(mapRPath, "mapR", args));
+			CHECK(spExec->execute(combineRPath, "combineR", args));
 			CHECK_EQUAL(2, spExec->getExitValue());
 
 			args.clear();
 			args.push_back("-h");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
+			CHECK(spExec->execute(combineRPath, "combineR", args));
 			CHECK_EQUAL(1, spExec->getExitValue());
 
 			args.clear();
 			args.push_back("--help");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
+			CHECK(spExec->execute(combineRPath, "combineR", args));
 			CHECK_EQUAL(1, spExec->getExitValue());
 
 			args.clear();
 			args.push_back("-?");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
-			CHECK_EQUAL(1, spExec->getExitValue());
-
-			args.clear();
-			args.push_back("/?");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
-			CHECK_EQUAL(1, spExec->getExitValue());
-
-			args.clear();
-			args.push_back("/h");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
+			CHECK(spExec->execute(combineRPath, "combineR", args));
 			CHECK_EQUAL(1, spExec->getExitValue());
 
 			args.clear();
 			args.push_back("-v");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
+			CHECK(spExec->execute(combineRPath, "combineR", args));
 			CHECK_EQUAL(1, spExec->getExitValue());
 
 			args.clear();
 			args.push_back("dummy");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
+			CHECK(spExec->execute(combineRPath, "combineR", args));
 			CHECK_EQUAL(3, spExec->getExitValue());
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
