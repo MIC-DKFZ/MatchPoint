@@ -250,7 +250,10 @@ namespace map
         }
 
         /**write the image data according to the settings in appData.
-        * @pre pImage must point to a valid instance.*/
+        * @pre pImage must point to a valid instance.
+        * @TODO should this method be reworked
+        * right now the tags of dicom image will only be transfered if they are 3D and the series read style is set to DICOM or GDCM.
+        * Thus 2D DICOM images are missed as well as 3D DICOM images that are stored as one image file (default series style).*/
         static void doWriting(ImageType* pImage, const ApplicationData& appData)
         {
           if (!pImage)
@@ -259,10 +262,6 @@ namespace map
           }
 
           std::cout << std::endl << "save output file ... ";
-
-          /** @TODO should this method be reworked
-          * right now the tags of dicom image will only be transfered if they are 3D and the series read style is set to DICOM or GDCM.
-          * Thus 2D DICOM images are missed as well as 3D DICOM images that are stored as one image file (default series style).*/
 
           if (appData._loadedDimensions > 2 &&
             (appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::Dicom

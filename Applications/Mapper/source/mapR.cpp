@@ -54,6 +54,16 @@ void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
   std::cout << std::endl;
 }
 
+/** Main entry point for the application.
+ * @retval 0 normal exit.
+ * @retval 1 showed help or version info.
+ * @retval 2 Invalid usage. Missing parameters.
+ * @retval 3 Invalid usage. Wrong option usage.
+ * @retval 4 Error while loading input image.
+ * @retval 5 Error while loading registration.
+ * @retval 6 Error while loading reference image.
+ * @retval 9 Error while mapping or writing result image.
+ */
 int main(int argc, char** argv)
 {
   int result = 0;
