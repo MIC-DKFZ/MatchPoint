@@ -61,8 +61,7 @@ namespace map
 			//Test open file regular DLL
 			deployment::DLLHandle::Pointer spHandle1 = NULL;
 
-			std::string validDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithm" +
-									   itksys::DynamicLoader::LibExtension();
+			std::string validDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithm" + map::deployment::getDeploymentDLLExtension();
 
 			CHECK_NO_THROW(spHandle1 = map::deployment::openDeploymentDLL(validDLLPath));
 			//now check the returned information
@@ -84,37 +83,32 @@ namespace map
 
 			//Test open file invalid DLL (missing mapGetDLLInterfaceVersion symbol)
 			std::string invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() +
-										 "mapTestAlgorithmInvalid1" + itksys::DynamicLoader::LibExtension();
+										 "mapTestAlgorithmInvalid1" + map::deployment::getDeploymentDLLExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
 								 deployment::MissingSymbolException);
 
 			//Test open file invalid DLL (missing mapGetRegistrationAlgorithmUID symbol)
-			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid2" +
-							 itksys::DynamicLoader::LibExtension();
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid2" + map::deployment::getDeploymentDLLExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
 								 deployment::MissingSymbolException);
 
 			//Test open file invalid DLL (missing mapGetRegistrationAlgorithmInstance symbol)
-			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid3" +
-							 itksys::DynamicLoader::LibExtension();
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid3" + map::deployment::getDeploymentDLLExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
 								 deployment::MissingSymbolException);
 
 			//Test open file invalid DLL (missing mapGetRegistrationAlgorithmProfile symbol)
-			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid7" +
-							 itksys::DynamicLoader::LibExtension();
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid7" + map::deployment::getDeploymentDLLExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
 								 deployment::MissingSymbolException);
 
 			//Test open file invalid DLL (wrong version)
-			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid4" +
-							 itksys::DynamicLoader::LibExtension();
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid4" + map::deployment::getDeploymentDLLExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
 								 deployment::InvalidInterfaceVersionException);
 
 			//Test open file invalid DLL (invalid UID when calling mapGetRegistrationAlgorithmUID)
-			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid5" +
-							 itksys::DynamicLoader::LibExtension();
+			invalidDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithmInvalid5" + map::deployment::getDeploymentDLLExtension();
 			CHECK_THROW_EXPLICIT(map::deployment::openDeploymentDLL(invalidDLLPath),
 								 deployment::InvalidUIDException);
 
@@ -176,7 +170,7 @@ namespace map
 			//////////////////////////////////////////////////
 			// Test: checkNameIsSharedLibrary
 			core::String noLib = "iAmNoLib.other";
-			core::String aLib = core::String("iAmALib.") + itksys::DynamicLoader::LibExtension();
+			core::String aLib = core::String("iAmALib.") + map::deployment::getDeploymentDLLExtension();
 
 			CHECK_THROW(map::deployment::checkNameIsSharedLibrary(NULL));
 			CHECK(map::deployment::checkNameIsSharedLibrary(aLib.c_str()));
@@ -194,12 +188,10 @@ namespace map
 			ostr << "-" << MAP_VERSION_MAJOR << "-" << MAP_VERSION_MINOR << "_";
 			core::String versionPart = ostr.str();
 
-			core::String invalidMDRA_DFlag = core::String("mdra-B") + versionPart + "MyInvalidDFlagAlgorithm" +
-											 itksys::DynamicLoader::LibExtension();
-			core::String invalidMDRA_Version = validMDRA + "0-0_" + "MyInvalidVersionAlgorithm" +
-											   itksys::DynamicLoader::LibExtension();
+			core::String invalidMDRA_DFlag = core::String("mdra-B") + versionPart + "MyInvalidDFlagAlgorithm" + map::deployment::getDeploymentDLLExtension();
+			core::String invalidMDRA_Version = validMDRA + "0-0_" + "MyInvalidVersionAlgorithm" + map::deployment::getDeploymentDLLExtension();
 			core::String invalidMDRA_Extension = validMDRA + "0-0_" + "MyInvalidExtensionAlgorithm.other";
-			validMDRA = validMDRA + versionPart + "MyValidAlgorithm" + itksys::DynamicLoader::LibExtension();
+			validMDRA = validMDRA + versionPart + "MyValidAlgorithm" + map::deployment::getDeploymentDLLExtension();
 			core::String validMDRA_withPath = core::String("./myPath/") + validMDRA;
 
 			CHECK_THROW(map::deployment::checkFileNameIsMDRACompliant(NULL));
