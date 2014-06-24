@@ -137,10 +137,10 @@ namespace map
 
         if (!argc)
         {
-          std::cerr << "Wrong command line option or insufficient number of arguments." << std::endl;
+          std::cerr << "Wrong command line: insufficient number of arguments." << std::endl;
           std::cerr << "Use one of the following flags for more information:" << std::endl;
           std::cerr << "-? or --help" << std::endl;
-          return 3;
+          return 2;
         }
 
         appData._outputFileName = argv[0];
