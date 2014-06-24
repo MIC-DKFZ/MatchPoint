@@ -41,7 +41,7 @@ namespace map
     getDeploymentDLLExtension()
     {
       map::core::String result = itksys::DynamicLoader::LibExtension();
-#ifdef __APPLE__
+#ifdef __APPLE_CC__
       result = ".dylib";
 #endif
       return result;
@@ -83,7 +83,7 @@ namespace map
 			core::OStringStream ostr;
 			ostr << "-" << MAP_VERSION_MAJOR << "-" << MAP_VERSION_MINOR << "_";
 
-#if _DEBUG || (__linux__ && !defined(NDEBUG))
+#if _DEBUG || (__linux__ && !defined(NDEBUG)) || (__APPLE__ && !defined(NDEBUG))
 			prefix = prefix + "-D";
 #endif
 
