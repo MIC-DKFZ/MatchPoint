@@ -97,7 +97,6 @@ namespace map
 			virtual bool getInverse(InverseTransformModelBasePointer& spInverseModel) const = 0;
 
 			/*! clones the transform model and copies all parameters.
-			 * spInverseModel.
 			 * @eguarantee strong
 			 * @remark Implement the function for special transform model classes.
 			 * @return Smartpointer to the cloned transform model.*/

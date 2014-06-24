@@ -88,6 +88,7 @@ namespace map
 				 * @return Smart pointer to the inverse kernel.
 				 * @pre input representation must be coverd by the first kernel and the mapped input representation must be covered by the input
 				 * representation of the second kernel.
+				 * @pre in its current implementation matrix combination is only possible when input, interim and output dimension are equal.
 				 */
 			virtual CombinedKernelBasePointer combineKernels(const RequestType& request,
 					const InputFieldRepresentationType* pInputFieldRepresentation,
@@ -118,6 +119,13 @@ namespace map
 		protected:
 			ModelModelKernelCombinator() {};
 			virtual ~ModelModelKernelCombinator() {};
+
+      /* Member tries to combine the given kernels as matrices and generate a new matrix
+       * based combined kernel. This will only be successfull if both support matrix
+       * decomposition.
+       * @return Null if kernels cannot be combined as matrices. Otherwise it returns the pointer
+         to the combination result.*/
+			CombinedKernelBasePointer combineAsMatrixKernels(const Kernel1Type* kernel1, const Kernel2Type* kernel2) const;
 
 		private:
 			ModelModelKernelCombinator(const Self&);  //purposely not implemented
