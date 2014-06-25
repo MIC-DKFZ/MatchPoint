@@ -97,8 +97,8 @@ namespace map
       {
       /**@Remark: The current implementation only implements the combination of kernels with same input and output dimension (square matrices)
          Because of the limited api of the used MatrixOffsetTransformBase and the usage of the cloned second kernel*/
-        typedef itk::MatrixOffsetTransformBase<Kernel1Type::TransformType::ScalarType,VOutputDimensions,VOutputDimensions> Transform1Type;
-        typedef itk::MatrixOffsetTransformBase<Kernel2Type::TransformType::ScalarType,VOutputDimensions,VOutputDimensions> Transform2Type;
+        typedef itk::MatrixOffsetTransformBase<typename Kernel1Type::TransformType::ScalarType,VOutputDimensions,VOutputDimensions> Transform1Type;
+        typedef itk::MatrixOffsetTransformBase<typename Kernel2Type::TransformType::ScalarType,VOutputDimensions,VOutputDimensions> Transform2Type;
         typedef map::core::ModelBasedRegistrationKernel<VOutputDimensions,VOutputDimensions> NewKernelType; 
 
         const Transform1Type* transform1 = dynamic_cast<const Transform1Type*>(kernel1->getTransformModel()->getTransform());

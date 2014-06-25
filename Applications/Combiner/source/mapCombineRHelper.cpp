@@ -40,8 +40,8 @@ map::core::RegistrationBase::Pointer
   {
     typename CastedResultType::Pointer castedResult = CastedResultType::New();
     map::core::RegistrationManipulator<CastedResultType> manipulator(castedResult);
-    manipulator.setDirectMapping(const_cast<CastedResultType::DirectMappingType*>(&(castedReg->getInverseMapping())));
-    manipulator.setInverseMapping(const_cast<CastedResultType::InverseMappingType*>(&(castedReg->getDirectMapping())));
+    manipulator.setDirectMapping(const_cast<typename CastedResultType::DirectMappingType*>(&(castedReg->getInverseMapping())));
+    manipulator.setInverseMapping(const_cast<typename CastedResultType::InverseMappingType*>(&(castedReg->getDirectMapping())));
     result = castedResult;
   }
 
@@ -124,7 +124,7 @@ bool
 
   if (castedReg.IsNotNull())
   {
-    map::io::RegistrationFileWriter<IIDim,IODim>::Pointer writer = map::io::RegistrationFileWriter<IIDim,IODim>::New();
+    typename map::io::RegistrationFileWriter<IIDim,IODim>::Pointer writer = map::io::RegistrationFileWriter<IIDim,IODim>::New();
     writer->write(castedReg,fileName);
     result = true;
   }
