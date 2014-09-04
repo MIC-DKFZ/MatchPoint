@@ -39,6 +39,7 @@ namespace map
 		void registerTests()
 		{
 			LIT_REGISTER_TEST(mapRBasicUsageTest);
+      LIT_REGISTER_TEST(mapRSimpleMappingTest);
 		}
 
 	} //namespace testing

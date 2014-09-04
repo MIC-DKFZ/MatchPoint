@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 536 $ (last changed revision)
+// @date    $Date: 2014-05-19 16:45:05 +0200 (Mo, 19 Mai 2014) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/branches/Issue1251/Applications/Mapper/source/mapR.cpp $
 */
 
 
@@ -35,8 +35,8 @@
 #include "mapRegistrationFileReader.h"
 #include "mapConvert.h"
 
-#include "mapRApplicationData.h"
-#include "mapRHelper.h"
+#include "..\Mapper\include\mapRApplicationData.h"
+#include "mapR4VHelper.h"
 
 #ifdef MAP_DISABLE_ITK_IO_FACTORY_AUTO_REGISTER
 /* The mapR needs the IO factories to be registered in cases where
@@ -54,21 +54,11 @@ void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
   std::cout << std::endl;
 }
 
-/** Main entry point for the application.
- * @retval 0 normal exit.
- * @retval 1 showed help or version info.
- * @retval 2 Invalid usage. Missing parameters.
- * @retval 3 Invalid usage. Wrong option usage.
- * @retval 4 Error while loading input image.
- * @retval 5 Error while loading registration.
- * @retval 6 Error while loading reference image.
- * @retval 9 Error while mapping or writing result image.
- */
 int main(int argc, char** argv)
 {
   int result = 0;
 
-  std::cout << "mapR - Generic image mapping tool for MatchPoint." << std::endl;
+  std::cout << "mapR for Virtuos - Generic image mapping tool for MatchPoint with Virtuos support." << std::endl;
 
   switch (appData.ParseArguments(argc, argv))
   {
@@ -121,7 +111,7 @@ int main(int argc, char** argv)
     std::cout << "Template file:     " << appData._refFileName << std::endl;
   }
 
-  map::apps::mapR::LoadingLogic loadingLogic(appData);
+  map::apps::mapR4V::LoadingLogic loadingLogic(appData);
 
   try
   {
@@ -193,11 +183,11 @@ int main(int argc, char** argv)
   {
     if (appData._loadedDimensions == 2)
     {
-      map::apps::mapR::handleGenericImage<2,map::apps::mapR::ProcessingLogic>(appData);
+      map::apps::mapR::handleGenericImage<2,map::apps::mapR4V::ProcessingLogic>(appData);
     }
     else if (appData._loadedDimensions == 3)
     {
-      map::apps::mapR::handleGenericImage<3,map::apps::mapR::ProcessingLogic>(appData);
+      map::apps::mapR::handleGenericImage<3,map::apps::mapR4V::ProcessingLogic>(appData);
     }
   }
   catch (::itk::ExceptionObject& e)
