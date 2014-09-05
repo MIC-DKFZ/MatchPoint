@@ -24,7 +24,21 @@
 #ifndef __MAP_R_HELPER_H
 #define __MAP_R_HELPER_H
 
+#include "itkImageFileWriter.h"
+#include "itkStdStreamLogOutput.h"
+#include "itkImageSeriesWriter.h"
+#include "itkNumericSeriesFileNames.h"
+#include "itkGDCMImageIO.h"
+#include "itkVersion.h"
+
+#include "gdcmUIDGenerator.h"
+
+#include "mapConvert.h"
 #include "mapExceptionObjectMacros.h"
+#include "mapImageMappingTask.h"
+#include "mapGenericImageReader.h"
+#include "mapRegistrationFileReader.h"
+
 #include "mapRApplicationData.h"
 
 namespace map
@@ -385,7 +399,7 @@ namespace map
 
         static void processData(const ApplicationData& appData)
         {
-          ImageType::Pointer mappedImage = doMapping(appData);
+          typename ImageType::Pointer mappedImage = doMapping(appData);
           doWriting(mappedImage,appData);
         }
 
