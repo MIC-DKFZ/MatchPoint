@@ -144,11 +144,13 @@ namespace map
 			CHECK_NO_THROW(spInverseKernel = spInverter->invertKernel(*(spKernel.GetPointer()), NULL, spInRep));
 
 			//check correct inversion
-			typedef core::FieldBasedRegistrationKernel<2, 2> FieldBasedRegistrationKernelType;
+			typedef core::InvertingFieldBasedRegistrationKernel<2, 2> FieldBasedRegistrationKernelType;
 			typedef FieldBasedRegistrationKernelType::FieldType::RegionType TestRegionType;
 
 			FieldBasedRegistrationKernelType* pInverseConcreteKernel =
 				dynamic_cast<FieldBasedRegistrationKernelType*>(spInverseKernel.GetPointer());
+      CHECK(pInverseConcreteKernel != NULL);
+      CHECK(pInverseConcreteKernel->getSourceKernel() == spKernel.GetPointer());
 
 			//define test region
 			TestRegionType::IndexType testIndex;

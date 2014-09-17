@@ -60,6 +60,7 @@ SET(H_FILES
 	include/mapImageMappingPerformerRequest.h
 	include/mapImageMappingTask.h
 	include/mapInverseRegistrationKernelGenerator.h
+	include/mapInvertingFieldBasedRegistrationKernel.h
 	include/mapITKDimensionedTransformModel.h
 	include/mapITKUnaryTransformModel.h
 	include/mapKernelCombinatorLoadPolicy.h
@@ -168,6 +169,7 @@ SET(TPP_FILES
 	include/mapImageMappingPerformerRequest.tpp
 	include/mapImageMappingTask.tpp
 	include/mapInverseRegistrationKernelGenerator.tpp
+	include/mapInvertingFieldBasedRegistrationKernel.tpp
 	include/mapITKDimensionedTransformModel.tpp
 	include/mapITKUnaryTransformModel.tpp
 	include/mapKernelCombinatorLoadPolicy.tpp
@@ -254,6 +256,7 @@ test/mapConcreteFieldBasedRegistrationKernelTest.cpp
 test/mapModelBasedKernelInverterTest.cpp
 test/mapFieldBasedKernelInverterTest.cpp
 test/mapInverseRegistrationKernelGeneratorTest.cpp
+test/mapInvertingFieldBasedRegistrationKernelTest.cpp
 test/mapRegistrationCombinationRequestTest.cpp
 test/mapRegistrationKernelCombinatorBaseTest.cpp
 test/mapFieldFieldKernelCombinatorTest.cpp
