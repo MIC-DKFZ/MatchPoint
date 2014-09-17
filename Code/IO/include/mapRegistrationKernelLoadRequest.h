@@ -25,6 +25,7 @@
 
 #include "mapSDElement.h"
 #include "mapMAPIOExports.h"
+#include "mapDimensionlessRegistrationKernelBase.h"
 
 namespace map
 {
@@ -41,13 +42,20 @@ namespace map
 		{
 		public:
 
-			structuredData::Element::ConstPointer _spKernelDescriptor;
-			bool _preferLazyLoading;
+			/*! Descriptor for the kernel that should be loaded.*/
+      structuredData::Element::ConstPointer _spKernelDescriptor;
+
+      /*! Optional information that specifies the "sibling" kernel of the registration instance _spKernelDescriptor
+       * is a part of.
+       * Default value is NULL, indicating that there is no sibling or it should not regarded in the loading request.*/
+			core::DimensionlessRegistrationKernelBase::ConstPointer _spComplementaryKernel;
+
+      bool _preferLazyLoading;
 
 			/*! Constructor
 			 * \pre pKernelDescriptor must not be NULL*/
 			RegistrationKernelLoadRequest(const structuredData::Element* pKernelDescriptor,
-										  bool preferLazyLoading);
+										  bool preferLazyLoading, const core::DimensionlessRegistrationKernelBase* pComplementaryKernel = NULL);
 			~RegistrationKernelLoadRequest();
 
 			RegistrationKernelLoadRequest(const RegistrationKernelLoadRequest&);

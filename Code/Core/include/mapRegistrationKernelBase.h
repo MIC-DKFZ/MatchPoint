@@ -21,13 +21,11 @@
 */
 
 
-
-
 #ifndef __REGISTRATION_KERNEL_BASE_H
 #define __REGISTRATION_KERNEL_BASE_H
 
 #include "mapFieldRepresentationDescriptor.h"
-#include "mapRegistrationKernelInterface.h"
+#include "mapDimensionlessRegistrationKernelBase.h"
 #include "itkObject.h"
 
 namespace map
@@ -40,15 +38,15 @@ namespace map
 				@ingroup RegKernel
 		 */
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class RegistrationKernelBase : public itk::Object, RegistrationKernelInterface
+		class RegistrationKernelBase : public DimensionlessRegistrationKernelBase
 		{
 		public:
 			typedef RegistrationKernelBase Self;
-			typedef itk::Object Superclass;
+			typedef DimensionlessRegistrationKernelBase Superclass;
 			typedef itk::SmartPointer<Self> Pointer;
 			typedef itk::SmartPointer<const Self> ConstPointer;
 
-			itkTypeMacro(RegistrationKernelBase, itk::Object);
+			itkTypeMacro(RegistrationKernelBase, DimensionlessRegistrationKernelBase);
 
 			itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
 			itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);
@@ -82,7 +80,7 @@ namespace map
 
 			/*! @brief gets the largest possible representation descriptor. The descriptor defines
 			 * the space the kernel guarantees to map.
-			 * @return Smart pointer to the descriptor (may be generated dynamicaly)
+			 * @return Smart pointer to the descriptor (may be generated dynamically)
 			 * @retval NULL there is no descriptor. If hasLimitedRepresentation returns false, the kernel
 			 * has no mapping limitations and covers the total input space.
 			  @eguarantee strong

@@ -1,5 +1,6 @@
 SET(CPP_FILES 
   source/mapConvert.cpp
+  source/mapDimensionlessRegistrationKernelBase.cpp  
   source/mapXMLLogger.cpp
   source/mapLogbook.cpp
   source/mapLogbookImplementation.cpp
@@ -40,6 +41,7 @@ SET(H_FILES
 	include/mapContinuous.h
 	include/mapContinuousElements.h
 	include/mapDefaultRegistrationTopologyPolicy.h
+	include/mapDimensionlessRegistrationKernelBase.h
 	include/mapDiscrete.h
 	include/mapDiscreteElements.h
 	include/mapEvents.h
@@ -107,7 +109,6 @@ SET(H_FILES
 	include/mapRegistrationException.h
 	include/mapRegistrationKernelBase.h
 	include/mapRegistrationKernelCombinatorBase.h
-	include/mapRegistrationKernelInterface.h
 	include/mapRegistrationKernelInverterBase.h
 	include/mapRegistrationManipulator.h
 	include/mapRegistrationTopology.h
@@ -126,6 +127,7 @@ SET(H_FILES
 	include/mapSyncInterface.h
     include/mapSDExceptions.h
     include/mapSDElement.h
+	include/mapSDITKStreamingHelper.h
     include/mapSDXMLStrReader.h
     include/mapSDStreamingInterface.h
     include/mapSDXMLFileReader.h

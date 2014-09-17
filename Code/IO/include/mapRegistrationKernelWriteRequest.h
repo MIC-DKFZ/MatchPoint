@@ -45,8 +45,16 @@ namespace map
 			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions> KernelBaseType;
 			typedef typename KernelBaseType::ConstPointer KernelBaseConstPointer;
 
-			/*! Kernel that should be stored with this request*/
+      typedef core::RegistrationKernelBase<VOutputDimensions, VInputDimensions> ComplimentaryKernelBaseType;
+      typedef typename ComplimentaryKernelBaseType::ConstPointer ComplimentaryKernelConstPointer;
+
+      /*! Kernel that should be stored with this request*/
 			KernelBaseConstPointer _spKernel;
+
+      /*! Optional information that specifies the "sibling" kernel of the registration instance _spKernel
+       * is a part of.
+       * Default value is NULL, indicating that there is no sibling or it should not regarded in the request.*/
+      ComplimentaryKernelConstPointer _spComplementaryKernel;
 
 			/*! Path to where the kernel is going to be stored and additional data
 			 *(e.g. image of the deformation field) should be stored).*/
@@ -62,9 +70,9 @@ namespace map
 			/*! Constructor
 			 * \pre pKernel1 and pKernel2 must not be NULL*/
 			RegistrationKernelWriteRequest(const KernelBaseType* pKernel, const core::String& path,
-										   const core::String& name, bool expandLazyKernels);
+										   const core::String& name, bool expandLazyKernels, const ComplimentaryKernelBaseType* pComplementaryKernel = NULL);
 			RegistrationKernelWriteRequest(const KernelBaseType& kernel, const core::String& path,
-										   const core::String& name, bool expandLazyKernels);
+										   const core::String& name, bool expandLazyKernels, const ComplimentaryKernelBaseType* pComplementaryKernel = NULL);
 			~RegistrationKernelWriteRequest();
 
 			RegistrationKernelWriteRequest(const RegistrationKernelWriteRequest&);
@@ -79,6 +87,7 @@ namespace map
 			os << "Path: " << request._path << std::endl;
 			os << "Name: " << request._name << std::endl;
 			os << "ExpandLazyKernels: " << request._expandLazyKernels << std::endl;
+      os << "Complementary Kernel: " << request._spComplementaryKernel << std::endl;
 			return os;
 		};
 

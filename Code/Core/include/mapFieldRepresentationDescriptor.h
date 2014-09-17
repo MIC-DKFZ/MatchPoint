@@ -24,14 +24,14 @@
 #ifndef __FIELD_REPRESENTATION_DESCRIPTOR_H
 #define __FIELD_REPRESENTATION_DESCRIPTOR_H
 
-#include "mapContinuousElements.h"
-#include "mapVolume.h"
-#include "mapDiscreteElements.h"
-
 #include "itkLightObject.h"
 #include "itkImageRegion.h"
 #include "itkMatrix.h"
 
+#include "mapContinuousElements.h"
+#include "mapVolume.h"
+#include "mapDiscreteElements.h"
+#include "mapSDStreamingInterface.h"
 
 /*! @namespace map The namespace map::core is for the library of MatchPoint
 */
@@ -43,7 +43,7 @@ namespace map
 		/*! @class FieldRepresentationDescriptor
 		@brief class for FieldRepresentationDescriptor.
 
-		This class is used as descriptor for a continous or discrete volume of finite size.
+		This class is used as descriptor for a continuous or discrete volume of finite size.
 		It is always used by MatchPoint if there is the need to define the field of view
 		or of support (e.g. which area of the target space is to be supported by the registration
 		determined by an algorithm in the case that the registration must be defined by
@@ -51,7 +51,7 @@ namespace map
 			@ingroup Registration
 		*/
 		template<unsigned int VDimensions>
-		class FieldRepresentationDescriptor : public itk::LightObject
+		class FieldRepresentationDescriptor : public itk::LightObject, public structuredData::StreamingInterface
 		{
 		public:
 			typedef FieldRepresentationDescriptor<VDimensions> Self;
@@ -192,6 +192,10 @@ namespace map
 			 @eguarantee strong
 			*/
 			DirectionType computePhysicalPointToIndexMatrix() const;
+
+      virtual structuredData::StreamingInterface::ElementPointer streamToSDInternal() const;
+
+      virtual void streamFromSDInternal(const structuredData::Element* pElement);
 
 			/*! Methods invoked by itk::LightObject::Print().  */
 			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;

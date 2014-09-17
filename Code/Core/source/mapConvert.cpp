@@ -139,10 +139,7 @@ namespace map
 
 			float toFloat(const String& value)
 			{
-				float result;
-				IStringStream strstrm(value);
-				strstrm >> result;
-				return result;
+        return toValueGeneric<float>(value);
 			};
 
 			int toInt(const String& value)
@@ -159,22 +156,12 @@ namespace map
 
 			unsigned int toUInt(const String& value)
 			{
-				unsigned int iResult;
-
-				IStringStream stream(value);
-				stream >> iResult;
-
-				return iResult;
+        return toValueGeneric<unsigned int>(value);
 			};
 
 			long toLong(const String& value)
 			{
-				long result;
-
-				IStringStream stream(value);
-				stream >> result;
-
-				return result;
+        return toValueGeneric<long>(value);
 			};
 
 			bool isALong(const String& value)
@@ -186,12 +173,7 @@ namespace map
 
 			unsigned long toULong(const String& value)
 			{
-				unsigned long result;
-
-				IStringStream stream(value);
-				stream >> result;
-
-				return result;
+        return toValueGeneric<unsigned long>(value);
 			};
 
 			bool toBool(const String& value)

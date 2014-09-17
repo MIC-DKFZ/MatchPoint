@@ -23,8 +23,10 @@
 #ifndef __MAP_VOLUME_SIZE_H
 #define __MAP_VOLUME_SIZE_H
 
-#include "mapContinuous.h"
 #include <iostream>
+
+#include "mapContinuous.h"
+#include "mapSDStreamingInterface.h"
 
 namespace map
 {
@@ -144,7 +146,11 @@ namespace map
 				* (and perhaps other compilers) from complaining about a partly
 				* bracketed initializer. */
 				SizeValueType _size[VDimensions];
-			};
+
+        static structuredData::StreamingInterface::ElementPointer streamToSD(const Self& vs);
+        static Self streamFromSD(const structuredData::Element* pElement);
+
+      };
 
 
 			template<unsigned int VDimensions>
@@ -152,6 +158,7 @@ namespace map
 
 		} // end namespace continuous
 	} // end namespace core
+
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP

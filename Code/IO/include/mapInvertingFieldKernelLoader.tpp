@@ -14,31 +14,32 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 303 $ (last changed revision)
+// @date    $Date: 2013-09-19 18:06:33 +0200 (Do, 19 Sep 2013) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/IO/include/mapInvertingFieldKernelLoader.tpp $
 */
 
-#ifndef __MAP_MATRIX_MODEL_BASED_KERNEL_LOADER_TPP
-#define __MAP_MATRIX_MODEL_BASED_KERNEL_LOADER_TPP
+#ifndef __MAP_INVERTING_FIELD_KERNEL_LOADER_TPP
+#define __MAP_INVERTING_FIELD_KERNEL_LOADER_TPP
 
-#include "mapMatrixModelBasedKernelLoader.h"
+#include "mapInvertingFieldKernelLoader.h"
 #include "mapServiceException.h"
 #include "mapRegistrationFileTags.h"
 #include "mapRegistrationManipulator.h"
-#include "mapITKAffineTransform.h"
 #include "mapConvert.h"
-#include "mapSDITKStreamingHelper.h"
+#include "mapInverseRegistrationKernelGenerator.h"
+#include "mapSDTags.h"
+#include "mapFileDispatch.h"
 
 namespace map
 {
 	namespace io
 	{
 
-		template <unsigned int VInputDimensions>
+		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
-		MatrixModelBasedKernelLoader<VInputDimensions>::
+		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		canHandleRequest(const RequestType& request) const
 		{
 			structuredData::Element::ConstSubElementIteratorType typePos = structuredData::findNextSubElement(
@@ -64,48 +65,48 @@ namespace map
 
 			if (typePos != request._spKernelDescriptor->getSubElementEnd())
 			{
-				canHandle = ((*typePos)->getValue() == "MatrixModelKernel") && (iDim == VInputDimensions)
-							&& (oDim == VInputDimensions);
+				canHandle = ((*typePos)->getValue() == "InvertingFieldKernel") && (iDim == VInputDimensions)
+							&& (oDim == VOutputDimensions) && request._spComplementaryKernel.IsNotNull();
 			}
 
 			return canHandle;
 		}
 
 
-		template <unsigned int VInputDimensions>
+		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		core::String
-		MatrixModelBasedKernelLoader<VInputDimensions>::
+		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
 			return Self::getStaticProviderName();
 		}
 
-		template <unsigned int VInputDimensions>
+		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		core::String
-		MatrixModelBasedKernelLoader<VInputDimensions>::
+		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
 			core::OStringStream os;
-			os << "MatrixModelBasedKernelLoader<" << VInputDimensions << "," << VInputDimensions << ">";
+			os << "InvertingFieldKernelLoader<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
-		template <unsigned int VInputDimensions>
+		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		core::String
-		MatrixModelBasedKernelLoader<VInputDimensions>::
+		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
 			core::OStringStream os;
-			os << "MatrixModelBasedKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: "
-			   << VInputDimensions << ".";
+			os << "InvertingFieldKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
+			   VOutputDimensions << ".";
 			return os.str();
 		}
 
 
-		template <unsigned int VInputDimensions>
-		typename MatrixModelBasedKernelLoader<VInputDimensions>::GenericKernelPointer
-		MatrixModelBasedKernelLoader<VInputDimensions>::
+		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+		typename InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::GenericKernelPointer
+		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		loadKernel(const RequestType& request) const
 		{
 			if (!canHandleRequest(request))
@@ -114,51 +115,55 @@ namespace map
 								  << "Error: cannot load kernel. Reason: cannot handle request.");
 			}
 
-			//establish matrix;
-			structuredData::Element::ConstSubElementIteratorType matrixPos = structuredData::findNextSubElement(
-						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
-						tags::Matrix);
+			typename KernelBaseType::Pointer spKernel;
 
-			if (matrixPos == request._spKernelDescriptor->getSubElementEnd())
+      core::InverseRegistrationKernelGenerator
+
+			if (request._preferLazyLoading)
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: no matrix found.");
+				typedef typename
+				core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
+				KernelType;
+				typename KernelType::Pointer spLazyKernel = KernelType::New();
+
+				typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
+
+				typename KernelBaseType::RepresentationDescriptorType::Pointer spFieldDescriptor =
+					core::createFieldRepresentationOfMetaImageFile<VInputDimensions>(filePath);
+
+				typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath, spFieldDescriptor);
+
+				spLazyKernel->setFieldFunctor(*(spFunctor.GetPointer()));
+				spLazyKernel->setNullVectorUsage(usesNullVector);
+				spLazyKernel->setNullVector(nullVector);
+
+				spKernel = spLazyKernel;
 			}
-      
-      typedef typename KernelType::TransformType::MatrixType MatrixType;
-      MatrixType matrix = structuredData::streamSDToITKMatrix<MatrixType>(*matrixPos);
-
-			//establish offset;
-			structuredData::Element::ConstSubElementIteratorType offsetPos = structuredData::findNextSubElement(
-						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
-						tags::Offset);
-
-			if (offsetPos == request._spKernelDescriptor->getSubElementEnd())
+			else
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: no offset found.");
+				typedef typename
+				core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
+				KernelType;
+				typename KernelType::Pointer spCachedKernel = KernelType::New();
+
+				typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
+				typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath);
+
+				typename KernelType::FieldType::Pointer spField = spFunctor->generateField();
+
+				spCachedKernel->setField(*(spField.GetPointer()));
+				spCachedKernel->setNullVectorUsage(usesNullVector);
+				spCachedKernel->setNullVector(nullVector);
+				spKernel = spCachedKernel;
 			}
-
-      typedef typename KernelType::TransformType::OutputVectorType OutputVectorType;
-      OutputVectorType offset = structuredData::streamSDToITKFixedArray<OutputVectorType>(*offsetPos);
-
-      //establish transform & kernel
-			typename KernelType::Pointer spKernel = KernelType::New();
-
-			typedef ::itk::AffineTransform<core::continuous::ScalarType, VInputDimensions> TransformType;
-			typedef algorithm::itk::ITKTransformModel<TransformType> ModelType;
-			typename ModelType::Pointer spModel = ModelType::New();
-
-			spModel->getConcreteTransform()->SetMatrix(matrix);
-			spModel->getConcreteTransform()->SetOffset(offset);
-
-			spKernel->setTransformModel(spModel);
 
 			GenericKernelPointer spResult = spKernel.GetPointer();
 			return spResult;
 		}
 
-		template <unsigned int VInputDimensions>
+		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
-		MatrixModelBasedKernelLoader<VInputDimensions>::
+		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		addAsInverseKernel(GenericKernelType* pKernel,
 						   core::RegistrationBase::Pointer& spRegistration) const
 		{
@@ -193,9 +198,9 @@ namespace map
 			man.setInverseMapping(pCastedKernel);
 		};
 
-		template <unsigned int VInputDimensions>
+		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
-		MatrixModelBasedKernelLoader<VInputDimensions>::
+		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		addAsDirectKernel(GenericKernelType* pKernel,
 						  core::RegistrationBase::Pointer& spRegistration) const
 		{
@@ -230,9 +235,9 @@ namespace map
 			man.setDirectMapping(pCastedKernel);
 		};
 
-		template <unsigned int VInputDimensions>
-		MatrixModelBasedKernelLoader<VInputDimensions>::
-		MatrixModelBasedKernelLoader()
+		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
+		InvertingFieldKernelLoader()
 		{};
 
 

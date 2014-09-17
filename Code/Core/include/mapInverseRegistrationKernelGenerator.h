@@ -75,14 +75,14 @@ namespace map
 		public:
 			typedef services::StaticServiceStack<ConcreteInverterStackType>			 InverterStackType;
 
-			/*! Generates an inverse kernel by requesting a rensponsible service provider from InverterStackType.
-				 * Returns a smpart pointer to an inverted version of the kernel.
+			/*! Generates an inverse kernel by requesting a responsible service provider from InverterStackType.
+				 * Returns a smart pointer to an inverted version of the kernel.
 				 * @eguarantee strong
-				 * @param [in] request Referenz to the kernel that should be inverted
+				 * @param [in] request reference to the kernel that should be inverted
 				 * @param [in] pInverseFieldRepresentation Pointer to the field representation of the input space of the inverse kernel.
 				 * @return Smart pointer to the inverse kernel.
 				 * @pre The inverter service provider may require one or both field representations, depending on the kernel.
-				 * e.g. if the kernel cannot be inverted analyticaly the inverse field representation descriptor is
+				 * e.g. if the kernel cannot be inverted analytically the inverse field representation descriptor is
 				 * needed in order to generate a proper field for the inverse kernel.
 				 * To avoid any exceptions always provide the field representation descriptors unless you are sure they
 				 * won't be needed.
@@ -96,15 +96,15 @@ namespace map
 
 
 		protected:
-			/*! Generates an inverse kernel by requesting a rensponsible service provider from InverterStackType.
-				 * Returns a smpart pointer to an inverted version of the kernel.
+			/*! Generates an inverse kernel by requesting a responsible service provider from InverterStackType.
+				 * Returns a smart pointer to an inverted version of the kernel.
 				 * @eguarantee strong
 				 * @param [in] request Reference to the kernel that should be inverted
 				 * @param [in] pFieldRepresentation Pointer to the field representation of the input space of the kernel that should be inverted.
 				 * @param [in] pInverseFieldRepresentation Pointer to the field representation of the input space of the inverse kernel.
 				 * @return Smart pointer to the inverse kernel.
 				 * @pre The inverter service provider may require one or both field representations, depending on the kernel.
-				 * e.g. if the kernel cannot be inverted analyticaly the inverse field representation descriptor is
+				 * e.g. if the kernel cannot be inverted analytically the inverse field representation descriptor is
 				 * needed in order to generate a proper field for the inverse kernel.
 				 * To avoid any exceptions always provide the field representation descriptors unless you are sure they
 				 * won't be needed.

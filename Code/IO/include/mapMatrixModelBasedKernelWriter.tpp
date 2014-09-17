@@ -27,6 +27,7 @@
 #include "mapServiceException.h"
 #include "mapRegistrationFileTags.h"
 #include "mapConvert.h"
+#include "mapSDITKStreamingHelper.h"
 
 namespace map
 {
@@ -141,30 +142,20 @@ namespace map
 										   "MatrixModelKernel"));
 
 			//add matrix
-			structuredData::Element::Pointer spMatrixElement = structuredData::Element::New();
-
+			structuredData::Element::Pointer spMatrixElement = structuredData::streamITKMatrixToSD(matrix);
 			spMatrixElement->setTag(tags::Matrix);
 
+			//set matrix as string
 			structuredData::Element::Pointer spMatrixStrElement = structuredData::Element::New();
-
 			spMatrixStrElement->setTag(tags::MatrixStr);
 
-			//set matrix as string
 			core::OStringStream matrixOS;
 
-			//set matrix as seperated elements
 			for (unsigned int rowID = 0; rowID < KernelType::TransformType::MatrixType::RowDimensions; ++rowID)
 			{
 				for (unsigned int colID = 0; colID < KernelType::TransformType::MatrixType::ColumnDimensions;
 					 ++colID)
 				{
-					structuredData::Element::Pointer spValueElement = structuredData::Element::New();
-					spValueElement->setTag(tags::Value);
-					spValueElement->setValue(core::convert::toStr(matrix(rowID, colID)));
-					spValueElement->setAttribute(tags::Column, core::convert::toStr(colID));
-					spValueElement->setAttribute(tags::Row, core::convert::toStr(rowID));
-					spMatrixElement->addSubElement(spValueElement);
-
 					matrixOS << matrix(rowID, colID) << " ";
 				}
 			}
@@ -175,7 +166,7 @@ namespace map
 			spKernelElement->addSubElement(spMatrixStrElement);
 
 			//add offset
-			structuredData::Element::Pointer spOffsetElement = structuredData::Element::New();
+			structuredData::Element::Pointer spOffsetElement = structuredData::streamITKFixedArrayToSD(offset);
 			spOffsetElement->setTag(tags::Offset);
 			structuredData::Element::Pointer spOffsetStrElement = structuredData::Element::New();
 			spOffsetStrElement->setTag(tags::OffsetStr);
@@ -183,12 +174,6 @@ namespace map
 
 			for (unsigned int rowID = 0; rowID < KernelType::TransformType::MatrixType::RowDimensions; ++rowID)
 			{
-				structuredData::Element::Pointer spValueElement = structuredData::Element::New();
-				spValueElement->setTag(tags::Value);
-				spValueElement->setValue(core::convert::toStr(offset[rowID]));
-				spValueElement->setAttribute(tags::Row, core::convert::toStr(rowID));
-				spOffsetElement->addSubElement(spValueElement);
-
 				offsetOS << offset[rowID] << " ";
 			}
 

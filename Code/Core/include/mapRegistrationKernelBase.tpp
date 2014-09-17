@@ -73,7 +73,6 @@ namespace map
 		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
-			os << indent << "limited Representation: " << hasLimitedRepresentation() << std::endl;
 			os << indent << "Largest possible field representation: ";
 
 			RepresentationDescriptorConstPointer spRep = getLargestPossibleRepresentation();
