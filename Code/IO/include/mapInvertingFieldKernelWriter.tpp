@@ -45,28 +45,18 @@ namespace map
 		{
 			// if the kernel "request" is a field-based kernel, then we can maybe handle it.
 
-			typedef typename
-			core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
-			CachedKernelType;
-			typedef typename
-			core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
-			LazyKernelType;
-
-			const CachedKernelType* pCachedKernel = dynamic_cast<const CachedKernelType*>
+			const KernelType* pKernel = dynamic_cast<const KernelType*>
 													(request._spKernel.GetPointer());
-			const LazyKernelType* pLazyKernel = dynamic_cast<const LazyKernelType*>
-												(request._spKernel.GetPointer());
 
 			bool canHandle = false;
 
-			if (pCachedKernel)
+			if (pKernel)
 			{
-				canHandle = true;
+        if (pKernel->getSourceKernel() == request._spComplimentaryKernel.GetPointer())
+        {
+				  canHandle = true;
+        }
 			}
-			else if (pLazyKernel && request._expandLazyKernels)
-			{
-				canHandle = true;
-			};
 
 			return canHandle;
 		}
@@ -119,17 +109,8 @@ namespace map
 			if (pKernel == NULL)
 			{
 				mapExceptionMacro(core::ServiceException,
-								  << "Error: cannot store kernel. Reason: cannot cast to FieldBasedKernel: " <<
+								  << "Error: cannot store kernel. Reason: cannot cast to InvertingFieldBasedRegistrationKernel: " <<
 								  request._spKernel.GetPointer());
-			}
-
-
-			const typename KernelType::FieldType::ConstPointer spField = pKernel->getField();
-
-			if (spField.IsNull())
-			{
-				mapExceptionMacro(core::ServiceException,
-								  << "Error: cannot store kernel. Reason: Kernel seems to have no valid field. Kernel: " << pKernel);
 			}
 
 			structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
@@ -142,61 +123,17 @@ namespace map
 			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
 										   this->getProviderName()));
 			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
-										   "ExpandedFieldKernel"));
+										   "InvertingFieldKernel"));
 
-			//generate file name and save field to file
-			if (request._path.empty())
-			{
-				core::Logbook::warning("No request path set for field storing. Will be stored to current directory.");
-			}
-
-			if (request._name.empty())
-			{
-				core::Logbook::warning("No request name specified. Field will be stored to unspecified file '_field.mhd'.");
-			}
-
-			core::String fieldPath =  request._name + "_field.mhd";
-			core::String absoluteFieldPath = core::FileDispatch::createFullPath(request._path, fieldPath);
-
-			typedef ::itk::ImageFileWriter< typename KernelType::FieldType  > FieldWriterType;
-			typename FieldWriterType::Pointer  spFieldWriter  = FieldWriterType::New();
-
-			spFieldWriter->SetFileName(absoluteFieldPath.c_str());
-			spFieldWriter->SetInput(spField);
-			spFieldWriter->Update();
-
-			//add field file
-			structuredData::Element::Pointer spFieldPathElement = structuredData::Element::New();
-			spFieldPathElement->setTag(tags::FieldPath);
-
-			spFieldPathElement->setValue(fieldPath);
+      typename KernelType::RepresentationDescriptorConstPointer spInverseFieldRepresentation = spKernel->getLargestPossibleRepresentation()
+      
+			if(spInverseFieldRepresentation.IsNotNull()
+      {
+			  structuredData::Element::Pointer spRepElement = spInverseFieldRepresentation->streamToSD();
+			  spRepElement->setTag(tags::InverseFieldRepresentation);
+      }
 
 			spKernelElement->addSubElement(spFieldPathElement);
-
-			//add null vector
-			structuredData::Element::Pointer spNullVectorElement = structuredData::Element::New();
-			spNullVectorElement->setTag(tags::NullVector);
-			structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
-			spUseNullVectorElement->setTag(tags::UseNullVector);
-			spUseNullVectorElement->setValue(core::convert::toStr(pKernel->usesNullVector()));
-			spKernelElement->addSubElement(spUseNullVectorElement);
-
-			if (pKernel->usesNullVector())
-			{
-				typename KernelType::MappingVectorType nullVector = pKernel->getNullVector();
-
-				for (unsigned int rowID = 0; rowID < KernelType::MappingVectorType::Dimension; ++rowID)
-				{
-					structuredData::Element::Pointer spValueElement = structuredData::Element::New();
-					spValueElement->setTag(tags::Value);
-					spValueElement->setValue(core::convert::toStr(nullVector[rowID]));
-					spValueElement->setAttribute(tags::Row, core::convert::toStr(rowID));
-					spNullVectorElement->addSubElement(spValueElement);
-
-				}
-
-				spKernelElement->addSubElement(spNullVectorElement);
-			}
 
 			return spKernelElement;
 		}

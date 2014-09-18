@@ -117,10 +117,18 @@ namespace map
 
 			typename KernelBaseType::Pointer spKernel;
 
-      core::InverseRegistrationKernelGenerator
+			structuredData::Element::ConstSubElementIteratorType repPos = structuredData::findNextSubElement(
+						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
+						tags::InverseFieldRepresentation);
+      
+      typename KernelType::RepresentationDescriptorConstPointer spInverseFieldRepresentation = spKernel->getLargestPossibleRepresentation()
 
+      core::InverseRegistrationKernelGenerator::Pointer generator = core::InverseRegistrationKernelGenerator::New();
+      generator->
+      
 			if (request._preferLazyLoading)
 			{
+
 				typedef typename
 				core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
 				KernelType;
