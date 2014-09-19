@@ -50,9 +50,9 @@ namespace map
 
 			bool canHandle = false;
 
-			if (pKernel)
+			if (pKernel && !request._expandLazyKernels)
 			{
-        if (pKernel->getSourceKernel() == request._spComplimentaryKernel.GetPointer())
+        if (pKernel->getSourceKernel() == request._spComplementaryKernel.GetPointer())
         {
 				  canHandle = true;
         }
@@ -125,15 +125,14 @@ namespace map
 			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
 										   "InvertingFieldKernel"));
 
-      typename KernelType::RepresentationDescriptorConstPointer spInverseFieldRepresentation = spKernel->getLargestPossibleRepresentation()
+      typename KernelType::RepresentationDescriptorConstPointer spInverseFieldRepresentation = pKernel->getLargestPossibleRepresentation();
       
-			if(spInverseFieldRepresentation.IsNotNull()
+			if(spInverseFieldRepresentation.IsNotNull())
       {
-			  structuredData::Element::Pointer spRepElement = spInverseFieldRepresentation->streamToSD();
+			  structuredData::Element::Pointer spRepElement = spInverseFieldRepresentation->streamToStructuredData();
 			  spRepElement->setTag(tags::InverseFieldRepresentation);
+  			spKernelElement->addSubElement(spRepElement);
       }
-
-			spKernelElement->addSubElement(spFieldPathElement);
 
 			return spKernelElement;
 		}

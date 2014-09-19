@@ -299,7 +299,7 @@ namespace map
       spNewSD->setAttribute("Dimensions", convert::toStr(VDimensions));
 
       //save size
-      structuredData::Element::Pointer spSizeElement = SizeType::streamToSD(this->getSize());
+      structuredData::Element::Pointer spSizeElement = SizeType::streamToStructuredData(this->getSize());
       spSizeElement->setTag("Size");
       spNewSD->addSubElement(spSizeElement);
       structuredData::Element::Pointer spOriginElement = structuredData::streamITKFixedArrayToSD(this->getOrigin());
@@ -309,7 +309,7 @@ namespace map
       spSpacingElement->setTag("Spacing");
       spNewSD->addSubElement(spSpacingElement);
       structuredData::Element::Pointer spDirectionElement = structuredData::streamITKMatrixToSD(this->getDirection());
-      spSpacingElement->setTag("Direction");
+      spDirectionElement->setTag("Direction");
       spNewSD->addSubElement(spDirectionElement);
 
       return spNewSD;
@@ -331,7 +331,7 @@ namespace map
 			{
 				mapDefaultExceptionMacro(<< "Error: cannot stream from structured data. Reason: sub element \"Size\" is missing.");
 			}
-      newSize = SizeType::streamFromSD(*subPos);
+      newSize = SizeType::streamFromStructuredData(*subPos);
 
 			subPos = structuredData::findNextSubElement(
 						pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Origin");

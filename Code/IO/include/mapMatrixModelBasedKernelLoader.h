@@ -36,7 +36,6 @@ namespace map
 		* @sa ModelBasedRegistrationKernel
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the kernel that should be inverted.
-		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.
 		*/
 		template <unsigned int VInputDimensions>
 		class MatrixModelBasedKernelLoader : public RegistrationKernelLoaderBase

@@ -147,8 +147,8 @@ namespace map
 				* bracketed initializer. */
 				SizeValueType _size[VDimensions];
 
-        static structuredData::StreamingInterface::ElementPointer streamToSD(const Self& vs);
-        static Self streamFromSD(const structuredData::Element* pElement);
+        static structuredData::StreamingInterface::ElementPointer streamToStructuredData(const Self& vs);
+        static Self streamFromStructuredData(const structuredData::Element* pElement);
 
       };
 

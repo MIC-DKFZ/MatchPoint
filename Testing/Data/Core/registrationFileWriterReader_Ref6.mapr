@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Registration>
+  <Tag Name='RegistrationUID'>RegistrationFileReaderTest.invertingKernel2</Tag>
+  <MovingDimensions>2</MovingDimensions>
+  <TargetDimensions>2</TargetDimensions>
+  <Kernel ID='direct' InputDimensions='2' OutputDimensions='2'>
+	<StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider>
+	<KernelType>InvertingFieldKernel</KernelType>
+	<InverseFieldRepresentation Dimensions='2'>
+		<Size>
+			<Value Row='0'>10.00000000</Value>
+			<Value Row='1'>10.00000000</Value></Size>
+		<Origin>
+			<Value Row='0'>0.0000000000</Value>
+			<Value Row='1'>0.0000000000</Value>
+		</Origin>
+		<Spacing>
+			<Value Row='0'>0.5000000000</Value>
+			<Value Row='1'>0.5000000000</Value>
+		</Spacing>
+		<Direction>
+			<Value Column='0' Row='0'>1.000000000</Value>
+			<Value Column='1' Row='0'>0.0000000000</Value>
+			<Value Column='0' Row='1'>0.0000000000</Value>
+			<Value Column='1' Row='1'>1.000000000</Value>
+		</Direction>
+	</InverseFieldRepresentation>
+  </Kernel>
+  <Kernel ID='inverse' InputDimensions='2' OutputDimensions='2'>
+    <StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider>
+    <KernelType>ExpandedFieldKernel</KernelType>
+    <FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath>
+    <UseNullVector>1</UseNullVector>
+    <NullVector>
+      <Value Row='0'>-1.000000000</Value>
+      <Value Row='1'>-2.000000000</Value>
+    </NullVector>
+  </Kernel>
+</Registration>

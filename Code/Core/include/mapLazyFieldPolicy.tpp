@@ -75,7 +75,6 @@ namespace map
 		checkAndPrepareField() const
 		{
 			::itk::MutexLockHolder<MutexType> mutexHolder(_checkMutex);
-
 			if (_spField.IsNull())
 			{
 				//create field

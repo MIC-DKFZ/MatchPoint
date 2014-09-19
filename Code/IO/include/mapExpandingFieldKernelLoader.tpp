@@ -234,8 +234,8 @@ namespace map
 		addAsInverseKernel(GenericKernelType* pKernel,
 						   core::RegistrationBase::Pointer& spRegistration) const
 		{
-			typedef core::RegistrationKernelBase<VInputDimensions, VInputDimensions> KernelType;
-			typedef core::Registration<VInputDimensions, VInputDimensions> RegistrationType;
+			typedef core::RegistrationKernelBase<VOutputDimensions, VInputDimensions> KernelType;
+			typedef core::Registration<VInputDimensions, VOutputDimensions> RegistrationType;
 
 			if (spRegistration.IsNull())
 			{
@@ -271,8 +271,8 @@ namespace map
 		addAsDirectKernel(GenericKernelType* pKernel,
 						  core::RegistrationBase::Pointer& spRegistration) const
 		{
-			typedef core::RegistrationKernelBase<VInputDimensions, VInputDimensions> KernelType;
-			typedef core::Registration<VInputDimensions, VInputDimensions> RegistrationType;
+			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions> KernelType;
+			typedef core::Registration<VInputDimensions, VOutputDimensions> RegistrationType;
 
 			if (spRegistration.IsNull())
 			{

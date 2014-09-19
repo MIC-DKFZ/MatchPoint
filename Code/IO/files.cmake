@@ -55,4 +55,6 @@ test/mapRegistrationFileReaderTest.cpp
 test/mapNullRegistrationKernelWriterTest.cpp
 test/mapExpandingFieldKernelWriterTest.cpp
 test/mapExpandingFieldKernelLoaderTest.cpp
+test/mapInvertingFieldKernelWriterTest.cpp
+test/mapInvertingFieldKernelLoaderTest.cpp
 )

@@ -26,6 +26,7 @@
 #include <assert.h>
 
 #include "mapVolumeSize.tpp"
+#include "mapConvert.h"
 #include "mapSDITKStreamingHelper.h"
 #include "mapExceptionObjectMacros.h"
 
@@ -231,7 +232,7 @@ namespace map
 			template<unsigned int VDimensions>
 			map::structuredData::StreamingInterface::ElementPointer 
 			VolumeSize<VDimensions>::
-			streamToSD(const Self& vs)
+			streamToStructuredData(const Self& vs)
 			{
         structuredData::Element::Pointer spElement = structuredData::Element::New();
         spElement->setTag("VolumeSize");
@@ -240,8 +241,8 @@ namespace map
         {
           structuredData::Element::Pointer spValueElement = structuredData::Element::New();
           spValueElement->setTag(tags::Value);
-          spValueElement->setValue(core::convert::toStr(vs._size[rowID]));
-          spValueElement->setAttribute(tags::Row, core::convert::toStr(rowID));
+          spValueElement->setValue(convert::toStr(vs._size[rowID]));
+          spValueElement->setAttribute(tags::Row, convert::toStr(rowID));
           spElement->addSubElement(spValueElement);
         }
 
@@ -251,7 +252,7 @@ namespace map
 			template<unsigned int VDimensions>
 			typename VolumeSize<VDimensions>::Self
 			VolumeSize<VDimensions>::
-			streamFromSD(const structuredData::Element* pElement)
+			streamFromStructuredData(const structuredData::Element* pElement)
 			{
         if (!pElement)
         {

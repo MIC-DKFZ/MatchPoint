@@ -74,7 +74,6 @@ namespace map
 		{
 			Superclass::PrintSelf(os, indent);
 			os << indent << "Largest possible field representation: ";
-
 			RepresentationDescriptorConstPointer spRep = getLargestPossibleRepresentation();
 
 			if (spRep.IsNull())

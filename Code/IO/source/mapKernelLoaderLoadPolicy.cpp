@@ -26,6 +26,7 @@
 #include "mapMatrixModelBasedKernelLoader.h"
 #include "mapNullRegistrationKernelLoader.h"
 #include "mapExpandingFieldKernelLoader.h"
+#include "mapInvertingFieldKernelLoader.h"
 
 namespace map
 {
@@ -68,7 +69,17 @@ namespace map
 				mapLogWarningObjMacro("NullRegistrationKernelLoader<3,2> was not added because it was already on the service stack!");
 			}
 
-			if (!loader.addProviderByPolicy(ExpandingFieldKernelLoader<2, 2>::New()))
+      if (!loader.addProviderByPolicy(InvertingFieldKernelLoader<2, 2>::New()))
+      {
+        mapLogWarningObjMacro("InvertingFieldKernelLoader<2,2> was not added because it was already on the service stack!");
+      }
+
+      if (!loader.addProviderByPolicy(InvertingFieldKernelLoader<3, 3>::New()))
+      {
+        mapLogWarningObjMacro("InvertingFieldKernelLoader<3,3> was not added because it was already on the service stack!");
+      }
+
+      if (!loader.addProviderByPolicy(ExpandingFieldKernelLoader<2, 2>::New()))
 			{
 				mapLogWarningObjMacro("ExpandingFieldKernelLoader<2,2> was not added because it was already on the service stack!");
 			}

@@ -57,6 +57,8 @@ namespace map
 			std::string refRegFile2 = refPath + "/registrationFileWriterReader_Ref2.mapr";
 			std::string refRegFile3 = refPath + "/registrationFileWriterReader_Ref3.mapr";
 			std::string refRegFile4 = refPath + "/registrationFileWriterReader_Ref4.mapr";
+      std::string refRegFile5 = refPath + "/registrationFileWriterReader_Ref5.mapr";
+      std::string refRegFile6 = refPath + "/registrationFileWriterReader_Ref6.mapr";
 
 			// create the generator
 			typedef io::RegistrationFileReader ReaderType;
@@ -100,7 +102,13 @@ namespace map
 			CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile4));
 			CHECK_EQUAL("RegistrationFileWriterTest.reg4", spRegistrationBase->getRegistrationUID());
 
-			RETURN_AND_REPORT_TEST_SUCCESS;
+      CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile5));
+      CHECK_EQUAL("RegistrationFileReaderTest.invertingKernel1", spRegistrationBase->getRegistrationUID());
+
+      CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile6));
+      CHECK_EQUAL("RegistrationFileReaderTest.invertingKernel2", spRegistrationBase->getRegistrationUID());
+
+      RETURN_AND_REPORT_TEST_SUCCESS;
 		}
 	} //namespace testing
 } //namespace map

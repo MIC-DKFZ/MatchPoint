@@ -115,57 +115,38 @@ namespace map
 								  << "Error: cannot load kernel. Reason: cannot handle request.");
 			}
 
-			typename KernelBaseType::Pointer spKernel;
+      /*! Kernel base type of kernels that should be inverted to get the requested field kernel.*/
+      typedef  core::RegistrationKernelBase<VOutputDimensions, VInputDimensions>	SourceKernelBaseType;
+      const SourceKernelBaseType* sourceKernel = dynamic_cast<const SourceKernelBaseType*>(request._spComplementaryKernel.GetPointer());
+
+			if (!sourceKernel)
+			{
+				mapExceptionMacro(core::ServiceException,
+								  << "Error: cannot load kernel. Reason: complementary/source kernel has not the correct dimensionality.");
+			}
 
 			structuredData::Element::ConstSubElementIteratorType repPos = structuredData::findNextSubElement(
 						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
 						tags::InverseFieldRepresentation);
       
-      typename KernelType::RepresentationDescriptorConstPointer spInverseFieldRepresentation = spKernel->getLargestPossibleRepresentation()
+      typename KernelBaseType::RepresentationDescriptorPointer spInverseFieldRep;
 
-      core::InverseRegistrationKernelGenerator::Pointer generator = core::InverseRegistrationKernelGenerator::New();
-      generator->
-      
-			if (request._preferLazyLoading)
+      if (repPos != request._spKernelDescriptor->getSubElementEnd())
+      {
+        spInverseFieldRep = KernelBaseType::RepresentationDescriptorType::New();
+        spInverseFieldRep->streamFromStructuredData(*repPos);
+      }
+
+      typedef core::InverseRegistrationKernelGenerator<VOutputDimensions, VInputDimensions> InversionGeneratorType;
+
+      InversionGeneratorType::Pointer generator = InversionGeneratorType::New();
+      core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult = generator->generateInverse(*sourceKernel, spInverseFieldRep);
+            
+      if (!request._preferLazyLoading)
 			{
-
-				typedef typename
-				core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
-				KernelType;
-				typename KernelType::Pointer spLazyKernel = KernelType::New();
-
-				typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
-
-				typename KernelBaseType::RepresentationDescriptorType::Pointer spFieldDescriptor =
-					core::createFieldRepresentationOfMetaImageFile<VInputDimensions>(filePath);
-
-				typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath, spFieldDescriptor);
-
-				spLazyKernel->setFieldFunctor(*(spFunctor.GetPointer()));
-				spLazyKernel->setNullVectorUsage(usesNullVector);
-				spLazyKernel->setNullVector(nullVector);
-
-				spKernel = spLazyKernel;
-			}
-			else
-			{
-				typedef typename
-				core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
-				KernelType;
-				typename KernelType::Pointer spCachedKernel = KernelType::New();
-
-				typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
-				typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath);
-
-				typename KernelType::FieldType::Pointer spField = spFunctor->generateField();
-
-				spCachedKernel->setField(*(spField.GetPointer()));
-				spCachedKernel->setNullVectorUsage(usesNullVector);
-				spCachedKernel->setNullVector(nullVector);
-				spKernel = spCachedKernel;
+        spResult->precomputeKernel();
 			}
 
-			GenericKernelPointer spResult = spKernel.GetPointer();
 			return spResult;
 		}
 
@@ -175,8 +156,8 @@ namespace map
 		addAsInverseKernel(GenericKernelType* pKernel,
 						   core::RegistrationBase::Pointer& spRegistration) const
 		{
-			typedef core::RegistrationKernelBase<VInputDimensions, VInputDimensions> KernelType;
-			typedef core::Registration<VInputDimensions, VInputDimensions> RegistrationType;
+			typedef core::RegistrationKernelBase<VOutputDimensions, VInputDimensions> KernelType;
+			typedef core::Registration<VInputDimensions, VOutputDimensions> RegistrationType;
 
 			if (spRegistration.IsNull())
 			{
@@ -212,8 +193,8 @@ namespace map
 		addAsDirectKernel(GenericKernelType* pKernel,
 						  core::RegistrationBase::Pointer& spRegistration) const
 		{
-			typedef core::RegistrationKernelBase<VInputDimensions, VInputDimensions> KernelType;
-			typedef core::Registration<VInputDimensions, VInputDimensions> RegistrationType;
+			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions> KernelType;
+			typedef core::Registration<VInputDimensions, VOutputDimensions> RegistrationType;
 
 			if (spRegistration.IsNull())
 			{

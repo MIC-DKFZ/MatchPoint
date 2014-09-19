@@ -125,7 +125,16 @@ namespace map
 			}
       
       typedef typename KernelType::TransformType::MatrixType MatrixType;
-      MatrixType matrix = structuredData::streamSDToITKMatrix<MatrixType>(*matrixPos);
+      MatrixType matrix;
+      
+      try
+      {
+          matrix = structuredData::streamSDToITKMatrix<MatrixType>(*matrixPos);
+      }
+      catch (core::ExceptionObject& ex)
+      {
+				mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+      }
 
 			//establish offset;
 			structuredData::Element::ConstSubElementIteratorType offsetPos = structuredData::findNextSubElement(
@@ -138,7 +147,16 @@ namespace map
 			}
 
       typedef typename KernelType::TransformType::OutputVectorType OutputVectorType;
-      OutputVectorType offset = structuredData::streamSDToITKFixedArray<OutputVectorType>(*offsetPos);
+      OutputVectorType offset;
+      
+      try
+      {
+          offset = structuredData::streamSDToITKFixedArray<OutputVectorType>(*offsetPos);
+      }
+      catch (core::ExceptionObject& ex)
+      {
+				mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+      }
 
       //establish transform & kernel
 			typename KernelType::Pointer spKernel = KernelType::New();
