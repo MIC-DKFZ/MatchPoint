@@ -129,7 +129,7 @@ namespace map
 								  << "Error: cannot invert kernel. Reason: pInverseFieldRepresentation not present.");
 			}
 
-			typedef typename InvertingFieldBasedRegistrationKernel<VOutputDimensions, VInputDimensions> LazyFieldKernelType;
+            typedef InvertingFieldBasedRegistrationKernel<VOutputDimensions, VInputDimensions> LazyFieldKernelType;
 			typename LazyFieldKernelType::Pointer spInverseKernel = LazyFieldKernelType::New();
 
 			typedef functors::FieldByFieldInversionFunctor<VOutputDimensions, VInputDimensions> FunctorType;

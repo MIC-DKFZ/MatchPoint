@@ -164,7 +164,7 @@ namespace map
 			{
         try
         {
-            nullVector = structuredData::streamSDToITKFixedArray<KernelBaseType::MappingVectorType>(*nullVecPos);
+            nullVector = structuredData::streamSDToITKFixedArray<typename KernelBaseType::MappingVectorType>(*nullVecPos);
         }
         catch (core::ExceptionObject& ex)
         {
@@ -174,8 +174,8 @@ namespace map
 
       typedef core::InverseRegistrationKernelGenerator<VOutputDimensions, VInputDimensions> InversionGeneratorType;
 
-      InversionGeneratorType::Pointer generator = InversionGeneratorType::New();
-      core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult = generator->generateInverse(*sourceKernel, spInverseFieldRep);
+      typename InversionGeneratorType::Pointer generator = InversionGeneratorType::New();
+      typename core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult = generator->generateInverse(*sourceKernel, spInverseFieldRep);
 
       core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>* fieldKernel = dynamic_cast<core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>*>(spResult.GetPointer());
       if (fieldKernel)
@@ -189,7 +189,7 @@ namespace map
         spResult->precomputeKernel();
 			}
 
-			return spResult;
+            return spResult.GetPointer();
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
