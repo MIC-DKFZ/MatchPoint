@@ -145,7 +145,7 @@ namespace map
 
 			core::String data = spStrWriter->write(spData);
 			core::String ref =
-				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation></Kernel>";
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.797693135e+308</Value><Value Row='1'>-1.797693135e+308</Value></NullVector></Kernel>";
 
 			CHECK_EQUAL(ref, data);
 

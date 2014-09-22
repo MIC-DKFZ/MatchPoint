@@ -137,10 +137,52 @@ namespace map
         spInverseFieldRep->streamFromStructuredData(*repPos);
       }
 
+			//determin null vector (support)
+			bool usesNullVector = false;
+			structuredData::Element::ConstSubElementIteratorType usesNullPos =
+				structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(),
+												   request._spKernelDescriptor->getSubElementEnd(), tags::UseNullVector);
+
+			if (usesNullPos != request._spKernelDescriptor->getSubElementEnd())
+			{
+				usesNullVector = core::convert::toBool((*usesNullPos)->getValue());
+			}
+			else
+			{
+				mapExceptionMacro(core::ServiceException,
+								  << "Error. Cannot load kernel. Field kernel description as no null vector usage information.")
+			}
+
+			typename KernelBaseType::MappingVectorType nullVector;
+			nullVector.Fill(0);
+
+			structuredData::Element::ConstSubElementIteratorType nullVecPos =
+				structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(),
+												   request._spKernelDescriptor->getSubElementEnd(), tags::NullVector);
+
+			if (nullVecPos != request._spKernelDescriptor->getSubElementEnd())
+			{
+        try
+        {
+            nullVector = structuredData::streamSDToITKFixedArray<KernelBaseType::MappingVectorType>(*nullVecPos);
+        }
+        catch (core::ExceptionObject& ex)
+        {
+				  mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+        }
+			}
+
       typedef core::InverseRegistrationKernelGenerator<VOutputDimensions, VInputDimensions> InversionGeneratorType;
 
       InversionGeneratorType::Pointer generator = InversionGeneratorType::New();
       core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult = generator->generateInverse(*sourceKernel, spInverseFieldRep);
+
+      core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>* fieldKernel = dynamic_cast<core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>*>(spResult.GetPointer());
+      if (fieldKernel)
+      {
+      	fieldKernel->setNullVectorUsage(usesNullVector);
+				fieldKernel->setNullVector(nullVector);
+      }
             
       if (!request._preferLazyLoading)
 			{

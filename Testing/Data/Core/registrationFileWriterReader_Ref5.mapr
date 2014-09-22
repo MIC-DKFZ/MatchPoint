@@ -35,5 +35,10 @@
 			<Value Column='1' Row='1'>1.000000000</Value>
 		</Direction>
 	</InverseFieldRepresentation>
+    <UseNullVector>1</UseNullVector>
+    <NullVector>
+      <Value Row='0'>-1.000000000</Value>
+      <Value Row='1'>-2.000000000</Value>
+    </NullVector>
   </Kernel>
 </Registration>

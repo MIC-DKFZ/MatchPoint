@@ -172,18 +172,14 @@ namespace map
 
 			if (nullVecPos != request._spKernelDescriptor->getSubElementEnd())
 			{
-				if ((*nullVecPos)->getSubElementsCount() < KernelBaseType::MappingVectorType::Dimension)
-				{
-					mapExceptionMacro(core::ServiceException,
-									  << "Error. Cannot load kernel. Field kernel description as a null vector that is under defined. Defined value count: "
-									  << (*nullVecPos)->getSubElementsCount() << "; expected count: " <<
-									  KernelBaseType::MappingVectorType::Dimension)
-				}
-
-				for (unsigned int rowID = 0; rowID < KernelBaseType::MappingVectorType::Dimension; ++rowID)
-				{
-					nullVector[rowID] = core::convert::toDouble((*nullVecPos)->getSubElement(rowID)->getValue());
-				}
+        try
+        {
+            nullVector = structuredData::streamSDToITKFixedArray<KernelBaseType::MappingVectorType>(*nullVecPos);
+        }
+        catch (core::ExceptionObject& ex)
+        {
+				  mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+        }
 			}
 
 			if (request._preferLazyLoading)

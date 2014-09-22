@@ -25,6 +25,7 @@
 			<Value Column='1' Row='1'>1.000000000</Value>
 		</Direction>
 	</InverseFieldRepresentation>
+    <UseNullVector>0</UseNullVector>	
   </Kernel>
   <Kernel ID='inverse' InputDimensions='2' OutputDimensions='2'>
     <StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider>

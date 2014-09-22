@@ -175,8 +175,6 @@ namespace map
 			spKernelElement->addSubElement(spFieldPathElement);
 
 			//add null vector
-			structuredData::Element::Pointer spNullVectorElement = structuredData::Element::New();
-			spNullVectorElement->setTag(tags::NullVector);
 			structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
 			spUseNullVectorElement->setTag(tags::UseNullVector);
 			spUseNullVectorElement->setValue(core::convert::toStr(pKernel->usesNullVector()));
@@ -185,16 +183,8 @@ namespace map
 			if (pKernel->usesNullVector())
 			{
 				typename KernelType::MappingVectorType nullVector = pKernel->getNullVector();
-
-				for (unsigned int rowID = 0; rowID < KernelType::MappingVectorType::Dimension; ++rowID)
-				{
-					structuredData::Element::Pointer spValueElement = structuredData::Element::New();
-					spValueElement->setTag(tags::Value);
-					spValueElement->setValue(core::convert::toStr(nullVector[rowID]));
-					spValueElement->setAttribute(tags::Row, core::convert::toStr(rowID));
-					spNullVectorElement->addSubElement(spValueElement);
-
-				}
+  			structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(nullVector);
+	  		spNullVectorElement->setTag(tags::NullVector);
 
 				spKernelElement->addSubElement(spNullVectorElement);
 			}

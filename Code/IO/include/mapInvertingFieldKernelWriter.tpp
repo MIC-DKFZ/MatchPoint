@@ -134,6 +134,20 @@ namespace map
   			spKernelElement->addSubElement(spRepElement);
       }
 
+			structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
+			spUseNullVectorElement->setTag(tags::UseNullVector);
+			spUseNullVectorElement->setValue(core::convert::toStr(pKernel->usesNullVector()));
+			spKernelElement->addSubElement(spUseNullVectorElement);
+
+			if (pKernel->usesNullVector())
+			{
+				typename KernelType::MappingVectorType nullVector = pKernel->getNullVector();
+  			structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(nullVector);
+	  		spNullVectorElement->setTag(tags::NullVector);
+
+				spKernelElement->addSubElement(spNullVectorElement);
+			}
+
 			return spKernelElement;
 		}
 
