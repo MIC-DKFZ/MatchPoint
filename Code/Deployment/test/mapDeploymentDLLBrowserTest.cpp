@@ -241,8 +241,7 @@ namespace map
 			CHECK_TESTER(tester);
 
 			core::String wrongFile = core::FileDispatch::createFullPath(searchPath,
-									 itksys::DynamicLoader::LibPrefix() + core::String("mapTestAlgorithm") +
-									 itksys::DynamicLoader::LibExtension());
+									 itksys::DynamicLoader::LibPrefix() + core::String("mapTestAlgorithm") + map::deployment::getDeploymentDLLExtension());
 			spBrowser->addDLLSearchLocation(wrongFile);
 			CHECK_NO_THROW(spBrowser->update());
 			CHECK_NO_THROW(infos = spBrowser->getLibraryInfos());

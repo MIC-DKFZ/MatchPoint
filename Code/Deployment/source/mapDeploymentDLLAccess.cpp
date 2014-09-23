@@ -37,6 +37,16 @@ namespace map
 	namespace deployment
 	{
 
+		map::core::String
+    getDeploymentDLLExtension()
+    {
+      map::core::String result = itksys::DynamicLoader::LibExtension();
+#ifdef __APPLE_CC__
+      result = ".dylib";
+#endif
+      return result;
+    };
+
 		bool
 		checkNameIsSharedLibrary(const char* name)
 		{
@@ -47,7 +57,7 @@ namespace map
 
 			core::String sname = name;
 
-			if (sname.find(itksys::DynamicLoader::LibExtension()) != core::String::npos)
+			if (sname.find(getDeploymentDLLExtension()) != core::String::npos)
 			{
 				return true;
 			}
@@ -67,13 +77,13 @@ namespace map
 
 			sname = core::FileDispatch::getFullName(sname);
 
-			core::String suffix = core::String(itksys::DynamicLoader::LibExtension());
+			core::String suffix = core::String(getDeploymentDLLExtension());
 			core::String prefix = core::String("mdra");
 
 			core::OStringStream ostr;
 			ostr << "-" << MAP_VERSION_MAJOR << "-" << MAP_VERSION_MINOR << "_";
 
-#if _DEBUG || (__linux__ && !defined(NDEBUG))
+#if _DEBUG || (__linux__ && !defined(NDEBUG)) || (__APPLE__ && !defined(NDEBUG))
 			prefix = prefix + "-D";
 #endif
 

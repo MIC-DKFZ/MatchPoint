@@ -125,7 +125,7 @@ namespace map
 		/**
 		 * A function to determine if a passed filename is compliant to the the naming conventions
 		 * for MatchPoint deployed algorithms: \n
-		 * mdra[verioning]_[name].[dll|so]\n\n
+		 * mdra[verioning]_[name].[dll|so|dylib]\n\n
 		 * Example: mdra-D-0-9_FancyNewElasitc.dll
 		 * @pre fileName pointer must not be NULL.
 		 * @return Indicates if the file is compliant to the naming conventions.
@@ -141,6 +141,11 @@ namespace map
 		 * @return Indicates if the file can be assumed to be a DLL by its (OS specific) extension
 		 */
 		MAPDeployment_EXPORT bool checkNameIsSharedLibrary(const char* name);
+
+		/**
+		 * function returns the os specific extension for deployed algorithms (Windows: .dll; Linux: .so; Mac OS: .dylib).
+		 */
+		MAPDeployment_EXPORT map::core::String getDeploymentDLLExtension();
 
 	} //end of namespace deployment;
 

@@ -225,8 +225,7 @@ int main(int argc, char* argv[])
 		std::cout << "Load registration algorithm..." << std::endl;
 
 		std::string dllPath = itksys::SystemTools::GetProgramPath(argv[0]);
-		dllPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "demoPropertiedAlgorithm2D" +
-				  itksys::DynamicLoader::LibExtension();
+    dllPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "demoPropertiedAlgorithm2D" + map::deployment::getDeploymentDLLExtension();
 
 		std::cout << "DLL location: " << dllPath << std::endl;
 

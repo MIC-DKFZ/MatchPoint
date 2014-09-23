@@ -66,8 +66,7 @@ namespace map
 			deployment::DLLHandle::Pointer spHandle1 = NULL;
 
 			std::string validDLLPath = map::core::FileDispatch::createFullPath(dllPath,
-									   map::core::String(itksys::DynamicLoader::LibPrefix()) + "mapTestAlgorithmConfig" +
-									   itksys::DynamicLoader::LibExtension());
+									   map::core::String(itksys::DynamicLoader::LibPrefix()) + "mapTestAlgorithmConfig" + map::deployment::getDeploymentDLLExtension());
 
 			spHandle1 = map::deployment::openDeploymentDLL(validDLLPath);
 
