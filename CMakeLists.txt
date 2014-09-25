@@ -54,6 +54,7 @@ include(CMake/mapFunctionCreateAlgorithmProfile.cmake)
 include(CMake/mapMacroCreateApplication.cmake)
 include(CMake/mapMacroCreateApplicationTests.cmake)
 include(CMake/mapMacroDefineDeployedAlgorithm.cmake)
+include(CMake/mapMacroCheckITKState.cmake)
 
 #-----------------------------------------------------------------------------
 # Basis config MatchPoint module infrastructure

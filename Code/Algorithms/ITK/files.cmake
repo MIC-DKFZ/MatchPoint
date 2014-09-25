@@ -101,7 +101,6 @@ include/mapITKBSplineDeformableTransform.h
 include/mapITKLinearInterpolateImageFunction.h
 include/mapITKNearestNeighborInterpolateImageFunction.h
 include/mapITKBSplineInterpolateImageFunction.h
-include/mapITKComplexBSplineInterpolateImageFunction.h
 include/mapITKWindowedSincInterpolateImageFunction.h
 include/mapITKMVNLOptimizerControlInterface.h
 include/mapITKPointSetToPointSetMetricControlBase.h
@@ -142,12 +141,10 @@ boxed/mapITKRigid3DClosedFormRegistrationAlgorithmTemplate.h
 boxed/mapTransMSRegistrationAlgorithmTemplate.h
 boxed/mapTransMattesMIRegistrationAlgorithmTemplate.h
 boxed/mapITKTransMattesMIMultiResRegistrationAlgorithmTemplate.h
-boxed/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.h
 boxed/mapITKPDEDemonsRegistrationAlgorithm.h
 boxed/mapITKLevelSetMotionRegistrationAlgorithm.h
 boxed/mapITKSymmetricForcesDemonsRegistrationAlgorithm.h
 boxed/mapITKLevelSetMotionMultiResRegistrationAlgorithm.h
-boxed/mapITKFastSymmetricForcesDemonsMultiResRegistrationAlgorithm.h
 )
 
 SET(TPP_FILES
@@ -190,12 +187,10 @@ boxed/mapITKTransMattesMIMultiResRegistrationAlgorithmTemplate.tpp
 boxed/mapITKInitializedImageRegistrationAlgorithm.tpp
 boxed/mapITKInitializedMultiResImageRegistrationAlgorithm.tpp
 boxed/mapITKRigid2DMattesMIRegistrationAlgorithmTemplate.tpp
-boxed/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.tpp
 boxed/mapITKPDEDemonsRegistrationAlgorithm.tpp
 boxed/mapITKLevelSetMotionRegistrationAlgorithm.tpp
 boxed/mapITKSymmetricForcesDemonsRegistrationAlgorithm.tpp
 boxed/mapITKLevelSetMotionMultiResRegistrationAlgorithm.tpp
-boxed/mapITKFastSymmetricForcesDemonsMultiResRegistrationAlgorithm.tpp
 )
 
 SET(TEST_CPP_FILES
@@ -227,3 +222,22 @@ test/mapITKRigid3DClosedFormRegistrationAlgorithmTemplateTest.cpp
 test/mapITKLandmarkKernelRegistrationAlgorithmTest.cpp
 test/mapITKEuler3DMattesMIRegistrationAlgorithmTemplateTest.cpp
 )
+
+SET(_MAP_ITK_REVIEW_ACTIVE "OFF")
+MAP_CHECK_ITK_REVIEW_ACTIVE(_MAP_ITK_REVIEW_ACTIVE)
+
+IF (${_MAP_ITK_REVIEW_ACTIVE})
+  SET(H_FILES
+    ${H_FILES}
+	include/mapITKComplexBSplineInterpolateImageFunction.h
+    boxed/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.h
+    boxed/mapITKFastSymmetricForcesDemonsMultiResRegistrationAlgorithm.h)
+	
+  SET(TPP_FILES
+    ${TPP_FILES}
+	boxed/mapITKFastSymmetricForcesDemonsMultiResRegistrationAlgorithm.tpp
+	boxed/mapITKFastSymmetricForcesDemonsRegistrationAlgorithm.tpp)
+
+ELSE (${_MAP_ITK_REVIEW_ACTIVE})
+  MESSAGE(WARNING "ITKReview Module is not activated. Dependend resources will be deactivated:\n - mapITKComplexBSplineInterpolateImageFunction.h\n - mapITKFastSymmetricForcesDemonsRegistrationAlgorithm\n - mapITKFastSymmetricForcesDemonsMultiResRegistrationAlgorithm")
+ENDIF (${_MAP_ITK_REVIEW_ACTIVE})
