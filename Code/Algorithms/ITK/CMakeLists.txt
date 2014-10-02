@@ -1,14 +1,24 @@
 MAP_CREATE_MODULE(MAPAlgorithmsITK DEPENDS MAPAlgorithms MAPUtilities)
 MAP_CREATE_MODULE_TESTS(MAPAlgorithmsITK PACKAGE_DEPENDS Litmus HEADER_TESTS)
 
+
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKEuler3DMattesMI PROFILE "deployed/ITKEuler3DMattesMI.profile" FILES "deployed/mapITKEuler3DMattesMI.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKEuler3DMattesMIMultiRes PROFILE "deployed/ITKEuler3DMattesMIMultiRes.profile" FILES "deployed/mapITKEuler3DMattesMIMultiRes.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKEuler3DMS PROFILE "deployed/ITKEuler3DMS.profile" FILES "deployed/mapITKEuler3DMS.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigid2DMattesMI PROFILE "deployed/ITKRigid2DMattesMI.profile" FILES "deployed/mapITKRigid2DMattesMI.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigid3DClosedForm PROFILE "deployed/ITKRigid3DClosedForm.profile" FILES "deployed/mapITKRigid3DClosedForm.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
-MAP_DEFINE_DEPLOYED_ALGORITHM(ITKFastSymmetricForcesDemons3D PROFILE "deployed/ITKFastSymmetricForcesDemons3D.profile" FILES "deployed/mapITKFastSymmetricForcesDemons3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKPDEDemons3D PROFILE "deployed/ITKPDEDemons3D.profile" FILES "deployed/mapITKPDEDemons3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKLevelSetMotion3D PROFILE "deployed/ITKLevelSetMotion3D.profile" FILES "deployed/mapITKLevelSetMotion3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKSymmetricForcesDemons3D PROFILE "deployed/ITKSymmetricForcesDemons3D.profile" FILES "deployed/mapITKSymmetricForcesDemons3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKLevelSetMotion3DMultiRes PROFILE "deployed/ITKLevelSetMotion3DMultiRes.profile" FILES "deployed/mapITKLevelSetMotion3DMultiRes.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
-MAP_DEFINE_DEPLOYED_ALGORITHM(ITKFastSymmetricForcesDemons3DMultiRes PROFILE "deployed/ITKFastSymmetricForcesDemons3DMultiRes.profile" FILES "deployed/mapITKFastSymmetricForcesDemons3DMultiRes.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+
+SET(_MAP_ITK_REVIEW_ACTIVE "OFF")
+MAP_CHECK_ITK_REVIEW_ACTIVE(_MAP_ITK_REVIEW_ACTIVE)
+
+IF (${_MAP_ITK_REVIEW_ACTIVE})
+  MAP_DEFINE_DEPLOYED_ALGORITHM(ITKFastSymmetricForcesDemons3D PROFILE "deployed/ITKFastSymmetricForcesDemons3D.profile" FILES "deployed/mapITKFastSymmetricForcesDemons3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+  MAP_DEFINE_DEPLOYED_ALGORITHM(ITKFastSymmetricForcesDemons3DMultiRes PROFILE "deployed/ITKFastSymmetricForcesDemons3DMultiRes.profile" FILES "deployed/mapITKFastSymmetricForcesDemons3DMultiRes.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+ELSE (${_MAP_ITK_REVIEW_ACTIVE})
+  MESSAGE(WARNING "ITKReview Module is not activated. Following algorithms will not be deployed:\n - ITKFastSymmetricForcesDemons3D\n - ITKFastSymmetricForcesDemons3DMultiRes")
+ENDIF (${_MAP_ITK_REVIEW_ACTIVE})
+  
