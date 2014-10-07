@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 303 $ (last changed revision)
-// @date    $Date: 2013-09-19 18:06:33 +0200 (Do, 19 Sep 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKTransMattesMIMultiResRegistrationAlgorithmTemplate.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 

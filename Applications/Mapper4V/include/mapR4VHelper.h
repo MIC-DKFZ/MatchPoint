@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 536 $ (last changed revision)
-// @date    $Date: 2014-05-19 16:45:05 +0200 (Mo, 19 Mai 2014) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/branches/Issue1251/Applications/Mapper/include/mapRHelper.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
