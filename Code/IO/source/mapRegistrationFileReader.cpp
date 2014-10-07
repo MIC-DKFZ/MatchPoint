@@ -77,7 +77,7 @@ namespace map
 
       if (!pDirectLoader)
 			{
-        mapLogDebugMacro(<<"No responsible loader available for given direct request. Try to load inverse request first and retry with additional complimentary kernel.");
+        mapLogDebugMacro(<<"No responsible loader available for given direct request. Try to load inverse request first and retry with additional complementary kernel.");
 			}
       else
       {
