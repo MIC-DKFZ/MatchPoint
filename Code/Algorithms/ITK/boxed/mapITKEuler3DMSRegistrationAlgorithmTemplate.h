@@ -53,7 +53,8 @@ namespace map
 					 SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> >
 					 >
 			class ITKEuler3DMSRegistrationAlgorithm :
-				public algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
+				public algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+				TUIDPolicy,
 				TInterpolatorPolicy,
 				SealedFixedImageToImageMetricPolicyMacro< ::itk::MeanSquaresImageToImageMetric<TMovingImage, TTargetImage> >,
 				SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer >,
@@ -63,7 +64,8 @@ namespace map
 				typedef ITKEuler3DMSRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
 						TInterpolatorPolicy > Self;
 
-				typedef typename algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+				typedef typename algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage,
+						TTargetImage,
 						TUIDPolicy,
 						TInterpolatorPolicy,
 						SealedFixedImageToImageMetricPolicyMacro< ::itk::MeanSquaresImageToImageMetric<TMovingImage, TTargetImage> >,

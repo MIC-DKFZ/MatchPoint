@@ -20,48 +20,33 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-
-
-
-#ifndef __REGISTRATION_KERNEL_INTERFACE_H
-#define __REGISTRATION_KERNEL_INTERFACE_H
+#include "mapDimensionlessRegistrationKernelBase.h"
 
 namespace map
 {
 	namespace core
 	{
 
-		/*! @class RegistrationKernelInterface
-		    This class is the base class for the registration kernels.
-				@ingroup RegKernel
-		 */
-		class RegistrationKernelInterface
+		void DimensionlessRegistrationKernelBase::PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
-		public:
-			typedef RegistrationKernelInterface Self;
-
-			/*! @brief Gets the number of input dimensions
-			@eguarantee no fail
-			*/
-			virtual unsigned int getInputDimensions() const = 0;
-
-			/*! @brief Gets the number of output dimensions
-			@eguarantee no fail
-			*/
-			virtual unsigned int getOutputDimensions() const = 0;
-
-		protected:
-
-			RegistrationKernelInterface() {};
-			virtual ~RegistrationKernelInterface() {};
-
-		private:
-			//No copy constructor allowed
-			RegistrationKernelInterface(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			Superclass::PrintSelf(os, indent);
+			os << indent << "Input dimensions: " << getInputDimensions() << std::endl;
+			os << indent << "Output dimensions: " << getOutputDimensions() << std::endl;
+			os << indent << "limited Representation: " << hasLimitedRepresentation() << std::endl;
 		};
+
+		DimensionlessRegistrationKernelBase::DimensionlessRegistrationKernelBase()
+		{};
+
+		DimensionlessRegistrationKernelBase::~DimensionlessRegistrationKernelBase()
+		{};
+
+		std::ostream& operator<< (std::ostream& os,
+								  const DimensionlessRegistrationKernelBase& p)
+		{
+			p.Print(os);
+			return os;
+		}
 
 	}
 }
-
-#endif

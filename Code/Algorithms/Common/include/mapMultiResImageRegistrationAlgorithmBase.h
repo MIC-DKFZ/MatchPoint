@@ -76,7 +76,7 @@ namespace map
 			typedef typename PyramidesPolicyType::MovingImagePyramideBaseType MovingImagePyramideBaseType;
 			typedef typename PyramidesPolicyType::MovingImagePyramideBasePointer MovingImagePyramideBasePointer;
 
-                    typedef typename Superclass::DimensionCountType DimensionCountType;
+			typedef typename Superclass::DimensionCountType DimensionCountType;
 
 #ifdef ITK_USE_CONCEPT_CHECKING
 			/** Begin concept checking */

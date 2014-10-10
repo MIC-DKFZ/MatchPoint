@@ -172,17 +172,14 @@ namespace map
 
 			if (nullVecPos != request._spKernelDescriptor->getSubElementEnd())
 			{
-				if ((*nullVecPos)->getSubElementsCount() < KernelBaseType::MappingVectorType::Dimension)
+				try
 				{
-					mapExceptionMacro(core::ServiceException,
-									  << "Error. Cannot load kernel. Field kernel description as a null vector that is under defined. Defined value count: "
-									  << (*nullVecPos)->getSubElementsCount() << "; expected count: " <<
-									  KernelBaseType::MappingVectorType::Dimension)
+					nullVector = structuredData::streamSDToITKFixedArray<typename KernelBaseType::MappingVectorType>
+								 (*nullVecPos);
 				}
-
-				for (unsigned int rowID = 0; rowID < KernelBaseType::MappingVectorType::Dimension; ++rowID)
+				catch (core::ExceptionObject& ex)
 				{
-					nullVector[rowID] = core::convert::toDouble((*nullVecPos)->getSubElement(rowID)->getValue());
+					mapExceptionMacro(core::ServiceException, << ex.GetDescription());
 				}
 			}
 
@@ -234,8 +231,8 @@ namespace map
 		addAsInverseKernel(GenericKernelType* pKernel,
 						   core::RegistrationBase::Pointer& spRegistration) const
 		{
-			typedef core::RegistrationKernelBase<VInputDimensions, VInputDimensions> KernelType;
-			typedef core::Registration<VInputDimensions, VInputDimensions> RegistrationType;
+			typedef core::RegistrationKernelBase<VOutputDimensions, VInputDimensions> KernelType;
+			typedef core::Registration<VInputDimensions, VOutputDimensions> RegistrationType;
 
 			if (spRegistration.IsNull())
 			{
@@ -271,8 +268,8 @@ namespace map
 		addAsDirectKernel(GenericKernelType* pKernel,
 						  core::RegistrationBase::Pointer& spRegistration) const
 		{
-			typedef core::RegistrationKernelBase<VInputDimensions, VInputDimensions> KernelType;
-			typedef core::Registration<VInputDimensions, VInputDimensions> RegistrationType;
+			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions> KernelType;
+			typedef core::Registration<VInputDimensions, VOutputDimensions> RegistrationType;
 
 			if (spRegistration.IsNull())
 			{

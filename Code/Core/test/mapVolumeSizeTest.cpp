@@ -24,10 +24,12 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapVolumeSize.h"
+#include <stdlib.h>
+
 #include "litCheckMacros.h"
 
-#include <stdlib.h>
+#include "mapSDXMLStrWriter.h"
+#include "mapVolumeSize.h"
 
 namespace map
 {
@@ -70,6 +72,18 @@ namespace map
 			CHECK(!nonPositiveSize1.isPositive());
 
 			CHECK_EQUAL(2, size1.getVolumeSizeDimension());
+
+			//Testing streaming
+			structuredData::Element::Pointer spSDElement;
+			CHECK_NO_THROW(spSDElement = core::continuous::VolumeSize<2>::streamToStructuredData(size1));
+			structuredData::XMLStrWriter::Pointer xmlStrWriter = structuredData::XMLStrWriter::New();
+
+			core::continuous::VolumeSize<2> size1_clone =
+				core::continuous::VolumeSize<2>::streamFromStructuredData(spSDElement);
+			CHECK_ARRAY_EQUAL(size1, size1_clone, 2);
+
+			CHECK_THROW(core::continuous::VolumeSize<3>::streamFromStructuredData(
+							spSDElement)); //wrong dimensionality
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

@@ -33,8 +33,10 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions>::
 		RegistrationKernelWriteRequest(const KernelBaseType* pKernel, const core::String& path,
-									   const core::String& name, bool expandLazyKernels):
-			_spKernel(pKernel), _path(path), _name(name), _expandLazyKernels(expandLazyKernels)
+									   const core::String& name, bool expandLazyKernels,
+									   const ComplementaryKernelBaseType* pComplementaryKernel):
+			_spKernel(pKernel), _path(path), _name(name), _expandLazyKernels(expandLazyKernels),
+			_spComplementaryKernel(pComplementaryKernel)
 		{
 			assert(pKernel);
 		}
@@ -42,8 +44,10 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions>::
 		RegistrationKernelWriteRequest(const KernelBaseType& kernel, const core::String& path,
-									   const core::String& name, bool expandLazyKernels):
-			_spKernel(&kernel), _path(path), _name(name), _expandLazyKernels(expandLazyKernels)
+									   const core::String& name, bool expandLazyKernels,
+									   const ComplementaryKernelBaseType* pComplementaryKernel):
+			_spKernel(&kernel), _path(path), _name(name), _expandLazyKernels(expandLazyKernels),
+			_spComplementaryKernel(pComplementaryKernel)
 		{
 		};
 
@@ -75,6 +79,7 @@ namespace map
 				_path = req._path;
 				_name = req._name;
 				_expandLazyKernels = req._expandLazyKernels;
+				_spComplementaryKernel = req._spComplementaryKernel;
 			}
 		}
 

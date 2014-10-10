@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKFastSymmetricForcesDemonsMultiResRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -77,22 +77,26 @@ namespace map
 #ifndef MAP_SEAL_ALGORITHMS
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("IntensityDifferenceThreshold.1",
 								typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumUpdateStepLength.1", typeid(double), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumUpdateStepLength.1", typeid(double),
+								true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("UseGradientType.1",
 								typeid(int), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("IntensityDifferenceThreshold.2",
 								typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumUpdateStepLength.2", typeid(double), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumUpdateStepLength.2", typeid(double),
+								true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("UseGradientType.2",
 								typeid(int), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("IntensityDifferenceThreshold.3",
 								typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumUpdateStepLength.3", typeid(double), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumUpdateStepLength.3", typeid(double),
+								true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("UseGradientType.3",
 								typeid(int), true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("IntensityDifferenceThreshold.4",
 								typeid(double), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumUpdateStepLength.4", typeid(double), true, true));
+				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumUpdateStepLength.4", typeid(double),
+								true, true));
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("UseGradientType.4",
 								typeid(int), true, true));
 #endif
@@ -184,7 +188,8 @@ namespace map
 				{
 					int value;
 					map::core::unwrapMetaProperty(pProperty, value);
-					this->getInternalRegistrationMethod().SetUseGradientType(static_cast<typename Superclass::InternalRegistrationMethodType::GradientType>(value));
+					this->getInternalRegistrationMethod().SetUseGradientType(
+						static_cast<typename Superclass::InternalRegistrationMethodType::GradientType>(value));
 					this->_lvlUseGradientType[0] = value;
 				}
 				else if (name == "IntensityDifferenceThreshold.2")
@@ -258,8 +263,11 @@ namespace map
 				{
 					this->getInternalRegistrationMethod().SetIntensityDifferenceThreshold(
 						this->_lvlIntensityDifferenceThreshold[this->getCurrentLevel()]);
-					this->getInternalRegistrationMethod().SetMaximumUpdateStepLength(this->_lvlMaximumUpdateStepLength[this->getCurrentLevel()]);
-					this->getInternalRegistrationMethod().SetUseGradientType( static_cast<typename Superclass::InternalRegistrationMethodType::GradientType>(this->_lvlUseGradientType[this->getCurrentLevel()]));
+					this->getInternalRegistrationMethod().SetMaximumUpdateStepLength(
+						this->_lvlMaximumUpdateStepLength[this->getCurrentLevel()]);
+					this->getInternalRegistrationMethod().SetUseGradientType(
+						static_cast<typename Superclass::InternalRegistrationMethodType::GradientType>
+						(this->_lvlUseGradientType[this->getCurrentLevel()]));
 				}
 			};
 

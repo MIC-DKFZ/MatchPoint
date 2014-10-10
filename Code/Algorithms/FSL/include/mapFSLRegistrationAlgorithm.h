@@ -113,7 +113,7 @@ namespace map
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
-                        typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
+				typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
 
 				// IterativeRegistrationAlgorithm
 				/*! @eguarantee strong*/

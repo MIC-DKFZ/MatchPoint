@@ -1,5 +1,6 @@
 SET(CPP_FILES 
   source/mapConvert.cpp
+  source/mapDimensionlessRegistrationKernelBase.cpp  
   source/mapXMLLogger.cpp
   source/mapLogbook.cpp
   source/mapLogbookImplementation.cpp
@@ -40,6 +41,7 @@ SET(H_FILES
 	include/mapContinuous.h
 	include/mapContinuousElements.h
 	include/mapDefaultRegistrationTopologyPolicy.h
+	include/mapDimensionlessRegistrationKernelBase.h
 	include/mapDiscrete.h
 	include/mapDiscreteElements.h
 	include/mapEvents.h
@@ -60,6 +62,7 @@ SET(H_FILES
 	include/mapImageMappingPerformerRequest.h
 	include/mapImageMappingTask.h
 	include/mapInverseRegistrationKernelGenerator.h
+	include/mapInvertingFieldBasedRegistrationKernel.h
 	include/mapITKDimensionedTransformModel.h
 	include/mapITKUnaryTransformModel.h
 	include/mapKernelCombinatorLoadPolicy.h
@@ -106,7 +109,6 @@ SET(H_FILES
 	include/mapRegistrationException.h
 	include/mapRegistrationKernelBase.h
 	include/mapRegistrationKernelCombinatorBase.h
-	include/mapRegistrationKernelInterface.h
 	include/mapRegistrationKernelInverterBase.h
 	include/mapRegistrationManipulator.h
 	include/mapRegistrationTopology.h
@@ -125,6 +127,7 @@ SET(H_FILES
 	include/mapSyncInterface.h
     include/mapSDExceptions.h
     include/mapSDElement.h
+	include/mapSDITKStreamingHelper.h
     include/mapSDXMLStrReader.h
     include/mapSDStreamingInterface.h
     include/mapSDXMLFileReader.h
@@ -168,6 +171,7 @@ SET(TPP_FILES
 	include/mapImageMappingPerformerRequest.tpp
 	include/mapImageMappingTask.tpp
 	include/mapInverseRegistrationKernelGenerator.tpp
+	include/mapInvertingFieldBasedRegistrationKernel.tpp
 	include/mapITKDimensionedTransformModel.tpp
 	include/mapITKUnaryTransformModel.tpp
 	include/mapKernelCombinatorLoadPolicy.tpp
@@ -254,6 +258,7 @@ test/mapConcreteFieldBasedRegistrationKernelTest.cpp
 test/mapModelBasedKernelInverterTest.cpp
 test/mapFieldBasedKernelInverterTest.cpp
 test/mapInverseRegistrationKernelGeneratorTest.cpp
+test/mapInvertingFieldBasedRegistrationKernelTest.cpp
 test/mapRegistrationCombinationRequestTest.cpp
 test/mapRegistrationKernelCombinatorBaseTest.cpp
 test/mapFieldFieldKernelCombinatorTest.cpp

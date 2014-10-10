@@ -44,14 +44,13 @@ namespace map
 		const char* const inverse = "inverse";
 		const char* const Matrix = "Matrix";
 		const char* const Offset = "Offset";
-		const char* const Value = "Value";
-		const char* const Column = "Column";
-		const char* const Row = "Row";
 		const char* const MatrixStr = "MatrixStr";
 		const char* const OffsetStr = "OffsetStr";
 		const char* const FieldPath = "FieldPath";
 		const char* const NullVector = "NullVector";
 		const char* const UseNullVector = "UseNullVector";
+		const char* const InverseFieldRepresentation = "InverseFieldRepresentation";
+
 
 	}
 }

@@ -66,6 +66,7 @@ namespace map
 			LIT_REGISTER_TEST(mapModelBasedKernelInverterTest);
 			LIT_REGISTER_TEST(mapFieldBasedKernelInverterTest);
 			LIT_REGISTER_TEST(mapInverseRegistrationKernelGeneratorTest);
+			LIT_REGISTER_TEST(mapInvertingFieldBasedRegistrationKernelTest);
 			LIT_REGISTER_TEST(mapRegistrationCombinationRequestTest);
 			LIT_REGISTER_TEST(mapRegistrationKernelCombinatorBaseTest);
 			LIT_REGISTER_TEST(mapFieldFieldKernelCombinatorTest);

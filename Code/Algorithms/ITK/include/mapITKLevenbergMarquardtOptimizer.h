@@ -137,26 +137,26 @@ namespace map
 
 				virtual IterationCountType doGetCurrentIteration() const
 				{
-          if (_spOptimizer->GetOptimizer())
-          {
-            return _spOptimizer->GetOptimizer()->get_num_iterations();
-          }
-          else
-          {
-            return 0;
-          }
+					if (_spOptimizer->GetOptimizer())
+					{
+						return _spOptimizer->GetOptimizer()->get_num_iterations();
+					}
+					else
+					{
+						return 0;
+					}
 				};
 
 				virtual IterationCountType doGetMaxIterations() const
 				{
-          if (_spOptimizer->GetOptimizer())
-          {
-            return _spOptimizer->GetOptimizer()->get_max_function_evals();
-          }
-          else
-          {
-            return 0;
-          }
+					if (_spOptimizer->GetOptimizer())
+					{
+						return _spOptimizer->GetOptimizer()->get_max_function_evals();
+					}
+					else
+					{
+						return 0;
+					}
 				};
 
 				virtual MVNLMeasureType doGetCurrentMeasure() const

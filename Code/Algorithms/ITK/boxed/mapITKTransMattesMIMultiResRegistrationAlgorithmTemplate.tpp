@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 303 $ (last changed revision)
-// @date    $Date: 2013-09-19 18:06:33 +0200 (Do, 19 Sep 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKTransMattesMIMultiResRegistrationAlgorithmTemplate.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -45,9 +45,9 @@ namespace map
 					 class TInterpolatorPolicy,
 					 class TPyramideInitializationPolicy >
 			ITKTransMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-															TInterpolatorPolicy,
-															TPyramideInitializationPolicy >::
-															ITKTransMattesMIMultiResRegistrationAlgorithm()
+														  TInterpolatorPolicy,
+														  TPyramideInitializationPolicy >::
+														  ITKTransMattesMIMultiResRegistrationAlgorithm()
 			{
 			};
 
@@ -56,9 +56,9 @@ namespace map
 					 class TInterpolatorPolicy,
 					 class TPyramideInitializationPolicy >
 			ITKTransMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-															TInterpolatorPolicy,
-															TPyramideInitializationPolicy >::
-															~ITKTransMattesMIMultiResRegistrationAlgorithm()
+														  TInterpolatorPolicy,
+														  TPyramideInitializationPolicy >::
+														  ~ITKTransMattesMIMultiResRegistrationAlgorithm()
 			{
 			};
 
@@ -68,9 +68,9 @@ namespace map
 					 class TPyramideInitializationPolicy >
 			void
 			ITKTransMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-															TInterpolatorPolicy,
-															TPyramideInitializationPolicy >::
-															configureAlgorithm()
+														  TInterpolatorPolicy,
+														  TPyramideInitializationPolicy >::
+														  configureAlgorithm()
 			{
 				Superclass::configureAlgorithm();
 
@@ -99,9 +99,9 @@ namespace map
 					 class TPyramideInitializationPolicy >
 			void
 			ITKTransMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-															TInterpolatorPolicy,
-															TPyramideInitializationPolicy >::
-															compileInfos(MetaPropertyVectorType& infos) const
+														  TInterpolatorPolicy,
+														  TPyramideInitializationPolicy >::
+														  compileInfos(MetaPropertyVectorType& infos) const
 			{
 				Superclass::compileInfos(infos);
 
@@ -217,9 +217,9 @@ namespace map
 					 class TPyramideInitializationPolicy >
 			void
 			ITKTransMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-															TInterpolatorPolicy,
-															TPyramideInitializationPolicy >::
-															doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
+														  TInterpolatorPolicy,
+														  TPyramideInitializationPolicy >::
+														  doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
 				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
@@ -303,9 +303,9 @@ namespace map
 					 class TPyramideInitializationPolic >
 			void
 			ITKTransMattesMIMultiResRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
-															TInterpolatorPolicy,
-															TPyramideInitializationPolic >::
-															doInterLevelSetup()
+														  TInterpolatorPolicy,
+														  TPyramideInitializationPolic >::
+														  doInterLevelSetup()
 			{
 				if (this->getCurrentLevel() > 0)
 				{

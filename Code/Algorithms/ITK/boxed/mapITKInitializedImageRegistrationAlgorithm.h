@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 303 $ (last changed revision)
-// @date    $Date: 2013-09-19 18:06:33 +0200 (Do, 19 Sep 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/Algorithms/ITK/boxed/mapITKInitializedImageRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -36,22 +36,26 @@ namespace map
 			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKInitializingImageRegistrationUIDPolicy,
 											   "MatchPoint.ITK", "ITKInitializedImageRegistrationAlgorithm.default", "1.0.0", "");
 
-      template < class TMovingImage, class TTargetImage,
-      class TIdentificationPolicy,
-      class TInterpolatorPolicy = itk::ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
-      class TMetricPolicy = itk::ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
-      class TOptimizerPolicy = itk::ArbitrarySVNLOptimizerPolicy,
-      class TTransformPolicy =
-        itk::ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-      class TInternalRegistrationMethod = ::itk::ImageRegistrationMethod<TTargetImage, TMovingImage> >
+			template < class TMovingImage, class TTargetImage,
+					 class TIdentificationPolicy,
+					 class TInterpolatorPolicy =
+					 itk::ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
+					 class TMetricPolicy = itk::ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
+					 class TOptimizerPolicy = itk::ArbitrarySVNLOptimizerPolicy,
+					 class TTransformPolicy =
+					 itk::ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+					 class TInternalRegistrationMethod = ::itk::ImageRegistrationMethod<TTargetImage, TMovingImage> >
 			class ITKInitializedImageRegistrationAlgorithm :
 				public algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
 				TIdentificationPolicy,
-				TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod >
+				TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy,
+				TInternalRegistrationMethod >
 			{
 			public:
-				typedef ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod > Self;
+				typedef ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+						TIdentificationPolicy,
+						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy,
+						TInternalRegistrationMethod > Self;
 
 				typedef typename algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
 						TIdentificationPolicy,

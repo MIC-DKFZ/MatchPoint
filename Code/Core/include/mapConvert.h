@@ -80,6 +80,17 @@ namespace map
 
 			MAPCore_EXPORT bool toBool(const String& value);
 
+			/**Helper function for types that should be converted into and do not need special
+			* conversion handling or are unkown when writing the code e.g. std::size_type*/
+			template <typename TElement>
+			TElement toValueGeneric(const String& value)
+			{
+				TElement result;
+				IStringStream strstrm(value);
+				strstrm >> result;
+				return result;
+			};
+
 			/** Converts a std::vector in any type based on itk::Array
 			* @param v Reference to the data source (vector)
 			* @return Array containing the values*/

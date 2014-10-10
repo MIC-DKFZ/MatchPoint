@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKPDEDeformableRegistrationAlgorithm.tpp $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -68,8 +68,8 @@ namespace map
 			{
 				//Connect images
 				this->InvokeEvent(events::AlgorithmEvent(this, "Connect images to itk registration method."));
-                this->getInternalRegistrationMethod().SetFixedImage(this->_spInternalTargetImage);
-                this->getInternalRegistrationMethod().SetMovingImage(this->_spInternalMovingImage);
+				this->getInternalRegistrationMethod().SetFixedImage(this->_spInternalTargetImage);
+				this->getInternalRegistrationMethod().SetMovingImage(this->_spInternalMovingImage);
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>

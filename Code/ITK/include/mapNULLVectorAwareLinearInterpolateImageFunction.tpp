@@ -124,7 +124,7 @@ namespace itk
 							neighIndex[dim] = this->m_EndIndex[dim];
 						}
 
-            overlap *= distance[dim];
+						overlap *= distance[dim];
 					}
 					else
 					{

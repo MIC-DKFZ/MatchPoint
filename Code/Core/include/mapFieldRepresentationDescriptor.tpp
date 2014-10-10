@@ -23,9 +23,12 @@
 #ifndef __FIELD_REPRESENTATION_DESCRIPTOR_TPP
 #define __FIELD_REPRESENTATION_DESCRIPTOR_TPP
 
+#include "itkImageTransformHelper.h"
+
 #include "mapFieldRepresentationDescriptor.h"
 #include "mapExceptionObject.h"
-#include "itkImageTransformHelper.h"
+#include "mapConvert.h"
+#include "mapSDITKStreamingHelper.h"
 
 namespace map
 {
@@ -282,6 +285,98 @@ namespace map
 			os << ")\n" << std::endl;
 
 		}
+
+		template<unsigned int VDimensions>
+		map::structuredData::StreamingInterface::ElementPointer
+		FieldRepresentationDescriptor<VDimensions>::
+		streamToSDInternal() const
+		{
+			structuredData::Element::Pointer spNewSD = structuredData::Element::New();
+
+			spNewSD->setTag("FieldRepresentationDescriptor");
+
+			//save attributes
+			spNewSD->setAttribute("Dimensions", convert::toStr(VDimensions));
+
+			//save size
+			structuredData::Element::Pointer spSizeElement = SizeType::streamToStructuredData(this->getSize());
+			spSizeElement->setTag("Size");
+			spNewSD->addSubElement(spSizeElement);
+			structuredData::Element::Pointer spOriginElement = structuredData::streamITKFixedArrayToSD(
+						this->getOrigin());
+			spOriginElement->setTag("Origin");
+			spNewSD->addSubElement(spOriginElement);
+			structuredData::Element::Pointer spSpacingElement = structuredData::streamITKFixedArrayToSD(
+						this->getSpacing());
+			spSpacingElement->setTag("Spacing");
+			spNewSD->addSubElement(spSpacingElement);
+			structuredData::Element::Pointer spDirectionElement = structuredData::streamITKMatrixToSD(
+						this->getDirection());
+			spDirectionElement->setTag("Direction");
+			spNewSD->addSubElement(spDirectionElement);
+
+			return spNewSD;
+		};
+
+		template<unsigned int VDimensions>
+		void
+		FieldRepresentationDescriptor<VDimensions>::
+		streamFromSDInternal(const structuredData::Element* pElement)
+		{
+			SizeType newSize;
+			PointType newOrigin;
+			SpacingType newSpacing;
+			DirectionType newDirection;
+
+			structuredData::Element::ConstSubElementIteratorType subPos = structuredData::findNextSubElement(
+						pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Size");
+
+			if (subPos == pElement->getSubElementEnd())
+			{
+				mapDefaultExceptionMacro( <<
+										  "Error: cannot stream from structured data. Reason: sub element \"Size\" is missing.");
+			}
+
+			newSize = SizeType::streamFromStructuredData(*subPos);
+
+			subPos = structuredData::findNextSubElement(
+						 pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Origin");
+
+			if (subPos == pElement->getSubElementEnd())
+			{
+				mapDefaultExceptionMacro( <<
+										  "Error: cannot stream from structured data. Reason: sub element \"Origin\" is missing.");
+			}
+
+			newOrigin = structuredData::streamSDToITKFixedArray<PointType>(*subPos);
+
+			subPos = structuredData::findNextSubElement(
+						 pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Spacing");
+
+			if (subPos == pElement->getSubElementEnd())
+			{
+				mapDefaultExceptionMacro( <<
+										  "Error: cannot stream from structured data. Reason: sub element \"Spacing\" is missing.");
+			}
+
+			newSpacing = structuredData::streamSDToITKFixedArray<SpacingType>(*subPos);
+
+			subPos = structuredData::findNextSubElement(
+						 pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Direction");
+
+			if (subPos == pElement->getSubElementEnd())
+			{
+				mapDefaultExceptionMacro( <<
+										  "Error: cannot stream from structured data. Reason: sub element \"Direction\" is missing.");
+			}
+
+			newDirection = structuredData::streamSDToITKMatrix<DirectionType>(*subPos);
+
+			this->setSize(newSize);
+			this->setOrigin(newOrigin);
+			this->setSpacing(newSpacing);
+			this->setDirection(newDirection);
+		};
 
 		// **** static methods ****
 		// ************************

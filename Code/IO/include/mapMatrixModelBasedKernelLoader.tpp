@@ -29,6 +29,7 @@
 #include "mapRegistrationManipulator.h"
 #include "mapITKAffineTransform.h"
 #include "mapConvert.h"
+#include "mapSDITKStreamingHelper.h"
 
 namespace map
 {
@@ -123,26 +124,19 @@ namespace map
 				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: no matrix found.");
 			}
 
-			if ((*matrixPos)->getSubElementsCount() != VInputDimensions * VInputDimensions)
+			typedef typename KernelType::TransformType::MatrixType MatrixType;
+			MatrixType matrix;
+
+			try
 			{
-				mapExceptionMacro(core::ServiceException,
-								  << "Error: cannot load kernel. Reason: matrix has wrong number of elements. Expexted: " <<
-								  VInputDimensions * VInputDimensions << "; found: " << (*matrixPos)->getSubElementsCount());
+				matrix = structuredData::streamSDToITKMatrix<MatrixType>(*matrixPos);
 			}
-
-			typename KernelType::TransformType::MatrixType matrix;
-
-			for (structuredData::Element::ConstSubElementIteratorType pos = (*matrixPos)->getSubElementBegin();
-				 pos != (*matrixPos)->getSubElementEnd(); ++pos)
+			catch (core::ExceptionObject& ex)
 			{
-				unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));
-				unsigned int colID = core::convert::toUInt((*pos)->getAttribute(tags::Column));
-
-				matrix(rowID, colID) = core::convert::toDouble((*pos)->getValue());
+				mapExceptionMacro(core::ServiceException, << ex.GetDescription());
 			}
 
 			//establish offset;
-
 			structuredData::Element::ConstSubElementIteratorType offsetPos = structuredData::findNextSubElement(
 						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
 						tags::Offset);
@@ -152,23 +146,19 @@ namespace map
 				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: no offset found.");
 			}
 
-			if ((*offsetPos)->getSubElementsCount() != VInputDimensions)
+			typedef typename KernelType::TransformType::OutputVectorType OutputVectorType;
+			OutputVectorType offset;
+
+			try
 			{
-				mapExceptionMacro(core::ServiceException,
-								  << "Error: cannot load kernel. Reason: offset has wrong number of elements. Expexted: " <<
-								  VInputDimensions << "; found: " << (*offsetPos)->getSubElementsCount());
+				offset = structuredData::streamSDToITKFixedArray<OutputVectorType>(*offsetPos);
+			}
+			catch (core::ExceptionObject& ex)
+			{
+				mapExceptionMacro(core::ServiceException, << ex.GetDescription());
 			}
 
-			typename KernelType::TransformType::OutputVectorType offset;
-
-			for (structuredData::Element::ConstSubElementIteratorType pos = (*offsetPos)->getSubElementBegin();
-				 pos != (*offsetPos)->getSubElementEnd(); ++pos)
-			{
-				unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));
-
-				offset[rowID] = core::convert::toDouble((*pos)->getValue());
-			}
-
+			//establish transform & kernel
 			typename KernelType::Pointer spKernel = KernelType::New();
 
 			typedef ::itk::AffineTransform<core::continuous::ScalarType, VInputDimensions> TransformType;

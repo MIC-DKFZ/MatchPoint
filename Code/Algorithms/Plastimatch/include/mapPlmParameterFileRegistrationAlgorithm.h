@@ -71,10 +71,10 @@ namespace map
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
-                typedef typename Superclass::MetaPropertyPointer MetaPropertyPointer;
-                typedef typename Superclass::MetaPropertyNameType MetaPropertyNameType;
-                typedef typename Superclass::MetaPropertyVectorType MetaPropertyVectorType;
-                typedef typename Superclass::MetaPropertyType MetaPropertyType;
+				typedef typename Superclass::MetaPropertyPointer MetaPropertyPointer;
+				typedef typename Superclass::MetaPropertyNameType MetaPropertyNameType;
+				typedef typename Superclass::MetaPropertyVectorType MetaPropertyVectorType;
+				typedef typename Superclass::MetaPropertyType MetaPropertyType;
 
 				mapGetMetaMacro(ParameterFilePath, core::String);
 				mapSetMetaMacro(ParameterFilePath, core::String);

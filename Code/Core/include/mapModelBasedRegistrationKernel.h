@@ -64,7 +64,7 @@ namespace map
 			typedef typename Superclass::RepresentationDescriptorPointer        RepresentationDescriptorPointer;
 			typedef typename Superclass::RepresentationDescriptorConstPointer
 			RepresentationDescriptorConstPointer;
-            typedef ModelBasedRegistrationKernelInterface::ParametersType ParametersType;
+			typedef ModelBasedRegistrationKernelInterface::ParametersType ParametersType;
 
 			virtual String getModelName() const;
 

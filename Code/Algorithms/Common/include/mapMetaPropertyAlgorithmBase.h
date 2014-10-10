@@ -50,10 +50,10 @@ namespace map
 		public:
 			typedef MetaPropertyAlgorithmBase Self;
 
-            typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyVectorType MetaPropertyVectorType;
-            typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyType MetaPropertyType;
-            typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyPointer MetaPropertyPointer;
-            typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyNameType MetaPropertyNameType;
+			typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyVectorType MetaPropertyVectorType;
+			typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyType MetaPropertyType;
+			typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyPointer MetaPropertyPointer;
+			typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyNameType MetaPropertyNameType;
 
 
 			/*! Returns the MetaPropertyInfo for the property identified by the passed name

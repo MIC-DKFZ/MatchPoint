@@ -35,6 +35,7 @@ ADD_TEST(mapCombinedFieldBasedRegistrationKernelTest ${MODULE_TESTS} mapCombined
 ADD_TEST(mapModelBasedKernelInverterTest ${MODULE_TESTS} mapModelBasedKernelInverterTest)
 ADD_TEST(mapFieldBasedKernelInverterTest ${MODULE_TESTS} mapFieldBasedKernelInverterTest)
 ADD_TEST(mapInverseRegistrationKernelGeneratorTest ${MODULE_TESTS} mapInverseRegistrationKernelGeneratorTest)
+ADD_TEST(mapInvertingFieldBasedRegistrationKernelTest ${MODULE_TESTS} mapInvertingFieldBasedRegistrationKernelTest)
 ADD_TEST(mapRegistrationCombinationRequestTest ${MODULE_TESTS} mapRegistrationCombinationRequestTest)
 ADD_TEST(mapRegistrationKernelCombinatorBaseTest ${MODULE_TESTS} mapRegistrationKernelCombinatorBaseTest)
 ADD_TEST(mapFieldFieldKernelCombinatorTest ${MODULE_TESTS} mapFieldFieldKernelCombinatorTest)

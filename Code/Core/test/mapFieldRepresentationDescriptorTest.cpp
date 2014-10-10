@@ -24,8 +24,10 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapFieldRepresentationDescriptor.h"
 #include "litCheckMacros.h"
+
+#include "mapFieldRepresentationDescriptor.h"
+#include "mapSDXMLStrWriter.h"
 
 #include <stdlib.h>
 
@@ -38,6 +40,15 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			//Prepration
+			core::FieldRepresentationDescriptor<2>::SpacingType defaultSpacing;
+			defaultSpacing.Fill(0.0);
+
+			core::FieldRepresentationDescriptor<2>::PointType defaultOrigin;
+			defaultOrigin.Fill(0.0);
+
+			core::FieldRepresentationDescriptor<2>::SizeType defaultSize;
+			defaultSize.fill(0.0);
+
 			core::FieldRepresentationDescriptor<2>::SpacingType spacing;
 			spacing.Fill(0.5);
 
@@ -75,9 +86,14 @@ namespace map
 
 			core::FieldRepresentationDescriptor<2>::ImageRegionType localRegion(localIndex, regionSize);
 
-			//Testing
+			//Testing setter and getter
 			core::FieldRepresentationDescriptor<2>::Pointer spFRD =
 				core::FieldRepresentationDescriptor<2>::New();
+
+			CHECK_ARRAY_EQUAL(spFRD->getSize(), defaultSize, 2);
+			CHECK_ARRAY_EQUAL(spFRD->getOrigin(), defaultOrigin, 2);
+			CHECK_ARRAY_EQUAL(spFRD->getSpacing(), defaultSpacing, 2);
+			CHECK(spFRD->getDirection() == direct1);
 
 			CHECK_NO_THROW(spFRD->setSize(size));
 			CHECK_NO_THROW(spFRD->setOrigin(origin));
@@ -89,6 +105,28 @@ namespace map
 			CHECK_ARRAY_EQUAL(spFRD->getSpacing(), spacing, 2);
 			CHECK(spFRD->getDirection() == direct2);
 
+			//Testing streaming
+			structuredData::Element::Pointer spSDElement;
+			CHECK_NO_THROW(spSDElement = spFRD->streamToStructuredData());
+			structuredData::XMLStrWriter::Pointer xmlStrWriter = structuredData::XMLStrWriter::New();
+
+			core::String frdStr = xmlStrWriter->write(spSDElement);
+			core::String refStr =
+				"<FieldRepresentationDescriptor Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>15.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>5.000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>2.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></FieldRepresentationDescriptor>";
+
+			CHECK_EQUAL(refStr, frdStr);
+
+			core::FieldRepresentationDescriptor<2>::Pointer spFRDClone =
+				core::FieldRepresentationDescriptor<2>::New();
+			CHECK_NO_THROW(spFRDClone->streamFromStructuredData(spSDElement));
+
+			CHECK((*spFRD) == (*spFRDClone));
+
+			core::FieldRepresentationDescriptor<3>::Pointer spFRD_wrongDim =
+				core::FieldRepresentationDescriptor<3>::New();
+			CHECK_THROW(spFRD_wrongDim->streamFromStructuredData(spSDElement));
+
+			//Testing other functions
 			spFRD->setDirection(direct1);
 
 			core::FieldRepresentationDescriptor<2>::Pointer spFRDbyRegion = core::createFieldRepresentation(
@@ -104,6 +142,7 @@ namespace map
 			CHECK_EQUAL(volume, spFRDbyVolume->getRepresentedVolume());
 
 			CHECK((*spFRDbyVolume) == (*spFRDbyVolume));
+			CHECK(!((*spFRDbyVolume) == (*spFRDbyRegion)));
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

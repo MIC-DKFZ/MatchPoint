@@ -26,7 +26,7 @@
 #include "mapFieldBasedKernelInverter.h"
 #include "mapServiceException.h"
 #include "mapFieldByFieldInversionFunctor.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapInvertingFieldBasedRegistrationKernel.h"
 
 namespace map
 {
@@ -129,7 +129,7 @@ namespace map
 								  << "Error: cannot invert kernel. Reason: pInverseFieldRepresentation not present.");
 			}
 
-			typedef typename FieldKernels<VOutputDimensions, VInputDimensions>::LazyFieldBasedRegistrationKernel
+			typedef InvertingFieldBasedRegistrationKernel<VOutputDimensions, VInputDimensions>
 			LazyFieldKernelType;
 			typename LazyFieldKernelType::Pointer spInverseKernel = LazyFieldKernelType::New();
 
@@ -139,6 +139,7 @@ namespace map
 			spFunctor->setNumberOfIterations(_functorNrOfIterations);
 
 			spInverseKernel->setFieldFunctor(*(spFunctor.GetPointer()));
+			spInverseKernel->setSourceKernel(pKernel);
 
 			assert(spInverseKernel.IsNotNull());
 

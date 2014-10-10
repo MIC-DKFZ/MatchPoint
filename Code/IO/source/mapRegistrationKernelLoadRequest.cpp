@@ -30,8 +30,11 @@ namespace map
 
 		RegistrationKernelLoadRequest::
 		RegistrationKernelLoadRequest(const structuredData::Element* pKernelDescriptor,
-									  bool preferLazyLoading): _spKernelDescriptor(pKernelDescriptor),
-			_preferLazyLoading(preferLazyLoading)
+									  bool preferLazyLoading,
+									  const core::DimensionlessRegistrationKernelBase* pComplementaryKernel): _spKernelDescriptor(
+											  pKernelDescriptor),
+			_preferLazyLoading(preferLazyLoading),
+			_spComplementaryKernel(pComplementaryKernel)
 		{
 			assert(pKernelDescriptor);
 		};
@@ -56,6 +59,7 @@ namespace map
 			{
 				_spKernelDescriptor = request._spKernelDescriptor;
 				_preferLazyLoading = request._preferLazyLoading;
+				_spComplementaryKernel = request._spComplementaryKernel;
 			}
 		};
 
@@ -63,6 +67,7 @@ namespace map
 		{
 			os << "Data: " << request._spKernelDescriptor << std::endl;
 			os << "Lazy loading: " << request._preferLazyLoading << std::endl;
+			os << "Complementary kernel: " << request._spComplementaryKernel << std::endl;
 			return os;
 		};
 

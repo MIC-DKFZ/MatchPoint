@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 4912 $ (last changed revision)
-// @date    $Date: 2013-07-31 10:04:21 +0200 (Mi, 31 Jul 2013) $ (last change date)
-// @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: http://sidt-hpc1/dkfz_repository/NotMeVisLab/SIDT/MatchPoint/trunk/Code/Algorithms/ITK/include/mapITKLevelSetMotionRegistrationAlgorithm.h $
+// @version $Revision$ (last changed revision)
+// @date    $Date$ (last change date)
+// @author  $Author$ (last changed by)
+// Subversion HeadURL: $HeadURL$
 */
 
 
@@ -44,7 +44,8 @@ namespace map
 			*/
 			template < class TImageType,
 					 class TIdentificationPolicy,
-                     class TDisplacementField = typename core::discrete::Elements<TImageType::ImageDimension>::VectorFieldType >
+					 class TDisplacementField = typename
+					 core::discrete::Elements<TImageType::ImageDimension>::VectorFieldType >
 			class ITKLevelSetMotionRegistrationAlgorithm : public
 				itk::ITKPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TDisplacementField, ::itk::LevelSetMotionRegistrationFilter<TImageType, TImageType, TDisplacementField> >
 			{
@@ -66,10 +67,10 @@ namespace map
 				IterativeRegistrationAlgorithm<TImageType::ImageDimension, TImageType::ImageDimension>::OptimizerMeasureType
 				OptimizerMeasureType;
 
-                typedef typename Superclass::TargetImageType TargetImageType;
-                typedef typename Superclass::MovingImageType MovingImageType;
-                typedef typename Superclass::MovingImageConstPointer MovingImageConstPointer;
-                typedef typename Superclass::TargetImageConstPointer TargetImageConstPointer;
+				typedef typename Superclass::TargetImageType TargetImageType;
+				typedef typename Superclass::MovingImageType MovingImageType;
+				typedef typename Superclass::MovingImageConstPointer MovingImageConstPointer;
+				typedef typename Superclass::TargetImageConstPointer TargetImageConstPointer;
 
 				typedef typename Superclass::MovingRepresentationDescriptorType MovingRepresentationDescriptorType;
 				typedef typename Superclass::TargetRepresentationDescriptorType TargetRepresentationDescriptorType;
@@ -79,10 +80,10 @@ namespace map
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 				typedef typename Superclass::IterationCountType IterationCountType;
 
-                typedef typename Superclass::MetaPropertyPointer MetaPropertyPointer;
-                typedef typename Superclass::MetaPropertyNameType MetaPropertyNameType;
-                typedef typename Superclass::MetaPropertyVectorType MetaPropertyVectorType;
-                typedef typename Superclass::MetaPropertyType MetaPropertyType;
+				typedef typename Superclass::MetaPropertyPointer MetaPropertyPointer;
+				typedef typename Superclass::MetaPropertyNameType MetaPropertyNameType;
+				typedef typename Superclass::MetaPropertyVectorType MetaPropertyVectorType;
+				typedef typename Superclass::MetaPropertyType MetaPropertyType;
 
 			protected:
 				ITKLevelSetMotionRegistrationAlgorithm();
