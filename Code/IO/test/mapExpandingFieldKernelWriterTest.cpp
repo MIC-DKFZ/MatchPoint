@@ -130,7 +130,7 @@ namespace map
 
 			//test valid request
 			structuredData::Element::Pointer spDataLazy;
-      CHECK_NO_THROW(spDataLazy = spWriter->storeKernel(requestLazy));
+			CHECK_NO_THROW(spDataLazy = spWriter->storeKernel(requestLazy));
 
 			//make the cached kernel legal
 			spCachedKernel->setField(*(spLazyKernel->getField()));

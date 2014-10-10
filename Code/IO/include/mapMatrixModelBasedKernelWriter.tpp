@@ -143,10 +143,12 @@ namespace map
 
 			//add matrix
 			structuredData::Element::Pointer spMatrixElement = structuredData::streamITKMatrixToSD(matrix);
+
 			spMatrixElement->setTag(tags::Matrix);
 
 			//set matrix as string
 			structuredData::Element::Pointer spMatrixStrElement = structuredData::Element::New();
+
 			spMatrixStrElement->setTag(tags::MatrixStr);
 
 			core::OStringStream matrixOS;

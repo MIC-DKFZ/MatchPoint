@@ -110,7 +110,7 @@ namespace map
 															 TTransformInitializationPolicy >::
 															 compileInfos(MetaPropertyVectorType& infos) const
 			{
-        Superclass::compileInfos(infos);
+				Superclass::compileInfos(infos);
 
 #ifndef MAP_SEAL_ALGORITHMS
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitTransform", typeid(bool), true,
@@ -151,12 +151,12 @@ namespace map
 				{
 					spResult = map::core::MetaProperty<bool>::New(this->_useCenterOfGravity);
 				}
-        else
-        {
-          spResult = Superclass::doGetProperty(name);
-        }
+				else
+				{
+					spResult = Superclass::doGetProperty(name);
+				}
 
-        assert(spResult.IsNotNull()); //any other property name should have been excluded by the calling function.
+				assert(spResult.IsNotNull()); //any other property name should have been excluded by the calling function.
 
 				return spResult;
 			};
@@ -189,10 +189,10 @@ namespace map
 					map::core::unwrapMetaProperty(pProperty, init);
 					this->_useCenterOfGravity = init;
 				}
-        else
-        {
-          Superclass::doSetProperty(name,pProperty);
-        }
+				else
+				{
+					Superclass::doSetProperty(name, pProperty);
+				}
 
 			};
 

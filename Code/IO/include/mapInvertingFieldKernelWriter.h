@@ -32,10 +32,10 @@ namespace map
 	{
 		/*! @class InvertingFieldKernelWriter
 		* @brief Provider that is able to store field based kernels based on the class InvertingFiledBasedKernels (thus lazy field
-    * based kernels that invert an other kernel) if the source kernel is part of the registration instance that should be stored.
-    *
+		* based kernels that invert an other kernel) if the source kernel is part of the registration instance that should be stored.
+		*
 		* The writer will only store the information to indicated, that the other kernel of the registration should be used (by inversion)
-    * to "load" the stored kernel. The writer can only handle request that do not force expansion of lazy kernels.
+		* to "load" the stored kernel. The writer can only handle request that do not force expansion of lazy kernels.
 		*
 		* @sa FieldBasedRegistrationKernel
 		* @ingroup RegOperation

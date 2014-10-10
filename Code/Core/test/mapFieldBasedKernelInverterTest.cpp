@@ -149,8 +149,8 @@ namespace map
 
 			FieldBasedRegistrationKernelType* pInverseConcreteKernel =
 				dynamic_cast<FieldBasedRegistrationKernelType*>(spInverseKernel.GetPointer());
-      CHECK(pInverseConcreteKernel != NULL);
-      CHECK(pInverseConcreteKernel->getSourceKernel() == spKernel.GetPointer());
+			CHECK(pInverseConcreteKernel != NULL);
+			CHECK(pInverseConcreteKernel->getSourceKernel() == spKernel.GetPointer());
 
 			//define test region
 			TestRegionType::IndexType testIndex;

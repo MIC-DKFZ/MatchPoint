@@ -36,22 +36,26 @@ namespace map
 			mapGenerateAlgorithmUIDPolicyMacro(DefaultITKInitializingImageRegistrationUIDPolicy,
 											   "MatchPoint.ITK", "ITKInitializedImageRegistrationAlgorithm.default", "1.0.0", "");
 
-      template < class TMovingImage, class TTargetImage,
-      class TIdentificationPolicy,
-      class TInterpolatorPolicy = itk::ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
-      class TMetricPolicy = itk::ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
-      class TOptimizerPolicy = itk::ArbitrarySVNLOptimizerPolicy,
-      class TTransformPolicy =
-        itk::ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
-      class TInternalRegistrationMethod = ::itk::ImageRegistrationMethod<TTargetImage, TMovingImage> >
+			template < class TMovingImage, class TTargetImage,
+					 class TIdentificationPolicy,
+					 class TInterpolatorPolicy =
+					 itk::ArbitraryInterpolatorPolicy<TMovingImage, core::continuous::ScalarType>,
+					 class TMetricPolicy = itk::ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
+					 class TOptimizerPolicy = itk::ArbitrarySVNLOptimizerPolicy,
+					 class TTransformPolicy =
+					 itk::ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+					 class TInternalRegistrationMethod = ::itk::ImageRegistrationMethod<TTargetImage, TMovingImage> >
 			class ITKInitializedImageRegistrationAlgorithm :
 				public algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
 				TIdentificationPolicy,
-				TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod >
+				TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy,
+				TInternalRegistrationMethod >
 			{
 			public:
-				typedef ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod > Self;
+				typedef ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+						TIdentificationPolicy,
+						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy,
+						TInternalRegistrationMethod > Self;
 
 				typedef typename algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,
 						TIdentificationPolicy,

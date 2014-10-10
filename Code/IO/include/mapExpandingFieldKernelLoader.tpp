@@ -172,14 +172,15 @@ namespace map
 
 			if (nullVecPos != request._spKernelDescriptor->getSubElementEnd())
 			{
-                try
-                {
-                    nullVector = structuredData::streamSDToITKFixedArray<typename KernelBaseType::MappingVectorType>(*nullVecPos);
-                }
-                catch (core::ExceptionObject& ex)
-                {
-				  mapExceptionMacro(core::ServiceException, << ex.GetDescription());
-                }
+				try
+				{
+					nullVector = structuredData::streamSDToITKFixedArray<typename KernelBaseType::MappingVectorType>
+								 (*nullVecPos);
+				}
+				catch (core::ExceptionObject& ex)
+				{
+					mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+				}
 			}
 
 			if (request._preferLazyLoading)

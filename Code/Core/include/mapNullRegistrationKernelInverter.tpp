@@ -89,7 +89,7 @@ namespace map
 			}
 
 			//inversion of a null kernel is always a null kernel
- 			typedef NullRegistrationKernel<VOutputDimensions, VInputDimensions> InverseKernelType;
+			typedef NullRegistrationKernel<VOutputDimensions, VInputDimensions> InverseKernelType;
 
 			InverseKernelBasePointer spResultKernel = InverseKernelType::New().GetPointer();
 			assert(spResultKernel.IsNotNull());

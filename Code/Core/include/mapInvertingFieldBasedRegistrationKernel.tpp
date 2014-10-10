@@ -48,7 +48,7 @@ namespace map
 		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
-      os << indent.GetNextIndent() << "Source kernel :" << _SourceKernel << std::endl;
+			os << indent.GetNextIndent() << "Source kernel :" << _SourceKernel << std::endl;
 		};
 
 	} // end namespace core

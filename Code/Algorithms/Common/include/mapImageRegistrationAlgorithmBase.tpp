@@ -50,11 +50,11 @@ namespace map
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
 		setMovingImage(const MovingImageType* pMovingImage)
 		{
-		  if (this->_spMovingImage != pMovingImage)
-		  {
-			  this->_spMovingImage = pMovingImage;
-			  this->_movingImageMTime.Modified();
-		  }
+			if (this->_spMovingImage != pMovingImage)
+			{
+				this->_spMovingImage = pMovingImage;
+				this->_movingImageMTime.Modified();
+			}
 		}
 
 		template<class TMovingImage, class TTargetImage>
@@ -62,11 +62,11 @@ namespace map
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
 		setTargetImage(const TargetImageType* pTargetImage)
 		{
-		  if (this->_spTargetImage != pTargetImage)
-		  {
-			  this->_spTargetImage = pTargetImage;
-			  this->_targetImageMTime.Modified();
-		  }
+			if (this->_spTargetImage != pTargetImage)
+			{
+				this->_spTargetImage = pTargetImage;
+				this->_targetImageMTime.Modified();
+			}
 		}
 
 
@@ -87,21 +87,21 @@ namespace map
 			os << indent << "Target image: " << _spTargetImage.GetPointer() << std::endl;
 		}
 
-   template<class TMovingImage, class TTargetImage>
-		   unsigned long
-         ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
-         getTargetImageMTime() const
-       {
-         return _targetImageMTime.GetMTime();
-       };
+		template<class TMovingImage, class TTargetImage>
+		unsigned long
+		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
+		getTargetImageMTime() const
+		{
+			return _targetImageMTime.GetMTime();
+		};
 
-   template<class TMovingImage, class TTargetImage>
-		   unsigned long
-         ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
-         getMovingImageMTime() const
-       {
-         return _movingImageMTime.GetMTime();
-       };
+		template<class TMovingImage, class TTargetImage>
+		unsigned long
+		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
+		getMovingImageMTime() const
+		{
+			return _movingImageMTime.GetMTime();
+		};
 
 
 	} // end namespace algorithms

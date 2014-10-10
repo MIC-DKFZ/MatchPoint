@@ -45,16 +45,17 @@ namespace map
 			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions> KernelBaseType;
 			typedef typename KernelBaseType::ConstPointer KernelBaseConstPointer;
 
-      typedef core::RegistrationKernelBase<VOutputDimensions, VInputDimensions> ComplementaryKernelBaseType;
-      typedef typename ComplementaryKernelBaseType::ConstPointer ComplementaryKernelConstPointer;
+			typedef core::RegistrationKernelBase<VOutputDimensions, VInputDimensions>
+			ComplementaryKernelBaseType;
+			typedef typename ComplementaryKernelBaseType::ConstPointer ComplementaryKernelConstPointer;
 
-      /*! Kernel that should be stored with this request*/
+			/*! Kernel that should be stored with this request*/
 			KernelBaseConstPointer _spKernel;
 
-      /*! Optional information that specifies the "sibling" kernel of the registration instance _spKernel
-       * is a part of.
-       * Default value is NULL, indicating that there is no sibling or it should not regarded in the request.*/
-      ComplementaryKernelConstPointer _spComplementaryKernel;
+			/*! Optional information that specifies the "sibling" kernel of the registration instance _spKernel
+			 * is a part of.
+			 * Default value is NULL, indicating that there is no sibling or it should not regarded in the request.*/
+			ComplementaryKernelConstPointer _spComplementaryKernel;
 
 			/*! Path to where the kernel is going to be stored and additional data
 			 *(e.g. image of the deformation field) should be stored).*/
@@ -70,9 +71,11 @@ namespace map
 			/*! Constructor
 			 * \pre pKernel1 and pKernel2 must not be NULL*/
 			RegistrationKernelWriteRequest(const KernelBaseType* pKernel, const core::String& path,
-										   const core::String& name, bool expandLazyKernels, const ComplementaryKernelBaseType* pComplementaryKernel = NULL);
+										   const core::String& name, bool expandLazyKernels,
+										   const ComplementaryKernelBaseType* pComplementaryKernel = NULL);
 			RegistrationKernelWriteRequest(const KernelBaseType& kernel, const core::String& path,
-										   const core::String& name, bool expandLazyKernels, const ComplementaryKernelBaseType* pComplementaryKernel = NULL);
+										   const core::String& name, bool expandLazyKernels,
+										   const ComplementaryKernelBaseType* pComplementaryKernel = NULL);
 			~RegistrationKernelWriteRequest();
 
 			RegistrationKernelWriteRequest(const RegistrationKernelWriteRequest&);
@@ -83,29 +86,31 @@ namespace map
 		std::ostream& operator<<(std::ostream& os,
 								 const RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions>& request)
 		{
-      os << "Kernel: ";
-      if (request._spKernel.IsNull())
-      {
-        os << "NULL" << std::endl;
-      }
-      else
-      {
-        os << request._spKernel << std::endl;
-      }
+			os << "Kernel: ";
 
-      os << "Path: " << request._path << std::endl;
+			if (request._spKernel.IsNull())
+			{
+				os << "NULL" << std::endl;
+			}
+			else
+			{
+				os << request._spKernel << std::endl;
+			}
+
+			os << "Path: " << request._path << std::endl;
 			os << "Name: " << request._name << std::endl;
 			os << "ExpandLazyKernels: " << request._expandLazyKernels << std::endl;
-      
-      os << "Complementary Kernel: ";
-      if (request._spComplementaryKernel.IsNull())
-      {
-        os << "NULL" << std::endl;
-      }
-      else
-      {
-        os << request._spComplementaryKernel << std::endl;
-      }
+
+			os << "Complementary Kernel: ";
+
+			if (request._spComplementaryKernel.IsNull())
+			{
+				os << "NULL" << std::endl;
+			}
+			else
+			{
+				os << request._spComplementaryKernel << std::endl;
+			}
 
 			return os;
 		};

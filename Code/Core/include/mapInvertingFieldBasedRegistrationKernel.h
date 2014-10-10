@@ -34,7 +34,7 @@ namespace map
 
 		/*!@brief  InvertingFieldBasedRegistrationKernel is a special implementation of a lazy field based registration kernel.
 		 * This implementation is used to indicated that an other kernel is inverted and to give the posibility to check which
-     * kernel will be inverted. It is used amongst other by the FieldBasedKernelInverter and optimized field kernel file I/O.
+		* kernel will be inverted. It is used amongst other by the FieldBasedKernelInverter and optimized field kernel file I/O.
 		 * @ingroup RegKernel
 		 */
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
@@ -63,8 +63,8 @@ namespace map
 			typedef typename Superclass::InputPointType  InputPointType;
 			typedef typename Superclass::OutputPointType OutputPointType;
 
-      typedef RegistrationKernelBase<VOutputDimensions, VInputDimensions> SourceKernelType;
-      typedef typename SourceKernelType::ConstPointer SourceKernelConstPointer;
+			typedef RegistrationKernelBase<VOutputDimensions, VInputDimensions> SourceKernelType;
+			typedef typename SourceKernelType::ConstPointer SourceKernelConstPointer;
 
 			mapSetConstObjectMacro(SourceKernel, SourceKernelType);
 			mapGetConstObjectMacro(SourceKernel, SourceKernelType);

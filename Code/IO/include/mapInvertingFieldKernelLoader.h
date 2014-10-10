@@ -33,9 +33,9 @@ namespace map
 		/*! @class InvertingFieldKernelLoader
 		* @brief Provider that is able to load InvertingFiledBasedKernels.
 		*
-    * The "loading" is done by using the related kernel of the loader request and inferting that kernel
-    * by using the InverseRegistrationKernelGenerator.
-    *
+		* The "loading" is done by using the related kernel of the loader request and inferting that kernel
+		* by using the InverseRegistrationKernelGenerator.
+		*
 		* @sa FieldBasedRegistrationKernels
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the kernel that should be inverted.
@@ -54,7 +54,8 @@ namespace map
 			itkTypeMacro(InvertingFieldKernelLoader, RegistrationKernelLoaderBase);
 			itkNewMacro(Self);
 
-			typedef  core::InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
+			typedef  core::InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>
+			KernelBaseType;
 			typedef typename KernelBaseType::Pointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
 

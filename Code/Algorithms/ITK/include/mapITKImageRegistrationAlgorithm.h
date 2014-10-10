@@ -161,8 +161,8 @@ namespace map
 
 				virtual bool isReusable() const;
 
-        mapSetMacro(CropInputImagesByMask, bool);
-        mapGetMacro(CropInputImagesByMask, bool);
+				mapSetMacro(CropInputImagesByMask, bool);
+				mapGetMacro(CropInputImagesByMask, bool);
 
 			protected:
 				ITKImageRegistrationAlgorithm();
@@ -259,14 +259,14 @@ namespace map
 				* @remark The default implementation does nothing. Thus the public input data will be the data used by the
 				* internal algorithm.
 				* @remark Implementations of this method should work with getInternalTargetImage()/getInternalMovingImage() and
-        * set there results via setInternalTargetImage()/setInternalMovingImage() to allow the correct handling.
+				* set there results via setInternalTargetImage()/setInternalMovingImage() to allow the correct handling.
 				@eguarantee strong
 				*/
 				virtual void prepPerpareInternalInputData();
 
 				/*! This method is the slot for passing relevant input data to the internal algorithm or its components.
 				* @remark The default implementation passes getInternalTargetImage and getInternalMovingImage, sets the schedules, the fixed image region of the registration and the metric masks.
-        * @remark If you need to access the images use getInternalTargetImage()/getInternalMovingImage().
+				* @remark If you need to access the images use getInternalTargetImage()/getInternalMovingImage().
 				@eguarantee strong
 				*/
 				virtual void prepSetInternalInputData();
@@ -274,14 +274,14 @@ namespace map
 				/*! This method is a slot that is used for the initialization of the transformation model used
 				* by the internal registration algorithm.
 				* @remark By default it just sets the initial transformation parameter for the internal registration methods to the current values of the transform.
-        * @remark If you need to access the images use getInternalTargetImage()/getInternalMovingImage().
+				* @remark If you need to access the images use getInternalTargetImage()/getInternalMovingImage().
 				@eguarantee strong
 				*/
 				virtual void prepInitializeTransformation();
 
 				/*! This method is the slot for final steps in the preparation process
 				* @remark The default implementation calls the prepareAfterAssembly methods of the sub component policies.
-        * @remark If you need to access the images use getInternalTargetImage()/getInternalMovingImage().
+				* @remark If you need to access the images use getInternalTargetImage()/getInternalMovingImage().
 				@eguarantee strong
 				*/
 				virtual void prepFinalizePreparation();
@@ -354,39 +354,39 @@ namespace map
 				/*! Method returns pointer to the moving image used by the algorithm internally. This is used to allow the algorithm
 				* or its derived classes to modify the moving image with out changing the public moving image pointer.
 				* It returns _spMovingImage if setInternalMovingImage was never called (thus no special internal image was defined).
-        * Otherwise it will return _spInternalMovingImage.
+				* Otherwise it will return _spInternalMovingImage.
 				* (e.g.: An algorithm always normalizes an image before registration. Then the algorithm can use the prepPerpareInternalInputData()
 				* function to manipulate the internal moving image before it is used by prepareAlgorithm() to set the internal algorithm)*/
-        MovingImageConstPointer getInternalMovingImage() const;
+				MovingImageConstPointer getInternalMovingImage() const;
 				/*! Method returns pointer to the target image used by the algorithm internally. This is used to allow the algorithm
 				* or its derived classes to modify the target image with out changing the public target image pointer.
 				* It returns _spTargetImage if setInternalTargetImage was never called (thus no special internal image was defined).
-        * Otherwise it will return _spInternalTargetImage.
+				* Otherwise it will return _spInternalTargetImage.
 				* (e.g.: An algorithm always normalizes an image before registration. Then the algorithm can use the prepPerpareInternalInputData()
 				* function to manipulate the internal target image before it is used by prepareAlgorithm() to set the internal algorithm)*/
-        TargetImageConstPointer getInternalTargetImage() const;
+				TargetImageConstPointer getInternalTargetImage() const;
 
 				/*!Method sets _spInternalMovingImage to the passed image and therefore overrides the target which is internally used by the algorithm.*/
-        void setInternalMovingImage(MovingImageType* image);
-        /*!Method sets _spInternalTargetImage to the passed image and therefore overrides the target which is internally used by the algorithm.*/
-        void setInternalTargetImage(TargetImageType* image);
+				void setInternalMovingImage(MovingImageType* image);
+				/*!Method sets _spInternalTargetImage to the passed image and therefore overrides the target which is internally used by the algorithm.*/
+				void setInternalTargetImage(TargetImageType* image);
 
-      private:
+			private:
 				typename InternalRegistrationMethodType::Pointer _internalRegistrationMethod;
 
 				/*!Pointer to the moving image used by the algorithm internally if it was changed by setInternalMovingImage().
-        * This is used to allow the algorithm or its derived classes to modify the moving image with out changing the public moving image pointer.
+				* This is used to allow the algorithm or its derived classes to modify the moving image with out changing the public moving image pointer.
 				* (e.g.: An algorithm always normalizes an image before registration. Then the algorithm can use the prepPerpareInternalInputData()
 				* function to manipulate _spInternalMovingImage before it is used by prepareAlgorithm() to set the internal algorithm)*/
 				typename MovingImageType::Pointer _spInternalMovingImage;
 
 				/*!Pointer to the target image used by the algorithm internally if it was changed by setInternalTargetImage().
-        * This is used to allow the algorithm or its derived classes to modify the target image with out changing the public target image pointer.
+				* This is used to allow the algorithm or its derived classes to modify the target image with out changing the public target image pointer.
 				* (e.g.: An algorithm always normalizes an image before registration. Then the algorithm can use the prepPerpareInternalInputData()
 				* function to manipulate _spInternalTargetImage before it is used by prepareAlgorithm() to set the internal algorithm)*/
 				typename TargetImageType::Pointer _spInternalTargetImage;
 
-        bool _CropInputImagesByMask;
+				bool _CropInputImagesByMask;
 
 				mutable core::ObserverSentinel::Pointer _onIterationObserver;
 				mutable core::ObserverSentinel::Pointer _onGeneralOptimizerObserver;

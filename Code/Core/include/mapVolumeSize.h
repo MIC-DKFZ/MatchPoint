@@ -147,10 +147,10 @@ namespace map
 				* bracketed initializer. */
 				SizeValueType _size[VDimensions];
 
-        static structuredData::StreamingInterface::ElementPointer streamToStructuredData(const Self& vs);
-        static Self streamFromStructuredData(const structuredData::Element* pElement);
+				static structuredData::StreamingInterface::ElementPointer streamToStructuredData(const Self& vs);
+				static Self streamFromStructuredData(const structuredData::Element* pElement);
 
-      };
+			};
 
 
 			template<unsigned int VDimensions>

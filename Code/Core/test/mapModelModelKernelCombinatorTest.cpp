@@ -39,19 +39,20 @@ namespace map
 	namespace testing
 	{
 
-    map::algorithm::itk::ITKTransformModel< ::itk::Euler2DTransform<map::core::continuous::ScalarType> >::Pointer
-      generateTestTransform(double rotation, double x, double y)
-    {
-      typedef map::algorithm::itk::ITKTransformModel< ::itk::Euler2DTransform<map::core::continuous::ScalarType> > ModelType;
-      ModelType::Pointer transform = ModelType::New();
-      transform->getConcreteTransform()->SetAngleInDegrees(rotation);
-      ::itk::Euler2DTransform<map::core::continuous::ScalarType>::OffsetType offset;
-      offset[0]=x;
-      offset[1]=y;
-      transform->getConcreteTransform()->SetOffset(offset);
-    
-      return transform;
-    }
+		map::algorithm::itk::ITKTransformModel< ::itk::Euler2DTransform<map::core::continuous::ScalarType> >::Pointer
+		generateTestTransform(double rotation, double x, double y)
+		{
+			typedef map::algorithm::itk::ITKTransformModel< ::itk::Euler2DTransform<map::core::continuous::ScalarType> >
+			ModelType;
+			ModelType::Pointer transform = ModelType::New();
+			transform->getConcreteTransform()->SetAngleInDegrees(rotation);
+			::itk::Euler2DTransform<map::core::continuous::ScalarType>::OffsetType offset;
+			offset[0] = x;
+			offset[1] = y;
+			transform->getConcreteTransform()->SetOffset(offset);
+
+			return transform;
+		}
 
 		int mapModelModelKernelCombinatorTest(int argc, char* argv[])
 		{
@@ -84,13 +85,15 @@ namespace map
 			ModelKernelType::Pointer spMOKernel1 = ModelKernelType::New();
 			ModelKernelType::Pointer spMOKernel2 = ModelKernelType::New();
 
-      spKernel1->setTransformModel(map::algorithm::itk::ITKTransformModel< ::itk::TranslationTransform< map::core::continuous::ScalarType, 2> >::New());
-      spKernel2->setTransformModel(map::algorithm::itk::ITKTransformModel< ::itk::TranslationTransform< map::core::continuous::ScalarType, 2> >::New());
+			spKernel1->setTransformModel(
+				map::algorithm::itk::ITKTransformModel< ::itk::TranslationTransform< map::core::continuous::ScalarType, 2> >::New());
+			spKernel2->setTransformModel(
+				map::algorithm::itk::ITKTransformModel< ::itk::TranslationTransform< map::core::continuous::ScalarType, 2> >::New());
 
-      spMOKernel1->setTransformModel(generateTestTransform(-10,11,-80));
-      spMOKernel2->setTransformModel(generateTestTransform(21,2,78));
+			spMOKernel1->setTransformModel(generateTestTransform(-10, 11, -80));
+			spMOKernel2->setTransformModel(generateTestTransform(21, 2, 78));
 
-      FieldKernelType::Pointer spIllegalKernel = FieldKernelType::New();
+			FieldKernelType::Pointer spIllegalKernel = FieldKernelType::New();
 
 
 			//creating the combinator
@@ -128,42 +131,42 @@ namespace map
 			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest3, spInRep),
 								 core::ServiceException);
 
-      // test combination support for matrix offset based transfor with uniform dimensionality
+			// test combination support for matrix offset based transfor with uniform dimensionality
 			// this should not be thrown any more as soon as the ModelModelKernelCombinator has been
-      // completly implemented
+			// completly implemented
 			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(request, spInRep), core::ServiceException);
 
-      // test combination support for matrix offset based transfor with uniform dimensionality
-      CombinatorType::CombinedKernelBasePointer resultKernel;
+			// test combination support for matrix offset based transfor with uniform dimensionality
+			CombinatorType::CombinedKernelBasePointer resultKernel;
 			CHECK_NO_THROW(resultKernel = spCombinator->combineKernels(request2, spInRep));
 
-      //now test im the mapping is correct.
-      map::core::continuous::Elements<2>::PointType inPoint1;
-      inPoint1[0] = 10;
-      inPoint1[1] = 1000;
-      
-      map::core::continuous::Elements<2>::PointType inPoint2;
-      inPoint2[0] = -33;
-      inPoint2[1] = 420;
+			//now test im the mapping is correct.
+			map::core::continuous::Elements<2>::PointType inPoint1;
+			inPoint1[0] = 10;
+			inPoint1[1] = 1000;
 
-      map::core::continuous::Elements<2>::PointType combinedResult1;
-      CHECK(resultKernel->mapPoint(inPoint1,combinedResult1));
-      map::core::continuous::Elements<2>::PointType combinedResult2;
-      CHECK(resultKernel->mapPoint(inPoint2,combinedResult2));
+			map::core::continuous::Elements<2>::PointType inPoint2;
+			inPoint2[0] = -33;
+			inPoint2[1] = 420;
 
-      map::core::continuous::Elements<2>::PointType refPoint1;
-      spMOKernel1->mapPoint(inPoint1,refPoint1);
-      spMOKernel2->mapPoint(refPoint1,refPoint1);
+			map::core::continuous::Elements<2>::PointType combinedResult1;
+			CHECK(resultKernel->mapPoint(inPoint1, combinedResult1));
+			map::core::continuous::Elements<2>::PointType combinedResult2;
+			CHECK(resultKernel->mapPoint(inPoint2, combinedResult2));
 
-      map::core::continuous::Elements<2>::PointType refPoint2;
-      spMOKernel1->mapPoint(inPoint2,refPoint2);
-      spMOKernel2->mapPoint(refPoint2,refPoint2);
+			map::core::continuous::Elements<2>::PointType refPoint1;
+			spMOKernel1->mapPoint(inPoint1, refPoint1);
+			spMOKernel2->mapPoint(refPoint1, refPoint1);
 
-      CHECK_CLOSE(refPoint1[0], combinedResult1[0], 0.0000001);
-      CHECK_CLOSE(refPoint1[1], combinedResult1[1], 0.0000001);
-      CHECK_CLOSE(refPoint2[0], combinedResult2[0], 0.0000001);
-      CHECK_CLOSE(refPoint2[1], combinedResult2[1], 0.0000001);
-      
+			map::core::continuous::Elements<2>::PointType refPoint2;
+			spMOKernel1->mapPoint(inPoint2, refPoint2);
+			spMOKernel2->mapPoint(refPoint2, refPoint2);
+
+			CHECK_CLOSE(refPoint1[0], combinedResult1[0], 0.0000001);
+			CHECK_CLOSE(refPoint1[1], combinedResult1[1], 0.0000001);
+			CHECK_CLOSE(refPoint2[0], combinedResult2[0], 0.0000001);
+			CHECK_CLOSE(refPoint2[1], combinedResult2[1], 0.0000001);
+
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}
 	} //namespace testing

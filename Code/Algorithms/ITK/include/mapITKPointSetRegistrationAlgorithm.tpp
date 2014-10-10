@@ -498,7 +498,7 @@ namespace map
 				manipulator.setInverseMapping(spIKernel);
 				manipulator.getTagValues()[tags::AlgorithmUID] = this->getUID()->toStr();
 
-  			//store the final results
+				//store the final results
 				_spFinalizedRegistration = spResult;
 				_finalizedTransformParameters = lastTransformParameters;
 			};

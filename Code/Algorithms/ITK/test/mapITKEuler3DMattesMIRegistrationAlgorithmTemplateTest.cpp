@@ -99,13 +99,14 @@ namespace map
 			}
 
 			//load input data
-      ImageType::Pointer spTargetImage =
-        lit::TestImageIO<unsigned char, ImageType>::readImage(targetFileName);
+			ImageType::Pointer spTargetImage =
+				lit::TestImageIO<unsigned char, ImageType>::readImage(targetFileName);
 
-      ImageType::Pointer spMovingImage =
-        lit::TestImageIO<unsigned char, ImageType>::readImage(movingFileName);
+			ImageType::Pointer spMovingImage =
+				lit::TestImageIO<unsigned char, ImageType>::readImage(movingFileName);
 
-			typedef algorithm::boxed::ITKEuler3DMattesMIRegistrationAlgorithm<ImageType> RegistrationAlgorithmType;
+			typedef algorithm::boxed::ITKEuler3DMattesMIRegistrationAlgorithm<ImageType>
+			RegistrationAlgorithmType;
 
 			RegistrationAlgorithmType::Pointer spAlgorithm = RegistrationAlgorithmType::New();
 
@@ -116,11 +117,11 @@ namespace map
 			spAlgorithm->AddObserver(::itk::AnyEvent(), spTestCommand);
 
 			//Set land marks
-      spAlgorithm->setMovingImage(spMovingImage);
+			spAlgorithm->setMovingImage(spMovingImage);
 			spAlgorithm->setTargetImage(spTargetImage);
 
-      spAlgorithm->setProperty("PreinitByCenterOfGravity", core::MetaProperty<bool>::New(true));
-      
+			spAlgorithm->setProperty("PreinitByCenterOfGravity", core::MetaProperty<bool>::New(true));
+
 			RegistrationAlgorithmType::RegistrationPointer spRegistration;
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
 
@@ -137,12 +138,12 @@ namespace map
 			CHECK_CLOSE(16.0, parameters[4], 0.05);
 			CHECK_CLOSE(5.0, parameters[5], 0.05);
 
-      RegistrationAlgorithmType::RegistrationPointer spRegistration2nd;
-      CHECK_NO_THROW(spRegistration2nd = spAlgorithm->getRegistration());
-      /** Check for same MTimes because there is no reason to determine the reg again*/
-      CHECK(spRegistration->GetMTime() == spRegistration2nd->GetMTime());
+			RegistrationAlgorithmType::RegistrationPointer spRegistration2nd;
+			CHECK_NO_THROW(spRegistration2nd = spAlgorithm->getRegistration());
+			/** Check for same MTimes because there is no reason to determine the reg again*/
+			CHECK(spRegistration->GetMTime() == spRegistration2nd->GetMTime());
 
-      RETURN_AND_REPORT_TEST_SUCCESS;
+			RETURN_AND_REPORT_TEST_SUCCESS;
 		}
 	} //namespace testing
 } //namespace map

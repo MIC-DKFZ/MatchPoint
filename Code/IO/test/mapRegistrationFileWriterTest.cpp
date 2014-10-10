@@ -82,16 +82,16 @@ namespace map
 					  io::NullRegistrationKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != DirectStackType::getProvider(
 					  io::ExpandingFieldKernelWriter<2, 2>::getStaticProviderName()));
-      CHECK(NULL != DirectStackType::getProvider(
-            io::InvertingFieldKernelWriter<2, 2>::getStaticProviderName()));
+			CHECK(NULL != DirectStackType::getProvider(
+					  io::InvertingFieldKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != InverseStackType::getProvider(
 					  io::MatrixModelBasedKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != InverseStackType::getProvider(
 					  io::NullRegistrationKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != InverseStackType::getProvider(
 					  io::ExpandingFieldKernelWriter<2, 2>::getStaticProviderName()));
-      CHECK(NULL != InverseStackType::getProvider(
-            io::InvertingFieldKernelWriter<2, 2>::getStaticProviderName()));
+			CHECK(NULL != InverseStackType::getProvider(
+					  io::InvertingFieldKernelWriter<2, 2>::getStaticProviderName()));
 
 			// create a ModelBasedKernels for testing
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;

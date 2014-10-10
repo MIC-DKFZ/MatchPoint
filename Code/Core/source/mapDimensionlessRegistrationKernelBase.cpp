@@ -27,19 +27,19 @@ namespace map
 	namespace core
 	{
 
-  		void DimensionlessRegistrationKernelBase::PrintSelf(std::ostream& os, itk::Indent indent) const
-      {
-        Superclass::PrintSelf(os, indent);
-        os << indent << "Input dimensions: " << getInputDimensions() << std::endl;
-        os << indent << "Output dimensions: " << getOutputDimensions() << std::endl;
-        os << indent << "limited Representation: " << hasLimitedRepresentation() << std::endl;
-      };
+		void DimensionlessRegistrationKernelBase::PrintSelf(std::ostream& os, itk::Indent indent) const
+		{
+			Superclass::PrintSelf(os, indent);
+			os << indent << "Input dimensions: " << getInputDimensions() << std::endl;
+			os << indent << "Output dimensions: " << getOutputDimensions() << std::endl;
+			os << indent << "limited Representation: " << hasLimitedRepresentation() << std::endl;
+		};
 
-			DimensionlessRegistrationKernelBase::DimensionlessRegistrationKernelBase()
-      {};
+		DimensionlessRegistrationKernelBase::DimensionlessRegistrationKernelBase()
+		{};
 
-			DimensionlessRegistrationKernelBase::~DimensionlessRegistrationKernelBase()
-      {};
+		DimensionlessRegistrationKernelBase::~DimensionlessRegistrationKernelBase()
+		{};
 
 		std::ostream& operator<< (std::ostream& os,
 								  const DimensionlessRegistrationKernelBase& p)

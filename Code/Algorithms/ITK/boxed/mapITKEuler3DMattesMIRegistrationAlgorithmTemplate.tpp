@@ -55,8 +55,8 @@ namespace map
 			ITKEuler3DMattesMIRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy, TInterpolatorPolicy>::
 			configureAlgorithm()
 			{
-                this->_preInitialize = true;
-                this->_useCenterOfGravity = false;
+				this->_preInitialize = true;
+				this->_useCenterOfGravity = false;
 
 				typename Superclass::ConcreteOptimizerType::ScalesType scales(6);
 				scales[0] = 1.0;
@@ -85,7 +85,7 @@ namespace map
 			ITKEuler3DMattesMIRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy, TInterpolatorPolicy>::
 			compileInfos(MetaPropertyVectorType& infos) const
 			{
-        Superclass::compileInfos(infos);
+				Superclass::compileInfos(infos);
 
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
 				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;

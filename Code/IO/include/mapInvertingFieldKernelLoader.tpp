@@ -115,9 +115,10 @@ namespace map
 								  << "Error: cannot load kernel. Reason: cannot handle request.");
 			}
 
-      /*! Kernel base type of kernels that should be inverted to get the requested field kernel.*/
-      typedef  core::RegistrationKernelBase<VOutputDimensions, VInputDimensions>	SourceKernelBaseType;
-      const SourceKernelBaseType* sourceKernel = dynamic_cast<const SourceKernelBaseType*>(request._spComplementaryKernel.GetPointer());
+			/*! Kernel base type of kernels that should be inverted to get the requested field kernel.*/
+			typedef  core::RegistrationKernelBase<VOutputDimensions, VInputDimensions>	SourceKernelBaseType;
+			const SourceKernelBaseType* sourceKernel = dynamic_cast<const SourceKernelBaseType*>
+					(request._spComplementaryKernel.GetPointer());
 
 			if (!sourceKernel)
 			{
@@ -128,14 +129,14 @@ namespace map
 			structuredData::Element::ConstSubElementIteratorType repPos = structuredData::findNextSubElement(
 						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
 						tags::InverseFieldRepresentation);
-      
-      typename KernelBaseType::RepresentationDescriptorPointer spInverseFieldRep;
 
-      if (repPos != request._spKernelDescriptor->getSubElementEnd())
-      {
-        spInverseFieldRep = KernelBaseType::RepresentationDescriptorType::New();
-        spInverseFieldRep->streamFromStructuredData(*repPos);
-      }
+			typename KernelBaseType::RepresentationDescriptorPointer spInverseFieldRep;
+
+			if (repPos != request._spKernelDescriptor->getSubElementEnd())
+			{
+				spInverseFieldRep = KernelBaseType::RepresentationDescriptorType::New();
+				spInverseFieldRep->streamFromStructuredData(*repPos);
+			}
 
 			//determin null vector (support)
 			bool usesNullVector = false;
@@ -162,34 +163,40 @@ namespace map
 
 			if (nullVecPos != request._spKernelDescriptor->getSubElementEnd())
 			{
-        try
-        {
-            nullVector = structuredData::streamSDToITKFixedArray<typename KernelBaseType::MappingVectorType>(*nullVecPos);
-        }
-        catch (core::ExceptionObject& ex)
-        {
-				  mapExceptionMacro(core::ServiceException, << ex.GetDescription());
-        }
+				try
+				{
+					nullVector = structuredData::streamSDToITKFixedArray<typename KernelBaseType::MappingVectorType>
+								 (*nullVecPos);
+				}
+				catch (core::ExceptionObject& ex)
+				{
+					mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+				}
 			}
 
-      typedef core::InverseRegistrationKernelGenerator<VOutputDimensions, VInputDimensions> InversionGeneratorType;
+			typedef core::InverseRegistrationKernelGenerator<VOutputDimensions, VInputDimensions>
+			InversionGeneratorType;
 
-      typename InversionGeneratorType::Pointer generator = InversionGeneratorType::New();
-      typename core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult = generator->generateInverse(*sourceKernel, spInverseFieldRep);
+			typename InversionGeneratorType::Pointer generator = InversionGeneratorType::New();
+			typename core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult =
+				generator->generateInverse(*sourceKernel, spInverseFieldRep);
 
-      core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>* fieldKernel = dynamic_cast<core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>*>(spResult.GetPointer());
-      if (fieldKernel)
-      {
-      	fieldKernel->setNullVectorUsage(usesNullVector);
-				fieldKernel->setNullVector(nullVector);
-      }
-            
-      if (!request._preferLazyLoading)
+			core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>* fieldKernel =
+				dynamic_cast<core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>*>
+				(spResult.GetPointer());
+
+			if (fieldKernel)
 			{
-        spResult->precomputeKernel();
+				fieldKernel->setNullVectorUsage(usesNullVector);
+				fieldKernel->setNullVector(nullVector);
 			}
 
-            return spResult.GetPointer();
+			if (!request._preferLazyLoading)
+			{
+				spResult->precomputeKernel();
+			}
+
+			return spResult.GetPointer();
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

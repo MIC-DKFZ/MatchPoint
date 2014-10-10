@@ -51,7 +51,8 @@ namespace map
 			@ingroup Registration
 		*/
 		template<unsigned int VDimensions>
-		class FieldRepresentationDescriptor : public itk::LightObject, public structuredData::StreamingInterface
+		class FieldRepresentationDescriptor : public itk::LightObject,
+			public structuredData::StreamingInterface
 		{
 		public:
 			typedef FieldRepresentationDescriptor<VDimensions> Self;
@@ -193,9 +194,9 @@ namespace map
 			*/
 			DirectionType computePhysicalPointToIndexMatrix() const;
 
-      virtual structuredData::StreamingInterface::ElementPointer streamToSDInternal() const;
+			virtual structuredData::StreamingInterface::ElementPointer streamToSDInternal() const;
 
-      virtual void streamFromSDInternal(const structuredData::Element* pElement);
+			virtual void streamFromSDInternal(const structuredData::Element* pElement);
 
 			/*! Methods invoked by itk::LightObject::Print().  */
 			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;

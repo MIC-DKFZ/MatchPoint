@@ -37,19 +37,19 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-      typedef core::InvertingFieldBasedRegistrationKernel<3, 2> KernelType;
+			typedef core::InvertingFieldBasedRegistrationKernel<3, 2> KernelType;
 			typedef core::ModelBasedRegistrationKernel<2, 3> SourcelKernelType;
 
 			SourcelKernelType::Pointer spSourceKernel = SourcelKernelType::New();
-      KernelType::Pointer spKernel = KernelType::New();
+			KernelType::Pointer spKernel = KernelType::New();
 
-      //just check the additions to the "normal" lazy field kernel
+			//just check the additions to the "normal" lazy field kernel
 
 			CHECK(spKernel->getSourceKernel() == NULL); //default must be null
 
-      CHECK_NO_THROW(spKernel->setSourceKernel(spSourceKernel));
-      
-      CHECK(spKernel->getSourceKernel() == spSourceKernel.GetPointer());
+			CHECK_NO_THROW(spKernel->setSourceKernel(spSourceKernel));
+
+			CHECK(spKernel->getSourceKernel() == spSourceKernel.GetPointer());
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

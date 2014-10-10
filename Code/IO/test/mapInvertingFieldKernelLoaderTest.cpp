@@ -65,40 +65,42 @@ namespace map
 				refPath = argv[2];
 			}
 
-      //////////////////////////////////////
-      //Kernel setup
-      typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> >
-        TransformType;
+			//////////////////////////////////////
+			//Kernel setup
+			typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> >
+			TransformType;
 
-      TransformType::Pointer spTransform = TransformType::New();
-      TransformType::ParametersType params(3);
-      params[0] = 1.5708;
-      params[1] = 5;
-      params[2] = 2;
-      spTransform->getTransform()->SetParameters(params);
+			TransformType::Pointer spTransform = TransformType::New();
+			TransformType::ParametersType params(3);
+			params[0] = 1.5708;
+			params[1] = 5;
+			params[2] = 2;
+			spTransform->getTransform()->SetParameters(params);
 
-      typedef core::functors::FieldByModelFunctor<2, 2> FieldFunctorType;
-      FieldFunctorType::InFieldRepresentationType::SpacingType spacing(0.5);
-      FieldFunctorType::InFieldRepresentationType::PointType origin;
-      origin.Fill(0);
-      FieldFunctorType::InFieldRepresentationType::SizeType size;
-      size.fill(10);
+			typedef core::functors::FieldByModelFunctor<2, 2> FieldFunctorType;
+			FieldFunctorType::InFieldRepresentationType::SpacingType spacing(0.5);
+			FieldFunctorType::InFieldRepresentationType::PointType origin;
+			origin.Fill(0);
+			FieldFunctorType::InFieldRepresentationType::SizeType size;
+			size.fill(10);
 
-      FieldFunctorType::InFieldRepresentationType::Pointer spInRep =
-        FieldFunctorType::InFieldRepresentationType::New();
-      spInRep->setSize(size);
-      spInRep->setSpacing(spacing);
-      spInRep->setOrigin(origin);
-      FieldFunctorType::Pointer spFunctor = FieldFunctorType::New(*spTransform, spInRep);
+			FieldFunctorType::InFieldRepresentationType::Pointer spInRep =
+				FieldFunctorType::InFieldRepresentationType::New();
+			spInRep->setSize(size);
+			spInRep->setSpacing(spacing);
+			spInRep->setOrigin(origin);
+			FieldFunctorType::Pointer spFunctor = FieldFunctorType::New(*spTransform, spInRep);
 
-      typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel SourceKernelType;
-      SourceKernelType::Pointer spSourceKernel = SourceKernelType::New();
-      spSourceKernel->setFieldFunctor(*spFunctor);
+			typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel SourceKernelType;
+			SourceKernelType::Pointer spSourceKernel = SourceKernelType::New();
+			spSourceKernel->setFieldFunctor(*spFunctor);
 
-      typedef core::InvertingFieldBasedRegistrationKernel<2, 2> InvertingKernelType;
+			typedef core::InvertingFieldBasedRegistrationKernel<2, 2> InvertingKernelType;
 
-      core::InverseRegistrationKernelGenerator<2,2>::Pointer inverter = core::InverseRegistrationKernelGenerator<2,2>::New();
-      InvertingKernelType::Pointer spInvertingKernelRef = dynamic_cast<InvertingKernelType*>(inverter->generateInverse(*spSourceKernel,spInRep).GetPointer());
+			core::InverseRegistrationKernelGenerator<2, 2>::Pointer inverter =
+				core::InverseRegistrationKernelGenerator<2, 2>::New();
+			InvertingKernelType::Pointer spInvertingKernelRef = dynamic_cast<InvertingKernelType*>
+					(inverter->generateInverse(*spSourceKernel, spInRep).GetPointer());
 
 			typedef io::InvertingFieldKernelLoader<2, 2> LoaderType;
 			typedef io::InvertingFieldKernelLoader<2, 3> Loader23Type;
@@ -107,32 +109,45 @@ namespace map
 			//Loader and request setup
 			LoaderType::Pointer spLoader = LoaderType::New();
 
-			core::String validData = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-			core::String invalidData_wrongDim = "<Kernel InputDimensions='3' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-			core::String invalidData_wrongDim2 = "<Kernel InputDimensions='2' OutputDimensions='3'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-			core::String invalidData_wrongType = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>WrongType</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-			core::String invalidData_wrongRepDim = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='4'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-      core::String invalidData_invalidRep = "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'></InverseFieldRepresentation></Kernel>";
+			core::String validData =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
+			core::String invalidData_wrongDim =
+				"<Kernel InputDimensions='3' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
+			core::String invalidData_wrongDim2 =
+				"<Kernel InputDimensions='2' OutputDimensions='3'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
+			core::String invalidData_wrongType =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>WrongType</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
+			core::String invalidData_wrongRepDim =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='4'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
+			core::String invalidData_invalidRep =
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'></InverseFieldRepresentation></Kernel>";
 
 			structuredData::XMLStrReader::Pointer spStrReader = structuredData::XMLStrReader::New();
 
 			LoaderType::RequestType validRequest(spStrReader->readXMLContent(validData), false, spSourceKernel);
-			LoaderType::RequestType validRequest_lazy(spStrReader->readXMLContent(validData), true, spSourceKernel);
-      LoaderType::RequestType invalidRequest_missingSource(spStrReader->readXMLContent(validData), true, NULL);
-			LoaderType::RequestType invalidRequest_wrongDim(spStrReader->readXMLContent(invalidData_wrongDim), false);
-			LoaderType::RequestType invalidRequest_wrongDim2(spStrReader->readXMLContent(invalidData_wrongDim2), false);
-			LoaderType::RequestType invalidRequest_wrongType(spStrReader->readXMLContent(invalidData_wrongType), false);
-			LoaderType::RequestType invalidRequest_wrongRepDim(spStrReader->readXMLContent(invalidData_wrongRepDim), false);
-      LoaderType::RequestType invalidRequest_invalidRep(spStrReader->readXMLContent(invalidData_invalidRep), false);
+			LoaderType::RequestType validRequest_lazy(spStrReader->readXMLContent(validData), true,
+					spSourceKernel);
+			LoaderType::RequestType invalidRequest_missingSource(spStrReader->readXMLContent(validData), true,
+					NULL);
+			LoaderType::RequestType invalidRequest_wrongDim(spStrReader->readXMLContent(invalidData_wrongDim),
+					false);
+			LoaderType::RequestType invalidRequest_wrongDim2(spStrReader->readXMLContent(invalidData_wrongDim2),
+					false);
+			LoaderType::RequestType invalidRequest_wrongType(spStrReader->readXMLContent(invalidData_wrongType),
+					false);
+			LoaderType::RequestType invalidRequest_wrongRepDim(spStrReader->readXMLContent(
+						invalidData_wrongRepDim), false);
+			LoaderType::RequestType invalidRequest_invalidRep(spStrReader->readXMLContent(
+						invalidData_invalidRep), false);
 
 			////////////////////////////////////////////
 			// Start Tests
-      CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_missingSource));
+			CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_missingSource));
 			CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_wrongDim));
 			CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_wrongDim2));
 			CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_wrongType));
-      CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_wrongRepDim));
-      CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_invalidRep));
+			CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_wrongRepDim));
+			CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_invalidRep));
 			CHECK_EQUAL(true, spLoader->canHandleRequest(validRequest));
 			CHECK_EQUAL(true, spLoader->canHandleRequest(validRequest_lazy));
 
@@ -141,7 +156,7 @@ namespace map
 
 			//test processing of illegal requests
 
-      CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_missingSource), core::ServiceException);
+			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_missingSource), core::ServiceException);
 			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_wrongDim), core::ServiceException);
 			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_wrongDim2), core::ServiceException);
 			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_wrongType), core::ServiceException);

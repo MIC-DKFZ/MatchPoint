@@ -62,10 +62,12 @@ namespace map
 		getRepresentationDescriptor() const
 		{
 			assert(_spField.IsNotNull());
-      if(_spField.IsNull())
-      {
-        mapDefaultExceptionStaticMacro(<<"Error. Cannot get representation descriptor in PreCachedFieldPolicy. Field is not set");
-      }
+
+			if (_spField.IsNull())
+			{
+				mapDefaultExceptionStaticMacro( <<
+												"Error. Cannot get representation descriptor in PreCachedFieldPolicy. Field is not set");
+			}
 
 			RepresentationDescriptorConstPointer spRepresentation = createFieldRepresentation(
 						*_spField).GetPointer();

@@ -45,7 +45,7 @@ namespace map
 			ITKMultiResPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy>::
 			doGetMaxIterations() const
 			{
-                typename InternalMultiResRegFilterType::NumberOfIterationsType iterations =
+				typename InternalMultiResRegFilterType::NumberOfIterationsType iterations =
 					this->_multiResFilter->GetNumberOfIterations();
 				IterationCountType result = 0;
 
@@ -61,9 +61,9 @@ namespace map
 			ITKMultiResPDEDeformableRegistrationAlgorithm<TImageType, TIdentificationPolicy, TInternalRegistrationFilter, TDisplacementField, TPyramidesPolicy>::
 			ITKMultiResPDEDeformableRegistrationAlgorithm()
 			{
-                this->_spInternalMovingImage = NULL;
-                this->_spInternalTargetImage = NULL;
-                this->_multiResFilter = InternalMultiResRegFilterType::New();
+				this->_spInternalMovingImage = NULL;
+				this->_spInternalTargetImage = NULL;
+				this->_multiResFilter = InternalMultiResRegFilterType::New();
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TInternalRegistrationFilter, class TDisplacementField, class TPyramidesPolicy>
@@ -174,8 +174,8 @@ namespace map
 				//Connect images
 				this->InvokeEvent(events::AlgorithmEvent(this,
 								  "Connect images to itk multi res PDE registration filter."));
-                this->_multiResFilter->SetFixedImage(this->_spInternalTargetImage);
-                this->_multiResFilter->SetMovingImage(this->_spInternalMovingImage);
+				this->_multiResFilter->SetFixedImage(this->_spInternalTargetImage);
+				this->_multiResFilter->SetMovingImage(this->_spInternalMovingImage);
 			}
 
 			template < class TImageType, class TIdentificationPolicy, class TInternalRegistrationFilter, class TDisplacementField, class TPyramidesPolicy>

@@ -35,109 +35,122 @@ namespace map
 	namespace structuredData
 	{
 
-    template<class TMatrix>
-  	Element::Pointer streamITKMatrixToSD(const TMatrix& matrix)
-    {
-      structuredData::Element::Pointer spMatrixElement = structuredData::Element::New();
+		template<class TMatrix>
+		Element::Pointer streamITKMatrixToSD(const TMatrix& matrix)
+		{
+			structuredData::Element::Pointer spMatrixElement = structuredData::Element::New();
 
-      spMatrixElement->setTag("Matrix");
+			spMatrixElement->setTag("Matrix");
 
-      for (unsigned int rowID = 0; rowID < TMatrix::RowDimensions; ++rowID)
-      {
-        for (unsigned int colID = 0; colID < TMatrix::ColumnDimensions; ++colID)
-        {
-          structuredData::Element::Pointer spValueElement = structuredData::Element::New();
-          spValueElement->setTag(tags::Value);
-          spValueElement->setValue(core::convert::toStr(matrix(rowID, colID)));
-          spValueElement->setAttribute(tags::Column, core::convert::toStr(colID));
-          spValueElement->setAttribute(tags::Row, core::convert::toStr(rowID));
-          spMatrixElement->addSubElement(spValueElement);
-        }
-      }
+			for (unsigned int rowID = 0; rowID < TMatrix::RowDimensions; ++rowID)
+			{
+				for (unsigned int colID = 0; colID < TMatrix::ColumnDimensions; ++colID)
+				{
+					structuredData::Element::Pointer spValueElement = structuredData::Element::New();
+					spValueElement->setTag(tags::Value);
+					spValueElement->setValue(core::convert::toStr(matrix(rowID, colID)));
+					spValueElement->setAttribute(tags::Column, core::convert::toStr(colID));
+					spValueElement->setAttribute(tags::Row, core::convert::toStr(rowID));
+					spMatrixElement->addSubElement(spValueElement);
+				}
+			}
 
-      return spMatrixElement;
-    };
+			return spMatrixElement;
+		};
 
-    template<class TMatrix>
+		template<class TMatrix>
 		TMatrix streamSDToITKMatrix(const Element* pElement)
-    {
-      assert(pElement);
-      if (!pElement)
-      {
-        mapDefaultExceptionStaticMacro( << "Cannot convert structured data into itk matrix. Structured element is missing.");
-      }
+		{
+			assert(pElement);
 
-      if (pElement->getSubElementsCount() != TMatrix::RowDimensions * TMatrix::ColumnDimensions)
-      {
-        mapDefaultExceptionStaticMacro( << "Error: convert structured data into itk matrix. Reason: matrix has wrong number of elements. Expected: " <<
-          TMatrix::RowDimensions * TMatrix::ColumnDimensions << "; found: " << pElement->getSubElementsCount());
-      }
+			if (!pElement)
+			{
+				mapDefaultExceptionStaticMacro( <<
+												"Cannot convert structured data into itk matrix. Structured element is missing.");
+			}
 
-      TMatrix matrix;
+			if (pElement->getSubElementsCount() != TMatrix::RowDimensions * TMatrix::ColumnDimensions)
+			{
+				mapDefaultExceptionStaticMacro( <<
+												"Error: convert structured data into itk matrix. Reason: matrix has wrong number of elements. Expected: "
+												<<
+												TMatrix::RowDimensions * TMatrix::ColumnDimensions << "; found: " <<
+												pElement->getSubElementsCount());
+			}
 
-      for (structuredData::Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
-        pos != pElement->getSubElementEnd(); ++pos)
-      {
-        if ((*pos)->getTag() != tags::Value)
-        {
-          mapDefaultExceptionStaticMacro( << "Error: convert structured data into itk matrix. Reason: contains wrong sub elements, only \"Value\" os allowed. Wrong sub element tag: " << (*pos)->getTag());
-        }
+			TMatrix matrix;
 
-        unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));
-        unsigned int colID = core::convert::toUInt((*pos)->getAttribute(tags::Column));
+			for (structuredData::Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
+				 pos != pElement->getSubElementEnd(); ++pos)
+			{
+				if ((*pos)->getTag() != tags::Value)
+				{
+					mapDefaultExceptionStaticMacro( <<
+													"Error: convert structured data into itk matrix. Reason: contains wrong sub elements, only \"Value\" os allowed. Wrong sub element tag: "
+													<< (*pos)->getTag());
+				}
 
-        matrix(rowID, colID) = core::convert::toValueGeneric<typename TMatrix::ValueType>((*pos)->getValue());
-      }
+				unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));
+				unsigned int colID = core::convert::toUInt((*pos)->getAttribute(tags::Column));
 
-      return matrix;
-    };
+				matrix(rowID, colID) = core::convert::toValueGeneric<typename TMatrix::ValueType>((
+										   *pos)->getValue());
+			}
+
+			return matrix;
+		};
 
 
-    template<class TITKFixedArray>
-  	Element::Pointer streamITKFixedArrayToSD(const TITKFixedArray& array)
-    {
-      structuredData::Element::Pointer spArrayElement = structuredData::Element::New();
-      spArrayElement->setTag("FixedArray");
+		template<class TITKFixedArray>
+		Element::Pointer streamITKFixedArrayToSD(const TITKFixedArray& array)
+		{
+			structuredData::Element::Pointer spArrayElement = structuredData::Element::New();
+			spArrayElement->setTag("FixedArray");
 
-      for (unsigned int rowID = 0; rowID < TITKFixedArray::Dimension; ++rowID)
-      {
-        structuredData::Element::Pointer spValueElement = structuredData::Element::New();
-        spValueElement->setTag(tags::Value);
-        spValueElement->setValue(core::convert::toStr(array[rowID]));
-        spValueElement->setAttribute(tags::Row, core::convert::toStr(rowID));
-        spArrayElement->addSubElement(spValueElement);
-      }
+			for (unsigned int rowID = 0; rowID < TITKFixedArray::Dimension; ++rowID)
+			{
+				structuredData::Element::Pointer spValueElement = structuredData::Element::New();
+				spValueElement->setTag(tags::Value);
+				spValueElement->setValue(core::convert::toStr(array[rowID]));
+				spValueElement->setAttribute(tags::Row, core::convert::toStr(rowID));
+				spArrayElement->addSubElement(spValueElement);
+			}
 
-      return spArrayElement;
-    };
+			return spArrayElement;
+		};
 
-    template<class TITKFixedArray>
+		template<class TITKFixedArray>
 		TITKFixedArray streamSDToITKFixedArray(const Element* pElement)
-    {
-      assert(pElement);
-      if (!pElement)
-      {
-        mapDefaultExceptionStaticMacro( << "Cannot convert structured data into itk fixed array. Structured element is missing.");
-      }
+		{
+			assert(pElement);
 
-      if (pElement->getSubElementsCount() != TITKFixedArray::Dimension)
-      {
-        mapDefaultExceptionStaticMacro( << "Error: convert structured data into itk fixed array. Reason: matrix has wrong number of elements. Expected: " <<
-          TITKFixedArray::Dimension << "; found: " << pElement->getSubElementsCount());
-      }
+			if (!pElement)
+			{
+				mapDefaultExceptionStaticMacro( <<
+												"Cannot convert structured data into itk fixed array. Structured element is missing.");
+			}
 
-      TITKFixedArray fixedArray;
+			if (pElement->getSubElementsCount() != TITKFixedArray::Dimension)
+			{
+				mapDefaultExceptionStaticMacro( <<
+												"Error: convert structured data into itk fixed array. Reason: matrix has wrong number of elements. Expected: "
+												<<
+												TITKFixedArray::Dimension << "; found: " << pElement->getSubElementsCount());
+			}
 
-      for (structuredData::Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
-        pos != pElement->getSubElementEnd(); ++pos)
-      {
-        unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));
+			TITKFixedArray fixedArray;
 
-        fixedArray[rowID] = core::convert::toValueGeneric<typename TITKFixedArray::ValueType>((*pos)->getValue());
-      }
+			for (structuredData::Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
+				 pos != pElement->getSubElementEnd(); ++pos)
+			{
+				unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));
 
-      return fixedArray;
-    };
+				fixedArray[rowID] = core::convert::toValueGeneric<typename TITKFixedArray::ValueType>((
+										*pos)->getValue());
+			}
+
+			return fixedArray;
+		};
 
 
 	} //end of namespace structuredData

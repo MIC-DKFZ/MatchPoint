@@ -139,12 +139,12 @@ namespace map
 			CHECK_CLOSE(17.0, parameters[4], 0.01);
 			CHECK_CLOSE(5.0, parameters[5], 0.01);
 
-      RegistrationAlgorithmType::RegistrationPointer spRegistration2nd;
-      CHECK_NO_THROW(spRegistration2nd = spAlgorithm->getRegistration());
-      /** Check for same MTimes because there is no reason to determine the reg again*/
-      CHECK(spRegistration->GetMTime() == spRegistration2nd->GetMTime());
+			RegistrationAlgorithmType::RegistrationPointer spRegistration2nd;
+			CHECK_NO_THROW(spRegistration2nd = spAlgorithm->getRegistration());
+			/** Check for same MTimes because there is no reason to determine the reg again*/
+			CHECK(spRegistration->GetMTime() == spRegistration2nd->GetMTime());
 
-      RETURN_AND_REPORT_TEST_SUCCESS;
+			RETURN_AND_REPORT_TEST_SUCCESS;
 		}
 	} //namespace testing
 } //namespace map

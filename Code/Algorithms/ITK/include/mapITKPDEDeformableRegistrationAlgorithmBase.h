@@ -53,9 +53,9 @@ namespace map
 			template < class TImageType,
 					 class TIdentificationPolicy,
 					 class TDisplacementField =
-                     typename core::discrete::Elements<TImageType::ImageDimension>::VectorFieldType ,
+					 typename core::discrete::Elements<TImageType::ImageDimension>::VectorFieldType ,
 					 class TInternalRegistrationFilter =
-                     typename ::itk::PDEDeformableRegistrationFilter< TImageType, TImageType, TDisplacementField> >
+					 typename ::itk::PDEDeformableRegistrationFilter< TImageType, TImageType, TDisplacementField> >
 			class ITKPDEDeformableRegistrationAlgorithmBase : public
 				IterativeRegistrationAlgorithm<TImageType::ImageDimension, TImageType::ImageDimension>,
 			public ImageRegistrationAlgorithmBase<TImageType, TImageType>,

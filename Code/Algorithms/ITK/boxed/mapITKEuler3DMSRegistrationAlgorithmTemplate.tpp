@@ -64,8 +64,8 @@ namespace map
 											  TInterpolatorPolicy >::
 											  configureAlgorithm()
 			{
-                this->_preInitialize = true;
-                this->_useCenterOfGravity = false;
+				this->_preInitialize = true;
+				this->_useCenterOfGravity = false;
 
 				//optimizer
 				typename Superclass::ConcreteOptimizerType::ScalesType scales(6);
@@ -93,9 +93,9 @@ namespace map
 											  TInterpolatorPolicy >::
 											  compileInfos(MetaPropertyVectorType& infos) const
 			{
-        Superclass::compileInfos(infos);
+				Superclass::compileInfos(infos);
 
-        typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
+				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
 				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
 
 #ifndef MAP_SEAL_ALGORITHMS

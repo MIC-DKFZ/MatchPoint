@@ -116,7 +116,7 @@ namespace map
 					int value;
 					map::core::unwrapMetaProperty(pProperty, value);
 					this->getInternalRegistrationMethod().SetUseGradientType(
-                        static_cast<typename Superclass::InternalRegistrationMethodType::GradientType>(value));
+						static_cast<typename Superclass::InternalRegistrationMethodType::GradientType>(value));
 				}
 				else
 				{

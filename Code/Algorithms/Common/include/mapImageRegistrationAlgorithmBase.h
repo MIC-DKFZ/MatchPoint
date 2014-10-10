@@ -90,19 +90,19 @@ namespace map
 			/*! Methods invoked by derivated classes.  */
 			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
-      /** Return this modified time of the target image.  */
-      unsigned long getTargetImageMTime() const;
+			/** Return this modified time of the target image.  */
+			unsigned long getTargetImageMTime() const;
 
-      /** Return this modified time of the moving image.  */
-      unsigned long getMovingImageMTime() const;
+			/** Return this modified time of the moving image.  */
+			unsigned long getMovingImageMTime() const;
 
 		private:
 
 			MovingImageConstPointer _spMovingImage;
-      ::itk::TimeStamp _movingImageMTime;
+			::itk::TimeStamp _movingImageMTime;
 
 			TargetImageConstPointer _spTargetImage;
-      ::itk::TimeStamp _targetImageMTime;
+			::itk::TimeStamp _targetImageMTime;
 
 
 			//No copy constructor allowed

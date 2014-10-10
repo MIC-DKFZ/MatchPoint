@@ -46,16 +46,16 @@ namespace map
 			// if the kernel "request" is a field-based kernel, then we can maybe handle it.
 
 			const KernelType* pKernel = dynamic_cast<const KernelType*>
-													(request._spKernel.GetPointer());
+										(request._spKernel.GetPointer());
 
 			bool canHandle = false;
 
 			if (pKernel && !request._expandLazyKernels)
 			{
-        if (pKernel->getSourceKernel() == request._spComplementaryKernel.GetPointer())
-        {
-				  canHandle = true;
-        }
+				if (pKernel->getSourceKernel() == request._spComplementaryKernel.GetPointer())
+				{
+					canHandle = true;
+				}
 			}
 
 			return canHandle;
@@ -125,14 +125,16 @@ namespace map
 			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
 										   "InvertingFieldKernel"));
 
-      typename KernelType::RepresentationDescriptorConstPointer spInverseFieldRepresentation = pKernel->getLargestPossibleRepresentation();
-      
-			if(spInverseFieldRepresentation.IsNotNull())
-      {
-			  structuredData::Element::Pointer spRepElement = spInverseFieldRepresentation->streamToStructuredData();
-			  spRepElement->setTag(tags::InverseFieldRepresentation);
-  			spKernelElement->addSubElement(spRepElement);
-      }
+			typename KernelType::RepresentationDescriptorConstPointer spInverseFieldRepresentation =
+				pKernel->getLargestPossibleRepresentation();
+
+			if (spInverseFieldRepresentation.IsNotNull())
+			{
+				structuredData::Element::Pointer spRepElement =
+					spInverseFieldRepresentation->streamToStructuredData();
+				spRepElement->setTag(tags::InverseFieldRepresentation);
+				spKernelElement->addSubElement(spRepElement);
+			}
 
 			structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
 			spUseNullVectorElement->setTag(tags::UseNullVector);
@@ -142,8 +144,9 @@ namespace map
 			if (pKernel->usesNullVector())
 			{
 				typename KernelType::MappingVectorType nullVector = pKernel->getNullVector();
-  			structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(nullVector);
-	  		spNullVectorElement->setTag(tags::NullVector);
+				structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(
+							nullVector);
+				spNullVectorElement->setTag(tags::NullVector);
 
 				spKernelElement->addSubElement(spNullVectorElement);
 			}

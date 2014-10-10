@@ -56,7 +56,8 @@ namespace map
 					 SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> >
 					 >
 			class ITKRigid2DMattesMIRegistrationAlgorithm :
-				public algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
+				public algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+				TUIDPolicy,
 				TInterpolatorPolicy,
 				SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
 				SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer >,
@@ -66,7 +67,8 @@ namespace map
 				typedef ITKRigid2DMattesMIRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
 						TInterpolatorPolicy > Self;
 
-				typedef typename algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
+				typedef typename algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage,
+						TTargetImage,
 						TUIDPolicy,
 						TInterpolatorPolicy,
 						SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,

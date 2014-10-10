@@ -155,7 +155,8 @@ namespace map
 				if (this->_currentIterationCount > 0)
 				{
 					//now build the inverse kernel (main kernel of a image based registration algorithm)
-                    typedef typename core::FieldKernels<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
+					typedef typename
+					core::FieldKernels<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
 					InverseKernelType;
 
 					typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
@@ -257,8 +258,8 @@ namespace map
 						 this->_numberOfHistogramMatchPoints;
 					this->InvokeEvent(events::AlgorithmEvent(this, strm.str()));
 
-          typedef typename ::itk::HistogramMatchingImageFilter< TImageType, TImageType>   MatchingFilterType;
-          typename MatchingFilterType::Pointer matcher = MatchingFilterType::New();
+					typedef typename ::itk::HistogramMatchingImageFilter< TImageType, TImageType>   MatchingFilterType;
+					typename MatchingFilterType::Pointer matcher = MatchingFilterType::New();
 
 					matcher->SetInput(this->_spInternalMovingImage);
 					matcher->SetReferenceImage(this->_spInternalTargetImage);
@@ -346,7 +347,8 @@ namespace map
 				RegistrationPointer spResult = NULL;
 
 				//now build the inverse kernel (main kernel of a image based registration algorithm)
-                typedef typename core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
+				typedef typename
+				core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
 				InverseKernelType;
 
 				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();

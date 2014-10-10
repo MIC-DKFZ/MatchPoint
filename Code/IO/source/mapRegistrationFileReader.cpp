@@ -73,47 +73,50 @@ namespace map
 			KernelLoaderBaseType::RequestType inverseRequest(*inverseKernelPos, _preferLazyLoading);
 
 			KernelLoaderBaseType* pDirectLoader = LoaderStackType::getProvider(directRequest);
-      KernelLoaderBaseType::GenericKernelPointer spDirectKernel;
+			KernelLoaderBaseType::GenericKernelPointer spDirectKernel;
 
-      if (!pDirectLoader)
+			if (!pDirectLoader)
 			{
-        mapLogDebugMacro(<<"No responsible loader available for given direct request. Try to load inverse request first and retry with additional complementary kernel.");
+				mapLogDebugMacro( <<
+								  "No responsible loader available for given direct request. Try to load inverse request first and retry with additional complementary kernel.");
 			}
-      else
-      {
-        spDirectKernel = pDirectLoader->loadKernel(directRequest);
-        inverseRequest._spComplementaryKernel = dynamic_cast<core::DimensionlessRegistrationKernelBase*>(spDirectKernel.GetPointer());
-      }
+			else
+			{
+				spDirectKernel = pDirectLoader->loadKernel(directRequest);
+				inverseRequest._spComplementaryKernel = dynamic_cast<core::DimensionlessRegistrationKernelBase*>
+														(spDirectKernel.GetPointer());
+			}
 
-      KernelLoaderBaseType* pInverseLoader = LoaderStackType::getProvider(inverseRequest);
-      KernelLoaderBaseType::GenericKernelPointer spInverseKernel;
+			KernelLoaderBaseType* pInverseLoader = LoaderStackType::getProvider(inverseRequest);
+			KernelLoaderBaseType::GenericKernelPointer spInverseKernel;
 
-      if (!pInverseLoader)
+			if (!pInverseLoader)
 			{
 				mapExceptionMacro(core::MissingProviderException,
 								  << "No responsible loader available for given inverse request. Request:" << inverseRequest);
 			}
-      else
-      {
-        spInverseKernel = pInverseLoader->loadKernel(inverseRequest);
-      }
+			else
+			{
+				spInverseKernel = pInverseLoader->loadKernel(inverseRequest);
+			}
 
-      if(spDirectKernel.IsNull())
-      { 
-        //retry direct kernel loading with additional complimentary kernel information
-        directRequest._spComplementaryKernel = dynamic_cast<core::DimensionlessRegistrationKernelBase*>(spInverseKernel.GetPointer());
-        pDirectLoader = LoaderStackType::getProvider(directRequest);
+			if (spDirectKernel.IsNull())
+			{
+				//retry direct kernel loading with additional complimentary kernel information
+				directRequest._spComplementaryKernel = dynamic_cast<core::DimensionlessRegistrationKernelBase*>
+													   (spInverseKernel.GetPointer());
+				pDirectLoader = LoaderStackType::getProvider(directRequest);
 
-        if (!pDirectLoader)
-        {
-          mapExceptionMacro(core::MissingProviderException,
-            << "No responsible loader available for given direct request. Request:" << directRequest);
-        }
+				if (!pDirectLoader)
+				{
+					mapExceptionMacro(core::MissingProviderException,
+									  << "No responsible loader available for given direct request. Request:" << directRequest);
+				}
 
-        spDirectKernel = pDirectLoader->loadKernel(directRequest);
-      }
+				spDirectKernel = pDirectLoader->loadKernel(directRequest);
+			}
 
-      LoadedRegistrationPointer spRegistration;
+			LoadedRegistrationPointer spRegistration;
 
 			pDirectLoader->addAsDirectKernel(spDirectKernel, spRegistration);
 			pInverseLoader->addAsInverseKernel(spInverseKernel, spRegistration);

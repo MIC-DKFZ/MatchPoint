@@ -123,18 +123,18 @@ namespace map
 			{
 				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: no matrix found.");
 			}
-      
-      typedef typename KernelType::TransformType::MatrixType MatrixType;
-      MatrixType matrix;
-      
-      try
-      {
-          matrix = structuredData::streamSDToITKMatrix<MatrixType>(*matrixPos);
-      }
-      catch (core::ExceptionObject& ex)
-      {
+
+			typedef typename KernelType::TransformType::MatrixType MatrixType;
+			MatrixType matrix;
+
+			try
+			{
+				matrix = structuredData::streamSDToITKMatrix<MatrixType>(*matrixPos);
+			}
+			catch (core::ExceptionObject& ex)
+			{
 				mapExceptionMacro(core::ServiceException, << ex.GetDescription());
-      }
+			}
 
 			//establish offset;
 			structuredData::Element::ConstSubElementIteratorType offsetPos = structuredData::findNextSubElement(
@@ -146,19 +146,19 @@ namespace map
 				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: no offset found.");
 			}
 
-      typedef typename KernelType::TransformType::OutputVectorType OutputVectorType;
-      OutputVectorType offset;
-      
-      try
-      {
-          offset = structuredData::streamSDToITKFixedArray<OutputVectorType>(*offsetPos);
-      }
-      catch (core::ExceptionObject& ex)
-      {
-				mapExceptionMacro(core::ServiceException, << ex.GetDescription());
-      }
+			typedef typename KernelType::TransformType::OutputVectorType OutputVectorType;
+			OutputVectorType offset;
 
-      //establish transform & kernel
+			try
+			{
+				offset = structuredData::streamSDToITKFixedArray<OutputVectorType>(*offsetPos);
+			}
+			catch (core::ExceptionObject& ex)
+			{
+				mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+			}
+
+			//establish transform & kernel
 			typename KernelType::Pointer spKernel = KernelType::New();
 
 			typedef ::itk::AffineTransform<core::continuous::ScalarType, VInputDimensions> TransformType;

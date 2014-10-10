@@ -124,28 +124,28 @@ namespace map
 			}
 
 			const typename KernelType::FieldType::ConstPointer spField = pKernel->getField();
-   
-      if (spField.IsNull())
+
+			if (spField.IsNull())
 			{
 				mapExceptionMacro(core::ServiceException,
 								  << "Error: cannot store kernel. Reason: Kernel seems to have no valid field. Kernel: " << pKernel);
 			}
 
-      structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
+			structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
 
-      spKernelElement->setTag(tags::Kernel);
+			spKernelElement->setTag(tags::Kernel);
 
-      spKernelElement->setAttribute(tags::InputDimensions, core::convert::toStr(VInputDimensions));
-			
-      spKernelElement->setAttribute(tags::OutputDimensions, core::convert::toStr(VOutputDimensions));
+			spKernelElement->setAttribute(tags::InputDimensions, core::convert::toStr(VInputDimensions));
 
-      spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
+			spKernelElement->setAttribute(tags::OutputDimensions, core::convert::toStr(VOutputDimensions));
+
+			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
 										   this->getProviderName()));
-			
-      spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
+
+			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
 										   "ExpandedFieldKernel"));
 
-      //generate file name and save field to file
+			//generate file name and save field to file
 			if (request._path.empty())
 			{
 				core::Logbook::warning("No request path set for field storing. Will be stored to current directory.");
@@ -156,7 +156,7 @@ namespace map
 				core::Logbook::warning("No request name specified. Field will be stored to unspecified file '_field.mhd'.");
 			}
 
-      core::String fieldPath =  request._name + "_field.mhd";
+			core::String fieldPath =  request._name + "_field.mhd";
 			core::String absoluteFieldPath = core::FileDispatch::createFullPath(request._path, fieldPath);
 
 			typedef ::itk::ImageFileWriter< typename KernelType::FieldType  > FieldWriterType;
@@ -183,8 +183,9 @@ namespace map
 			if (pKernel->usesNullVector())
 			{
 				typename KernelType::MappingVectorType nullVector = pKernel->getNullVector();
-  			structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(nullVector);
-	  		spNullVectorElement->setTag(tags::NullVector);
+				structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(
+							nullVector);
+				spNullVectorElement->setTag(tags::NullVector);
 
 				spKernelElement->addSubElement(spNullVectorElement);
 			}

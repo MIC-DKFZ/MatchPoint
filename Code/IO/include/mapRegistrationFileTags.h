@@ -49,8 +49,8 @@ namespace map
 		const char* const FieldPath = "FieldPath";
 		const char* const NullVector = "NullVector";
 		const char* const UseNullVector = "UseNullVector";
-    const char* const InverseFieldRepresentation = "InverseFieldRepresentation";
-    
+		const char* const InverseFieldRepresentation = "InverseFieldRepresentation";
+
 
 	}
 }

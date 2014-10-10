@@ -31,12 +31,12 @@
 namespace map
 {
 
-  namespace tags
-  {
-    const char* const Value = "Value";
-    const char* const Column = "Column";
-    const char* const Row = "Row";
-  }
+	namespace tags
+	{
+		const char* const Value = "Value";
+		const char* const Column = "Column";
+		const char* const Row = "Row";
+	}
 
 	namespace structuredData
 	{
@@ -44,25 +44,25 @@ namespace map
 		/** Helper function that streams an itk::Matrix class into a structured data element.
 		* @ingroup SD
 		*/
-    template<class TMatrix>
-  	Element::Pointer streamITKMatrixToSD(const TMatrix& matrix);
+		template<class TMatrix>
+		Element::Pointer streamITKMatrixToSD(const TMatrix& matrix);
 
 		/** Helper function that streams from a structured data element into an itk::Matrix class.
 		* @ingroup SD
 		*/
-    template<class TMatrix>
+		template<class TMatrix>
 		TMatrix streamSDToITKMatrix(const Element* pElement);
 
 		/** Helper function that streams an itk::FixedArray (ore derived classes) into a structured data element.
 		* @ingroup SD
 		*/
-    template<class TITKFixedArray>
-  	Element::Pointer streamITKFixedArrayToSD(const TITKFixedArray& array);
+		template<class TITKFixedArray>
+		Element::Pointer streamITKFixedArrayToSD(const TITKFixedArray& array);
 
 		/** Helper function that streams from a structured data element into an itk::FixedArray (or derived) class.
 		* @ingroup SD
 		*/
-    template<class TITKFixedArray>
+		template<class TITKFixedArray>
 		TITKFixedArray streamSDToITKFixedArray(const Element* pElement);
 
 	} //end of namespace structuredData
