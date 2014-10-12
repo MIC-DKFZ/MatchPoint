@@ -46,27 +46,11 @@ namespace map
 						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
 						tags::KernelType);
 
-			if (!request._spKernelDescriptor->attributeExists(tags::InputDimensions))
-			{
-				return false;
-			}
-
-			if (!request._spKernelDescriptor->attributeExists(tags::OutputDimensions))
-			{
-				return false;
-			}
-
-			unsigned int iDim = core::convert::toUInt(request._spKernelDescriptor->getAttribute(
-									tags::InputDimensions));
-			unsigned int oDim = core::convert::toUInt(request._spKernelDescriptor->getAttribute(
-									tags::OutputDimensions));
-
 			bool canHandle = false;
 
 			if (typePos != request._spKernelDescriptor->getSubElementEnd())
 			{
-				canHandle = ((*typePos)->getValue() == "InvertingFieldKernel") && (iDim == VInputDimensions)
-							&& (oDim == VOutputDimensions) && request._spComplementaryKernel.IsNotNull();
+				canHandle = ((*typePos)->getValue() == "InvertingFieldKernel") && Superclass::canHandleRequest(request) && request._spComplementaryKernel.IsNotNull();
 			}
 
 			return canHandle;
@@ -139,40 +123,8 @@ namespace map
 			}
 
 			//determin null vector (support)
-			bool usesNullVector = false;
-			structuredData::Element::ConstSubElementIteratorType usesNullPos =
-				structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(),
-												   request._spKernelDescriptor->getSubElementEnd(), tags::UseNullVector);
-
-			if (usesNullPos != request._spKernelDescriptor->getSubElementEnd())
-			{
-				usesNullVector = core::convert::toBool((*usesNullPos)->getValue());
-			}
-			else
-			{
-				mapExceptionMacro(core::ServiceException,
-								  << "Error. Cannot load kernel. Field kernel description as no null vector usage information.")
-			}
-
 			typename KernelBaseType::MappingVectorType nullVector;
-			nullVector.Fill(0);
-
-			structuredData::Element::ConstSubElementIteratorType nullVecPos =
-				structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(),
-												   request._spKernelDescriptor->getSubElementEnd(), tags::NullVector);
-
-			if (nullVecPos != request._spKernelDescriptor->getSubElementEnd())
-			{
-				try
-				{
-					nullVector = structuredData::streamSDToITKFixedArray<typename KernelBaseType::MappingVectorType>
-								 (*nullVecPos);
-				}
-				catch (core::ExceptionObject& ex)
-				{
-					mapExceptionMacro(core::ServiceException, << ex.GetDescription());
-				}
-			}
+			bool usesNullVector = hasNullVector(request, nullVector);
 
 			typedef core::InverseRegistrationKernelGenerator<VOutputDimensions, VInputDimensions>
 			InversionGeneratorType;
@@ -198,80 +150,6 @@ namespace map
 
 			return spResult.GetPointer();
 		}
-
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		void
-		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
-		addAsInverseKernel(GenericKernelType* pKernel,
-						   core::RegistrationBase::Pointer& spRegistration) const
-		{
-			typedef core::RegistrationKernelBase<VOutputDimensions, VInputDimensions> KernelType;
-			typedef core::Registration<VInputDimensions, VOutputDimensions> RegistrationType;
-
-			if (spRegistration.IsNull())
-			{
-				spRegistration = RegistrationType::New();
-			}
-
-			if (!pKernel)
-			{
-				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel pointer is null.");
-			}
-
-			RegistrationType* pCastedReg = dynamic_cast<RegistrationType*>(spRegistration.GetPointer());
-			KernelType* pCastedKernel = dynamic_cast<KernelType*>(pKernel);
-
-			if (!pCastedReg)
-			{
-				mapDefaultExceptionMacro( <<
-										  "Error. Cannot add kernel. Registration has not the correct dimension.");
-			}
-
-			if (!pCastedKernel)
-			{
-				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel has not the correct dimension.");
-			}
-
-			core::RegistrationManipulator<RegistrationType> man(pCastedReg);
-			man.setInverseMapping(pCastedKernel);
-		};
-
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		void
-		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
-		addAsDirectKernel(GenericKernelType* pKernel,
-						  core::RegistrationBase::Pointer& spRegistration) const
-		{
-			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions> KernelType;
-			typedef core::Registration<VInputDimensions, VOutputDimensions> RegistrationType;
-
-			if (spRegistration.IsNull())
-			{
-				spRegistration = RegistrationType::New();
-			}
-
-			if (!pKernel)
-			{
-				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel pointer is null.");
-			}
-
-			RegistrationType* pCastedReg = dynamic_cast<RegistrationType*>(spRegistration.GetPointer());
-			KernelType* pCastedKernel = dynamic_cast<KernelType*>(pKernel);
-
-			if (!pCastedReg)
-			{
-				mapDefaultExceptionMacro( <<
-										  "Error. Cannot add kernel. Registration has not the correct dimension.");
-			}
-
-			if (!pCastedKernel)
-			{
-				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel has not the correct dimension.");
-			}
-
-			core::RegistrationManipulator<RegistrationType> man(pCastedReg);
-			man.setDirectMapping(pCastedKernel);
-		};
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::

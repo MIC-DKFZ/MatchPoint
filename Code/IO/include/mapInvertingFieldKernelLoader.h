@@ -23,7 +23,7 @@
 #ifndef __MAP_INVERTING_FIELD_KERNEL_LOADER_H
 #define __MAP_INVERTING_FIELD_KERNEL_LOADER_H
 
-#include "mapRegistrationKernelLoaderBase.h"
+#include "mapFieldKernelLoaderBase.h"
 #include "mapInvertingFieldBasedRegistrationKernel.h"
 
 namespace map
@@ -42,16 +42,16 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class InvertingFieldKernelLoader : public RegistrationKernelLoaderBase
+		class InvertingFieldKernelLoader : public FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
 			typedef InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>				Self;
-			typedef RegistrationKernelLoaderBase   Superclass;
+			typedef FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>   Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
-			itkTypeMacro(InvertingFieldKernelLoader, RegistrationKernelLoaderBase);
+			itkTypeMacro(InvertingFieldKernelLoader, FieldKernelLoaderBase);
 			itkNewMacro(Self);
 
 			typedef  core::InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>
@@ -89,26 +89,6 @@ namespace map
 				 * @pre request must be valid.
 				 */
 			virtual GenericKernelPointer loadKernel(const RequestType& request) const;
-
-			/*! Adds a given generic kernel to the passed registration as inverse kernel.
-				 * @eguarantee strong
-			* @param [in] pKernel pointer to the kernel that should be added if the Pointer is null a fitting registration object will be created.
-			* @param [in] pRegistration pointer to the registration that should receive the kernel
-			* @pre pKernel must be valid and of correct dimensionality or NULL.
-			* @pre pRegistration must be valid and of correct dimensionality.
-				 */
-			virtual void addAsInverseKernel(GenericKernelType* pKernel,
-											core::RegistrationBase::Pointer& spRegistration) const;
-
-			/*! Adds a given generic kernel to the passed registration as direct kernel.
-				 * @eguarantee strong
-				 * @param [in] pKernel pointer to the kernel that should be added if the Pointer is null a fitting registration object will be created.
-				 * @param [in] pRegistration pointer to the registration that should receive the kernel
-				 * @pre pKernel must be valid and of correct dimensionality or NULL.
-			* @pre pRegistration must be valid and of correct dimensionality.
-				 */
-			virtual void addAsDirectKernel(GenericKernelType* pKernel,
-										   core::RegistrationBase::Pointer& spRegistration) const;
 
 		protected:
 
