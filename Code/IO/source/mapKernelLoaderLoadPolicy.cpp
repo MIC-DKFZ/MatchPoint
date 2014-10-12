@@ -25,7 +25,8 @@
 #include "mapServiceRepositoryPolicyLoadInterface.h"
 #include "mapMatrixModelBasedKernelLoader.h"
 #include "mapNullRegistrationKernelLoader.h"
-#include "mapExpandingFieldKernelLoader.h"
+#include "mapFieldKernelLoader.h"
+#include "mapLazyFileFieldKernelLoader.h"
 #include "mapInvertingFieldKernelLoader.h"
 
 namespace map
@@ -79,14 +80,24 @@ namespace map
 				mapLogWarningObjMacro("InvertingFieldKernelLoader<3,3> was not added because it was already on the service stack!");
 			}
 
-			if (!loader.addProviderByPolicy(ExpandingFieldKernelLoader<2, 2>::New()))
+			if (!loader.addProviderByPolicy(LazyFileFieldKernelLoader<2, 2>::New()))
 			{
-				mapLogWarningObjMacro("ExpandingFieldKernelLoader<2,2> was not added because it was already on the service stack!");
+				mapLogWarningObjMacro("LazyFileFieldKernelLoader<2,2> was not added because it was already on the service stack!");
 			}
 
-			if (!loader.addProviderByPolicy(ExpandingFieldKernelLoader<3, 3>::New()))
+			if (!loader.addProviderByPolicy(LazyFileFieldKernelLoader<3, 3>::New()))
 			{
-				mapLogWarningObjMacro("ExpandingFieldKernelLoader<3,3> was not added because it was already on the service stack!");
+				mapLogWarningObjMacro("LazyFileFieldKernelLoader<3,3> was not added because it was already on the service stack!");
+			}
+
+			if (!loader.addProviderByPolicy(FieldKernelLoader<2, 2>::New()))
+			{
+				mapLogWarningObjMacro("FieldKernelLoader<2,2> was not added because it was already on the service stack!");
+			}
+
+			if (!loader.addProviderByPolicy(FieldKernelLoader<3, 3>::New()))
+			{
+				mapLogWarningObjMacro("FieldKernelLoader<3,3> was not added because it was already on the service stack!");
 			}
 		}
 
