@@ -218,10 +218,13 @@ namespace map
 		Logbook::
 		getSynchronization(deployment::SyncObject& syncObject)
 		{
-			syncObject._map.insert(std::make_pair("Logbook_Impl",
-												  core::SmartMetaProperty<LogbookImplementation>::New(_spLoggerImpl)));
-			syncObject._map.insert(std::make_pair("Logbook_Priority",
-												  core::MetaProperty<PriorityLevelType>::New(_currentPriorityLevel)));
+            core::MetaPropertyBase::Pointer prop = core::SmartMetaProperty<LogbookImplementation>::New(_spLoggerImpl).GetPointer();
+            deployment::SyncObject::SyncPropertyMapType::value_type valuePair("Logbook_Impl", prop);
+            syncObject._map.insert(valuePair);
+
+            prop = core::MetaProperty<PriorityLevelType>::New(_currentPriorityLevel).GetPointer();
+            deployment::SyncObject::SyncPropertyMapType::value_type valuePair2("Logbook_Priority", prop);
+            syncObject._map.insert(valuePair2);
 		};
 
 		void
