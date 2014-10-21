@@ -38,14 +38,17 @@ namespace map
 		* It loads the following providers:
 		* - MatrixModelBasedKernelLoader<2,2>
 		* - MatrixModelBasedKernelLoader<3,3>
-		* - ExpandingFieldKernelLoader<2,2>
-		* - ExpandingFieldKernelLoader<3,3>
+		* - InvertingFieldKernelLoader<2,2>
+		* - InvertingFieldKernelLoader<3,3>
+		* - LazyFileFieldKernelLoader<2,2>
+		* - LazyFileFieldKernelLoader<3,3>
+		* - FieldKernelLoader<2,2>
+		* - FieldKernelLoader<3,3>
 		* - NullKernelLoader<2,2>
 		* - NullKernelLoader<2,3>
 		* - NullKernelLoader<3,3>
 		* - NullKernelLoader<3,2>
 		* .
-		* @TODO Add missing Loaders
 		* @ingroup LoadPolicies
 		* @ingroup RegOperation
 		* @sa RegistrationFileReader

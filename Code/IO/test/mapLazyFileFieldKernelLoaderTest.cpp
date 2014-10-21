@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 797 $ (last changed revision)
+// @date    $Date: 2014-10-10 11:42:05 +0200 (Fr, 10 Okt 2014) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/IO/test/mapLazyFileFieldKernelLoaderTest.cpp $
 */
 
 #if defined(_MSC_VER)
@@ -26,7 +26,7 @@
 
 #include "mapModelBasedRegistrationKernel.h"
 #include "mapFieldBasedRegistrationKernels.h"
-#include "mapExpandingFieldKernelLoader.h"
+#include "mapLazyFileFieldKernelLoader.h"
 #include "test/mapTestFieldGenerationFunctor.h"
 #include "mapFileDispatch.h"
 #include "mapSDXMLStrReader.h"
@@ -42,7 +42,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapExpandingFieldKernelLoaderTest(int argc, char* argv[])
+		int mapLazyFileFieldKernelLoaderTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: test storage path
 			//           2: ref path
@@ -81,8 +81,8 @@ namespace map
 			typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel LazyKernelType;
 			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel PreCachedKernelType;
 
-			typedef io::ExpandingFieldKernelLoader<2, 2> LoaderType;
-			typedef io::ExpandingFieldKernelLoader<2, 3> Loader23Type;
+			typedef io::LazyFileFieldKernelLoader<2, 2> LoaderType;
+			typedef io::LazyFileFieldKernelLoader<2, 3> Loader23Type;
 
 			//////////////////////////////////////////////
 			//Loader and request setup
@@ -147,13 +147,13 @@ namespace map
 			CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_wrongDim));
 			CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_wrongDim2));
 			CHECK_EQUAL(false, spLoader->canHandleRequest(invalidRequest_wrongType));
-			CHECK_EQUAL(true, spLoader->canHandleRequest(validRequest));
+			CHECK_EQUAL(false, spLoader->canHandleRequest(validRequest));
 			CHECK_EQUAL(true, spLoader->canHandleRequest(validRequest_lazy));
-			CHECK_EQUAL(true, spLoader->canHandleRequest(validRequest_noNull));
+			CHECK_EQUAL(false, spLoader->canHandleRequest(validRequest_noNull));
 			CHECK_EQUAL(true, spLoader->canHandleRequest(validRequest_noNull_lazy));
 
-			CHECK_EQUAL("ExpandingFieldKernelLoader<2,2>", spLoader->getProviderName());
-			CHECK_EQUAL("ExpandingFieldKernelLoader<2,3>", Loader23Type::getStaticProviderName());
+			CHECK_EQUAL("LazyFileFieldKernelLoader<2,2>", spLoader->getProviderName());
+			CHECK_EQUAL("LazyFileFieldKernelLoader<2,3>", Loader23Type::getStaticProviderName());
 
 			//test processing of illegal requests
 
@@ -163,18 +163,15 @@ namespace map
 			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_noFile), core::ServiceException);
 			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_noUseNullVector), core::ServiceException);
 			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_wrongNullVector), core::ServiceException);
-			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_wrongFile),
-								 ::itk::ImageFileReaderException);
+			CHECK_THROW_EXPLICIT(spLoader->loadKernel(invalidRequest_wrongFile), core::ServiceException);
+			CHECK_THROW_EXPLICIT(spLoader->loadKernel(validRequest), core::ServiceException);
+			CHECK_THROW_EXPLICIT(spLoader->loadKernel(validRequest_noNull), core::ServiceException);
 
 			//test valid request
 			LoaderType::GenericKernelPointer spKernel;
-			CHECK_NO_THROW(spKernel = spLoader->loadKernel(validRequest));
-			LoaderType::GenericKernelPointer spKernel_lazy;
-			CHECK_NO_THROW(spKernel_lazy = spLoader->loadKernel(validRequest_lazy));
+			CHECK_NO_THROW(spKernel = spLoader->loadKernel(validRequest_lazy));
 			LoaderType::GenericKernelPointer spKernel_noNull;
-			CHECK_NO_THROW(spKernel_noNull = spLoader->loadKernel(validRequest_noNull));
-			LoaderType::GenericKernelPointer spKernel_noNull_lazy;
-			CHECK_NO_THROW(spKernel_noNull_lazy = spLoader->loadKernel(validRequest_noNull_lazy));
+			CHECK_NO_THROW(spKernel_noNull = spLoader->loadKernel(validRequest_noNull_lazy));
 
 			//test the fields
 			lit::FieldTester<FieldFunctorType::FieldType> tester;
@@ -182,30 +179,17 @@ namespace map
 			tester.setCheckThreshold(checkThreshold);
 			tester.setExpectedField(spRefFunctor->generateField());
 
-			PreCachedKernelType* pKernel = dynamic_cast<PreCachedKernelType*>(spKernel.GetPointer());
+			LazyKernelType* pKernel = dynamic_cast<LazyKernelType*>(spKernel.GetPointer());
 			CHECK(pKernel != NULL);
 			tester.setActualField(pKernel->getField());
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
-			LazyKernelType* pKernel_lazy = dynamic_cast<LazyKernelType*>(spKernel_lazy.GetPointer());
-			CHECK(pKernel_lazy != NULL);
-			tester.setActualField(pKernel_lazy->getField());
-			CHECK_TESTER(tester);
-			CHECK(*(pKernel_lazy->getLargestPossibleRepresentation()) == *spInRep);
-
-			pKernel = dynamic_cast<PreCachedKernelType*>(spKernel_noNull.GetPointer());
+			pKernel = dynamic_cast<LazyKernelType*>(spKernel_noNull.GetPointer());
 			CHECK(pKernel != NULL);
 			tester.setActualField(pKernel->getField());
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
-
-			pKernel_lazy = dynamic_cast<LazyKernelType*>(spKernel_noNull_lazy.GetPointer());
-			CHECK(pKernel_lazy != NULL);
-			tester.setActualField(pKernel_lazy->getField());
-			CHECK_TESTER(tester);
-			CHECK(*(pKernel_lazy->getLargestPossibleRepresentation()) == *spInRep);
-
 
 			//*@TODO Noch Test für: wenn man ein meta file unterschiebt, dass die falsche Dimension hat, also .mapr noch richtige dimension und dann das meta image falsch.
 

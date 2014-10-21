@@ -33,7 +33,9 @@
 #include "test/mapTestKernelBase.h"
 #include "mapNullRegistrationKernel.h"
 #include "mapNullRegistrationKernelLoader.h"
-#include "mapExpandingFieldKernelLoader.h"
+#include "mapFieldKernelLoader.h"
+#include "mapLazyFileFieldKernelLoader.h"
+#include "mapInvertingFieldKernelLoader.h"
 
 namespace map
 {
@@ -82,9 +84,17 @@ namespace map
 			CHECK(NULL != LoaderStackType::getProvider(
 					  io::NullRegistrationKernelLoader<3, 3>::getStaticProviderName()));
 			CHECK(NULL != LoaderStackType::getProvider(
-					  io::ExpandingFieldKernelLoader<2, 2>::getStaticProviderName()));
+					  io::FieldKernelLoader<2, 2>::getStaticProviderName()));
 			CHECK(NULL != LoaderStackType::getProvider(
-					  io::ExpandingFieldKernelLoader<3, 3>::getStaticProviderName()));
+					  io::FieldKernelLoader<3, 3>::getStaticProviderName()));
+			CHECK(NULL != LoaderStackType::getProvider(
+					  io::LazyFileFieldKernelLoader<2, 2>::getStaticProviderName()));
+			CHECK(NULL != LoaderStackType::getProvider(
+					  io::LazyFileFieldKernelLoader<3, 3>::getStaticProviderName()));
+			CHECK(NULL != LoaderStackType::getProvider(
+					  io::InvertingFieldKernelLoader<2, 2>::getStaticProviderName()));
+			CHECK(NULL != LoaderStackType::getProvider(
+					  io::InvertingFieldKernelLoader<3, 3>::getStaticProviderName()));
 
 			// create a ModelBasedKernels for testing
 

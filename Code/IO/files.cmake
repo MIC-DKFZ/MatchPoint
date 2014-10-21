@@ -8,7 +8,9 @@ source/mapKernelLoaderLoadPolicy.cpp
 
 SET(H_FILES 
 include/mapExpandingFieldKernelWriter.h
-include/mapExpandingFieldKernelLoader.h
+include/mapFieldKernelLoader.h
+include/mapFieldKernelLoaderBase.h
+include/mapLazyFileFieldKernelLoader.h
 include/mapMatrixModelBasedKernelWriter.h
 include/mapMatrixModelBasedKernelLoader.h
 include/mapNullRegistrationKernelLoader.h
@@ -31,7 +33,9 @@ include/mapInvertingFieldKernelLoader.h
 
 SET(TPP_FILES
 include/mapExpandingFieldKernelWriter.tpp
-include/mapExpandingFieldKernelLoader.tpp
+include/mapFieldKernelLoader.tpp
+include/mapFieldKernelLoaderBase.tpp
+include/mapLazyFileFieldKernelLoader.tpp
 include/mapMatrixModelBasedKernelWriter.tpp
 include/mapMatrixModelBasedKernelLoader.tpp
 include/mapNullRegistrationKernelWriter.tpp
@@ -54,7 +58,8 @@ test/mapRegistrationFileWriterTest.cpp
 test/mapRegistrationFileReaderTest.cpp
 test/mapNullRegistrationKernelWriterTest.cpp
 test/mapExpandingFieldKernelWriterTest.cpp
-test/mapExpandingFieldKernelLoaderTest.cpp
+test/mapLazyFileFieldKernelLoaderTest.cpp
+test/mapFieldKernelLoaderTest.cpp
 test/mapInvertingFieldKernelWriterTest.cpp
 test/mapInvertingFieldKernelLoaderTest.cpp
 )

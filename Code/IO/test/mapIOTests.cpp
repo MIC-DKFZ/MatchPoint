@@ -40,7 +40,8 @@ namespace map
 			LIT_REGISTER_TEST(mapMatrixModelBasedKernelLoaderTest);
 			LIT_REGISTER_TEST(mapNullRegistrationKernelWriterTest);
 			LIT_REGISTER_TEST(mapExpandingFieldKernelWriterTest);
-			LIT_REGISTER_TEST(mapExpandingFieldKernelLoaderTest);
+			LIT_REGISTER_TEST(mapLazyFileFieldKernelLoaderTest);
+			LIT_REGISTER_TEST(mapFieldKernelLoaderTest);
 			LIT_REGISTER_TEST(mapInvertingFieldKernelWriterTest);
 			LIT_REGISTER_TEST(mapInvertingFieldKernelLoaderTest);
 			LIT_REGISTER_TEST(mapRegistrationFileWriterTest);

@@ -14,27 +14,24 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 797 $ (last changed revision)
+// @date    $Date: 2014-10-10 11:42:05 +0200 (Fr, 10 Okt 2014) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/IO/include/mapFieldKernelLoader.h $
 */
 
-#ifndef __MAP_INVERTING_FIELD_KERNEL_LOADER_H
-#define __MAP_INVERTING_FIELD_KERNEL_LOADER_H
+#ifndef __MAP_FIELD_KERNEL_LOADER_H
+#define __MAP_FIELD_KERNEL_LOADER_H
 
 #include "mapFieldKernelLoaderBase.h"
-#include "mapInvertingFieldBasedRegistrationKernel.h"
+#include "mapFieldBasedRegistrationKernels.h"
 
 namespace map
 {
 	namespace io
 	{
-		/*! @class InvertingFieldKernelLoader
-		* @brief Provider that is able to load InvertingFiledBasedKernels.
-		*
-		* The "loading" is done by using the related kernel of the loader request and inferting that kernel
-		* by using the InverseRegistrationKernelGenerator.
+		/*! @class FieldKernelLoader
+		* @brief Provider that is able to load expanded field kernels.
 		*
 		* @sa FieldBasedRegistrationKernels
 		* @ingroup RegOperation
@@ -42,20 +39,19 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class InvertingFieldKernelLoader : public FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>
+		class FieldKernelLoader : public FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>				Self;
+			typedef FieldKernelLoader<VInputDimensions, VOutputDimensions>				Self;
 			typedef FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>   Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
-			itkTypeMacro(InvertingFieldKernelLoader, FieldKernelLoaderBase);
+			itkTypeMacro(FieldKernelLoader, FieldKernelLoaderBase);
 			itkNewMacro(Self);
 
-			typedef  core::InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>
-			KernelBaseType;
+			typedef  core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
 			typedef typename KernelBaseType::Pointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
 
@@ -92,11 +88,11 @@ namespace map
 
 		protected:
 
-			InvertingFieldKernelLoader();
-			virtual ~InvertingFieldKernelLoader() {};
+			FieldKernelLoader();
+			virtual ~FieldKernelLoader() {};
 
 		private:
-			InvertingFieldKernelLoader(const Self&);  //purposely not implemented
+			FieldKernelLoader(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented
 		};
 
@@ -104,7 +100,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapInvertingFieldKernelLoader.tpp"
+# include "mapFieldKernelLoader.tpp"
 #endif
 
 #endif

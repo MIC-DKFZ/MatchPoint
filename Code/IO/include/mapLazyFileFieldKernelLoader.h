@@ -14,24 +14,24 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 797 $ (last changed revision)
+// @date    $Date: 2014-10-10 11:42:05 +0200 (Fr, 10 Okt 2014) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/IO/include/mapLazyFileFieldKernelLoader.h $
 */
 
-#ifndef __MAP_EXPANDING_FIELD_KERNEL_LOADER_H
-#define __MAP_EXPANDING_FIELD_KERNEL_LOADER_H
+#ifndef __MAP_LAZY_FILE_FIELD_KERNEL_LOADER_H
+#define __MAP_LAZY_FILE_FIELD_KERNEL_LOADER_H
 
-#include "mapRegistrationKernelLoaderBase.h"
+#include "mapFieldKernelLoaderBase.h"
 #include "mapFieldBasedRegistrationKernels.h"
 
 namespace map
 {
 	namespace io
 	{
-		/*! @class ExpandingFieldKernelLoader
-		* @brief Provider that is able to load expanded field kernels.
+		/*! @class LazyFileFieldKernelLoader
+		* @brief Provider that is able to load expanded field kernels, but uses a lazy loading scheme (on demand via functor).
 		*
 		* @sa FieldBasedRegistrationKernels
 		* @ingroup RegOperation
@@ -39,16 +39,16 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class ExpandingFieldKernelLoader : public RegistrationKernelLoaderBase
+		class LazyFileFieldKernelLoader : public FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef ExpandingFieldKernelLoader<VInputDimensions, VOutputDimensions>				Self;
-			typedef RegistrationKernelLoaderBase   Superclass;
+			typedef LazyFileFieldKernelLoader<VInputDimensions, VOutputDimensions>				Self;
+			typedef FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>   Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
-			itkTypeMacro(ExpandingFieldKernelLoader, RegistrationKernelLoaderBase);
+			itkTypeMacro(LazyFileFieldKernelLoader, FieldKernelLoaderBase);
 			itkNewMacro(Self);
 
 			typedef  core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
@@ -86,33 +86,13 @@ namespace map
 				 */
 			virtual GenericKernelPointer loadKernel(const RequestType& request) const;
 
-			/*! Adds a given generic kernel to the passed registration as inverse kernel.
-				 * @eguarantee strong
-			* @param [in] pKernel pointer to the kernel that should be added if the Pointer is null a fitting registration object will be created.
-			* @param [in] pRegistration pointer to the registration that should receive the kernel
-			* @pre pKernel must be valid and of correct dimensionality or NULL.
-			* @pre pRegistration must be valid and of correct dimensionality.
-				 */
-			virtual void addAsInverseKernel(GenericKernelType* pKernel,
-											core::RegistrationBase::Pointer& spRegistration) const;
-
-			/*! Adds a given generic kernel to the passed registration as direct kernel.
-				 * @eguarantee strong
-				 * @param [in] pKernel pointer to the kernel that should be added if the Pointer is null a fitting registration object will be created.
-				 * @param [in] pRegistration pointer to the registration that should receive the kernel
-				 * @pre pKernel must be valid and of correct dimensionality or NULL.
-			* @pre pRegistration must be valid and of correct dimensionality.
-				 */
-			virtual void addAsDirectKernel(GenericKernelType* pKernel,
-										   core::RegistrationBase::Pointer& spRegistration) const;
-
 		protected:
 
-			ExpandingFieldKernelLoader();
-			virtual ~ExpandingFieldKernelLoader() {};
+			LazyFileFieldKernelLoader();
+			virtual ~LazyFileFieldKernelLoader() {};
 
 		private:
-			ExpandingFieldKernelLoader(const Self&);  //purposely not implemented
+			LazyFileFieldKernelLoader(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented
 		};
 
@@ -120,7 +100,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapExpandingFieldKernelLoader.tpp"
+# include "mapLazyFileFieldKernelLoader.tpp"
 #endif
 
 #endif
