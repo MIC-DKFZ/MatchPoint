@@ -54,6 +54,8 @@ namespace map
 			typedef  core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
 			typedef typename KernelBaseType::Pointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
+            typedef typename Superclass::GenericKernelType       GenericKernelType;
+            typedef typename Superclass::GenericKernelPointer    GenericKernelPointer;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request. Thus if the kernel is an expanded field kernel
