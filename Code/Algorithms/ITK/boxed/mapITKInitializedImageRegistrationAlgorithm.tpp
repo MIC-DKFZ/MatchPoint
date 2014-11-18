@@ -41,110 +41,110 @@ namespace map
 		{
 
 			template < class TMovingImage, class TTargetImage,
-					 class TIdentificationPolicy,
-					 class TInterpolatorPolicy,
-					 class TMetricInitializationPolicy,
-					 class TOptimizerInitializationPolicy,
-					 class TTransformInitializationPolicy,
-					 class TInternalRegistrationMethod >
+			           class TIdentificationPolicy,
+			           class TInterpolatorPolicy,
+			           class TMetricInitializationPolicy,
+			           class TOptimizerInitializationPolicy,
+			           class TTransformInitializationPolicy,
+			           class TInternalRegistrationMethod >
 			ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-													 TInterpolatorPolicy,
-													 TMetricInitializationPolicy,
-													 TOptimizerInitializationPolicy,
-													 TTransformInitializationPolicy, TInternalRegistrationMethod >::
-													 ITKInitializedImageRegistrationAlgorithm()
+			                                         TInterpolatorPolicy,
+			                                         TMetricInitializationPolicy,
+			                                         TOptimizerInitializationPolicy,
+			                                         TTransformInitializationPolicy, TInternalRegistrationMethod >::
+			                                         ITKInitializedImageRegistrationAlgorithm()
 			{
 			};
 
 			template < class TMovingImage, class TTargetImage,
-					 class TIdentificationPolicy,
-					 class TInterpolatorPolicy,
-					 class TMetricInitializationPolicy,
-					 class TOptimizerInitializationPolicy,
-					 class TTransformInitializationPolicy,
-					 class TInternalRegistrationMethod >
+			           class TIdentificationPolicy,
+			           class TInterpolatorPolicy,
+			           class TMetricInitializationPolicy,
+			           class TOptimizerInitializationPolicy,
+			           class TTransformInitializationPolicy,
+			           class TInternalRegistrationMethod >
 			ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-													 TInterpolatorPolicy,
-													 TMetricInitializationPolicy,
-													 TOptimizerInitializationPolicy,
-													 TTransformInitializationPolicy, TInternalRegistrationMethod >::
-													 ~ITKInitializedImageRegistrationAlgorithm()
+			                                         TInterpolatorPolicy,
+			                                         TMetricInitializationPolicy,
+			                                         TOptimizerInitializationPolicy,
+			                                         TTransformInitializationPolicy, TInternalRegistrationMethod >::
+			                                         ~ITKInitializedImageRegistrationAlgorithm()
 			{
 			};
 
 			template < class TMovingImage, class TTargetImage,
-					 class TIdentificationPolicy,
-					 class TInterpolatorPolicy,
-					 class TMetricInitializationPolicy,
-					 class TOptimizerInitializationPolicy,
-					 class TTransformInitializationPolicy,
-					 class TInternalRegistrationMethod >
+			           class TIdentificationPolicy,
+			           class TInterpolatorPolicy,
+			           class TMetricInitializationPolicy,
+			           class TOptimizerInitializationPolicy,
+			           class TTransformInitializationPolicy,
+			           class TInternalRegistrationMethod >
 			void
 			ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-													 TInterpolatorPolicy,
-													 TMetricInitializationPolicy,
-													 TOptimizerInitializationPolicy,
-													 TTransformInitializationPolicy, TInternalRegistrationMethod >::
-													 configureAlgorithm()
+			                                         TInterpolatorPolicy,
+			                                         TMetricInitializationPolicy,
+			                                         TOptimizerInitializationPolicy,
+			                                         TTransformInitializationPolicy, TInternalRegistrationMethod >::
+			                                         configureAlgorithm()
 			{
 				_preInitialize = false;
 				_useCenterOfGravity = false;
 			};
 
 			template < class TMovingImage, class TTargetImage,
-					 class TIdentificationPolicy,
-					 class TInterpolatorPolicy,
-					 class TMetricInitializationPolicy,
-					 class TOptimizerInitializationPolicy,
-					 class TTransformInitializationPolicy,
-					 class TInternalRegistrationMethod >
+			           class TIdentificationPolicy,
+			           class TInterpolatorPolicy,
+			           class TMetricInitializationPolicy,
+			           class TOptimizerInitializationPolicy,
+			           class TTransformInitializationPolicy,
+			           class TInternalRegistrationMethod >
 			void
 			ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-													 TInterpolatorPolicy,
-													 TMetricInitializationPolicy,
-													 TOptimizerInitializationPolicy,
-													 TTransformInitializationPolicy, TInternalRegistrationMethod >::
-													 compileInfos(MetaPropertyVectorType& infos) const
+			                                         TInterpolatorPolicy,
+			                                         TMetricInitializationPolicy,
+			                                         TOptimizerInitializationPolicy,
+			                                         TTransformInitializationPolicy, TInternalRegistrationMethod >::
+			                                         compileInfos(MetaPropertyVectorType& infos) const
 			{
 				Superclass::compileInfos(infos);
 
-#ifndef MAP_SEAL_ALGORITHMS
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitTransform", typeid(bool), true,
-								true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("PreinitByCenterOfGravity", typeid(bool),
-								true, true));
-#endif
+				#ifndef MAP_SEAL_ALGORITHMS
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("PreinitTransform", typeid(bool), true,
+				                true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("PreinitByCenterOfGravity", typeid(bool),
+				                true, true));
+				#endif
 			};
 
 			template < class TMovingImage, class TTargetImage,
-					 class TIdentificationPolicy,
-					 class TInterpolatorPolicy,
-					 class TMetricInitializationPolicy,
-					 class TOptimizerInitializationPolicy,
-					 class TTransformInitializationPolicy,
-					 class TInternalRegistrationMethod >
+			           class TIdentificationPolicy,
+			           class TInterpolatorPolicy,
+			           class TMetricInitializationPolicy,
+			           class TOptimizerInitializationPolicy,
+			           class TTransformInitializationPolicy,
+			           class TInternalRegistrationMethod >
 			typename 			ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
-								TIdentificationPolicy,
-								TInterpolatorPolicy,
-								TMetricInitializationPolicy,
-								TOptimizerInitializationPolicy,
-								TTransformInitializationPolicy, TInternalRegistrationMethod >::MetaPropertyPointer
-								ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-								TInterpolatorPolicy,
-								TMetricInitializationPolicy,
-								TOptimizerInitializationPolicy,
-								TTransformInitializationPolicy, TInternalRegistrationMethod >::
-								doGetProperty(const MetaPropertyNameType& name) const
+			                    TIdentificationPolicy,
+			                    TInterpolatorPolicy,
+			                    TMetricInitializationPolicy,
+			                    TOptimizerInitializationPolicy,
+			                    TTransformInitializationPolicy, TInternalRegistrationMethod >::MetaPropertyPointer
+			                    ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
+			                    TInterpolatorPolicy,
+			                    TMetricInitializationPolicy,
+			                    TOptimizerInitializationPolicy,
+			                    TTransformInitializationPolicy, TInternalRegistrationMethod >::
+			                    doGetProperty(const MetaPropertyNameType& name) const
 			{
 				MetaPropertyPointer spResult;
 
 				if (name == "PreinitTransform")
 				{
-					spResult = map::core::MetaProperty<bool>::New(this->_preInitialize);
+					spResult = ::map::core::MetaProperty<bool>::New(this->_preInitialize);
 				}
 				else if (name == "PreinitByCenterOfGravity")
 				{
-					spResult = map::core::MetaProperty<bool>::New(this->_useCenterOfGravity);
+					spResult = ::map::core::MetaProperty<bool>::New(this->_useCenterOfGravity);
 				}
 				else
 				{
@@ -157,30 +157,30 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-					 class TIdentificationPolicy,
-					 class TInterpolatorPolicy,
-					 class TMetricInitializationPolicy,
-					 class TOptimizerInitializationPolicy,
-					 class TTransformInitializationPolicy,
-					 class TInternalRegistrationMethod >
+			           class TIdentificationPolicy,
+			           class TInterpolatorPolicy,
+			           class TMetricInitializationPolicy,
+			           class TOptimizerInitializationPolicy,
+			           class TTransformInitializationPolicy,
+			           class TInternalRegistrationMethod >
 			void
 			ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-													 TInterpolatorPolicy,
-													 TMetricInitializationPolicy,
-													 TOptimizerInitializationPolicy,
-													 TTransformInitializationPolicy, TInternalRegistrationMethod >::
-													 doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
+			                                         TInterpolatorPolicy,
+			                                         TMetricInitializationPolicy,
+			                                         TOptimizerInitializationPolicy,
+			                                         TTransformInitializationPolicy, TInternalRegistrationMethod >::
+			                                         doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				if (name == "PreinitTransform")
 				{
 					bool init;
-					map::core::unwrapMetaProperty(pProperty, init);
+					::map::core::unwrapMetaProperty(pProperty, init);
 					this->_preInitialize = init;
 				}
 				else if (name == "PreinitByCenterOfGravity")
 				{
 					bool init;
-					map::core::unwrapMetaProperty(pProperty, init);
+					::map::core::unwrapMetaProperty(pProperty, init);
 					this->_useCenterOfGravity = init;
 				}
 				else
@@ -190,19 +190,19 @@ namespace map
 			};
 
 			template < class TMovingImage, class TTargetImage,
-					 class TIdentificationPolicy,
-					 class TInterpolatorPolicy,
-					 class TMetricInitializationPolicy,
-					 class TOptimizerInitializationPolicy,
-					 class TTransformInitializationPolicy,
-					 class TInternalRegistrationMethod >
+			           class TIdentificationPolicy,
+			           class TInterpolatorPolicy,
+			           class TMetricInitializationPolicy,
+			           class TOptimizerInitializationPolicy,
+			           class TTransformInitializationPolicy,
+			           class TInternalRegistrationMethod >
 			void
 			ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage, TIdentificationPolicy,
-													 TInterpolatorPolicy,
-													 TMetricInitializationPolicy,
-													 TOptimizerInitializationPolicy,
-													 TTransformInitializationPolicy, TInternalRegistrationMethod >::
-													 prepInitializeTransformation()
+			                                         TInterpolatorPolicy,
+			                                         TMetricInitializationPolicy,
+			                                         TOptimizerInitializationPolicy,
+			                                         TTransformInitializationPolicy, TInternalRegistrationMethod >::
+			                                         prepInitializeTransformation()
 			{
 				Superclass::prepInitializeTransformation();
 
@@ -239,9 +239,9 @@ namespace map
 				   this->getConcreteTransformModel()->getConcreteTransform()->GetParameters();
 				//set the parameter of the transform model to the current transform parameters of the algorithm
 				this->setCurrentTransformParameters(
-					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
+				    this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
 				this->getInternalRegistrationMethod().SetInitialTransformParameters(
-					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
+				    this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
 
 				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
 			};

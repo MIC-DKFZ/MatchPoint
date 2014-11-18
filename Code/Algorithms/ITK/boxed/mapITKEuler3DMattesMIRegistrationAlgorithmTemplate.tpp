@@ -90,28 +90,31 @@ namespace map
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
 				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
 
-#ifndef MAP_SEAL_ALGORITHMS
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("TransformParameters", typeid(ParametersType),
-								true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("FixedTransformParameters",
-								typeid(ParametersType), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("Scales", typeid(ScalesType), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MaximumStepLength", typeid(double), true,
-								true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("MinimumStepLength", typeid(double), true,
-								true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("RelaxationFactor", typeid(double), true,
-								true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfIterations", typeid(unsigned long),
-								true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("GradientMagnitudeTolerance", typeid(double),
-								true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfHistogramBins",
-								typeid(unsigned long), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("NumberOfSpatialSamples",
-								typeid(unsigned long), true, true));
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("UseAllPixels", typeid(bool), true, true));
-#endif
+				#ifndef MAP_SEAL_ALGORITHMS
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("TransformParameters",
+				                typeid(ParametersType),
+				                true, true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("FixedTransformParameters",
+				                typeid(ParametersType), true, true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("Scales", typeid(ScalesType), true,
+				                true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("MaximumStepLength", typeid(double), true,
+				                true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("MinimumStepLength", typeid(double), true,
+				                true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("RelaxationFactor", typeid(double), true,
+				                true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("NumberOfIterations", typeid(unsigned long),
+				                true, true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("GradientMagnitudeTolerance",
+				                typeid(double),
+				                true, true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("NumberOfHistogramBins",
+				                typeid(unsigned long), true, true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("NumberOfSpatialSamples",
+				                typeid(unsigned long), true, true));
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("UseAllPixels", typeid(bool), true, true));
+				#endif
 			};
 
 			template <class TMovingImage, class TTargetImage, typename TUIDPolicy, class TInterpolatorPolicy>
@@ -125,57 +128,57 @@ namespace map
 
 				if (name == "TransformParameters")
 				{
-					spResult = map::core::MetaProperty<ParametersType>::New(
-								   this->getTransformInternal()->getTransform()->GetParameters());
+					spResult = ::map::core::MetaProperty<ParametersType>::New(
+					               this->getTransformInternal()->getTransform()->GetParameters());
 				}
 				else if (name == "FixedTransformParameters")
 				{
-					spResult = map::core::MetaProperty<ParametersType>::New(
-								   this->getTransformInternal()->getTransform()->GetFixedParameters());
+					spResult = ::map::core::MetaProperty<ParametersType>::New(
+					               this->getTransformInternal()->getTransform()->GetFixedParameters());
 				}
 				else if (name == "Scales")
 				{
-					spResult = map::core::MetaProperty<ScalesType>::New(this->getConcreteITKOptimizer()->GetScales());
+					spResult = ::map::core::MetaProperty<ScalesType>::New(this->getConcreteITKOptimizer()->GetScales());
 				}
 				else if (name == "MaximumStepLength")
 				{
-					spResult = map::core::MetaProperty<double>::New(
-								   this->getConcreteITKOptimizer()->GetMaximumStepLength());
+					spResult = ::map::core::MetaProperty<double>::New(
+					               this->getConcreteITKOptimizer()->GetMaximumStepLength());
 				}
 				else if (name == "MinimumStepLength")
 				{
-					spResult = map::core::MetaProperty<double>::New(
-								   this->getConcreteITKOptimizer()->GetMinimumStepLength());
+					spResult = ::map::core::MetaProperty<double>::New(
+					               this->getConcreteITKOptimizer()->GetMinimumStepLength());
 				}
 				else if (name == "RelaxationFactor")
 				{
-					spResult = map::core::MetaProperty<double>::New(
-								   this->getConcreteITKOptimizer()->GetRelaxationFactor());
+					spResult = ::map::core::MetaProperty<double>::New(
+					               this->getConcreteITKOptimizer()->GetRelaxationFactor());
 				}
 				else if (name == "NumberOfIterations")
 				{
-					spResult = map::core::MetaProperty<unsigned long>::New(
-								   this->getConcreteITKOptimizer()->GetNumberOfIterations());
+					spResult = ::map::core::MetaProperty<unsigned long>::New(
+					               this->getConcreteITKOptimizer()->GetNumberOfIterations());
 				}
 				else if (name == "GradientMagnitudeTolerance")
 				{
-					spResult = map::core::MetaProperty<double>::New(
-								   this->getConcreteITKOptimizer()->GetGradientMagnitudeTolerance());
+					spResult = ::map::core::MetaProperty<double>::New(
+					               this->getConcreteITKOptimizer()->GetGradientMagnitudeTolerance());
 				}
 				else if (name == "NumberOfHistogramBins")
 				{
-					spResult = map::core::MetaProperty<unsigned long>::New(
-								   this->getConcreteMetricControl()->getConcreteMetric()->GetNumberOfHistogramBins());
+					spResult = ::map::core::MetaProperty<unsigned long>::New(
+					               this->getConcreteMetricControl()->getConcreteMetric()->GetNumberOfHistogramBins());
 				}
 				else if (name == "NumberOfSpatialSamples")
 				{
-					spResult = map::core::MetaProperty<unsigned long>::New(
-								   this->getConcreteMetricControl()->getConcreteMetric()->GetNumberOfFixedImageSamples());
+					spResult = ::map::core::MetaProperty<unsigned long>::New(
+					               this->getConcreteMetricControl()->getConcreteMetric()->GetNumberOfFixedImageSamples());
 				}
 				else if (name == "UseAllPixels")
 				{
-					spResult = map::core::MetaProperty<bool>::New(
-								   this->getConcreteMetricControl()->getConcreteMetric()->GetUseAllPixels());
+					spResult = ::map::core::MetaProperty<bool>::New(
+					               this->getConcreteMetricControl()->getConcreteMetric()->GetUseAllPixels());
 				}
 				else
 				{
@@ -197,67 +200,67 @@ namespace map
 				if (name == "TransformParameters")
 				{
 					ParametersType params;
-					map::core::unwrapMetaProperty(pProperty, params);
+					::map::core::unwrapMetaProperty(pProperty, params);
 					this->getTransformInternal()->getTransform()->SetParameters(params);
 				}
 				else if (name == "FixedTransformParameters")
 				{
 					ParametersType params;
-					map::core::unwrapMetaProperty(pProperty, params);
+					::map::core::unwrapMetaProperty(pProperty, params);
 					this->getTransformInternal()->getTransform()->SetFixedParameters(params);
 				}
 				else if (name == "Scales")
 				{
 					ScalesType scales;
-					map::core::unwrapMetaProperty(pProperty, scales);
+					::map::core::unwrapMetaProperty(pProperty, scales);
 					this->getConcreteITKOptimizer()->SetScales(scales);
 				}
 				else if (name == "MaximumStepLength")
 				{
 					double length;
-					map::core::unwrapMetaProperty(pProperty, length);
+					::map::core::unwrapMetaProperty(pProperty, length);
 					this->getConcreteITKOptimizer()->SetMaximumStepLength(length);
 				}
 				else if (name == "MinimumStepLength")
 				{
 					double length;
-					map::core::unwrapMetaProperty(pProperty, length);
+					::map::core::unwrapMetaProperty(pProperty, length);
 					this->getConcreteITKOptimizer()->SetMinimumStepLength(length);
 				}
 				else if (name == "RelaxationFactor")
 				{
 					double factor;
-					map::core::unwrapMetaProperty(pProperty, factor);
+					::map::core::unwrapMetaProperty(pProperty, factor);
 					this->getConcreteITKOptimizer()->SetRelaxationFactor(factor);
 				}
 				else if (name == "NumberOfIterations")
 				{
 					unsigned long iterations;
-					map::core::unwrapMetaProperty(pProperty, iterations);
+					::map::core::unwrapMetaProperty(pProperty, iterations);
 					this->getConcreteITKOptimizer()->SetNumberOfIterations(iterations);
 				}
 				else if (name == "GradientMagnitudeTolerance")
 				{
 					double tolerance;
-					map::core::unwrapMetaProperty(pProperty, tolerance);
+					::map::core::unwrapMetaProperty(pProperty, tolerance);
 					this->getConcreteITKOptimizer()->SetGradientMagnitudeTolerance(tolerance);
 				}
 				else if (name == "NumberOfHistogramBins")
 				{
 					unsigned long nr;
-					map::core::unwrapMetaProperty(pProperty, nr);
+					::map::core::unwrapMetaProperty(pProperty, nr);
 					this->getConcreteMetricControl()->getConcreteMetric()->SetNumberOfHistogramBins(nr);
 				}
 				else if (name == "NumberOfSpatialSamples")
 				{
 					unsigned long nr;
-					map::core::unwrapMetaProperty(pProperty, nr);
+					::map::core::unwrapMetaProperty(pProperty, nr);
 					this->getConcreteMetricControl()->getConcreteMetric()->SetNumberOfSpatialSamples(nr);
 				}
 				else if (name == "UseAllPixels")
 				{
 					bool useAll;
-					map::core::unwrapMetaProperty(pProperty, useAll);
+					::map::core::unwrapMetaProperty(pProperty, useAll);
 					this->getConcreteMetricControl()->getConcreteMetric()->SetUseAllPixels(useAll);
 				}
 				else

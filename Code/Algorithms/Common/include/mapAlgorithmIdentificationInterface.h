@@ -69,14 +69,14 @@ namespace map
 				Use AlgorithmProfileHelper to parse the profile string.
 				  @eguarantee strong
 				 */
-				virtual map::core::String getAlgorithmProfile() const = 0;
+				virtual ::map::core::String getAlgorithmProfile() const = 0;
 
 				/*! Returns the description string of the algorithm.
 				@remark The same information may also be defined in the
 				profile string (getAlgorithmProfile()). But this is a convinient access to this information.
 				  @eguarantee strong
 				*/
-				virtual map::core::String getAlgorithmDescription() const = 0;
+				virtual ::map::core::String getAlgorithmDescription() const = 0;
 
 			protected:
 				AlgorithmIdentificationInterface() {};
@@ -100,11 +100,11 @@ namespace map
 	{ \
 		return this->UID();\
 	}\
-	virtual map::core::String getAlgorithmProfile() const\
+	virtual ::map::core::String getAlgorithmProfile() const\
 	{ \
 		return this->AlgorithmProfile();\
 	}\
-	virtual map::core::String getAlgorithmDescription() const\
+	virtual ::map::core::String getAlgorithmDescription() const\
 	{\
 		return this->AlgorithmDescription();\
 	}

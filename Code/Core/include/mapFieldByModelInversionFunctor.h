@@ -73,8 +73,8 @@ namespace map
 				typedef typename Superclass::OutFieldRepresentationConstPointer OutFieldRepresentationConstPointer;
 				typedef typename Superclass::FieldType                          FieldType;
 				typedef typename Superclass::FieldPointer                       FieldPointer;
-				typedef TransformModelBase < map::core::continuous::ScalarType,
-						VOutputDimensions, VInputDimensions >  TransformModelType;
+				typedef TransformModelBase < ::map::core::continuous::ScalarType,
+				        VOutputDimensions, VInputDimensions >  TransformModelType;
 				typedef typename TransformModelType::ConstPointer               TransformModelConstPointer;
 
 				itkTypeMacro(FieldByModelInversionFunctor, FieldGenerationFunctor);
@@ -102,7 +102,7 @@ namespace map
 				 * @return Smart pointer to the new functor
 				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
 				static Pointer New(const TransformModelType& model,
-								   const InFieldRepresentationType* pInFieldRepresentation);
+				                   const InFieldRepresentationType* pInFieldRepresentation);
 
 				/*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
 				 * @eguarantee strong
@@ -140,7 +140,7 @@ namespace map
 				 * may be NULL if no representation is defined.
 				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
 				FieldByModelInversionFunctor(const TransformModelType& model,
-											 const InFieldRepresentationType* pInFieldRepresentation);
+				                             const InFieldRepresentationType* pInFieldRepresentation);
 
 				virtual ~FieldByModelInversionFunctor();
 

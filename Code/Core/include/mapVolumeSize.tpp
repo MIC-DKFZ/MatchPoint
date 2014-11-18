@@ -230,7 +230,7 @@ namespace map
 			};
 
 			template<unsigned int VDimensions>
-			map::structuredData::StreamingInterface::ElementPointer
+			::map::structuredData::StreamingInterface::ElementPointer
 			VolumeSize<VDimensions>::
 			streamToStructuredData(const Self& vs)
 			{
@@ -257,21 +257,21 @@ namespace map
 				if (!pElement)
 				{
 					mapDefaultExceptionStaticMacro( <<
-													"Error: convert structured data into VolumeSize. Reason: passed structured element point to NULL.");
+					                                "Error: convert structured data into VolumeSize. Reason: passed structured element point to NULL.");
 				}
 
 				if (pElement->getSubElementsCount() != VDimensions)
 				{
 					mapDefaultExceptionStaticMacro( <<
-													"Error: convert structured data into VolumeSize. Reason: Wrong number of sub elements. Expected: "
-													<<
-													VDimensions << "; found: " << pElement->getSubElementsCount());
+					                                "Error: convert structured data into VolumeSize. Reason: Wrong number of sub elements. Expected: "
+					                                <<
+					                                VDimensions << "; found: " << pElement->getSubElementsCount());
 				}
 
 				Self vs;
 
 				for (structuredData::Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
-					 pos != pElement->getSubElementEnd(); ++pos)
+				     pos != pElement->getSubElementEnd(); ++pos)
 				{
 					unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));
 

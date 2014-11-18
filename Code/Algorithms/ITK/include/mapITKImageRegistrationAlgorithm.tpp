@@ -219,7 +219,7 @@ namespace map
 			typename ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::InterimRegistrationPointer
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			determineInterimRegistration(const MovingRepresentationDescriptorType* pMovingRepresentation,
-										 const TargetRepresentationDescriptorType* pTargetRepresentation) const
+			                             const TargetRepresentationDescriptorType* pTargetRepresentation) const
 			{
 				InterimRegistrationPointer spResult = NULL;
 
@@ -231,7 +231,7 @@ namespace map
 					if (!pTransformModel)
 					{
 						mapExceptionMacro(AlgorithmException,
-										  << "Error. Cannot determine interim registration. No transform model present on internal level (getTransformInternal(). Pleas ensure proper setup of algorithm.");
+						                  << "Error. Cannot determine interim registration. No transform model present on internal level (getTransformInternal(). Pleas ensure proper setup of algorithm.");
 					}
 
 					//clone the transform model
@@ -240,8 +240,8 @@ namespace map
 					if (spInterimTransformModel.IsNull())
 					{
 						mapExceptionMacro(AlgorithmException,
-										  << "Error. Cannot determine interim registration. Unable to clone transform model. Current model: "
-										  << *pTransformModel);
+						                  << "Error. Cannot determine interim registration. Unable to clone transform model. Current model: "
+						                  << *pTransformModel);
 					}
 
 					//set the parameter of the interim transform model to the current transform parameters of the algorithm
@@ -249,7 +249,7 @@ namespace map
 					//it could cause errors with itk transforms that only keep a pointer to their parameters (e.g. itk::BSplineDeformableTransform).
 					//This transforms would be invalid as soon as we leave this method.
 					spInterimTransformModel->getTransform()->SetParametersByValue(
-						this->getCurrentTransformParameters());
+					    this->getCurrentTransformParameters());
 
 					//now build the inverse kernel (main kernel of a image based registration algorithm)
 					typedef core::ModelBasedRegistrationKernel<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>
@@ -264,13 +264,13 @@ namespace map
 					typename GeneratorType::Pointer spGenerator = GeneratorType::New();
 					typedef typename GeneratorType::InverseKernelBaseType DirectKernelType;
 					typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*
-							(spIKernel.GetPointer()), pMovingRepresentation);
+					        (spIKernel.GetPointer()), pMovingRepresentation);
 
 					if (spDKernel.IsNull())
 					{
 						mapExceptionMacro(AlgorithmException,
-										  << "Error. Cannot determine direct mapping kernel of interim registration. Current inverse kernel: "
-										  << spIKernel);
+						                  << "Error. Cannot determine direct mapping kernel of interim registration. Current inverse kernel: "
+						                  << spIKernel);
 					}
 
 					//now create the registration an set the kernels
@@ -310,7 +310,7 @@ namespace map
 				if (!this->getTransformInternal())
 				{
 					mapExceptionMacro(AlgorithmException,
-									  << "Cannot start algorithm; no transformation model available.");
+					                  << "Cannot start algorithm; no transformation model available.");
 				}
 
 				if (!this->getInterpolatorInternal())
@@ -381,8 +381,8 @@ namespace map
 						//we have a mask -> so construct the image region
 						typename TargetImageType::RegionType boundedRegion;
 
-						if (map::algorithm::MaskBoundingBoxHelper<TargetImageType::ImageDimension>::computeBoundingImageRegion(
-								this->getTargetMask(), this->getInternalTargetImage(), boundedRegion))
+						if (::map::algorithm::MaskBoundingBoxHelper<TargetImageType::ImageDimension>::computeBoundingImageRegion(
+						        this->getTargetMask(), this->getInternalTargetImage(), boundedRegion))
 						{
 							if (boundedRegion.Crop(this->getInternalTargetImage()->GetLargestPossibleRegion()))
 							{
@@ -417,8 +417,8 @@ namespace map
 						//we have a mask -> so construct the image region
 						typename MovingImageType::RegionType boundedRegion;
 
-						if (map::algorithm::MaskBoundingBoxHelper<MovingImageType::ImageDimension>::computeBoundingImageRegion(
-								this->getMovingMask(), this->getInternalMovingImage(), boundedRegion))
+						if (::map::algorithm::MaskBoundingBoxHelper<MovingImageType::ImageDimension>::computeBoundingImageRegion(
+						        this->getMovingMask(), this->getInternalMovingImage(), boundedRegion))
 						{
 							if (boundedRegion.Crop(this->getInternalMovingImage()->GetLargestPossibleRegion()))
 							{
@@ -477,7 +477,7 @@ namespace map
 				}
 
 				this->_internalRegistrationMethod->SetFixedImageRegion(
-					this->getInternalTargetImage()->GetLargestPossibleRegion());
+				    this->getInternalTargetImage()->GetLargestPossibleRegion());
 			}
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
@@ -490,7 +490,7 @@ namespace map
 				if (!pTransformModel)
 				{
 					mapExceptionMacro(AlgorithmException,
-									  << "Error. Cannot determine interim registration. No transform model present on internal level (getTransformInternal(). Pleas ensure proper setup of algorithm.");
+					                  << "Error. Cannot determine interim registration. No transform model present on internal level (getTransformInternal(). Pleas ensure proper setup of algorithm.");
 				}
 
 				::map::core::OStringStream os;
@@ -499,7 +499,7 @@ namespace map
 				//set the parameter of the transform model to the current transform parameters of the algorithm
 				this->setCurrentTransformParameters(pTransformModel->getTransform()->GetParameters());
 				this->_internalRegistrationMethod->SetInitialTransformParameters(
-					pTransformModel->getTransform()->GetParameters());
+				    pTransformModel->getTransform()->GetParameters());
 
 				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
 			};
@@ -543,7 +543,7 @@ namespace map
 
 				//assemble registration components
 				this->InvokeEvent(events::AlgorithmEvent(this,
-								  "Initializing itk multi resolution registration method."));
+				                  "Initializing itk multi resolution registration method."));
 				this->prepAssembleSubComponents();
 
 				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing/Preparing input data."));
@@ -566,7 +566,7 @@ namespace map
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onIterationEvent);
 					_onIterationObserver = core::ObserverSentinel::New(this->getOptimizerInternal()->getSVNLOptimizer(),
-										   ::itk::IterationEvent(), spCommand);
+					                       ::itk::IterationEvent(), spCommand);
 				}
 
 				if (_onGeneralOptimizerObserver.IsNull())
@@ -574,7 +574,7 @@ namespace map
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onGeneralOptimizerEvent);
 					_onGeneralOptimizerObserver = core::ObserverSentinel::New(
-													  this->getOptimizerInternal()->getSVNLOptimizer(), ::itk::AnyEvent(), spCommand);
+					                                  this->getOptimizerInternal()->getSVNLOptimizer(), ::itk::AnyEvent(), spCommand);
 				}
 
 				if (_onGeneralMetricObserver.IsNull())
@@ -582,7 +582,7 @@ namespace map
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onGeneralMetricEvent);
 					_onGeneralMetricObserver = core::ObserverSentinel::New(
-												   this->getMetricInternal()->getImageToImageMetric(), ::itk::AnyEvent(), spCommand);
+					                               this->getMetricInternal()->getImageToImageMetric(), ::itk::AnyEvent(), spCommand);
 				}
 
 				if (_onGeneralInterpolatorObserver.IsNull())
@@ -590,7 +590,7 @@ namespace map
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onGeneralInterpolatorEvent);
 					_onGeneralInterpolatorObserver = core::ObserverSentinel::New(this->getInterpolatorInternal(),
-													 ::itk::AnyEvent(), spCommand);
+					                                 ::itk::AnyEvent(), spCommand);
 				}
 
 				if (_onGeneralTransformObserver.IsNull())
@@ -598,7 +598,7 @@ namespace map
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onGeneralTransformEvent);
 					_onGeneralTransformObserver = core::ObserverSentinel::New(
-													  this->getTransformInternal()->getTransform(), ::itk::AnyEvent(), spCommand);
+					                                  this->getTransformInternal()->getTransform(), ::itk::AnyEvent(), spCommand);
 				}
 
 				typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
@@ -638,7 +638,7 @@ namespace map
 				if (!pTransformModel)
 				{
 					mapExceptionMacro(AlgorithmException,
-									  << "Error. Cannot determine final registration. No transform model present on internal level (getTransformInternal()). Please ensure proper setup of algorithm.");
+					                  << "Error. Cannot determine final registration. No transform model present on internal level (getTransformInternal()). Please ensure proper setup of algorithm.");
 				}
 
 				//clone the transform model
@@ -647,16 +647,16 @@ namespace map
 				if (spFinalTransformModel.IsNull())
 				{
 					mapExceptionMacro(AlgorithmException,
-									  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " <<
-									  *pTransformModel);
+					                  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " <<
+					                  *pTransformModel);
 				}
 
 				TransformParametersType lastTransformParameters =
-					this->_internalRegistrationMethod->GetLastTransformParameters();
+				    this->_internalRegistrationMethod->GetLastTransformParameters();
 
 				//set the parameter of the final transform model to the final transform parameters of the algorithm
 				spFinalTransformModel->getTransform()->SetParametersByValue(
-					lastTransformParameters); //this line is need to ensure correct cloning for
+				    lastTransformParameters); //this line is need to ensure correct cloning for
 				//itk transforms that only keep a pointer to their parameters (e.g. itk::BSplineDeformableTransform).
 				//Thoose transforms can cause problems with optimizers that only keep the parameters localy (e.g. itk::LBFGSOptimizer).
 				//Excplicit resetting the parameters is a work arround to this problem.
@@ -674,13 +674,13 @@ namespace map
 				typename GeneratorType::Pointer spGenerator = GeneratorType::New();
 				typedef typename GeneratorType::InverseKernelBaseType DirectKernelType;
 				typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*
-						(spIKernel.GetPointer()), this->getMovingRepresentation());
+				        (spIKernel.GetPointer()), this->getMovingRepresentation());
 
 				if (spDKernel.IsNull())
 				{
 					mapExceptionMacro(AlgorithmException,
-									  << "Error. Cannot determine direct mapping kernel of final registration. Current inverse kernel: "
-									  << spIKernel);
+					                  << "Error. Cannot determine direct mapping kernel of final registration. Current inverse kernel: "
+					                  << spIKernel);
 				}
 
 				//ensure that settings changed to the registration determination process are reseted to default
@@ -715,15 +715,15 @@ namespace map
 			{
 				::map::core::OStringStream os;
 				TransformParametersType currentParams =
-					this->getTransformInternal()->getTransform()->GetParameters();
+				    this->getTransformInternal()->getTransform()->GetParameters();
 
 				bool hasCurrentPosition = this->getOptimizerInternal()->hasCurrentPosition();
 				typename OptimizerBaseType::OptimizerPositionType currentPosition =
-					this->getOptimizerInternal()->getCurrentPosition();
+				    this->getOptimizerInternal()->getCurrentPosition();
 
 				bool hasCurrentValue = this->getOptimizerInternal()->hasCurrentValue();
 				typename OptimizerBaseType::SVNLMeasureType currentValue =
-					this->getOptimizerInternal()->getCurrentMeasure();
+				    this->getOptimizerInternal()->getCurrentMeasure();
 
 				this->_currentIterationLock.Lock();
 				++_currentIterationCount;
@@ -800,7 +800,7 @@ namespace map
 			onGeneralRegistrationMethodEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
 				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
-						"internal registration method event");
+				        "internal registration method event");
 				this->InvokeEvent(wrappedEvent);
 			};
 
@@ -960,7 +960,7 @@ namespace map
 
 				ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::PrintSelf(os, indent);
 				MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::PrintSelf(
-					os, indent);
+				    os, indent);
 
 				os << indent << "Current itertation count: " << _currentIterationCount << std::endl;
 				os << indent << "Current transform parameters: " << _currentTransformParameters << std::endl;
@@ -973,10 +973,11 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			compileInfos(MetaPropertyVectorType& infos) const
 			{
-#ifndef MAP_SEAL_ALGORITHMS
-				infos.push_back(map::algorithm::MetaPropertyInfo::New("CropInputImagesByMasks", typeid(bool), true,
-								true));
-#endif
+				#ifndef MAP_SEAL_ALGORITHMS
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("CropInputImagesByMasks", typeid(bool),
+				                true,
+				                true));
+				#endif
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
@@ -988,7 +989,7 @@ namespace map
 
 				if (name == "CropInputImagesByMasks")
 				{
-					spResult = map::core::MetaProperty<bool>::New(this->_CropInputImagesByMask);
+					spResult = ::map::core::MetaProperty<bool>::New(this->_CropInputImagesByMask);
 				}
 
 				return spResult;
@@ -1002,7 +1003,7 @@ namespace map
 				if (name == "CropInputImagesByMasks")
 				{
 					bool crop;
-					map::core::unwrapMetaProperty(pProperty, crop);
+					::map::core::unwrapMetaProperty(pProperty, crop);
 					this->_CropInputImagesByMask = crop;
 				}
 				else

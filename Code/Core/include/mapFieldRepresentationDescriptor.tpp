@@ -120,13 +120,13 @@ namespace map
 		typename FieldRepresentationDescriptor<VDimensions>::ImageRegionType
 		FieldRepresentationDescriptor<VDimensions>::
 		getRepresentedLocalImageRegion(const PointType& imageOrigin,
-									   const DirectionType& imageDirection) const
+		                               const DirectionType& imageDirection) const
 		{
 			if (!(imageDirection == this->getDirection()))
 			{
 				mapDefaultExceptionMacro( <<
-										  "Directions of field representation and image are not the same. Cannot determin image region. Field direction: "
-										  << this->getDirection() << "; image direction: " << imageDirection);
+				                          "Directions of field representation and image are not the same. Cannot determin image region. Field direction: "
+				                          << this->getDirection() << "; image direction: " << imageDirection);
 			}
 
 			typename ImageRegionType::SizeType regionSize;
@@ -136,12 +136,12 @@ namespace map
 
 			::itk::ImageTransformHelper < VDimensions, VDimensions - 1,
 			VDimensions - 1 >::TransformPhysicalPointToIndex(pointToIndexMatrix, imageOrigin, this->getOrigin(),
-					regionIndex);
+			        regionIndex);
 
 			for (unsigned long i = 0; i < VDimensions; ++i)
 			{
 				regionSize[i] = static_cast<typename ImageRegionType::SizeType::SizeValueType>(floor((
-									*_pFieldSize)[i] / (*_pFieldSpacing)[i]));
+				                    *_pFieldSize)[i] / (*_pFieldSpacing)[i]));
 			}
 
 			return ImageRegionType(regionIndex, regionSize);
@@ -287,7 +287,7 @@ namespace map
 		}
 
 		template<unsigned int VDimensions>
-		map::structuredData::StreamingInterface::ElementPointer
+		::map::structuredData::StreamingInterface::ElementPointer
 		FieldRepresentationDescriptor<VDimensions>::
 		streamToSDInternal() const
 		{
@@ -303,15 +303,15 @@ namespace map
 			spSizeElement->setTag("Size");
 			spNewSD->addSubElement(spSizeElement);
 			structuredData::Element::Pointer spOriginElement = structuredData::streamITKFixedArrayToSD(
-						this->getOrigin());
+			            this->getOrigin());
 			spOriginElement->setTag("Origin");
 			spNewSD->addSubElement(spOriginElement);
 			structuredData::Element::Pointer spSpacingElement = structuredData::streamITKFixedArrayToSD(
-						this->getSpacing());
+			            this->getSpacing());
 			spSpacingElement->setTag("Spacing");
 			spNewSD->addSubElement(spSpacingElement);
 			structuredData::Element::Pointer spDirectionElement = structuredData::streamITKMatrixToSD(
-						this->getDirection());
+			            this->getDirection());
 			spDirectionElement->setTag("Direction");
 			spNewSD->addSubElement(spDirectionElement);
 
@@ -329,45 +329,45 @@ namespace map
 			DirectionType newDirection;
 
 			structuredData::Element::ConstSubElementIteratorType subPos = structuredData::findNextSubElement(
-						pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Size");
+			            pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Size");
 
 			if (subPos == pElement->getSubElementEnd())
 			{
 				mapDefaultExceptionMacro( <<
-										  "Error: cannot stream from structured data. Reason: sub element \"Size\" is missing.");
+				                          "Error: cannot stream from structured data. Reason: sub element \"Size\" is missing.");
 			}
 
 			newSize = SizeType::streamFromStructuredData(*subPos);
 
 			subPos = structuredData::findNextSubElement(
-						 pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Origin");
+			             pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Origin");
 
 			if (subPos == pElement->getSubElementEnd())
 			{
 				mapDefaultExceptionMacro( <<
-										  "Error: cannot stream from structured data. Reason: sub element \"Origin\" is missing.");
+				                          "Error: cannot stream from structured data. Reason: sub element \"Origin\" is missing.");
 			}
 
 			newOrigin = structuredData::streamSDToITKFixedArray<PointType>(*subPos);
 
 			subPos = structuredData::findNextSubElement(
-						 pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Spacing");
+			             pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Spacing");
 
 			if (subPos == pElement->getSubElementEnd())
 			{
 				mapDefaultExceptionMacro( <<
-										  "Error: cannot stream from structured data. Reason: sub element \"Spacing\" is missing.");
+				                          "Error: cannot stream from structured data. Reason: sub element \"Spacing\" is missing.");
 			}
 
 			newSpacing = structuredData::streamSDToITKFixedArray<SpacingType>(*subPos);
 
 			subPos = structuredData::findNextSubElement(
-						 pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Direction");
+			             pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Direction");
 
 			if (subPos == pElement->getSubElementEnd())
 			{
 				mapDefaultExceptionMacro( <<
-										  "Error: cannot stream from structured data. Reason: sub element \"Direction\" is missing.");
+				                          "Error: cannot stream from structured data. Reason: sub element \"Direction\" is missing.");
 			}
 
 			newDirection = structuredData::streamSDToITKMatrix<DirectionType>(*subPos);
@@ -410,7 +410,7 @@ namespace map
 		template <unsigned int VDimensions>
 		typename FieldRepresentationDescriptor<VDimensions>::Pointer
 		createFieldRepresentation(const itk::ImageRegion<VDimensions>& region,
-								  const typename ::map::core::continuous::Elements<VDimensions>::SpacingType& spacing)
+		                          const typename ::map::core::continuous::Elements<VDimensions>::SpacingType& spacing)
 		{
 			typename FieldRepresentationDescriptor<VDimensions>::DirectionType direction;
 			typename FieldRepresentationDescriptor<VDimensions>::PointType origin;
@@ -423,9 +423,9 @@ namespace map
 		template <unsigned int VDimensions>
 		typename FieldRepresentationDescriptor<VDimensions>::Pointer
 		createFieldRepresentation(const itk::ImageRegion<VDimensions>& region,
-								  const typename ::map::core::continuous::Elements<VDimensions>::SpacingType& spacing,
-								  const typename FieldRepresentationDescriptor<VDimensions>::PointType& imageOrigin,
-								  const typename FieldRepresentationDescriptor<VDimensions>::DirectionType& direction)
+		                          const typename ::map::core::continuous::Elements<VDimensions>::SpacingType& spacing,
+		                          const typename FieldRepresentationDescriptor<VDimensions>::PointType& imageOrigin,
+		                          const typename FieldRepresentationDescriptor<VDimensions>::DirectionType& direction)
 		{
 			typedef FieldRepresentationDescriptor<VDimensions> FRDType;
 
@@ -448,7 +448,7 @@ namespace map
 			indexToPointMatrix = direction * scale;
 			::itk::ImageTransformHelper < VDimensions, VDimensions - 1,
 			VDimensions - 1 >::TransformIndexToPhysicalPoint(indexToPointMatrix, imageOrigin, region.GetIndex(),
-					origin);
+			        origin);
 
 			spFRD->setSpacing(fieldSpacing);
 			spFRD->setSize(size);
@@ -462,8 +462,8 @@ namespace map
 		template <class TVolume>
 		typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::Pointer
 		createFieldRepresentation(const TVolume& volume,
-								  const typename ::map::core::continuous::Elements<TVolume::VolumeDimension>::SpacingType& spacing,
-								  const typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::DirectionType& direction)
+		                          const typename ::map::core::continuous::Elements<TVolume::VolumeDimension>::SpacingType& spacing,
+		                          const typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::DirectionType& direction)
 		{
 			typedef FieldRepresentationDescriptor<TVolume::VolumeDimension> FRDType;
 
@@ -491,7 +491,7 @@ namespace map
 		template <class TVolume>
 		typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::Pointer
 		createFieldRepresentation(const TVolume& volume,
-								  const typename ::map::core::continuous::Elements<TVolume::VolumeDimension>::SpacingType& spacing)
+		                          const typename ::map::core::continuous::Elements<TVolume::VolumeDimension>::SpacingType& spacing)
 		{
 			typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::DirectionType direction;
 			direction.SetIdentity();

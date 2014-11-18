@@ -45,36 +45,36 @@ namespace map
 		{
 
 			mapGenerateAlgorithmUIDPolicyMacro(DefaultEuler3DMattesMIRegistrationAlgorithmUIDPolicy,
-											   "de.dkfz.matchpoint", "Euler3DMattesMIRegistrationAlgorithm.default", "1.1.0", "");
+			                                   "de.dkfz.matchpoint", "Euler3DMattesMIRegistrationAlgorithm.default", "1.1.0", "");
 
 			/** @brief Boxing of a simple rigid mattes based image registration algorithm
 			@ingroup Boxed
 			*/
 			template < class TMovingImage, class TTargetImage = TMovingImage,
-					 typename TUIDPolicy = DefaultEuler3DMattesMIRegistrationAlgorithmUIDPolicy,
-					 class TInterpolatorPolicy =
-					 SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, map::core::continuous::ScalarType> >
-					 >
+			           typename TUIDPolicy = DefaultEuler3DMattesMIRegistrationAlgorithmUIDPolicy,
+			           class TInterpolatorPolicy =
+			           SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TTargetImage, ::map::core::continuous::ScalarType> >
+			           >
 			class ITKEuler3DMattesMIRegistrationAlgorithm :
 				public algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
 				TUIDPolicy,
 				TInterpolatorPolicy,
 				SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
 				SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer>,
-				SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<map::core::continuous::ScalarType> > >
+				SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<::map::core::continuous::ScalarType> > >
 			{
 			public:
 				typedef ITKEuler3DMattesMIRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy, TInterpolatorPolicy>
 				Self;
 
 				typedef typename algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage,
-						TTargetImage,
-						TUIDPolicy,
-						TInterpolatorPolicy,
-						SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
-						SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer>,
-						SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<map::core::continuous::ScalarType> > >
-						Superclass;
+				        TTargetImage,
+				        TUIDPolicy,
+				        TInterpolatorPolicy,
+				        SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
+				        SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer>,
+				        SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<::map::core::continuous::ScalarType> > >
+				        Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;

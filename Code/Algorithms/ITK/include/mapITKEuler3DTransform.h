@@ -44,11 +44,12 @@ namespace map
 			*/
 			template<class TScalarType>
 			class ITKTransformModel< ::itk::Euler3DTransform<TScalarType> >:
-				public map::core::ITKDimensionedTransformModel< ::itk::Euler3DTransform, TScalarType>
+				public ::map::core::ITKDimensionedTransformModel< ::itk::Euler3DTransform, TScalarType>
 			{
 			public:
 				typedef ITKTransformModel< ::itk::Euler3DTransform<TScalarType> >  Self;
-				typedef map::core::ITKDimensionedTransformModel< ::itk::Euler3DTransform, TScalarType>  Superclass;
+				typedef ::map::core::ITKDimensionedTransformModel< ::itk::Euler3DTransform, TScalarType>
+				Superclass;
 				typedef ::itk::SmartPointer<Self>        Pointer;
 				typedef ::itk::SmartPointer<const Self>  ConstPointer;
 
