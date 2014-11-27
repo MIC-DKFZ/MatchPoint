@@ -84,7 +84,7 @@ namespace map
 
 					typename FieldSourceType::Pointer spFieldSource = FieldSourceType::New();
 
-					spFieldSource->SetTransform(pTransformModel->getTransform());
+					spFieldSource->SetTransform(pTransformModel);
 
 					spFieldSource->SetSpacing(pInFieldRepresentation->getSpacing());
 					spFieldSource->SetOrigin(pInFieldRepresentation->getOrigin());

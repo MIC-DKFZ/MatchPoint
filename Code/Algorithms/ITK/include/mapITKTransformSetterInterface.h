@@ -26,7 +26,7 @@
 #ifndef __ITK_TRANSFORM_SETTER_INTERFACE_H
 #define __ITK_TRANSFORM_SETTER_INTERFACE_H
 
-#include "mapTransformModelBase.h"
+#include "itkTransform.h"
 
 namespace map
 {
@@ -45,7 +45,7 @@ namespace map
 			public:
 				typedef ITKTransformSetterInterface<TScalar, VInputDimensions, VOutputDimensions> Self;
 
-				typedef core::TransformModelBase<TScalar, VInputDimensions, VOutputDimensions> TransformType;
+				typedef ::itk::Transform<TScalar, VInputDimensions, VOutputDimensions> TransformType;
 
 				/*! sets the transform
 				  @eguarantee strong

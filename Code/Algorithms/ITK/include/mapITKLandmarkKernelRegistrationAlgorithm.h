@@ -32,7 +32,6 @@
 #include "mapPointSetRegistrationAlgorithmBase.h"
 #include "mapObserverSentinel.h"
 #include "mapRegistrationAlgorithm.h"
-#include "mapITKTransformModel.h"
 #include "mapAnalyticAlgorithmInterface.h"
 
 
@@ -72,7 +71,7 @@ namespace map
 				itkTypeMacro(ITKLandmarkKernelRegistrationAlgorithm, RegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
-				typedef ITKTransformModel<TITKTransform> TransformModelType;
+				typedef TITKTransform TransformModelType;
 				typedef typename Superclass::UIDType UIDType;
 				typedef typename Superclass::UIDPointer UIDPointer;
 				typedef typename RegistrationAlgorithmBase::AlgorithmType AlgorithmType;

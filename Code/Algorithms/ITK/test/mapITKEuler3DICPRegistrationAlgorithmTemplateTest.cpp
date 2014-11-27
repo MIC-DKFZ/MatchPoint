@@ -126,18 +126,27 @@ namespace map
 
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
 
+      const core::ModelBasedRegistrationKernel<3, 3>* pDirectKernel =
+        dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&
+        (spRegistration->getDirectMapping()));
+      core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
+        pDirectKernel->getParameters();
+
+      CHECK_CLOSE(0.0, parameters[0], 0.01);
+      CHECK_CLOSE(0.0, parameters[1], 0.01);
+      CHECK_CLOSE(0.0, parameters[2], 0.01);
+      CHECK_CLOSE(-13.0, parameters[3], 0.01);
+      CHECK_CLOSE(-17.0, parameters[4], 0.01);
+      CHECK_CLOSE(-5.0, parameters[5], 0.01);
+
 			const core::ModelBasedRegistrationKernel<3, 3>* pInverseKernel =
 				dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&
 						(spRegistration->getInverseMapping()));
-			core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
-				pInverseKernel->getParameters();
+			parameters = pInverseKernel->getParameters();
 
-			CHECK_CLOSE(0.0, parameters[0], 0.01);
-			CHECK_CLOSE(0.0, parameters[1], 0.01);
-			CHECK_CLOSE(0.0, parameters[2], 0.01);
-			CHECK_CLOSE(13.0, parameters[3], 0.01);
-			CHECK_CLOSE(17.0, parameters[4], 0.01);
-			CHECK_CLOSE(5.0, parameters[5], 0.01);
+			CHECK_CLOSE(13.0, parameters[9], 0.01);
+			CHECK_CLOSE(17.0, parameters[10], 0.01);
+			CHECK_CLOSE(5.0, parameters[11], 0.01);
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

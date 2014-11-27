@@ -24,13 +24,13 @@
 #pragma warning ( disable : 4786 )
 #endif
 
+#include "itkEuler2DTransform.h"
+#include "itkImageFileReader.h"
+
 #include "litCheckMacros.h"
 #include "litFieldTester.h"
 
-#include "itkImageFileReader.h"
-
 #include "mapModelBasedRegistrationKernel.h"
-#include "mapITKEuler2DTransform.h"
 #include "mapFieldBasedRegistrationKernels.h"
 #include "mapInvertingFieldBasedRegistrationKernel.h"
 #include "mapInvertingFieldKernelWriter.h"
@@ -67,8 +67,7 @@ namespace map
 			//////////////////////////////////////
 			//Kernel setup
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
-			typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> >
-			TransformType;
+			typedef itk::Euler2DTransform<core::continuous::ScalarType> TransformType;
 
 			KernelType::Pointer spSourceKernel = KernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
@@ -76,7 +75,7 @@ namespace map
 			params[0] = 1.5708;
 			params[1] = 5;
 			params[2] = 2;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 			spSourceKernel->setTransformModel(spTransform);
 
 

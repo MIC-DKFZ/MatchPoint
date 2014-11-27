@@ -26,9 +26,9 @@
 
 #include "litCheckMacros.h"
 #include "litTextFileTester.h"
+
 #include "mapMatrixModelBasedKernelLoader.h"
 #include "mapModelBasedRegistrationKernel.h"
-#include "mapITKAffineTransform.h"
 #include "mapRegistrationFileReader.h"
 #include "test/mapTestKernelBase.h"
 #include "mapNullRegistrationKernel.h"

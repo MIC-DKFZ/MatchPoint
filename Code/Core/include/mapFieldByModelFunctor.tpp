@@ -66,7 +66,7 @@ namespace map
 					spField->TransformIndexToPhysicalPoint(index, inPoint);
 
 					typename TransformModelType::OutputPointType outPoint =
-						_spTransformModel->getTransform()->TransformPoint(inPoint);
+						_spTransformModel->TransformPoint(inPoint);
 
 					typename FieldType::ValueType value = outPoint - inPoint;
 					iterator.Set(value);

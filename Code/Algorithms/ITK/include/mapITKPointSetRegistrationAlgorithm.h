@@ -217,8 +217,7 @@ namespace map
 				*/
 				virtual void prepInitializeTransformation();
 
-				typedef typename TransformPolicyType::TransformType::TransformBaseType::ParametersType
-				TransformParametersType;
+				typedef typename TransformPolicyType::TransformType::ParametersType	TransformParametersType;
 
 				/*! Gets the member variable _currentTransformParameters secured via _currentIterationLock.
 				@return Copy of the current transform parameters.

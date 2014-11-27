@@ -21,73 +21,11 @@
 */
 
 
+#ifndef __MAP_ITK_AZIMUTH_ELEVATION_TO_CARTESIAN_TRANSFORM_H
+#define __MAP_ITK_AZIMUTH_ELEVATION_TO_CARTESIAN_TRANSFORM_H
 
-
-#ifndef __MAP_ITK_XXX_TRANSFORM_H
-#define __MAP_ITK_XXX_TRANSFORM_H
-
-#include "mapITKTransformModel.h"
-#include "mapITKUnaryTransformModel.h"
+/* This header is a simple pass through of the itk header. It is a convinience to allow MatchPoint
+   developers to use the include style for all itk algorithm components.*/
 #include "itkAzimuthElevationToCartesianTransform.h"
-
-namespace map
-{
-	namespace algorithm
-	{
-		namespace itk
-		{
-
-			/*!
-			This class is the template specialization for the itk::AzimuthElevationToCartesianTransform.
-			@ingroup ITK
-			@ingroup ITKTransformModel
-			*/
-			template<class TScalarType, unsigned int TDimensions>
-			class ITKTransformModel< ::itk::AzimuthElevationToCartesianTransform<TScalarType, TDimensions> >:
-				public map::core::ITKUnaryTransformModel< ::itk::AzimuthElevationToCartesianTransform, TScalarType, TDimensions>
-			{
-			public:
-				typedef ITKTransformModel< ::itk::AzimuthElevationToCartesianTransform<TScalarType, TDimensions> >
-				Self;
-				typedef map::core::ITKUnaryTransformModel< ::itk::AzimuthElevationToCartesianTransform, TScalarType, TDimensions>
-				Superclass;
-				typedef ::itk::SmartPointer<Self>        Pointer;
-				typedef ::itk::SmartPointer<const Self>  ConstPointer;
-
-				itkTypeMacro(ITKTransformModel, ITKUnaryTransformModel);
-				itkNewMacro(Self);
-
-				typedef typename Superclass::TransformModelBasePointer        TransformModelBasePointer;
-
-				typedef typename Superclass::ScalarType                       ScalarType;
-
-				typedef typename Superclass::InverseTransformModelBaseType    InverseTransformModelBaseType;
-				typedef typename Superclass::InverseTransformModelBasePointer InverseTransformModelBasePointer;
-
-				typedef typename Superclass::InverseTransformModelType        InverseTransformModelType;
-				typedef typename Superclass::InverseTransformModelPointer     InverseTransformModelPointer;
-
-				typedef typename Superclass::TransformBaseType                TransformBaseType;
-				typedef typename Superclass::TransformBasePointer             TransformBasePointer;
-				typedef typename Superclass::InverseTransformBaseType         InverseTransformBaseType;
-				typedef typename Superclass::InverseTransformBasePointer      InverseTransformBasePointer;
-
-				typedef typename Superclass::TransformType                    TransformType;
-				typedef typename Superclass::TransformPointer                 TransformPointer;
-				typedef typename Superclass::InverseTransformType             InverseTransformType;
-				typedef typename Superclass::InverseTransformPointer          InverseTransformPointer;
-			protected:
-				ITKTransformModel() {};
-
-				virtual ~ITKTransformModel() {};
-
-			private:
-				ITKTransformModel(const Self&);  //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
-			};
-
-		}
-	}
-}
 
 #endif

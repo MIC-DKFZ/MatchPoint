@@ -23,11 +23,12 @@
 #ifndef __MAP_MATRIX_MODEL_BASED_KERNEL_LOADER_TPP
 #define __MAP_MATRIX_MODEL_BASED_KERNEL_LOADER_TPP
 
+#include "itkAffineTransform.h"
+
 #include "mapMatrixModelBasedKernelLoader.h"
 #include "mapServiceException.h"
 #include "mapRegistrationFileTags.h"
 #include "mapRegistrationManipulator.h"
-#include "mapITKAffineTransform.h"
 #include "mapConvert.h"
 #include "mapSDITKStreamingHelper.h"
 
@@ -162,11 +163,10 @@ namespace map
 			typename KernelType::Pointer spKernel = KernelType::New();
 
 			typedef ::itk::AffineTransform<core::continuous::ScalarType, VInputDimensions> TransformType;
-			typedef algorithm::itk::ITKTransformModel<TransformType> ModelType;
-			typename ModelType::Pointer spModel = ModelType::New();
+			typename TransformType::Pointer spModel = TransformType::New();
 
-			spModel->getConcreteTransform()->SetMatrix(matrix);
-			spModel->getConcreteTransform()->SetOffset(offset);
+			spModel->SetMatrix(matrix);
+			spModel->SetOffset(offset);
 
 			spKernel->setTransformModel(spModel);
 

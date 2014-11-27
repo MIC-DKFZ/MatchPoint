@@ -62,8 +62,7 @@ namespace map
 			}
 
 			//get direct access to the transform model
-			const typename ModelKernelType::TransformType::TransformBaseType* transform =
-				pDirectKernel->getTransformModel()->getTransform();
+			const typename ModelKernelType::TransformType* transform = pDirectKernel->getTransformModel();
 
 			//create result point set
 			ResultDataPointer spResultPointSet = ResultDataType::New();

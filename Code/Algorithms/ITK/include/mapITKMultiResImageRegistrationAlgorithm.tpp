@@ -175,7 +175,7 @@ namespace map
 				if (!this->_firstLevelEvent)
 				{
 					TransformParametersType currentParams =
-						this->getTransformInternal()->getTransform()->GetParameters();
+						this->getTransformInternal()->GetParameters();
 
 					bool hasCurrentPosition = this->getOptimizerInternal()->hasCurrentPosition();
 					typename OptimizerBaseType::OptimizerPositionType currentPosition =

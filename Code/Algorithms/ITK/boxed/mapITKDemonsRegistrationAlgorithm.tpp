@@ -133,7 +133,7 @@ namespace map
 				//  //We set the parameter by Value and not by using SetParameter() because otherwise
 				//  //it could cause errors with itk transforms that only keep a pointer to their parameters (e.g. itk::BSplineDeformableTransform).
 				//  //This transforms would be invalid as soon as we leave this method.
-				//  spInterimTransformModel->getTransform()->SetParametersByValue(this->getCurrentTransformParameters());
+				//  spInterimTransformModel->SetParametersByValue(this->getCurrentTransformParameters());
 
 				//  //now build the inverse kernel (main kernel of a image based registration algorithm)
 				//  typedef core::ModelBasedRegistrationKernel<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions> InverseKernelType;

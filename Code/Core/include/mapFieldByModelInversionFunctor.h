@@ -23,8 +23,8 @@
 #ifndef __MAP_FIELD_BY_MODEL_INVERSION_FUNCTOR_H
 #define __MAP_FIELD_BY_MODEL_INVERSION_FUNCTOR_H
 
+#include <itkTransform.h>
 #include "mapFieldGenerationFunctor.h"
-#include "mapTransformModelBase.h"
 
 namespace map
 {
@@ -34,10 +34,10 @@ namespace map
 		{
 
 			/*! @class FieldByModelInversionFunctor
-			* @brief Functors generates a field by sampling a transformation model after inverting it nummerically
+			* @brief Functors generates a field by sampling a transformation model after inverting it numerically
 			*
 			* This field functors generates a field by sampling the inversion of a transformation which is
-			* assumed to model the inverse mapping direction. The inversion of the model will be done nummerically,
+			* assumed to model the inverse mapping direction. The inversion of the model will be done numerically,
 			* thus if the model can be inverted analytically, you should invert the transform and use the inverted
 			* one in combination with FieldByModelFunctor.\n
 			* This functor needs the input field representation to be set, other wise it wouldn't
@@ -73,7 +73,7 @@ namespace map
 				typedef typename Superclass::OutFieldRepresentationConstPointer OutFieldRepresentationConstPointer;
 				typedef typename Superclass::FieldType                          FieldType;
 				typedef typename Superclass::FieldPointer                       FieldPointer;
-				typedef TransformModelBase < ::map::core::continuous::ScalarType,
+				typedef itk::Transform < ::map::core::continuous::ScalarType,
 				        VOutputDimensions, VInputDimensions >  TransformModelType;
 				typedef typename TransformModelType::ConstPointer               TransformModelConstPointer;
 

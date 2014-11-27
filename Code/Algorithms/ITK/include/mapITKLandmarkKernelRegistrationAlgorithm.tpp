@@ -129,7 +129,7 @@ namespace map
 
 				this->InvokeEvent(events::StartingAlgorithmEvent());
 
-				_spTransform->getConcreteTransform()->SetStiffness(this->m_Stiffness);
+				_spTransform->SetStiffness(this->m_Stiffness);
 
 				typedef typename TITKTransform::PointSetPointer InternalPointSetPointer;
 
@@ -138,10 +138,10 @@ namespace map
 				convertPointSetToKernelPointSet(this->getTargetPointSet(), internalTargetPS);
 				convertPointSetToKernelPointSet(this->getMovingPointSet(), internalMovingPS);
 
-				_spTransform->getConcreteTransform()->SetTargetLandmarks(internalTargetPS);
-				_spTransform->getConcreteTransform()->SetSourceLandmarks(internalMovingPS);
+				_spTransform->SetTargetLandmarks(internalTargetPS);
+				_spTransform->SetSourceLandmarks(internalMovingPS);
 
-				_spTransform->getConcreteTransform()->UpdateParameters();
+				_spTransform->UpdateParameters();
 
 				this->InvokeEvent(events::StoppedAlgorithmEvent());
 
@@ -166,8 +166,7 @@ namespace map
 				}
 
 				//clone the transform model
-				typename TransformModelType::TransformModelBasePointer spFinalTransformModel =
-					_spTransform->clone();
+				typename TransformModelType::Pointer spFinalTransformModel = _spTransform->Clone();
 
 				if (spFinalTransformModel.IsNull())
 				{

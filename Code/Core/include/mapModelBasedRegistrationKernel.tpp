@@ -23,6 +23,8 @@
 #ifndef __MODEL_BASED_REGISTRATION_KERNEL_TPP
 #define __MODEL_BASED_REGISTRATION_KERNEL_TPP
 
+#include "mapAffineMatrixOffsetDecompositionPolicy.h"
+
 namespace map
 {
 	namespace core
@@ -44,7 +46,7 @@ namespace map
 		getParameters() const
 		{
 			assert(_spTransformModel.IsNotNull());
-			return _spTransformModel->getTransform()->GetParameters();
+			return _spTransformModel->GetParameters();
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
@@ -53,7 +55,7 @@ namespace map
 		transformPoint(const InputPointType& inPoint) const
 		{
 			assert(_spTransformModel.IsNotNull());
-			return _spTransformModel->getTransform()->TransformPoint(inPoint);
+			return _spTransformModel->TransformPoint(inPoint);
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
@@ -62,7 +64,7 @@ namespace map
 		transformVector(const InputVectorType& inVector) const
 		{
 			assert(_spTransformModel.IsNotNull());
-			return _spTransformModel->getTransform()->TransformVector(inVector);
+			return _spTransformModel->TransformVector(inVector);
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
@@ -71,7 +73,7 @@ namespace map
 		doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const
 		{
 			assert(_spTransformModel.IsNotNull());
-			outPoint = _spTransformModel->getTransform()->TransformPoint(inPoint);
+			outPoint = _spTransformModel->TransformPoint(inPoint);
 			return true;
 		};
 
@@ -119,6 +121,25 @@ namespace map
 		{
 			//nothing to precompute
 		};
+
+			/*! Tries to decompose the transform model into an affine matrix and an offset. It is indecated by the return value if
+			 * the actual modell can be decomposed.\n
+			 * Usage of the return values: Point_trans = Matrix*Point + Offset
+			 *
+			 * @eguarantee strong
+			 * @remark Implement the function for special transform model classes.
+			 * @param [out] matrix Reference to the matrix that define the affine non-translation part (e.g. rotation and scaling).
+			 * @param [out] offset Reference to a vector that defines the translation offset.
+			 * @return Indicates if the transform model can be decomposed in a affine transformation matrix plus offset. If it returns false, it cannot be decomposed
+			 * and the referenced output parameters are invalid.*/
+		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
+		bool
+      ModelBasedRegistrationKernel<VInputDimensions, VOutputDimensions>::
+      getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const
+    {
+      return AffineMatrixOffsetDecompositionPolicy<typename TransformType::ScalarType, VInputDimensions, VOutputDimensions>::getAffineMatrixDecomposition(_spTransformModel.GetPointer(), matrix,offset);
+    };
+
 
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>

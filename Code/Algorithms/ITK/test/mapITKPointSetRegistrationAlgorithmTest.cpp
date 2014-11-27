@@ -130,8 +130,7 @@ namespace map
 			MetricControlType;
 			typedef algorithm::itk::ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer>
 			OptimizerControlType;
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
-			TranformModelType;
+			typedef ::itk::TranslationTransform<core::continuous::ScalarType, 2> TranformModelType;
 
 			OptimizerControlType::Pointer spOptimizer = OptimizerControlType::New();
 			MetricControlType::Pointer spMetric = MetricControlType::New();
@@ -255,10 +254,10 @@ namespace map
 			//now the observer set by the algorithm should be removed
 			CHECK_EQUAL(false, spMetric->getMetric()->HasObserver(::itk::AnyEvent()));
 
-			CHECK_EQUAL(true, spTransformModel->getTransform()->HasObserver(::itk::AnyEvent()));
+			CHECK_EQUAL(true, spTransformModel->HasObserver(::itk::AnyEvent()));
 			spAlgorithm->setTransformModel(NULL);
 			//now the observer set by the algorithm should be removed
-			CHECK_EQUAL(false, spTransformModel->getTransform()->HasObserver(::itk::AnyEvent()));
+			CHECK_EQUAL(false, spTransformModel->HasObserver(::itk::AnyEvent()));
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

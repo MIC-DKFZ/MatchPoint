@@ -26,10 +26,8 @@
 #ifndef __SEALED_TRANSFORM_POLICY_H
 #define __SEALED_TRANSFORM_POLICY_H
 
-#include "mapTransformModelBase.h"
-#include "mapITKTransformModel.h"
-
 #include "itkCommand.h"
+#include "itkTransform.h"
 
 namespace map
 {
@@ -56,9 +54,9 @@ namespace map
 				typedef SealedTransformPolicy<TConcreteITKTransform>      Self;
 
 
-				typedef ITKTransformModel<TConcreteITKTransform> ConcreteTransformType;
+				typedef TConcreteITKTransform ConcreteTransformType;
 				typedef typename ConcreteTransformType::Pointer ConcreteTransformPointer;
-				typedef core::TransformModelBase<typename ConcreteTransformType::ScalarType, ConcreteTransformType::InputDimensions, ConcreteTransformType::OutputDimensions>
+				typedef ::itk::Transform<typename ConcreteTransformType::ScalarType, ConcreteTransformType::InputSpaceDimension, ConcreteTransformType::OutputSpaceDimension>
 				TransformType;
 				typedef typename TransformType::ScalarType TransformScalarType;
 

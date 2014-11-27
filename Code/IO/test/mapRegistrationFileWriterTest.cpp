@@ -24,11 +24,12 @@
 #pragma warning ( disable : 4786 )
 #endif
 
+#include <itkEuler2DTransform.h>
+
 #include "litCheckMacros.h"
 #include "litTextFileTester.h"
 #include "mapMatrixModelBasedKernelWriter.h"
 #include "mapModelBasedRegistrationKernel.h"
-#include "mapITKEuler2DTransform.h"
 #include "mapRegistrationFileWriter.h"
 #include "test/mapTestKernelBase.h"
 #include "mapNullRegistrationKernel.h"
@@ -101,8 +102,7 @@ namespace map
 			typedef TestKernelBase<2, 2> IllegalKernelType;
 			typedef core::NullRegistrationKernel<2, 2> NullKernelType;
 
-			typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> >
-			TransformType;
+			typedef ::itk::Euler2DTransform<core::continuous::ScalarType> TransformType;
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::Pointer spTransform2 = TransformType::New();
 
@@ -110,14 +110,14 @@ namespace map
 			params[0] = 1.5708;
 			params[1] = 5;
 			params[2] = 2;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 			spKernel->setTransformModel(spTransform);
 
 			TransformType::ParametersType params2(3);
 			params2[0] = -1.5708;
 			params2[1] = -5;
 			params2[2] = -2;
-			spTransform2->getTransform()->SetParameters(params2);
+			spTransform2->SetParameters(params2);
 			spKernel2->setTransformModel(spTransform2);
 
 			// create registrations for testing purposes

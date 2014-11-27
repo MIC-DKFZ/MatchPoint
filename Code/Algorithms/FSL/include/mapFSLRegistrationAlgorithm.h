@@ -24,11 +24,12 @@
 #ifndef __MAP_FSL_REGISTRATION_ALGORITHM_H
 #define __MAP_FSL_REGISTRATION_ALGORITHM_H
 
+#include "itkAffineTransform.h"
+
 #include "mapContinuous.h"
 
 #include "mapIterativeRegistrationAlgorithm.h"
 #include "mapImageRegistrationAlgorithmBase.h"
-#include "mapITKAffineTransform.h"
 #include "mapClassMacros.h"
 #include "mapMetaPropertyAlgorithmBase.h"
 
@@ -176,8 +177,7 @@ namespace map
 				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
 				TargetImageConstPointer;
 
-				typedef itk::ITKTransformModel< ::itk::AffineTransform<map::core::continuous::ScalarType, TTargetImage::ImageDimension> >
-				ModelType;
+				typedef ::itk::AffineTransform<map::core::continuous::ScalarType, TTargetImage::ImageDimension> ModelType;
 
 				/* @reimplemented*/
 				virtual void configureAlgorithm();
@@ -319,7 +319,7 @@ namespace map
 			private:
 
 				/*! The parameters of the registration transform of the last successfull registration determiniation. Will be set by finalizeAlgorithm()*/
-				typename ModelType::TransformType::ParametersType _finalizedTransformParameters;
+				typename ModelType::ParametersType _finalizedTransformParameters;
 
 				/*! Smartpointer to the finalized registration. Will be set by finalizeAlgorithm()*/
 				typename RegistrationType::Pointer _spFinalizedRegistration;

@@ -124,11 +124,11 @@ namespace map
 			}
 
 			const typename KernelType::TransformType* pTransformModel = pKernel->getTransformModel();
-			typename KernelType::TransformType::InverseTransformModelBasePointer spInverseTransformModel;
+			typename KernelType::TransformType::InverseTransformBasePointer spInverseTransformModel = pTransformModel->GetInverseTransform();
 
 			InverseKernelBasePointer spResultKernel;
-
-			if (pTransformModel->getInverse(spInverseTransformModel))
+      
+			if (spInverseTransformModel.IsNotNull())
 			{
 				// analytic inversion worked, so we just have to create the kernel and return it
 				typedef ModelBasedRegistrationKernel<VOutputDimensions, VInputDimensions> InverseKernelType;

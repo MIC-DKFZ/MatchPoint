@@ -218,14 +218,14 @@ namespace map
 				{
 					this->InvokeEvent(events::AlgorithmEvent(this, "Preinitialize transform."));
 
-					typedef ::itk::CenteredTransformInitializer<typename Superclass::ConcreteTransformType::TransformType, typename Superclass::TargetImageType, typename Superclass::MovingImageType>
+					typedef ::itk::CenteredTransformInitializer<typename Superclass::ConcreteTransformType, typename Superclass::TargetImageType, typename Superclass::MovingImageType>
 					InitializerType;
 
 					typename InitializerType::Pointer spInitializer = InitializerType::New();
 
 					spInitializer->SetMovingImage(this->getInternalMovingImage());
 					spInitializer->SetFixedImage(this->getInternalTargetImage());
-					spInitializer->SetTransform(this->getConcreteTransformModel()->getConcreteTransform());
+					spInitializer->SetTransform(this->getConcreteTransformModel());
 
 					if (this->_useCenterOfGravity)
 					{
@@ -241,20 +241,13 @@ namespace map
 					spInitializer->InitializeTransform();
 				}
 
-				typename Superclass::ConcreteTransformType::MatrixType matrix;
-				typename Superclass::ConcreteTransformType::OutputVectorType offset;
-
-				this->getConcreteTransformModel()->getAffineMatrixDecomposition(matrix, offset);
-
 				core::OStringStream os;
 
 				os << "Preinitialized transform to: " <<
-				   this->getConcreteTransformModel()->getConcreteTransform()->GetParameters();
+				   this->getConcreteTransformModel()->GetParameters();
 				//set the parameter of the transform model to the current transform parameters of the algorithm
-				this->setCurrentTransformParameters(
-					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
-				this->getInternalRegistrationMethod().SetInitialTransformParameters(
-					this->getConcreteTransformModel()->getConcreteTransform()->GetParameters());
+				this->setCurrentTransformParameters(this->getConcreteTransformModel()->GetParameters());
+				this->getInternalRegistrationMethod().SetInitialTransformParameters(this->getConcreteTransformModel()->GetParameters());
 
 				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
 			};

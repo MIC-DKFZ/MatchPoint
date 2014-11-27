@@ -67,15 +67,14 @@ namespace map
 
 			//////////////////////////////////////
 			//Kernel setup
-			typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> >
-			TransformType;
+			typedef itk::Euler2DTransform<core::continuous::ScalarType> TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(3);
 			params[0] = 1.5708;
 			params[1] = 5;
 			params[2] = 2;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 
 			typedef core::functors::FieldByModelFunctor<2, 2> FieldFunctorType;
 			FieldFunctorType::InFieldRepresentationType::SpacingType spacing(0.5);

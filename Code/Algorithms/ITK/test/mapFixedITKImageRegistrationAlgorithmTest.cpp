@@ -29,7 +29,6 @@
 #include "litTestCommand.h"
 #include "litTestImageIO.h"
 
-#include "mapITKUnaryTransformModel.h"
 #include "mapITKRegularStepGradientDescentOptimizer.h"
 #include "mapITKMeanSquaresImageToImageMetric.h"
 #include "mapFixedImageToImageMetricPolicy.h"

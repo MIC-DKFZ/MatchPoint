@@ -28,7 +28,7 @@
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
 
-#include "mapITKScaleTransform.h"
+#include "itkScaleTransform.h"
 
 #include "itkImageRegionIterator.h"
 
@@ -45,8 +45,7 @@ namespace map
 
 
 			//Model kernel generation
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 3> >
-			ScaleTransformType;
+			typedef itk::ScaleTransform<core::continuous::ScalarType, 3> ScaleTransformType;
 
 			FunctorType::TransformModelType::Pointer spModel = ScaleTransformType::New().GetPointer();
 
@@ -57,7 +56,7 @@ namespace map
 			size.fill(2);
 			FunctorType::TransformModelType::ParametersType params(3);
 			params.fill(2.0);
-			spModel->getTransform()->SetParameters(params);
+			spModel->SetParameters(params);
 
 			FunctorType::InFieldRepresentationType::Pointer spInRep =
 				FunctorType::InFieldRepresentationType::New();
@@ -84,9 +83,9 @@ namespace map
 			CHECK_NO_THROW(spField = spFunc->generateField());
 			CHECK(spField.IsNotNull());
 
-			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType::TransformBaseType>
+			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType>
 			tester;
-			tester.setReferenceTransform(spModel->getTransform());
+			tester.setReferenceTransform(spModel);
 			tester.setActualField(spField);
 			tester.setCheckThreshold(0.0);
 

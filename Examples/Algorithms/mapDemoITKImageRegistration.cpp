@@ -117,8 +117,7 @@ int main(int argc, char* argv[])
 	OptimizerControlType;
 	typedef ::itk::LinearInterpolateImageFunction<ImageType, map::core::continuous::ScalarType>
 	InterpolatorType;
-	typedef map::algorithm::itk::ITKTransformModel< ::itk::TranslationTransform<map::core::continuous::ScalarType, 2> >
-	TranformModelType;
+	typedef ::itk::TranslationTransform<map::core::continuous::ScalarType, 2> TranformModelType;
 
 	OptimizerControlType::Pointer spOptimizer = OptimizerControlType::New();
 	MetricControlType::Pointer spMetric = MetricControlType::New();

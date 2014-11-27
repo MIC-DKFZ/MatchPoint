@@ -30,7 +30,7 @@
 #include "litTransformFieldTester.h"
 #include "mapFieldBasedRegistrationKernels.h"
 
-#include "mapITKScaleTransform.h"
+#include "itkScaleTransform.h"
 #include "itkIdentityTransform.h"
 
 namespace map
@@ -67,19 +67,17 @@ namespace map
 			spIllegalInRep->setOrigin(illegalOrigin);
 
 			//Model kernel generation
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
-			TransformType;
+			typedef itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
 
 			ModelKernelType::Pointer spModelKernel = ModelKernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
 			params[0] = 0.3;
 			params[1] = 0.3;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 
 			//Field kernel (generate by using inverse transform)
-			TransformType::InverseTransformModelBasePointer spInverseTransform;
-			spTransform->getInverse(spInverseTransform);
+			TransformType::InverseTransformBasePointer spInverseTransform = spTransform->GetInverseTransform();
 
 			spModelKernel->setTransformModel(spTransform);
 
@@ -123,7 +121,7 @@ namespace map
 			CHECK_NO_THROW(spResultField = spTestFunctor->generateField());
 			CHECK(spResultField.IsNotNull());
 
-			lit::TransformFieldTester<CombinatorFunctorType::FieldType, ModelKernelType::TransformType::TransformBaseType>
+			lit::TransformFieldTester<CombinatorFunctorType::FieldType, ModelKernelType::TransformType>
 			tester;
 			typedef itk::IdentityTransform<core::continuous::ScalarType, 2> IdentityTransformType;
 

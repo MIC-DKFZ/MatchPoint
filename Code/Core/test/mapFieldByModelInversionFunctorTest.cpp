@@ -28,7 +28,7 @@
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
 
-#include "mapITKScaleTransform.h"
+#include "itkScaleTransform.h"
 
 #include "itkImageRegionIterator.h"
 
@@ -71,8 +71,7 @@ namespace map
 			}
 
 			typedef core::functors::FieldByModelInversionFunctor<2, 2> FunctorType;
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
-			TransformType;
+			typedef itk::ScaleTransform<core::continuous::ScalarType, 2>	TransformType;
 
 			TransformType::Pointer spModel = TransformType::New();
 
@@ -83,7 +82,7 @@ namespace map
 			size.fill(10);
 			FunctorType::TransformModelType::ParametersType params(2);
 			params.fill(3.0);
-			spModel->getTransform()->SetParameters(params);
+			spModel->SetParameters(params);
 
 			FunctorType::InFieldRepresentationType::Pointer spInRep =
 				FunctorType::InFieldRepresentationType::New();
@@ -114,14 +113,12 @@ namespace map
 			CHECK_NO_THROW(spField = spFunc->generateField());
 			CHECK(spField.IsNotNull());
 
-			TransformType::InverseTransformModelBasePointer
-			spInverseModel; //barra = TransformType::InverseTransformModelType::New();
-			spModel->getInverse(spInverseModel);
+			TransformType::InverseTransformBasePointer	spInverseModel = spModel->GetInverseTransform();
 
 
-			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType::TransformBaseType>
+			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType>
 			tester;
-			tester.setReferenceTransform(spInverseModel->getTransform());
+			tester.setReferenceTransform(spInverseModel);
 			tester.setActualField(spField);
 			tester.setCheckThreshold(checkThreshold);
 

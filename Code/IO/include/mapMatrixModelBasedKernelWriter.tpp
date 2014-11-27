@@ -46,17 +46,12 @@ namespace map
 
 			if (pKernel)
 			{
-				typename KernelType::TransformType::ConstPointer spModel = pKernel->getTransformModel();
+				typename KernelType::MatrixType matrix;
+				typename KernelType::OutputVectorType offset;
 
-				if (spModel.IsNotNull())
+				if (pKernel->getAffineMatrixDecomposition(matrix, offset))
 				{
-					typename KernelType::TransformType::MatrixType matrix;
-					typename KernelType::TransformType::OutputVectorType offset;
-
-					if (spModel->getAffineMatrixDecomposition(matrix, offset))
-					{
-						canHandle = true;
-					}
+					canHandle = true;
 				}
 			};
 
@@ -120,7 +115,7 @@ namespace map
 								  << pKernel);
 			}
 
-			if (!spModel->getAffineMatrixDecomposition(matrix, offset))
+			if (!pKernel->getAffineMatrixDecomposition(matrix, offset))
 			{
 				mapExceptionMacro(core::ServiceException,
 								  << "Error: cannot store kernel. Reason: Kernel has no valid matrix decompostion. Kernel: " <<

@@ -50,8 +50,7 @@ namespace map
 
 			if (pModelKernel)
 			{
-				const TransformType* pTransform = pModelKernel->getTransformModel();
-				result = pTransform->getAffineMatrixDecomposition(matrix, offset);
+				result = pModelKernel->getAffineMatrixDecomposition(matrix, offset);
 			};
 
 			return result;

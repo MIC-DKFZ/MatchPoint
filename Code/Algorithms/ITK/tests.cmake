@@ -15,8 +15,6 @@ ADD_TEST(mapFixedMVNLOptimizerPolicyTest ${MODULE_TESTS} mapFixedMVNLOptimizerPo
 ADD_TEST(mapFixedPointSetToPointSetMetricPolicyTest ${MODULE_TESTS} mapFixedPointSetToPointSetMetricPolicyTest)
 ADD_TEST(mapFixedSVNLOptimizerPolicyTest ${MODULE_TESTS} mapFixedSVNLOptimizerPolicyTest)
 ADD_TEST(mapFixedTransformPolicyTest ${MODULE_TESTS} mapFixedTransformPolicyTest)
-ADD_TEST(mapITKAffineTransformTest ${MODULE_TESTS} mapITKAffineTransformTest)
-ADD_TEST(mapITKCenteredRigid2DTransformTest ${MODULE_TESTS} mapITKCenteredRigid2DTransformTest)
 ADD_TEST(mapITKEuler3DICPRegistrationAlgorithmTemplateTest ${MODULE_TESTS} mapITKEuler3DICPRegistrationAlgorithmTemplateTest "${TEST_DATA_ROOT}/Algorithms/Landmarks_3D_Shifted13x17y5z.txt" "${TEST_DATA_ROOT}/Algorithms/Landmarks_3D.txt")
 ADD_TEST(mapITKImageRegistrationAlgorithmTest ${MODULE_TESTS} mapITKImageRegistrationAlgorithmTest "${TEST_DATA_ROOT}/Algorithms/BrainProtonDensitySliceShifted13x17y.png" "${TEST_DATA_ROOT}/Algorithms/BrainProtonDensitySliceBorder20.png")
 ADD_TEST(mapITKLandmarkKernelRegistrationAlgorithmTest ${MODULE_TESTS} mapITKLandmarkKernelRegistrationAlgorithmTest "${TEST_DATA_ROOT}/Algorithms/Landmarks_3D_Shifted13x17y5z.txt" "${TEST_DATA_ROOT}/Algorithms/Landmarks_3D.txt")
