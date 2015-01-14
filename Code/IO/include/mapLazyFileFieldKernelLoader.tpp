@@ -107,7 +107,7 @@ namespace map
 			
 			//determin null vector (support)
 			typename KernelBaseType::MappingVectorType nullVector;
-			bool usesNullVector = hasNullVector(request, nullVector);
+            bool usesNullVector = this->hasNullVector(request, nullVector);
 
 			typedef typename
 			core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel

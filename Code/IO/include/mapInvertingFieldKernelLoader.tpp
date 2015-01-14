@@ -124,7 +124,7 @@ namespace map
 
 			//determin null vector (support)
 			typename KernelBaseType::MappingVectorType nullVector;
-			bool usesNullVector = hasNullVector(request, nullVector);
+            bool usesNullVector = this->hasNullVector(request, nullVector);
 
 			typedef core::InverseRegistrationKernelGenerator<VOutputDimensions, VInputDimensions>
 			InversionGeneratorType;
