@@ -59,9 +59,9 @@ namespace map
 				public algorithm::boxed::ITKInitializedImageRegistrationAlgorithm < TMovingImage, TTargetImage,
 				TUIDPolicy,
 				TInterpolatorPolicy,
-				SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
+                SealedFixedImageToImageMetricPolicyMacro < ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
 				SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer>,
-				SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<::map::core::continuous::ScalarType> > >
+                SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform< ::map::core::continuous::ScalarType> > >
 			{
 			public:
 				typedef ITKEuler3DMattesMIRegistrationAlgorithm<TMovingImage, TTargetImage, TUIDPolicy, TInterpolatorPolicy>
@@ -73,7 +73,7 @@ namespace map
 				        TInterpolatorPolicy,
 				        SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
 				        SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer>,
-				        SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform<::map::core::continuous::ScalarType> > >
+                        SealedFixedTransformPolicyMacro< ::itk::Euler3DTransform< ::map::core::continuous::ScalarType> > >
 				        Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
