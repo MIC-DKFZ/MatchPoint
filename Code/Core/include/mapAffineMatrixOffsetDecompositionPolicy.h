@@ -32,158 +32,158 @@
 
 namespace map
 {
-	namespace core
-	{
-		/*! @class AffineMatrixOffsetDecompositionPolicy
-		* @brief Class defines the rule for decomposing an itk::transforms of any dimensionality into an affine matrix and offset (if that is possible).
-		*
-		* This helper class is used by MatchPoint for decomposition purposes of arbitrary dimensionality.
-		* It can be seen like a trait pattern, because not all combinations of dimension allow all decomposition strategies.
-		*
-		* @ingroup Registration
-		* @tparam VInDimensions Dimension count of the input type.
-		* @tparam VOutDimensions Dimension count of the output type.
-		*/
-		template <typename TScalarType, unsigned int VInDimensions, unsigned int VOutDimensions>
-		class AffineMatrixOffsetDecompositionPolicy
-		{
-		public:
+  namespace core
+  {
+    /*! @class AffineMatrixOffsetDecompositionPolicy
+    * @brief Class defines the rule for decomposing an itk::transforms of any dimensionality into an affine matrix and offset (if that is possible).
+    *
+    * This helper class is used by MatchPoint for decomposition purposes of arbitrary dimensionality.
+    * It can be seen like a trait pattern, because not all combinations of dimension allow all decomposition strategies.
+    *
+    * @ingroup Registration
+    * @tparam VInDimensions Dimension count of the input type.
+    * @tparam VOutDimensions Dimension count of the output type.
+    */
+    template <typename TScalarType, unsigned int VInDimensions, unsigned int VOutDimensions>
+    class AffineMatrixOffsetDecompositionPolicy
+    {
+    public:
       typedef ::itk::Transform<TScalarType, VInDimensions, VOutDimensions> TransformType;
 
-			typedef typename continuous::Elements<VOutDimensions>::PointType            OutputPointType;
-			typedef typename continuous::Elements<VOutDimensions>::VectorType           OutputVectorType;
+      typedef typename continuous::Elements<VOutDimensions>::PointType            OutputPointType;
+      typedef typename continuous::Elements<VOutDimensions>::VectorType           OutputVectorType;
 
       typedef itk::Matrix<TScalarType, VOutDimensions, VInDimensions> MatrixType;
 
-			/*! Tries to decompose the transform model into an affine matrix and an offset. It is indicated by the return value if
-			 * the actual model can be decomposed.\n
-			 * Usage of the return values: Point_trans = Matrix*Point + Offset
-			 *
-			 * @eguarantee strong
-			 * @remark Implement the function for special transform model classes.
-       * @param [in] Pointer to the transfrom that should be decomposed
-			 * @param [out] matrix Reference to the matrix that define the affine non-translation part (e.g. rotation and scaling).
-			 * @param [out] offset Reference to a vector that defines the translation offset.
-			 * @return Indicates if the transform model can be decomposed in a affine transformation matrix plus offset. If it returns false, it cannot be decomposed
-			 * and the referenced output parameters are invalid. If the passed transform is invalid, it will also return false.*/
-		static bool  getAffineMatrixDecomposition(const TransformType* transform, MatrixType& matrix, OutputVectorType& offset)
-    {
-      if (!transform)
+      /*! Tries to decompose the transform model into an affine matrix and an offset. It is indicated by the return value if
+      * the actual model can be decomposed.\n
+      * Usage of the return values: Point_trans = Matrix*Point + Offset
+      *
+      * @eguarantee strong
+      * @remark Implement the function for special transform model classes.
+      * @param [in] Pointer to the transfrom that should be decomposed
+      * @param [out] matrix Reference to the matrix that define the affine non-translation part (e.g. rotation and scaling).
+      * @param [out] offset Reference to a vector that defines the translation offset.
+      * @return Indicates if the transform model can be decomposed in a affine transformation matrix plus offset. If it returns false, it cannot be decomposed
+      * and the referenced output parameters are invalid. If the passed transform is invalid, it will also return false.*/
+      static bool  getAffineMatrixDecomposition(const TransformType* transform, MatrixType& matrix, OutputVectorType& offset)
       {
-        return false;
-      }
+        if (!transform)
+        {
+          return false;
+        }
 
-      typedef ::itk::TranslationTransform<TScalarType, VOutDimensions> TranslationTransformType;
-      typedef ::itk::IdentityTransform<TScalarType, VOutDimensions> IdentityTransformType;
+        typedef ::itk::TranslationTransform<TScalarType, VOutDimensions> TranslationTransformType;
+        typedef ::itk::IdentityTransform<TScalarType, VOutDimensions> IdentityTransformType;
 
-      bool result = false;
+        bool result = false;
 
-      const TranslationTransformType* translationModel = dynamic_cast<const TranslationTransformType*>(transform);
-      const IdentityTransformType* identityModel = dynamic_cast<const IdentityTransformType*>(transform);
+        const TranslationTransformType* translationModel = dynamic_cast<const TranslationTransformType*>(transform);
+        const IdentityTransformType* identityModel = dynamic_cast<const IdentityTransformType*>(transform);
 
-      if (translationModel)
-      {
-					matrix.SetIdentity();
-					offset = translationModel->GetOffset();
-					result =  true;       
-      }
-      else if (identityModel)
-      {
-					matrix.SetIdentity();
-					offset.Fill(0);
-					result =  true;       
-      }
+        if (translationModel)
+        {
+          matrix.SetIdentity();
+          offset = translationModel->GetOffset();
+          result =  true;       
+        }
+        else if (identityModel)
+        {
+          matrix.SetIdentity();
+          offset.Fill(0);
+          result =  true;       
+        }
 
-      return result;
+        return result;
+      };
+
+    private:
+
+      typedef AffineMatrixOffsetDecompositionPolicy<TScalarType, VInDimensions, VOutDimensions> Self;
+      AffineMatrixOffsetDecompositionPolicy(); //purposely not implemented
+      virtual ~AffineMatrixOffsetDecompositionPolicy();  //purposely not implemented
+      AffineMatrixOffsetDecompositionPolicy(const Self&);  //purposely not implemented
+      void operator=(const Self&);  //purposely not implemented
     };
 
-		private:
-
-			typedef AffineMatrixOffsetDecompositionPolicy<TScalarType, VInDimensions, VOutDimensions> Self;
-			AffineMatrixOffsetDecompositionPolicy(); //purposely not implemented
-			virtual ~AffineMatrixOffsetDecompositionPolicy();  //purposely not implemented
-			AffineMatrixOffsetDecompositionPolicy(const Self&);  //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
-		};
-
-		/*! @class AffineMatrixOffsetDecompositionPolicy<VDimensions>
-		* @brief Template specialization for the case that input and output are of the same dimensionality.
-		*
-		* @ingroup Registration
-		* @tparam VDimensions Dimensionality of the operands.
-		*/
-		template <typename TScalarType, unsigned int VDimensions>
-		class AffineMatrixOffsetDecompositionPolicy<TScalarType, VDimensions, VDimensions>
-		{
-		public:
+    /*! @class AffineMatrixOffsetDecompositionPolicy<VDimensions>
+    * @brief Template specialization for the case that input and output are of the same dimensionality.
+    *
+    * @ingroup Registration
+    * @tparam VDimensions Dimensionality of the operands.
+    */
+    template <typename TScalarType, unsigned int VDimensions>
+    class AffineMatrixOffsetDecompositionPolicy<TScalarType, VDimensions, VDimensions>
+    {
+    public:
       typedef ::itk::Transform<TScalarType, VDimensions, VDimensions> TransformType;
 
       typedef typename continuous::Elements<VDimensions>::PointType            OutputPointType;
-			typedef typename continuous::Elements<VDimensions>::VectorType           OutputVectorType;
-      
+      typedef typename continuous::Elements<VDimensions>::VectorType           OutputVectorType;
+
       typedef itk::Matrix<TScalarType, VDimensions, VDimensions> MatrixType;
 
-			/*! Tries to decompose the transform model into an affine matrix and an offset. It is indicated by the return value if
-			 * the actual model can be decomposed.\n
-			 * Usage of the return values: Point_trans = Matrix*Point + Offset
-			 *
-			 * @eguarantee strong
-			 * @remark Implement the function for special transform model classes.
-       * @param [in] Pointer to the transform that should be decomposed
-			 * @param [out] matrix Reference to the matrix that define the affine non-translation part (e.g. rotation and scaling).
-			 * @param [out] offset Reference to a vector that defines the translation offset.
-			 * @return Indicates if the transform model can be decomposed in a affine transformation matrix plus offset. If it returns false, it cannot be decomposed
-			 * and the referenced output parameters are invalid. If the passed transform is invalid, it will also return false.*/
-		static bool  getAffineMatrixDecomposition(const TransformType* transform, MatrixType& matrix, OutputVectorType& offset)
-    {
-      if (!transform)
+      /*! Tries to decompose the transform model into an affine matrix and an offset. It is indicated by the return value if
+      * the actual model can be decomposed.\n
+      * Usage of the return values: Point_trans = Matrix*Point + Offset
+      *
+      * @eguarantee strong
+      * @remark Implement the function for special transform model classes.
+      * @param [in] Pointer to the transform that should be decomposed
+      * @param [out] matrix Reference to the matrix that define the affine non-translation part (e.g. rotation and scaling).
+      * @param [out] offset Reference to a vector that defines the translation offset.
+      * @return Indicates if the transform model can be decomposed in a affine transformation matrix plus offset. If it returns false, it cannot be decomposed
+      * and the referenced output parameters are invalid. If the passed transform is invalid, it will also return false.*/
+      static bool  getAffineMatrixDecomposition(const TransformType* transform, MatrixType& matrix, OutputVectorType& offset)
       {
-        return false;
-      }
+        if (!transform)
+        {
+          return false;
+        }
 
-      typedef ::itk::MatrixOffsetTransformBase<TScalarType, VDimensions, VDimensions> MatrixOffsetTransformType;
-      typedef ::itk::TranslationTransform<TScalarType, VDimensions> TranslationTransformType;
-      typedef ::itk::IdentityTransform<TScalarType, VDimensions> IdentityTransformType;
+        typedef ::itk::MatrixOffsetTransformBase<TScalarType, VDimensions, VDimensions> MatrixOffsetTransformType;
+        typedef ::itk::TranslationTransform<TScalarType, VDimensions> TranslationTransformType;
+        typedef ::itk::IdentityTransform<TScalarType, VDimensions> IdentityTransformType;
 
-      bool result = false;
+        bool result = false;
 
-      const MatrixOffsetTransformType* matrixBasedModel = dynamic_cast<const MatrixOffsetTransformType*>(transform);
-      const TranslationTransformType* translationModel = dynamic_cast<const TranslationTransformType*>(transform);
-      const IdentityTransformType* identityModel = dynamic_cast<const IdentityTransformType*>(transform);
+        const MatrixOffsetTransformType* matrixBasedModel = dynamic_cast<const MatrixOffsetTransformType*>(transform);
+        const TranslationTransformType* translationModel = dynamic_cast<const TranslationTransformType*>(transform);
+        const IdentityTransformType* identityModel = dynamic_cast<const IdentityTransformType*>(transform);
 
-      if (matrixBasedModel)
-      {
-        	matrix = matrixBasedModel->GetMatrix();
-					offset = matrixBasedModel->GetOffset();
-					result =  true;       
-      }
-      else if (translationModel)
-      {
-					matrix.SetIdentity();
-					offset = translationModel->GetOffset();
-					result =  true;       
-      }
-      else if (identityModel)
-      {
-					matrix.SetIdentity();
-					offset.Fill(0);
-					result =  true;       
-      }
+        if (matrixBasedModel)
+        {
+          matrix = matrixBasedModel->GetMatrix();
+          offset = matrixBasedModel->GetOffset();
+          result =  true;       
+        }
+        else if (translationModel)
+        {
+          matrix.SetIdentity();
+          offset = translationModel->GetOffset();
+          result =  true;       
+        }
+        else if (identityModel)
+        {
+          matrix.SetIdentity();
+          offset.Fill(0);
+          result =  true;       
+        }
 
-      return result;
+        return result;
+      };
+
+    private:
+
+      typedef AffineMatrixOffsetDecompositionPolicy<TScalarType, VDimensions, VDimensions> Self;
+      AffineMatrixOffsetDecompositionPolicy(); //purposely not implemented
+      virtual ~AffineMatrixOffsetDecompositionPolicy();  //purposely not implemented
+      AffineMatrixOffsetDecompositionPolicy(const Self&);  //purposely not implemented
+      void operator=(const Self&);  //purposely not implemented
     };
 
-		private:
 
-			typedef AffineMatrixOffsetDecompositionPolicy<TScalarType, VDimensions, VDimensions> Self;
-			AffineMatrixOffsetDecompositionPolicy(); //purposely not implemented
-			virtual ~AffineMatrixOffsetDecompositionPolicy();  //purposely not implemented
-			AffineMatrixOffsetDecompositionPolicy(const Self&);  //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
-		};
-
-    
-	} // end namespace core
+  } // end namespace core
 } // end namespace map
 
 #endif
