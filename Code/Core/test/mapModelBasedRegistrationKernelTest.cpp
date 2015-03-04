@@ -26,7 +26,6 @@
 
 #include "mapModelBasedRegistrationKernel.h"
 #include "litCheckMacros.h"
-#include "mapITKTranslationTransform.h"
 
 #include "itkTranslationTransform.h"
 
@@ -40,25 +39,24 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
-			TransformType;
+			typedef itk::TranslationTransform<core::continuous::ScalarType, 2> TransformType;
 
 			KernelType::Pointer spKernel = KernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
 			params[0] = 5;
 			params[1] = -5;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 
 			spKernel->setTransformModel(spTransform);
 
 			KernelType::InputPointType inPoint;
 			inPoint.Fill(0);
-			KernelType::OutputPointType referencePoint = spTransform->getTransform()->TransformPoint(inPoint);
+			KernelType::OutputPointType referencePoint = spTransform->TransformPoint(inPoint);
 
 			KernelType::InputVectorType inVector;
 			inVector.Fill(4);
-			KernelType::OutputVectorType referenceVector = spTransform->getTransform()->TransformVector(
+			KernelType::OutputVectorType referenceVector = spTransform->TransformVector(
 						inVector);
 
 			KernelType::OutputVectorType resultVector;

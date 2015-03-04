@@ -24,10 +24,11 @@
 #pragma warning ( disable : 4786 )
 #endif
 
+#include <itkScaleTransform.h>
+
 #include "litCheckMacros.h"
 #include "mapContinuous.h"
 #include "mapArbitraryTransformPolicy.h"
-#include "mapITKScaleTransform.h"
 
 namespace map
 {
@@ -91,14 +92,13 @@ namespace map
 			TestPolicy<core::continuous::ScalarType, 3, 3> policy;
 			const TestPolicy<core::continuous::ScalarType, 3, 3>& constPolicy = policy;
 
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 3> >
-			ModelType;
+			typedef ::itk::ScaleTransform<core::continuous::ScalarType, 3> ModelType;
 
 			ModelType::Pointer spModel1 = ModelType::New();
 			ModelType::Pointer spModel2 = ModelType::New();
 
-			core::TransformModelBase<core::continuous::ScalarType, 3, 3>* pModel = NULL;
-			const core::TransformModelBase<core::continuous::ScalarType, 3, 3>* pConstModel = NULL;
+			itk::Transform<core::continuous::ScalarType, 3, 3>* pModel = NULL;
+			const itk::Transform<core::continuous::ScalarType, 3, 3>* pConstModel = NULL;
 
 			CHECK_NO_THROW(pModel = policy.getTransformInternal());
 			CHECK_NO_THROW(pConstModel = constPolicy.getTransformInternal());

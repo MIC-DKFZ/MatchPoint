@@ -66,7 +66,7 @@ namespace map
 				scales[4] = 1.0 / 1000;
 				scales[5] = 1.0 / 1000;
 
-				this->getConcreteTransformModel()->getConcreteTransform()->SetIdentity();
+				this->getConcreteTransformModel()->SetIdentity();
 				this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetScales(scales);
 				this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetMaximumStepLength(4.00);
 				this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetMinimumStepLength(0.01);
@@ -88,7 +88,7 @@ namespace map
 				Superclass::compileInfos(infos);
 
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
-				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
+				typedef typename Superclass::TransformBaseType::ParametersType ParametersType;
 
 				#ifndef MAP_SEAL_ALGORITHMS
 				infos.push_back(::map::algorithm::MetaPropertyInfo::New("TransformParameters",
@@ -124,17 +124,17 @@ namespace map
 			{
 				MetaPropertyPointer spResult;
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
-				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
+				typedef typename Superclass::TransformBaseType::ParametersType ParametersType;
 
 				if (name == "TransformParameters")
 				{
 					spResult = ::map::core::MetaProperty<ParametersType>::New(
-					               this->getTransformInternal()->getTransform()->GetParameters());
+					               this->getTransformInternal()->GetParameters());
 				}
 				else if (name == "FixedTransformParameters")
 				{
 					spResult = ::map::core::MetaProperty<ParametersType>::New(
-					               this->getTransformInternal()->getTransform()->GetFixedParameters());
+					               this->getTransformInternal()->GetFixedParameters());
 				}
 				else if (name == "Scales")
 				{
@@ -195,19 +195,19 @@ namespace map
 			doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				typedef typename Superclass::OptimizerBaseType::OptimizerBaseType::ScalesType ScalesType;
-				typedef typename Superclass::TransformBaseType::TransformBaseType::ParametersType ParametersType;
+				typedef typename Superclass::TransformBaseType::ParametersType ParametersType;
 
 				if (name == "TransformParameters")
 				{
 					ParametersType params;
 					::map::core::unwrapMetaProperty(pProperty, params);
-					this->getTransformInternal()->getTransform()->SetParameters(params);
+					this->getTransformInternal()->SetParameters(params);
 				}
 				else if (name == "FixedTransformParameters")
 				{
 					ParametersType params;
 					::map::core::unwrapMetaProperty(pProperty, params);
-					this->getTransformInternal()->getTransform()->SetFixedParameters(params);
+					this->getTransformInternal()->SetFixedParameters(params);
 				}
 				else if (name == "Scales")
 				{

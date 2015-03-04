@@ -106,7 +106,7 @@ namespace map
 					scales[4] = 1.0 / 1000;
 					scales[5] = 1.0 / 1000;
 
-					this->getConcreteTransformModel()->getConcreteTransform()->SetIdentity();
+					this->getConcreteTransformModel()->SetIdentity();
 					this->getConcreteITKOptimizer()->SetScales(scales);
 					this->getConcreteITKOptimizer()->SetValueTolerance(1e-5);
 					this->getConcreteITKOptimizer()->SetGradientTolerance(1e-5);

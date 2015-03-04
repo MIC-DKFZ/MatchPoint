@@ -24,14 +24,14 @@
 #pragma warning ( disable : 4786 )
 #endif
 
+#include "itkScaleTransform.h"
+#include "itkIdentityTransform.h"
+
 #include "mapFieldByFieldFieldCombinationFunctor.h"
 #include "mapFieldByModelFunctor.h"
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
 #include "mapFieldBasedRegistrationKernels.h"
-
-#include "mapITKScaleTransform.h"
-#include "itkIdentityTransform.h"
 
 namespace map
 {
@@ -66,17 +66,15 @@ namespace map
 			spIllegalInRep->setOrigin(illegalOrigin);
 
 			//Setting up transform and inverse
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
-			TransformType;
+			typedef itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
 			params[0] = 0.3;
 			params[1] = 0.3;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 
-			TransformType::InverseTransformModelBasePointer spInverseTransform;
-			spTransform->getInverse(spInverseTransform);
+			TransformType::InverseTransformBasePointer spInverseTransform = spTransform->GetInverseTransform();
 
 			typedef core::functors::FieldByModelFunctor<2, 2> FunctorType;
 

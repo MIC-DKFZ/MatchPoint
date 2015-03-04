@@ -31,8 +31,7 @@
 #include "litTransformFieldTester.h"
 #include "mapFieldBasedRegistrationKernels.h"
 
-#include "mapITKUnaryTransformModel.h"
-#include "mapITKScaleTransform.h"
+#include "itkScaleTransform.h"
 
 namespace map
 {
@@ -58,21 +57,19 @@ namespace map
 			spInRep->setOrigin(origin);
 
 			//Model kernel generation
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
-			TransformType;
+			typedef itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
 
 			ModelKernelType::Pointer spModelKernel = ModelKernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
 			params[0] = 0.3;
 			params[1] = 0.3;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 
 			spModelKernel->setTransformModel(spTransform);
 
 			//Field kernel (generate by using inverse transform)
-			TransformType::InverseTransformModelBasePointer spInverseTransform;
-			spTransform->getInverse(spInverseTransform);
+			TransformType::InverseTransformBasePointer spInverseTransform =	spTransform->GetInverseTransform();
 
 			typedef core::functors::FieldByModelFunctor<2, 2> FunctorType;
 			FunctorType::Pointer spFieldFunctor = FunctorType::New(*spInverseTransform, spInRep);

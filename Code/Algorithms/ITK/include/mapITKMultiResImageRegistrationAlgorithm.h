@@ -195,8 +195,7 @@ namespace map
 				*/
 				virtual void prepFinalizePreparation();
 
-				typedef typename TransformPolicyType::TransformType::TransformBaseType::ParametersType
-				TransformParametersType;
+				typedef typename TransformPolicyType::TransformType::ParametersType	TransformParametersType;
 
 				/*! return the current resolution level number.
 				Will be called by getCurrentLevel() if hasLevelCount() returns true.

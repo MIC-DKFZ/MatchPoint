@@ -24,11 +24,12 @@
 #pragma warning ( disable : 4786 )
 #endif
 
+#include "itkScaleTransform.h"
+
 #include "litCheckMacros.h"
 #include "mapFixedTransformPolicy.h"
 #include "mapDiscrete.h"
 #include "mapContinuousElements.h"
-#include "mapITKScaleTransform.h"
 
 namespace map
 {

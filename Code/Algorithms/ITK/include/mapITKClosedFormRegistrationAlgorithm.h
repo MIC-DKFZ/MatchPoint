@@ -26,15 +26,15 @@
 #ifndef __ITK_CLOSED_FORM_REGISTRATION_ALGORITHM_H
 #define __ITK_CLOSED_FORM_REGISTRATION_ALGORITHM_H
 
+#include "itkLandmarkBasedTransformInitializer.h"
+
 #include "mapContinuous.h"
 
 #include "mapArbitraryTransformPolicy.h"
 #include "mapPointSetRegistrationAlgorithmBase.h"
 #include "mapObserverSentinel.h"
 #include "mapRegistrationAlgorithm.h"
-#include "mapITKTransformModel.h"
 #include "mapAnalyticAlgorithmInterface.h"
-#include "itkLandmarkBasedTransformInitializer.h"
 
 
 /*! @namespace map The namespace map is used throughout the MatchPoint project to
@@ -74,7 +74,7 @@ namespace map
 				itkTypeMacro(ITKClosedFormRegistrationAlgorithm, RegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
-				typedef ITKTransformModel<TITKTransform> TransformModelType;
+				typedef TITKTransform TransformModelType;
 
 				typedef typename Superclass::UIDType UIDType;
 				typedef typename Superclass::UIDPointer UIDPointer;
@@ -104,7 +104,7 @@ namespace map
 				ITKClosedFormRegistrationAlgorithm();
 				virtual ~ITKClosedFormRegistrationAlgorithm();
 
-				typedef ::itk::LandmarkBasedTransformInitializer < typename TransformModelType::TransformType,
+				typedef ::itk::LandmarkBasedTransformInitializer < typename TransformModelType,
 						typename core::discrete::Elements<TTargetPointSet::PointDimension>::InternalImageType,
 						typename core::discrete::Elements<TMovingPointSet::PointDimension>::InternalImageType >
 						InternalSolverMethodType;

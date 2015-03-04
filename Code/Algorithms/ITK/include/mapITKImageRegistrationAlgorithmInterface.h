@@ -26,9 +26,11 @@
 #ifndef __ITK_IMAGE_REGISTRATION_ALGORITHM_INTERFACE_H
 #define __ITK_IMAGE_REGISTRATION_ALGORITHM_INTERFACE_H
 
+#include <itkTransform.h>
+#include <itkInterpolateImageFunction.h>
+
 #include "mapITKSVNLOptimizerControlInterface.h"
 #include "mapITKImageToImageMetricControlInterface.h"
-#include "mapTransformModelBase.h"
 
 #include "mapITKSVNLOptimizerSetterInterface.h"
 #include "mapITKSVNLOptimizerGetterInterface.h"
@@ -38,9 +40,6 @@
 #include "mapITKInterpolatorGetterInterface.h"
 #include "mapITKImageToImageMetricSetterInterface.h"
 #include "mapITKImageToImageMetricGetterInterface.h"
-
-#include "itkInterpolateImageFunction.h"
-
 
 /*! @namespace map The namespace map is used throughout the MatchPoint project to
     mark code as components of this project
@@ -65,8 +64,7 @@ namespace map
 
 				typedef ITKSVNLOptimizerControlInterface OptimizerBaseType;
 				typedef ITKImageToImageMetricControlInterface<TMovingImage, TTargetImage> MetricBaseType;
-				typedef core::TransformModelBase<TTransformScalar, TMovingImage::ImageDimension, TTargetImage::ImageDimension>
-				TransformBaseType;
+				typedef ::itk::Transform<TTransformScalar, TMovingImage::ImageDimension, TTargetImage::ImageDimension> TransformBaseType;
 				typedef ::itk::InterpolateImageFunction<TMovingImage, TInterpolatorCoordRep> InterpolatorBaseType;
 
 				typedef facet::ITKSVNLOptimizerSetterInterface OptimizerSetterInterfaceType;

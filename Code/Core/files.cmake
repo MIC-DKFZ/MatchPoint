@@ -34,6 +34,7 @@ SET(CPP_FILES
 
 SET(H_FILES 
 	include/mapAffineMatrixDecomposer.h
+	include/mapAffineMatrixOffsetDecompositionPolicy.h
     include/mapConvert.h
 	include/mapClassMacros.h
 	include/mapCombinedFieldBasedRegistrationKernel.h
@@ -63,8 +64,6 @@ SET(H_FILES
 	include/mapImageMappingTask.h
 	include/mapInverseRegistrationKernelGenerator.h
 	include/mapInvertingFieldBasedRegistrationKernel.h
-	include/mapITKDimensionedTransformModel.h
-	include/mapITKUnaryTransformModel.h
 	include/mapKernelCombinatorLoadPolicy.h
 	include/mapKernelInverterLoadPolicy.h
 	include/mapLazyFieldPolicy.h
@@ -117,8 +116,6 @@ SET(H_FILES
 	include/mapSmartMetaProperty.h
 	include/mapString.h
 	include/mapThreadEvents.h
-#	include/mapTransformModel.h
-	include/mapTransformModelBase.h
 	include/mapVolume.h
 	include/mapVolumeSize.h
 	include/mapWin32Header.h
@@ -172,8 +169,6 @@ SET(TPP_FILES
 	include/mapImageMappingTask.tpp
 	include/mapInverseRegistrationKernelGenerator.tpp
 	include/mapInvertingFieldBasedRegistrationKernel.tpp
-	include/mapITKDimensionedTransformModel.tpp
-	include/mapITKUnaryTransformModel.tpp
 	include/mapKernelCombinatorLoadPolicy.tpp
 	include/mapKernelInverterLoadPolicy.tpp
 	include/mapLazyFieldPolicy.tpp
@@ -204,8 +199,6 @@ SET(TPP_FILES
 	include/mapRegistrationKernelCombinatorBase.tpp
 	include/mapRegistrationManipulator.tpp
 	include/mapSmartMetaProperty.tpp
-#	include/mapTransformModel.tpp
-	include/mapTransformModelBase.tpp
 	include/mapVolume.tpp
 	include/mapVolumeSize.tpp
     include/mapServiceStack.tpp

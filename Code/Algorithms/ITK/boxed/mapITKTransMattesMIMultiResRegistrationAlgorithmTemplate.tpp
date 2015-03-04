@@ -151,7 +151,7 @@ namespace map
 				if (name == "TransformParameters")
 				{
 					spResult = map::core::MetaProperty<ParametersType>::New(
-								   this->getTransformInternal()->getTransform()->GetParameters());
+								   this->getTransformInternal()->GetParameters());
 				}
 				else if (name == "Scales")
 				{
@@ -228,7 +228,7 @@ namespace map
 				{
 					ParametersType params;
 					map::core::unwrapMetaProperty(pProperty, params);
-					this->getTransformInternal()->getTransform()->SetParameters(params);
+					this->getTransformInternal()->SetParameters(params);
 				}
 				else if (name == "Scales")
 				{

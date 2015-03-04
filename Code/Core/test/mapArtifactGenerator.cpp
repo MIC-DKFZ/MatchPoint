@@ -25,7 +25,6 @@
 #endif
 
 #include "mapArtifactGenerator.h"
-#include "mapITKUnaryTransformModel.h"
 #include "mapITKScaleTransform.h"
 #include "mapFieldByModelFunctor.h"
 
@@ -38,14 +37,13 @@ namespace map
 			const core::FieldRepresentationDescriptor<2>* pRepDesc)
 		{
 			//Model kernel generation
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
-			TransformType;
+			typedef itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
 			params[0] = 0.3;
 			params[1] = 0.4;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 
 			typedef core::functors::FieldByModelFunctor<2, 2> FunctorType;
 			FunctorType::Pointer spFieldFunctor = FunctorType::New(*spTransform, pRepDesc);

@@ -24,10 +24,11 @@
 #ifndef __DUMMY_IMAGE_REGISTRATION_ALGORITHM_TPP
 #define __DUMMY_IMAGE_REGISTRATION_ALGORITHM_TPP
 
+#include <itkAffineTransform.h>
+
 #include "mapAlgorithmException.h"
 #include "mapModelBasedRegistrationKernel.h"
 #include "mapRegistrationManipulator.h"
-#include "../ITK/include/mapITKAffineTransform.h"
 
 namespace map
 {
@@ -102,12 +103,11 @@ namespace map
 		{
 			RegistrationPointer spResult = NULL;
 
-			typedef map::algorithm::itk::ITKTransformModel< ::itk::AffineTransform<core::continuous::ScalarType, RegistrationType::MovingDimensions> >
-			TransformModelType;
+			typedef ::itk::AffineTransform<core::continuous::ScalarType, RegistrationType::MovingDimensions>  TransformModelType;
 
 			typename TransformModelType::Pointer spFinalTransformModel = TransformModelType::New();
 
-			spFinalTransformModel->getConcreteTransform()->SetIdentity();
+			spFinalTransformModel->SetIdentity();
 
 			//now build the inverse kernel (main kernel of a image based registration algorithm)
 			typedef core::ModelBasedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>

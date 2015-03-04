@@ -105,21 +105,17 @@ namespace map
 				typedef map::core::ModelBasedRegistrationKernel<VOutputDimensions, VOutputDimensions> NewKernelType;
 
 				const Transform1Type* transform1 = dynamic_cast<const Transform1Type*>
-												   (kernel1->getTransformModel()->getTransform());
+												   (kernel1->getTransformModel());
 				const Transform2Type* transform2 = dynamic_cast<const Transform2Type*>
-												   (kernel2->getTransformModel()->getTransform());
+												   (kernel2->getTransformModel());
 
 				if (transform1 && transform2)
 				{
-					typename NewKernelType::TransformType::Pointer newModel =
-						dynamic_cast<typename NewKernelType::TransformType*>
-						(kernel2->getTransformModel()->clone().GetPointer());
+					typename Transform2Type::Pointer newModel = dynamic_cast<Transform2Type*>(transform2->Clone().GetPointer());
 
-					Transform2Type* resultTransform = dynamic_cast<Transform2Type*>(newModel->getTransform());
-
-					if (resultTransform)
+					if (newModel)
 					{
-						resultTransform->Compose(transform1, true);
+						newModel->Compose(transform1, true);
 
 						typename NewKernelType::Pointer newKernel = NewKernelType::New();
 						newKernel->setTransformModel(newModel);

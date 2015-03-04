@@ -23,8 +23,9 @@
 #ifndef __MAP_FIELD_BY_MODEL_FUNCTOR_H
 #define __MAP_FIELD_BY_MODEL_FUNCTOR_H
 
+#include <itkTransform.h>
+
 #include "mapFieldGenerationFunctor.h"
-#include "mapTransformModelBase.h"
 
 namespace map
 {
@@ -65,7 +66,7 @@ namespace map
 				typedef typename Superclass::OutFieldRepresentationConstPointer OutFieldRepresentationConstPointer;
 				typedef typename Superclass::FieldType                          FieldType;
 				typedef typename Superclass::FieldPointer                       FieldPointer;
-				typedef TransformModelBase < map::core::continuous::ScalarType,
+				typedef ::itk::Transform < map::core::continuous::ScalarType,
 						VOutputDimensions, VInputDimensions >  TransformModelType;
 				typedef typename TransformModelType::ConstPointer               TransformModelConstPointer;
 

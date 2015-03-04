@@ -23,10 +23,11 @@
 #ifndef __MODEL_BASED_REGISTRATION_KERNEL_H
 #define __MODEL_BASED_REGISTRATION_KERNEL_H
 
+#include "itkTransform.h"
+
 #include "mapString.h"
 #include "mapModelBasedRegistrationKernelInterface.h"
 #include "mapRegistrationKernelBase.h"
-#include "mapTransformModelBase.h"
 
 /*! @namespace map The namespace map::core is for the library of MatchPoint
 */
@@ -45,8 +46,7 @@ namespace map
 		{
 
 		public:
-			typedef TransformModelBase<continuous::ScalarType, VInputDimensions, VOutputDimensions>
-			TransformType;
+			typedef ::itk::Transform<continuous::ScalarType, VInputDimensions, VOutputDimensions>	TransformType;
 
 			typedef ModelBasedRegistrationKernel<VInputDimensions, VOutputDimensions> Self;
 			typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions> Superclass;
@@ -114,6 +114,20 @@ namespace map
 
 			virtual void precomputeKernel();
 
+
+      typedef itk::Matrix<continuous::ScalarType, VOutputDimensions, VInputDimensions> MatrixType;
+
+			/*! Tries to decompose the transform model into an affine matrix and an offset. It is indecated by the return value if
+			 * the actual modell can be decomposed.\n
+			 * Usage of the return values: Point_trans = Matrix*Point + Offset
+			 *
+			 * @eguarantee strong
+			 * @remark Implement the function for special transform model classes.
+			 * @param [out] matrix Reference to the matrix that define the affine non-translation part (e.g. rotation and scaling).
+			 * @param [out] offset Reference to a vector that defines the translation offset.
+			 * @return Indicates if the transform model can be decomposed in a affine transformation matrix plus offset. If it returns false, it cannot be decomposed
+			 * and the referenced output parameters are invalid.*/
+			virtual bool getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const;
 
 		protected:
 			ModelBasedRegistrationKernel();

@@ -57,14 +57,13 @@ namespace map
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
 			KernelType::Pointer spKernel = KernelType::New();
 
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
-			TransformType;
+			typedef itk::TranslationTransform<core::continuous::ScalarType, 2> TransformType;
 			TransformType::Pointer spTransform = TransformType::New();
 
 			TransformType::ParametersType params(2);
 			params[0] = 5;
 			params[1] = 5;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 			spKernel->setTransformModel(spTransform);
 
 			// let the generator invert the kernel

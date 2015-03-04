@@ -24,10 +24,11 @@
 #pragma warning ( disable : 4786 )
 #endif
 
+#include "itkEuler2DTransform.h"
+#include "itkBSplineTransform.h"
+
 #include "mapModelBasedRegistrationKernel.h"
 #include "mapFieldBasedRegistrationKernels.h"
-#include "mapITKEuler2DTransform.h"
-#include "mapITKDimensionedTransformModel.h"
 #include "mapMatrixModelBasedKernelWriter.h"
 #include "mapSDXMLStrWriter.h"
 
@@ -40,52 +41,6 @@ namespace map
 	namespace testing
 	{
 
-		template< template <typename> class TTransform, class TScalarType>
-		class TestNumericTransformModel : public core::ITKDimensionedTransformModel<TTransform, TScalarType>
-		{
-		public:
-			/*! Standard class typedefs. */
-			typedef TestNumericTransformModel<TTransform, TScalarType>  Self;
-			typedef core::ITKDimensionedTransformModel<TTransform, TScalarType>  Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
-
-			itkTypeMacro(TestNumericTransformModel, ITKDimensionedTransformModel);
-			itkNewMacro(Self);
-
-			typedef typename Superclass::ScalarType                       ScalarType;
-			typedef typename Superclass::InverseTransformModelPointer     InverseTransformModelPointer;
-			typedef typename Superclass::InverseTransformModelBasePointer InverseTransformModelBasePointer;
-			typedef typename Superclass::TransformModelBasePointer        TransformModelBasePointer;
-			typedef typename Superclass::MatrixType                       MatrixType;
-			typedef typename Superclass::OutputVectorType                 OutputVectorType;
-
-			virtual bool getInverse(InverseTransformModelBasePointer& spInverseModel) const
-			{
-				return false;
-			};
-
-			virtual bool getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const
-			{
-				return false;
-			};
-
-		protected:
-
-			virtual InverseTransformModelPointer createInverse() const
-			{
-				InverseTransformModelPointer spNew;
-				return spNew;
-			};
-
-			virtual TransformModelBasePointer createAnotherInstance() const
-			{
-				TransformModelBasePointer spNew = New().GetPointer();
-				return spNew;
-			};
-
-		};
-
 		int mapMatrixModelBasedKernelWriterTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
@@ -93,10 +48,9 @@ namespace map
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
 
 			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel IllegalKernelType;
-			typedef algorithm::itk::ITKTransformModel< itk::Euler2DTransform<core::continuous::ScalarType> >
-			TransformType;
-			typedef TestNumericTransformModel<itk::Euler2DTransform, core::continuous::ScalarType>
-			NumericTransformType;
+			typedef itk::Euler2DTransform<core::continuous::ScalarType>	TransformType;
+      //define non matrix-offset-decomposable type
+      typedef itk::BSplineTransform<core::continuous::ScalarType,2,2> IllegalTransformType; 
 
 			typedef io::MatrixModelBasedKernelWriter<2, 2> WriterType;
 			typedef io::MatrixModelBasedKernelWriter<2, 3> Writer23Type;
@@ -107,20 +61,19 @@ namespace map
 			params[0] = 1.5708;
 			params[1] = 5;
 			params[2] = 2;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 			spKernel->setTransformModel(spTransform);
 
-			KernelType::Pointer spNumericKernel = KernelType::New();
-			NumericTransformType::Pointer spNumericTransform = NumericTransformType::New();
-			spNumericTransform->getTransform()->SetParameters(params);
-			spNumericKernel->setTransformModel(spNumericTransform);
+			KernelType::Pointer spNonMatrixKernel = KernelType::New();
+			IllegalTransformType::Pointer spNonMatrixTransform = IllegalTransformType::New();
+			spNonMatrixKernel->setTransformModel(spNonMatrixTransform);
 
 			IllegalKernelType::Pointer spIllegalKernel = IllegalKernelType::New();
 
 			WriterType::Pointer spWriter = WriterType::New();
 
 			WriterType::RequestType illegalRequest1(spIllegalKernel, "", "", false);
-			WriterType::RequestType illegalRequest2(spNumericKernel, "", "", false);
+			WriterType::RequestType illegalRequest2(spNonMatrixKernel, "", "", false);
 			WriterType::RequestType request(spKernel, "", "MatrixModelBasedWriterTest", false);
 
 			CHECK_EQUAL(false, spWriter->canHandleRequest(illegalRequest1));

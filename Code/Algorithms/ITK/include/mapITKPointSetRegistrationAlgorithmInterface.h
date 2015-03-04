@@ -26,9 +26,10 @@
 #ifndef __ITK_POINT_SET_REGISTRATION_ALGORITHM_INTERFACE_H
 #define __ITK_POINT_SET_REGISTRATION_ALGORITHM_INTERFACE_H
 
+#include <itkTransform.h>
+
 #include "mapITKMVNLOptimizerControlInterface.h"
 #include "mapITKPointSetToPointSetMetricControlInterface.h"
-#include "mapTransformModelBase.h"
 
 #include "mapITKMVNLOptimizerSetterInterface.h"
 #include "mapITKMVNLOptimizerGetterInterface.h"
@@ -62,8 +63,7 @@ namespace map
 				typedef ITKMVNLOptimizerControlInterface OptimizerBaseType;
 				typedef ITKPointSetToPointSetMetricControlInterface<TMovingPointSet, TTargetPointSet>
 				MetricBaseType;
-				typedef core::TransformModelBase<TTransformScalar, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>
-				TransformBaseType;
+				typedef ::itk::Transform<TTransformScalar, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension> TransformBaseType;
 
 				typedef facet::ITKMVNLOptimizerSetterInterface OptimizerSetterInterfaceType;
 				typedef facet::ITKMVNLOptimizerGetterInterface OptimizerGetterInterfaceType;

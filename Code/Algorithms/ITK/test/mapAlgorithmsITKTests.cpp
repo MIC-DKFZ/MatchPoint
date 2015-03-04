@@ -50,8 +50,6 @@ namespace map
 			LIT_REGISTER_TEST(mapFixedPointSetToPointSetMetricPolicyTest);
 			LIT_REGISTER_TEST(mapITKImageRegistrationAlgorithmTest);
 			LIT_REGISTER_TEST(mapFixedITKImageRegistrationAlgorithmTest);
-			LIT_REGISTER_TEST(mapITKAffineTransformTest);
-			LIT_REGISTER_TEST(mapITKCenteredRigid2DTransformTest);
 			LIT_REGISTER_TEST(mapITKPointSetRegistrationAlgorithmTest);
 			LIT_REGISTER_TEST(mapITKRigid2DICPRegistrationAlgorithmTemplateTest);
 			LIT_REGISTER_TEST(mapITKEuler3DICPRegistrationAlgorithmTemplateTest);

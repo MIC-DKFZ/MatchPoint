@@ -235,20 +235,22 @@ namespace map
 					}
 
 					//clone the transform model
-					typename TransformBaseType::Pointer spInterimTransformModel = pTransformModel->clone();
+					typename TransformBaseType::Pointer spInterimTransformModel = pTransformModel->Clone();
 
 					if (spInterimTransformModel.IsNull())
 					{
+            std::ostringstream modelStrm;
+            pTransformModel->Print(modelStrm);
 						mapExceptionMacro(AlgorithmException,
 						                  << "Error. Cannot determine interim registration. Unable to clone transform model. Current model: "
-						                  << *pTransformModel);
+						                  << modelStrm);
 					}
 
 					//set the parameter of the interim transform model to the current transform parameters of the algorithm
 					//We set the parameter by Value and not by using SetParameter() because otherwise
 					//it could cause errors with itk transforms that only keep a pointer to their parameters (e.g. itk::BSplineDeformableTransform).
 					//This transforms would be invalid as soon as we leave this method.
-					spInterimTransformModel->getTransform()->SetParametersByValue(
+					spInterimTransformModel->SetParametersByValue(
 					    this->getCurrentTransformParameters());
 
 					//now build the inverse kernel (main kernel of a image based registration algorithm)
@@ -357,7 +359,7 @@ namespace map
 			{
 				this->_internalRegistrationMethod->SetMetric(this->getMetricInternal()->getImageToImageMetric());
 				this->_internalRegistrationMethod->SetOptimizer(this->getOptimizerInternal()->getSVNLOptimizer());
-				this->_internalRegistrationMethod->SetTransform(this->getTransformInternal()->getTransform());
+				this->_internalRegistrationMethod->SetTransform(this->getTransformInternal());
 				this->_internalRegistrationMethod->SetInterpolator(this->getInterpolatorInternal());
 			}
 
@@ -495,11 +497,11 @@ namespace map
 
 				::map::core::OStringStream os;
 				os << "Set start transformation parameters to: " <<
-				   pTransformModel->getTransform()->GetParameters();
+				   pTransformModel->GetParameters();
 				//set the parameter of the transform model to the current transform parameters of the algorithm
-				this->setCurrentTransformParameters(pTransformModel->getTransform()->GetParameters());
+				this->setCurrentTransformParameters(pTransformModel->GetParameters());
 				this->_internalRegistrationMethod->SetInitialTransformParameters(
-				    pTransformModel->getTransform()->GetParameters());
+				    pTransformModel->GetParameters());
 
 				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
 			};
@@ -598,7 +600,7 @@ namespace map
 					typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
 					spCommand->SetCallbackFunction(this, &Self::onGeneralTransformEvent);
 					_onGeneralTransformObserver = core::ObserverSentinel::New(
-					                                  this->getTransformInternal()->getTransform(), ::itk::AnyEvent(), spCommand);
+					                                  this->getTransformInternal(), ::itk::AnyEvent(), spCommand);
 				}
 
 				typename ::itk::MemberCommand<Self>::Pointer spCommand = ::itk::MemberCommand<Self>::New();
@@ -642,20 +644,22 @@ namespace map
 				}
 
 				//clone the transform model
-				typename TransformBaseType::Pointer spFinalTransformModel = pTransformModel->clone();
+				typename TransformBaseType::Pointer spFinalTransformModel = pTransformModel->Clone();
 
 				if (spFinalTransformModel.IsNull())
 				{
+          std::ostringstream modelStrm;
+          pTransformModel->Print(modelStrm);
 					mapExceptionMacro(AlgorithmException,
 					                  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " <<
-					                  *pTransformModel);
+					                  modelStrm);
 				}
 
 				TransformParametersType lastTransformParameters =
 				    this->_internalRegistrationMethod->GetLastTransformParameters();
 
 				//set the parameter of the final transform model to the final transform parameters of the algorithm
-				spFinalTransformModel->getTransform()->SetParametersByValue(
+				spFinalTransformModel->SetParametersByValue(
 				    lastTransformParameters); //this line is need to ensure correct cloning for
 				//itk transforms that only keep a pointer to their parameters (e.g. itk::BSplineDeformableTransform).
 				//Thoose transforms can cause problems with optimizers that only keep the parameters localy (e.g. itk::LBFGSOptimizer).
@@ -715,7 +719,7 @@ namespace map
 			{
 				::map::core::OStringStream os;
 				TransformParametersType currentParams =
-				    this->getTransformInternal()->getTransform()->GetParameters();
+				    this->getTransformInternal()->GetParameters();
 
 				bool hasCurrentPosition = this->getOptimizerInternal()->hasCurrentPosition();
 				typename OptimizerBaseType::OptimizerPositionType currentPosition =

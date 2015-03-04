@@ -74,8 +74,8 @@ namespace map
 				const InverseKernelBaseType& inverseKernelBase = request._spRegistration->getInverseMapping();
 				const ModelKernelType* pInverseKernel = dynamic_cast<const ModelKernelType*>(&inverseKernelBase);
 				//get direct access to the transform model
-				const typename ModelKernelType::TransformType::TransformBaseType* pTransform =
-					pInverseKernel->getTransformModel()->getTransform();
+				const typename ModelKernelType::TransformType* pTransformModel =
+					pInverseKernel->getTransformModel();
 
 				//instantiate resampler
 				typedef itk::ResampleImageFilter<InputDataType, ResultDataType, continuous::ScalarType>
@@ -87,7 +87,7 @@ namespace map
 				spFilter->SetSize(request._spResultDescriptor->getRepresentedLocalImageRegion().GetSize());
 				spFilter->SetOutputDirection(request._spResultDescriptor->getDirection());
 
-				spFilter->SetTransform(pTransform);
+				spFilter->SetTransform(pTransformModel);
 
 				spFilter->SetInput(request._spInputData);
 				spFilter->SetInterpolator(request._spInterpolateFunction);

@@ -29,8 +29,8 @@
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
 #include "mapFieldBasedRegistrationKernels.h"
-#include "mapITKScaleTransform.h"
 
+#include "itkScaleTransform.h"
 #include "itkImageRegionIterator.h"
 
 namespace map
@@ -76,8 +76,7 @@ namespace map
 
 			// We need a field, so we build one here using the FieldByModelFunctor
 			typedef core::functors::FieldByModelFunctor<2, 2> ModelFunctorType;
-			typedef algorithm::itk::ITKTransformModel< itk::ScaleTransform<core::continuous::ScalarType, 2> >
-			TransformType;
+			typedef itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
 
 			TransformType::Pointer spModel = TransformType::New();
 
@@ -88,7 +87,7 @@ namespace map
 			size.fill(2);
 			ModelFunctorType::TransformModelType::ParametersType params(2);
 			params.fill(3.0);
-			spModel->getTransform()->SetParameters(params);
+			spModel->SetParameters(params);
 
 			ModelFunctorType::InFieldRepresentationType::Pointer spInRep =
 				ModelFunctorType::InFieldRepresentationType::New();
@@ -103,9 +102,8 @@ namespace map
 
 
 			// we use the source model for analytic inversion
-			TransformType::InverseTransformModelBasePointer
-			spInverseModel; //barra = TransformType::InverseTransformModelType::New();
-			spModel->getInverse(spInverseModel);
+			TransformType::InverseTransformBasePointer
+			spInverseModel = spModel->GetInverseTransform();
 
 
 			// test the FieldByFieldInversionFunctor
@@ -145,9 +143,9 @@ namespace map
 
 			// use the inverted model spInverseModel to compare results
 
-			lit::TransformFieldTester<FieldInversionFunctorType::FieldType, ModelFunctorType::TransformModelType::TransformBaseType>
+			lit::TransformFieldTester<FieldInversionFunctorType::FieldType, ModelFunctorType::TransformModelType>
 			tester;
-			tester.setReferenceTransform(spInverseModel->getTransform());
+			tester.setReferenceTransform(spInverseModel);
 			tester.setActualField(spGeneratedField);
 			tester.setCheckThreshold(checkThreshold);
 

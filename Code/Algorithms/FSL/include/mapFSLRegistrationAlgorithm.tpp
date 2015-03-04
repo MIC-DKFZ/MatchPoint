@@ -554,14 +554,13 @@ namespace map
 							targetRep, movingRep);
 					tmpMatrix = MatrixConverterType::convertRASToITKTrans(tmpMatrix);
 
-					typename ModelType::TransformType::ParametersType params =
-						convertMatrixToAffineTransformParams<TTargetImage::ImageDimension>(tmpMatrix);
+					typename ModelType::ParametersType params =	convertMatrixToAffineTransformParams<TTargetImage::ImageDimension>(tmpMatrix);
 
 					//set the parameter of the final transform model to the final transform parameters of the algorithm
 					//We set the parameter by Value and not by using SetParameter() because otherwise
 					//it could cause errors with itk transforms that only keep a pointer to their parameters (e.g. itk::BSplineDeformableTransform).
 					//This transforms would be invalid as soon as we leave this method.
-					spFinalTransformModel->getTransform()->SetParametersByValue(params);
+					spFinalTransformModel->SetParametersByValue(params);
 
 					//now build the inverse kernel (main kernel of an image based registration algorithm)
 					typedef core::ModelBasedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>

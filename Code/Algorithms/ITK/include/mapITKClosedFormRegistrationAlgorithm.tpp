@@ -58,9 +58,9 @@ namespace map
 			ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::
 			isTargetRepresentationRequired() const
 			{
-				typename TransformModelType::InverseTransformModelBasePointer spInverseModel;
+				typename TransformModelType::InverseTransformBasePointer spInverseModel = this->_spTransform->GetInverseTransform();
 
-				if (this->_spTransform->getInverse(spInverseModel))
+				if (spInverseModel.IsNotNull())
 				{
 					// you can invert it thus no rep is needed
 					return FieldRepRequirement::No;
@@ -125,7 +125,7 @@ namespace map
 				//assemble registration components
 				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing solver."));
 
-				this->_internalSolver->SetTransform(_spTransform->getConcreteTransform());
+				this->_internalSolver->SetTransform(_spTransform);
 
 				//Connect point sets
 				this->InvokeEvent(events::AlgorithmEvent(this, "Connect point sets to itk registration method."));
@@ -164,14 +164,14 @@ namespace map
 				}
 
 				//clone the transform model
-				typename TransformModelType::TransformModelBasePointer spFinalTransformModel =
-					_spTransform->clone();
+				typename TransformModelType::Pointer spFinalTransformModel =	dynamic_cast<TransformModelType*>(_spTransform->Clone().GetPointer());
 
 				if (spFinalTransformModel.IsNull())
 				{
+          std::ostringstream modelStrm;
+          _spTransform->Print(modelStrm);
 					mapExceptionMacro(AlgorithmException,
-									  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " <<
-									  * (_spTransform.GetPointer()));
+									  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " <<modelStrm);
 				}
 
 

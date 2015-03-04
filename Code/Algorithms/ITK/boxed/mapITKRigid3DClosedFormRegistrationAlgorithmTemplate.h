@@ -26,7 +26,7 @@
 
 #include "mapITKClosedFormRegistrationAlgorithm.h"
 
-#include "mapITKVersorRigid3DTransform.h"
+#include "itkVersorRigid3DTransform.h"
 
 
 namespace map

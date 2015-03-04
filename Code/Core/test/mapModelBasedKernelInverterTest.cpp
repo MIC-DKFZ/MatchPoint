@@ -24,10 +24,11 @@
 #pragma warning ( disable : 4786 )
 #endif
 
+#include "itkTranslationTransform.h"
+
 #include "mapModelBasedKernelInverter.h"
 #include "mapModelBasedRegistrationKernel.h"
 #include "mapFieldBasedRegistrationKernels.h"
-#include "mapITKTranslationTransform.h"
 
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
@@ -38,47 +39,27 @@ namespace map
 	namespace testing
 	{
 
-		template< template <typename, unsigned int> class TTransform, class TScalarType, unsigned int VDimensions>
-		class TestNumericTransformModel : public
-			core::ITKUnaryTransformModel<TTransform, TScalarType, VDimensions>
+		template<class TScalarType, unsigned int VDimensions>
+		class TestNonInvertingTranslationTransform : public ::itk::TranslationTransform<TScalarType, VDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef TestNumericTransformModel<TTransform, TScalarType, VDimensions>  Self;
-			typedef core::ITKUnaryTransformModel<TTransform, TScalarType, VDimensions>  Superclass;
+			typedef TestNonInvertingTranslationTransform<TScalarType, VDimensions>  Self;
+			typedef ::itk::TranslationTransform<TScalarType, VDimensions>  Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
-			itkTypeMacro(TestNumericTransformModel, ITKUnaryTransformModel);
+			itkTypeMacro(TestNonInvertingTranslationTransform, TranslationTransform);
 			itkNewMacro(Self);
 
 			typedef typename Superclass::ScalarType                       ScalarType;
 
-			virtual bool getInverse(typename Superclass::InverseTransformModelBasePointer& spInverseModel) const
-			{
-				return false;
-			};
-
-			virtual bool getAffineMatrixDecomposition(typename Superclass::MatrixType& matrix,
-					typename Superclass::OutputVectorType& offset) const
-			{
-				return false;
-			};
-
-		protected:
-
-			virtual typename Superclass::InverseTransformModelPointer createInverse() const
-			{
-				typename Superclass::InverseTransformModelPointer spNew;
-				return spNew;
-			};
-
-			virtual typename Superclass::TransformModelBasePointer createAnotherInstance() const
-			{
-				typename Superclass::TransformModelBasePointer spNew = New().GetPointer();
-				return spNew;
-			};
-
+      /** Return an inverse of this transform. */
+      virtual InverseTransformBasePointer GetInverseTransform() const
+      {
+        InverseTransformBasePointer result;
+        return result;
+      };
 		};
 
 		int mapModelBasedKernelInverterTest(int argc, char* argv[])
@@ -118,10 +99,10 @@ namespace map
 			typedef core::ModelBasedRegistrationKernel<2, 2> InverseKernelType;
 
 			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel IllegalKernelType;
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
-			TransformType;
-			typedef TestNumericTransformModel<itk::TranslationTransform, core::continuous::ScalarType, 2>
-			NumericTransformType;
+			typedef itk::TranslationTransform<core::continuous::ScalarType, 2> TransformType;
+
+			typedef TestNonInvertingTranslationTransform<core::continuous::ScalarType, 2>	NumericTransformType;
+
 			typedef core::ModelBasedKernelInverter<2, 2> InverterType;
 			typedef core::ModelBasedKernelInverter<2, 3> Inverter2Type;
 
@@ -130,12 +111,12 @@ namespace map
 			TransformType::ParametersType params(2);
 			params[0] = 5;
 			params[1] = 5;
-			spTransform->getTransform()->SetParameters(params);
+			spTransform->SetParameters(params);
 			spKernel->setTransformModel(spTransform);
 
 			KernelType::Pointer spNumericKernel = KernelType::New();
 			NumericTransformType::Pointer spNumericTransform = NumericTransformType::New();
-			spNumericTransform->getTransform()->SetParameters(params);
+			spNumericTransform->SetParameters(params);
 			spNumericKernel->setTransformModel(spNumericTransform);
 
 			InverseKernelType::RepresentationDescriptorType::SpacingType spacing(0.5);
@@ -183,8 +164,8 @@ namespace map
 			CHECK(NULL != pInverseConcreteKernel);
 
 			//check correct inversion by transform parameters
-			CHECK_EQUAL(-5, pInverseConcreteKernel->getTransformModel()->getTransform()->GetParameters()[0]);
-			CHECK_EQUAL(-5, pInverseConcreteKernel->getTransformModel()->getTransform()->GetParameters()[1]);
+			CHECK_EQUAL(-5, pInverseConcreteKernel->getTransformModel()->GetParameters()[0]);
+			CHECK_EQUAL(-5, pInverseConcreteKernel->getTransformModel()->GetParameters()[1]);
 
 			//test if the kernel was really inverted numerically, thus a lazy field kernel was established
 
@@ -203,9 +184,9 @@ namespace map
 			CHECK(NULL != pInverseConcreteNumericKernel);
 
 			//check correct inversion
-			lit::TransformFieldTester<FieldBasedRegistrationKernelType::FieldType, NumericTransformType::TransformBaseType>
+			lit::TransformFieldTester<FieldBasedRegistrationKernelType::FieldType, NumericTransformType::InverseTransformBaseType>
 			tester;
-			tester.setReferenceTransform(pInverseConcreteKernel->getTransformModel()->getTransform());
+			tester.setReferenceTransform(pInverseConcreteKernel->getTransformModel());
 			tester.setActualField(pInverseConcreteNumericKernel->getField());
 			tester.setCheckThreshold(0.1);
 

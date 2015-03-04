@@ -39,17 +39,16 @@ namespace map
 	namespace testing
 	{
 
-		map::algorithm::itk::ITKTransformModel< ::itk::Euler2DTransform<map::core::continuous::ScalarType> >::Pointer
+		::itk::Euler2DTransform<map::core::continuous::ScalarType>::Pointer
 		generateTestTransform(double rotation, double x, double y)
 		{
-			typedef map::algorithm::itk::ITKTransformModel< ::itk::Euler2DTransform<map::core::continuous::ScalarType> >
-			ModelType;
+			typedef ::itk::Euler2DTransform<map::core::continuous::ScalarType> ModelType;
 			ModelType::Pointer transform = ModelType::New();
-			transform->getConcreteTransform()->SetAngleInDegrees(rotation);
+			transform->SetAngleInDegrees(rotation);
 			::itk::Euler2DTransform<map::core::continuous::ScalarType>::OffsetType offset;
 			offset[0] = x;
 			offset[1] = y;
-			transform->getConcreteTransform()->SetOffset(offset);
+			transform->SetOffset(offset);
 
 			return transform;
 		}
@@ -85,10 +84,8 @@ namespace map
 			ModelKernelType::Pointer spMOKernel1 = ModelKernelType::New();
 			ModelKernelType::Pointer spMOKernel2 = ModelKernelType::New();
 
-			spKernel1->setTransformModel(
-				map::algorithm::itk::ITKTransformModel< ::itk::TranslationTransform< map::core::continuous::ScalarType, 2> >::New());
-			spKernel2->setTransformModel(
-				map::algorithm::itk::ITKTransformModel< ::itk::TranslationTransform< map::core::continuous::ScalarType, 2> >::New());
+			spKernel1->setTransformModel(::itk::TranslationTransform< map::core::continuous::ScalarType, 2>::New());
+			spKernel2->setTransformModel(::itk::TranslationTransform< map::core::continuous::ScalarType, 2>::New());
 
 			spMOKernel1->setTransformModel(generateTestTransform(-10, 11, -80));
 			spMOKernel2->setTransformModel(generateTestTransform(21, 2, 78));
@@ -131,12 +128,12 @@ namespace map
 			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest3, spInRep),
 								 core::ServiceException);
 
-			// test combination support for matrix offset based transfor with uniform dimensionality
+			// test combination support for matrix offset based transform with uniform dimensionality
 			// this should not be thrown any more as soon as the ModelModelKernelCombinator has been
 			// completly implemented
 			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(request, spInRep), core::ServiceException);
 
-			// test combination support for matrix offset based transfor with uniform dimensionality
+			// test combination support for matrix offset based transform with uniform dimensionality
 			CombinatorType::CombinedKernelBasePointer resultKernel;
 			CHECK_NO_THROW(resultKernel = spCombinator->combineKernels(request2, spInRep));
 

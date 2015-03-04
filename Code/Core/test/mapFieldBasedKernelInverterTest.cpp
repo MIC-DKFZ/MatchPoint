@@ -24,14 +24,15 @@
 #pragma warning ( disable : 4786 )
 #endif
 
+#include "itkTranslationTransform.h"
+
+#include "litCheckMacros.h"
+#include "litTransformFieldTester.h"
+
 #include "mapFieldBasedKernelInverter.h"
 #include "mapModelBasedRegistrationKernel.h"
 #include "mapFieldBasedRegistrationKernels.h"
 #include "mapFieldByModelFunctor.h"
-#include "litCheckMacros.h"
-#include "litTransformFieldTester.h"
-
-#include "mapITKTranslationTransform.h"
 
 namespace map
 {
@@ -76,8 +77,7 @@ namespace map
 
 			typedef core::ModelBasedRegistrationKernel<2, 2> IllegalKernelType;
 
-			typedef algorithm::itk::ITKTransformModel< itk::TranslationTransform<core::continuous::ScalarType, 2> >
-			TransformType;
+			typedef itk::TranslationTransform<core::continuous::ScalarType, 2> TransformType;
 
 			typedef core::FieldBasedKernelInverter<2, 2> InverterType;
 			typedef core::FieldBasedKernelInverter<2, 3> Inverter2Type;
@@ -95,7 +95,7 @@ namespace map
 			size.fill(20);
 			ModelFunctorType::TransformModelType::ParametersType params(2);
 			params.fill(0.3);
-			spModel->getTransform()->SetParameters(params);
+			spModel->SetParameters(params);
 
 			ModelFunctorType::InFieldRepresentationType::Pointer spInRep =
 				ModelFunctorType::InFieldRepresentationType::New();
@@ -105,8 +105,7 @@ namespace map
 
 			ModelFunctorType::Pointer spFunc = ModelFunctorType::New(*spModel, spInRep);
 
-			TransformType::InverseTransformModelBasePointer spInverseModel;
-			spModel->getInverse(spInverseModel);
+			TransformType::InverseTransformBasePointer spInverseModel = spModel->GetInverseTransform();
 
 			//Now we create the kernel
 			KernelType::Pointer spKernel = KernelType::New();
@@ -161,7 +160,7 @@ namespace map
 
 			lit::TransformFieldTester<FieldBasedRegistrationKernelType::FieldType, TransformType::InverseTransformBaseType>
 			tester;
-			tester.setReferenceTransform(spInverseModel->getTransform());
+			tester.setReferenceTransform(spInverseModel);
 			tester.setActualField(pInverseConcreteKernel->getField());
 			tester.setTestRegion(testRegion);
 			tester.setCheckThreshold(0.1);

@@ -28,7 +28,6 @@
 
 #include "mapITKTransformSetterInterface.h"
 #include "mapITKTransformGetterInterface.h"
-#include "mapTransformModelBase.h"
 #include "mapModificationTimeValidator.h"
 
 #include "itkCommand.h"
@@ -60,7 +59,7 @@ namespace map
 				Superclass;
 				itkTypeMacro(ArbitraryTransformPolicy, facet::ITKTransformSetterInterface);
 
-				typedef core::TransformModelBase<TScalar, VInputDimensions, VOutputDimensions> TransformType;
+				typedef typename Superclass::TransformType TransformType;
 				typedef TScalar TransformScalarType;
 
 				/*! sets the transfrom model

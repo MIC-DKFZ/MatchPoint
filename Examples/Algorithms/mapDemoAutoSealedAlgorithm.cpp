@@ -37,7 +37,6 @@
 
 #include "mapITKImageRegistrationAlgorithm.h"
 
-#include "mapITKUnaryTransformModel.h"
 #include "mapITKRegularStepGradientDescentOptimizer.h"
 #include "mapITKMeanSquaresImageToImageMetric.h"
 #include "mapITKTranslationTransform.h"

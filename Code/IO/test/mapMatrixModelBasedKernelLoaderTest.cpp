@@ -24,10 +24,10 @@
 #pragma warning ( disable : 4786 )
 #endif
 
+#include "itkEuler2DTransform.h"
+
 #include "mapModelBasedRegistrationKernel.h"
 #include "mapFieldBasedRegistrationKernels.h"
-#include "mapITKEuler2DTransform.h"
-#include "mapITKDimensionedTransformModel.h"
 #include "mapMatrixModelBasedKernelLoader.h"
 #include "mapSDXMLStrReader.h"
 
@@ -114,7 +114,7 @@ namespace map
 
 			KernelType::TransformType::MatrixType matrix;
 			KernelType::TransformType::OutputVectorType offset;
-			CHECK(pMKernel->getTransformModel()->getAffineMatrixDecomposition(matrix, offset));
+			CHECK(pMKernel->getAffineMatrixDecomposition(matrix, offset));
 			CHECK_EQUAL(5, offset[0]);
 			CHECK_EQUAL(2, offset[1]);
 			CHECK_EQUAL(0, matrix[0][0]);
