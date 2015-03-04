@@ -170,9 +170,10 @@ namespace map
 
 				if (spFinalTransformModel.IsNull())
 				{
+          std::ostringstream modelStrm;
+          _spTransform->Print(modelStrm);
 					mapExceptionMacro(AlgorithmException,
-									  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " <<
-									  * (_spTransform.GetPointer()));
+									  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " << modelStrm);
 				}
 
 

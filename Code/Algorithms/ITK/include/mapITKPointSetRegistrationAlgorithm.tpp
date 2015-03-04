@@ -240,9 +240,11 @@ namespace map
 
 					if (spInterimTransformModel.IsNull())
 					{
+            std::ostringstream modelStrm;
+            pTransformModel->Print(modelStrm);
 						mapExceptionMacro(AlgorithmException,
 										  << "Error. Cannot determine interim registration. Unable to clone transform model. Current model: "
-										  << *pTransformModel);
+										  << modelStrm);
 					}
 
 					//set the parameter of the interim transform model to the current transform parameters of the algorithm
@@ -454,9 +456,11 @@ namespace map
 
 				if (spFinalTransformModel.IsNull())
 				{
+          std::ostringstream modelStrm;
+          pTransformModel->Print(modelStrm);
 					mapExceptionMacro(AlgorithmException,
 									  << "Error. Cannot determine final registration. Unable to clone transform model. Current model: " <<
-									  *pTransformModel);
+									  modelStrm);
 				}
 
 				//set the parameter of the final transform model to the final transform parameters of the algorithm
