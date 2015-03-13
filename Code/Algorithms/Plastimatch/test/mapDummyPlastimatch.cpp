@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 	//generate a result field
 
 	typedef map::core::functors::FieldByModelFunctor<3, 3> FunctorType;
-	typedef map::algorithm::itk::ITKTransformModel< itk::TranslationTransform<map::core::continuous::ScalarType, 3> >
+    typedef itk::TranslationTransform<map::core::continuous::ScalarType, 3>
 	TransformType;
 
 	FunctorType::TransformModelType::Pointer spModel = TransformType::New().GetPointer();
@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
 	params[0] = 10.0;
 	params[1] = -16.0;
 	params[2] = -5.0;
-	spModel->getTransform()->SetParameters(params);
+    spModel->SetParameters(params);
 
 	//load target image for field descriptor
 	typedef map::core::discrete::Elements<3>::InternalImageType ImageType;

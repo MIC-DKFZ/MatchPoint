@@ -53,13 +53,14 @@ namespace map
 			itkNewMacro(Self);
 
 			typedef typename Superclass::ScalarType                       ScalarType;
+            typedef typename Superclass::InverseTransformBasePointer      InverseTransformBasePointer;
 
-      /** Return an inverse of this transform. */
-      virtual InverseTransformBasePointer GetInverseTransform() const
-      {
-        InverseTransformBasePointer result;
-        return result;
-      };
+            /** Return an inverse of this transform. */
+            virtual InverseTransformBasePointer GetInverseTransform() const
+            {
+              InverseTransformBasePointer result;
+              return result;
+            };
 		};
 
 		int mapModelBasedKernelInverterTest(int argc, char* argv[])

@@ -94,8 +94,7 @@ namespace map
 			}
 		}
 
-		typedef map::algorithm::itk::ITKTransformModel< itk::TranslationTransform<map::core::continuous::ScalarType, 3> >
-		TransformModelType;
+        typedef itk::TranslationTransform<map::core::continuous::ScalarType, 3> TransformModelType;
 
 		TransformModelType::Pointer generateInverseReferenceTransformModel()
 		{
@@ -104,15 +103,15 @@ namespace map
 			params[0] = 10.0;
 			params[1] = -16.0;
 			params[2] = -5.0;
-			spModel->getTransform()->SetParameters(params);
+            spModel->SetParameters(params);
 			return spModel;
 		}
 
-		TransformModelType::InverseTransformModelBaseType::Pointer generateDirectReferenceTransformModel()
+        TransformModelType::InverseTransformBaseType::Pointer generateDirectReferenceTransformModel()
 		{
 			TransformModelType::Pointer spModel = generateInverseReferenceTransformModel();
-			TransformModelType::InverseTransformModelBaseType::Pointer spInvModel;
-			spModel->getInverse(spInvModel);
+            TransformModelType::InverseTransformBaseType::Pointer spInvModel;
+            spInvModel = spModel->GetInverseTransform();
 			return spInvModel;
 		}
 
@@ -189,7 +188,7 @@ namespace map
 						spAlgorithm->getCurrentState());
 
 			// test result
-			typedef lit::TransformFieldTester<map::core::discrete::Elements<3>::VectorFieldType, TransformModelType::TransformBaseType>
+            typedef lit::TransformFieldTester<map::core::discrete::Elements<3>::VectorFieldType, TransformModelType>
 			TesterType;
 			TesterType tester;
 			typedef map::core::FieldBasedRegistrationKernel<3, 3> KernelBaseType;
@@ -197,7 +196,7 @@ namespace map
 											(spRegistration->getInverseMapping()));
 			CHECK(pKernel != NULL);
 
-			tester.setReferenceTransform(generateInverseReferenceTransformModel()->getTransform());
+            tester.setReferenceTransform(generateInverseReferenceTransformModel());
 			tester.setActualField(pKernel->getField());
 			tester.setCheckThreshold(0.01);
 			CHECK_TESTER(tester);

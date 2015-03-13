@@ -99,7 +99,8 @@ int testAccess(AlgorithmBaseType* pAlgorithm, bool accessExpected)
 	if (pTGetter)
 	{
 		std::cout << "You have access to the transform model: " << std::endl;
-		std::cout << *(pTGetter->getTransformModel()) << std::endl << std::endl;
+        pTGetter->getTransformModel()->Print(std::cout);
+        std::cout << std::endl << std::endl;
 
 		if (!accessExpected)
 		{

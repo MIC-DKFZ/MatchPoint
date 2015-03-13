@@ -104,7 +104,7 @@ namespace map
 				ITKClosedFormRegistrationAlgorithm();
 				virtual ~ITKClosedFormRegistrationAlgorithm();
 
-				typedef ::itk::LandmarkBasedTransformInitializer < typename TransformModelType,
+                typedef ::itk::LandmarkBasedTransformInitializer < TransformModelType,
 						typename core::discrete::Elements<TTargetPointSet::PointDimension>::InternalImageType,
 						typename core::discrete::Elements<TMovingPointSet::PointDimension>::InternalImageType >
 						InternalSolverMethodType;
