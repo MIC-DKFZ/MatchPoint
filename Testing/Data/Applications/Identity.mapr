@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Registration>
+  <MovingDimensions>3</MovingDimensions>
+  <TargetDimensions>3</TargetDimensions>
+  <Kernel ID='direct' InputDimensions='3' OutputDimensions='3'>
+    <StreamProvider>MatrixModelBasedKernelWriter&lt;3,3&gt;</StreamProvider>
+    <KernelType>MatrixModelKernel</KernelType>
+    <Matrix>
+      <Value Column='0' Row='0'>1.000000000</Value>
+      <Value Column='1' Row='0'>0.000000000</Value>
+      <Value Column='2' Row='0'>0.000000000</Value>
+      <Value Column='0' Row='1'>0.000000000</Value>
+      <Value Column='1' Row='1'>1.000000000</Value>
+      <Value Column='2' Row='1'>0.000000000</Value>
+      <Value Column='0' Row='2'>0.000000000</Value>
+      <Value Column='1' Row='2'>0.000000000</Value>
+      <Value Column='2' Row='2'>1.000000000</Value>
+    </Matrix>
+    <MatrixStr>1 0 0 0 1 0 0 0 1</MatrixStr>
+    <Offset>
+      <Value Row='0'>0.000000000</Value>
+      <Value Row='1'>0.000000000</Value>
+      <Value Row='2'>0.000000000</Value>
+    </Offset>
+    <OffsetStr>0 0 0 </OffsetStr>
+  </Kernel>
+  <Kernel ID='inverse' InputDimensions='3' OutputDimensions='3'>
+    <StreamProvider>MatrixModelBasedKernelWriter&lt;3,3&gt;</StreamProvider>
+    <KernelType>MatrixModelKernel</KernelType>
+    <Matrix>
+      <Value Column='0' Row='0'>1.000000000</Value>
+      <Value Column='1' Row='0'>0.000000000</Value>
+      <Value Column='2' Row='0'>0.000000000</Value>
+      <Value Column='0' Row='1'>0.000000000</Value>
+      <Value Column='1' Row='1'>1.000000000</Value>
+      <Value Column='2' Row='1'>0.000000000</Value>
+      <Value Column='0' Row='2'>0.000000000</Value>
+      <Value Column='1' Row='2'>0.000000000</Value>
+      <Value Column='2' Row='2'>1.000000000</Value>
+    </Matrix>
+    <MatrixStr>1 0 0 0 1 0 0 0 1</MatrixStr>
+    <Offset>
+      <Value Row='0'>0.000000000</Value>
+      <Value Row='1'>0.000000000</Value>
+      <Value Row='2'>0.000000000</Value>
+    </Offset>
+    <OffsetStr>0 0 0 </OffsetStr>
+  </Kernel>
+</Registration>

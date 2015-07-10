@@ -241,7 +241,7 @@ namespace map
 			}
 
 			PerformerRequestType request(Superclass::_spRegistration, _spInputImage, spCurrentDescriptor,
-										 _spInterpolator, _throwOnMappingError, _errorValue, _throwOnPaddingError, _paddingValue);
+			                             _spInterpolator, _throwOnMappingError, _errorValue, _throwOnPaddingError, _paddingValue);
 
 			mapLogInfoMacro( << "Register image. Request: " << request);
 
@@ -250,7 +250,7 @@ namespace map
 			if (!pPerformer)
 			{
 				mapExceptionMacro(MissingProviderException,
-								  << "No responsible registration performer available for given request. Request:" << request);
+				                  << "No responsible registration performer available for given request. Request:" << request);
 			}
 
 			_spResultImage = pPerformer->performMapping(request);

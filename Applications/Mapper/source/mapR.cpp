@@ -34,9 +34,9 @@ map::apps::mapR::ApplicationData appData;
 
 void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
 {
-  std::cout << " > > > ";
-  event.Print(std::cout);
-  std::cout << std::endl;
+	std::cout << " > > > ";
+	event.Print(std::cout);
+	std::cout << std::endl;
 }
 
 /** Main entry point for the application.
@@ -51,159 +51,161 @@ void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
  */
 int main(int argc, char** argv)
 {
-  int result = 0;
+	int result = 0;
 
-  std::cout << "mapR - Generic image mapping tool for MatchPoint." << std::endl;
+	std::cout << "mapR - Generic image mapping tool for MatchPoint." << std::endl;
 
-  switch (appData.ParseArguments(argc, argv))
-  {
-  case 1:
-    {
-      //showed version or help info. Done.
-      return 1;
-    }
+	switch (appData.ParseArguments(argc, argv))
+	{
+		case 1:
+		{
+			//showed version or help info. Done.
+			return 1;
+		}
 
-  case 2:
-    {
-      std::cerr << "Missing Parameters. Use one of the following flags for more information:" <<
-        std::endl;
-      std::cerr << "-? or --help" << std::endl;
-      return 2;
-    }
+		case 2:
+		{
+			std::cerr << "Missing Parameters. Use one of the following flags for more information:" <<
+			          std::endl;
+			std::cerr << "-? or --help" << std::endl;
+			return 2;
+		}
 
-  case 3:
-    {
-      //wrong option usage.
-      return 3;
-    }
-  }
+		case 3:
+		{
+			//wrong option usage.
+			return 3;
+		}
+	}
 
-  if (appData._fileCount < 2)
-  {
-    std::cerr << "Missing Parameters. Use one of the following flags for more information:" <<
-      std::endl;
-    std::cerr << "-? or --help" << std::endl;
-    return 1;
-  }
+	if (appData._fileCount < 2)
+	{
+		std::cerr << "Missing Parameters. Use one of the following flags for more information:" <<
+		          std::endl;
+		std::cerr << "-? or --help" << std::endl;
+		return 1;
+	}
 
-  ::itk::StdStreamLogOutput::Pointer spStreamLogOutput = ::itk::StdStreamLogOutput::New();
-  spStreamLogOutput->SetStream(std::cout);
-  map::core::Logbook::addAdditionalLogOutput(spStreamLogOutput);
+	::itk::StdStreamLogOutput::Pointer spStreamLogOutput = ::itk::StdStreamLogOutput::New();
+	spStreamLogOutput->SetStream(std::cout);
+	map::core::Logbook::addAdditionalLogOutput(spStreamLogOutput);
 
-  if (appData._detailedOutput)
-  {
-    map::core::Logbook::setLogbookToDebugMode();
-  }
+	if (appData._detailedOutput)
+	{
+		map::core::Logbook::setLogbookToDebugMode();
+	}
 
-  std::cout << std::endl << "*******************************************" << std::endl;
-  std::cout << "Input file:        " << appData._inputFileName << std::endl;
-  std::cout << "Registration file: " << appData._regFileName << std::endl;
-  std::cout << "Series read style: " << appData._seriesReadStyleStr << std::endl;
-  std::cout << "Series write style: " << appData._seriesWriteStyleStr << std::endl;
+	std::cout << std::endl << "*******************************************" << std::endl;
+	std::cout << "Input file:        " << appData._inputFileName << std::endl;
+	std::cout << "Registration file: " << appData._regFileName << std::endl;
+	std::cout << "Series read style: " << appData._seriesReadStyleStr << std::endl;
+	std::cout << "Series write style: " << appData._seriesWriteStyleStr << std::endl;
+	std::cout << "Interpolation style: " << appData._interpolatorType << "(" <<
+	          appData._interpolatorTypeStr << ")" << std::endl;
 
-  if (!(appData._refFileName.empty()))
-  {
-    std::cout << "Template file:     " << appData._refFileName << std::endl;
-  }
+	if (!(appData._refFileName.empty()))
+	{
+		std::cout << "Template file:     " << appData._refFileName << std::endl;
+	}
 
-  map::apps::mapR::LoadingLogic loadingLogic(appData);
+	map::apps::mapR::LoadingLogic loadingLogic(appData);
 
-  try
-  {
-    loadingLogic.loadInputImage();
-  }
-  catch (::itk::ExceptionObject& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e << std::endl;
-    return 4;
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e.what() << std::endl;
-    return 4;
-  }
-  catch (...)
-  {
-    std::cerr << "Error!!! unknown error while reading input image." << std::endl;
-    return 4;
-  }
+	try
+	{
+		loadingLogic.loadInputImage();
+	}
+	catch (::itk::ExceptionObject& e)
+	{
+		std::cerr << "Error!!!" << std::endl;
+		std::cerr << e << std::endl;
+		return 4;
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << "Error!!!" << std::endl;
+		std::cerr << e.what() << std::endl;
+		return 4;
+	}
+	catch (...)
+	{
+		std::cerr << "Error!!! unknown error while reading input image." << std::endl;
+		return 4;
+	}
 
-  try
-  {
-    loadingLogic.loadRegistration();
-  }
-  catch (::itk::ExceptionObject& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e << std::endl;
-    return 5;
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e.what() << std::endl;
-    return 5;
-  }
-  catch (...)
-  {
-    std::cerr << "Error!!! unknown error while reading registration file." << std::endl;
-    return 5;
-  }
+	try
+	{
+		loadingLogic.loadRegistration();
+	}
+	catch (::itk::ExceptionObject& e)
+	{
+		std::cerr << "Error!!!" << std::endl;
+		std::cerr << e << std::endl;
+		return 5;
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << "Error!!!" << std::endl;
+		std::cerr << e.what() << std::endl;
+		return 5;
+	}
+	catch (...)
+	{
+		std::cerr << "Error!!! unknown error while reading registration file." << std::endl;
+		return 5;
+	}
 
-  try
-  {
-    loadingLogic.loadReferenceImage();
-  }
-  catch (::itk::ExceptionObject& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e << std::endl;
-    return 6;
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e.what() << std::endl;
-    return 6;
-  }
-  catch (...)
-  {
-    std::cerr << "Error!!! unknown error while reading template image." << std::endl;
-    return 6;
-  }
+	try
+	{
+		loadingLogic.loadReferenceImage();
+	}
+	catch (::itk::ExceptionObject& e)
+	{
+		std::cerr << "Error!!!" << std::endl;
+		std::cerr << e << std::endl;
+		return 6;
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << "Error!!!" << std::endl;
+		std::cerr << e.what() << std::endl;
+		return 6;
+	}
+	catch (...)
+	{
+		std::cerr << "Error!!! unknown error while reading template image." << std::endl;
+		return 6;
+	}
 
-  try
-  {
-    if (appData._loadedDimensions == 2)
-    {
-      map::apps::mapR::handleGenericImage<2,map::apps::mapR::ProcessingLogic>(appData);
-    }
-    else if (appData._loadedDimensions == 3)
-    {
-      map::apps::mapR::handleGenericImage<3,map::apps::mapR::ProcessingLogic>(appData);
-    }
-  }
-  catch (::itk::ExceptionObject& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e << std::endl;
-    return 9;
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e.what() << std::endl;
-    return 9;
-  }
-  catch (...)
-  {
-    std::cerr << "Error!!! unknown error while mapping and writing image." << std::endl;
-    return 9;
-  }
+	try
+	{
+		if (appData._loadedDimensions == 2)
+		{
+			map::apps::mapR::handleGenericImage<2, map::apps::mapR::ProcessingLogic>(appData);
+		}
+		else if (appData._loadedDimensions == 3)
+		{
+			map::apps::mapR::handleGenericImage<3, map::apps::mapR::ProcessingLogic>(appData);
+		}
+	}
+	catch (::itk::ExceptionObject& e)
+	{
+		std::cerr << "Error!!!" << std::endl;
+		std::cerr << e << std::endl;
+		return 9;
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << "Error!!!" << std::endl;
+		std::cerr << e.what() << std::endl;
+		return 9;
+	}
+	catch (...)
+	{
+		std::cerr << "Error!!! unknown error while mapping and writing image." << std::endl;
+		return 9;
+	}
 
-  std::cout << std::endl;
+	std::cout << std::endl;
 
-  return result;
+	return result;
 }

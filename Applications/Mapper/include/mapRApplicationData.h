@@ -36,6 +36,18 @@ namespace map
 	{
 		namespace mapR
 		{
+			struct ImageMappingInterpolator
+			{
+				enum Type
+				{
+					Unkown = 0, //< undefined/unkown
+					NearestNeighbor = 1, //< use nearest neighbor
+					Linear = 2, //< use linear
+					BSpline_3 = 3, //< use a 3rd order spline
+					WSinc_Hamming = 4, //< use a wsinc with hamming window
+					WSinc_Welch = 5 //< use a wsinc with welch window
+				};
+			};
 
 			class ApplicationData
 			{
@@ -56,6 +68,10 @@ namespace map
 				core::String _seriesReadStyleStr;
 				io::ImageSeriesReadStyle::Type _seriesWriteStyle;
 				core::String _seriesWriteStyleStr;
+
+				ImageMappingInterpolator::Type _interpolatorType;
+				core::String _interpolatorTypeStr;
+
 				bool _showVersion;
 				bool _detailedOutput;
 				bool _showHelp;
