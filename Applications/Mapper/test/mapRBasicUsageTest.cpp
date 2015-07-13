@@ -76,24 +76,9 @@ namespace map
 			CHECK_EQUAL(1, spExec->getExitValue());
 
 			args.clear();
-			args.push_back("/?");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
-			CHECK_EQUAL(1, spExec->getExitValue());
-
-			args.clear();
-			args.push_back("/h");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
-			CHECK_EQUAL(1, spExec->getExitValue());
-
-			args.clear();
 			args.push_back("-v");
 			CHECK(spExec->execute(mapRPath, "mapR", args));
 			CHECK_EQUAL(1, spExec->getExitValue());
-
-			args.clear();
-			args.push_back("dummy");
-			CHECK(spExec->execute(mapRPath, "mapR", args));
-			CHECK_EQUAL(3, spExec->getExitValue());
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

@@ -82,10 +82,16 @@ namespace map
 
 				if (argc > 1)
 				{
-					_inputFileName = argv[1];
-					++_fileCount;
-					--argc;
-					++argv;
+					core::String dummyArg = argv[1];
+
+					if (dummyArg.substr(0, 1) != "-")
+					{
+						//argument is the input file. Store the argument and move to next position.
+						_inputFileName = dummyArg;
+						++_fileCount;
+						--argc;
+						++argv;
+					}
 				}
 
 				if (argc > 1)
@@ -133,10 +139,6 @@ namespace map
 				cmdParser.AddArgument("--help", itksys::CommandLineArguments::NO_ARGUMENT, &_showHelp,
 				                      "Shows this help information for the program.");
 				cmdParser.AddArgument("-?", itksys::CommandLineArguments::NO_ARGUMENT, &_showHelp,
-				                      "Shows this help information for the program.");
-				cmdParser.AddArgument("/h", itksys::CommandLineArguments::NO_ARGUMENT, &_showHelp,
-				                      "Shows this help information for the program.");
-				cmdParser.AddArgument("/?", itksys::CommandLineArguments::NO_ARGUMENT, &_showHelp,
 				                      "Shows this help information for the program.");
 
 				cmdParser.AddArgument("-u", itksys::CommandLineArguments::SPACE_ARGUMENT, &_upperSeriesLimit,

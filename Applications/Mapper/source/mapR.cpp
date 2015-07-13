@@ -83,7 +83,7 @@ int main(int argc, char** argv)
 		std::cerr << "Missing Parameters. Use one of the following flags for more information:" <<
 		          std::endl;
 		std::cerr << "-? or --help" << std::endl;
-		return 1;
+		return 2;
 	}
 
 	::itk::StdStreamLogOutput::Pointer spStreamLogOutput = ::itk::StdStreamLogOutput::New();
