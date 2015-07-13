@@ -78,7 +78,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	if (appData._fileCount < 2)
+	if (appData._fileCount < 1)
 	{
 		std::cerr << "Missing Parameters. Use one of the following flags for more information:" <<
 		          std::endl;
@@ -97,7 +97,17 @@ int main(int argc, char** argv)
 
 	std::cout << std::endl << "*******************************************" << std::endl;
 	std::cout << "Input file:        " << appData._inputFileName << std::endl;
-	std::cout << "Registration file: " << appData._regFileName << std::endl;
+	std::cout << "Registration file: ";
+
+	if (appData._regFileName.empty())
+	{
+		std::cout << "unspecified -> Identity transform will be used" << std::endl;
+	}
+	else
+	{
+		std::cout << appData._regFileName << std::endl;
+	}
+
 	std::cout << "Series read style: " << appData._seriesReadStyleStr << std::endl;
 	std::cout << "Series write style: " << appData._seriesWriteStyleStr << std::endl;
 	std::cout << "Interpolation style: ";

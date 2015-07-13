@@ -80,17 +80,26 @@ namespace map
 			{
 				this->Reset();
 
-				if (argc > 2)
+				if (argc > 1)
 				{
 					_inputFileName = argv[1];
 					++_fileCount;
 					--argc;
 					++argv;
+				}
 
-					_regFileName = argv[1];
-					++_fileCount;
-					--argc;
-					++argv;
+				if (argc > 1)
+				{
+					core::String dummyArg = argv[1];
+
+					if (dummyArg.substr(0, 1) != "-")
+					{
+						//argument is the reg file. Store the argument and move to next position before parsing starts.
+						_regFileName = dummyArg;
+						++_fileCount;
+						--argc;
+						++argv;
+					}
 				}
 
 				cmdParser.Initialize(argc, argv);
@@ -165,11 +174,12 @@ namespace map
 				if (_showHelp)
 				{
 					std::cout << std::endl << "Usage: " << std::endl << std::endl;
-					std::cout << "  mapR <Input> <Reg> [options]" << std::endl << std::endl;
+					std::cout << "  mapR <Input> [<Reg>] [options]" << std::endl << std::endl;
 					std::cout << "     Input: File path to the image that should be mapped." << std::endl;
 					std::cout << "     Reg: File path to the registration file that specifies" << std::endl;
-					std::cout << "          the registration that should be used for mapping." << std::endl <<
-					          std::endl;
+					std::cout << "          the registration that should be used for mapping." << std::endl;
+					std::cout << "          Optional: If no reg file is specified, an identity" << std::endl;
+					std::cout << "          transform will be used for mapping." << std::endl << std::endl;
 					std::cout << "Command-Line Options:" << std::endl << std::endl;
 					std::cout << cmdParser.GetHelp() << std::endl << std::endl;
 					std::cout << " Example:" << std::endl << std::endl;
@@ -186,7 +196,7 @@ namespace map
 					return 1;
 				}
 
-				if (_fileCount < 2)
+				if (_fileCount < 1)
 				{
 					return 2;
 				}
