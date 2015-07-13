@@ -100,8 +100,19 @@ int main(int argc, char** argv)
 	std::cout << "Registration file: " << appData._regFileName << std::endl;
 	std::cout << "Series read style: " << appData._seriesReadStyleStr << std::endl;
 	std::cout << "Series write style: " << appData._seriesWriteStyleStr << std::endl;
-	std::cout << "Interpolation style: " << appData._interpolatorType << "(" <<
-	          appData._interpolatorTypeStr << ")" << std::endl;
+	std::cout << "Interpolation style: ";
+
+	if (appData._interpolatorType == map::apps::mapR::ImageMappingInterpolator::Unkown)
+	{
+		std::cout <<
+		          "unkown interpolator defined by user. Abort mapping. User defined interpolator string: " <<
+		          appData._interpolatorTypeStr << std::endl;
+		return 3;
+	}
+	else
+	{
+		std::cout << appData._interpolatorType << "(" << appData._interpolatorTypeStr << ")" << std::endl;
+	}
 
 	if (!(appData._refFileName.empty()))
 	{
