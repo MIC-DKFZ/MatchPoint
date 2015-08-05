@@ -40,7 +40,7 @@ namespace map
 			{
 				enum Type
 				{
-					Unkown = 0, //< undefined/unkown
+					Unkown = 0, //< undefined/unknown
 					NearestNeighbor = 1, //< use nearest neighbor
 					Linear = 2, //< use linear
 					BSpline_3 = 3, //< use a 3rd order spline
