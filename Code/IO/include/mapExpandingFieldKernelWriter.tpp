@@ -35,172 +35,172 @@
 
 namespace map
 {
-	namespace io
-	{
+  namespace io
+  {
 
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		bool
-		ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
-		canHandleRequest(const RequestType& request) const
-		{
-			// if the kernel "request" is a field-based kernel, then we can maybe handle it.
+    template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    bool
+    ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+    canHandleRequest(const RequestType& request) const
+    {
+      // if the kernel "request" is a field-based kernel, then we can maybe handle it.
 
-			typedef typename
-			core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
-			CachedKernelType;
-			typedef typename
-			core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
-			LazyKernelType;
+      typedef typename
+      core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
+      CachedKernelType;
+      typedef typename
+      core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
+      LazyKernelType;
 
-			const CachedKernelType* pCachedKernel = dynamic_cast<const CachedKernelType*>
-													(request._spKernel.GetPointer());
-			const LazyKernelType* pLazyKernel = dynamic_cast<const LazyKernelType*>
-												(request._spKernel.GetPointer());
+      const CachedKernelType* pCachedKernel = dynamic_cast<const CachedKernelType*>
+                                              (request._spKernel.GetPointer());
+      const LazyKernelType* pLazyKernel = dynamic_cast<const LazyKernelType*>
+                                          (request._spKernel.GetPointer());
 
-			bool canHandle = false;
+      bool canHandle = false;
 
-			if (pCachedKernel)
-			{
-				canHandle = true;
-			}
-			else if (pLazyKernel && request._expandLazyKernels)
-			{
-				canHandle = true;
-			};
+      if (pCachedKernel)
+      {
+        canHandle = true;
+      }
+      else if (pLazyKernel && request._expandLazyKernels)
+      {
+        canHandle = true;
+      };
 
-			return canHandle;
-		}
-
-
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
-		ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
-		getProviderName() const
-		{
-			return Self::getStaticProviderName();
-		}
-
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
-		ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
-		getStaticProviderName()
-		{
-			core::OStringStream os;
-			os << "ExpandingFieldKernelWriter<" << VInputDimensions << "," << VOutputDimensions << ">";
-			return os.str();
-		}
+      return canHandle;
+    }
 
 
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
-		ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
-		getDescription() const
-		{
-			core::OStringStream os;
-			os << "ExpandingFieldKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
-			   VOutputDimensions << ".";
-			return os.str();
-		}
+    template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    core::String
+    ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+    getProviderName() const
+    {
+      return Self::getStaticProviderName();
+    }
+
+    template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    core::String
+    ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+    getStaticProviderName()
+    {
+      core::OStringStream os;
+      os << "ExpandingFieldKernelWriter<" << VInputDimensions << "," << VOutputDimensions << ">";
+      return os.str();
+    }
 
 
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		structuredData::Element::Pointer
-		ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
-		storeKernel(const RequestType& request) const
-		{
-			if (!canHandleRequest(request))
-			{
-				mapExceptionMacro(core::ServiceException,
-								  << "Error: cannot store kernel. Reason: cannot handle request.");
-			}
-
-			const KernelType* pKernel = dynamic_cast<const KernelType*>(request._spKernel.GetPointer());
-
-			if (pKernel == NULL)
-			{
-				mapExceptionMacro(core::ServiceException,
-								  << "Error: cannot store kernel. Reason: cannot cast to FieldBasedKernel: " <<
-								  request._spKernel.GetPointer());
-			}
-
-			const typename KernelType::FieldType::ConstPointer spField = pKernel->getField();
-
-			if (spField.IsNull())
-			{
-				mapExceptionMacro(core::ServiceException,
-								  << "Error: cannot store kernel. Reason: Kernel seems to have no valid field. Kernel: " << pKernel);
-			}
-
-			structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
-
-			spKernelElement->setTag(tags::Kernel);
-
-			spKernelElement->setAttribute(tags::InputDimensions, core::convert::toStr(VInputDimensions));
-
-			spKernelElement->setAttribute(tags::OutputDimensions, core::convert::toStr(VOutputDimensions));
-
-			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
-										   this->getProviderName()));
-
-			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
-										   "ExpandedFieldKernel"));
-
-			//generate file name and save field to file
-			if (request._path.empty())
-			{
-				core::Logbook::warning("No request path set for field storing. Will be stored to current directory.");
-			}
-
-			if (request._name.empty())
-			{
-				core::Logbook::warning("No request name specified. Field will be stored to unspecified file '_field.mhd'.");
-			}
-
-			core::String fieldPath =  request._name + "_field.mhd";
-			core::String absoluteFieldPath = core::FileDispatch::createFullPath(request._path, fieldPath);
-
-			typedef ::itk::ImageFileWriter< typename KernelType::FieldType  > FieldWriterType;
-			typename FieldWriterType::Pointer  spFieldWriter  = FieldWriterType::New();
-
-			spFieldWriter->SetFileName(absoluteFieldPath.c_str());
-			spFieldWriter->SetInput(spField);
-			spFieldWriter->Update();
-
-			//add field file
-			structuredData::Element::Pointer spFieldPathElement = structuredData::Element::New();
-			spFieldPathElement->setTag(tags::FieldPath);
-
-			spFieldPathElement->setValue(fieldPath);
-
-			spKernelElement->addSubElement(spFieldPathElement);
-
-			//add null vector
-			structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
-			spUseNullVectorElement->setTag(tags::UseNullVector);
-			spUseNullVectorElement->setValue(core::convert::toStr(pKernel->usesNullVector()));
-			spKernelElement->addSubElement(spUseNullVectorElement);
-
-			if (pKernel->usesNullVector())
-			{
-				typename KernelType::MappingVectorType nullVector = pKernel->getNullVector();
-				structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(
-							nullVector);
-				spNullVectorElement->setTag(tags::NullVector);
-
-				spKernelElement->addSubElement(spNullVectorElement);
-			}
-
-			return spKernelElement;
-		}
+    template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    core::String
+    ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+    getDescription() const
+    {
+      core::OStringStream os;
+      os << "ExpandingFieldKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
+         VOutputDimensions << ".";
+      return os.str();
+    }
 
 
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
-		ExpandingFieldKernelWriter()
-		{};
+    template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    structuredData::Element::Pointer
+    ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+    storeKernel(const RequestType& request) const
+    {
+      if (!canHandleRequest(request))
+      {
+        mapExceptionMacro(core::ServiceException,
+                          << "Error: cannot store kernel. Reason: cannot handle request.");
+      }
+
+      const KernelType* pKernel = dynamic_cast<const KernelType*>(request._spKernel.GetPointer());
+
+      if (pKernel == NULL)
+      {
+        mapExceptionMacro(core::ServiceException,
+                          << "Error: cannot store kernel. Reason: cannot cast to FieldBasedKernel: " <<
+                          request._spKernel.GetPointer());
+      }
+
+      const typename KernelType::FieldType::ConstPointer spField = pKernel->getField();
+
+      if (spField.IsNull())
+      {
+        mapExceptionMacro(core::ServiceException,
+                          << "Error: cannot store kernel. Reason: Kernel seems to have no valid field. Kernel: " << pKernel);
+      }
+
+      structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
+
+      spKernelElement->setTag(tags::Kernel);
+
+      spKernelElement->setAttribute(tags::InputDimensions, core::convert::toStr(VInputDimensions));
+
+      spKernelElement->setAttribute(tags::OutputDimensions, core::convert::toStr(VOutputDimensions));
+
+      spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
+                                     this->getProviderName()));
+
+      spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
+                                     "ExpandedFieldKernel"));
+
+      //generate file name and save field to file
+      if (request._path.empty())
+      {
+        core::Logbook::warning("No request path set for field storing. Will be stored to current directory.");
+      }
+
+      if (request._name.empty())
+      {
+        core::Logbook::warning("No request name specified. Field will be stored to unspecified file '_field.nrrd'.");
+      }
+
+      core::String fieldPath =  request._name + "_field.nrrd";
+      core::String absoluteFieldPath = core::FileDispatch::createFullPath(request._path, fieldPath);
+
+      typedef ::itk::ImageFileWriter< typename KernelType::FieldType  > FieldWriterType;
+      typename FieldWriterType::Pointer  spFieldWriter  = FieldWriterType::New();
+
+      spFieldWriter->SetFileName(absoluteFieldPath.c_str());
+      spFieldWriter->SetInput(spField);
+      spFieldWriter->Update();
+
+      //add field file
+      structuredData::Element::Pointer spFieldPathElement = structuredData::Element::New();
+      spFieldPathElement->setTag(tags::FieldPath);
+
+      spFieldPathElement->setValue(fieldPath);
+
+      spKernelElement->addSubElement(spFieldPathElement);
+
+      //add null vector
+      structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
+      spUseNullVectorElement->setTag(tags::UseNullVector);
+      spUseNullVectorElement->setValue(core::convert::toStr(pKernel->usesNullVector()));
+      spKernelElement->addSubElement(spUseNullVectorElement);
+
+      if (pKernel->usesNullVector())
+      {
+        typename KernelType::MappingVectorType nullVector = pKernel->getNullVector();
+        structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(
+              nullVector);
+        spNullVectorElement->setTag(tags::NullVector);
+
+        spKernelElement->addSubElement(spNullVectorElement);
+      }
+
+      return spKernelElement;
+    }
 
 
-	} // end namespace io
+    template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+    ExpandingFieldKernelWriter()
+    {};
+
+
+  } // end namespace io
 } // end namespace map
 
 #endif
