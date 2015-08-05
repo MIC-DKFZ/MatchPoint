@@ -23,42 +23,80 @@
 
 #include "mapRHelper.h"
 #include "mapGenericImageReader.h"
+#include "mapDummyRegistrationAlgorithm.h"
 
 map::apps::mapR::LoadingLogic::LoadingLogic(ApplicationData& appData): _appData(appData)
 {
 };
 
-void
-  map::apps::mapR::LoadingLogic::
-  loadRegistration()
-{
-  map::io::RegistrationFileReader::Pointer spRegReader = map::io::RegistrationFileReader::New();
 
+template <unsigned int VDimension>
+map::core::RegistrationBase::Pointer GenerateDummyReg()
+{
+  typedef map::algorithm::DummyRegistrationAlgorithm<VDimension>	DummyRegType;
+  DummyRegType::Pointer regAlg = DummyRegType::New();
+
+  map::core::RegistrationBase::Pointer dummyReg = regAlg->getRegistration();
+
+  return dummyReg;
+}
+
+void
+map::apps::mapR::LoadingLogic::
+loadRegistration()
+{
   map::io::RegistrationFileReader::LoadedRegistrationPointer spReg;
 
-  std::cout << std::endl << "read registration file... ";
-  spReg = spRegReader->read(_appData._regFileName);
-  std::cout << "done." << std::endl;
-
-  if (_appData._detailedOutput)
+  if (_appData._regFileName.empty())
   {
-    std::cout << std::endl << "Registration info:" << std::endl;
-    _appData._spReg->Print(std::cout);
-    std::cout << std::endl;
+    std::cout << std::endl << "generate identity transform... ";
+
+    if (_appData._loadedDimensions == 2)
+    {
+      spReg = GenerateDummyReg<2>();
+    }
+    else if (_appData._loadedDimensions == 3)
+    {
+      spReg = GenerateDummyReg<3>();
+    }
+    else
+    {
+      mapDefaultExceptionStaticMacro( <<
+                                      "Cannot generate identity transform. Dimensionality of loaded input image is not supported. LoadedDimensions: "
+                                      << _appData._loadedDimensions);
+    }
+
+    std::cout << "done." << std::endl;
   }
-
-  if (spReg->getMovingDimensions() != spReg->getTargetDimensions()
-    || spReg->getMovingDimensions() != _appData._loadedDimensions)
+  else
   {
-    mapDefaultExceptionStaticMacro(<< "oaded registration and loaded image have no equal dimensionality. Registration cannot be used to map the image.");
+    map::io::RegistrationFileReader::Pointer spRegReader = map::io::RegistrationFileReader::New();
+
+    std::cout << std::endl << "read registration file... ";
+    spReg = spRegReader->read(_appData._regFileName);
+    std::cout << "done." << std::endl;
+
+    if (_appData._detailedOutput)
+    {
+      std::cout << std::endl << "Registration info:" << std::endl;
+      _appData._spReg->Print(std::cout);
+      std::cout << std::endl;
+    }
+
+    if (spReg->getMovingDimensions() != spReg->getTargetDimensions()
+        || spReg->getMovingDimensions() != _appData._loadedDimensions)
+    {
+      mapDefaultExceptionStaticMacro( <<
+                                      "Loaded registration and loaded image have no equal dimensionality. Registration cannot be used to map the image.");
+    }
   }
 
   _appData._spReg = spReg;
 };
 
 void
-  map::apps::mapR::LoadingLogic::
-  loadInputImage()
+map::apps::mapR::LoadingLogic::
+loadInputImage()
 {
   map::io::GenericImageReader::GenericOutputImageType::Pointer loadedImage;
   unsigned int loadedDimensions;
@@ -73,7 +111,7 @@ void
 
   std::cout << std::endl << "read input file... ";
   loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
-    loadedComponentType);
+                                    loadedComponentType);
   loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
 
   if (loadedImage.IsNotNull())
@@ -89,18 +127,21 @@ void
   }
   else
   {
-    mapDefaultExceptionStaticMacro(<< " Unable to load input image. File is not existing or has an unsupported format.");
+    mapDefaultExceptionStaticMacro( <<
+                                    " Unable to load input image. File is not existing or has an unsupported format.");
   }
 
 
   if (loadedPixelType != ::itk::ImageIOBase::SCALAR)
   {
-    mapDefaultExceptionStaticMacro(<< "Unsupported input image. Only simple scalar images are supported in this version.");
+    mapDefaultExceptionStaticMacro( <<
+                                    "Unsupported input image. Only simple scalar images are supported in this version.");
   }
 
   if (loadedDimensions < 2 || loadedDimensions > 3)
   {
-    mapDefaultExceptionStaticMacro(<< "Unsupported input image. Only 2D and 3D images are supported in this version.");
+    mapDefaultExceptionStaticMacro( <<
+                                    "Unsupported input image. Only 2D and 3D images are supported in this version.");
   }
 
   _appData._spInputImage = loadedImage;
@@ -112,8 +153,8 @@ void
 };
 
 void
-  map::apps::mapR::LoadingLogic::
-  loadReferenceImage()
+map::apps::mapR::LoadingLogic::
+loadReferenceImage()
 {
   if (!(_appData._refFileName.empty()))
   {
@@ -130,7 +171,7 @@ void
 
     std::cout << std::endl << "read template file... ";
     loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
-      loadedComponentType);
+                                      loadedComponentType);
     loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
 
     if (loadedImage.IsNotNull())
@@ -146,13 +187,15 @@ void
     }
     else
     {
-      mapDefaultExceptionStaticMacro(<< " Unable to load templatet image. File is not existing or has an unsupported format.");
+      mapDefaultExceptionStaticMacro( <<
+                                      " Unable to load template image. File is not existing or has an unsupported format.");
     }
 
 
     if (loadedDimensions != _appData._spReg->getTargetDimensions())
     {
-      mapDefaultExceptionStaticMacro(<< " Unsupported template image. Template image dimension does not match registration.");
+      mapDefaultExceptionStaticMacro( <<
+                                      " Unsupported template image. Template image dimensions does not match registration.");
     }
 
     _appData._spRefImage = loadedImage;

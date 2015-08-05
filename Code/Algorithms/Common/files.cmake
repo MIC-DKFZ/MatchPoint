@@ -53,6 +53,7 @@ include/mapSealedImagePyramidesPolicy.h
 include/mapStoppableAlgorithmInterface.h
 include/mapUID.h
 include/mapMaskBoundingBoxHelper.h
+boxed/mapDummyRegistrationAlgorithm.h
 boxed/mapDummyImageRegistrationAlgorithm.h	
 )
 
@@ -68,6 +69,7 @@ include/mapArbitraryImagePyramidesPolicy.tpp
 include/mapSealedImagePyramidesPolicy.tpp
 include/mapImagePyramidesSetterInterface.tpp
 include/mapImagePyramidesGetterInterface.tpp
+boxed/mapDummyRegistrationAlgorithm.tpp
 boxed/mapDummyImageRegistrationAlgorithm.tpp
 )
 
