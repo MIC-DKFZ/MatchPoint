@@ -33,172 +33,172 @@ map::apps::mapR::LoadingLogic::LoadingLogic(ApplicationData& appData): _appData(
 template <unsigned int VDimension>
 map::core::RegistrationBase::Pointer GenerateDummyReg()
 {
-	typedef map::algorithm::DummyRegistrationAlgorithm<VDimension>	DummyRegType;
-	DummyRegType::Pointer regAlg = DummyRegType::New();
+  typedef map::algorithm::DummyRegistrationAlgorithm<VDimension>	DummyRegType;
+  DummyRegType::Pointer regAlg = DummyRegType::New();
 
-	map::core::RegistrationBase::Pointer dummyReg = regAlg->getRegistration();
+  map::core::RegistrationBase::Pointer dummyReg = regAlg->getRegistration();
 
-	return dummyReg;
+  return dummyReg;
 }
 
 void
 map::apps::mapR::LoadingLogic::
 loadRegistration()
 {
-	map::io::RegistrationFileReader::LoadedRegistrationPointer spReg;
+  map::io::RegistrationFileReader::LoadedRegistrationPointer spReg;
 
-	if (_appData._regFileName.empty())
-	{
-		std::cout << std::endl << "generate identity transform... ";
+  if (_appData._regFileName.empty())
+  {
+    std::cout << std::endl << "generate identity transform... ";
 
-		if (_appData._loadedDimensions == 2)
-		{
-			spReg = GenerateDummyReg<2>();
-		}
-		else if (_appData._loadedDimensions == 3)
-		{
-			spReg = GenerateDummyReg<3>();
-		}
-		else
-		{
-			mapDefaultExceptionStaticMacro( <<
-			                                "Cannot generate identity transform. Dimensionality of loaded input image is not supported. LoadedDimensions: "
-			                                << _appData._loadedDimensions);
-		}
+    if (_appData._loadedDimensions == 2)
+    {
+      spReg = GenerateDummyReg<2>();
+    }
+    else if (_appData._loadedDimensions == 3)
+    {
+      spReg = GenerateDummyReg<3>();
+    }
+    else
+    {
+      mapDefaultExceptionStaticMacro( <<
+                                      "Cannot generate identity transform. Dimensionality of loaded input image is not supported. LoadedDimensions: "
+                                      << _appData._loadedDimensions);
+    }
 
-		std::cout << "done." << std::endl;
-	}
-	else
-	{
-		map::io::RegistrationFileReader::Pointer spRegReader = map::io::RegistrationFileReader::New();
+    std::cout << "done." << std::endl;
+  }
+  else
+  {
+    map::io::RegistrationFileReader::Pointer spRegReader = map::io::RegistrationFileReader::New();
 
-		std::cout << std::endl << "read registration file... ";
-		spReg = spRegReader->read(_appData._regFileName);
-		std::cout << "done." << std::endl;
+    std::cout << std::endl << "read registration file... ";
+    spReg = spRegReader->read(_appData._regFileName);
+    std::cout << "done." << std::endl;
 
-		if (_appData._detailedOutput)
-		{
-			std::cout << std::endl << "Registration info:" << std::endl;
-			_appData._spReg->Print(std::cout);
-			std::cout << std::endl;
-		}
+    if (_appData._detailedOutput)
+    {
+      std::cout << std::endl << "Registration info:" << std::endl;
+      _appData._spReg->Print(std::cout);
+      std::cout << std::endl;
+    }
 
-		if (spReg->getMovingDimensions() != spReg->getTargetDimensions()
-		    || spReg->getMovingDimensions() != _appData._loadedDimensions)
-		{
-			mapDefaultExceptionStaticMacro( <<
-			                                "Loaded registration and loaded image have no equal dimensionality. Registration cannot be used to map the image.");
-		}
-	}
+    if (spReg->getMovingDimensions() != spReg->getTargetDimensions()
+        || spReg->getMovingDimensions() != _appData._loadedDimensions)
+    {
+      mapDefaultExceptionStaticMacro( <<
+                                      "Loaded registration and loaded image have no equal dimensionality. Registration cannot be used to map the image.");
+    }
+  }
 
-	_appData._spReg = spReg;
+  _appData._spReg = spReg;
 };
 
 void
 map::apps::mapR::LoadingLogic::
 loadInputImage()
 {
-	map::io::GenericImageReader::GenericOutputImageType::Pointer loadedImage;
-	unsigned int loadedDimensions;
-	map::io::GenericImageReader::LoadedPixelType loadedPixelType;
-	map::io::GenericImageReader::LoadedComponentType loadedComponentType;
-	map::io::GenericImageReader::MetaDataDictionaryArrayType loadedMetaDataDictArray;
+  map::io::GenericImageReader::GenericOutputImageType::Pointer loadedImage;
+  unsigned int loadedDimensions;
+  map::io::GenericImageReader::LoadedPixelType loadedPixelType;
+  map::io::GenericImageReader::LoadedComponentType loadedComponentType;
+  map::io::GenericImageReader::MetaDataDictionaryArrayType loadedMetaDataDictArray;
 
-	map::io::GenericImageReader::Pointer spReader = map::io::GenericImageReader::New();
-	spReader->setSeriesReadStyle(_appData._seriesReadStyle);
-	spReader->setFileName(_appData._inputFileName);
-	spReader->setUpperSeriesLimit(_appData._upperSeriesLimit);
+  map::io::GenericImageReader::Pointer spReader = map::io::GenericImageReader::New();
+  spReader->setSeriesReadStyle(_appData._seriesReadStyle);
+  spReader->setFileName(_appData._inputFileName);
+  spReader->setUpperSeriesLimit(_appData._upperSeriesLimit);
 
-	std::cout << std::endl << "read input file... ";
-	loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
-	                                  loadedComponentType);
-	loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
+  std::cout << std::endl << "read input file... ";
+  loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
+                                    loadedComponentType);
+  loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
 
-	if (loadedImage.IsNotNull())
-	{
-		std::cout << "done." << std::endl;
+  if (loadedImage.IsNotNull())
+  {
+    std::cout << "done." << std::endl;
 
-		if (_appData._detailedOutput)
-		{
-			std::cout << "Input image info:" << std::endl;
-			loadedImage->Print(std::cout);
-			std::cout << std::endl;
-		}
-	}
-	else
-	{
-		mapDefaultExceptionStaticMacro( <<
-		                                " Unable to load input image. File is not existing or has an unsupported format.");
-	}
+    if (_appData._detailedOutput)
+    {
+      std::cout << "Input image info:" << std::endl;
+      loadedImage->Print(std::cout);
+      std::cout << std::endl;
+    }
+  }
+  else
+  {
+    mapDefaultExceptionStaticMacro( <<
+                                    " Unable to load input image. File is not existing or has an unsupported format.");
+  }
 
 
-	if (loadedPixelType != ::itk::ImageIOBase::SCALAR)
-	{
-		mapDefaultExceptionStaticMacro( <<
-		                                "Unsupported input image. Only simple scalar images are supported in this version.");
-	}
+  if (loadedPixelType != ::itk::ImageIOBase::SCALAR)
+  {
+    mapDefaultExceptionStaticMacro( <<
+                                    "Unsupported input image. Only simple scalar images are supported in this version.");
+  }
 
-	if (loadedDimensions < 2 || loadedDimensions > 3)
-	{
-		mapDefaultExceptionStaticMacro( <<
-		                                "Unsupported input image. Only 2D and 3D images are supported in this version.");
-	}
+  if (loadedDimensions < 2 || loadedDimensions > 3)
+  {
+    mapDefaultExceptionStaticMacro( <<
+                                    "Unsupported input image. Only 2D and 3D images are supported in this version.");
+  }
 
-	_appData._spInputImage = loadedImage;
+  _appData._spInputImage = loadedImage;
 
-	_appData._loadedDimensions = loadedDimensions;
-	_appData._loadedPixelType = loadedPixelType;
-	_appData._loadedComponentType = loadedComponentType;
-	_appData._loadedMetaDataDictArray = loadedMetaDataDictArray;
+  _appData._loadedDimensions = loadedDimensions;
+  _appData._loadedPixelType = loadedPixelType;
+  _appData._loadedComponentType = loadedComponentType;
+  _appData._loadedMetaDataDictArray = loadedMetaDataDictArray;
 };
 
 void
 map::apps::mapR::LoadingLogic::
 loadReferenceImage()
 {
-	if (!(_appData._refFileName.empty()))
-	{
-		map::io::GenericImageReader::GenericOutputImageType::Pointer loadedImage;
-		unsigned int loadedDimensions;
-		map::io::GenericImageReader::LoadedPixelType loadedPixelType;
-		map::io::GenericImageReader::LoadedComponentType loadedComponentType;
-		map::io::GenericImageReader::MetaDataDictionaryArrayType loadedMetaDataDictArray;
+  if (!(_appData._refFileName.empty()))
+  {
+    map::io::GenericImageReader::GenericOutputImageType::Pointer loadedImage;
+    unsigned int loadedDimensions;
+    map::io::GenericImageReader::LoadedPixelType loadedPixelType;
+    map::io::GenericImageReader::LoadedComponentType loadedComponentType;
+    map::io::GenericImageReader::MetaDataDictionaryArrayType loadedMetaDataDictArray;
 
-		map::io::GenericImageReader::Pointer spReader = map::io::GenericImageReader::New();
-		spReader->setSeriesReadStyle(_appData._seriesReadStyle);
-		spReader->setFileName(_appData._refFileName);
-		spReader->setUpperSeriesLimit(_appData._upperSeriesLimit);
+    map::io::GenericImageReader::Pointer spReader = map::io::GenericImageReader::New();
+    spReader->setSeriesReadStyle(_appData._seriesReadStyle);
+    spReader->setFileName(_appData._refFileName);
+    spReader->setUpperSeriesLimit(_appData._upperSeriesLimit);
 
-		std::cout << std::endl << "read template file... ";
-		loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
-		                                  loadedComponentType);
-		loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
+    std::cout << std::endl << "read template file... ";
+    loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
+                                      loadedComponentType);
+    loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
 
-		if (loadedImage.IsNotNull())
-		{
-			std::cout << "done." << std::endl;
+    if (loadedImage.IsNotNull())
+    {
+      std::cout << "done." << std::endl;
 
-			if (_appData._detailedOutput)
-			{
-				std::cout << "Input image info:" << std::endl;
-				loadedImage->Print(std::cout);
-				std::cout << std::endl;
-			}
-		}
-		else
-		{
-			mapDefaultExceptionStaticMacro( <<
-			                                " Unable to load templatet image. File is not existing or has an unsupported format.");
-		}
+      if (_appData._detailedOutput)
+      {
+        std::cout << "Input image info:" << std::endl;
+        loadedImage->Print(std::cout);
+        std::cout << std::endl;
+      }
+    }
+    else
+    {
+      mapDefaultExceptionStaticMacro( <<
+                                      " Unable to load template image. File is not existing or has an unsupported format.");
+    }
 
 
-		if (loadedDimensions != _appData._spReg->getTargetDimensions())
-		{
-			mapDefaultExceptionStaticMacro( <<
-			                                " Unsupported template image. Template image dimension does not match registration.");
-		}
+    if (loadedDimensions != _appData._spReg->getTargetDimensions())
+    {
+      mapDefaultExceptionStaticMacro( <<
+                                      " Unsupported template image. Template image dimensions does not match registration.");
+    }
 
-		_appData._spRefImage = loadedImage;
-		_appData._loadedRefMetaDataDictArray = loadedMetaDataDictArray;
-	}
+    _appData._spRefImage = loadedImage;
+    _appData._loadedRefMetaDataDictArray = loadedMetaDataDictArray;
+  }
 };
