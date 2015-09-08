@@ -34,9 +34,9 @@ template <unsigned int VDimension>
 map::core::RegistrationBase::Pointer GenerateDummyReg()
 {
   typedef map::algorithm::DummyRegistrationAlgorithm<VDimension>	DummyRegType;
-  DummyRegType::Pointer regAlg = DummyRegType::New();
+  typename DummyRegType::Pointer regAlg = DummyRegType::New();
 
-  map::core::RegistrationBase::Pointer dummyReg = regAlg->getRegistration();
+  map::core::RegistrationBase::Pointer dummyReg = regAlg->getRegistration().GetPointer();
 
   return dummyReg;
 }

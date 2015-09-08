@@ -61,7 +61,7 @@ namespace map
         TInterpolatorPolicy,
         SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
         SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer >,
-        SealedFixedTransformPolicyMacro< ::itk::Rigid2DTransform<::map::core::continuous::ScalarType> > >
+        SealedFixedTransformPolicyMacro< ::itk::Rigid2DTransform< ::map::core::continuous::ScalarType> > >
       {
       public:
         typedef ITKRigid2DMattesMIRegistrationAlgorithm < TMovingImage, TTargetImage, TUIDPolicy,
@@ -73,7 +73,7 @@ namespace map
                 TInterpolatorPolicy,
                 SealedFixedImageToImageMetricPolicyMacro< ::itk::MattesMutualInformationImageToImageMetric<TMovingImage, TTargetImage> >,
                 SealedFixedSVNLOptimizerPolicyMacro< ::itk::RegularStepGradientDescentOptimizer >,
-                SealedFixedTransformPolicyMacro< ::itk::Rigid2DTransform<::map::core::continuous::ScalarType> > >
+                SealedFixedTransformPolicyMacro< ::itk::Rigid2DTransform< ::map::core::continuous::ScalarType> > >
                 Superclass;
 
         typedef ::itk::SmartPointer<Self>                                     Pointer;
