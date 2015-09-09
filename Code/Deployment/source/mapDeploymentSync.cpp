@@ -25,9 +25,12 @@
 #include "mapExceptionObject.h"
 #include "mapLogbook.h"
 
-#if !defined(_MSC_VER) && !defined(__APPLE__)
+#if !defined(_MSC_VER) && !defined(__APPLE__) && !defined(__linux__)
 #include <auto_ptr.h>
 #endif
+
+#include <memory>
+
 
 namespace map
 {
