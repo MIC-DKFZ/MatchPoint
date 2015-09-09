@@ -59,7 +59,7 @@ namespace map
 			public:
 				typedef ArbitrarySVNLOptimizerPolicy      Self;
 				typedef facet::ITKSVNLOptimizerSetterInterface   Superclass;
-				itkTypeMacro(ArbitrarySVNLOptimizerPolicy, facet::ITKSVNLOptimizerSetterInterface);
+                                itkTypeMacroNoParent(ArbitrarySVNLOptimizerPolicy);
 
 				typedef Superclass::ITKOptimizerControlType  ITKOptimizerControlType;
 				typedef facet::OptimizerGetterInterface::OptimizerControlType  OptimizerControlType;
