@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Registration>
+  <MovingDimensions>2</MovingDimensions>
+  <TargetDimensions>2</TargetDimensions>
+  <Kernel ID='direct' InputDimensions='2' OutputDimensions='2'>
+    <StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider>
+    <KernelType>MatrixModelKernel</KernelType>
+    <Matrix>
+      <Value Column='0' Row='0'>0.98480775301220805936674302458952</Value>
+      <Value Column='1' Row='0'>-0.17364817766693034885171662676931</Value>
+      <Value Column='0' Row='1'>0.17364817766693034885171662676931</Value>
+      <Value Column='1' Row='1'>0.98480775301220805936674302458952</Value>
+    </Matrix>
+    <MatrixStr>1 0 0 1</MatrixStr>
+    <Offset>
+      <Value Row='0'>13.000000000</Value>
+      <Value Row='1'>17.000000000</Value>
+    </Offset>
+    <OffsetStr>13 17 </OffsetStr>
+  </Kernel>
+  <Kernel ID='inverse' InputDimensions='2' OutputDimensions='2'>
+    <StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider>
+    <KernelType>MatrixModelKernel</KernelType>
+    <Matrix>
+      <Value Column='0' Row='0'>0.98480775301220805936674302458952</Value>
+      <Value Column='1' Row='0'>0.17364817766693034885171662676931</Value>
+      <Value Column='0' Row='1'>-0.17364817766693034885171662676931</Value>
+      <Value Column='1' Row='1'>0.98480775301220805936674302458952</Value>
+    </Matrix>
+    <MatrixStr>1 0 0 1</MatrixStr>
+    <Offset>
+      <Value Row='0'>-13.000000000</Value>
+      <Value Row='1'>-17.000000000</Value>
+    </Offset>
+    <OffsetStr>-13 -17 </OffsetStr>
+  </Kernel>
+</Registration>

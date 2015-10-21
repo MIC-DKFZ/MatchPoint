@@ -6,6 +6,7 @@ include/mapArbitraryWarpImageFilter.h
 include/mapEuclideanPairDistancePointMetric.h
 include/mapIterativeInverseTransformToDisplacementFieldSource.h
 include/mapNULLVectorAwareLinearInterpolateImageFunction.h
+include/itkMatrixOffsetBasedTranslationTransform.h
 )
 
 SET(TPP_FILES
@@ -13,6 +14,7 @@ include/mapArbitraryWarpImageFilter.txx
 include/mapEuclideanPairDistancePointMetric.txx
 include/mapIterativeInverseTransformToDisplacementFieldSource.txx
 include/mapNULLVectorAwareLinearInterpolateImageFunction.tpp
+include/itkMatrixOffsetBasedTranslationTransform.hxx
 )
 
 SET(TEST_CPP_FILES

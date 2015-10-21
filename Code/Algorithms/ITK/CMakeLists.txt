@@ -1,4 +1,4 @@
-MAP_CREATE_MODULE(MAPAlgorithmsITK DEPENDS MAPAlgorithms MAPUtilities)
+MAP_CREATE_MODULE(MAPAlgorithmsITK DEPENDS MAPAlgorithms MAPITK MAPUtilities)
 MAP_CREATE_MODULE_TESTS(MAPAlgorithmsITK PACKAGE_DEPENDS Litmus HEADER_TESTS)
 
 
@@ -11,6 +11,7 @@ MAP_DEFINE_DEPLOYED_ALGORITHM(ITKPDEDemons3D PROFILE "deployed/ITKPDEDemons3D.pr
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKLevelSetMotion3D PROFILE "deployed/ITKLevelSetMotion3D.profile" FILES "deployed/mapITKLevelSetMotion3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKSymmetricForcesDemons3D PROFILE "deployed/ITKSymmetricForcesDemons3D.profile" FILES "deployed/mapITKSymmetricForcesDemons3D.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKLevelSetMotion3DMultiRes PROFILE "deployed/ITKLevelSetMotion3DMultiRes.profile" FILES "deployed/mapITKLevelSetMotion3DMultiRes.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(ITKTranslation3DMattesMIMultiRes PROFILE "deployed/ITKTranslation3DMattesMIMultiRes.profile" FILES "deployed/mapITKTranslation3DMattesMIMultiRes.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 
 SET(_MAP_ITK_REVIEW_ACTIVE "OFF")
 MAP_CHECK_ITK_REVIEW_ACTIVE(_MAP_ITK_REVIEW_ACTIVE)
