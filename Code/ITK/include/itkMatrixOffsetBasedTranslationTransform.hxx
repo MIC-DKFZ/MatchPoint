@@ -174,8 +174,8 @@ namespace itk
   & MatrixOffsetBasedTranslationTransform<ScalarType, NDimensions>
   ::GetFixedParameters(void) const
   {
-    m_FixedParameters.SetSize(0);
-    return m_FixedParameters;
+    this->m_FixedParameters.SetSize(0);
+    return this->m_FixedParameters;
   }
 
   // Compute the Jacobian of the transformation
