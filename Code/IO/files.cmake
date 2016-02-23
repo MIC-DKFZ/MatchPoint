@@ -27,6 +27,7 @@ include/mapKernelLoaderLoadPolicy.h
 include/mapImageReader.h
 include/mapImageWriter.h
 include/mapGenericImageReader.h
+include/mapGenericImageReadHelper.h
 include/mapInvertingFieldKernelWriter.h
 include/mapInvertingFieldKernelLoader.h
 )
