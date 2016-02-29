@@ -439,6 +439,11 @@ namespace map
 						spMapper->setResultImageDescriptor(spResultDesc);
 						spMapper->setPaddingValue(appData._paddingValue);
 						spMapper->setImageInterpolator(generateInterpolator(appData._interpolatorType));
+            if (appData._noFailOnErrors)
+            {
+                spMapper->setThrowOnMappingError(false);
+                spMapper->setErrorValue(appData._paddingValue);
+            }
 						spMapper->execute();
 						spResult = spMapper->getResultImage();
 						std::cout << "done." << std::endl;

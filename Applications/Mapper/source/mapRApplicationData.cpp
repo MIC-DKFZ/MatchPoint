@@ -58,6 +58,7 @@ namespace map
 				_showHelp = false;
 				_detailedOutput = false;
 				_paddingValue = 0.0;
+        _noFailOnErrors = false;
 
 				_upperSeriesLimit = 0;
 				_loadedPixelType = ::itk::ImageIOBase::SCALAR;
@@ -164,7 +165,10 @@ namespace map
 				                      &_interpolatorTypeStr,
 				                      "Defines the interpolator that should be used for mapping the image. Default value is 'linear'. Valid values are: 'nn': uses a nearest neighbor interpolator; 'linear': uses a simple linear interpolator; 'bspline_3': uses a 3rd order B spline interpolator; 'hamming': uses a wsinc with hamming window as interpolator; 'welch': uses a wsinc with welch window as interpolator.");
 
-				if (!cmdParser.Parse())
+        cmdParser.AddArgument("--handleMappingFailure", itksys::CommandLineArguments::NO_ARGUMENT, &_noFailOnErrors,
+            "If this flag is activated the mapping process will not faile if the registration is not sufficiently defined. Instead it will use the padding value (-p) to mark any voxel that could not be map due to the insufficent registration with the padding value.");
+
+        if (!cmdParser.Parse())
 				{
 					std::cerr << "Wrong command line option or insufficient number of arguments." << std::endl;
 					std::cerr << "The last correct argument was: " << argv[cmdParser.GetLastArgument()] << std::endl <<

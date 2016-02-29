@@ -76,6 +76,7 @@ namespace map
 				bool _detailedOutput;
 				bool _showHelp;
 				double _paddingValue;
+        bool _noFailOnErrors;
 
 				int _fileCount;
 
