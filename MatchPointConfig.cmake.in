@@ -43,8 +43,12 @@ SET(MatchPoint_DLL_INTERFACE_VERSION_MINOR "@MatchPoint_DLL_INTERFACE_VERSION_MI
 # The location of the UseMatchPoint.cmake file.
 SET(MatchPoint_USE_FILE "@MatchPoint_USE_FILE@")
 
-# The location of the MatchPointTargets.cmake file.
+# Import MatchPoint targets.
 SET(MatchPoint_TARGETS_FILE "@MatchPoint_TARGETS_FILE@")
+if(NOT MatchPoint_TARGETS_IMPORTED)
+  set(MatchPoint_TARGETS_IMPORTED 1)
+  include("${MatchPoint_TARGETS_FILE}")
+endif()
 
 # The MatchPoint library dependencies.
 IF(NOT MatchPoint_NO_LIBRARY_DEPENDS AND
