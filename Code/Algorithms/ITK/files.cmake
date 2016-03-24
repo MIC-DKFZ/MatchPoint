@@ -145,6 +145,7 @@ boxed/mapITKPDEDemonsRegistrationAlgorithm.h
 boxed/mapITKLevelSetMotionRegistrationAlgorithm.h
 boxed/mapITKSymmetricForcesDemonsRegistrationAlgorithm.h
 boxed/mapITKLevelSetMotionMultiResRegistrationAlgorithm.h
+boxed/mapITKFastSymmetricForcesDemonsMultiResRegistrationAlgorithm.h
 )
 
 SET(TPP_FILES
@@ -191,6 +192,7 @@ boxed/mapITKPDEDemonsRegistrationAlgorithm.tpp
 boxed/mapITKLevelSetMotionRegistrationAlgorithm.tpp
 boxed/mapITKSymmetricForcesDemonsRegistrationAlgorithm.tpp
 boxed/mapITKLevelSetMotionMultiResRegistrationAlgorithm.tpp
+boxed/mapITKFastSymmetricForcesDemonsMultiResRegistrationAlgorithm.h
 )
 
 SET(TEST_CPP_FILES
