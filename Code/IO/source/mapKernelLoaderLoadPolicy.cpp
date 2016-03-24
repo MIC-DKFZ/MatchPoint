@@ -38,7 +38,7 @@ namespace map
 		KernelLoaderLoadPolicy::
 		doLoading()
 		{
-			core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(_pLoadInterface);
+			::map::core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(_pLoadInterface);
 
 			if (!loader.addProviderByPolicy(MatrixModelBasedKernelLoader<2>::New()))
 			{

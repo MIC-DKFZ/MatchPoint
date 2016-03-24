@@ -39,12 +39,12 @@ namespace map
 	namespace structuredData
 	{
 
-		core::String decodeForXmlChar(const core::String& sSrc, const core::String& searchStr,
+		::map::core::String decodeForXmlChar(const core::String& sSrc, const core::String& searchStr,
 									  const core::String& newStr)
 		{
-			core::String sRet = sSrc;
+			::map::core::String sRet = sSrc;
 
-			core::String::size_type pos = sRet.find(searchStr);
+			::map::core::String::size_type pos = sRet.find(searchStr);
 
 			while (pos != core::String::npos)
 			{
@@ -56,9 +56,9 @@ namespace map
 		}
 
 
-		core::String decodeForXml(const core::String& sSrc)
+		::map::core::String decodeForXml(const core::String& sSrc)
 		{
-			core::String sRet = decodeForXmlChar(sSrc, "&apos;", "\'");
+			::map::core::String sRet = decodeForXmlChar(sSrc, "&apos;", "\'");
 			sRet = decodeForXmlChar(sRet, "&quot;", "\"");
 			sRet = decodeForXmlChar(sRet, "&gt;", ">");
 			sRet = decodeForXmlChar(sRet, "&lt;", "<'");
@@ -91,8 +91,8 @@ namespace map
 				return "XMLStrReaderImpl";
 			};
 
-			typedef std::pair<core::String, core::String> AttributeType;
-			typedef std::map<core::String, core::String> AttributesType;
+			typedef std::pair<::map::core::String, core::String> AttributeType;
+			typedef std::map<::map::core::String, core::String> AttributesType;
 			//uses vector for saving, to avoid automatic sort feature of stl::map
 			typedef std::vector<AttributeType> AttributesSaveListType;
 
@@ -167,7 +167,7 @@ namespace map
 
 			/**String containing all data received by CB_CharacterDataHandler
 			* it will used to set the current element's value.*/
-			core::String m_currentElementText;
+			::map::core::String m_currentElementText;
 
 			/** Pointer to the expat parser*/
 			XML_Parser m_Parser;
@@ -224,7 +224,7 @@ namespace map
 
 			if (!result)
 			{
-				core::String errorMsg(XML_ErrorString(XML_GetErrorCode(m_Parser)));
+				::map::core::String errorMsg(XML_ErrorString(XML_GetErrorCode(m_Parser)));
 				mapDefaultExceptionMacro( << "Expat error while parsing raw string. Error: " << errorMsg <<
 										  "; Error position: " << XML_GetCurrentLineNumber(m_Parser) << ":" << XML_GetCurrentColumnNumber(
 											  m_Parser));
@@ -241,7 +241,7 @@ namespace map
 		XMLStrReaderImpl::
 		CB_StartElement(const char* name, const char** pAttributes)
 		{
-			ElementPointer spNewElement = Element::createElement(core::String(name), "");
+			ElementPointer spNewElement = Element::createElement(::map::core::String(name), "");
 			m_stack.back()->addSubElement(spNewElement);
 
 			//any data yet stored in m_CurrentElementText should now be stored to
@@ -258,7 +258,7 @@ namespace map
 		XMLStrReaderImpl::
 		CB_EndElement(const char* name)
 		{
-			if (core::String(name) != m_stack.back()->getTag())
+			if (::map::core::String(name) != m_stack.back()->getTag())
 			{
 				mapDefaultExceptionMacro( <<
 										  "Error. XML structure seems not to be correct. XML tags seem to be mingeld end tag does not fit the last start tag. Start tag: "
@@ -344,9 +344,9 @@ namespace map
 
 			while (*pActAttr)
 			{
-				core::String sKey = *pActAttr;
+				::map::core::String sKey = *pActAttr;
 				pActAttr++;
-				core::String sValue = *pActAttr;
+				::map::core::String sValue = *pActAttr;
 				pActAttr++;
 				attrs.insert(AttributeType(sKey, sValue));
 			};

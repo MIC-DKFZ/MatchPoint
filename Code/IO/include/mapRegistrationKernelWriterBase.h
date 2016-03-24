@@ -43,7 +43,7 @@ namespace map
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		class RegistrationKernelWriterBase : public
-			core::services::ServiceProvider< RegistrationKernelWriteRequest< VInputDimensions, VOutputDimensions> >
+			::map::core::services::ServiceProvider< RegistrationKernelWriteRequest< VInputDimensions, VOutputDimensions> >
 		{
 		public:
 			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>			KernelBaseType;

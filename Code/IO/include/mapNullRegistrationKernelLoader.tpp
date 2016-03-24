@@ -70,7 +70,7 @@ namespace map
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		NullRegistrationKernelLoader<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
@@ -78,22 +78,22 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		NullRegistrationKernelLoader<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "NullRegistrationKernelLoader<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		NullRegistrationKernelLoader<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "NullRegistrationKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: "
 			   << VOutputDimensions << ".";
 			return os.str();
@@ -107,12 +107,12 @@ namespace map
 		{
 			if (!canHandleRequest(request))
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot load kernel. Reason: cannot handle request.");
 			}
 
 			GenericKernelPointer spResult =
-				core::NullRegistrationKernel<VInputDimensions, VOutputDimensions>::New().GetPointer();
+				::map::core::NullRegistrationKernel<VInputDimensions, VOutputDimensions>::New().GetPointer();
 			return spResult;
 		}
 
@@ -149,7 +149,7 @@ namespace map
 				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel has not the correct dimension.");
 			}
 
-			core::RegistrationManipulator<RegistrationType> man(pCastedReg);
+			::map::core::RegistrationManipulator<RegistrationType> man(pCastedReg);
 			man.setInverseMapping(pCastedKernel);
 		};
 
@@ -186,7 +186,7 @@ namespace map
 				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel has not the correct dimension.");
 			}
 
-			core::RegistrationManipulator<RegistrationType> man(pCastedReg);
+			::map::core::RegistrationManipulator<RegistrationType> man(pCastedReg);
 			man.setDirectMapping(pCastedKernel);
 		};
 

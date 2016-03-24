@@ -54,23 +54,23 @@ namespace map
 			public:
 
 				/** Loaded Image.*/
-				io::GenericImageReader::GenericOutputImageType::Pointer _spInputImage;
-				core::String  _inputFileName;
-				io::GenericImageReader::GenericOutputImageType::Pointer _spRefImage;
-				core::String  _refFileName;
-				io::RegistrationFileReader::LoadedRegistrationPointer _spReg;
-				core::String  _regFileName;
+				::map::io::GenericImageReader::GenericOutputImageType::Pointer _spInputImage;
+				::map::core::String  _inputFileName;
+				::map::io::GenericImageReader::GenericOutputImageType::Pointer _spRefImage;
+				::map::core::String  _refFileName;
+				::map::io::RegistrationFileReader::LoadedRegistrationPointer _spReg;
+				::map::core::String  _regFileName;
 
-				core::String  _outputFileName;
+				::map::core::String  _outputFileName;
 
 				int _upperSeriesLimit;
-				io::ImageSeriesReadStyle::Type _seriesReadStyle;
-				core::String _seriesReadStyleStr;
-				io::ImageSeriesReadStyle::Type _seriesWriteStyle;
-				core::String _seriesWriteStyleStr;
+				::map::io::ImageSeriesReadStyle::Type _seriesReadStyle;
+				::map::core::String _seriesReadStyleStr;
+				::map::io::ImageSeriesReadStyle::Type _seriesWriteStyle;
+				::map::core::String _seriesWriteStyleStr;
 
 				ImageMappingInterpolator::Type _interpolatorType;
-				core::String _interpolatorTypeStr;
+				::map::core::String _interpolatorTypeStr;
 
 				bool _showVersion;
 				bool _detailedOutput;
@@ -80,12 +80,12 @@ namespace map
 
 				int _fileCount;
 
-				io::GenericImageReader::LoadedPixelType _loadedPixelType;
-				io::GenericImageReader::LoadedComponentType _loadedComponentType;
+				::map::io::GenericImageReader::LoadedPixelType _loadedPixelType;
+				::map::io::GenericImageReader::LoadedComponentType _loadedComponentType;
 				unsigned int _loadedDimensions;
 
-				io::GenericImageReader::MetaDataDictionaryArrayType _loadedMetaDataDictArray;
-				io::GenericImageReader::MetaDataDictionaryArrayType _loadedRefMetaDataDictArray;
+				::map::io::GenericImageReader::MetaDataDictionaryArrayType _loadedMetaDataDictArray;
+				::map::io::GenericImageReader::MetaDataDictionaryArrayType _loadedRefMetaDataDictArray;
 
 				/** Parse the application argument passed when starting the application.
 				* If no error or special request occurred the return is 0. Otherwise the return values

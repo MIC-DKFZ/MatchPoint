@@ -73,10 +73,10 @@ namespace map
 		UID::
 		toStr() const
 		{
-			core::OStringStream stream;
+			::map::core::OStringStream stream;
 			stream << this->_namespace << "::" << this->_name << "::" << this->_version << "::" <<
 				   this->_buildTag;
-			core::String result = stream.str();
+			::map::core::String result = stream.str();
 
 			return result;
 		};

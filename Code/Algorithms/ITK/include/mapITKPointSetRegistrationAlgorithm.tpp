@@ -278,7 +278,7 @@ namespace map
 
 					//now create the registration an set the kernels
 					spResult = InterimRegistrationType::New();
-					core::RegistrationManipulator<InterimRegistrationType> manipulator(spResult);
+					::map::core::RegistrationManipulator<InterimRegistrationType> manipulator(spResult);
 
 					manipulator.setDirectMapping(spDKernel);
 					manipulator.setInverseMapping(spIKernel);
@@ -343,17 +343,17 @@ namespace map
 				this->_internalRegistrationMethod = InternalRegistrationMethodType::New();
 
 				//initialize registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
 				this->configureAlgorithmByMetaProperties();
 
 				//initialize registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing registration components."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing registration components."));
 				this->prepareTransform();
 				this->prepareMetric();
 				this->prepareOptimizer();
 
 				//assemble registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing itk registration method."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing itk registration method."));
 				this->_internalRegistrationMethod->SetMetric(
 					this->getMetricInternal()->getPointSetToPointSetMetric());
 				this->_internalRegistrationMethod->SetOptimizer(this->getOptimizerInternal()->getMVNLOptimizer());
@@ -361,7 +361,7 @@ namespace map
 				this->prepInitializeTransformation();
 
 				//Connect point sets
-				this->InvokeEvent(events::AlgorithmEvent(this, "Connect point sets to itk registration method."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Connect point sets to itk registration method."));
 				this->_internalRegistrationMethod->SetFixedPointSet(this->getTargetPointSet());
 				this->_internalRegistrationMethod->SetMovingPointSet(this->getMovingPointSet());
 
@@ -496,7 +496,7 @@ namespace map
 
 				//now create the registration an set the kernels
 				spResult = RegistrationType::New();
-				core::RegistrationManipulator<RegistrationType> manipulator(spResult);
+				::map::core::RegistrationManipulator<RegistrationType> manipulator(spResult);
 
 				manipulator.setDirectMapping(spDKernel);
 				manipulator.setInverseMapping(spIKernel);
@@ -528,7 +528,7 @@ namespace map
 				this->_internalRegistrationMethod->SetInitialTransformParameters(
 					pTransformModel->GetParameters());
 
-				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, os.str()));
 			};
 
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
@@ -571,7 +571,7 @@ namespace map
 				this->_currentIterationLock.Unlock();
 
 
-				this->InvokeEvent(events::AlgorithmIterationEvent(this, os.str()));
+				this->InvokeEvent(::map::events::AlgorithmIterationEvent(this, os.str()));
 			};
 
 			template<class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy>
@@ -579,7 +579,7 @@ namespace map
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
 			onGeneralOptimizerEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal optimizer event");
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal optimizer event");
 				this->InvokeEvent(wrappedEvent);
 			};
 
@@ -588,7 +588,7 @@ namespace map
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
 			onGeneralMetricEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal metric event");
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal metric event");
 				this->InvokeEvent(wrappedEvent);
 			};
 
@@ -597,7 +597,7 @@ namespace map
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
 			onGeneralTransformEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal transform event");
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal transform event");
 				this->InvokeEvent(wrappedEvent);
 			};
 
@@ -606,7 +606,7 @@ namespace map
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
 			onGeneralRegistrationMethodEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
 						"internal registration method event");
 				this->InvokeEvent(wrappedEvent);
 			};

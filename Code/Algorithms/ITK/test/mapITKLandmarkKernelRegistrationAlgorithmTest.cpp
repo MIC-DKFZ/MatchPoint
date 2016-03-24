@@ -112,7 +112,7 @@ namespace map
 												  (targetLMFileName);
 
 
-			typedef algorithm::itk::ITKLandmarkKernelRegistrationAlgorithm<LandmarksType, ::itk::VolumeSplineKernelTransform<core::continuous::ScalarType, 3>, ITKLandmarkKernelRegistrationAlgorithmUIDPolicy>
+			typedef algorithm::itk::ITKLandmarkKernelRegistrationAlgorithm<LandmarksType, ::itk::VolumeSplineKernelTransform<::map::core::continuous::ScalarType, 3>, ITKLandmarkKernelRegistrationAlgorithmUIDPolicy>
 			RegistrationAlgorithmType;
 
 			RegistrationAlgorithmType::Pointer spAlgorithm = RegistrationAlgorithmType::New();
@@ -120,7 +120,7 @@ namespace map
 			//Add observer for algorithm events.
 			RegTestCommand::Pointer spTestCommand = RegTestCommand::New();
 
-			spAlgorithm->AddObserver(events::AlgorithmEvent(), spTestCommand);
+			spAlgorithm->AddObserver(::map::events::AlgorithmEvent(), spTestCommand);
 			spAlgorithm->AddObserver(::itk::AnyEvent(), spTestCommand);
 
 			//Set land marks

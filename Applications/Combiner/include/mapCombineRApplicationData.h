@@ -39,12 +39,12 @@ namespace map
 			struct ApplicationData
 			{
 				/** Loaded Registrations.*/
-				typedef std::vector<core::RegistrationBase::Pointer> RegistrationListType;
+				typedef std::vector<::map::core::RegistrationBase::Pointer> RegistrationListType;
         RegistrationListType _spRegList;
-				std::vector<core::String>  _regFileList;
+				std::vector<::map::core::String>  _regFileList;
         std::vector<bool> _inversionList;
 
-				core::String  _outputFileName;
+				::map::core::String  _outputFileName;
 
 				bool _showVersion;
 				bool _detailedOutput;

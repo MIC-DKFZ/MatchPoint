@@ -83,7 +83,7 @@ namespace map
 			else
 			{
 				spDirectKernel = pDirectLoader->loadKernel(directRequest);
-				inverseRequest._spComplementaryKernel = dynamic_cast<core::DimensionlessRegistrationKernelBase*>
+				inverseRequest._spComplementaryKernel = dynamic_cast<::map::core::DimensionlessRegistrationKernelBase*>
 														(spDirectKernel.GetPointer());
 			}
 
@@ -92,7 +92,7 @@ namespace map
 
 			if (!pInverseLoader)
 			{
-				mapExceptionMacro(core::MissingProviderException,
+				mapExceptionMacro(::map::core::MissingProviderException,
 								  << "No responsible loader available for given inverse request. Request:" << inverseRequest);
 			}
 			else
@@ -103,13 +103,13 @@ namespace map
 			if (spDirectKernel.IsNull())
 			{
 				//retry direct kernel loading with additional complimentary kernel information
-				directRequest._spComplementaryKernel = dynamic_cast<core::DimensionlessRegistrationKernelBase*>
+				directRequest._spComplementaryKernel = dynamic_cast<::map::core::DimensionlessRegistrationKernelBase*>
 													   (spInverseKernel.GetPointer());
 				pDirectLoader = LoaderStackType::getProvider(directRequest);
 
 				if (!pDirectLoader)
 				{
-					mapExceptionMacro(core::MissingProviderException,
+					mapExceptionMacro(::map::core::MissingProviderException,
 									  << "No responsible loader available for given direct request. Request:" << directRequest);
 				}
 
@@ -122,8 +122,8 @@ namespace map
 			pInverseLoader->addAsInverseKernel(spInverseKernel, spRegistration);
 
 			//read registration tags
-			core::RegistrationBaseManipulator manip(spRegistration);
-			core::RegistrationBaseManipulator::TagMapType tagMap;
+			::map::core::RegistrationBaseManipulator manip(spRegistration);
+			::map::core::RegistrationBaseManipulator::TagMapType tagMap;
 			structuredData::Element::SubElementIteratorType pos = structuredData::findNextSubElement(
 						spFileData->getSubElementBegin(), spFileData->getSubElementEnd(), tags::RegistrationTag);
 

@@ -60,7 +60,7 @@ namespace map
 			* element designates the string itself. All found
 			* top level xml elements will be added as sub elements
 			* to the root StructuredData element.*/
-			core::String write(const Element* pElement) const;
+			::map::core::String write(const Element* pElement) const;
 
 		protected:
 			typedef unsigned long ElementLevelType;

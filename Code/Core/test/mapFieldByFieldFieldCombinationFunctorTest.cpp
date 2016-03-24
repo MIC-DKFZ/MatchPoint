@@ -66,7 +66,7 @@ namespace map
 			spIllegalInRep->setOrigin(illegalOrigin);
 
 			//Setting up transform and inverse
-			typedef itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
+			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
@@ -124,7 +124,7 @@ namespace map
 			CHECK_NO_THROW(spResultField = spTestFunctor->generateField());
 			CHECK(spResultField.IsNotNull());
 
-			typedef itk::IdentityTransform<core::continuous::ScalarType, 2> IdentityTransformType;
+			typedef itk::IdentityTransform<::map::core::continuous::ScalarType, 2> IdentityTransformType;
 			lit::TransformFieldTester<CombinatorFunctorType::FieldType, IdentityTransformType> tester;
 
 			IdentityTransformType::Pointer spIdentityTransform = IdentityTransformType::New();

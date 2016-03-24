@@ -48,7 +48,7 @@ namespace map
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		class KernelWriterLoadPolicy : public
-			core::services::GenericStaticLoadPolicyBase<RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions> >
+			::map::core::services::GenericStaticLoadPolicyBase<RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions> >
 		{
 		protected:
 			/*! Standard class typedefs. */

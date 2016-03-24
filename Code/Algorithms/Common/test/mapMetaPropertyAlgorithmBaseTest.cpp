@@ -52,7 +52,7 @@ namespace map
 			CHECK_EQUAL(5, infos.size());
 			CHECK_EQUAL(1, testInterface.recorder.getRecordValueCount(TestInterfaceType::compileInfosID));
 
-			algorithm::MetaPropertyInfo::Pointer spCountInfo;
+			::map::algorithm::MetaPropertyInfo::Pointer spCountInfo;
 
 			CHECK_NO_THROW(spCountInfo = testInterface.getPropertyInfo("Count"));
 			CHECK(spCountInfo.IsNotNull());
@@ -63,13 +63,13 @@ namespace map
 			//now the compile methods must have been executed 2 times
 			CHECK_EQUAL(2, testInterface.recorder.getRecordValueCount(TestInterfaceType::compileInfosID));
 
-			algorithm::MetaPropertyInfo::Pointer spSecretInfo;
+			::map::algorithm::MetaPropertyInfo::Pointer spSecretInfo;
 
 			CHECK_NO_THROW(spSecretInfo = testInterface.getPropertyInfo("SecretIngredient"));
 			CHECK(spSecretInfo.IsNotNull());
 			CHECK("SecretIngredient" == spSecretInfo->getName());
 
-			algorithm::MetaPropertyInfo::Pointer spUnkownInfo;
+			::map::algorithm::MetaPropertyInfo::Pointer spUnkownInfo;
 
 			CHECK_NO_THROW(spUnkownInfo = testInterface.getPropertyInfo("UnkownProperty"));
 			CHECK(spUnkownInfo.IsNull());
@@ -87,7 +87,7 @@ namespace map
 			CHECK_EQUAL(1, testInterface.recorder.getRecordValueCount(TestInterfaceType::compileInfosID));
 			CHECK_EQUAL(1, testInterface.recorder.getRecordValueCount(TestInterfaceType::doGetPropertyID));
 			int testInt = 0;
-			CHECK(core::unwrapMetaProperty(spSize, testInt));
+			CHECK(::map::core::unwrapMetaProperty(spSize, testInt));
 			CHECK_EQUAL(testInterface._size, testInt);
 
 			//check behaviour in case of nonreadable property
@@ -112,16 +112,16 @@ namespace map
 			CHECK_EQUAL(4, testInterface.recorder.getRecordValueCount(TestInterfaceType::compileInfosID));
 			CHECK_EQUAL(2, testInterface.recorder.getRecordValueCount(TestInterfaceType::doGetPropertyID));
 			float testfloat = 0.0;
-			CHECK(core::unwrapMetaProperty(spSecret, testfloat));
+			CHECK(::map::core::unwrapMetaProperty(spSecret, testfloat));
 			CHECK_EQUAL(testInterface._secret, testfloat);
 
 			//test overloaded version: MetaPropertyInfo
 			testInterface.recorder.resetRecorder();
 
-			algorithm::MetaPropertyInfo::Pointer spHoleInfo = algorithm::MetaPropertyInfo::New("BlackHole",
+			::map::algorithm::MetaPropertyInfo::Pointer spHoleInfo = algorithm::MetaPropertyInfo::New("BlackHole",
 					typeid(void*), false, true);
 			spUnkownInfo = algorithm::MetaPropertyInfo::New("UnkownProperty", typeid(int));
-			algorithm::MetaPropertyInfo::Pointer spIllegalSizeInfo = algorithm::MetaPropertyInfo::New("Size",
+			::map::algorithm::MetaPropertyInfo::Pointer spIllegalSizeInfo = algorithm::MetaPropertyInfo::New("Size",
 					typeid(void*), true, true);
 
 			TestInterfaceType::MetaPropertyPointer spCount;
@@ -131,7 +131,7 @@ namespace map
 			CHECK_EQUAL(1, testInterface.recorder.getRecordValueCount(TestInterfaceType::compileInfosID));
 			CHECK_EQUAL(1, testInterface.recorder.getRecordValueCount(TestInterfaceType::doGetPropertyID));
 
-			CHECK(core::unwrapMetaProperty(spCount, testInt));
+			CHECK(::map::core::unwrapMetaProperty(spCount, testInt));
 			CHECK_EQUAL(testInterface._count, testInt);
 
 			//check behaviour in case of nonreadable property
@@ -180,8 +180,8 @@ namespace map
 			TestInterfaceType::MetaPropertyPointer spCachedSize;
 			int testCachedInt = 0;
 			CHECK_NO_THROW(spCachedSize = testInterface.getProperty("Size"));
-			CHECK(core::unwrapMetaProperty(spSize, testInt));
-			CHECK(core::unwrapMetaProperty(spCachedSize, testCachedInt));
+			CHECK(::map::core::unwrapMetaProperty(spSize, testInt));
+			CHECK(::map::core::unwrapMetaProperty(spCachedSize, testCachedInt));
 			CHECK_EQUAL(testInt, testCachedInt);
 
 			testInterface.configureAlgorithmByMetaProperties(); //now transfer values
@@ -207,7 +207,7 @@ namespace map
 			CHECK_EQUAL(refTime, testInterface.GetMTime());
 
 			//check behavior in case of property pointer with wrong type
-			core::MetaPropertyBase::Pointer spWrongTypedValue = core::MetaProperty<bool>::New(
+			::map::core::MetaPropertyBase::Pointer spWrongTypedValue = core::MetaProperty<bool>::New(
 						false).GetPointer();
 			CHECK_THROW_EXPLICIT(testInterface.setProperty("Size", spWrongTypedValue), core::ExceptionObject);
 			CHECK_EQUAL(5, testInterface.recorder.getRecordValueCount(TestInterfaceType::compileInfosID));
@@ -216,7 +216,7 @@ namespace map
 
 
 			//test overloaded version: MetaPropertyInfo
-			algorithm::MetaPropertyInfo::Pointer spSizeInfo = algorithm::MetaPropertyInfo::New("Size",
+			::map::algorithm::MetaPropertyInfo::Pointer spSizeInfo = algorithm::MetaPropertyInfo::New("Size",
 					typeid(int), true, true);
 			spSize = core::MetaProperty<int>::New(21);
 
@@ -230,7 +230,7 @@ namespace map
 						testInterface._size); //it is not changed because it is currently stored in the cache
 
 			CHECK_NO_THROW(spCachedSize = testInterface.getProperty("Size"));
-			CHECK(core::unwrapMetaProperty(spCachedSize, testCachedInt));
+			CHECK(::map::core::unwrapMetaProperty(spCachedSize, testCachedInt));
 			CHECK_EQUAL(21, testCachedInt);
 
 			testInterface.configureAlgorithmByMetaProperties(); //now transfer values

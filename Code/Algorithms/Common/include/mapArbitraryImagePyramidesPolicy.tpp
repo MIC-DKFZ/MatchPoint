@@ -139,7 +139,7 @@ namespace map
 				//there is really the need to change
 				if (this->_spOnChangeMoving.IsNotNull())
 				{
-					events::UnregisterAlgorithmComponentEvent unRegEvent(_spMovingPyramide.GetPointer(),
+					::map::events::UnregisterAlgorithmComponentEvent unRegEvent(_spMovingPyramide.GetPointer(),
 							"Unregister current moving image pyramide");
 					this->_spOnChangeMoving->Execute((::itk::Object*)NULL, unRegEvent);
 				}
@@ -149,7 +149,7 @@ namespace map
 
 				if (this->_spOnChangeMoving.IsNotNull())
 				{
-					events::RegisterAlgorithmComponentEvent regEvent(_spMovingPyramide.GetPointer(),
+					::map::events::RegisterAlgorithmComponentEvent regEvent(_spMovingPyramide.GetPointer(),
 							"Register new moving image pyramide");
 					this->_spOnChangeMoving->Execute((::itk::Object*)NULL, regEvent);
 				}
@@ -166,7 +166,7 @@ namespace map
 				//there is really the need to change
 				if (this->_spOnChangeTarget.IsNotNull())
 				{
-					events::UnregisterAlgorithmComponentEvent unRegEvent(_spTargetPyramide.GetPointer(),
+					::map::events::UnregisterAlgorithmComponentEvent unRegEvent(_spTargetPyramide.GetPointer(),
 							"Unregister current target image pyramide");
 					this->_spOnChangeTarget->Execute((::itk::Object*)NULL, unRegEvent);
 				}
@@ -176,7 +176,7 @@ namespace map
 
 				if (this->_spOnChangeTarget.IsNotNull())
 				{
-					events::RegisterAlgorithmComponentEvent regEvent(_spTargetPyramide.GetPointer(),
+					::map::events::RegisterAlgorithmComponentEvent regEvent(_spTargetPyramide.GetPointer(),
 							"Register new target image pyramide");
 					this->_spOnChangeTarget->Execute((::itk::Object*)NULL, regEvent);
 				}

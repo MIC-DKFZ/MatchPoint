@@ -42,7 +42,7 @@ namespace map
 		KernelWriterLoadPolicy<VInputDimensions, VOutputDimensions>::
 		doLoading()
 		{
-			core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(
+			::map::core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(
 				Superclass::_pLoadInterface);
 
 			typedef MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions> ModelKernelWriterType;

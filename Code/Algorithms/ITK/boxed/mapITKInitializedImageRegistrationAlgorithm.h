@@ -43,7 +43,7 @@ namespace map
 					 class TMetricPolicy = itk::ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
 					 class TOptimizerPolicy = itk::ArbitrarySVNLOptimizerPolicy,
 					 class TTransformPolicy =
-					 itk::ArbitraryTransformPolicy<core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+					 itk::ArbitraryTransformPolicy<::map::core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
 					 class TInternalRegistrationMethod = ::itk::ImageRegistrationMethod<TTargetImage, TMovingImage> >
 			class ITKInitializedImageRegistrationAlgorithm :
 				public algorithm::itk::ITKImageRegistrationAlgorithm < TMovingImage, TTargetImage,

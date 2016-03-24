@@ -60,7 +60,7 @@ namespace map
 			::itk::LevenbergMarquardtOptimizer* pConcreteOptimizer = NULL;
 			const ::itk::LevenbergMarquardtOptimizer* pConstConcreteOptimizer = NULL;
 
-			algorithm::itk::ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer>* pConcreteController =
+			::map::algorithm::itk::ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer>* pConcreteController =
 				NULL;
 			const algorithm::itk::ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer>*
 			pConstConcreteController = NULL;
@@ -68,8 +68,8 @@ namespace map
 			const algorithm::itk::ITKOptimizerControlInterface* pConstController = NULL;
 			const algorithm::OptimizerControlInterface* pConstControllerBase = NULL;
 
-			algorithm::itk::ITKOptimizerControlInterface* pController = NULL;
-			algorithm::OptimizerControlInterface* pControllerBase = NULL;
+			::map::algorithm::itk::ITKOptimizerControlInterface* pController = NULL;
+			::map::algorithm::OptimizerControlInterface* pControllerBase = NULL;
 
 			CHECK_NO_THROW(pConcreteOptimizer = policy.getConcreteITKOptimizer());
 			CHECK_NO_THROW(pConstConcreteOptimizer = constPolicy.getConcreteITKOptimizer());

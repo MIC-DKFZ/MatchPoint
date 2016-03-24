@@ -113,7 +113,7 @@ namespace map
 			//Add observer for algorithm events.
 			RegTestCommand::Pointer spTestCommand = RegTestCommand::New();
 
-			spAlgorithm->AddObserver(events::AlgorithmEvent(), spTestCommand);
+			spAlgorithm->AddObserver(::map::events::AlgorithmEvent(), spTestCommand);
 			spAlgorithm->AddObserver(::itk::AnyEvent(), spTestCommand);
 
 			//Set land marks
@@ -128,7 +128,7 @@ namespace map
 			const core::ModelBasedRegistrationKernel<3, 3>* pInverseKernel =
 				dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&
 						(spRegistration->getInverseMapping()));
-			core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
+			::map::core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
 				pInverseKernel->getParameters();
 
 			CHECK_CLOSE(0.0, parameters[0], 0.05);

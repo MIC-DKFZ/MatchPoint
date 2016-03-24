@@ -48,7 +48,7 @@ namespace map
 			/*! Optional information that specifies the "sibling" kernel of the registration instance _spKernelDescriptor
 			 * is a part of.
 			 * Default value is NULL, indicating that there is no sibling or it should not regarded in the loading request.*/
-			core::DimensionlessRegistrationKernelBase::ConstPointer _spComplementaryKernel;
+			::map::core::DimensionlessRegistrationKernelBase::ConstPointer _spComplementaryKernel;
 
 			bool _preferLazyLoading;
 

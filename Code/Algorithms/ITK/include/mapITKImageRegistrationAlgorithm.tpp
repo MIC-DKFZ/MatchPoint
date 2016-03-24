@@ -277,7 +277,7 @@ namespace map
 
 					//now create the registration an set the kernels
 					spResult = InterimRegistrationType::New();
-					core::RegistrationManipulator<InterimRegistrationType> manipulator(spResult);
+					::map::core::RegistrationManipulator<InterimRegistrationType> manipulator(spResult);
 
 					manipulator.setDirectMapping(spDKernel);
 					manipulator.setInverseMapping(spIKernel);
@@ -412,7 +412,7 @@ namespace map
 						os << "Target mask: none -> use complete target image.";
 					}
 
-					this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, os.str()));
 
 					if (this->getMovingMask().IsNotNull())
 					{
@@ -448,7 +448,7 @@ namespace map
 						os2 << "Moving mask: none -> use complete moving image.";
 					}
 
-					this->InvokeEvent(events::AlgorithmEvent(this, os2.str()));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, os2.str()));
 
 				}
 			}
@@ -459,12 +459,12 @@ namespace map
 			prepSetInternalInputData()
 			{
 				//Connect images
-				this->InvokeEvent(events::AlgorithmEvent(this, "Connect images to itk registration method."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Connect images to itk registration method."));
 				this->_internalRegistrationMethod->SetFixedImage(this->getInternalTargetImage());
 				this->_internalRegistrationMethod->SetMovingImage(this->getInternalMovingImage());
 
 				//Connect masks if present
-				this->InvokeEvent(events::AlgorithmEvent(this, "Connect masks to registration metric."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Connect masks to registration metric."));
 
 				if (this->getMovingMask().IsNotNull())
 				{
@@ -503,7 +503,7 @@ namespace map
 				this->_internalRegistrationMethod->SetInitialTransformParameters(
 				    pTransformModel->GetParameters());
 
-				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, os.str()));
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
@@ -536,30 +536,30 @@ namespace map
 				this->_internalRegistrationMethod = InternalRegistrationMethodType::New();
 
 				//initialize registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
 				this->configureAlgorithmByMetaProperties();
 
 				//initialize registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing registration components."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing registration components."));
 				this->prepPrepareSubComponents();
 
 				//assemble registration components
-				this->InvokeEvent(events::AlgorithmEvent(this,
+				this->InvokeEvent(::map::events::AlgorithmEvent(this,
 				                  "Initializing itk multi resolution registration method."));
 				this->prepAssembleSubComponents();
 
-				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing/Preparing input data."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing/Preparing input data."));
 
 				this->prepPerpareInternalInputData();
 
-				this->InvokeEvent(events::AlgorithmEvent(this, "Passing input data to internal algorithm."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Passing input data to internal algorithm."));
 				this->prepSetInternalInputData();
 
 				//possibility to initialize internal registration method after assembly
 				this->prepInitializeTransformation();
 
 				//initialize registration components after assembly
-				this->InvokeEvent(events::AlgorithmEvent(this, "Finalizing initialization..."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Finalizing initialization..."));
 				this->prepFinalizePreparation();
 
 				//Register observers
@@ -691,7 +691,7 @@ namespace map
 
 				//now create the registration an set the kernels
 				spResult = RegistrationType::New();
-				core::RegistrationManipulator<RegistrationType> manipulator(spResult);
+				::map::core::RegistrationManipulator<RegistrationType> manipulator(spResult);
 
 				manipulator.setDirectMapping(spDKernel);
 				manipulator.setInverseMapping(spIKernel);
@@ -758,7 +758,7 @@ namespace map
 
 				this->_currentIterationLock.Unlock();
 
-				this->InvokeEvent(events::AlgorithmIterationEvent(this, os.str()));
+				this->InvokeEvent(::map::events::AlgorithmIterationEvent(this, os.str()));
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
@@ -766,7 +766,7 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			onGeneralOptimizerEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal optimizer event");
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal optimizer event");
 				this->InvokeEvent(wrappedEvent);
 			};
 
@@ -775,7 +775,7 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			onGeneralMetricEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal metric event");
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal metric event");
 				this->InvokeEvent(wrappedEvent);
 			};
 
@@ -784,7 +784,7 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			onGeneralInterpolatorEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal interpolator event");
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal interpolator event");
 				this->InvokeEvent(wrappedEvent);
 			};
 
@@ -793,7 +793,7 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			onGeneralTransformEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal transform event");
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller, "internal transform event");
 				this->InvokeEvent(wrappedEvent);
 			};
 
@@ -802,7 +802,7 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			onGeneralRegistrationMethodEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
 				        "internal registration method event");
 				this->InvokeEvent(wrappedEvent);
 			};

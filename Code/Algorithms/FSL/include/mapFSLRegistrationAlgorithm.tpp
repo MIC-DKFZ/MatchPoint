@@ -159,7 +159,7 @@ namespace map
 				if (this->isFirstConfiguration())
 				{
 					_flirtDir = "";
-					core::String envDir = "";
+					::map::core::String envDir = "";
 
 					if (itksys::SystemTools::GetEnv("MAPFSLPath", envDir))
 					{
@@ -239,13 +239,13 @@ namespace map
 			{
 				if (name == "WorkingDirectory")
 				{
-					core::String dir;
+					::map::core::String dir;
 					map::core::unwrapMetaProperty(pProperty, dir);
 					this->_workingDir = dir;
 				}
 				else if (name == "FlirtDirectory")
 				{
-					core::String dir;
+					::map::core::String dir;
 					map::core::unwrapMetaProperty(pProperty, dir);
 					this->_flirtDir = dir;
 				}
@@ -301,9 +301,9 @@ namespace map
 			initializeCurrentTempDir()
 			{
 				srand(time(NULL));
-				core::OStringStream stream;
+				::map::core::OStringStream stream;
 				stream << itksys::SystemTools::GetCurrentDateTime("%Y-%m-%d_%H-%M-%S") << "_#" << rand();
-				core::String currentTempDir = core::FileDispatch::createFullPath(_workingDir, stream.str());
+				::map::core::String currentTempDir = core::FileDispatch::createFullPath(_workingDir, stream.str());
 
 				if (!itksys::SystemTools::MakeDirectory(currentTempDir.c_str()))
 				{
@@ -334,14 +334,14 @@ namespace map
 					}
 
 					//initialize registration components
-					this->InvokeEvent(events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
 					this->configureAlgorithmByMetaProperties();
 
-					this->InvokeEvent(events::AlgorithmEvent(this, "Initializing registration."));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing registration."));
 					this->initializeCurrentTempDir();
 
 					//preparing data
-					this->InvokeEvent(events::AlgorithmEvent(this, "Initializing/Preparing input data."));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing/Preparing input data."));
 					_spInternalMovingImage = this->getMovingImage();
 					_spInternalTargetImage = this->getTargetImage();
 
@@ -349,10 +349,10 @@ namespace map
 
 					//storing temporary images
 					typedef typename
-					io::ImageWriter<typename TMovingImage::PixelType, typename TMovingImage::PixelType, TMovingImage::ImageDimension>
+					::map::io::ImageWriter<typename TMovingImage::PixelType, typename TMovingImage::PixelType, TMovingImage::ImageDimension>
 					MovingWriterType;
 					typedef typename
-					io::ImageWriter<typename TTargetImage::PixelType, typename TTargetImage::PixelType, TTargetImage::ImageDimension>
+					::map::io::ImageWriter<typename TTargetImage::PixelType, typename TTargetImage::PixelType, TTargetImage::ImageDimension>
 					TargetWriterType;
 					typename MovingWriterType::Pointer spMWriter = MovingWriterType::New();
 					typename TargetWriterType::Pointer spTWriter = TargetWriterType::New();
@@ -365,10 +365,10 @@ namespace map
 					spTWriter->setInput(_spInternalTargetImage);
 					spMWriter->setFilePath(_movingImageTempPath);
 					spTWriter->setFilePath(_targetImageTempPath);
-					this->InvokeEvent(events::AlgorithmEvent(this,
+					this->InvokeEvent(::map::events::AlgorithmEvent(this,
 									  "Write temporary moving image. Path: " + _movingImageTempPath));
 					spMWriter->update();
-					this->InvokeEvent(events::AlgorithmEvent(this,
+					this->InvokeEvent(::map::events::AlgorithmEvent(this,
 									  "Write temporary target image. Path: " + _targetImageTempPath));
 					spTWriter->update();
 				}
@@ -546,9 +546,9 @@ namespace map
 					}
 
 					typename Superclass::MovingRepresentationDescriptorType::Pointer movingRep =
-						core::createFieldRepresentation(*(this->_spInternalMovingImage));
+						::map::core::createFieldRepresentation(*(this->_spInternalMovingImage));
 					typename Superclass::TargetRepresentationDescriptorType::Pointer targetRep =
-						core::createFieldRepresentation(*(this->_spInternalTargetImage));
+						::map::core::createFieldRepresentation(*(this->_spInternalTargetImage));
 
 					typename MatrixConverterType::MatrixType tmpMatrix = MatrixConverterType::convertFSLToRAS(fslMatrix,
 							targetRep, movingRep);
@@ -586,7 +586,7 @@ namespace map
 
 					//now create the registration and set the kernels
 					spResult = RegistrationType::New();
-					core::RegistrationManipulator<RegistrationType> manipulator(spResult);
+					::map::core::RegistrationManipulator<RegistrationType> manipulator(spResult);
 
 					manipulator.setDirectMapping(spDKernel);
 					manipulator.setInverseMapping(spIKernel);
@@ -674,7 +674,7 @@ namespace map
 
 				if (pItEvent)
 				{
-					this->InvokeEvent(events::AlgorithmIterationEvent(this, pItEvent->getComment()));
+					this->InvokeEvent(::map::events::AlgorithmIterationEvent(this, pItEvent->getComment()));
 				}
 			}
 

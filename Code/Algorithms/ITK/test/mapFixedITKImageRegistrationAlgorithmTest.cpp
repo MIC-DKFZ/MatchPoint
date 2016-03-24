@@ -153,7 +153,7 @@ namespace map
 			//Add observer for algorithm events.
 			RegTestCommand::Pointer spTestCommand = RegTestCommand::New();
 
-			spAlgorithm->AddObserver(events::AlgorithmEvent(), spTestCommand);
+			spAlgorithm->AddObserver(::map::events::AlgorithmEvent(), spTestCommand);
 			spAlgorithm->AddObserver(::itk::AnyEvent(), spTestCommand);
 
 			//Test algorithm execution without images
@@ -172,7 +172,7 @@ namespace map
 			const core::ModelBasedRegistrationKernel<2, 2>* pInverseKernel =
 				dynamic_cast<const core::ModelBasedRegistrationKernel<2, 2>* >(&
 						(spRegistration->getInverseMapping()));
-			core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters =
+			::map::core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters =
 				pInverseKernel->getParameters();
 
 			CHECK_CLOSE(13.0, parameters[0], 0.01);

@@ -55,7 +55,7 @@ namespace map
 				mapDefaultExceptionStaticMacro("Error. File name pointer to check is NULL. Cannot determine if its an library.");
 			}
 
-			core::String sname = name;
+			::map::core::String sname = name;
 
 			if (sname.find(getDeploymentDLLExtension()) != core::String::npos)
 			{
@@ -73,14 +73,14 @@ namespace map
 				mapDefaultExceptionStaticMacro("Error. File name pointer to check is NULL. Cannot determine if its name is compliant to the naming style for deployed algorithms.");
 			}
 
-			core::String sname = name;
+			::map::core::String sname = name;
 
 			sname = core::FileDispatch::getFullName(sname);
 
-			core::String suffix = core::String(getDeploymentDLLExtension());
-			core::String prefix = core::String("mdra");
+			::map::core::String suffix = core::String(getDeploymentDLLExtension());
+			::map::core::String prefix = core::String("mdra");
 
-			core::OStringStream ostr;
+			::map::core::OStringStream ostr;
 			ostr << "-" << MAP_VERSION_MAJOR << "-" << MAP_VERSION_MINOR << "_";
 
 #if _DEBUG || (__linux__ && !defined(NDEBUG)) || (__APPLE__ && !defined(NDEBUG))
@@ -230,7 +230,7 @@ namespace map
 
 			//DLL seems to be valid -> Get the UID and compile the DLL info
 
-			algorithm::UID::Pointer spUIDdll;
+			::map::algorithm::UID::Pointer spUIDdll;
 			(*pUIDFunction)(spUIDdll);
 
 			if (spUIDdll.IsNull())
@@ -243,7 +243,7 @@ namespace map
 			(*pProfileFunction)(profileStr);
 
 			//copy the UID information to a UID that is not instanciated within the DLL, thus the new UID does not depend on the DLL.
-			algorithm::UID::Pointer spUID = algorithm::UID::New(spUIDdll->getNamespace(), spUIDdll->getName(),
+			::map::algorithm::UID::Pointer spUID = algorithm::UID::New(spUIDdll->getNamespace(), spUIDdll->getName(),
 											spUIDdll->getVersion(), spUIDdll->getBuildTag());
 
 			DLLHandle::Pointer spResult = DLLHandle::New(libHandle, spUID, libraryFile, profileStr);
@@ -282,12 +282,12 @@ namespace map
 			}
 		};
 
-		algorithm::UID::ConstPointer peekDeploymentDLL(const char* libraryFile)
+		::map::algorithm::UID::ConstPointer peekDeploymentDLL(const char* libraryFile)
 		{
 			DLLHandle::Pointer spHandle = openDeploymentDLL(libraryFile);
 
-			algorithm::UID::ConstPointer spUID;
-			core::String tempProfile;
+			::map::algorithm::UID::ConstPointer spUID;
+			::map::core::String tempProfile;
 
 			peekDeploymentDLL(libraryFile, spUID, tempProfile);
 
@@ -296,7 +296,7 @@ namespace map
 			return spUID;
 		};
 
-		algorithm::UID::ConstPointer peekDeploymentDLL(const core::String& libraryFile)
+		::map::algorithm::UID::ConstPointer peekDeploymentDLL(const core::String& libraryFile)
 		{
 			return peekDeploymentDLL(libraryFile.c_str());
 		};

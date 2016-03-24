@@ -33,11 +33,11 @@ namespace map
 	namespace testing
 	{
 
-		core::discrete::Elements<2>::VectorFieldType::Pointer generate2DScaleField(
+		::map::core::discrete::Elements<2>::VectorFieldType::Pointer generate2DScaleField(
 			const core::FieldRepresentationDescriptor<2>* pRepDesc)
 		{
 			//Model kernel generation
-			typedef itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
+			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
@@ -53,14 +53,14 @@ namespace map
 			return spField;
 		}
 
-		core::discrete::Elements<2>::VectorFieldType::Pointer generate2DScaleFieldWithNull(
+		::map::core::discrete::Elements<2>::VectorFieldType::Pointer generate2DScaleFieldWithNull(
 			const core::FieldRepresentationDescriptor<2>* pRepDesc,
 			const map::core::continuous::Elements<2>::VectorType& nullVector)
 		{
 
-			core::discrete::Elements<2>::VectorFieldType::Pointer spField = generate2DScaleField(pRepDesc);
+			::map::core::discrete::Elements<2>::VectorFieldType::Pointer spField = generate2DScaleField(pRepDesc);
 
-			core::discrete::Elements<2>::VectorFieldType::IndexType index;
+			::map::core::discrete::Elements<2>::VectorFieldType::IndexType index;
 			index.Fill(1);
 			spField->SetPixel(index, nullVector);
 

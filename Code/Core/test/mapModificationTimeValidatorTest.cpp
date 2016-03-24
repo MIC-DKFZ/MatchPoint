@@ -76,13 +76,13 @@ namespace map
 			OffContextObject::Pointer spOffContextObj2 = OffContextObject::New();
 
 			//check constructors
-			core::ModificationTimeValidator mtv;
+			::map::core::ModificationTimeValidator mtv;
 			CHECK_EQUAL(contextRefTS.GetMTime(), mtv.getMTime());
 
-			core::ModificationTimeValidator mtv2(NULL);
+			::map::core::ModificationTimeValidator mtv2(NULL);
 			CHECK_EQUAL(contextRefTS.GetMTime(), mtv2.getMTime());
 
-			core::ModificationTimeValidator mtv3(spInContextObj);
+			::map::core::ModificationTimeValidator mtv3(spInContextObj);
 			unsigned long lastTS_MTV3 = mtv3.getMTime();
 			CHECK(contextRefTS.GetMTime() < lastTS_MTV3);
 

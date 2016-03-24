@@ -54,7 +54,7 @@ namespace map
 		* @sa RegistrationFileReader
 		*/
 		class MAPIO_EXPORT KernelLoaderLoadPolicy : public
-			core::services::GenericStaticLoadPolicyBase<RegistrationKernelLoaderBase >
+			::map::core::services::GenericStaticLoadPolicyBase<RegistrationKernelLoaderBase >
 		{
 		protected:
 			/*! Standard class typedefs. */

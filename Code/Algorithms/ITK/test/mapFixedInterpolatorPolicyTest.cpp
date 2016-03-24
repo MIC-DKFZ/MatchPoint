@@ -52,7 +52,7 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef ::itk::LinearInterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
+			typedef ::itk::LinearInterpolateImageFunction<::map::core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
 			InterpolatorType;
 			typedef TestPolicy< InterpolatorType > PolicyType;
 

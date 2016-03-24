@@ -38,7 +38,7 @@ namespace map
 			this->_XSLTFile = file;
 		};
 
-		core::String
+		::map::core::String
 		XMLFileWriter::
 		getXSLTFile() const
 		{
@@ -57,7 +57,7 @@ namespace map
 
 			XMLIntendedStrWriter::Pointer spStrWriter = XMLIntendedStrWriter::New();
 
-			core::String savedStr = spStrWriter->write(pElement);
+			::map::core::String savedStr = spStrWriter->write(pElement);
 
 			std::ofstream file;
 

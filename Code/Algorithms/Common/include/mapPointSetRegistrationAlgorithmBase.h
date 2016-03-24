@@ -103,8 +103,8 @@ namespace map
 
 		private:
 
-			core::ModificationTimeValidator _targetPSMTime;
-			core::ModificationTimeValidator _movingPSMTime;
+			::map::core::ModificationTimeValidator _targetPSMTime;
+			::map::core::ModificationTimeValidator _movingPSMTime;
 
 			MovingPointSetConstPointer _spMovingPointSet;
 

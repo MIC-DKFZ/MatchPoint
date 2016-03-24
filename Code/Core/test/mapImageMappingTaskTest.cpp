@@ -56,7 +56,7 @@ namespace map
 			RegistrationType::Pointer spRegistration = RegistrationType::New();
 			MappingTaskType::InterpolateBaseType::Pointer spInterpolator = InterpolatorType::New().GetPointer();
 			MappingTaskType::ResultImageDescriptorType::Pointer spResultDescriptor =
-				core::createFieldRepresentation(*spInput);
+				::map::core::createFieldRepresentation(*spInput);
 
 			MappingTaskType::ErrorValueType errorReference =
 				itk::NumericTraits<MappingTaskType::ErrorValueType>::Zero;

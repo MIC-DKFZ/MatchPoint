@@ -94,7 +94,7 @@ namespace map
 			* @pre pRegistration must be valid and of correct dimensionality.
 				 */
 			virtual void addAsInverseKernel(GenericKernelType* pKernel,
-											core::RegistrationBase::Pointer& spRegistration) const;
+											::map::core::RegistrationBase::Pointer& spRegistration) const;
 
 			/*! Adds a given generic kernel to the passed registration as direct kernel.
 				 * @eguarantee strong

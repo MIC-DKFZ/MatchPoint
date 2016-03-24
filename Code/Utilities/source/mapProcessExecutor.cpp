@@ -35,13 +35,13 @@ namespace map
 	namespace utilities
 	{
 
-		core::String
+		::map::core::String
 		ProcessExecutor::
 		getOSDependendExecutableName(const core::String& name)
 		{
 #if defined(_WIN32)
 
-			if (core::FileDispatch::getExtension(name).empty())
+			if (::map::core::FileDispatch::getExtension(name).empty())
 			{
 				return name + ".exe";
 			}
@@ -52,7 +52,7 @@ namespace map
 
 #else
 
-			if (core::FileDispatch::getPath(name).empty())
+			if (::map::core::FileDispatch::getPath(name).empty())
 			{
 				return "./" + name;
 			}
@@ -147,7 +147,7 @@ namespace map
 		execute(const core::String& executionPath, const core::String& executableName,
 				ArgumentListType argumentList)
 		{
-			core::String executableName_OS = getOSDependendExecutableName(executableName);
+			::map::core::String executableName_OS = getOSDependendExecutableName(executableName);
 
 			argumentList.insert(argumentList.begin(), executableName_OS);
 

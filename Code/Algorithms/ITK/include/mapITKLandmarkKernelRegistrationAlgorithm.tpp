@@ -107,7 +107,7 @@ namespace map
 			{
 				bool resultAvailable = true;
 
-				this->InvokeEvent(events::InitializingAlgorithmEvent());
+				this->InvokeEvent(::map::events::InitializingAlgorithmEvent());
 
 				if (!this->getMovingPointSet())
 				{
@@ -125,9 +125,9 @@ namespace map
 				this->_spTransform = TransformModelType::New();
 
 				//assemble registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing kernel trasform."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing kernel trasform."));
 
-				this->InvokeEvent(events::StartingAlgorithmEvent());
+				this->InvokeEvent(::map::events::StartingAlgorithmEvent());
 
 				_spTransform->SetStiffness(this->m_Stiffness);
 
@@ -143,11 +143,11 @@ namespace map
 
 				_spTransform->UpdateParameters();
 
-				this->InvokeEvent(events::StoppedAlgorithmEvent());
+				this->InvokeEvent(::map::events::StoppedAlgorithmEvent());
 
 				this->finalizeAlgorithm();
 
-				this->InvokeEvent(events::FinalizedAlgorithmEvent());
+				this->InvokeEvent(::map::events::FinalizedAlgorithmEvent());
 
 				return resultAvailable;
 			};
@@ -190,7 +190,7 @@ namespace map
 
 				//now create the registration an set the kernels
 				spResult = RegistrationType::New();
-				core::RegistrationManipulator<RegistrationType> manipulator(spResult);
+				::map::core::RegistrationManipulator<RegistrationType> manipulator(spResult);
 
 				manipulator.setDirectMapping(spDKernel);
 				manipulator.setInverseMapping(spIKernel);

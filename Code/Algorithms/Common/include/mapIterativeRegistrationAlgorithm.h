@@ -169,7 +169,7 @@ namespace map
 			 * specified.
 			 * @remark This value should have only informative character and should not control or influence algorithmic or program
 			 * behavior*/
-			core::String _stopConditionDescription;
+			::map::core::String _stopConditionDescription;
 		private:
 			//No copy constructor allowed
 			IterativeRegistrationAlgorithm(const Self& source);

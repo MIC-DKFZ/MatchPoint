@@ -105,9 +105,9 @@ namespace map
 		MAPDeployment_EXPORT algorithm::UID::ConstPointer peekDeploymentDLL(const core::String&
 				libraryFile);
 		MAPDeployment_EXPORT void peekDeploymentDLL(const char* libraryFile,
-				algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
+				::map::algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
 		MAPDeployment_EXPORT void peekDeploymentDLL(const core::String& libraryFile,
-				algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
+				::map::algorithm::UID::ConstPointer& spUID, ::map::core::String& algProfile);
 
 
 		/*! Method requests an algorithm instance of the DLL specified by the passed DLL info.

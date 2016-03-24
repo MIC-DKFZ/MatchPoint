@@ -53,7 +53,7 @@ namespace map
 					//there is really the need to change
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::UnregisterAlgorithmComponentEvent unRegEvent(_spMetric.GetPointer(),
+						::map::events::UnregisterAlgorithmComponentEvent unRegEvent(_spMetric.GetPointer(),
 								"Unregister current metric");
 						this->_spOnChange->Execute((::itk::Object*)NULL, unRegEvent);
 					}
@@ -63,7 +63,7 @@ namespace map
 
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::RegisterAlgorithmComponentEvent regEvent(_spMetric.GetPointer(), "Register new metric");
+						::map::events::RegisterAlgorithmComponentEvent regEvent(_spMetric.GetPointer(), "Register new metric");
 						this->_spOnChange->Execute((::itk::Object*)NULL, regEvent);
 					}
 				}

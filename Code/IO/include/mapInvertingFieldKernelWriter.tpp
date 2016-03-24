@@ -63,7 +63,7 @@ namespace map
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
@@ -71,22 +71,22 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "InvertingFieldKernelWriter<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "InvertingFieldKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
 			   VOutputDimensions << ".";
 			return os.str();
@@ -100,7 +100,7 @@ namespace map
 		{
 			if (!canHandleRequest(request))
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot store kernel. Reason: cannot handle request.");
 			}
 
@@ -108,7 +108,7 @@ namespace map
 
 			if (pKernel == NULL)
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot store kernel. Reason: cannot cast to InvertingFieldBasedRegistrationKernel: " <<
 								  request._spKernel.GetPointer());
 			}
@@ -138,7 +138,7 @@ namespace map
 
 			structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
 			spUseNullVectorElement->setTag(tags::UseNullVector);
-			spUseNullVectorElement->setValue(core::convert::toStr(pKernel->usesNullVector()));
+			spUseNullVectorElement->setValue(::map::core::convert::toStr(pKernel->usesNullVector()));
 			spKernelElement->addSubElement(spUseNullVectorElement);
 
 			if (pKernel->usesNullVector())

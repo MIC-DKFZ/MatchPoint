@@ -56,7 +56,7 @@ namespace map
 										  filePath);
 			}
 
-			core::String data;
+			::map::core::String data;
 			bool hasError = false;
 			std::streamsize filesize = itksys::SystemTools::FileLength(filePath.c_str());
 			char* buffer = new char [filesize];

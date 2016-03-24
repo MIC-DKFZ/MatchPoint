@@ -32,10 +32,10 @@ namespace map
 	{
 
 		/** generates a vector field by a scaletransform (0.3 x and 0.4 y factor)*/
-		core::discrete::Elements<2>::VectorFieldType::Pointer generate2DScaleField(
+		::map::core::discrete::Elements<2>::VectorFieldType::Pointer generate2DScaleField(
 			const core::FieldRepresentationDescriptor<2>* pRepDesc);
 		/** generates a vector field by a scaletransform (0.3 x and 0.4 y factor) and a NULL vector in the pixel with index (1,1).*/
-		core::discrete::Elements<2>::VectorFieldType::Pointer generate2DScaleFieldWithNull(
+		::map::core::discrete::Elements<2>::VectorFieldType::Pointer generate2DScaleFieldWithNull(
 			const core::FieldRepresentationDescriptor<2>* pRepDesc,
 			const map::core::continuous::Elements<2>::VectorType& nullVector);
 

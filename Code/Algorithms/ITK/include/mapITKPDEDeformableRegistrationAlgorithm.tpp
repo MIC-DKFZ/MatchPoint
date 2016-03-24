@@ -67,7 +67,7 @@ namespace map
 			prepSetInternalInputData()
 			{
 				//Connect images
-				this->InvokeEvent(events::AlgorithmEvent(this, "Connect images to itk registration method."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Connect images to itk registration method."));
 				this->getInternalRegistrationMethod().SetFixedImage(this->_spInternalTargetImage);
 				this->getInternalRegistrationMethod().SetMovingImage(this->_spInternalMovingImage);
 			}

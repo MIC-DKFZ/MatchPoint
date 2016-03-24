@@ -39,7 +39,7 @@ namespace map
 		{
 			template<class TScalar, unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			class TestPolicy : public
-				algorithm::itk::ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>
+				::map::algorithm::itk::ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>
 			{
 				//derivered a test class to generate public constructors (The policy itsself cannot
 				//be instantiated directly), to set the visibility of getTransformInternal to
@@ -89,16 +89,16 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			TestPolicy<core::continuous::ScalarType, 3, 3> policy;
-			const TestPolicy<core::continuous::ScalarType, 3, 3>& constPolicy = policy;
+			TestPolicy<::map::core::continuous::ScalarType, 3, 3> policy;
+			const TestPolicy<::map::core::continuous::ScalarType, 3, 3>& constPolicy = policy;
 
-			typedef ::itk::ScaleTransform<core::continuous::ScalarType, 3> ModelType;
+			typedef ::itk::ScaleTransform<::map::core::continuous::ScalarType, 3> ModelType;
 
 			ModelType::Pointer spModel1 = ModelType::New();
 			ModelType::Pointer spModel2 = ModelType::New();
 
-			itk::Transform<core::continuous::ScalarType, 3, 3>* pModel = NULL;
-			const itk::Transform<core::continuous::ScalarType, 3, 3>* pConstModel = NULL;
+			itk::Transform<::map::core::continuous::ScalarType, 3, 3>* pModel = NULL;
+			const itk::Transform<::map::core::continuous::ScalarType, 3, 3>* pConstModel = NULL;
 
 			CHECK_NO_THROW(pModel = policy.getTransformInternal());
 			CHECK_NO_THROW(pConstModel = constPolicy.getTransformInternal());

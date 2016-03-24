@@ -39,7 +39,7 @@ namespace map
 
 			template<unsigned int VMovingDimension, unsigned int VTargetDimension>
 			class TestMaskedRegistrationAlgorithmBase : public
-				algorithm::MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension>
+				::map::algorithm::MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension>
 			{
 			public:
 				TestMaskedRegistrationAlgorithmBase() {};

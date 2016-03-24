@@ -127,7 +127,7 @@ namespace map
 			//Add observer for algorithm events.
 			RegTestCommand::Pointer spTestCommand = RegTestCommand::New();
 
-			spAlgorithm->AddObserver(events::AlgorithmEvent(), spTestCommand);
+			spAlgorithm->AddObserver(::map::events::AlgorithmEvent(), spTestCommand);
 			spAlgorithm->AddObserver(::itk::AnyEvent(), spTestCommand);
 
 			//create registration algorithm components
@@ -137,7 +137,7 @@ namespace map
 			OptimizerControlType;
 			typedef ::itk::LinearInterpolateImageFunction<TestImageType, core::continuous::ScalarType>
 			InterpolatorType;
-			typedef ::itk::TranslationTransform<core::continuous::ScalarType, 2> TranformModelType;
+			typedef ::itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TranformModelType;
 
 			OptimizerControlType::Pointer spOptimizer = OptimizerControlType::New();
 			MetricControlType::Pointer spMetric = MetricControlType::New();
@@ -175,7 +175,7 @@ namespace map
 			const core::ModelBasedRegistrationKernel<2, 2>* pInverseKernel =
 				dynamic_cast<const core::ModelBasedRegistrationKernel<2, 2>* >(&
 						(spRegistration->getInverseMapping()));
-			core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters =
+			::map::core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters =
 				pInverseKernel->getParameters();
 
 			CHECK_CLOSE(13.0, parameters[0], 0.01);

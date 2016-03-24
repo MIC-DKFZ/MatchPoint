@@ -50,9 +50,9 @@ namespace map
 			{
 				this->_configurationPLM.clear();
 				this->_configurationPLM.push_back(
-					algorithm::plastimatch::ParameterStageType()); //add global section, will be filled by base class
+					::map::algorithm::plastimatch::ParameterStageType()); //add global section, will be filled by base class
 
-				algorithm::plastimatch::ParameterStageType map;
+				::map::algorithm::plastimatch::ParameterStageType map;
 				/////////////////////////////////
 				//Setup Stage 1: rigid
 				/////////////////////////////////

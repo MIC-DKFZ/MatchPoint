@@ -55,7 +55,7 @@ namespace map
 				for (unsigned int i = 0; i < dir->GetNumberOfFiles(); i++)
 				{
 					const char* file = dir->GetFile(i);
-					core::String fullpath = core::FileDispatch::createFullPath(libraryPath.c_str(), file);
+					::map::core::String fullpath = core::FileDispatch::createFullPath(libraryPath.c_str(), file);
 					result.push_back(fullpath);
 				}
 			}
@@ -158,7 +158,7 @@ namespace map
 			*/
 			virtual void handleFailure(void) const
 			{
-				core::OStringStream stream;
+				::map::core::OStringStream stream;
 				stream << "Directory browser misidentified the deployed algorithms." << std::endl;
 				stream << "False positives (wrongly assumed to be deployed algorithms)" << std::endl;
 
@@ -214,8 +214,8 @@ namespace map
 			CHECK_NO_THROW(spBrowser->addDLLSearchLocation("aPath"));
 			CHECK_NO_THROW(spBrowser->addDLLSearchLocation("bPath"));
 			CHECK_NO_THROW(paths = spBrowser->getDLLSearchLocations());
-			core::String refAPath = core::FileDispatch::createFullPath("base", "aPath");
-			core::String refBPath = core::FileDispatch::createFullPath("base", "bPath");
+			::map::core::String refAPath = core::FileDispatch::createFullPath("base", "aPath");
+			::map::core::String refBPath = core::FileDispatch::createFullPath("base", "bPath");
 			CHECK_EQUAL(refAPath, paths[0]);
 			CHECK_EQUAL(refBPath, paths[1]);
 			CHECK_EQUAL(2, paths.size());
@@ -240,7 +240,7 @@ namespace map
 
 			CHECK_TESTER(tester);
 
-			core::String wrongFile = core::FileDispatch::createFullPath(searchPath,
+			::map::core::String wrongFile = core::FileDispatch::createFullPath(searchPath,
 									 itksys::DynamicLoader::LibPrefix() + core::String("mapTestAlgorithm") + map::deployment::getDeploymentDLLExtension());
 			spBrowser->addDLLSearchLocation(wrongFile);
 			CHECK_NO_THROW(spBrowser->update());

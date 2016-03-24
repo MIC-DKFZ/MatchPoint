@@ -97,7 +97,7 @@ namespace map
 					//there is really the need to change
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::UnregisterAlgorithmComponentEvent unRegEvent(_spInterpolator.GetPointer(),
+						::map::events::UnregisterAlgorithmComponentEvent unRegEvent(_spInterpolator.GetPointer(),
 								"Unregister current interpolator");
 						this->_spOnChange->Execute((::itk::Object*)NULL, unRegEvent);
 					}
@@ -107,7 +107,7 @@ namespace map
 
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::RegisterAlgorithmComponentEvent regEvent(_spInterpolator.GetPointer(),
+						::map::events::RegisterAlgorithmComponentEvent regEvent(_spInterpolator.GetPointer(),
 								"Register new interpolator");
 						this->_spOnChange->Execute((::itk::Object*)NULL, regEvent);
 					}

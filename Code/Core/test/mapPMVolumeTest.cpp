@@ -37,17 +37,17 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			core::continuous::PMVolume::SizeType size(2);
+			::map::core::continuous::PMVolume::SizeType size(2);
 			size[0] = 1;
 			size[1] = 2;
-			core::continuous::PMVolume::OriginType origin(2);
+			::map::core::continuous::PMVolume::OriginType origin(2);
 			origin[0] = 5;
 			origin[1] = 6;
 
 
-			core::continuous::PMVolume volume1(size);
-			core::continuous::PMVolume volume2(origin, size);
-			core::continuous::PMVolume volume3(volume2);
+			::map::core::continuous::PMVolume volume1(size);
+			::map::core::continuous::PMVolume volume2(origin, size);
+			::map::core::continuous::PMVolume volume3(volume2);
 
 			CHECK_EQUAL(0, volume1.getOrigin(0));
 			CHECK_EQUAL(0, volume1.getOrigin(1));

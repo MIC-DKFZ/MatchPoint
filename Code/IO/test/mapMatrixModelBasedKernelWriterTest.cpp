@@ -48,9 +48,9 @@ namespace map
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
 
 			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel IllegalKernelType;
-			typedef itk::Euler2DTransform<core::continuous::ScalarType>	TransformType;
+			typedef itk::Euler2DTransform<::map::core::continuous::ScalarType>	TransformType;
       //define non matrix-offset-decomposable type
-      typedef itk::BSplineTransform<core::continuous::ScalarType,2,2> IllegalTransformType; 
+      typedef itk::BSplineTransform<::map::core::continuous::ScalarType,2,2> IllegalTransformType; 
 
 			typedef io::MatrixModelBasedKernelWriter<2, 2> WriterType;
 			typedef io::MatrixModelBasedKernelWriter<2, 3> Writer23Type;
@@ -95,8 +95,8 @@ namespace map
 			//test content
 			structuredData::XMLStrWriter::Pointer spStrWriter = structuredData::XMLStrWriter::New();
 
-			core::String data = spStrWriter->write(spData);
-			core::String ref =
+			::map::core::String data = spStrWriter->write(spData);
+			::map::core::String ref =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>-3.673205103e-006</Value></Matrix><MatrixStr>-3.67321e-006 -1 1 -3.67321e-006 </MatrixStr><Offset><Value Row='0'>5.000000000</Value><Value Row='1'>2.000000000</Value></Offset><OffsetStr>5 2 </OffsetStr></Kernel>";
 
 			CHECK_EQUAL(ref, data);

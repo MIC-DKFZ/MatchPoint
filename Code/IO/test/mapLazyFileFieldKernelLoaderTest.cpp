@@ -91,28 +91,28 @@ namespace map
 			map::core::String testFilePath = map::structuredData::encodeForXml(
 												 map::core::FileDispatch::createFullPath(refPath, "expandingFieldKernelWriterTest_ref.mhd"));
 
-			core::String validData =
+			::map::core::String validData =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>"
 				+ testFilePath +
 				"</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
-			core::String validData_noNullVector =
+			::map::core::String validData_noNullVector =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>"
 				+ testFilePath + "</FieldPath><UseNullVector>1</UseNullVector></Kernel>";
-			core::String invalidData_wrongDim =
+			::map::core::String invalidData_wrongDim =
 				"<Kernel InputDimensions='3' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType></Kernel>";
-			core::String invalidData_wrongDim2 =
+			::map::core::String invalidData_wrongDim2 =
 				"<Kernel InputDimensions='2' OutputDimensions='3'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType></Kernel>";
-			core::String invalidData_wrongType =
+			::map::core::String invalidData_wrongType =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>WrongKernel</KernelType></Kernel>";
-			core::String invalidData_noFile =
+			::map::core::String invalidData_noFile =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
-			core::String invalidData_noUseNullVector =
+			::map::core::String invalidData_noUseNullVector =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
-			core::String invalidData_wrongNullVector =
+			::map::core::String invalidData_wrongNullVector =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value></NullVector></Kernel>";
-			core::String invalidData_wrongFile =
+			::map::core::String invalidData_wrongFile =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>inexistantDummyFile.error</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
-			core::String invalidData_wrongDimFile =
+			::map::core::String invalidData_wrongDimFile =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>"
 				+ testFilePath +
 				"</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";

@@ -90,7 +90,7 @@ namespace map
 			KernelType::OutputPointType resultPoint;
 
 			KernelType::RepresentationDescriptorPointer spReferenceFieldRepresentation =
-				core::createFieldRepresentation(*(spField.GetPointer()));
+				::map::core::createFieldRepresentation(*(spField.GetPointer()));
 
 			CHECK_EQUAL(spField.GetPointer(), spKernel->getField());
 			CHECK_EQUAL(true, spKernel->hasLimitedRepresentation());

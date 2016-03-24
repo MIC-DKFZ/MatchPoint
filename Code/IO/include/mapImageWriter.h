@@ -81,7 +81,7 @@ namespace map
 			/** Pointer to the image volume to be saved.*/
 			typename InputImageType::ConstPointer _spImage;
 			/** The file name and path for the saved image. */
-			core::String  _filePath;
+			::map::core::String  _filePath;
 			/** Indicates if the output image intensity should be rescaled.*/
 			bool _rescaleImage;
 			/** Indicates the minimum of the output.*/

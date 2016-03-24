@@ -83,7 +83,7 @@ namespace map
 
 				if (argc > 1)
 				{
-					core::String dummyArg = argv[1];
+					::map::core::String dummyArg = argv[1];
 
 					if (dummyArg.substr(0, 1) != "-")
 					{
@@ -97,7 +97,7 @@ namespace map
 
 				if (argc > 1)
 				{
-					core::String dummyArg = argv[1];
+					::map::core::String dummyArg = argv[1];
 
 					if (dummyArg.substr(0, 1) != "-")
 					{
@@ -209,10 +209,10 @@ namespace map
 
 				if (_outputFileName.empty())
 				{
-					core::String path = core::FileDispatch::getPath(_inputFileName);
-					core::String inputName = core::FileDispatch::getName(_inputFileName);
-					core::String inputExt = core::FileDispatch::getExtension(_inputFileName);
-					core::String regName = core::FileDispatch::getName(_regFileName);
+					::map::core::String path = core::FileDispatch::getPath(_inputFileName);
+					::map::core::String inputName = core::FileDispatch::getName(_inputFileName);
+					::map::core::String inputExt = core::FileDispatch::getExtension(_inputFileName);
+					::map::core::String regName = core::FileDispatch::getName(_regFileName);
 
 					_outputFileName = core::FileDispatch::createFullPath(path, inputName + "_" + regName + inputExt);
 				}

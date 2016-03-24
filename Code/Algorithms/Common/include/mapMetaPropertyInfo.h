@@ -118,7 +118,7 @@ namespace map
 			bool isWritable() const;
 
 		protected:
-			core::String _name;
+			::map::core::String _name;
 			const std::type_info& _type_info;
 			bool _isReadable;
 			bool _isWritable;

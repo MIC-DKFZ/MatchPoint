@@ -61,7 +61,7 @@ namespace map
 			if (pSync)
 			{
 				_SyncedObject = pSync;
-				core::Logbook::setSynchronization(*pSync);
+				::map::core::Logbook::setSynchronization(*pSync);
 			}
 		};
 
@@ -71,7 +71,7 @@ namespace map
 		{
 			::std::auto_ptr<deployment::SyncObject> pNewSync(new SyncObject());
 
-			core::Logbook::getSynchronization(*pNewSync);
+			::map::core::Logbook::getSynchronization(*pNewSync);
 
 			if (!_SyncObject)
 			{

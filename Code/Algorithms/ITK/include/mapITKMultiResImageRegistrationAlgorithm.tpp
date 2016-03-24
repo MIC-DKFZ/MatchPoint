@@ -120,7 +120,7 @@ namespace map
 			{
 				Superclass::prepSetInternalInputData();
 
-				this->InvokeEvent(events::AlgorithmEvent(this,
+				this->InvokeEvent(::map::events::AlgorithmEvent(this,
 								  "Pass resolution schedules to itk registration method."));
 				this->getInternalRegistrationMethod().SetSchedules(this->getTargetSchedule(),
 						this->getMovingSchedule());
@@ -224,7 +224,7 @@ namespace map
 				this->_currentIterationLock.Unlock();
 				this->_currentLevelLock.Unlock();
 
-				this->InvokeEvent(events::AlgorithmResolutionLevelEvent(this, os.str()));
+				this->InvokeEvent(::map::events::AlgorithmResolutionLevelEvent(this, os.str()));
 				this->doInterLevelSetup();
 			};
 

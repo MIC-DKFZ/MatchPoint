@@ -52,7 +52,7 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef ::itk::MeanSquaresImageToImageMetric<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			typedef ::itk::MeanSquaresImageToImageMetric<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
 			MetricType;
 			typedef algorithm::itk::ITKMetricControl<MetricType> MetricControlType;
 			typedef TestPolicy< MetricType > PolicyType;

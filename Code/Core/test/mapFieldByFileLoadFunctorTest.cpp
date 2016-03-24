@@ -43,7 +43,7 @@ namespace map
 
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			core::String filePath = "";
+			::map::core::String filePath = "";
 			double checkThreshold = 0.1;
 
 			if (argc > 1)

@@ -86,7 +86,7 @@ namespace map
 			bool iterationSuccess = false;
 
 			this->setCurrentState(Superclass::AlgorithmState::Initializing);
-			this->InvokeEvent(events::InitializingAlgorithmEvent());
+			this->InvokeEvent(::map::events::InitializingAlgorithmEvent());
 
 			try
 			{
@@ -102,7 +102,7 @@ namespace map
 			{
 				//go on with the algorithm
 				this->setCurrentState(Superclass::AlgorithmState::Running);
-				this->InvokeEvent(events::StartingAlgorithmEvent());
+				this->InvokeEvent(::map::events::StartingAlgorithmEvent());
 
 				try
 				{
@@ -119,17 +119,17 @@ namespace map
 			{
 				//stopped, by user interaction
 				this->setCurrentState(Superclass::AlgorithmState::Stopped);
-				this->InvokeEvent(events::StoppedAlgorithmEvent(NULL, "aborted by user"));
+				this->InvokeEvent(::map::events::StoppedAlgorithmEvent(NULL, "aborted by user"));
 				resultAvailable = false;
 			}
 			else
 			{
 				//normal termination of the algorithm -> finalize
 				this->setCurrentState(Superclass::AlgorithmState::Stopped);
-				this->InvokeEvent(events::StoppedAlgorithmEvent(NULL, _stopConditionDescription));
+				this->InvokeEvent(::map::events::StoppedAlgorithmEvent(NULL, _stopConditionDescription));
 
 				this->setCurrentState(Superclass::AlgorithmState::Finalizing);
-				this->InvokeEvent(events::FinalizingAlgorithmEvent());
+				this->InvokeEvent(::map::events::FinalizingAlgorithmEvent());
 
 				try
 				{
@@ -142,7 +142,7 @@ namespace map
 				}
 
 				this->setCurrentState(Superclass::AlgorithmState::Finalized);
-				this->InvokeEvent(events::FinalizedAlgorithmEvent());
+				this->InvokeEvent(::map::events::FinalizedAlgorithmEvent());
 
 				resultAvailable = true;
 			}

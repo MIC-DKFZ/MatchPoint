@@ -37,7 +37,7 @@ namespace map
 		protected:
 			virtual void doLoading()
 			{
-				core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(_pLoadInterface);
+				::map::core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(_pLoadInterface);
 				loader.addProviderByPolicy(TestServiceProvider<1>::New());
 				loader.addProviderByPolicy(TestServiceProvider<2>::New());
 			};

@@ -148,7 +148,7 @@ namespace map
 
 			//Test alternative peek with valid dll
 			spUID = NULL;
-			core::String testProfile = "";
+			::map::core::String testProfile = "";
 			CHECK_NO_THROW(map::deployment::peekDeploymentDLL(validDLLPath, spUID, testProfile));
 			CHECK(spUID.IsNotNull());
 			CHECK_EQUAL("de.dkfz.matchpoint", spUID->getNamespace());
@@ -169,8 +169,8 @@ namespace map
 
 			//////////////////////////////////////////////////
 			// Test: checkNameIsSharedLibrary
-			core::String noLib = "iAmNoLib.other";
-			core::String aLib = core::String("iAmALib.") + map::deployment::getDeploymentDLLExtension();
+			::map::core::String noLib = "iAmNoLib.other";
+			::map::core::String aLib = core::String("iAmALib.") + map::deployment::getDeploymentDLLExtension();
 
 			CHECK_THROW(map::deployment::checkNameIsSharedLibrary(NULL));
 			CHECK(map::deployment::checkNameIsSharedLibrary(aLib.c_str()));
@@ -179,20 +179,20 @@ namespace map
 			//////////////////////////////////////////////////
 			// Test: checkFileNameIsMDRACompliant
 
-			core::String validMDRA = core::String("mdra");
+			::map::core::String validMDRA = core::String("mdra");
 #if _DEBUG || (__linux__ && !defined(NDEBUG))
 			validMDRA = validMDRA + "-D";
 #endif
 
-			core::OStringStream ostr;
+			::map::core::OStringStream ostr;
 			ostr << "-" << MAP_VERSION_MAJOR << "-" << MAP_VERSION_MINOR << "_";
-			core::String versionPart = ostr.str();
+			::map::core::String versionPart = ostr.str();
 
-			core::String invalidMDRA_DFlag = core::String("mdra-B") + versionPart + "MyInvalidDFlagAlgorithm" + map::deployment::getDeploymentDLLExtension();
-			core::String invalidMDRA_Version = validMDRA + "0-0_" + "MyInvalidVersionAlgorithm" + map::deployment::getDeploymentDLLExtension();
-			core::String invalidMDRA_Extension = validMDRA + "0-0_" + "MyInvalidExtensionAlgorithm.other";
+			::map::core::String invalidMDRA_DFlag = core::String("mdra-B") + versionPart + "MyInvalidDFlagAlgorithm" + map::deployment::getDeploymentDLLExtension();
+			::map::core::String invalidMDRA_Version = validMDRA + "0-0_" + "MyInvalidVersionAlgorithm" + map::deployment::getDeploymentDLLExtension();
+			::map::core::String invalidMDRA_Extension = validMDRA + "0-0_" + "MyInvalidExtensionAlgorithm.other";
 			validMDRA = validMDRA + versionPart + "MyValidAlgorithm" + map::deployment::getDeploymentDLLExtension();
-			core::String validMDRA_withPath = core::String("./myPath/") + validMDRA;
+			::map::core::String validMDRA_withPath = core::String("./myPath/") + validMDRA;
 
 			CHECK_THROW(map::deployment::checkFileNameIsMDRACompliant(NULL));
 			CHECK(! map::deployment::checkFileNameIsMDRACompliant(aLib.c_str()));

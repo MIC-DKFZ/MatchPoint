@@ -37,8 +37,8 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			CHECK_NO_THROW(core::Logbook::setDefaultLogFileName("mapLogbookTest.log"));
-			CHECK_NO_THROW(core::Logbook::info("first entry and initialization"));
+			CHECK_NO_THROW(::map::core::Logbook::setDefaultLogFileName("mapLogbookTest.log"));
+			CHECK_NO_THROW(::map::core::Logbook::info("first entry and initialization"));
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

@@ -74,7 +74,7 @@ namespace map
 
 
 		template <unsigned int VInputDimensions>
-		core::String
+		::map::core::String
 		MatrixModelBasedKernelLoader<VInputDimensions>::
 		getProviderName() const
 		{
@@ -82,22 +82,22 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions>
-		core::String
+		::map::core::String
 		MatrixModelBasedKernelLoader<VInputDimensions>::
 		getStaticProviderName()
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "MatrixModelBasedKernelLoader<" << VInputDimensions << "," << VInputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions>
-		core::String
+		::map::core::String
 		MatrixModelBasedKernelLoader<VInputDimensions>::
 		getDescription() const
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "MatrixModelBasedKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: "
 			   << VInputDimensions << ".";
 			return os.str();
@@ -111,7 +111,7 @@ namespace map
 		{
 			if (!canHandleRequest(request))
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot load kernel. Reason: cannot handle request.");
 			}
 
@@ -122,7 +122,7 @@ namespace map
 
 			if (matrixPos == request._spKernelDescriptor->getSubElementEnd())
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: no matrix found.");
+				mapExceptionMacro(::map::core::ServiceException, << "Error: cannot load kernel. Reason: no matrix found.");
 			}
 
 			typedef typename KernelType::TransformType::MatrixType MatrixType;
@@ -132,9 +132,9 @@ namespace map
 			{
 				matrix = structuredData::streamSDToITKMatrix<MatrixType>(*matrixPos);
 			}
-			catch (core::ExceptionObject& ex)
+			catch (::map::core::ExceptionObject& ex)
 			{
-				mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+				mapExceptionMacro(::map::core::ServiceException, << ex.GetDescription());
 			}
 
 			//establish offset;
@@ -144,7 +144,7 @@ namespace map
 
 			if (offsetPos == request._spKernelDescriptor->getSubElementEnd())
 			{
-				mapExceptionMacro(core::ServiceException, << "Error: cannot load kernel. Reason: no offset found.");
+				mapExceptionMacro(::map::core::ServiceException, << "Error: cannot load kernel. Reason: no offset found.");
 			}
 
 			typedef typename KernelType::TransformType::OutputVectorType OutputVectorType;
@@ -154,15 +154,15 @@ namespace map
 			{
 				offset = structuredData::streamSDToITKFixedArray<OutputVectorType>(*offsetPos);
 			}
-			catch (core::ExceptionObject& ex)
+			catch (::map::core::ExceptionObject& ex)
 			{
-				mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+				mapExceptionMacro(::map::core::ServiceException, << ex.GetDescription());
 			}
 
 			//establish transform & kernel
 			typename KernelType::Pointer spKernel = KernelType::New();
 
-			typedef ::itk::AffineTransform<core::continuous::ScalarType, VInputDimensions> TransformType;
+			typedef ::itk::AffineTransform<::map::core::continuous::ScalarType, VInputDimensions> TransformType;
 			typename TransformType::Pointer spModel = TransformType::New();
 
 			spModel->SetMatrix(matrix);
@@ -207,7 +207,7 @@ namespace map
 				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel has not the correct dimension.");
 			}
 
-			core::RegistrationManipulator<RegistrationType> man(pCastedReg);
+			::map::core::RegistrationManipulator<RegistrationType> man(pCastedReg);
 			man.setInverseMapping(pCastedKernel);
 		};
 
@@ -244,7 +244,7 @@ namespace map
 				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel has not the correct dimension.");
 			}
 
-			core::RegistrationManipulator<RegistrationType> man(pCastedReg);
+			::map::core::RegistrationManipulator<RegistrationType> man(pCastedReg);
 			man.setDirectMapping(pCastedKernel);
 		};
 

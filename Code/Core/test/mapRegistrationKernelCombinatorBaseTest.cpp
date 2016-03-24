@@ -36,7 +36,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		class TestRegistrationKernelCombinatorBase: public
-			core::RegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			::map::core::RegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions>
 		{
 		public:
 

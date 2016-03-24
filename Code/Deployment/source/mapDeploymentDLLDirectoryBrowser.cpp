@@ -42,7 +42,7 @@ namespace map
 		DLLDirectoryBrowser::
 		addDLLSearchLocation(const core::String& location)
 		{
-			core::String fullPath = core::FileDispatch::ensureCorrectOSPathSeparator(
+			::map::core::String fullPath = core::FileDispatch::ensureCorrectOSPathSeparator(
 										itksys::SystemTools::CollapseFullPath(location.c_str(), _basePath.c_str()));
 
 			_pathList.push_back(fullPath);
@@ -116,7 +116,7 @@ namespace map
 
 					if (checkFileNameIsMDRACompliant(file))
 					{
-						core::String fullpath = core::FileDispatch::createFullPath(libraryPath.c_str(), file);
+						::map::core::String fullpath = core::FileDispatch::createFullPath(libraryPath.c_str(), file);
 						result.push_back(fullpath);
 					}
 				}
@@ -154,7 +154,7 @@ namespace map
 				}
 				else
 				{
-					core::OStringStream stream;
+					::map::core::OStringStream stream;
 					stream << "Specified dll search location does not exist. Location: " << *pos;
 					mapLogWarningMacro( << stream.str());
 					this->InvokeEvent(map::events::InvalidDLLEvent(NULL, stream.str()));
@@ -174,22 +174,22 @@ namespace map
 			{
 				try
 				{
-					algorithm::UID::ConstPointer spUID;
-					core::String profileStr;
+					::map::algorithm::UID::ConstPointer spUID;
+					::map::core::String profileStr;
 					map::deployment::peekDeploymentDLL(libraryFilePath, spUID, profileStr);
 					DLLInfo::Pointer spInfo = DLLInfo::New(spUID, libraryFilePath, profileStr);
 					list.push_back(spInfo);
-					core::String sComment = "Valid DLL: " + libraryFilePath;
+					::map::core::String sComment = "Valid DLL: " + libraryFilePath;
 					this->InvokeEvent(map::events::ValidDLLEvent(spInfo.GetPointer(), sComment));
 				}
 				catch (const map::core::ExceptionObject& e)
 				{
-					core::String sComment = e.GetDescription();
+					::map::core::String sComment = e.GetDescription();
 					this->InvokeEvent(map::events::InvalidDLLEvent(NULL, sComment));
 				}
 				catch (...)
 				{
-					core::String sComment = "Unkown error while try to peek DLL. File path: " + libraryFilePath;
+					::map::core::String sComment = "Unkown error while try to peek DLL. File path: " + libraryFilePath;
 					this->InvokeEvent(map::events::InvalidDLLEvent(NULL, sComment));
 				}
 			}
@@ -237,7 +237,7 @@ namespace map
 
 		DLLInfoListType peekDeploymentDLLDirectory(const char* directoryPath)
 		{
-			return peekDeploymentDLLDirectory(core::String(directoryPath));
+			return peekDeploymentDLLDirectory(::map::core::String(directoryPath));
 		};
 
 		DLLInfoListType peekDeploymentDLLDirectory(const core::String& directoryPath)

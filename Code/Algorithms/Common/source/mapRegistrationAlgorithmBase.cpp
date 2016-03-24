@@ -91,7 +91,7 @@ namespace map
 			StateLockHolderType holder(_stateLock);
 
 			this->onStateChange(_currentState, state);
-			this->InvokeEvent(events::AlgorithmStateChangeEvent(_currentState, state));
+			this->InvokeEvent(::map::events::AlgorithmStateChangeEvent(_currentState, state));
 			_currentState = state;
 		};
 

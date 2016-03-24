@@ -149,19 +149,19 @@ namespace map
 					//add observer for the communication with the thread
 					typename ::itk::MemberCommand<Self>::Pointer spNewTaskCommand = ::itk::MemberCommand<Self>::New();
 					spNewTaskCommand->SetCallbackFunction(this, &Self::onNextTaskThreadEvent);
-					smpThread->AddObserver(events::NextTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID),
+					smpThread->AddObserver(::map::events::NextTaskThreadEvent(::map::events::NextTaskThreadEvent::anyThreadID),
 										   spNewTaskCommand);
 
 					typename ::itk::MemberCommand<Self>::Pointer spProcessedTaskCommand =
 						::itk::MemberCommand<Self>::New();
 					spProcessedTaskCommand->SetCallbackFunction(this, &Self::onProcessedTaskThreadEvent);
-					smpThread->AddObserver(events::ProcessedTaskThreadEvent(
+					smpThread->AddObserver(::map::events::ProcessedTaskThreadEvent(
 											   events::ProcessedTaskThreadEvent::anyThreadID), spProcessedTaskCommand);
 
 					typename ::itk::MemberCommand<Self>::Pointer spFailedTaskCommand =
 						::itk::MemberCommand<Self>::New();
 					spFailedTaskCommand->SetCallbackFunction(this, &Self::onFailedTaskThreadEvent);
-					smpThread->AddObserver(events::FailedTaskThreadEvent(events::FailedTaskThreadEvent::anyThreadID),
+					smpThread->AddObserver(::map::events::FailedTaskThreadEvent(::map::events::FailedTaskThreadEvent::anyThreadID),
 										   spFailedTaskCommand);
 
 					_threads.push_back(smpThread);
@@ -233,7 +233,7 @@ namespace map
 					pThread->setNewTask(pTask);
 					_assignedTasks.push_back(pTask);
 					_pendingTasks.pop_front();
-					this->InvokeEvent(events::NextTaskThreadEvent(pThread->getThreadID(), pTask, "Next assigned task"));
+					this->InvokeEvent(::map::events::NextTaskThreadEvent(pThread->getThreadID(), pTask, "Next assigned task"));
 				}
 			}
 		}
@@ -252,7 +252,7 @@ namespace map
 				MappingTaskBaseType* pTask = pThread->getCurrentTask();
 				std::remove(_assignedTasks.begin(), _assignedTasks.end(), pTask);
 				_processedTasks.push_back(pTask);
-				this->InvokeEvent(events::ProcessedTaskThreadEvent(pThread->getThreadID(), pTask,
+				this->InvokeEvent(::map::events::ProcessedTaskThreadEvent(pThread->getThreadID(), pTask,
 								  "Task processed successfully"));
 			}
 			else
@@ -286,11 +286,11 @@ namespace map
 						_pTerminatingException = pTask->getRegistrationException();
 					}
 
-					this->InvokeEvent(events::ThreadTerminatingErrorEvent(pThread->getThreadID(), pThread,
+					this->InvokeEvent(::map::events::ThreadTerminatingErrorEvent(pThread->getThreadID(), pThread,
 									  "Thread loop terminated with exception"));
 				}
 
-				this->InvokeEvent(events::FailedTaskThreadEvent(pThread->getThreadID(), pTask, "Task failed"));
+				this->InvokeEvent(::map::events::FailedTaskThreadEvent(pThread->getThreadID(), pTask, "Task failed"));
 			}
 			else
 			{

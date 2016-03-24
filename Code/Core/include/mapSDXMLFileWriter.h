@@ -55,7 +55,7 @@ namespace map
 			typedef Element::Pointer ElementPointer;
 
 			void setXSLTFile(const core::String& file);
-			core::String getXSLTFile() const;
+			::map::core::String getXSLTFile() const;
 
 			/**Write the passed StructuredData element as xml to the specified filepath.
 			 * @param [in] filePath String that defines the location of the file. If the file already exists,
@@ -76,8 +76,8 @@ namespace map
 			void write(const core::String& filePath, const StreamingInterface* pInterface);
 
 		protected:
-			core::String _XSLTFile;
-			core::String _EncodingType;
+			::map::core::String _XSLTFile;
+			::map::core::String _EncodingType;
 
 			XMLFileWriter();
 			~XMLFileWriter();

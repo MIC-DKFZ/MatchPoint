@@ -41,7 +41,7 @@ namespace map
 		* @ingroup RegOperation
 		*/
 		class MAPIO_EXPORT RegistrationKernelLoaderBase : public
-			core::services::ServiceProvider< RegistrationKernelLoadRequest >
+			::map::core::services::ServiceProvider< RegistrationKernelLoadRequest >
 		{
 		public:
 			typedef RegistrationKernelLoadRequest RequestType;
@@ -77,7 +77,7 @@ namespace map
 			* @pre pRegistration must be valid and of correct dimensionality.
 				 */
 			virtual void addAsInverseKernel(GenericKernelType* pKernel,
-											core::RegistrationBase::Pointer& spRegistration) const = 0;
+											::map::core::RegistrationBase::Pointer& spRegistration) const = 0;
 
 			/*! Adds a given generic kernel to the passed registration as direct kernel.
 				 * @eguarantee strong

@@ -66,7 +66,7 @@ namespace map
 			spIllegalInRep->setOrigin(illegalOrigin);
 
 			//Model kernel generation
-			typedef ::itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
+			typedef ::itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
 
 			ModelKernelType::Pointer spModelKernel = ModelKernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
@@ -121,7 +121,7 @@ namespace map
 
 			lit::TransformFieldTester<CombinatorFunctorType::FieldType, ModelKernelType::TransformType>
 			tester;
-			typedef itk::IdentityTransform<core::continuous::ScalarType, 2> IdentityTransformType;
+			typedef itk::IdentityTransform<::map::core::continuous::ScalarType, 2> IdentityTransformType;
 
 			IdentityTransformType::Pointer spIdentityTransform = IdentityTransformType::New();
 

@@ -36,15 +36,15 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			core::String validStr =
+			::map::core::String validStr =
 				"<Profile><Contact>sbr@dkfz.de</Contact><Description>My test description.</Description></Profile>";
-			core::String validStr_noDesc = "<Profile></Profile>";
-			core::String validStr_full =
+			::map::core::String validStr_noDesc = "<Profile></Profile>";
+			::map::core::String validStr_full =
 				"<Profile><Description>desc</Description><Contact>contact1</Contact><Contact>contact2</Contact><Terms>the terms</Terms><Characteristics><DataType>Image</DataType><ComputationStyle>Analytic</ComputationStyle><Deterministic/><ResolutionStyle>Single</ResolutionStyle><DimMoving>3</DimMoving><ModalityMoving>ModType1</ModalityMoving><ModalityMoving>ModType2</ModalityMoving><DimTarget>2</DimTarget><ModalityTarget>any</ModalityTarget><Subject>sub1</Subject><Object>obj1</Object><TransformModel>rigid</TransformModel><TransformDomain>global</TransformDomain><Optimization>opt1</Optimization><Metric>metric1</Metric></Characteristics><Keywords><Keyword>key1</Keyword><Keyword>key2</Keyword><Keyword>key3</Keyword></Keywords></Profile>";
 
-			core::String emptyStr = "";
-			core::String invalidStr = "<profile></profile>";
-			core::String invalidStr2 = "<profile>";
+			::map::core::String emptyStr = "";
+			::map::core::String invalidStr = "<profile></profile>";
+			::map::core::String invalidStr2 = "<profile>";
 
 			//////////////////////////////////////////////////////////
 			// Test parseProfileString
@@ -84,7 +84,7 @@ namespace map
 			CHECK(0 == algorithm::profile::getContact(spValidProfile_noDesc).size());
 
 			std::string value;
-			CHECK(algorithm::profile::getTerms(spValidProfile_full, value));
+			CHECK(::map::algorithm::profile::getTerms(spValidProfile_full, value));
 			CHECK_EQUAL("the terms", value);
 			CHECK(!algorithm::profile::getTerms(spValidProfile_noDesc, value));
 
@@ -96,7 +96,7 @@ namespace map
 			CHECK_EQUAL("Analytic", algorithm::profile::getComputationStyle(spValidProfile_full)[0]);
 			CHECK(0 == algorithm::profile::getComputationStyle(spValidProfile_noDesc).size());
 
-			CHECK(algorithm::profile::isDeterministic(spValidProfile_full));
+			CHECK(::map::algorithm::profile::isDeterministic(spValidProfile_full));
 			CHECK(!algorithm::profile::isDeterministic(spValidProfile_noDesc));
 
 			CHECK(1 == algorithm::profile::getResolutionStyle(spValidProfile_full).size());
@@ -104,7 +104,7 @@ namespace map
 			CHECK(0 == algorithm::profile::getResolutionStyle(spValidProfile_noDesc).size());
 
 			unsigned int dimValue;
-			CHECK(algorithm::profile::getMovingDimensions(spValidProfile_full, dimValue));
+			CHECK(::map::algorithm::profile::getMovingDimensions(spValidProfile_full, dimValue));
 			CHECK_EQUAL(3, dimValue);
 			CHECK(!algorithm::profile::getMovingDimensions(spValidProfile_noDesc, dimValue));
 
@@ -113,7 +113,7 @@ namespace map
 			CHECK_EQUAL("ModType2", algorithm::profile::getMovingModality(spValidProfile_full)[1]);
 			CHECK(0 == algorithm::profile::getMovingModality(spValidProfile_noDesc).size());
 
-			CHECK(algorithm::profile::getTargetDimensions(spValidProfile_full, dimValue));
+			CHECK(::map::algorithm::profile::getTargetDimensions(spValidProfile_full, dimValue));
 			CHECK_EQUAL(2, dimValue);
 			CHECK(!algorithm::profile::getTargetDimensions(spValidProfile_noDesc, dimValue));
 
@@ -163,7 +163,7 @@ namespace map
 			CHECK_EQUAL("contact2", algorithm::profile::getContact(validStr_full)[1]);
 			CHECK(0 == algorithm::profile::getContact(validStr_noDesc).size());
 
-			CHECK(algorithm::profile::getTerms(validStr_full, value));
+			CHECK(::map::algorithm::profile::getTerms(validStr_full, value));
 			CHECK_EQUAL("the terms", value);
 			CHECK(!algorithm::profile::getTerms(validStr_noDesc, value));
 
@@ -175,14 +175,14 @@ namespace map
 			CHECK_EQUAL("Analytic", algorithm::profile::getComputationStyle(validStr_full)[0]);
 			CHECK(0 == algorithm::profile::getComputationStyle(validStr_noDesc).size());
 
-			CHECK(algorithm::profile::isDeterministic(validStr_full));
+			CHECK(::map::algorithm::profile::isDeterministic(validStr_full));
 			CHECK(!algorithm::profile::isDeterministic(validStr_noDesc));
 
 			CHECK(1 == algorithm::profile::getResolutionStyle(validStr_full).size());
 			CHECK_EQUAL("Single", algorithm::profile::getResolutionStyle(validStr_full)[0]);
 			CHECK(0 == algorithm::profile::getResolutionStyle(validStr_noDesc).size());
 
-			CHECK(algorithm::profile::getMovingDimensions(validStr_full, dimValue));
+			CHECK(::map::algorithm::profile::getMovingDimensions(validStr_full, dimValue));
 			CHECK_EQUAL(3, dimValue);
 			CHECK(!algorithm::profile::getMovingDimensions(validStr_noDesc, dimValue));
 
@@ -191,7 +191,7 @@ namespace map
 			CHECK_EQUAL("ModType2", algorithm::profile::getMovingModality(validStr_full)[1]);
 			CHECK(0 == algorithm::profile::getMovingModality(validStr_noDesc).size());
 
-			CHECK(algorithm::profile::getTargetDimensions(validStr_full, dimValue));
+			CHECK(::map::algorithm::profile::getTargetDimensions(validStr_full, dimValue));
 			CHECK_EQUAL(2, dimValue);
 			CHECK(!algorithm::profile::getTargetDimensions(validStr_noDesc, dimValue));
 

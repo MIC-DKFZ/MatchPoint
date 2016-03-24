@@ -156,7 +156,7 @@ namespace map
 				{
 					//now build the inverse kernel (main kernel of a image based registration algorithm)
 					typedef typename
-					core::FieldKernels<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
+					::map::core::FieldKernels<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
 					InverseKernelType;
 
 					typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
@@ -179,7 +179,7 @@ namespace map
 
 					//now create the registration an set the kernels
 					spResult = InterimRegistrationType::New();
-					core::RegistrationManipulator<InterimRegistrationType> manipulator(spResult);
+					::map::core::RegistrationManipulator<InterimRegistrationType> manipulator(spResult);
 
 					manipulator.setDirectMapping(spDKernel);
 					manipulator.setInverseMapping(spIKernel);
@@ -256,7 +256,7 @@ namespace map
 					strm <<  "Match histograms of images. Threshold: " << this->_thresholdAtMeanIntensity <<
 						 "; histogram levels: " << this->_numberOfHistogramLevels << "; match points: " <<
 						 this->_numberOfHistogramMatchPoints;
-					this->InvokeEvent(events::AlgorithmEvent(this, strm.str()));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, strm.str()));
 
 					typedef typename ::itk::HistogramMatchingImageFilter< TImageType, TImageType>   MatchingFilterType;
 					typename MatchingFilterType::Pointer matcher = MatchingFilterType::New();
@@ -302,31 +302,31 @@ namespace map
 				this->_internalRegistrationMethod = InternalRegistrationMethodType::New();
 
 				//initialize registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
 				this->configureAlgorithmByMetaProperties();
 
 				//initialize registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing registration components."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing registration components."));
 				this->prepPrepareSubComponents();
 
 				//assemble registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing PDE deformable registration method."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing PDE deformable registration method."));
 				this->prepAssembleSubComponents();
 
-				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing/Preparing input data."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing/Preparing input data."));
 				_spInternalMovingImage = this->getMovingImage();
 				_spInternalTargetImage = this->getTargetImage();
 
 				this->prepPerpareInternalInputData();
 
-				this->InvokeEvent(events::AlgorithmEvent(this, "Passing input data to internal algorithm."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Passing input data to internal algorithm."));
 				this->prepSetInternalInputData();
 
 				//possibility to initialize internal registration method after assembly
 				this->prepInitializeTransformation();
 
 				//initialize registration components after assembly
-				this->InvokeEvent(events::AlgorithmEvent(this, "Finalizing initialization..."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Finalizing initialization..."));
 				this->prepFinalizePreparation();
 
 				//Register observers
@@ -348,7 +348,7 @@ namespace map
 
 				//now build the inverse kernel (main kernel of a image based registration algorithm)
 				typedef typename
-				core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
+				::map::core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
 				InverseKernelType;
 
 				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
@@ -380,7 +380,7 @@ namespace map
 
 				//now create the registration an set the kernels
 				spResult = RegistrationType::New();
-				core::RegistrationManipulator<RegistrationType> manipulator(spResult);
+				::map::core::RegistrationManipulator<RegistrationType> manipulator(spResult);
 
 				manipulator.setDirectMapping(spDKernel);
 				manipulator.setInverseMapping(spIKernel);
@@ -429,7 +429,7 @@ namespace map
 				os << "; RMS error change: " << this->_internalRegistrationMethod->GetRMSChange();
 				this->_currentIterationLock.Unlock();
 
-				this->InvokeEvent(events::AlgorithmIterationEvent(this, os.str()));
+				this->InvokeEvent(::map::events::AlgorithmIterationEvent(this, os.str()));
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TDisplacementField, class TInternalRegistrationFilter>
@@ -437,7 +437,7 @@ namespace map
 			ITKPDEDeformableRegistrationAlgorithmBase<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			onGeneralRegistrationMethodEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
 						"internal registration method event");
 				this->InvokeEvent(wrappedEvent);
 			};

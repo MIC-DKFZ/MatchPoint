@@ -93,7 +93,7 @@ namespace map
 			{
 				if (name == "ParameterFilePath")
 				{
-					core::String path;
+					::map::core::String path;
 					map::core::unwrapMetaProperty(pProperty, path);
 					this->_parameterFilePath = path;
 				}

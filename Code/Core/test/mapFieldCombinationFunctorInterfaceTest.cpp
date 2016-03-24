@@ -35,7 +35,7 @@ namespace map
 		// create derived class from interface to be able to instantiate interface class standalone
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		class TestFieldCombinationFunctorInterface: public
-			core::functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			::map::core::functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
 		{
 		public:
 			typedef core::functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>

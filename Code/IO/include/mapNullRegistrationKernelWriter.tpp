@@ -52,7 +52,7 @@ namespace map
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		NullRegistrationKernelWriter<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
@@ -60,22 +60,22 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		NullRegistrationKernelWriter<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "NullRegistrationKernelWriter<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		NullRegistrationKernelWriter<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "NullRegistrationKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: "
 			   << VOutputDimensions << ".";
 			return os.str();
@@ -91,17 +91,17 @@ namespace map
 
 			if (pKernel == NULL)
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot store kernel. Reason: cannot cast to NullRegistrationKernel: " << pKernel);
 			}
 
 			structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
 
 			spKernelElement->setTag(tags::Kernel);
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << VInputDimensions;
 			spKernelElement->setAttribute(tags::InputDimensions, os.str());
-			core::OStringStream os2;
+			::map::core::OStringStream os2;
 			os2 << VOutputDimensions;
 			spKernelElement->setAttribute(tags::OutputDimensions, os2.str());
 

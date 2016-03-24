@@ -67,12 +67,12 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>::
 		getFilePath(const RequestType& request) const
 		{
 			//get file path
-			core::String filePath = "";
+			::map::core::String filePath = "";
 			structuredData::Element::ConstSubElementIteratorType pathPos = structuredData::findNextSubElement(
 						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
 						tags::FieldPath);
@@ -83,7 +83,7 @@ namespace map
 			}
 			else
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error. Cannot load kernel. Description as no file path element.")
 			}
 
@@ -94,7 +94,7 @@ namespace map
 				if ((request._spKernelDescriptor->getAttribute(map::tags::SDInternalSourceReader) ==
 					 map::tags::SDInternalSourceReader_file))
 				{
-					core::String basePath = request._spKernelDescriptor->getAttribute(map::tags::SDInternalSourceURI);
+					::map::core::String basePath = request._spKernelDescriptor->getAttribute(map::tags::SDInternalSourceURI);
 					basePath = map::core::FileDispatch::getPath(basePath);
 
 					filePath = itksys::SystemTools::CollapseFullPath(filePath.c_str(), basePath.c_str());
@@ -121,7 +121,7 @@ namespace map
 			}
 			else
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error. Cannot load kernel. Field kernel description as no null vector usage information.")
 			}
 
@@ -139,9 +139,9 @@ namespace map
 					newNullVector = structuredData::streamSDToITKFixedArray<typename KernelBaseType::MappingVectorType>
 								 (*nullVecPos);
 				}
-				catch (core::ExceptionObject& ex)
+				catch (::map::core::ExceptionObject& ex)
 				{
-					mapExceptionMacro(core::ServiceException, << ex.GetDescription());
+					mapExceptionMacro(::map::core::ServiceException, << ex.GetDescription());
 				}
 			}
 
@@ -182,7 +182,7 @@ namespace map
 				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel has not the correct dimension.");
 			}
 
-			core::RegistrationManipulator<RegistrationType> man(pCastedReg);
+			::map::core::RegistrationManipulator<RegistrationType> man(pCastedReg);
 			man.setInverseMapping(pCastedKernel);
 		};
 
@@ -219,7 +219,7 @@ namespace map
 				mapDefaultExceptionMacro( << "Error. Cannot add kernel. Kernel has not the correct dimension.");
 			}
 
-			core::RegistrationManipulator<RegistrationType> man(pCastedReg);
+			::map::core::RegistrationManipulator<RegistrationType> man(pCastedReg);
 			man.setDirectMapping(pCastedKernel);
 		};
 

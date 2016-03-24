@@ -70,7 +70,7 @@ namespace map
 			* @pre pRegistration must be valid and of correct dimensionality.
 				 */
 			virtual void addAsInverseKernel(GenericKernelType* pKernel,
-											core::RegistrationBase::Pointer& spRegistration) const;
+											::map::core::RegistrationBase::Pointer& spRegistration) const;
 
 			/*! Adds a given generic kernel to the passed registration as direct kernel.
 				 * @eguarantee strong
@@ -86,7 +86,7 @@ namespace map
 
 			/** Returns the file path of the field defined in the request.
 			 * @eguarantee strong*/
-			core::String getFilePath(const RequestType& request) const;
+			::map::core::String getFilePath(const RequestType& request) const;
 			
 			/** Checks the passed request if a null vector is defined and returns its value.
 			 * @param nullVector Values of the null vector. Valid if method returns true. If it returns false, no vector was defined and the value is 0.

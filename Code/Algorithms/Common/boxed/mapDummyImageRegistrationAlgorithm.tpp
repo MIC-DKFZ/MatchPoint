@@ -103,7 +103,7 @@ namespace map
     {
       RegistrationPointer spResult = NULL;
 
-      typedef ::itk::AffineTransform<core::continuous::ScalarType, RegistrationType::MovingDimensions>
+      typedef ::itk::AffineTransform<::map::core::continuous::ScalarType, RegistrationType::MovingDimensions>
       TransformModelType;
 
       typename TransformModelType::Pointer spFinalTransformModel = TransformModelType::New();

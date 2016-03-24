@@ -91,20 +91,20 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			TestPolicy<core::discrete::Elements<3>::InternalImageType> policy;
-			const TestPolicy<core::discrete::Elements<3>::InternalImageType>& constPolicy = policy;
+			TestPolicy<::map::core::discrete::Elements<3>::InternalImageType> policy;
+			const TestPolicy<::map::core::discrete::Elements<3>::InternalImageType>& constPolicy = policy;
 
-			typedef itk::LinearInterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
+			typedef itk::LinearInterpolateImageFunction<::map::core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
 			Interpolator1Type;
-			typedef itk::NearestNeighborInterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
+			typedef itk::NearestNeighborInterpolateImageFunction<::map::core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
 			Interpolator2Type;
 
 			Interpolator1Type::Pointer spInterpolator1 = Interpolator1Type::New();
 			Interpolator2Type::Pointer spInterpolator2 = Interpolator2Type::New();
 
-			itk::InterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
+			itk::InterpolateImageFunction<::map::core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
 			* pInterpolator = NULL;
-			const itk::InterpolateImageFunction<core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
+			const itk::InterpolateImageFunction<::map::core::discrete::Elements<3>::InternalImageType, core::continuous::ScalarType>
 			* pConstInterpolator = NULL;
 
 			CHECK_NO_THROW(pInterpolator = policy.getInterpolatorInternal());

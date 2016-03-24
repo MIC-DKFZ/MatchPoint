@@ -59,7 +59,7 @@ namespace map
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		FieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
@@ -67,22 +67,22 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		FieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "FieldKernelLoader<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		FieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "FieldKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
 			   VOutputDimensions << ".";
 			return os.str();
@@ -96,21 +96,21 @@ namespace map
 		{
 			if (!canHandleRequest(request))
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot load kernel. Reason: cannot handle request.");
 			}
 
 			typename KernelBaseType::Pointer spKernel;
 
 			//get file path
-			core::String filePath = Superclass::getFilePath(request);
+			::map::core::String filePath = Superclass::getFilePath(request);
 			
 			//determin null vector (support)
 			typename KernelBaseType::MappingVectorType nullVector;
             bool usesNullVector = this->hasNullVector(request, nullVector);
 
 			typedef typename
-			core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
+			::map::core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
 			KernelType;
 			typename KernelType::Pointer spCachedKernel = KernelType::New();
 

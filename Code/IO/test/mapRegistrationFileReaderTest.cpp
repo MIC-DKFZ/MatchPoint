@@ -98,7 +98,7 @@ namespace map
 
 			// create a ModelBasedKernels for testing
 
-			core::RegistrationBase::Pointer spRegistrationBase;
+			::map::core::RegistrationBase::Pointer spRegistrationBase;
 
 			CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile1));
 			CHECK_EQUAL("RegistrationFileWriterTest.reg1", spRegistrationBase->getRegistrationUID());

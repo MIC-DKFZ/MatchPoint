@@ -105,7 +105,7 @@ namespace map
 					mapDefaultExceptionStaticMacro( << "ERROR: could not open " << fileName	<< " for reading.");
 				}
 
-				core::String line = "";
+				::map::core::String line = "";
 
 				while (parameterFile.good())
 				{

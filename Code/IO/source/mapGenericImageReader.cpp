@@ -38,7 +38,7 @@ namespace map
 		{
 			_spImage = NULL;
 
-			core::String probeFileName = this->_fileName;
+			::map::core::String probeFileName = this->_fileName;
 
 			if (this->_seriesReadStyle == ImageSeriesReadStyle::Numeric)
 			{

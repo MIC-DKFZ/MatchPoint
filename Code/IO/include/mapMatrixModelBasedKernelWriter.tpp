@@ -60,7 +60,7 @@ namespace map
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
@@ -68,22 +68,22 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "MatrixModelBasedKernelWriter<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "MatrixModelBasedKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: "
 			   << VOutputDimensions << ".";
 			return os.str();
@@ -99,7 +99,7 @@ namespace map
 
 			if (pKernel == NULL)
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot store kernel. Reason: cannot cast to ModelBasedKernel: " << pKernel);
 			}
 
@@ -110,14 +110,14 @@ namespace map
 
 			if (spModel.IsNull())
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot store kernel. Reason: Kernel seems to have no valid transform model instance. Kernel: "
 								  << pKernel);
 			}
 
 			if (!pKernel->getAffineMatrixDecomposition(matrix, offset))
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot store kernel. Reason: Kernel has no valid matrix decompostion. Kernel: " <<
 								  pKernel);
 			};
@@ -146,7 +146,7 @@ namespace map
 
 			spMatrixStrElement->setTag(tags::MatrixStr);
 
-			core::OStringStream matrixOS;
+			::map::core::OStringStream matrixOS;
 
 			for (unsigned int rowID = 0; rowID < KernelType::TransformType::MatrixType::RowDimensions; ++rowID)
 			{
@@ -167,7 +167,7 @@ namespace map
 			spOffsetElement->setTag(tags::Offset);
 			structuredData::Element::Pointer spOffsetStrElement = structuredData::Element::New();
 			spOffsetStrElement->setTag(tags::OffsetStr);
-			core::OStringStream offsetOS;
+			::map::core::OStringStream offsetOS;
 
 			for (unsigned int rowID = 0; rowID < KernelType::TransformType::MatrixType::RowDimensions; ++rowID)
 			{

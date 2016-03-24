@@ -290,12 +290,12 @@ namespace map
 				FinalFieldPointer	generateField() const;
 
 				/*! Helper function that generates the file path to the parameter file.*/
-				core::String getParameterFilePath() const;
+				::map::core::String getParameterFilePath() const;
 
 				/*! Helper function that generates the file path to the result parameters
 				  for the final(last stage) transform.
 					@pre Algorithm must have at least one stage.*/
-				core::String getFinalTransformFilePath() const;
+				::map::core::String getFinalTransformFilePath() const;
 
 				/*!Pointer to the moving image used by the algorithm internally. This is used to allow the algorithm
 				* or its derived classes to modify the moving image without changing the public moving image pointer.
@@ -312,21 +312,21 @@ namespace map
 				TargetImageConstPointer _spInternalTargetImage;
 
 				/*!Directory that can be used to store temporary data. Process must have write access to this directory*/
-				core::String _workingDir;
+				::map::core::String _workingDir;
 				/*!Directory where the plastimatch tool 'plastimatch' is located.*/
-				core::String _plastimatchDir;
+				::map::core::String _plastimatchDir;
 				/*!Directory that is used to store temporary data on the current run*/
-				core::String _currentTempDir;
+				::map::core::String _currentTempDir;
 
 				/*!Vector with plastimatch parameter maps, each element of the vector is the parameter
 				 map for one registration stage of plastimatch*/
 				ConfigurationType _configurationPLM;
 
-				core::String _movingImageTempPath;
-				core::String _targetImageTempPath;
-				core::String _finalFieldTempPath;
-				core::String _movingMaskTempPath;
-				core::String _targetMaskTempPath;
+				::map::core::String _movingImageTempPath;
+				::map::core::String _targetImageTempPath;
+				::map::core::String _finalFieldTempPath;
+				::map::core::String _movingMaskTempPath;
+				::map::core::String _targetMaskTempPath;
 
 				bool _deleteTempDirectory;
 

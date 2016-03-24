@@ -109,9 +109,9 @@ namespace map
 
 		private:
 
-			core::ModificationTimeValidator _movingMaskMTime;
+			::map::core::ModificationTimeValidator _movingMaskMTime;
 
-			core::ModificationTimeValidator _targetMaskMTime;
+			::map::core::ModificationTimeValidator _targetMaskMTime;
 
 			MovingMaskBaseConstPointer _spMovingMask;
 

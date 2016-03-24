@@ -96,8 +96,8 @@ namespace map
 			tagsWithUID.insert(std::make_pair("test2", "value2"));
 			tagsWithUID.insert(std::make_pair(map::tags::RegistrationUID, "my.Personal.UID"));
 
-			core::String foundValue = "";
-			core::String foundValue2 = "";
+			::map::core::String foundValue = "";
+			::map::core::String foundValue2 = "";
 			//check if a default UID is generated
 			CHECK(1 == spReg1->getTags().size());
 			CHECK(spReg1->getTagValue(map::tags::RegistrationUID, foundValue));

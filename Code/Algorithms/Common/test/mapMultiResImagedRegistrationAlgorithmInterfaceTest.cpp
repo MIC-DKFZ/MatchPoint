@@ -40,7 +40,7 @@ namespace map
 
 			template<class TMovingImage, class TTargetImage>
 			class TestMultiResRegistrationAlgorithmBase : public
-				algorithm::MultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, algorithm::ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage> >
+				::map::algorithm::MultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, algorithm::ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage> >
 			{
 			public:
 				TestMultiResRegistrationAlgorithmBase()

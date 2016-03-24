@@ -89,7 +89,7 @@ namespace map
 			/** Loaded Image.*/
 			typename OutputImageType::Pointer _spImage;
 			/** The file name of the image. */
-			core::String  _fileName;
+			::map::core::String  _fileName;
 			/** The upper limit for the searching of series files in the path.*/
 			unsigned int _upperSeriesLimit;
 			/** Indicates if the image data is up to date or should be read again.*/

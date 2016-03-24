@@ -42,7 +42,7 @@ namespace map
 			typedef core::AffineMatrixDecomposer<2, 2> DecomposerType;
 
 			typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
-			typedef ::itk::TranslationTransform<core::continuous::ScalarType, 2> TransformType;
+			typedef ::itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
 			typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel FieldKernelType;
 
 			ModelKernelType::Pointer spKernel = ModelKernelType::New();

@@ -140,7 +140,7 @@ namespace map
 				if (this->isFirstConfiguration())
 				{
 					_plastimatchDir = "";
-					core::String envDir = "";
+					::map::core::String envDir = "";
 
 					if (itksys::SystemTools::GetEnv("MAP_PLASTIMATCH_PATH", envDir))
 					{
@@ -202,13 +202,13 @@ namespace map
 			{
 				if (name == "WorkingDirectory")
 				{
-					core::String dir;
+					::map::core::String dir;
 					map::core::unwrapMetaProperty(pProperty, dir);
 					this->_workingDir = dir;
 				}
 				else if (name == "PlastimatchDirectory")
 				{
-					core::String dir;
+					::map::core::String dir;
 					map::core::unwrapMetaProperty(pProperty, dir);
 					this->_plastimatchDir = dir;
 				}
@@ -251,9 +251,9 @@ namespace map
 			initializeCurrentTempDir()
 			{
 				srand(time(NULL));
-				core::OStringStream stream;
+				::map::core::OStringStream stream;
 				stream << itksys::SystemTools::GetCurrentDateTime("%Y-%m-%d_%H-%M-%S") << "_#" << rand();
-				core::String currentTempDir = core::FileDispatch::createFullPath(_workingDir, stream.str());
+				::map::core::String currentTempDir = core::FileDispatch::createFullPath(_workingDir, stream.str());
 
 				if (!itksys::SystemTools::MakeDirectory(currentTempDir.c_str()))
 				{
@@ -277,29 +277,29 @@ namespace map
 					this->_spFinalizedRegistration = NULL;
 
 					//initialize registration components
-					this->InvokeEvent(events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
 					this->configureAlgorithmByMetaProperties();
 
-					this->InvokeEvent(events::AlgorithmEvent(this, "Initializing registration."));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing registration."));
 					this->initializeCurrentTempDir();
 
 					//preparing data
-					this->InvokeEvent(events::AlgorithmEvent(this, "Initializing/Preparing input data."));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing/Preparing input data."));
 					_spInternalMovingImage = this->getMovingImage();
 					_spInternalTargetImage = this->getTargetImage();
 
 					this->prepPerpareInternalInputData();
 
 					//storing temporary images
-					this->InvokeEvent(events::AlgorithmEvent(this,
+					this->InvokeEvent(::map::events::AlgorithmEvent(this,
 									  "Passing input data to plastimatch working directory."));
 					this->prepSavePlastimatchInputData();
 
-					this->InvokeEvent(events::AlgorithmEvent(this, "Generating parameter maps for plastimatch."));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Generating parameter maps for plastimatch."));
 					this->prepConfigurationPLM();
 					this->ensureCorrectGlobalConfigSettings();
 
-					this->InvokeEvent(events::AlgorithmEvent(this, "Store plastimatch configuration."));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Store plastimatch configuration."));
 					saveConfigurationToFile(this->_configurationPLM, this->getParameterFilePath());
 				}
 				catch (...)
@@ -401,7 +401,7 @@ namespace map
 			saveTempImage(const TImage* image, const core::String& filePath)
 			{
 				typedef typename
-				io::ImageWriter<typename TImage::PixelType, typename TImage::PixelType, TImage::ImageDimension>
+				::map::io::ImageWriter<typename TImage::PixelType, typename TImage::PixelType, TImage::ImageDimension>
 				WriterType;
 				typename WriterType::Pointer spWriter = WriterType::New();
 				spWriter->setInput(image);
@@ -455,10 +455,10 @@ namespace map
 				_movingMaskTempPath = "";
 				_targetMaskTempPath = "";
 
-				this->InvokeEvent(events::AlgorithmEvent(this,
+				this->InvokeEvent(::map::events::AlgorithmEvent(this,
 								  "Write temporary moving image. Path: " + _movingImageTempPath));
 				saveTempImage(_spInternalMovingImage.GetPointer(), _movingImageTempPath);
-				this->InvokeEvent(events::AlgorithmEvent(this,
+				this->InvokeEvent(::map::events::AlgorithmEvent(this,
 								  "Write temporary target image. Path: " + _targetImageTempPath));
 				saveTempImage(_spInternalTargetImage.GetPointer(), _targetImageTempPath);
 
@@ -471,7 +471,7 @@ namespace map
 							(this->getMovingMask(), core::createFieldRepresentation(*(_spInternalMovingImage)).GetPointer());
 
 					_movingMaskTempPath = core::FileDispatch::createFullPath(_currentTempDir, "movingMask.mhd");
-					this->InvokeEvent(events::AlgorithmEvent(this,
+					this->InvokeEvent(::map::events::AlgorithmEvent(this,
 									  "Write temporary moving mask image. Path: " + _movingMaskTempPath));
 					saveTempImage(spMovingMaskImage.GetPointer(), _movingMaskTempPath);
 				}
@@ -484,7 +484,7 @@ namespace map
 							(this->getTargetMask(), core::createFieldRepresentation(*(_spInternalTargetImage)).GetPointer());
 
 					_targetMaskTempPath = core::FileDispatch::createFullPath(_currentTempDir, "targetMask.mhd");
-					this->InvokeEvent(events::AlgorithmEvent(this,
+					this->InvokeEvent(::map::events::AlgorithmEvent(this,
 									  "Write temporary target mask image. Path: " + _targetMaskTempPath));
 					saveTempImage(spTargetMaskImage.GetPointer(), _targetMaskTempPath);
 				}
@@ -506,7 +506,7 @@ namespace map
 				args.push_back("register");
 				args.push_back(this->getParameterFilePath());
 
-				core::OStringStream ostr;
+				::map::core::OStringStream ostr;
 				ostr << "Calling plastimatch (" << _plastimatchDir << ") with arguments:";
 
 				for (map::utilities::ProcessExecutor::ArgumentListType::const_iterator pos = args.begin();
@@ -515,7 +515,7 @@ namespace map
 					ostr << " " << *pos;
 				}
 
-				this->InvokeEvent(events::AlgorithmEvent(this, ostr.str()));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, ostr.str()));
 
 				if (!spExec->execute(_plastimatchDir, core::FileDispatch::createFullPath(_plastimatchDir,
 									 "plastimatch"), args))
@@ -549,16 +549,16 @@ namespace map
 
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			core::String
+			::map::core::String
 			map::algorithm::plastimatch::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			getParameterFilePath() const
 			{
-				core::String result = core::FileDispatch::createFullPath(_currentTempDir, "parameters.txt");
+				::map::core::String result = core::FileDispatch::createFullPath(_currentTempDir, "parameters.txt");
 				return result;
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			core::String
+			::map::core::String
 			map::algorithm::plastimatch::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			getFinalTransformFilePath() const
 			{
@@ -568,9 +568,9 @@ namespace map
 									  << "Cannot determine final transform file path; no parameter maps are defined.");
 				}
 
-				core::OStringStream ostr;
+				::map::core::OStringStream ostr;
 				ostr << "TransformParameters." << this->_configurationPLM.size() - 1 << ".txt";
-				core::String result = core::FileDispatch::createFullPath(_currentTempDir, ostr.str());
+				::map::core::String result = core::FileDispatch::createFullPath(_currentTempDir, ostr.str());
 				return result;
 			};
 
@@ -598,7 +598,7 @@ namespace map
 					typename GeneratorType::Pointer spGenerator = GeneratorType::New();
 					typedef typename GeneratorType::InverseKernelBaseType DirectKernelType;
 					typename Superclass::MovingRepresentationDescriptorType::ConstPointer spMovingRep =
-						core::createFieldRepresentation(*(this->getMovingImage())).GetPointer();
+						::map::core::createFieldRepresentation(*(this->getMovingImage())).GetPointer();
 
 					if (this->getMovingRepresentation())
 					{
@@ -618,7 +618,7 @@ namespace map
 
 					//now create the registration and set the kernels
 					spResult = RegistrationType::New();
-					core::RegistrationManipulator<RegistrationType> manipulator(spResult);
+					::map::core::RegistrationManipulator<RegistrationType> manipulator(spResult);
 
 					manipulator.setDirectMapping(spDKernel);
 					manipulator.setInverseMapping(spIKernel);
@@ -704,7 +704,7 @@ namespace map
 
 				if (pStdEvent)
 				{
-					this->InvokeEvent(events::AlgorithmIterationEvent(this, pStdEvent->getComment()));
+					this->InvokeEvent(::map::events::AlgorithmIterationEvent(this, pStdEvent->getComment()));
 				}
 			}
 

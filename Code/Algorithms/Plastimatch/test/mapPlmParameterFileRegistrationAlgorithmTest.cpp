@@ -44,7 +44,7 @@ namespace map
 		mapGenerateAlgorithmUIDPolicyMacro(TestPlm3DRegistrationUIDPolicy,
 										   "de.dkfz.matchpoint.plastimatch.test", "ProgramFileRegistration.3D.default", "1.0.0", "");
 
-		typedef std::vector<core::String> ArgumentsType;
+		typedef std::vector<::map::core::String> ArgumentsType;
 
 		ArgumentsType getLoggedArguments(const core::String& logFilePath)
 		{
@@ -56,7 +56,7 @@ namespace map
 				mapDefaultExceptionStaticMacro( << "Error cannot find or access plastimatchDummyCall.log");
 			}
 
-			core::String item;
+			::map::core::String item;
 			ArgumentsType list;
 
 			while (std::getline(logFile, item))
@@ -67,7 +67,7 @@ namespace map
 			return list;
 		}
 
-		core::String getLoggedTempDir(const ArgumentsType& loggedArguments)
+		::map::core::String getLoggedTempDir(const ArgumentsType& loggedArguments)
 		{
 			//the temp dir should be deduced by the 3rd line (plastimatch configuration file)
 
@@ -77,7 +77,7 @@ namespace map
 												"Error. PlastimatchDummyCall.log seems to be invalid, line with configuration file is missing.");
 			}
 
-			core::String dir = loggedArguments[2];
+			::map::core::String dir = loggedArguments[2];
 			dir = core::FileDispatch::getPath(dir);
 
 			return dir;
@@ -124,9 +124,9 @@ namespace map
 
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			core::String movingImageFileName = "";
-			core::String targetImageFileName = "";
-			core::String paramFileName = "";
+			::map::core::String movingImageFileName = "";
+			::map::core::String targetImageFileName = "";
+			::map::core::String paramFileName = "";
 
 			if (argc > 1)
 			{
@@ -167,7 +167,7 @@ namespace map
 			CHECK_THROW_EXPLICIT(spAlgorithm->determineRegistration(), algorithm::AlgorithmException);
 			CHECK_THROW_EXPLICIT(spAlgorithm->getRegistration(), algorithm::AlgorithmException);
 
-			core::String testString;
+			::map::core::String testString;
 			CHECK(spAlgorithm->getParameterFilePath(testString));
 			CHECK_EQUAL("", testString);
 			bool delDir;
@@ -209,7 +209,7 @@ namespace map
 			CHECK_EQUAL(true, delDir);
 			CHECK_NO_THROW(spAlgorithm->determineRegistration());
 			ArgumentsType cmdArg = getLoggedArguments("plastimatchDummyCall.log");
-			core::String tempDir = getLoggedTempDir(cmdArg);
+			::map::core::String tempDir = getLoggedTempDir(cmdArg);
 
 			CHECK(!(itksys::SystemTools::FileExists(tempDir.c_str(), false)));
 
@@ -228,11 +228,11 @@ namespace map
 			//use date of the last run (where the temp dir was not deleted).
 
 			ImageType::Pointer spStoredMovingImage =
-				lit::TestImageIO<core::discrete::InternalPixelType, ImageType>::readImage(
-					core::FileDispatch::createFullPath(tempDir, "moving.mhd"));
+				lit::TestImageIO<::map::core::discrete::InternalPixelType, ImageType>::readImage(
+					::map::core::FileDispatch::createFullPath(tempDir, "moving.mhd"));
 			ImageType::Pointer spStoredTargetImage =
-				lit::TestImageIO<core::discrete::InternalPixelType, ImageType>::readImage(
-					core::FileDispatch::createFullPath(tempDir, "target.mhd"));
+				lit::TestImageIO<::map::core::discrete::InternalPixelType, ImageType>::readImage(
+					::map::core::FileDispatch::createFullPath(tempDir, "target.mhd"));
 
 			lit::ImageTester<ImageType, ImageType> imageTester;
 
@@ -254,10 +254,10 @@ namespace map
 			CHECK_EQUAL(false, spAlgorithm->hasIterationCount());
 			CHECK_EQUAL(false, spAlgorithm->isStoppable());
 
-			core::String envPlastimatchPath = "";
+			::map::core::String envPlastimatchPath = "";
 			itksys::SystemTools::GetEnv("MAPPlastimatchPath", envPlastimatchPath);
 
-			core::String dir;
+			::map::core::String dir;
 			CHECK(spAlgorithm->getWorkingDirectory(dir));
 			CHECK_EQUAL(itksys::SystemTools::GetCurrentWorkingDirectory(), dir);
 			CHECK(spAlgorithm->getPlastimatchDirectory(dir));

@@ -101,7 +101,7 @@ namespace map
 				*/
 				virtual void prepConfigurationPLM();
 
-				core::String _parameterFilePath;
+				::map::core::String _parameterFilePath;
 
 			private:
 

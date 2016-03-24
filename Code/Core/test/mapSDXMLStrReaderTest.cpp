@@ -33,7 +33,7 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			core::String dataStr1 =
+			::map::core::String dataStr1 =
 				"<Main type='demo'>boss<Sub id='1'>1st</Sub><Sub id='2' attr2='###'>2nd</Sub><Sub id='3'><Sub id='3.1'/></Sub><Add/></Main>";
 
 			map::structuredData::XMLStrReader::Pointer spReader = map::structuredData::XMLStrReader::New();
@@ -110,10 +110,10 @@ namespace map
 			CHECK_EQUAL(2, spSub->getAttributeNames().size());
 			CHECK_EQUAL(0, spSub->getSubElementsCount());
 
-			core::String faultyDataStr1 = "<Main/><Main/>";
-			core::String faultyDataStr2 = "<Main> <Mingel> </Main> </Mingel>";
-			core::String faultyDataStr3 = "</OpenEnd>";
-			core::String faultyDataStr4 = "<Main> <OpenElement> </Main>";
+			::map::core::String faultyDataStr1 = "<Main/><Main/>";
+			::map::core::String faultyDataStr2 = "<Main> <Mingel> </Main> </Mingel>";
+			::map::core::String faultyDataStr3 = "</OpenEnd>";
+			::map::core::String faultyDataStr4 = "<Main> <OpenElement> </Main>";
 
 			CHECK_THROW(spReader->read(faultyDataStr1));
 			CHECK_THROW(spReader->read(faultyDataStr2));
@@ -186,7 +186,7 @@ namespace map
 			CHECK_EQUAL(2, spSub->getAttributeNames().size());
 			CHECK_EQUAL(0, spSub->getSubElementsCount());
 
-			core::String emptyDataStr1 = "";
+			::map::core::String emptyDataStr1 = "";
 
 			CHECK_THROW(spReader->readXMLContent(emptyDataStr1));
 

@@ -57,7 +57,7 @@ namespace map
 
 			virtual std::string getProviderName() const
 			{
-				core::OStringStream stream;
+				::map::core::OStringStream stream;
 				stream << "TestServiceProvider_" << VLegalRequest;
 				return stream.str();
 			};

@@ -167,10 +167,10 @@ namespace map
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		prepareGDCMSource() const
 		{
-			core::FileDispatch dispatch(_fileName);
+			::map::core::FileDispatch dispatch(_fileName);
 
-			core::String  dir = dispatch.getPath();
-			core::String  strippedFileName = dispatch.getFullName();
+			::map::core::String  dir = dispatch.getPath();
+			::map::core::String  strippedFileName = dispatch.getFullName();
 
 			typedef itk::GDCMSeriesFileNames NamesGeneratorType;
 			NamesGeneratorType::Pointer nameGenerator = NamesGeneratorType::New();
@@ -252,11 +252,11 @@ namespace map
 		{
 			::map::core::FileDispatch dispatch(_fileName);
 
-			core::String	sTemp = dispatch.getExtension();
-			core::String  sDir = dispatch.getPath();
+			::map::core::String	sTemp = dispatch.getExtension();
+			::map::core::String  sDir = dispatch.getPath();
 
 			//Convert to lowercase
-			for (core::String::iterator spos = sTemp.begin(); spos != sTemp.end(); spos++)
+			for (::map::core::String::iterator spos = sTemp.begin(); spos != sTemp.end(); spos++)
 			{
 				(*spos) = std::tolower((*spos), std::locale(""));
 			}

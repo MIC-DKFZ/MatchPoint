@@ -93,11 +93,11 @@ namespace map
 			RegistrationType::Pointer spIllegalRegistration1 = RegistrationType::New();
 			RegistrationType::Pointer spIllegalRegistration2 = RegistrationType::New();
 
-			core::RegistrationManipulator<RegistrationType> manipulator1(spRegistration);
+			::map::core::RegistrationManipulator<RegistrationType> manipulator1(spRegistration);
 			manipulator1.setDirectMapping(spKernel);
 			manipulator1.setInverseMapping(spIllegalKernel);
 
-			core::RegistrationManipulator<RegistrationType> manipulator2(spIllegalRegistration1);
+			::map::core::RegistrationManipulator<RegistrationType> manipulator2(spIllegalRegistration1);
 			manipulator2.setDirectMapping(spIllegalKernel);
 			manipulator2.setInverseMapping(spIllegalKernel);
 

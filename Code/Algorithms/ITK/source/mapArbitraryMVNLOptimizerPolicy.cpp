@@ -64,7 +64,7 @@ namespace map
 					//there is really the need to change the optimizer
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::UnregisterAlgorithmComponentEvent unRegEvent(_spOptimizerControl.GetPointer(),
+						::map::events::UnregisterAlgorithmComponentEvent unRegEvent(_spOptimizerControl.GetPointer(),
 								"Unregister current optimizer");
 						this->_spOnChange->Execute((::itk::Object*)NULL, unRegEvent);
 					}
@@ -74,7 +74,7 @@ namespace map
 
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::RegisterAlgorithmComponentEvent regEvent(_spOptimizerControl.GetPointer(),
+						::map::events::RegisterAlgorithmComponentEvent regEvent(_spOptimizerControl.GetPointer(),
 								"Register new optimizer");
 						this->_spOnChange->Execute((::itk::Object*)NULL, regEvent);
 					}

@@ -216,7 +216,7 @@ namespace map
 
 				if (this->_preInitialize)
 				{
-					this->InvokeEvent(events::AlgorithmEvent(this, "Preinitialize transform."));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Preinitialize transform."));
 
 					typedef ::itk::CenteredTransformInitializer<typename Superclass::ConcreteTransformType, typename Superclass::TargetImageType, typename Superclass::MovingImageType>
 					InitializerType;
@@ -229,19 +229,19 @@ namespace map
 
 					if (this->_useCenterOfGravity)
 					{
-						this->InvokeEvent(events::AlgorithmEvent(this, "Preinitialize by moments."));
+						this->InvokeEvent(::map::events::AlgorithmEvent(this, "Preinitialize by moments."));
 						spInitializer->MomentsOn();
 					}
 					else
 					{
-						this->InvokeEvent(events::AlgorithmEvent(this, "Preinitialize by image geometry."));
+						this->InvokeEvent(::map::events::AlgorithmEvent(this, "Preinitialize by image geometry."));
 						spInitializer->GeometryOn();
 					}
 
 					spInitializer->InitializeTransform();
 				}
 
-				core::OStringStream os;
+				::map::core::OStringStream os;
 
 				os << "Preinitialized transform to: " <<
 				   this->getConcreteTransformModel()->GetParameters();
@@ -249,7 +249,7 @@ namespace map
 				this->setCurrentTransformParameters(this->getConcreteTransformModel()->GetParameters());
 				this->getInternalRegistrationMethod().SetInitialTransformParameters(this->getConcreteTransformModel()->GetParameters());
 
-				this->InvokeEvent(events::AlgorithmEvent(this, os.str()));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, os.str()));
 			};
 
 

@@ -135,37 +135,37 @@ namespace map
 
 			// create the registrations
 			PreRegistrationType::Pointer spValidPreRegistration = PreRegistrationType::New();
-			core::RegistrationManipulator<PreRegistrationType> manipulator(spValidPreRegistration.GetPointer());
+			::map::core::RegistrationManipulator<PreRegistrationType> manipulator(spValidPreRegistration.GetPointer());
 			manipulator.setDirectMapping(generateKernel());
 			manipulator.setInverseMapping(generateKernel());
 
 			RegistrationType::Pointer spValidRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator2(spValidRegistration.GetPointer());
+			::map::core::RegistrationManipulator<RegistrationType> manipulator2(spValidRegistration.GetPointer());
 			manipulator2.setDirectMapping(generateKernel());
 			manipulator2.setInverseMapping(generateKernel());
 
 
 			PreRegistrationType::Pointer spInvalidDirectKernelPreRegistration = PreRegistrationType::New();
-			core::RegistrationManipulator<PreRegistrationType> manipulator3(
+			::map::core::RegistrationManipulator<PreRegistrationType> manipulator3(
 				spInvalidDirectKernelPreRegistration.GetPointer());
 			manipulator3.setDirectMapping(IllegalKernelType::New());
 			manipulator3.setInverseMapping(generateKernel());
 
 			PreRegistrationType::Pointer spInvalidInverseKernelPreRegistration = PreRegistrationType::New();
-			core::RegistrationManipulator<PreRegistrationType> manipulator4(
+			::map::core::RegistrationManipulator<PreRegistrationType> manipulator4(
 				spInvalidInverseKernelPreRegistration.GetPointer());
 			manipulator4.setDirectMapping(generateKernel());
 			manipulator4.setInverseMapping(IllegalKernelType::New());
 
 
 			RegistrationType::Pointer spInvalidDirectKernelRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator5(
+			::map::core::RegistrationManipulator<RegistrationType> manipulator5(
 				spInvalidDirectKernelRegistration.GetPointer());
 			manipulator5.setDirectMapping(IllegalKernelType::New());
 			manipulator5.setInverseMapping(generateKernel());
 
 			RegistrationType::Pointer spInvalidInverseKernelRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator6(
+			::map::core::RegistrationManipulator<RegistrationType> manipulator6(
 				spInvalidInverseKernelRegistration.GetPointer());
 			manipulator6.setDirectMapping(generateKernel());
 			manipulator6.setInverseMapping(IllegalKernelType::New());

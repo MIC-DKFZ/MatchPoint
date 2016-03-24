@@ -59,7 +59,7 @@ namespace map
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		LazyFileFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
@@ -67,22 +67,22 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		LazyFileFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "LazyFileFieldKernelLoader<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		LazyFileFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "LazyFileFieldKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
 			   VOutputDimensions << ".";
 			return os.str();
@@ -96,28 +96,28 @@ namespace map
 		{
 			if (!canHandleRequest(request))
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot load kernel. Reason: cannot handle request.");
 			}
 
 			typename KernelBaseType::Pointer spKernel;
 
 			//get file path
-			core::String filePath = Superclass::getFilePath(request);
+			::map::core::String filePath = Superclass::getFilePath(request);
 			
 			//determin null vector (support)
 			typename KernelBaseType::MappingVectorType nullVector;
             bool usesNullVector = this->hasNullVector(request, nullVector);
 
 			typedef typename
-			core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
+			::map::core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
 			KernelType;
 			typename KernelType::Pointer spLazyKernel = KernelType::New();
 
 			typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
 
 			typename KernelBaseType::RepresentationDescriptorType::Pointer spFieldDescriptor =
-				core::createFieldRepresentationOfMetaImageFile<VInputDimensions>(filePath);
+				::map::core::createFieldRepresentationOfMetaImageFile<VInputDimensions>(filePath);
 
 			typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath, spFieldDescriptor);
 

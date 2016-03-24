@@ -115,7 +115,7 @@ namespace map
 			//Add observer for algorithm events.
 			RegTestCommand::Pointer spTestCommand = RegTestCommand::New();
 
-			spAlgorithm->AddObserver(events::AlgorithmEvent(), spTestCommand);
+			spAlgorithm->AddObserver(::map::events::AlgorithmEvent(), spTestCommand);
 			spAlgorithm->AddObserver(::itk::AnyEvent(), spTestCommand);
 
 			//Set land marks

@@ -77,7 +77,7 @@ namespace map
 
 			typedef core::ModelBasedRegistrationKernel<2, 2> IllegalKernelType;
 
-			typedef itk::TranslationTransform<core::continuous::ScalarType, 2> TransformType;
+			typedef itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
 
 			typedef core::FieldBasedKernelInverter<2, 2> InverterType;
 			typedef core::FieldBasedKernelInverter<2, 3> Inverter2Type;

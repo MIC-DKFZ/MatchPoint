@@ -54,7 +54,7 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef ::itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
+			typedef ::itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
 			typedef TestPolicy< TransformType > PolicyType;
 			typedef PolicyType::ConcreteTransformType ModelType;
 

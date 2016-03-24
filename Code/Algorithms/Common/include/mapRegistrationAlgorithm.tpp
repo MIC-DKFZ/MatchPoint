@@ -66,7 +66,7 @@ namespace map
 				if (registrationIsOutdated())
 				{
 					mapLogInfoMacro( << "Registration is outdated. Redetermine registration.");
-					this->InvokeEvent(events::AlgorithmEvent(this,
+					this->InvokeEvent(::map::events::AlgorithmEvent(this,
 									  "Registration is outdated. Redetermine registration."));
 					doDetermineRegistration();
 				}

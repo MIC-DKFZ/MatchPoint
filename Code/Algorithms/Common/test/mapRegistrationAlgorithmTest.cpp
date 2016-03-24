@@ -38,7 +38,7 @@ namespace map
 
 			template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 			class TestRegistrationAlgorithm: public
-				algorithm::RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>,
+				::map::algorithm::RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>,
 			public TestRegistrationAlgorithmUIDPolicy
 			{
 			public:

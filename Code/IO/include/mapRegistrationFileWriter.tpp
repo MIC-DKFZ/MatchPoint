@@ -46,8 +46,8 @@ namespace map
 				mapDefaultExceptionMacro( << "Cannot serialize registration. Passed registration object is NULL.");
 			}
 
-			core::String fileName = core::FileDispatch::getName(path);
-			core::String dir = core::FileDispatch::getPath(path);
+			::map::core::String fileName = core::FileDispatch::getName(path);
+			::map::core::String dir = core::FileDispatch::getPath(path);
 
 			typename DirectKernelWriterBaseType::RequestType directRequest(registration->getDirectMapping(),
 					dir, fileName + "_D", _expandLazyKernels, &(registration->getInverseMapping()));
@@ -62,13 +62,13 @@ namespace map
 
 			if (!pDirectWriter)
 			{
-				mapExceptionMacro(core::MissingProviderException,
+				mapExceptionMacro(::map::core::MissingProviderException,
 								  << "No responsible writer available for given direct request. Request:" << directRequest);
 			}
 
 			if (!pInverseWriter)
 			{
-				mapExceptionMacro(core::MissingProviderException,
+				mapExceptionMacro(::map::core::MissingProviderException,
 								  << "No responsible writer available for given inverse request. Request:" << inverseRequest);
 			}
 
@@ -84,9 +84,9 @@ namespace map
 			spRegElement->setTag(tags::Registration);
 
 			//add tags
-			core::RegistrationBase::TagMapType tagMap = registration->getTags();
+			::map::core::RegistrationBase::TagMapType tagMap = registration->getTags();
 
-			for (core::RegistrationBase::TagMapType::iterator pos = tagMap.begin(); pos != tagMap.end(); ++pos)
+			for (::map::core::RegistrationBase::TagMapType::iterator pos = tagMap.begin(); pos != tagMap.end(); ++pos)
 			{
 				structuredData::Element::Pointer spTagElement = structuredData::Element::New();
 				spTagElement->setTag(tags::RegistrationTag);
@@ -98,9 +98,9 @@ namespace map
 
 			//add dimensions
 			spRegElement->addSubElement(structuredData::Element::createElement(tags::MovingDimensions,
-										core::convert::toStr(registration->getMovingDimensions())));
+										::map::core::convert::toStr(registration->getMovingDimensions())));
 			spRegElement->addSubElement(structuredData::Element::createElement(tags::TargetDimensions,
-										core::convert::toStr(registration->getTargetDimensions())));
+										::map::core::convert::toStr(registration->getTargetDimensions())));
 
 			//add kernels
 			spDirectKernelStream->setAttribute(tags::KernelID, tags::direct);

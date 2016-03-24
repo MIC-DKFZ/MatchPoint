@@ -103,7 +103,7 @@ namespace map
 		{
 			RegistrationPointer spResult = NULL;
 
-			typedef ::itk::AffineTransform<core::continuous::ScalarType, VDimension>  TransformModelType;
+			typedef ::itk::AffineTransform<::map::core::continuous::ScalarType, VDimension>  TransformModelType;
 
 			typename TransformModelType::Pointer spFinalTransformModel = TransformModelType::New();
 
@@ -123,7 +123,7 @@ namespace map
 
 			//now create the registration an set the kernels
 			spResult = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator(spResult);
+			::map::core::RegistrationManipulator<RegistrationType> manipulator(spResult);
 
 			manipulator.setDirectMapping(spDKernel);
 			manipulator.setInverseMapping(spIKernel);

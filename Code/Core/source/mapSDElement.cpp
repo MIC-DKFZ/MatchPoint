@@ -65,7 +65,7 @@ namespace map
 		{
 			if (index >= _SubElements.size())
 			{
-				mapExceptionMacro(core::OutOfRangeException,
+				mapExceptionMacro(::map::core::OutOfRangeException,
 								  << "Error. Cannot get element. Passed index is out of sub elements vector range. Index: " << index
 								  << "; vector size: " << _SubElements.size());
 			}
@@ -79,7 +79,7 @@ namespace map
 		{
 			if (index >= _SubElements.size())
 			{
-				mapExceptionMacro(core::OutOfRangeException,
+				mapExceptionMacro(::map::core::OutOfRangeException,
 								  << "Error. Cannot get element. Passed index is out of sub elements vector range. Index: " << index
 								  << "; vector size: " << _SubElements.size());
 			}
@@ -93,7 +93,7 @@ namespace map
 		{
 			if (index >= _SubElements.size())
 			{
-				mapExceptionMacro(core::OutOfRangeException,
+				mapExceptionMacro(::map::core::OutOfRangeException,
 								  << "Error. Cannot remove element. Passed index is out of sub elements vector range. Index: " <<
 								  index << "; vector size: " << _SubElements.size());
 			}
@@ -148,7 +148,7 @@ namespace map
 		{
 			if (location >= _SubElements.size())
 			{
-				mapExceptionMacro(core::OutOfRangeException,
+				mapExceptionMacro(::map::core::OutOfRangeException,
 								  << "Error. Cannot insert element. Passed index is out of sub elements vector range. Index: " <<
 								  location << "; vector size: " << _SubElements.size());
 			}
@@ -240,7 +240,7 @@ namespace map
 
 			if (pos == _Attributes.end())
 			{
-				mapExceptionMacro(core::MissingIdentifierException,
+				mapExceptionMacro(::map::core::MissingIdentifierException,
 								  << "Error. Requested attribute does not exist. Attribute name: " << name);
 			}
 

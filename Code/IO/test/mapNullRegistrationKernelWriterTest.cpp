@@ -72,8 +72,8 @@ namespace map
 			//test content
 			structuredData::XMLStrWriter::Pointer spStrWriter = structuredData::XMLStrWriter::New();
 
-			core::String data = spStrWriter->write(spData);
-			core::String ref =
+			::map::core::String data = spStrWriter->write(spData);
+			::map::core::String ref =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>NullRegistrationKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>NullRegistrationKernel</KernelType></Kernel>";
 
 			CHECK_EQUAL(ref, data);

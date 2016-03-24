@@ -76,7 +76,7 @@ namespace map
 
 			// We need a field, so we build one here using the FieldByModelFunctor
 			typedef core::functors::FieldByModelFunctor<2, 2> ModelFunctorType;
-			typedef itk::ScaleTransform<core::continuous::ScalarType, 2> TransformType;
+			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
 
 			TransformType::Pointer spModel = TransformType::New();
 

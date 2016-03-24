@@ -52,7 +52,7 @@ namespace map
 					//there is really the need to change
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::UnregisterAlgorithmComponentEvent unRegEvent(_spTransformModel.GetPointer(),
+						::map::events::UnregisterAlgorithmComponentEvent unRegEvent(_spTransformModel.GetPointer(),
 								"Unregister current transform model");
 						this->_spOnChange->Execute((::itk::Object*)NULL, unRegEvent);
 					}
@@ -62,7 +62,7 @@ namespace map
 
 					if (this->_spOnChange.IsNotNull())
 					{
-						events::RegisterAlgorithmComponentEvent regEvent(_spTransformModel.GetPointer(),
+						::map::events::RegisterAlgorithmComponentEvent regEvent(_spTransformModel.GetPointer(),
 								"Register new transform model");
 						this->_spOnChange->Execute((::itk::Object*)NULL, regEvent);
 					}

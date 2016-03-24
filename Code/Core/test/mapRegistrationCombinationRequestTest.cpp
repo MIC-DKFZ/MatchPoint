@@ -46,7 +46,7 @@ namespace map
 
 			// create a first RegistrationLoadRequest object with these two kernels
 			// and check if the two kernels are really in the object
-			core::RegistrationCombinationRequest<2, 2, 2> request1(spKernel1, spKernel2);
+			::map::core::RegistrationCombinationRequest<2, 2, 2> request1(spKernel1, spKernel2);
 
 			CHECK(spKernel1.GetPointer() == request1._spKernel1.GetPointer());
 			CHECK(spKernel2.GetPointer() == request1._spKernel2.GetPointer());
@@ -54,13 +54,13 @@ namespace map
 
 			// use the copy constructor to create a second RegistrationLoadRequest object
 			// and check if the kernels are the same in the first and second object
-			core::RegistrationCombinationRequest<2, 2, 2> request2(request1);
+			::map::core::RegistrationCombinationRequest<2, 2, 2> request2(request1);
 			CHECK(spKernel1.GetPointer() == request2._spKernel1.GetPointer());
 			CHECK(spKernel2.GetPointer() == request2._spKernel2.GetPointer());
 
 			// use the operator= the create a third RegistrationLoadRequest object
 			// and check if the kernels are the same in the first and third object
-			core::RegistrationCombinationRequest<2, 2, 2> request3(spKernel3, spKernel4);
+			::map::core::RegistrationCombinationRequest<2, 2, 2> request3(spKernel3, spKernel4);
 			request3 = request1;
 			CHECK(spKernel1.GetPointer() == request3._spKernel1.GetPointer());
 			CHECK(spKernel2.GetPointer() == request3._spKernel2.GetPointer());

@@ -160,9 +160,9 @@ namespace map
 			virtual void preparePyramidesAfterAssembly();
 
 		private:
-			core::ModificationTimeValidator _movingPyramideMTime;
+			::map::core::ModificationTimeValidator _movingPyramideMTime;
 
-			core::ModificationTimeValidator _targetPyramideMTime;
+			::map::core::ModificationTimeValidator _targetPyramideMTime;
 
 			/*! The time stamp is used to signal changes of the policy that may effect the controlling structur (e.g. registration algorithm)
 			* because the controlled object has changed.*/

@@ -38,7 +38,7 @@ namespace map
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		class TestRegistrationKernel : public
-			core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>
+			::map::core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			typedef TestRegistrationKernel<VInputDimensions, VOutputDimensions> Self;
@@ -127,7 +127,7 @@ namespace map
 				manip.setDirectMapping(_spDirectKernel);
 				manip.setInverseMapping(_spInverseKernel);
 
-				core::RegistrationBase::TagMapType tags;
+				::map::core::RegistrationBase::TagMapType tags;
 				std::pair<std::string, std::string> taggedValue(_tag1, _value1);
 				tags.insert(taggedValue);
 

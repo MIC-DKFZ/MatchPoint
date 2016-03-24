@@ -44,13 +44,13 @@ namespace map
 
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			core::String filePath = "dir1" + sep + "subdir" + sep + "fileName.fileExt";
-			core::String path = "dir1" + sep + "subdir" + sep;
-			core::String path2 = "dir1" + sep + "subdir";
-			core::String path2_wrong = "dir1" + wSep + "subdir";
-			core::String emptyPath = "";
-			core::String wrongPath = "dir1" + sep + "subdir" + wSep + "subsubdir" + wSep + "fileName.fileExt";
-			core::String correctPath = "dir1" + sep + "subdir" + sep + "subsubdir" + sep + "fileName.fileExt";
+			::map::core::String filePath = "dir1" + sep + "subdir" + sep + "fileName.fileExt";
+			::map::core::String path = "dir1" + sep + "subdir" + sep;
+			::map::core::String path2 = "dir1" + sep + "subdir";
+			::map::core::String path2_wrong = "dir1" + wSep + "subdir";
+			::map::core::String emptyPath = "";
+			::map::core::String wrongPath = "dir1" + sep + "subdir" + wSep + "subsubdir" + wSep + "fileName.fileExt";
+			::map::core::String correctPath = "dir1" + sep + "subdir" + sep + "subsubdir" + sep + "fileName.fileExt";
 
 			//check static member
 			CHECK(map::core::FileDispatch::getName(filePath) == "fileName");

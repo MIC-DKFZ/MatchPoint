@@ -35,11 +35,11 @@ namespace map
 	{
 
 
-		core::String encodeForXml(const core::String& sSrc)
+		::map::core::String encodeForXml(const core::String& sSrc)
 		{
-			core::OStringStream sRet;
+			::map::core::OStringStream sRet;
 
-			for (core::String::const_iterator iter = sSrc.begin(); iter != sSrc.end(); iter++)
+			for (::map::core::String::const_iterator iter = sSrc.begin(); iter != sSrc.end(); iter++)
 			{
 				unsigned char c = (unsigned char) * iter;
 
@@ -81,7 +81,7 @@ namespace map
 		}
 
 
-		core::String
+		::map::core::String
 		XMLStrWriter::
 		write(const Element* pElement) const
 		{
@@ -92,22 +92,22 @@ namespace map
 			}
 
 			ElementLevelType level = 0;
-			core::String result = writeElement(pElement, level);
+			::map::core::String result = writeElement(pElement, level);
 
 			return result;
 		};
 
-		core::String
+		::map::core::String
 		XMLStrWriter::
 		writeElement(const Element* pElement, const ElementLevelType& level) const
 		{
 			assert(pElement);
 
-			core::OStringStream stream;
+			::map::core::OStringStream stream;
 
 			bool isEmptyElement = (pElement->getSubElementsCount() == 0) && pElement->getValue().empty();
 
-			core::String attributes = writeAttributes(pElement, level);
+			::map::core::String attributes = writeAttributes(pElement, level);
 
 			stream << "<" << pElement->getTag();
 
@@ -130,13 +130,13 @@ namespace map
 			return stream.str();
 		};
 
-		core::String
+		::map::core::String
 		XMLStrWriter::
 		writeAttributes(const Element* pElement, const ElementLevelType& level) const
 		{
 			assert(pElement);
 
-			core::OStringStream stream;
+			::map::core::OStringStream stream;
 
 			Element::AttributeNameVectorType attributes = pElement->getAttributeNames();
 			bool firstLoop = true;
@@ -162,14 +162,14 @@ namespace map
 			return stream.str();
 		};
 
-		core::String
+		::map::core::String
 		XMLStrWriter::
 		writeSubElements(const Element* pElement, const ElementLevelType& level) const
 		{
 			assert(pElement);
 
-			core::String result;
-			core::OStringStream stream;
+			::map::core::String result;
+			::map::core::OStringStream stream;
 
 			ElementLevelType sublevel = level + 1;
 
@@ -197,18 +197,18 @@ namespace map
 
 
 
-		core::String
+		::map::core::String
 		XMLIntendedStrWriter::
 		writeElement(const Element* pElement, const ElementLevelType& level) const
 		{
 			assert(pElement);
 
 			::itk::Indent indent(2 * level);
-			core::OStringStream stream;
+			::map::core::OStringStream stream;
 
 			bool isEmptyElement = (pElement->getSubElementsCount() == 0) && pElement->getValue().empty();
 
-			core::String attributes = writeAttributes(pElement, level);
+			::map::core::String attributes = writeAttributes(pElement, level);
 
 			stream << indent << "<" << pElement->getTag();
 

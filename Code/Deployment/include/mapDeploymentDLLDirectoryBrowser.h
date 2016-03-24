@@ -66,7 +66,7 @@ namespace map
 			itkFactorylessNewMacro(Self);
 
 			typedef std::vector<DLLInfo::Pointer> DLLInfoListType;
-			typedef std::vector<core::String> PathListType;
+			typedef std::vector<::map::core::String> PathListType;
 
 			/** Sets the base that is used to collapse relative search paths when added as search locations.
 			* @eguarantee strong
@@ -128,7 +128,7 @@ namespace map
 			PathListType _pathList;
 
 			/*! Base for collapsing of relative search paths. Default is the current working directory*/
-			core::String _basePath;
+			::map::core::String _basePath;
 
 		private:
 			DLLDirectoryBrowser(const Self&); //purposely not implemented

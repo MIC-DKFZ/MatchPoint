@@ -38,7 +38,7 @@ namespace map
 		{
 			template<class TTargetImage, class TMovingImage>
 			class TestPolicy : public
-				algorithm::itk::ArbitraryImageToImageMetricPolicy<TTargetImage, TMovingImage>
+				::map::algorithm::itk::ArbitraryImageToImageMetricPolicy<TTargetImage, TMovingImage>
 			{
 				//derivered a test class to generate public constructors (The policy itsself cannot
 				//be instantiated directly), to set the visibility of getMetricInternal to
@@ -86,20 +86,20 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			TestPolicy<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			TestPolicy<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
 			policy;
-			const TestPolicy<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			const TestPolicy<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
 			& constPolicy = policy;
 
-			typedef algorithm::itk::ITKMetricControl< ::itk::MeanSquaresImageToImageMetric<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> >
+			typedef algorithm::itk::ITKMetricControl< ::itk::MeanSquaresImageToImageMetric<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> >
 			MetricType;
 
 			MetricType::Pointer spMetricControl1 = MetricType::New();
 			MetricType::Pointer spMetricControl2 = MetricType::New();
 
-			algorithm::itk::ITKImageToImageMetricControlInterface<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			::map::algorithm::itk::ITKImageToImageMetricControlInterface<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
 			* pMetricControl = NULL;
-			const algorithm::itk::ITKImageToImageMetricControlInterface<core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			const algorithm::itk::ITKImageToImageMetricControlInterface<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
 			* pConstMetricControl = NULL;
 
 			CHECK_NO_THROW(pMetricControl = policy.getMetricInternal());

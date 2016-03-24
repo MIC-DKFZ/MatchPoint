@@ -67,7 +67,7 @@ namespace map
 
 			//////////////////////////////////////
 			//Kernel setup
-			typedef itk::Euler2DTransform<core::continuous::ScalarType> TransformType;
+			typedef itk::Euler2DTransform<::map::core::continuous::ScalarType> TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(3);
@@ -96,8 +96,8 @@ namespace map
 
 			typedef core::InvertingFieldBasedRegistrationKernel<2, 2> InvertingKernelType;
 
-			core::InverseRegistrationKernelGenerator<2, 2>::Pointer inverter =
-				core::InverseRegistrationKernelGenerator<2, 2>::New();
+			::map::core::InverseRegistrationKernelGenerator<2, 2>::Pointer inverter =
+				::map::core::InverseRegistrationKernelGenerator<2, 2>::New();
 			InvertingKernelType::Pointer spInvertingKernelRef = dynamic_cast<InvertingKernelType*>
 					(inverter->generateInverse(*spSourceKernel, spInRep).GetPointer());
 
@@ -108,17 +108,17 @@ namespace map
 			//Loader and request setup
 			LoaderType::Pointer spLoader = LoaderType::New();
 
-			core::String validData =
+			::map::core::String validData =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-			core::String invalidData_wrongDim =
+			::map::core::String invalidData_wrongDim =
 				"<Kernel InputDimensions='3' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-			core::String invalidData_wrongDim2 =
+			::map::core::String invalidData_wrongDim2 =
 				"<Kernel InputDimensions='2' OutputDimensions='3'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-			core::String invalidData_wrongType =
+			::map::core::String invalidData_wrongType =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>WrongType</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-			core::String invalidData_wrongRepDim =
+			::map::core::String invalidData_wrongRepDim =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='4'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>0</UseNullVector></Kernel>";
-			core::String invalidData_invalidRep =
+			::map::core::String invalidData_invalidRep =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'></InverseFieldRepresentation></Kernel>";
 
 			structuredData::XMLStrReader::Pointer spStrReader = structuredData::XMLStrReader::New();

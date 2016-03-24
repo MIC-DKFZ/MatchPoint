@@ -69,7 +69,7 @@ namespace map
 				template <typename TElement>
 				ParamGenerator& add(const TElement& value)
 				{
-					this->_values.push_back(core::convert::toStrGeneric(value));
+					this->_values.push_back(::map::core::convert::toStrGeneric(value));
 					return *this;
 				};
 

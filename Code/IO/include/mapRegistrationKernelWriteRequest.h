@@ -59,10 +59,10 @@ namespace map
 
 			/*! Path to where the kernel is going to be stored and additional data
 			 *(e.g. image of the deformation field) should be stored).*/
-			core::String _path;
+			::map::core::String _path;
 			/*! "Project name" for the write operation which can be used to generate i.a. file names
 			 * if needed*/
-			core::String _name;
+			::map::core::String _name;
 
 			/*! Determines if lazy kernels that have not been processed should be stored with there generation functors (false)
 			 * or should be generated and stored with the actual kernel data (true). Default is true.*/

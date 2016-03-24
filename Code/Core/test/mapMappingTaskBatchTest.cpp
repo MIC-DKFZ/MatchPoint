@@ -102,16 +102,16 @@ namespace map
 			MappingTaskBatchType::Pointer spBatch = MappingTaskBatchType::New();
 
 			BatchTestCommand::Pointer spTestCommand = BatchTestCommand::New();
-			spBatch->AddObserver(events::AnyMatchPointEvent(), spTestCommand);
+			spBatch->AddObserver(::map::events::AnyMatchPointEvent(), spTestCommand);
 
 			lit::TestCommand::Pointer spNextCommand = lit::TestCommand::New();
 			lit::TestCommand::Pointer spSuccesCommand = lit::TestCommand::New();
 			lit::TestCommand::Pointer spFailedCommand = lit::TestCommand::New();
-			spBatch->AddObserver(events::NextTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID),
+			spBatch->AddObserver(::map::events::NextTaskThreadEvent(::map::events::NextTaskThreadEvent::anyThreadID),
 								 spNextCommand);
-			spBatch->AddObserver(events::ProcessedTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID),
+			spBatch->AddObserver(::map::events::ProcessedTaskThreadEvent(::map::events::NextTaskThreadEvent::anyThreadID),
 								 spSuccesCommand);
-			spBatch->AddObserver(events::FailedTaskThreadEvent(events::NextTaskThreadEvent::anyThreadID),
+			spBatch->AddObserver(::map::events::FailedTaskThreadEvent(::map::events::NextTaskThreadEvent::anyThreadID),
 								 spFailedCommand);
 
 			MappingTaskType::Pointer spTask1 = MappingTaskType::New();

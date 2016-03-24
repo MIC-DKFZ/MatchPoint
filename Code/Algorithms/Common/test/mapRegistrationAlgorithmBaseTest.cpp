@@ -147,33 +147,33 @@ namespace map
 			CHECK_EQUAL(0, spStateEventTest->getEventCount());
 
 			//test basic state interface (set and get)
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
+			CHECK_EQUAL(::map::algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
 						spRegAlg->getCurrentState());
 
 			CHECK_NO_THROW(spRegAlg->setCurrentState(
 							   algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing));
 			CHECK_EQUAL(1, spRegAlg->_onStateChange);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
+			CHECK_EQUAL(::map::algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
 						spRegAlg->_onStateChangeOldState);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
+			CHECK_EQUAL(::map::algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
 						spRegAlg->_onStateChangeNewState);
 			CHECK_EQUAL(1, spStateEventTest->getEventCount());
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
+			CHECK_EQUAL(::map::algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
 						spStateEventTest->_oldStates[0]);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
+			CHECK_EQUAL(::map::algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
 						spStateEventTest->_newStates[0]);
 
 			CHECK_NO_THROW(spRegAlg->setCurrentState(
 							   algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping));
 			CHECK_EQUAL(2, spRegAlg->_onStateChange);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
+			CHECK_EQUAL(::map::algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
 						spRegAlg->_onStateChangeOldState);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping,
+			CHECK_EQUAL(::map::algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping,
 						spRegAlg->_onStateChangeNewState);
 			CHECK_EQUAL(2, spStateEventTest->getEventCount());
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
+			CHECK_EQUAL(::map::algorithm::RegistrationAlgorithmBase::AlgorithmState::Initializing,
 						spStateEventTest->_oldStates[1]);
-			CHECK_EQUAL(algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping,
+			CHECK_EQUAL(::map::algorithm::RegistrationAlgorithmBase::AlgorithmState::Stopping,
 						spStateEventTest->_newStates[1]);
 
 			RETURN_AND_REPORT_TEST_SUCCESS;

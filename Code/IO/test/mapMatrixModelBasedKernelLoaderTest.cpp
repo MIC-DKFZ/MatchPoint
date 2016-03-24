@@ -50,21 +50,21 @@ namespace map
 
 			LoaderType::Pointer spLoader = LoaderType::New();
 
-			core::String validData =
+			::map::core::String validData =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>0</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>0</Value></Matrix><MatrixStr>0 -1 1 0 </MatrixStr><Offset><Value Row='0'>5.000000000</Value><Value Row='1'>2.000000000</Value></Offset><OffsetStr>5 2 </OffsetStr></Kernel>";
-			core::String invalidData_wrongDim =
+			::map::core::String invalidData_wrongDim =
 				"<Kernel InputDimensions='2' OutputDimensions='3'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType></Kernel>";
-			core::String invalidData_wrongDim2 =
+			::map::core::String invalidData_wrongDim2 =
 				"<Kernel InputDimensions='3' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType></Kernel>";
-			core::String invalidData_wrongType =
+			::map::core::String invalidData_wrongType =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>WrongKernelType</KernelType></Kernel>";
-			core::String invalidData_noMatrix =
+			::map::core::String invalidData_noMatrix =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType></Kernel>";
-			core::String invalidData_wrongMatrix =
+			::map::core::String invalidData_wrongMatrix =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value></Matrix></Kernel>";
-			core::String invalidData_noOffset =
+			::map::core::String invalidData_noOffset =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>-3.673205103e-006</Value></Matrix><MatrixStr>-3.67321e-006 -1 1 -3.67321e-006 </MatrixStr><OffsetStr>5 2 </OffsetStr></Kernel>";
-			core::String invalidData_wrongOffset =
+			::map::core::String invalidData_wrongOffset =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>MatrixModelBasedKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>MatrixModelKernel</KernelType><Matrix><Value Column='0' Row='0'>-3.673205103e-006</Value><Value Column='1' Row='0'>-1.000000000</Value><Value Column='0' Row='1'>1.000000000</Value><Value Column='1' Row='1'>-3.673205103e-006</Value></Matrix><MatrixStr>-3.67321e-006 -1 1 -3.67321e-006 </MatrixStr><Offset><Value Row='0'>5.000000000</Value></Offset><OffsetStr>5 2 </OffsetStr></Kernel>";
 
 			structuredData::XMLStrReader::Pointer spStrReader = structuredData::XMLStrReader::New();

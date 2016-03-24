@@ -58,7 +58,7 @@ namespace map
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
@@ -66,22 +66,22 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "InvertingFieldKernelLoader<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		core::String
+		::map::core::String
 		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
-			core::OStringStream os;
+			::map::core::OStringStream os;
 			os << "InvertingFieldKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
 			   VOutputDimensions << ".";
 			return os.str();
@@ -95,7 +95,7 @@ namespace map
 		{
 			if (!canHandleRequest(request))
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot load kernel. Reason: cannot handle request.");
 			}
 
@@ -106,7 +106,7 @@ namespace map
 
 			if (!sourceKernel)
 			{
-				mapExceptionMacro(core::ServiceException,
+				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error: cannot load kernel. Reason: complementary/source kernel has not the correct dimensionality.");
 			}
 
@@ -133,8 +133,8 @@ namespace map
 			typename core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult =
 				generator->generateInverse(*sourceKernel, spInverseFieldRep);
 
-			core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>* fieldKernel =
-				dynamic_cast<core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>*>
+			::map::core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>* fieldKernel =
+				dynamic_cast<::map::core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>*>
 				(spResult.GetPointer());
 
 			if (fieldKernel)

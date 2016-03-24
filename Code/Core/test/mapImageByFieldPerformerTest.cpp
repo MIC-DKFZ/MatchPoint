@@ -137,11 +137,11 @@ namespace map
 			RegistrationType::Pointer spRegistration = RegistrationType::New();
 			RegistrationType::Pointer spIllegalRegistration1 = RegistrationType::New();
 
-			core::RegistrationManipulator<RegistrationType> manipulator1(spRegistration);
+			::map::core::RegistrationManipulator<RegistrationType> manipulator1(spRegistration);
 			manipulator1.setDirectMapping(spIllegalKernel);
 			manipulator1.setInverseMapping(spKernel);
 
-			core::RegistrationManipulator<RegistrationType> manipulator2(spIllegalRegistration1);
+			::map::core::RegistrationManipulator<RegistrationType> manipulator2(spIllegalRegistration1);
 			manipulator2.setDirectMapping(spIllegalKernel);
 			manipulator2.setInverseMapping(spIllegalKernel);
 
@@ -160,11 +160,11 @@ namespace map
 					referenceImageFile3Name);
 
 			PerformerType::RequestType::ResultImageDescriptorType::Pointer spFieldRep =
-				core::createFieldRepresentation(*spInputImage);
+				::map::core::createFieldRepresentation(*spInputImage);
 			PerformerType::RequestType::ResultImageDescriptorType::Pointer spFieldRep2 =
-				core::createFieldRepresentation(*spInputImage);
+				::map::core::createFieldRepresentation(*spInputImage);
 			PerformerType::RequestType::ResultImageDescriptorType::Pointer spFieldRep3 =
-				core::createFieldRepresentation(*spInputImage);
+				::map::core::createFieldRepresentation(*spInputImage);
 
 			PerformerType::RequestType::ResultImageDescriptorType::PointType newOrigin;
 			newOrigin[0] = 10.0;

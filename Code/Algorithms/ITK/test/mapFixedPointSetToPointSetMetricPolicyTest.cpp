@@ -52,7 +52,7 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef ::itk::EuclideanDistancePointMetric<core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			typedef ::itk::EuclideanDistancePointMetric<::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
 			MetricType;
 			typedef algorithm::itk::ITKMetricControl<MetricType> MetricControlType;
 			typedef TestPolicy< MetricType > PolicyType;

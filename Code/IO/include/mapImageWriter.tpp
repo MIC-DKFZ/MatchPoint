@@ -88,11 +88,11 @@ namespace map
 		ImageWriter<TInputPixel, TOutputPixel, iDimension>::
 		save3D()
 		{
-			core::FileDispatch dispatch(_filePath);
-			core::String  sTemp = dispatch.getExtension();
+			::map::core::FileDispatch dispatch(_filePath);
+			::map::core::String  sTemp = dispatch.getExtension();
 
 			//Converts to lowercase, because itk:analyzeIO is bugged and only checks for lower case
-			for (core::String::iterator spos = sTemp.begin(); spos != sTemp.end(); spos++)
+			for (::map::core::String::iterator spos = sTemp.begin(); spos != sTemp.end(); spos++)
 			{
 				(*spos) = std::tolower((*spos), std::locale("english"));
 			}

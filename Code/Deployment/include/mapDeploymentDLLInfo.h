@@ -76,11 +76,11 @@ namespace map
 			~DLLInfo();
 
 			map::algorithm::UID::ConstPointer _spAlgorithmUID;
-			core::String _libraryFilePath;
+			::map::core::String _libraryFilePath;
 			/** Profile string (xml structured) associated with the algorithm*/
-			core::String _profileStr;
+			::map::core::String _profileStr;
 			/** Description string associated with the algorithm*/
-			core::String _description;
+			::map::core::String _description;
 
 		private:
 			DLLInfo(const Self&); //purposely not implemented

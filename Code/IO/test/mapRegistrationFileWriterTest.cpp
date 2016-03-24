@@ -102,7 +102,7 @@ namespace map
 			typedef TestKernelBase<2, 2> IllegalKernelType;
 			typedef core::NullRegistrationKernel<2, 2> NullKernelType;
 
-			typedef ::itk::Euler2DTransform<core::continuous::ScalarType> TransformType;
+			typedef ::itk::Euler2DTransform<::map::core::continuous::ScalarType> TransformType;
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::Pointer spTransform2 = TransformType::New();
 
@@ -123,38 +123,38 @@ namespace map
 			// create registrations for testing purposes
 			// let the writer store the registration
 			RegistrationType::Pointer spValidRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator(spValidRegistration.GetPointer());
+			::map::core::RegistrationManipulator<RegistrationType> manipulator(spValidRegistration.GetPointer());
 			manipulator.setDirectMapping(spKernel);
 			manipulator.setInverseMapping(NullKernelType::New());
-			core::RegistrationManipulator<RegistrationType>::TagMapType tags;
+			::map::core::RegistrationManipulator<RegistrationType>::TagMapType tags;
 			tags.insert(std::make_pair("RegistrationUID", "RegistrationFileWriterTest.reg1"));
 			manipulator.setTagValues(tags);
 
 			RegistrationType::Pointer spValidRegistration2 = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator2(spValidRegistration2.GetPointer());
+			::map::core::RegistrationManipulator<RegistrationType> manipulator2(spValidRegistration2.GetPointer());
 			manipulator2.setDirectMapping(NullKernelType::New());
 			manipulator2.setInverseMapping(spKernel);
-			core::RegistrationManipulator<RegistrationType>::TagMapType tags2;
+			::map::core::RegistrationManipulator<RegistrationType>::TagMapType tags2;
 			tags2.insert(std::make_pair("RegistrationUID", "RegistrationFileWriterTest.reg2"));
 			manipulator2.setTagValues(tags2);
 
 			RegistrationType::Pointer spValidRegistration3 = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator3(spValidRegistration3.GetPointer());
+			::map::core::RegistrationManipulator<RegistrationType> manipulator3(spValidRegistration3.GetPointer());
 			manipulator3.setDirectMapping(spKernel);
 			manipulator3.setInverseMapping(spKernel2);
-			core::RegistrationManipulator<RegistrationType>::TagMapType tags3;
+			::map::core::RegistrationManipulator<RegistrationType>::TagMapType tags3;
 			tags3.insert(std::make_pair("RegistrationUID", "RegistrationFileWriterTest.reg3"));
 			tags3.insert(std::make_pair("Purpose", "UnitTest"));
 			manipulator3.setTagValues(tags3);
 
 			RegistrationType::Pointer spInvalidDirectKernelRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator4(
+			::map::core::RegistrationManipulator<RegistrationType> manipulator4(
 				spInvalidDirectKernelRegistration.GetPointer());
 			manipulator4.setDirectMapping(IllegalKernelType::New());
 			manipulator4.setInverseMapping(spKernel2);
 
 			RegistrationType::Pointer spInvalidInverseKernelRegistration = RegistrationType::New();
-			core::RegistrationManipulator<RegistrationType> manipulator5(
+			::map::core::RegistrationManipulator<RegistrationType> manipulator5(
 				spInvalidInverseKernelRegistration.GetPointer());
 			manipulator5.setDirectMapping(spKernel);
 			manipulator5.setInverseMapping(IllegalKernelType::New());

@@ -40,7 +40,7 @@ namespace map
 		mapGenerateAlgorithmUIDPolicyMacro(TestFSL3DRegistrationUIDPolicy, "de.dkfz.matchpoint.test",
 										   "FSL.3D.default", "1.0.0", "");
 
-		typedef std::map<core::String, core::String> ArgumentMapType;
+		typedef std::map<::map::core::String, core::String> ArgumentMapType;
 
 		ArgumentMapType getLoggedArguments()
 		{
@@ -52,8 +52,8 @@ namespace map
 				mapDefaultExceptionStaticMacro( << "Error cannot find or access flirtDummyCall.log");
 			}
 
-			core::String item;
-			std::vector<core::String> list;
+			::map::core::String item;
+			std::vector<::map::core::String> list;
 
 			while (std::getline(logFile, item))
 			{
@@ -62,7 +62,7 @@ namespace map
 
 			ArgumentMapType result;
 
-			for (std::vector<core::String>::const_iterator pos = list.begin(); pos != list.end(); ++pos)
+			for (std::vector<::map::core::String>::const_iterator pos = list.begin(); pos != list.end(); ++pos)
 			{
 				if (pos->find("-") == 0)
 				{
@@ -81,7 +81,7 @@ namespace map
 			return result;
 		}
 
-		core::String extractArg(const ArgumentMapType& args, const core::String& name)
+		::map::core::String extractArg(const ArgumentMapType& args, const core::String& name)
 		{
 			ArgumentMapType::const_iterator finding = args.find(name);
 
@@ -114,8 +114,8 @@ namespace map
 
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			core::String movingImageFileName = "";
-			core::String targetImageFileName = "";
+			::map::core::String movingImageFileName = "";
+			::map::core::String targetImageFileName = "";
 
 			if (argc > 1)
 			{
@@ -164,7 +164,7 @@ namespace map
 			const core::ModelBasedRegistrationKernel<3, 3>* pInverseKernel =
 				dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&
 						(spRegistration->getInverseMapping()));
-			core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
+			::map::core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
 				pInverseKernel->getParameters();
 
 			CHECK_CLOSE(1.0574, parameters[0], 0.0001);
@@ -189,29 +189,29 @@ namespace map
 			CHECK(extractArg(cmdArg, "-cost") == "corratio");
 
 			// check other params
-			spAlgorithm->setCostFunction(algorithm::fsl::CostFunction::LeastSquares);
-			spAlgorithm->setDegreesOfFreedom(algorithm::fsl::DegreesOfFreedom::DoF6);
+			spAlgorithm->setCostFunction(::map::algorithm::fsl::CostFunction::LeastSquares);
+			spAlgorithm->setDegreesOfFreedom(::map::algorithm::fsl::DegreesOfFreedom::DoF6);
 			CHECK_NO_THROW(spAlgorithm->determineRegistration());
 			cmdArg = getLoggedArguments();
 			CHECK(extractArg(cmdArg, "-dof") == "6");
 			CHECK(extractArg(cmdArg, "-cost") == "leastsq");
 
-			spAlgorithm->setCostFunction(algorithm::fsl::CostFunction::MutualInformation);
-			spAlgorithm->setDegreesOfFreedom(algorithm::fsl::DegreesOfFreedom::DoF7);
+			spAlgorithm->setCostFunction(::map::algorithm::fsl::CostFunction::MutualInformation);
+			spAlgorithm->setDegreesOfFreedom(::map::algorithm::fsl::DegreesOfFreedom::DoF7);
 			CHECK_NO_THROW(spAlgorithm->determineRegistration());
 			cmdArg = getLoggedArguments();
 			CHECK(extractArg(cmdArg, "-dof") == "7");
 			CHECK(extractArg(cmdArg, "-cost") == "mutualinfo");
 
-			spAlgorithm->setCostFunction(algorithm::fsl::CostFunction::NormalisedCorrelation);
-			spAlgorithm->setDegreesOfFreedom(algorithm::fsl::DegreesOfFreedom::DoF9);
+			spAlgorithm->setCostFunction(::map::algorithm::fsl::CostFunction::NormalisedCorrelation);
+			spAlgorithm->setDegreesOfFreedom(::map::algorithm::fsl::DegreesOfFreedom::DoF9);
 			CHECK_NO_THROW(spAlgorithm->determineRegistration());
 			cmdArg = getLoggedArguments();
 			CHECK(extractArg(cmdArg, "-dof") == "9");
 			CHECK(extractArg(cmdArg, "-cost") == "normcorr");
 
-			spAlgorithm->setCostFunction(algorithm::fsl::CostFunction::NormalisedMutualInformation);
-			spAlgorithm->setDegreesOfFreedom(algorithm::fsl::DegreesOfFreedom::DoF12);
+			spAlgorithm->setCostFunction(::map::algorithm::fsl::CostFunction::NormalisedMutualInformation);
+			spAlgorithm->setDegreesOfFreedom(::map::algorithm::fsl::DegreesOfFreedom::DoF12);
 			CHECK_NO_THROW(spAlgorithm->determineRegistration());
 			cmdArg = getLoggedArguments();
 			CHECK(extractArg(cmdArg, "-dof") == "12");
@@ -225,14 +225,14 @@ namespace map
 			CHECK_EQUAL(false, spAlgorithm->hasIterationCount());
 			CHECK_EQUAL(false, spAlgorithm->isStoppable());
 
-			core::String envFlirtPath = "";
+			::map::core::String envFlirtPath = "";
 
 			if (!itksys::SystemTools::GetEnv("MAPElastixPath", envFlirtPath))
 			{
 				itksys::SystemTools::GetEnv("FSLDIR", envFlirtPath);
 			};
 
-			core::String dir;
+			::map::core::String dir;
 
 			CHECK(spAlgorithm->getWorkingDirectory(dir));
 

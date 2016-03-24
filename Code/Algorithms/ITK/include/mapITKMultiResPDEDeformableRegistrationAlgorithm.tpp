@@ -161,7 +161,7 @@ namespace map
 			prepPerpareInternalInputData()
 			{
 				Superclass::prepPerpareInternalInputData();
-				this->InvokeEvent(events::AlgorithmEvent(this,
+				this->InvokeEvent(::map::events::AlgorithmEvent(this,
 								  "Pass resolution level count to itk registration method."));
 				this->_multiResFilter->SetNumberOfLevels(this->getResolutionLevels());
 			}
@@ -172,7 +172,7 @@ namespace map
 			prepSetInternalInputData()
 			{
 				//Connect images
-				this->InvokeEvent(events::AlgorithmEvent(this,
+				this->InvokeEvent(::map::events::AlgorithmEvent(this,
 								  "Connect images to itk multi res PDE registration filter."));
 				this->_multiResFilter->SetFixedImage(this->_spInternalTargetImage);
 				this->_multiResFilter->SetMovingImage(this->_spInternalMovingImage);
@@ -268,7 +268,7 @@ namespace map
 				this->_currentIterationLock.Unlock();
 				this->_currentLevelLock.Unlock();
 
-				this->InvokeEvent(events::AlgorithmResolutionLevelEvent(this, os.str()));
+				this->InvokeEvent(::map::events::AlgorithmResolutionLevelEvent(this, os.str()));
 				this->doInterLevelSetup();
 			};
 

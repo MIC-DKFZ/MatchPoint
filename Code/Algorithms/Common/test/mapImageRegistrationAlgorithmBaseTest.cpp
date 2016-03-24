@@ -37,7 +37,7 @@ namespace map
 
 			template<class TMovingImage, class TTargetImage>
 			class TestImageRegistrationAlgorithmInterface : public
-				algorithm::ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
+				::map::algorithm::ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
 			{
 			public:
 				TestImageRegistrationAlgorithmInterface() {};

@@ -94,10 +94,10 @@ namespace map
 			AControlType::Pointer spAControl = AControlType::New();
 			BControlType::Pointer spBControl = BControlType::New();
 
-			algorithm::itk::ITKSVNLOptimizerControlInterface* pController = NULL;
+			::map::algorithm::itk::ITKSVNLOptimizerControlInterface* pController = NULL;
 			const algorithm::itk::ITKSVNLOptimizerControlInterface* pConstController = NULL;
 
-			algorithm::OptimizerControlInterface* pControllerBase = NULL;
+			::map::algorithm::OptimizerControlInterface* pControllerBase = NULL;
 			const algorithm::OptimizerControlInterface* pConstControllerBase = NULL;
 
 			CHECK_NO_THROW(pController = policy.getITKOptimizerControl());

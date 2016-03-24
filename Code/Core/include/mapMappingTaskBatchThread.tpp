@@ -66,7 +66,7 @@ namespace map
 				{
 					//Reset task pointer to indicates the assignment of a new task
 					_pNewTask = NULL;
-					this->InvokeEvent(events::NextTaskThreadEvent(_threadID));
+					this->InvokeEvent(::map::events::NextTaskThreadEvent(_threadID));
 
 					if (_pNewTask)
 					{
@@ -75,11 +75,11 @@ namespace map
 
 						if (_pCurrentProcessedTask->execute())
 						{
-							this->InvokeEvent(events::ProcessedTaskThreadEvent(_threadID, _pCurrentProcessedTask));
+							this->InvokeEvent(::map::events::ProcessedTaskThreadEvent(_threadID, _pCurrentProcessedTask));
 						}
 						else
 						{
-							this->InvokeEvent(events::FailedTaskThreadEvent(_threadID, _pCurrentProcessedTask));
+							this->InvokeEvent(::map::events::FailedTaskThreadEvent(_threadID, _pCurrentProcessedTask));
 						}
 					}
 					else
@@ -91,7 +91,7 @@ namespace map
 			catch (...)
 			{
 				_unhandledExceptionOccured = true;
-				this->InvokeEvent(events::FailedTaskThreadEvent(_threadID, _pCurrentProcessedTask));
+				this->InvokeEvent(::map::events::FailedTaskThreadEvent(_threadID, _pCurrentProcessedTask));
 			}
 		};
 

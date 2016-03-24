@@ -61,7 +61,7 @@ namespace map
 			ModelKernelType::Pointer spIllegalModelKernel = ModelKernelType::New(); //has no transform model
 
 			//setting up model kernel
-			typedef ::itk::TranslationTransform<core::continuous::ScalarType, 2> TransformType;
+			typedef ::itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
@@ -76,15 +76,15 @@ namespace map
 			RegistrationType::Pointer spIllegalRegistration1 = RegistrationType::New();
 			RegistrationType::Pointer spIllegalRegistration2 = RegistrationType::New();
 
-			core::RegistrationManipulator<RegistrationType> manipulator1(spRegistration);
+			::map::core::RegistrationManipulator<RegistrationType> manipulator1(spRegistration);
 			manipulator1.setDirectMapping(spKernel);
 			manipulator1.setInverseMapping(spIllegalKernel);
 
-			core::RegistrationManipulator<RegistrationType> manipulator2(spIllegalRegistration1);
+			::map::core::RegistrationManipulator<RegistrationType> manipulator2(spIllegalRegistration1);
 			manipulator2.setDirectMapping(spIllegalKernel);
 			manipulator2.setInverseMapping(spIllegalKernel);
 
-			core::RegistrationManipulator<RegistrationType> manipulator3(spIllegalRegistration2);
+			::map::core::RegistrationManipulator<RegistrationType> manipulator3(spIllegalRegistration2);
 			manipulator3.setDirectMapping(spIllegalModelKernel);
 			manipulator3.setInverseMapping(spIllegalKernel);
 

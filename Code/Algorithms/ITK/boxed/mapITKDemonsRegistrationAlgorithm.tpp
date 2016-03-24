@@ -195,15 +195,15 @@ namespace map
 				this->_internalRegistrationMethod = InternalRegistrationMethodType::New();
 
 				//initialize registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Transfer cached MetaProperties."));
 				this->configureAlgorithmByMetaProperties();
 
 				//assemble registration components
-				this->InvokeEvent(events::AlgorithmEvent(this, "Initializing itk registration method."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Initializing itk registration method."));
 				this->prepInitializeTransformation();
 
 				//Connect images
-				this->InvokeEvent(events::AlgorithmEvent(this, "Connect images to itk registration method."));
+				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Connect images to itk registration method."));
 				this->_internalRegistrationMethod->SetFixedImage(this->getTargetImage());
 				this->_internalRegistrationMethod->SetMovingImage(this->getMovingImage());
 
@@ -235,7 +235,7 @@ namespace map
 
 				//now build the inverse kernel (main kernel of a image based registration algorithm)
 				typedef typename
-				core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
+				::map::core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
 				InverseKernelType;
 
 				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
@@ -258,7 +258,7 @@ namespace map
 
 				//now create the registration an set the kernels
 				spResult = RegistrationType::New();
-				core::RegistrationManipulator<InterimRegistrationType> manipulator(spResult);
+				::map::core::RegistrationManipulator<InterimRegistrationType> manipulator(spResult);
 
 				manipulator.setDirectMapping(spDKernel);
 				manipulator.setInverseMapping(spIKernel);
@@ -325,7 +325,7 @@ namespace map
 
 				//        this->_currentIterationLock.Unlock();
 
-				//        this->InvokeEvent(events::AlgorithmIterationEvent(this,os.str()));
+				//        this->InvokeEvent(::map::events::AlgorithmIterationEvent(this,os.str()));
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
@@ -333,7 +333,7 @@ namespace map
 			ITKDemonsRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			onGeneralRegistrationMethodEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
+				::map::events::AlgorithmWrapperEvent wrappedEvent(eventObject, caller,
 						"internal registration method event");
 				this->InvokeEvent(wrappedEvent);
 			};

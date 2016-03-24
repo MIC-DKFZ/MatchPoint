@@ -39,12 +39,12 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			core::continuous::VolumeSize<2> size1 = {{1, 2}};
-			core::continuous::VolumeSize<2> size2;
+			::map::core::continuous::VolumeSize<2> size1 = {{1, 2}};
+			::map::core::continuous::VolumeSize<2> size2;
 			size2.fill(2);
-			core::continuous::VolumeSize<2> size3;
+			::map::core::continuous::VolumeSize<2> size3;
 			size3 = size2;
-			core::continuous::VolumeSize<2> nonPositiveSize1 = {{2, -2}};
+			::map::core::continuous::VolumeSize<2> nonPositiveSize1 = {{2, -2}};
 
 			CHECK_EQUAL(1, size1.getElement(0));
 			CHECK_EQUAL(1, size1[0]);
@@ -78,11 +78,11 @@ namespace map
 			CHECK_NO_THROW(spSDElement = core::continuous::VolumeSize<2>::streamToStructuredData(size1));
 			structuredData::XMLStrWriter::Pointer xmlStrWriter = structuredData::XMLStrWriter::New();
 
-			core::continuous::VolumeSize<2> size1_clone =
-				core::continuous::VolumeSize<2>::streamFromStructuredData(spSDElement);
+			::map::core::continuous::VolumeSize<2> size1_clone =
+				::map::core::continuous::VolumeSize<2>::streamFromStructuredData(spSDElement);
 			CHECK_ARRAY_EQUAL(size1, size1_clone, 2);
 
-			CHECK_THROW(core::continuous::VolumeSize<3>::streamFromStructuredData(
+			CHECK_THROW(::map::core::continuous::VolumeSize<3>::streamFromStructuredData(
 							spSDElement)); //wrong dimensionality
 
 			RETURN_AND_REPORT_TEST_SUCCESS;

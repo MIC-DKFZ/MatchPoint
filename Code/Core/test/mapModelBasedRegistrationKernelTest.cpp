@@ -39,7 +39,7 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
-			typedef itk::TranslationTransform<core::continuous::ScalarType, 2> TransformType;
+			typedef itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
 
 			KernelType::Pointer spKernel = KernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();

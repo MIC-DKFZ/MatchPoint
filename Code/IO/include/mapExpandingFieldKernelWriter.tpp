@@ -110,7 +110,7 @@ namespace map
     {
       if (!canHandleRequest(request))
       {
-        mapExceptionMacro(core::ServiceException,
+        mapExceptionMacro(::map::core::ServiceException,
                           << "Error: cannot store kernel. Reason: cannot handle request.");
       }
 
@@ -118,7 +118,7 @@ namespace map
 
       if (pKernel == NULL)
       {
-        mapExceptionMacro(core::ServiceException,
+        mapExceptionMacro(::map::core::ServiceException,
                           << "Error: cannot store kernel. Reason: cannot cast to FieldBasedKernel: " <<
                           request._spKernel.GetPointer());
       }
@@ -127,7 +127,7 @@ namespace map
 
       if (spField.IsNull())
       {
-        mapExceptionMacro(core::ServiceException,
+        mapExceptionMacro(::map::core::ServiceException,
                           << "Error: cannot store kernel. Reason: Kernel seems to have no valid field. Kernel: " << pKernel);
       }
 
@@ -177,7 +177,7 @@ namespace map
       //add null vector
       structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
       spUseNullVectorElement->setTag(tags::UseNullVector);
-      spUseNullVectorElement->setValue(core::convert::toStr(pKernel->usesNullVector()));
+      spUseNullVectorElement->setValue(::map::core::convert::toStr(pKernel->usesNullVector()));
       spKernelElement->addSubElement(spUseNullVectorElement);
 
       if (pKernel->usesNullVector())
