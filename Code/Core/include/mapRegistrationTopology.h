@@ -26,6 +26,7 @@
 
 #include "mapContinuousElements.h"
 #include "mapDiscreteElements.h"
+#include "itkTransform.h"
 
 
 namespace map
@@ -56,7 +57,7 @@ namespace map
 			typedef itk::Image< DirectMappingVectorType, DirectInputDimension> DirectFieldType;
 			typedef typename DirectFieldType::Pointer DirectFieldPointer;
 			typedef typename DirectFieldType::RegionType DirectFieldRegionType;
-      typedef ::itk::Transform<continuous::ScalarType, VInputDimensions, VOutputDimensions>	DirectTransformType;
+      typedef ::itk::Transform<continuous::ScalarType, DirectInputDimension, DirectOutputDimension>	DirectTransformType;
 
 
 			//inverse mapping

@@ -40,7 +40,7 @@ namespace map
 		 */
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions, template <unsigned int, unsigned int> class TTransformPolicy >
 		class ConcreteRegistrationKernel : public
-			RegistrationKernel<VInputDimensions, VOutputDimensions>,
+			RegistrationKernelBase<VInputDimensions, VOutputDimensions>,
 		public TTransformPolicy <VInputDimensions, VOutputDimensions>
 		{
 		public:

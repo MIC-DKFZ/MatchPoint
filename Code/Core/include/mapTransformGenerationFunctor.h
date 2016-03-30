@@ -21,8 +21,8 @@
 */
 
 
-#ifndef __MAP_FIELD_GENERATION_FUNCTOR_H
-#define __MAP_FIELD_GENERATION_FUNCTOR_H
+#ifndef __MAP_TRANSFORM_GENERATION_FUNCTOR_H
+#define __MAP_TRANSFORM_GENERATION_FUNCTOR_H
 
 #include "mapFieldRepresentationDescriptor.h"
 #include "mapRegistrationTopology.h"
@@ -36,27 +36,29 @@ namespace map
 		namespace functors
 		{
 
-			/*! @class FieldGenerationFunctor
-			* @brief Base class for functors that gernerate vector fields
+			/*! @class TransformGenerationFunctor
+			* @brief Base class for functors that gernerate transform instances
 			*
 			* The field functors are used in conjunction with special service providers
-			* to realize the "lazy" generation of vector fields that represent a mapping
-			* kernel of a registration. The "lazy" generation of the fields is prefered
-			* because the representation of a mapping direction may consume memory without
+			* to realize the "lazy" generation of transforms that are used in a mapping
+			* kernel of a registration. The "lazy" generation of the transform is prefered
+			* if/because the representation of a mapping direction may consume memory without
 			* really being needed to register a certain data type. E.g. To register
 			* point data you only need a direct mapping. The inverse mapping will only be
 			* created (by a functor), if an image should also be registered.
+      * Typical candidates for such a lazy generation are itk::DiscplacementFieldTransform
+      * based instances.
 			*
 			* @ingroup RegFunctors
-			* @tparam VInputDimensions Dimensions of the input space the field should map from.
-			* @tparam VOutputDimensions Dimensions of the output space the field should map into.
+			* @tparam VInputDimensions Dimensions of the input space the transform should map from.
+			* @tparam VOutputDimensions Dimensions of the output space the transform should map into.
 			*/
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			class FieldGenerationFunctor: public itk::Object
+			class TransformGenerationFunctor: public itk::Object
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef FieldGenerationFunctor<VInputDimensions, VOutputDimensions>  Self;
+				typedef TransformGenerationFunctor<VInputDimensions, VOutputDimensions>  Self;
 				typedef itk::Object                    Superclass;
 				typedef itk::SmartPointer<Self>        Pointer;
 				typedef itk::SmartPointer<const Self>  ConstPointer;
@@ -69,16 +71,16 @@ namespace map
 				typedef FieldRepresentationDescriptor<VOutputDimensions>       OutFieldRepresentationType;
 				typedef typename OutFieldRepresentationType::ConstPointer      OutFieldRepresentationConstPointer;
 				typedef typename RegistrationTopology < VInputDimensions,
-						VOutputDimensions >::DirectFieldType FieldType;
-				typedef typename FieldType::Pointer FieldPointer;
+						VOutputDimensions >::DirectTransformType TransformType;
+				typedef typename TransformType::Pointer TransformPointer;
 
-				itkTypeMacro(FieldGenerationFunctor, itk::Object);
+				itkTypeMacro(TransformGenerationFunctor, itk::Object);
 
 				/*! Generates the field an returns the result as a smart pointer.
 				 * @eguarantee should be strong
 				 * @return Smart pointer to the generated field.
 				 */
-				virtual FieldPointer generateField() const = 0;
+				virtual TransformPointer generateTransform() const = 0;
 
 				/*! Returns a const pointer to the input field representation descriptor.
 				 * @eguarantee no fail
@@ -89,8 +91,8 @@ namespace map
 				const InFieldRepresentationType* getInFieldRepresentation(void) const;
 
 			protected:
-				FieldGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation);
-				virtual ~FieldGenerationFunctor();
+				TransformGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation);
+				virtual ~TransformGenerationFunctor();
 
 				InFieldRepresentationConstPointer _spInFieldRepresentation;
 
@@ -98,7 +100,7 @@ namespace map
 				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			private:
-				FieldGenerationFunctor(const Self&);  //purposely not implemented
+				TransformGenerationFunctor(const Self&);  //purposely not implemented
 				void operator=(const Self&);  //purposely not implemented
 			};
 
@@ -107,7 +109,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapFieldGenerationFunctor.tpp"
+# include "mapTransformGenerationFunctor.tpp"
 #endif
 
 #endif

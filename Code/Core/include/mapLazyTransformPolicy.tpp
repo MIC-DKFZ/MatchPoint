@@ -36,15 +36,15 @@ namespace map
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
 		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
-		setFieldFunctor(const FieldGenerationFunctorType& functor)
+		setTransformFunctor(const TransformGenerationFunctorType& functor)
 		{
 			_spGenerationFunctor = &functor;
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		const typename LazyTransformPolicy<VInputDimensions, VOutputDimensions>::FieldGenerationFunctorType*
+		const typename LazyTransformPolicy<VInputDimensions, VOutputDimensions>::TransformGenerationFunctorType*
 		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
-		getFieldFunctor() const
+		getTransformFunctor() const
 		{
 			return _spGenerationFunctor;
 		};
@@ -64,23 +64,23 @@ namespace map
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
 		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
-		fieldExists() const
+    transformExists() const
 		{
-			return _spField.IsNotNull();
+			return _spTransform.IsNotNull();
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
 		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
-		checkAndPrepareField() const
+		checkAndPrepareTransform() const
 		{
 			::itk::MutexLockHolder<MutexType> mutexHolder(_checkMutex);
 
-			if (_spField.IsNull())
+			if (_spTransform.IsNull())
 			{
 				//create field
 				mapLogInfoObjMacro( << "Lazy field kernel needs to generate the field");
-				generateField();
+				generateTransform();
 			}
 
 			return true;
@@ -96,6 +96,38 @@ namespace map
 			return spRep;
 		};
 
+    template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    const typename LazyTransformPolicy<VInputDimensions, VOutputDimensions>::MappingVectorType&
+        LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
+        doGetNullVector() const
+    {
+        return _nullVector;
+    };
+
+    template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    bool
+        LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
+        doUsesNullVector() const
+    {
+        return _useNullVector;
+    };
+
+    template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    void
+        LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
+        setNullVector(const MappingVectorType& nullVector)
+    {
+        _nullVector = nullVector;
+    };
+
+    template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    void
+        LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
+        setNullVectorUsage(bool use)
+    {
+        _useNullVector = use;
+    };
+
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
 		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
@@ -110,25 +142,28 @@ namespace map
 				os << indent << "Generation functor : NULL" << std::endl;
 			}
 
-			if (_spField.IsNotNull())
+			if (_spTransform.IsNotNull())
 			{
-				os << indent << "Field : " << std::endl << _spField << std::endl;
+				os << indent << "Transform : " << std::endl << _spTransform << std::endl;
 			}
 			else
 			{
-				os << indent << "Field : NULL" << std::endl;
+				os << indent << "Transform : NULL" << std::endl;
 			}
+
+      os << indent << "Use null vector: " << _useNullVector << std::endl;
+      os << indent << "Null vector: " << this->_nullVector << std::endl;
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
 		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
-		generateField() const
+		generateTransform() const
 		{
 			::itk::MutexLockHolder<MutexType> mutexHolder(_generateMutex);
 
 			assert(_spGenerationFunctor.IsNotNull());
-			_spField = _spGenerationFunctor->generateField();
+			_spTransform = _spGenerationFunctor->generateTransform();
 			mapLogInfoObjMacro( << "Lazy field kernel has generated the field");
 		};
 

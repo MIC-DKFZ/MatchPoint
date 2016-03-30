@@ -52,15 +52,9 @@ namespace map
 			*/
       void setTransform(TransformType* transform);
 
-      void setNullVector(const MappingVectorType& nullVector)
-      {
-          _nullVector = nullVector;
-      };
+      void setNullVector(const MappingVectorType& nullVector);
 
-      void setNullVectorUsage(bool use)
-      {
-          _useNullVector = use;
-      };
+      void setNullVectorUsage(bool use);
 
 		protected:
 			PreCachedTransformPolicy();
@@ -82,7 +76,7 @@ namespace map
 
       bool doUsesNullVector() const;
 
-			typedef TransformRepresentationDescriptor<VInputDimensions> RepresentationDescriptorType;
+			typedef FieldRepresentationDescriptor<VInputDimensions> RepresentationDescriptorType;
 			typedef typename RepresentationDescriptorType::ConstPointer  RepresentationDescriptorConstPointer;
 			/* Generates the representation descriptor according to the _spTransform.
 			 @pre _spTransform must not be null

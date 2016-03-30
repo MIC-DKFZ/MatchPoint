@@ -70,7 +70,7 @@ namespace map
 
 
     template<unsigned int VInputDimensions, unsigned int VOutputDimensions, template <unsigned int, unsigned int> class TTransformPolicy >
-    const ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, TTransformPolicy>::MappingVectorType&
+    const typename ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, TTransformPolicy>::MappingVectorType&
     ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, TTransformPolicy>::
     getNullVector() const
     {

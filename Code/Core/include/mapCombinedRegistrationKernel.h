@@ -20,10 +20,10 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-#ifndef __COMBINED_FIELD_BASED_REGISTRATION_KERNEL_H
-#define __COMBINED_FIELD_BASED_REGISTRATION_KERNEL_H
+#ifndef __COMBINED_REGISTRATION_KERNEL_H
+#define __COMBINED_REGISTRATION_KERNEL_H
 
-#include "mapConcreteFieldBasedRegistrationKernel.h"
+#include "mapConcreteRegistrationKernel.h"
 #include "mapLazyTransformPolicy.h"
 #include "mapFieldCombinationFunctorInterface.h"
 
@@ -35,26 +35,26 @@ namespace map
 	namespace core
 	{
 
-		/*!@brief  CombinedFieldBasedRegistrationKernel is a special implementation of a lazy field based registration kernel.
-		 * This implementation uses a combination functor to generate its field. In contrast to the normal field based kernel
+		/*!@brief  CombinedRegistrationKernel is a special implementation of a lazy registration kernel.
+		 * This implementation uses a combination functor to generate its field. In contrast to the normal lazy kernel
 		 * implementation, this kernel maps points directly by using its functor given source kernels. Thus no field will generated
 		 * just for mapping points. The field must be generated explicitly by calling gernerateField().
 		 * @ingroup RegKernel
 		 */
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		class CombinedFieldBasedRegistrationKernel : public
-			ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, LazyTransformPolicy>
+		class CombinedRegistrationKernel : public
+			ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, LazyTransformPolicy>
 		{
 		public:
-			typedef CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			typedef CombinedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>
 			Self;
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, ::map::core::LazyTransformPolicy>
+			typedef ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, ::map::core::LazyTransformPolicy>
 			Superclass; //an error in the VS2005 name lookup forces to define the policy explicitly with full namespace information
 			typedef itk::SmartPointer<Self> Pointer;
 			typedef itk::SmartPointer<const Self> ConstPointer;
 			// typedef typename Superclass::TransformPolicyType TransformPolicyType;
 
-			itkTypeMacro(CombinedFieldBasedRegistrationKernel, ConcreteFieldBasedRegistrationKernel);
+			itkTypeMacro(CombinedRegistrationKernel, ConcreteRegistrationKernel);
 			itkNewMacro(Self);
 
 			typedef typename Superclass::FieldType FieldType;
@@ -83,7 +83,7 @@ namespace map
 
 			const FieldCombinationFunctorInterfaceType* _pCombinationInterface;
 
-			/*! maps a given point by using both source kernel. In contrast to other ConcreteFieldBasedRegistrationKernel classes,
+			/*! maps a given point by using both source kernel. In contrast to other ConcreteRegistrationKernel classes,
 			 * calling this methos will not trigger the generation of the kernel field.
 			  @eguarantee no fail
 			  @param functor Reference to the functor that is responsible for generating the field
@@ -91,8 +91,8 @@ namespace map
 			*/
 			virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const;
 
-			CombinedFieldBasedRegistrationKernel();
-			virtual ~CombinedFieldBasedRegistrationKernel();
+			CombinedRegistrationKernel();
+			virtual ~CombinedRegistrationKernel();
 
 
 			/*! Methods invoked by itk::LightObject::Print().  */
@@ -101,7 +101,7 @@ namespace map
 		private:
 
 			//No copy constructor allowed
-			CombinedFieldBasedRegistrationKernel(const Self& source);
+			CombinedRegistrationKernel(const Self& source);
 			void operator=(const Self&);  //purposely not implemented
 
 		};
@@ -110,7 +110,7 @@ namespace map
 }
 
 #ifndef MatchPoint_MANUAL_TPP
-#include "mapCombinedFieldBasedRegistrationKernel.tpp"
+#include "mapCombinedRegistrationKernel.tpp"
 #endif
 
 #endif

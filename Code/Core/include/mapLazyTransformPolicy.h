@@ -25,7 +25,7 @@
 #define __LAZY_FIELD_POLICY_H
 
 #include "mapRegistrationTopology.h"
-#include "mapFieldGenerationFunctor.h"
+#include "mapTransformGenerationFunctor.h"
 
 #include "itkSimpleFastMutexLock.h"
 
@@ -43,50 +43,66 @@ namespace map
 		class LazyTransformPolicy
 		{
 		public:
-			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectFieldType
-			FieldType;
-			typedef functors::FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
-			FieldGenerationFunctorType;
-			typedef typename FieldGenerationFunctorType::ConstPointer FieldGenerationFunctorConstPointer;
+			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectTransformType
+			TransformType;
+      typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType
+          MappingVectorType;
+
+			typedef functors::TransformGenerationFunctor<VInputDimensions, VOutputDimensions>
+			TransformGenerationFunctorType;
+			typedef typename TransformGenerationFunctorType::ConstPointer TransformGenerationFunctorConstPointer;
 
 			/*! sets the field's functor
 			  @eguarantee no fail
 			  @param functor Reference to the functor that is responsible for generating the field
 			*/
-			virtual void setFieldFunctor(const FieldGenerationFunctorType& functor);
+			virtual void setTransformFunctor(const TransformGenerationFunctorType& functor);
 
 			/*! gets the field's functor
 			  @eguarantee no fail
 			  @return Pointer to the field functor that is used to generate the field on demand.
 			*/
-			virtual const FieldGenerationFunctorType*  getFieldFunctor() const;
+			virtual const TransformGenerationFunctorType*  getTransformFunctor() const;
 
 
-			/*! Returns if the field was already created or if the generation still is pending / wasn't necessary.
+			/*! Returns if the transform was already created or if the generation still is pending / wasn't necessary.
 			    @eguarantee strong
 			*/
-			bool fieldExists() const;
+			bool transformExists() const;
+
+      void setNullVector(const MappingVectorType& nullVector);
+
+      void setNullVectorUsage(bool use);
+
 
 		protected:
 			LazyTransformPolicy();
 			~LazyTransformPolicy();
 
-			typedef typename FieldType::Pointer FieldPointer;
-			//is mutable because it is a cache for the functor result, thus it may be changed by checkAndPrepareField()
-			mutable FieldPointer _spField;
+			typedef typename TransformType::Pointer TransformPointer;
+			//is mutable because it is a cache for the functor result, thus it may be changed by checkAndPrepareTransform()
+			mutable TransformPointer _spTransform;
 
-			FieldGenerationFunctorConstPointer _spGenerationFunctor;
+			TransformGenerationFunctorConstPointer _spGenerationFunctor;
+
+      MappingVectorType _nullVector;
+      bool _useNullVector;
 
 			/*! checks the field that has been set for correctness and prepares it
 			  @eguarantee strong
 			  @return the success of the operation
 			*/
-			bool checkAndPrepareField() const;
+			bool checkAndPrepareTransform() const;
 
 			/*! generates the field
 			  @eguarantee strong
 			*/
-			void generateField() const;
+			void generateTransform() const;
+
+
+      const MappingVectorType& doGetNullVector() const;
+
+      bool doUsesNullVector() const;
 
 			typedef FieldRepresentationDescriptor<VInputDimensions> RepresentationDescriptorType;
 			typedef typename RepresentationDescriptorType::ConstPointer  RepresentationDescriptorConstPointer;

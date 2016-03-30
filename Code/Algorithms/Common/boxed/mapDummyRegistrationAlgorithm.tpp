@@ -27,7 +27,7 @@
 #include <itkAffineTransform.h>
 
 #include "mapAlgorithmException.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapRegistrationKernels.h"
 #include "mapRegistrationManipulator.h"
 
 namespace map
@@ -110,9 +110,9 @@ namespace map
 			spFinalTransformModel->SetIdentity();
 
 			//now build the inverse kernel (main kernel of a image based registration algorithm)
-			typedef core::ModelBasedRegistrationKernel<VDimension, VDimension>
+      typedef core::Kernels<VDimension, VDimension>::PreCachedRegistrationKernel
 			InverseKernelType;
-			typedef core::ModelBasedRegistrationKernel<VDimension, VDimension>
+      typedef core::Kernels<VDimension, VDimension>::PreCachedRegistrationKernel
 			DirectKernelType;
 
 			typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();

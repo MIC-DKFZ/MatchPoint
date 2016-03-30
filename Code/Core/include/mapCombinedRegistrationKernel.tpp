@@ -20,8 +20,8 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-#ifndef __COMBINED_FIELD_BASED_REGISTRATION_KERNEL_TPP
-#define __COMBINED_FIELD_BASED_REGISTRATION_KERNEL_TPP
+#ifndef __COMBINED_REGISTRATION_KERNEL_TPP
+#define __COMBINED_REGISTRATION_KERNEL_TPP
 
 #include "mapExceptionObjectMacros.h"
 
@@ -31,20 +31,20 @@ namespace map
 	{
 
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		CombinedFieldBasedRegistrationKernel()
+		CombinedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+		CombinedRegistrationKernel()
 		{
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		~CombinedFieldBasedRegistrationKernel()
+		CombinedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+		~CombinedRegistrationKernel()
 		{
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		bool
-		CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+		CombinedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 		doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const
 		{
 			bool result = false;
@@ -74,7 +74,7 @@ namespace map
 
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		void
-		CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+		CombinedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 		setFieldFunctor(const FieldGenerationFunctorType& functor)
 		{
 			const FieldCombinationFunctorInterfaceType* pInterface =
@@ -88,7 +88,7 @@ namespace map
 
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		void
-		CombinedFieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+		CombinedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);

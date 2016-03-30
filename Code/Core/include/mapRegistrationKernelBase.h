@@ -26,6 +26,8 @@
 
 #include "mapFieldRepresentationDescriptor.h"
 #include "mapDimensionlessRegistrationKernelBase.h"
+#include "mapRegistrationTopology.h"
+
 #include "itkObject.h"
 
 namespace map
@@ -57,6 +59,7 @@ namespace map
           MappingVectorType;
 
       typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectTransformType TransformType;
+      typedef typename TransformType::OutputVectorType OutputVectorType;
 
 			typedef FieldRepresentationDescriptor<VInputDimensions>       RepresentationDescriptorType;
 			typedef typename RepresentationDescriptorType::Pointer        RepresentationDescriptorPointer;
@@ -133,24 +136,8 @@ namespace map
       virtual bool getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const;
 
       virtual const MappingVectorType& getNullVector() const = 0;
-      {
-          return _nullVector;
-      };
 
       virtual bool usesNullVector() const = 0;
-      {
-          return _useNullVector;
-      };
-
-      void setNullVector(const MappingVectorType& nullVector)
-      {
-          _nullVector = nullVector;
-      };
-
-      void setNullVectorUsage(bool use)
-      {
-          _useNullVector = use;
-      };
 
 		protected:
 
@@ -164,9 +151,6 @@ namespace map
 
 			RegistrationKernelBase();
 			virtual ~RegistrationKernelBase();
-
-      MappingVectorType _nullVector;
-      bool _useNullVector;
 
 		private:
 			//No copy constructor allowed

@@ -21,10 +21,10 @@
 */
 
 
-#ifndef __MAP_FIELD_GENERATION_FUNCTOR_TPP
-#define __MAP_FIELD_GENERATION_FUNCTOR_TPP
+#ifndef __MAP_TRANSFORM_GENERATION_FUNCTOR_TPP
+#define __MAP_TRANSFORM_GENERATION_FUNCTOR_TPP
 
-#include "mapFieldGenerationFunctor.h"
+#include "mapTransformGenerationFunctor.h"
 
 namespace map
 {
@@ -35,29 +35,29 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			const typename
-			FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType*
-			FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::
+			TransformGenerationFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType*
+			TransformGenerationFunctor<VInputDimensions, VOutputDimensions>::
 			getInFieldRepresentation(void) const
 			{
 				return _spInFieldRepresentation;
 			};
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::
-			FieldGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation):
+			TransformGenerationFunctor<VInputDimensions, VOutputDimensions>::
+			TransformGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation):
 				_spInFieldRepresentation(pInFieldRepresentation)
 			{
 			};
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::
-			~FieldGenerationFunctor()
+			TransformGenerationFunctor<VInputDimensions, VOutputDimensions>::
+			~TransformGenerationFunctor()
 			{
 			};
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			void
-			FieldGenerationFunctor<VInputDimensions, VOutputDimensions>::
+			TransformGenerationFunctor<VInputDimensions, VOutputDimensions>::
 			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
 				Superclass::PrintSelf(os, indent);

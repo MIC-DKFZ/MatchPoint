@@ -37,7 +37,7 @@ SET(H_FILES
 	include/mapAffineMatrixOffsetDecompositionPolicy.h
     include/mapConvert.h
 	include/mapClassMacros.h
-	include/mapCombinedFieldBasedRegistrationKernel.h
+	include/mapCombinedRegistrationKernel.h
 	include/mapConcreteRegistrationKernel.h
 	include/mapContinuous.h
 	include/mapContinuousElements.h
@@ -50,7 +50,7 @@ SET(H_FILES
 	include/mapExceptionObjectMacros.h
 	include/mapFieldBasedKernelInverter.h
 	include/mapFieldBasedRegistrationKernel.h
-	include/mapFieldBasedRegistrationKernels.h
+	include/mapRegistrationKernels.h
 	include/mapFieldFieldKernelCombinator.h
 	include/mapFieldModelKernelCombinator.h
 	include/mapFieldRepresentationDescriptor.h
@@ -139,7 +139,7 @@ SET(H_FILES
     include/mapDefaultSLStaticPolicy.h
     include/mapFastLockedThreadingStaticPolicy.h
     include/mapFastMutexLockSentinel.h
-    include/mapFieldGenerationFunctor.h
+    include/mapTransformGenerationFunctor.h
     include/mapFieldByModelFunctor.h
     include/mapFieldByModelInversionFunctor.h
     include/mapFieldByFieldInversionFunctor.h
@@ -152,7 +152,7 @@ SET(H_FILES
 
 SET(TPP_FILES
 	include/mapAffineMatrixDecomposer.tpp
-	include/mapCombinedFieldBasedRegistrationKernel.tpp
+	include/mapCombinedRegistrationKernel.tpp
 	include/mapConcreteRegistrationKernel.tpp
 	include/mapFieldBasedKernelInverter.tpp
 	include/mapFieldFieldKernelCombinator.tpp
@@ -202,7 +202,7 @@ SET(TPP_FILES
     include/mapGenericStaticLoadPolicyBase.tpp
     include/mapStaticServiceStack.tpp
     include/mapDefaultSLStaticPolicy.tpp	
-    include/mapFieldGenerationFunctor.tpp
+    include/mapTransformGenerationFunctor.tpp
     include/mapFieldByModelFunctor.tpp
     include/mapFieldByModelInversionFunctor.tpp
     include/mapFieldByFieldInversionFunctor.tpp

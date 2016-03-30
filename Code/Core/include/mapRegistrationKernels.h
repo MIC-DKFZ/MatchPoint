@@ -23,10 +23,10 @@
 
 
 
-#ifndef __FIELD_BASED_REGISTRATION_KERNELS_H
-#define __FIELD_BASED_REGISTRATION_KERNELS_H
+#ifndef __REGISTRATION_KERNELS_H
+#define __REGISTRATION_KERNELS_H
 
-#include "mapConcreteFieldBasedRegistrationKernel.h"
+#include "mapConcreteRegistrationKernel.h"
 #include "mapPreCachedTransformPolicy.h"
 #include "mapLazyTransformPolicy.h"
 
@@ -35,20 +35,20 @@ namespace map
 	namespace core
 	{
 
-		/*!@brief  FieldKernels is a struct that allows easy access to the two default field kernels of MatchPoint
+		/*!@brief  Kernels is a struct that allows easy access to the two default field kernels of MatchPoint
 		 * This struct is used as a workarround/convinience because PreCachedFieldBasedRegistrationKernel and
 		 * ConcreteFieldBasedRegistrationKernel are only partially templated classes and cannot be defined directly
 		 * in the namespace as a typedef.
 		 * @ingroup RegKernel
 		 */
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		struct FieldKernels
+		struct Kernels
 		{
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, PreCachedTransformPolicy>
-			PreCachedFieldBasedRegistrationKernel;
+      typedef ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, PreCachedTransformPolicy>
+			PreCachedRegistrationKernel;
 
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, LazyTransformPolicy>
-			LazyFieldBasedRegistrationKernel;
+			typedef ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, LazyTransformPolicy>
+			LazyRegistrationKernel;
 		};
 
 	}
