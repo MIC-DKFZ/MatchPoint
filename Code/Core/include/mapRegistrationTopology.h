@@ -56,6 +56,8 @@ namespace map
 			typedef itk::Image< DirectMappingVectorType, DirectInputDimension> DirectFieldType;
 			typedef typename DirectFieldType::Pointer DirectFieldPointer;
 			typedef typename DirectFieldType::RegionType DirectFieldRegionType;
+      typedef ::itk::Transform<continuous::ScalarType, VInputDimensions, VOutputDimensions>	DirectTransformType;
+
 
 			//inverse mapping
 			itkStaticConstMacro(InverseInputDimension, unsigned int, VTargetDimensions);
@@ -66,6 +68,7 @@ namespace map
 			typedef itk::Image< InverseMappingVectorType, InverseInputDimension > InverseFieldType;
 			typedef typename InverseFieldType::Pointer InverseFieldPointer;
 			typedef typename InverseFieldType::RegionType InverseFieldRegionType;
+      typedef ::itk::Transform<continuous::ScalarType, InverseInputDimension, InverseOutputDimension>	InverseTransformType;
 
 		private:
 			typedef RegistrationTopology<VMovingDimensions, VTargetDimensions> Self;

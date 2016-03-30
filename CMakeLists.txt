@@ -9,7 +9,7 @@ CMAKE_POLICY(VERSION 2.8)
 
 # MatchPoint version number.
 SET(MatchPoint_VERSION_MAJOR "0")
-SET(MatchPoint_VERSION_MINOR "11")
+SET(MatchPoint_VERSION_MINOR "12")
 SET(MatchPoint_VERSION_PATCH "0")
 
 # Version string should not include patch level.  The major.minor is
@@ -18,7 +18,7 @@ SET(MatchPoint_VERSION_STRING "${MatchPoint_VERSION_MAJOR}.${MatchPoint_VERSION_
 SET(MatchPoint_FULL_VERSION_STRING "${MatchPoint_VERSION_MAJOR}.${MatchPoint_VERSION_MINOR}.${MatchPoint_VERSION_PATCH}")
 
 # MatchPoint DLL interface version number.
-SET(MatchPoint_DLL_INTERFACE_VERSION_MAJOR "2")
+SET(MatchPoint_DLL_INTERFACE_VERSION_MAJOR "3")
 SET(MatchPoint_DLL_INTERFACE_VERSION_MINOR "0")
 
 # Version string.

@@ -27,8 +27,8 @@
 #define __FIELD_BASED_REGISTRATION_KERNELS_H
 
 #include "mapConcreteFieldBasedRegistrationKernel.h"
-#include "mapPreCachedFieldPolicy.h"
-#include "mapLazyFieldPolicy.h"
+#include "mapPreCachedTransformPolicy.h"
+#include "mapLazyTransformPolicy.h"
 
 namespace map
 {
@@ -44,10 +44,10 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		struct FieldKernels
 		{
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, PreCachedFieldPolicy>
+			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, PreCachedTransformPolicy>
 			PreCachedFieldBasedRegistrationKernel;
 
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, LazyFieldPolicy>
+			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, LazyTransformPolicy>
 			LazyFieldBasedRegistrationKernel;
 		};
 

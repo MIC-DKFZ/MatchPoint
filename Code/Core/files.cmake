@@ -38,7 +38,7 @@ SET(H_FILES
     include/mapConvert.h
 	include/mapClassMacros.h
 	include/mapCombinedFieldBasedRegistrationKernel.h
-	include/mapConcreteFieldBasedRegistrationKernel.h
+	include/mapConcreteRegistrationKernel.h
 	include/mapContinuous.h
 	include/mapContinuousElements.h
 	include/mapDefaultRegistrationTopologyPolicy.h
@@ -50,7 +50,6 @@ SET(H_FILES
 	include/mapExceptionObjectMacros.h
 	include/mapFieldBasedKernelInverter.h
 	include/mapFieldBasedRegistrationKernel.h
-	include/mapFieldBasedRegistrationKernelInterface.h
 	include/mapFieldBasedRegistrationKernels.h
 	include/mapFieldFieldKernelCombinator.h
 	include/mapFieldModelKernelCombinator.h
@@ -66,7 +65,7 @@ SET(H_FILES
 	include/mapInvertingFieldBasedRegistrationKernel.h
 	include/mapKernelCombinatorLoadPolicy.h
 	include/mapKernelInverterLoadPolicy.h
-	include/mapLazyFieldPolicy.h
+	include/mapLazyTransformPolicy.h
 	include/mapLogbook.h
 	include/mapLogbookImplementation.h
 	include/mapLogbookMacros.h
@@ -83,8 +82,6 @@ SET(H_FILES
 	include/mapMetaPropertyBase.h
 	include/mapMissingProviderException.h
 	include/mapModelBasedKernelInverter.h
-	include/mapModelBasedRegistrationKernel.h
-	include/mapModelBasedRegistrationKernelInterface.h
 	include/mapModelFieldKernelCombinator.h
 	include/mapModelModelKernelCombinator.h
 	include/mapModificationTimeValidator.h
@@ -100,7 +97,7 @@ SET(H_FILES
 	include/mapPointSetMappingPerformerRequest.h
 	include/mapPointSetMappingTask.h
 	include/mapPointVectorCombinationPolicy.h
-	include/mapPreCachedFieldPolicy.h
+	include/mapPreCachedTransformPolicy.h
 	include/mapRegistration.h
 	include/mapRegistrationBase.h
 	include/mapRegistrationCombinationRequest.h
@@ -156,7 +153,7 @@ SET(H_FILES
 SET(TPP_FILES
 	include/mapAffineMatrixDecomposer.tpp
 	include/mapCombinedFieldBasedRegistrationKernel.tpp
-	include/mapConcreteFieldBasedRegistrationKernel.tpp
+	include/mapConcreteRegistrationKernel.tpp
 	include/mapFieldBasedKernelInverter.tpp
 	include/mapFieldFieldKernelCombinator.tpp
 	include/mapFieldModelKernelCombinator.tpp
@@ -171,7 +168,7 @@ SET(TPP_FILES
 	include/mapInvertingFieldBasedRegistrationKernel.tpp
 	include/mapKernelCombinatorLoadPolicy.tpp
 	include/mapKernelInverterLoadPolicy.tpp
-	include/mapLazyFieldPolicy.tpp
+	include/mapLazyTransformPolicy.tpp
 	include/mapMappingPerformerRequestBase.tpp
 	include/mapMappingTaskBase.tpp
 	include/mapMappingTaskBatch.tpp
@@ -179,7 +176,6 @@ SET(TPP_FILES
 	include/mapMetaProperty.tpp
 	include/mapMetaPropertyAccessor.tpp
 	include/mapModelBasedKernelInverter.tpp
-	include/mapModelBasedRegistrationKernel.tpp
 	include/mapModelFieldKernelCombinator.tpp
 	include/mapModelModelKernelCombinator.tpp
 	include/mapNoneMappingPerformerLoadPolicy.tpp
@@ -191,7 +187,7 @@ SET(TPP_FILES
 	include/mapPointSetMappingPerformerLoadPolicy.tpp
 	include/mapPointSetMappingPerformerRequest.tpp
 	include/mapPointSetMappingTask.tpp
-	include/mapPreCachedFieldPolicy.tpp
+	include/mapPreCachedTransformPolicy.tpp
 	include/mapRegistration.tpp
 	include/mapRegistrationCombinationRequest.tpp
 	include/mapRegistrationCombinator.tpp

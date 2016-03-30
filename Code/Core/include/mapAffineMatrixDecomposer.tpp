@@ -46,14 +46,7 @@ namespace map
 												"Error decomposing affine matrix of kernel. Passed kernel pointer is NULL.");
 			};
 
-			const ModelKernelType* pModelKernel = dynamic_cast<const ModelKernelType*>(pKernel);
-
-			if (pModelKernel)
-			{
-				result = pModelKernel->getAffineMatrixDecomposition(matrix, offset);
-			};
-
-			return result;
+      return pKernel->getAffineMatrixDecomposition(matrix, offset);
 		};
 
 	}

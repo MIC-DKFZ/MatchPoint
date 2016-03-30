@@ -20,10 +20,10 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-#ifndef __CONCRETE_FIELD_BASED_REGISTRATION_KERNEL_H
-#define __CONCRETE_FIELD_BASED_REGISTRATION_KERNEL_H
+#ifndef __CONCRETE_REGISTRATION_KERNEL_H
+#define __CONCRETE_REGISTRATION_KERNEL_H
 
-#include "mapFieldBasedRegistrationKernel.h"
+#include "mapRegistrationKernelBase.h"
 
 /*! @namespace map The namespace map::core is for the library of MatchPoint
  */
@@ -32,30 +32,29 @@ namespace map
 	namespace core
 	{
 
-		/*! Concrete FieldBasedRegistrationKernel implementation.
+		/*! Concrete RegistrationKernelBase implementation.
 		 * This class is the base class for field based registration kernels,
 		 * that define the mapping via a deformation vector field.
-		 * The concrete field management behavior will be defined by the FieldPolicy.
+		 * The concrete transform management behavior will be defined by the TransformPolicy.
 		 * @ingroup RegKernel
 		 */
-		template<unsigned int VInputDimensions, unsigned int VOutputDimensions, template <unsigned int, unsigned int> class TFieldPolicy >
-		class ConcreteFieldBasedRegistrationKernel : public
-			FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>,
-		public TFieldPolicy <VInputDimensions, VOutputDimensions>
+		template<unsigned int VInputDimensions, unsigned int VOutputDimensions, template <unsigned int, unsigned int> class TTransformPolicy >
+		class ConcreteRegistrationKernel : public
+			RegistrationKernel<VInputDimensions, VOutputDimensions>,
+		public TTransformPolicy <VInputDimensions, VOutputDimensions>
 		{
 		public:
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, TFieldPolicy>
+			typedef ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, TTransformPolicy>
 			Self;
-			typedef FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions> Superclass;
+			typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions> Superclass;
 			typedef itk::SmartPointer<Self> Pointer;
 			typedef itk::SmartPointer<const Self> ConstPointer;
-			typedef TFieldPolicy <VInputDimensions, VOutputDimensions> FieldPolicyType;
+			typedef TTransformPolicy <VInputDimensions, VOutputDimensions> TransformPolicyType;
 
-			itkTypeMacro(ConcreteFieldBasedRegistrationKernel, FieldBasedRegistrationKernel);
+			itkTypeMacro(ConcreteRegistrationKernel, RegistrationKernelBase);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::FieldType FieldType;
-			typedef typename Superclass::FieldRegionType FieldRegionType;
+      typedef typename Superclass::TransformType TransformType;
 			typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;
 			typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
 			typedef typename Superclass::RepresentationDescriptorConstPointer
@@ -72,26 +71,24 @@ namespace map
 			 */
 			virtual RepresentationDescriptorConstPointer getLargestPossibleRepresentation() const;
 
-			/*! gets the field
-			  @eguarantee strong
-			  @return const pointer to a FieldType
-			 */
-			virtual const FieldType* getField() const;
-
-			/*! gets the field
-			  @eguarantee strong
-			  @return pointer to a FieldType
-			 */
-			virtual FieldType* getField();
+      /*! Returns pointer to the transform model used by the kernel
+      @eguarantee strong
+      @return const pointer to the internal tranform model
+      */
+      virtual const TransformType* getTransformModel() const;
 
 			/*! @brief forces kernel to precompute, even if it is a LazyFieldKernel
 			  @eguarantee strong
 			 */
 			virtual void precomputeKernel();
 
+      virtual const MappingVectorType& getNullVector() const;
+
+      virtual bool usesNullVector() const;
+
 		protected:
-			ConcreteFieldBasedRegistrationKernel();
-			virtual ~ConcreteFieldBasedRegistrationKernel();
+			ConcreteRegistrationKernel();
+			virtual ~ConcreteRegistrationKernel();
 
 			virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const;
 
@@ -101,7 +98,7 @@ namespace map
 		private:
 
 			//No copy constructor allowed
-			ConcreteFieldBasedRegistrationKernel(const Self& source);
+			ConcreteRegistrationKernel(const Self& source);
 			void operator=(const Self&);  //purposely not implemented
 
 		};
@@ -110,7 +107,7 @@ namespace map
 }
 
 #ifndef MatchPoint_MANUAL_TPP
-#include "mapConcreteFieldBasedRegistrationKernel.tpp"
+#include "mapConcreteRegistrationKernel.tpp"
 #endif
 
 #endif

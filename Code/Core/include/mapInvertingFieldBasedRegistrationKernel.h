@@ -24,7 +24,7 @@
 #define __INVERTING_FIELD_BASED_REGISTRATION_KERNEL_H
 
 #include "mapConcreteFieldBasedRegistrationKernel.h"
-#include "mapLazyFieldPolicy.h"
+#include "mapLazyTransformPolicy.h"
 #include "mapClassMacros.h"
 
 namespace map
@@ -39,12 +39,12 @@ namespace map
 		 */
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		class InvertingFieldBasedRegistrationKernel : public
-			ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, LazyFieldPolicy>
+			ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, LazyTransformPolicy>
 		{
 		public:
 			typedef InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>
 			Self;
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, ::map::core::LazyFieldPolicy>
+			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, ::map::core::LazyTransformPolicy>
 			Superclass;
 			typedef itk::SmartPointer<Self> Pointer;
 			typedef itk::SmartPointer<const Self> ConstPointer;
@@ -58,8 +58,8 @@ namespace map
 			typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
 			typedef typename Superclass::RepresentationDescriptorConstPointer
 			RepresentationDescriptorConstPointer;
-			typedef typename Superclass::FieldPolicyType FieldPolicyType;
-			typedef typename FieldPolicyType::FieldGenerationFunctorType FieldGenerationFunctorType;
+			typedef typename Superclass::TransformPolicyType TransformPolicyType;
+			typedef typename TransformPolicyType::FieldGenerationFunctorType FieldGenerationFunctorType;
 			typedef typename Superclass::InputPointType  InputPointType;
 			typedef typename Superclass::OutputPointType OutputPointType;
 

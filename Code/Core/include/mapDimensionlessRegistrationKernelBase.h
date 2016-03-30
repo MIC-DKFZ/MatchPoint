@@ -28,6 +28,7 @@
 
 #include "itkObject.h"
 #include "mapMAPCoreExports.h"
+#include "mapString.h"
 
 namespace map
 {
@@ -70,6 +71,12 @@ namespace map
 			@eguarantee no fail
 			*/
 			virtual unsigned int getOutputDimensions() const = 0;
+
+      /*! gets the name of the model
+      @eguarantee strong
+      @return an String containing the model name
+      */
+      virtual String getModelName() const = 0;
 
 		protected:
 

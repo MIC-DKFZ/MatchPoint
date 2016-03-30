@@ -83,7 +83,7 @@ namespace map
 
 			_pCombinationInterface = pInterface;
 
-			FieldPolicyType::setFieldFunctor(functor);
+			TransformPolicyType::setFieldFunctor(functor);
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
@@ -92,7 +92,7 @@ namespace map
 		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);
-			FieldPolicyType::PrintSelf(os, indent);
+			TransformPolicyType::PrintSelf(os, indent);
 		};
 
 	} // end namespace core

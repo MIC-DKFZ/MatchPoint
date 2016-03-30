@@ -34,13 +34,13 @@ namespace map
 	namespace core
 	{
 
-		/*! @class LazyFieldPolicy
-		    @brief class for LazyFieldPolicy.
+		/*! @class LazyTransformPolicy
+		    @brief class for LazyTransformPolicy.
 
-		    This class is the class for the LazyFieldPolicy.
+		    This class is the class for the LazyTransformPolicy.
 		 */
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class LazyFieldPolicy
+		class LazyTransformPolicy
 		{
 		public:
 			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectFieldType
@@ -68,8 +68,8 @@ namespace map
 			bool fieldExists() const;
 
 		protected:
-			LazyFieldPolicy();
-			~LazyFieldPolicy();
+			LazyTransformPolicy();
+			~LazyTransformPolicy();
 
 			typedef typename FieldType::Pointer FieldPointer;
 			//is mutable because it is a cache for the functor result, thus it may be changed by checkAndPrepareField()
@@ -105,8 +105,8 @@ namespace map
 			mutable MutexType _generateMutex;
 
 			//No copy constructor allowed
-			LazyFieldPolicy(const LazyFieldPolicy&);
-			void operator=(const LazyFieldPolicy&);  //purposely not implemented
+			LazyTransformPolicy(const LazyTransformPolicy&);
+			void operator=(const LazyTransformPolicy&);  //purposely not implemented
 
 		};
 
@@ -114,7 +114,7 @@ namespace map
 }
 
 #ifndef MatchPoint_MANUAL_TPP
-#include "mapLazyFieldPolicy.tpp"
+#include "mapLazyTransformPolicy.tpp"
 #endif
 
 #endif

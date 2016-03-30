@@ -69,48 +69,8 @@ namespace map
 			typedef typename Superclass::InputPointType  InputPointType;
 			typedef typename Superclass::OutputPointType OutputPointType;
 
-			/*! gets the field
-			  @eguarantee strong
-			  @return const pointer to a FieldType
-			 */
-			virtual const FieldType* getField() const = 0;
-
-			/*! gets the field
-			  @eguarantee strong
-			  @return pointer to a FieldType
-			 */
-			virtual FieldType* getField() = 0;
-
-			const MappingVectorType& getNullVector() const
-			{
-				return _nullVector;
-			};
-
-			void setNullVector(const MappingVectorType& nullVector)
-			{
-				_nullVector = nullVector;
-			};
-
-			bool usesNullVector() const
-			{
-				return _useNullVector;
-			};
-
-			void setNullVectorUsage(bool use)
-			{
-				_useNullVector = use;
-			};
 
 		protected:
-			~FieldBasedRegistrationKernel() {};
-
-			FieldBasedRegistrationKernel() : _nullVector(
-					::itk::NumericTraits< typename MappingVectorType::ValueType >::NonpositiveMin()),
-					 _useNullVector(true)
-			{};
-
-			MappingVectorType _nullVector;
-			bool _useNullVector;
 
 		private:
 

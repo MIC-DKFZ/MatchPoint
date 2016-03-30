@@ -35,35 +35,35 @@ namespace map
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
-		LazyFieldPolicy<VInputDimensions, VOutputDimensions>::
+		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
 		setFieldFunctor(const FieldGenerationFunctorType& functor)
 		{
 			_spGenerationFunctor = &functor;
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		const typename LazyFieldPolicy<VInputDimensions, VOutputDimensions>::FieldGenerationFunctorType*
-		LazyFieldPolicy<VInputDimensions, VOutputDimensions>::
+		const typename LazyTransformPolicy<VInputDimensions, VOutputDimensions>::FieldGenerationFunctorType*
+		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
 		getFieldFunctor() const
 		{
 			return _spGenerationFunctor;
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		LazyFieldPolicy<VInputDimensions, VOutputDimensions>::
-		LazyFieldPolicy() : _spGenerationFunctor(NULL)
+		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
+		LazyTransformPolicy() : _spGenerationFunctor(NULL)
 		{
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		LazyFieldPolicy<VInputDimensions, VOutputDimensions>::
-		~LazyFieldPolicy()
+		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
+		~LazyTransformPolicy()
 		{
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
-		LazyFieldPolicy<VInputDimensions, VOutputDimensions>::
+		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
 		fieldExists() const
 		{
 			return _spField.IsNotNull();
@@ -71,7 +71,7 @@ namespace map
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
-		LazyFieldPolicy<VInputDimensions, VOutputDimensions>::
+		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
 		checkAndPrepareField() const
 		{
 			::itk::MutexLockHolder<MutexType> mutexHolder(_checkMutex);
@@ -87,8 +87,8 @@ namespace map
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		typename LazyFieldPolicy<VInputDimensions, VOutputDimensions>::RepresentationDescriptorConstPointer
-		LazyFieldPolicy<VInputDimensions, VOutputDimensions>::
+		typename LazyTransformPolicy<VInputDimensions, VOutputDimensions>::RepresentationDescriptorConstPointer
+		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
 		getRepresentationDescriptor() const
 		{
 			assert(_spGenerationFunctor.IsNotNull());
@@ -98,7 +98,7 @@ namespace map
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
-		LazyFieldPolicy<VInputDimensions, VOutputDimensions>::
+		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
 		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			if (_spGenerationFunctor.IsNotNull())
@@ -122,7 +122,7 @@ namespace map
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
-		LazyFieldPolicy<VInputDimensions, VOutputDimensions>::
+		LazyTransformPolicy<VInputDimensions, VOutputDimensions>::
 		generateField() const
 		{
 			::itk::MutexLockHolder<MutexType> mutexHolder(_generateMutex);
