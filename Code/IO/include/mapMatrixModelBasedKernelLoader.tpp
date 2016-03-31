@@ -31,7 +31,7 @@
 #include "mapRegistrationManipulator.h"
 #include "mapConvert.h"
 #include "mapSDITKStreamingHelper.h"
-#include "mapRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 
 namespace map
 {
@@ -161,7 +161,7 @@ namespace map
 			}
 
 			//establish transform & kernel
-      typedef core:Kernels<VInputDimensions, VInputDimensions>::PreCachedRegistrationKernel KernelType;
+      typedef core::PreCachedRegistrationKernel<VInputDimensions, VInputDimensions> KernelType;
       typename KernelType::Pointer spKernel = KernelType::New();
 
 			typedef ::itk::AffineTransform<::map::core::continuous::ScalarType, VInputDimensions> TransformType;

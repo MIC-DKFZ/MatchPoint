@@ -72,12 +72,6 @@ namespace map
 			*/
 			virtual unsigned int getOutputDimensions() const = 0;
 
-      /*! gets the name of the model
-      @eguarantee strong
-      @return an String containing the model name
-      */
-      virtual String getModelName() const = 0;
-
 		protected:
 
 			/*! Methods invoked by itk::LightObject::Print().  */

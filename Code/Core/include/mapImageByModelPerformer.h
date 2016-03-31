@@ -25,7 +25,7 @@
 #define __MAP_IMAGE_BY_MODEL_PERFORMER_H
 
 #include "mapImageMappingPerformerBase.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapRegistrationKernelBase.h"
 
 namespace map
 {
@@ -91,8 +91,6 @@ namespace map
 
 		protected:
 			typedef typename RegistrationType::InverseMappingType InverseKernelBaseType;
-			typedef ModelBasedRegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions>
-			ModelKernelType;
 
 			ImageByModelPerformer();
 			virtual ~ImageByModelPerformer();

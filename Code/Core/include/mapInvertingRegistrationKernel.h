@@ -23,8 +23,7 @@
 #ifndef __INVERTING_FIELD_BASED_REGISTRATION_KERNEL_H
 #define __INVERTING_FIELD_BASED_REGISTRATION_KERNEL_H
 
-#include "mapConcreteFieldBasedRegistrationKernel.h"
-#include "mapLazyTransformPolicy.h"
+#include "mapLazyRegistrationKernel.h"
 #include "mapClassMacros.h"
 
 namespace map
@@ -32,34 +31,29 @@ namespace map
 	namespace core
 	{
 
-		/*!@brief  InvertingFieldBasedRegistrationKernel is a special implementation of a lazy field based registration kernel.
+		/*!@brief  InvertingRegistrationKernel is a special implementation of a lazy field based registration kernel.
 		 * This implementation is used to indicated that an other kernel is inverted and to give the posibility to check which
-		* kernel will be inverted. It is used amongst other by the FieldBasedKernelInverter and optimized field kernel file I/O.
+		* kernel will be inverted. It is used amongst other by the DefaultKernelInverter and optimized field kernel file I/O.
 		 * @ingroup RegKernel
 		 */
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class InvertingFieldBasedRegistrationKernel : public
-			ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, LazyTransformPolicy>
+		class InvertingRegistrationKernel : public LazyRegistrationKernel<VInputDimensions, VOutputDimensions>
 		{
 		public:
-			typedef InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>
+			typedef InvertingRegistrationKernel<VInputDimensions, VOutputDimensions>
 			Self;
-			typedef ConcreteFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions, ::map::core::LazyTransformPolicy>
+      typedef LazyRegistrationKernel<VInputDimensions, VOutputDimensions>
 			Superclass;
 			typedef itk::SmartPointer<Self> Pointer;
 			typedef itk::SmartPointer<const Self> ConstPointer;
 
-			itkTypeMacro(InvertingFieldBasedRegistrationKernel, ConcreteFieldBasedRegistrationKernel);
+			itkTypeMacro(InvertingRegistrationKernel, ConcreteFieldBasedRegistrationKernel);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::FieldType FieldType;
-			typedef typename Superclass::FieldRegionType FieldRegionType;
 			typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;
 			typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
 			typedef typename Superclass::RepresentationDescriptorConstPointer
 			RepresentationDescriptorConstPointer;
-			typedef typename Superclass::TransformPolicyType TransformPolicyType;
-			typedef typename TransformPolicyType::FieldGenerationFunctorType FieldGenerationFunctorType;
 			typedef typename Superclass::InputPointType  InputPointType;
 			typedef typename Superclass::OutputPointType OutputPointType;
 
@@ -73,8 +67,8 @@ namespace map
 
 			SourceKernelConstPointer _SourceKernel;
 
-			InvertingFieldBasedRegistrationKernel();
-			virtual ~InvertingFieldBasedRegistrationKernel();
+			InvertingRegistrationKernel();
+			virtual ~InvertingRegistrationKernel();
 
 
 			/*! Methods invoked by itk::LightObject::Print().  */
@@ -83,7 +77,7 @@ namespace map
 		private:
 
 			//No copy constructor allowed
-			InvertingFieldBasedRegistrationKernel(const Self& source);
+			InvertingRegistrationKernel(const Self& source);
 			void operator=(const Self&);  //purposely not implemented
 
 		};
@@ -92,7 +86,7 @@ namespace map
 }
 
 #ifndef MatchPoint_MANUAL_TPP
-#include "mapInvertingFieldBasedRegistrationKernel.tpp"
+#include "mapInvertingRegistrationKernel.tpp"
 #endif
 
 #endif

@@ -27,6 +27,7 @@
 #include "mapLogbookMacros.h"
 
 #include "itkImageRegionIterator.h"
+#include "itkDisplacementFieldTransform.h"
 
 namespace map
 {
@@ -35,50 +36,105 @@ namespace map
 		namespace functors
 		{
 
+        /*! Helper class for a workaround.
+        * right now we only support symmetric inversion. Must be implemented later on.
+        * Template specialization allows the compiling of the code even in unsupported
+        * cases.
+        * @todo: Implement suitable solutions for unsymmetric cases (like VectorCombinationPolicy)
+        */
+        template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        class FieldByModelFunctorHelper
+        {
+        public:
+            typedef typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::TransformPointer TransformPointer;
+            typedef typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::SourceTransformModelType
+                SourceTransformModelType;
+            typedef typename
+                FieldByModelFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
+                InFieldRepresentationType;
+
+            static inline TransformPointer generate(const SourceTransformModelType* pTransformModel,
+                const InFieldRepresentationType* pInFieldRepresentation)
+            {
+                mapExceptionStaticMacro(ExceptionObject,
+                    << "Error unsymmetric field inversion not implemented yet.");
+                return NULL;
+            }
+        };
+
+        template <unsigned int VDimensions>
+        class FieldByModelFunctorHelper<VDimensions, VDimensions>
+        {
+        public:
+            typedef typename FieldByModelFunctor<VDimensions, VDimensions>::FieldType FieldType;
+            typedef typename FieldByModelFunctor<VDimensions, VDimensions>::TransformType TransformType;
+            typedef typename FieldByModelFunctor<VDimensions, VDimensions>::TransformPointer TransformPointer;
+            typedef typename FieldByModelFunctor<VDimensions, VDimensions>::SourceTransformModelType
+                SourceTransformModelType;
+            typedef typename FieldByModelFunctor<VDimensions, VDimensions>::InFieldRepresentationType
+                InFieldRepresentationType;
+
+            typedef typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
+
+            static inline TransformPointer generate(const SourceTransformModelType* pTransformModel,
+                const InFieldRepresentationType* pInFieldRepresentation)
+            {
+                FieldPointer spField = FieldType::New();
+
+                typedef itk::ImageRegionIterator< FieldType > IteratorType;
+
+                typename FieldType::RegionType region =
+                    pInFieldRepresentation->getRepresentedLocalImageRegion();
+
+                //allocate image memory
+                spField->SetRegions(region);
+                spField->SetSpacing(pInFieldRepresentation->getSpacing());
+                spField->SetOrigin(pInFieldRepresentation->getOrigin());
+                spField->SetDirection(pInFieldRepresentation->getDirection());
+                spField->Allocate();
+
+                //sample the transform into a vector field
+                IteratorType iterator(spField, spField->GetLargestPossibleRegion());
+
+                for (iterator.GoToBegin(); !(iterator.IsAtEnd()); ++iterator)
+                {
+                    typename FieldType::IndexType index = iterator.GetIndex();
+                    typename FieldType::PointType inPoint;
+                    spField->TransformIndexToPhysicalPoint(index, inPoint);
+
+                    typename TransformModelType::OutputPointType outPoint =
+                        pTransformModel->TransformPoint(inPoint);
+
+                    typename FieldType::ValueType value = outPoint - inPoint;
+                    iterator.Set(value);
+                }
+
+                typename FieldTransformType::Pointer spResult = FieldTransformType::New();
+                spResult->SetDisplacementField(spField);
+                return spResult.GetPointer();
+
+                return spField;
+            }
+        };
+
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::FieldPointer
+      typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::TransformPointer
 			FieldByModelFunctor<VInputDimensions, VOutputDimensions>::
-			generateField() const
+      generateTransform() const
 			{
 				mapLogInfoMacro( << "Generate field by model sampling");
 
-				FieldPointer spField = FieldType::New();
+        TransformPointer spResult =
+            FieldByModelFunctorHelper<VInputDimensions, VOutputDimensions>::generate(_spTransformModel,
+            Superclass::_spInFieldRepresentation);
 
-				typedef itk::ImageRegionIterator< FieldType > IteratorType;
-
-				typename FieldType::RegionType region =
-					Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
-
-				//allocate image memory
-				spField->SetRegions(region);
-				spField->SetSpacing(Superclass::_spInFieldRepresentation->getSpacing());
-				spField->SetOrigin(Superclass::_spInFieldRepresentation->getOrigin());
-				spField->SetDirection(Superclass::_spInFieldRepresentation->getDirection());
-				spField->Allocate();
-
-				//sample the transform into a vector field
-				IteratorType iterator(spField, spField->GetLargestPossibleRegion());
-
-				for (iterator.GoToBegin(); !(iterator.IsAtEnd()); ++iterator)
-				{
-					typename FieldType::IndexType index = iterator.GetIndex();
-					typename FieldType::PointType inPoint;
-					spField->TransformIndexToPhysicalPoint(index, inPoint);
-
-					typename TransformModelType::OutputPointType outPoint =
-						_spTransformModel->TransformPoint(inPoint);
-
-					typename FieldType::ValueType value = outPoint - inPoint;
-					iterator.Set(value);
-				}
-
-				return spField;
+        return spResult;
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			const typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::TransformModelType*
+      const typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::SourceTransformModelType*
 			FieldByModelFunctor<VInputDimensions, VOutputDimensions>::
-			getTransformModel(void) const
+      getSourceTransformModel(void) const
 			{
 				return _spTransformModel;
 			}
@@ -86,7 +142,7 @@ namespace map
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::Pointer
 			FieldByModelFunctor<VInputDimensions, VOutputDimensions>::
-			New(const TransformModelType& model,
+      New(const SourceTransformModelType* model,
 				const InFieldRepresentationType* pInFieldRepresentation)
 			{
 				assert(pInFieldRepresentation);
@@ -107,7 +163,7 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			FieldByModelFunctor<VInputDimensions, VOutputDimensions>::
-			FieldByModelFunctor(const TransformModelType& model,
+          FieldByModelFunctor(const SourceTransformModelType* model,
 								const InFieldRepresentationType* pInFieldRepresentation):
 				Superclass(pInFieldRepresentation), _spTransformModel(&model)
 			{

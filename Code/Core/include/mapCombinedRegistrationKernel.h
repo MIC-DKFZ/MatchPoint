@@ -23,8 +23,7 @@
 #ifndef __COMBINED_REGISTRATION_KERNEL_H
 #define __COMBINED_REGISTRATION_KERNEL_H
 
-#include "mapConcreteRegistrationKernel.h"
-#include "mapLazyTransformPolicy.h"
+#include "mapLazyRegistrationKernel.h"
 #include "mapFieldCombinationFunctorInterface.h"
 
 
@@ -43,18 +42,16 @@ namespace map
 		 */
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		class CombinedRegistrationKernel : public
-			ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, LazyTransformPolicy>
+			LazyRegistrationKernel<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			typedef CombinedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>
 			Self;
-			typedef ConcreteRegistrationKernel<VInputDimensions, VOutputDimensions, ::map::core::LazyTransformPolicy>
-			Superclass; //an error in the VS2005 name lookup forces to define the policy explicitly with full namespace information
+			typedef LazyRegistrationKernel<VInputDimensions, VOutputDimensions>	Superclass;
 			typedef itk::SmartPointer<Self> Pointer;
 			typedef itk::SmartPointer<const Self> ConstPointer;
-			// typedef typename Superclass::TransformPolicyType TransformPolicyType;
 
-			itkTypeMacro(CombinedRegistrationKernel, ConcreteRegistrationKernel);
+			itkTypeMacro(CombinedRegistrationKernel, LazyRegistrationKernel);
 			itkNewMacro(Self);
 
 			typedef typename Superclass::FieldType FieldType;
@@ -68,12 +65,12 @@ namespace map
 			typedef typename Superclass::InputPointType  InputPointType;
 			typedef typename Superclass::OutputPointType OutputPointType;
 
-			/*! sets the field's functor
-			  @eguarantee no fail
-			  @param functor Reference to the functor that is responsible for generating the field
-			  @pre Functor must have implemented FieldCombinationFunctorInterface
-			*/
-			virtual void setFieldFunctor(const FieldGenerationFunctorType& functor);
+      /*! sets the field's functor
+      @eguarantee no fail
+      @param functor Pointer to the functor that is responsible for generating the field
+      @pre functor must point to a valid instance.
+      */
+      virtual void setTransformFunctor(const TransformGenerationFunctorType* functor) override;
 
 		protected:
 			typedef functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
@@ -83,7 +80,7 @@ namespace map
 
 			const FieldCombinationFunctorInterfaceType* _pCombinationInterface;
 
-			/*! maps a given point by using both source kernel. In contrast to other ConcreteRegistrationKernel classes,
+			/*! maps a given point by using both source kernel. In contrast to other LazyRegistrationKernel classes,
 			 * calling this methos will not trigger the generation of the kernel field.
 			  @eguarantee no fail
 			  @param functor Reference to the functor that is responsible for generating the field

@@ -26,8 +26,7 @@
 
 #include "mapKernelInverterLoadPolicy.h"
 #include "mapServiceRepositoryPolicyLoadInterface.h"
-#include "mapModelBasedKernelInverter.h"
-#include "mapFieldBasedKernelInverter.h"
+#include "mapDefaultKernelInverter.h"
 #include "mapNullRegistrationKernelInverter.h"
 
 namespace map
@@ -41,13 +40,11 @@ namespace map
 		KernelInverterLoadPolicy<VInputDimensions, VOutputDimensions>::
 		doLoading()
 		{
-			typedef ModelBasedKernelInverter<VInputDimensions, VOutputDimensions> ModelKernelInverterType;
-			typedef FieldBasedKernelInverter<VInputDimensions, VOutputDimensions> FieldKernelInverterType;
+        typedef DefaultKernelInverter<VInputDimensions, VOutputDimensions> DefaultKernelInverterType;
 			typedef NullRegistrationKernelInverter<VInputDimensions, VOutputDimensions>
 			NullRegistrationKernelInverterType;
 
-			typename ModelKernelInverterType::Pointer spModelInverter = ModelKernelInverterType::New();
-			typename FieldKernelInverterType::Pointer spFieldInverter = FieldKernelInverterType::New();
+      typename DefaultKernelInverterType::Pointer spDefaultInverter = DefaultKernelInverterType::New();
 			typename NullRegistrationKernelInverterType::Pointer spNullnverter =
 				NullRegistrationKernelInverterType::New();
 
@@ -58,14 +55,9 @@ namespace map
 				mapLogWarningObjMacro("NullRegistrationKernelInverter was not added because it was already on the service stack!");
 			}
 
-			if (!loader.addProviderByPolicy(spModelInverter))
+      if (!loader.addProviderByPolicy(spDefaultInverter))
 			{
-				mapLogWarningObjMacro("ModelBasedKernelInverter was not added because it was already on the service stack!");
-			}
-
-			if (!loader.addProviderByPolicy(spFieldInverter))
-			{
-				mapLogWarningObjMacro("FieldBasedKernelInverter was not added because it was already on the service stack!");
+				mapLogWarningObjMacro("DefaultKernelInverter was not added because it was already on the service stack!");
 			}
 
 		}

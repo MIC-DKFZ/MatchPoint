@@ -28,7 +28,7 @@
 #include "itkExtractImageFilter.h"
 
 #include "mapAlgorithmException.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
@@ -254,7 +254,7 @@ namespace map
 					    this->getCurrentTransformParameters());
 
 					//now build the inverse kernel (main kernel of a image based registration algorithm)
-					typedef core::ModelBasedRegistrationKernel<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>
+					typedef core::PreCachedRegistrationKernel<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>
 					InverseKernelType;
 
 					typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
@@ -665,7 +665,7 @@ namespace map
 				//Excplicit resetting the parameters is a work arround to this problem.
 
 				//now build the inverse kernel (main kernel of a image based registration algorithm)
-				typedef core::ModelBasedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>
+				typedef core::PreCachedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>
 				InverseKernelType;
 
 				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();

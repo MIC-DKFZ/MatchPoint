@@ -25,7 +25,7 @@
 #define __ITK_POINT_SET_REGISTRATION_ALGORITHM_TPP
 
 #include "mapAlgorithmException.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
@@ -255,7 +255,7 @@ namespace map
 						this->getCurrentTransformParameters());
 
 					//now build the direct kernel (main kernel of a point set based registration algorithm)
-					typedef core::ModelBasedRegistrationKernel<InterimRegistrationType::MovingDimensions, InterimRegistrationType::TargetDimensions>
+					typedef core::PreCachedRegistrationKernel<InterimRegistrationType::MovingDimensions, InterimRegistrationType::TargetDimensions>
 					DirectKernelType;
 
 					typename DirectKernelType::Pointer spDKernel = DirectKernelType::New();
@@ -470,7 +470,7 @@ namespace map
 				spFinalTransformModel->SetParametersByValue(lastTransformParameters);
 
 				//now build the direct kernel (main kernel of a point set based registration algorithm)
-				typedef core::ModelBasedRegistrationKernel<RegistrationType::MovingDimensions, RegistrationType::TargetDimensions>
+				typedef core::PreCachedRegistrationKernel<RegistrationType::MovingDimensions, RegistrationType::TargetDimensions>
 				DirectKernelType;
 
 				typename DirectKernelType::Pointer spDKernel = DirectKernelType::New();

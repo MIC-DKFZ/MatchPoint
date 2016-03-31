@@ -31,20 +31,20 @@ namespace map
 	{
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-		InvertingFieldBasedRegistrationKernel()
+		InvertingRegistrationKernel<VInputDimensions, VOutputDimensions>::
+		InvertingRegistrationKernel()
 		{
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-		~InvertingFieldBasedRegistrationKernel()
+		InvertingRegistrationKernel<VInputDimensions, VOutputDimensions>::
+		~InvertingRegistrationKernel()
 		{
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
-		InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>::
+		InvertingRegistrationKernel<VInputDimensions, VOutputDimensions>::
 		PrintSelf(std::ostream& os, itk::Indent indent) const
 		{
 			Superclass::PrintSelf(os, indent);

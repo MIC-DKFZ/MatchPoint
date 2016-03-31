@@ -36,7 +36,7 @@ namespace map
     * @remark The loader is kept for backwards compatibility. We do not have the MatrixModelBasedKernel
     * any more. It is now covered by the PreCachedRegistrationKernel. But the loader/writer are usefull
     * if the transform is matrix based in order to store it directly in the matchpoint xml file.
-		* @sa ModelBasedRegistrationKernel
+		* @sa PreCachedRegistrationKernel
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the kernel that should be inverted.
 		*/

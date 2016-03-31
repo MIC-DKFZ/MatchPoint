@@ -73,8 +73,7 @@ namespace map
 			/*! @brief forces kernel to precompute, even if it is a LazyFieldKernel
 			  @eguarantee strong
 			 */
-			virtual void precomputeKernel();
-
+			virtual void precomputeKernel() override;
 
 		protected:
 

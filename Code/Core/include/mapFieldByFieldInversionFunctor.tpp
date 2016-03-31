@@ -28,190 +28,202 @@
 #include "mapLogbookMacros.h"
 
 #include "itkIterativeInverseDisplacementFieldImageFilter.h"
+#include "itkDisplacementFieldTransform.h"
 
 namespace map
 {
-	namespace core
-	{
-		namespace functors
-		{
+    namespace core
+    {
+        namespace functors
+        {
 
-			/*! Helper class for a workaround.
-			 * right now we only support symmetric inversion. Must be implemented later on.
-			 * Template specialization allows the compiling of the code even in unsupported
-			 * cases.
-			 * @todo: Implement suitable solutions for unsymmetric cases (like VectorCombinationPolicy)
-			 */
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			class FieldByFieldInversionFunctorHelper
-			{
-			public:
-				typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::FieldPointer
-				FieldPointer;
-				typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::FieldType
-				FieldType;
-				typedef typename
-				FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType
-				SourceFieldKernelType;
-				typedef typename
-				FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
-				InFieldRepresentationType;
+            /*! Helper class for a workaround.
+             * right now we only support symmetric inversion. Must be implemented later on.
+             * Template specialization allows the compiling of the code even in unsupported
+             * cases.
+             * @todo: Implement suitable solutions for unsymmetric cases (like VectorCombinationPolicy)
+             */
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            class FieldByFieldInversionFunctorHelper
+            {
+            public:
+                typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::FieldType
+                    FieldType;
+                typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::TransformPointer TransformPointer;
+                typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::TransformType TransformType;
+                typedef typename
+                    FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType
+                    SourceFieldKernelType;
+                typedef typename
+                    FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
+                    InFieldRepresentationType;
 
-				static inline FieldPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
-													const InFieldRepresentationType* pInFieldRepresentation,
-													double stopValue, unsigned int nrOfIterations)
-				{
-					mapExceptionStaticMacro(ExceptionObject,
-											<< "Error unsymmetric field inversion not implemented yet.");
-					return NULL;
-				}
-			};
+                static inline TransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
+                    const InFieldRepresentationType* pInFieldRepresentation,
+                    double stopValue, unsigned int nrOfIterations)
+                {
+                    mapExceptionStaticMacro(ExceptionObject,
+                        << "Error unsymmetric field inversion not implemented yet.");
+                    return NULL;
+                }
+            };
 
-			template <unsigned int VDimensions>
-			class FieldByFieldInversionFunctorHelper<VDimensions, VDimensions>
-			{
-			public:
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::FieldPointer FieldPointer;
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::FieldType    FieldType;
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldType
-				SourceFieldType;
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldConstPointer
-				SourceFieldConstPointer;
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldKernelType
-				SourceFieldKernelType;
-				typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::InFieldRepresentationType
-				InFieldRepresentationType;
+            template <unsigned int VDimensions>
+            class FieldByFieldInversionFunctorHelper < VDimensions, VDimensions >
+            {
+            public:
+                typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::FieldType    FieldType;
+                typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::TransformPointer TransformPointer;
+                typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::TransformType TransformType;
+                typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldType
+                    SourceFieldType;
+                typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldKernelType
+                    SourceFieldKernelType;
+                typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::InFieldRepresentationType
+                    InFieldRepresentationType;
 
-				static inline FieldPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
-													const InFieldRepresentationType* pInFieldRepresentation,
-													double stopValue, unsigned int nrOfIterations)
-				{
-					typedef itk::IterativeInverseDisplacementFieldImageFilter<SourceFieldType, FieldType>
-					FieldInverterType;
+                typedef typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
 
-					mapLogInfoStaticMacro( << "Generate field by field inversion");
+                static inline TransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
+                    const InFieldRepresentationType* pInFieldRepresentation,
+                    double stopValue, unsigned int nrOfIterations)
+                {
+                    const FieldTransformType* pFieldTransformModel = dynamic_cast<const FieldTransformType*>(pSourceFieldKernel->getTransformModel());
 
-					typename FieldInverterType::Pointer spFieldInverter = FieldInverterType::New();
+                    if (!pFieldTransformModel)
+                    {
+                        mapDefaultExceptionStaticMacro(<< "Error. Cannot generate inverted field. Passed source kernel has no DisplacementFieldTransform instance as transform model.");
+                    }
 
-					SourceFieldConstPointer spSourceField = pSourceFieldKernel->getField();
+                    typedef itk::IterativeInverseDisplacementFieldImageFilter < SourceFieldType, FieldType >
+                        FieldInverterType;
 
-					spFieldInverter->SetInput(spSourceField);
-					spFieldInverter->SetNumberOfIterations(nrOfIterations);
-					spFieldInverter->SetStopValue(stopValue);
+                    mapLogInfoStaticMacro(<< "Generate field by field inversion");
 
-					FieldPointer spField = spFieldInverter->GetOutput();
-					spFieldInverter->Update();
+                    typename FieldInverterType::Pointer spFieldInverter = FieldInverterType::New();
 
-					return spField;
-				}
-			};
+                    spFieldInverter->SetInput(pFieldTransformModel->GetDisplacementField());
+                    spFieldInverter->SetNumberOfIterations(nrOfIterations);
+                    spFieldInverter->SetStopValue(stopValue);
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::FieldPointer
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			generateField() const
-			{
-				FieldPointer spField =
-					FieldByFieldInversionFunctorHelper<VInputDimensions, VOutputDimensions>::generate(
-						_spSourceFieldKernel, Superclass::_spInFieldRepresentation, _stopValue, _nrOfIterations);
+                    typename FieldType::Pointer spField = spFieldInverter->GetOutput();
+                    spFieldInverter->Update();
 
-				return spField;
-			}
+                    typename FieldTransformType::Pointer spResult = FieldTransformType::New();
+                    spResult->SetDisplacementField(spField);
+                    return spResult.GetPointer();
+                }
+            };
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			const typename
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType*
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			getSourceFieldKernel(void) const
-			{
-				return _spSourceFieldKernel;
-			}
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::TransformPointer
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                generateTransform() const
+            {
+                TransformPointer spResult =
+                    FieldByFieldInversionFunctorHelper<VInputDimensions, VOutputDimensions>::generate(
+                    _spSourceFieldKernel, Superclass::_spInFieldRepresentation, _stopValue, _nrOfIterations);
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::Pointer
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			New(const SourceFieldKernelType& sourceFieldKernel,
-				const InFieldRepresentationType* pInFieldRepresentation)
-			{
-				assert(pInFieldRepresentation);
-				Pointer spFieldByFieldInversionFunctor = new Self(sourceFieldKernel, pInFieldRepresentation);
-				spFieldByFieldInversionFunctor->UnRegister();
-				return spFieldByFieldInversionFunctor;
-			}
+                return spResult;
+            }
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			typename ::itk::LightObject::Pointer
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			CreateAnother(void) const
-			{
-				::itk::LightObject::Pointer smartPtr;
-				Pointer spNew = Self::New(*_spSourceFieldKernel, Superclass::_spInFieldRepresentation).GetPointer();
-				smartPtr = spNew;
-				spNew->setNumberOfIterations(this->getNumberOfIterations());
-				spNew->setStopValue(this->getStopValue());
-				return smartPtr;
-			}
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            const typename
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType*
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                getSourceFieldKernel(void) const
+            {
+                return _spSourceFieldKernel;
+            }
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			FieldByFieldInversionFunctor(const SourceFieldKernelType& sourceFieldKernel,
-										 const InFieldRepresentationType* pInFieldRepresentation):
-				Superclass(pInFieldRepresentation), _spSourceFieldKernel(&sourceFieldKernel), _nrOfIterations(20),
-				_stopValue(0.0)
-			{
-				assert(pInFieldRepresentation);
-			}
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::Pointer
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                New(const SourceFieldKernelType* sourceFieldKernel,
+                const InFieldRepresentationType* pInFieldRepresentation)
+            {
+                assert(sourceFieldKernel);
+                assert(pInFieldRepresentation);
+                Pointer spFieldByFieldInversionFunctor = new Self(sourceFieldKernel, pInFieldRepresentation);
+                spFieldByFieldInversionFunctor->UnRegister();
+                return spFieldByFieldInversionFunctor;
+            }
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			~FieldByFieldInversionFunctor() {}
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            typename ::itk::LightObject::Pointer
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                CreateAnother(void) const
+            {
+                ::itk::LightObject::Pointer smartPtr;
+                Pointer spNew = Self::New(_spSourceFieldKernel, Superclass::_spInFieldRepresentation).GetPointer();
+                smartPtr = spNew;
+                spNew->setNumberOfIterations(this->getNumberOfIterations());
+                spNew->setStopValue(this->getStopValue());
+                return smartPtr;
+            }
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			void
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			PrintSelf(std::ostream& os, itk::Indent indent) const
-			{
-				Superclass::PrintSelf(os, indent);
-				os << indent << "Number of iterations: " << _nrOfIterations << std::endl;
-				os << indent << "Stop value: " << _stopValue << std::endl;
-				os << indent << "Source field kernel: " << _spSourceFieldKernel << std::endl;
-			}
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                FieldByFieldInversionFunctor(const SourceFieldKernelType* sourceFieldKernel,
+                const InFieldRepresentationType* pInFieldRepresentation) :
+                Superclass(pInFieldRepresentation), _spSourceFieldKernel(sourceFieldKernel), _nrOfIterations(20),
+                _stopValue(0.0)
+            {
+                assert(sourceFieldKernel);
+                assert(pInFieldRepresentation);
+
+            }
+
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                ~FieldByFieldInversionFunctor() {}
+
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            void
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                PrintSelf(std::ostream& os, itk::Indent indent) const
+            {
+                Superclass::PrintSelf(os, indent);
+                os << indent << "Number of iterations: " << _nrOfIterations << std::endl;
+                os << indent << "Stop value: " << _stopValue << std::endl;
+                os << indent << "Source field kernel: " << _spSourceFieldKernel << std::endl;
+            }
 
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			unsigned long
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			getNumberOfIterations() const
-			{
-				return _nrOfIterations;
-			}
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            unsigned long
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                getNumberOfIterations() const
+            {
+                return _nrOfIterations;
+            }
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			void
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			setNumberOfIterations(unsigned long nrOfIterations)
-			{
-				_nrOfIterations = nrOfIterations;
-			}
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            void
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                setNumberOfIterations(unsigned long nrOfIterations)
+            {
+                _nrOfIterations = nrOfIterations;
+            }
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			double
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			getStopValue() const
-			{
-				return _stopValue;
-			}
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            double
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                getStopValue() const
+            {
+                return _stopValue;
+            }
 
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			void
-			FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-			setStopValue(double stopValue)
-			{
-				_stopValue = stopValue;
-			}
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            void
+                FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
+                setStopValue(double stopValue)
+            {
+                _stopValue = stopValue;
+            }
 
-		} // end namespace functors
-	} // end namespace core
+        } // end namespace functors
+    } // end namespace core
 } // end namespace map
 
 #endif

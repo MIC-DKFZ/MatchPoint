@@ -24,9 +24,9 @@
 #ifndef __MAP_FIELD_BY_FIELD_INVERSION_FUNCTOR_H
 #define __MAP_FIELD_BY_FIELD_INVERSION_FUNCTOR_H
 
-#include "mapFieldGenerationFunctor.h"
+#include "mapTransformGenerationFunctor.h"
+#include "mapRegistrationKernel.h"
 #include "mapRegistrationTopology.h"
-#include "mapFieldBasedRegistrationKernel.h"
 
 namespace map
 {
@@ -53,12 +53,12 @@ namespace map
 			*/
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 			class FieldByFieldInversionFunctor: public
-				FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
+				TransformGenerationFunctor<VInputDimensions, VOutputDimensions>
 			{
 			public:
 				/*! Standard class typedefs. */
 				typedef FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>  Self;
-				typedef FieldGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
+				typedef TransformGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
 				typedef itk::SmartPointer<Self>        Pointer;
 				typedef itk::SmartPointer<const Self>  ConstPointer;
 
@@ -69,21 +69,23 @@ namespace map
 				typedef typename Superclass::InFieldRepresentationConstPointer  InFieldRepresentationConstPointer;
 				typedef typename Superclass::OutFieldRepresentationType         OutFieldRepresentationType;
 				typedef typename Superclass::OutFieldRepresentationConstPointer OutFieldRepresentationConstPointer;
-				typedef typename Superclass::FieldType                          FieldType;
-				typedef typename Superclass::FieldPointer                       FieldPointer;
-				typedef FieldBasedRegistrationKernel < VOutputDimensions,
-						VInputDimensions >          SourceFieldKernelType;
-				typedef typename SourceFieldKernelType::ConstPointer            SourceFieldKernelConstPointer;
-				typedef typename SourceFieldKernelType::FieldType               SourceFieldType;
-				typedef typename SourceFieldType::ConstPointer                  SourceFieldConstPointer;
+        typedef typename RegistrationTopology < VInputDimensions,
+            VOutputDimensions >::DirectFieldType                          FieldType;
+        typedef typename Superclass::TransformType                      TransformType;
+        typedef typename Superclass::TransformPointer                   TransformPointer;
+				typedef RegistrationKernel < VOutputDimensions,	VInputDimensions > SourceFieldKernelType;
+        typedef typename RegistrationTopology < VInputDimensions,
+            VOutputDimensions >::InverseFieldType                       SourceFieldType;
+        typedef typename SourceFieldType::ConstPointer                  SourceFieldConstPointer;
+        typedef typename SourceFieldKernelType::ConstPointer            SourceFieldKernelConstPointer;
 
-				itkTypeMacro(FieldByFieldInversionFunctor, FieldGenerationFunctor);
+				itkTypeMacro(FieldByFieldInversionFunctor, TransformGenerationFunctor);
 
-				/*! Generates the field an returns the result as a smart pointer.
-				 * @eguarantee should be strong
-				 * @return Smart pointer to the generated field.
-				 */
-				virtual FieldPointer generateField() const;
+        /*! Generates the field an returns the result as a smart pointer.
+        * @eguarantee should be strong
+        * @return Smart pointer to the generated field.
+        */
+        virtual TransformPointer generateTransform() const override;
 
 				/*! Returns a const pointer to the source field that will be inverted in order
 				 * to generate the field.
@@ -100,8 +102,9 @@ namespace map
 				 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
 				 * may not be null for this functor.
 				 * @return Smart pointer to the new functor
-				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				static Pointer New(const SourceFieldKernelType& sourceFieldKernel,
+				 * @pre sourceFieldKernel musst be set, may not be NULL
+         * @pre pInFieldRepresentation musst be set, may not be NULL*/
+				static Pointer New(const SourceFieldKernelType* sourceFieldKernel,
 								   const InFieldRepresentationType* pInFieldRepresentation);
 
 				/*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
@@ -135,8 +138,9 @@ namespace map
 				 * @param [in] sourceFieldKernel Reference to the field kernel offering the field that should be used as inversion source.
 				 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
 				 * may not be null for this functor.
+         * @pre sourceFieldKernel musst be set, may not be NULL
 				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				FieldByFieldInversionFunctor(const SourceFieldKernelType& sourceFieldKernel,
+          FieldByFieldInversionFunctor(const SourceFieldKernelType* sourceFieldKernel,
 											 const InFieldRepresentationType* pInFieldRepresentation);
 
 				virtual ~FieldByFieldInversionFunctor();

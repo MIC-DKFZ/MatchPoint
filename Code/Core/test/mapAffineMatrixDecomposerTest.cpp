@@ -24,11 +24,12 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapModelBasedRegistrationKernel.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "litCheckMacros.h"
 #include "mapITKTranslationTransform.h"
 #include "mapAffineMatrixDecomposer.h"
+
+#include "itkDisplacementFieldTransform.h"
 
 namespace map
 {
@@ -41,11 +42,11 @@ namespace map
 
 			typedef core::AffineMatrixDecomposer<2, 2> DecomposerType;
 
-			typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 			typedef ::itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
-			typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel FieldKernelType;
+      typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, 2> FieldTransformType;
 
-			ModelKernelType::Pointer spKernel = ModelKernelType::New();
+			KernelType::Pointer spKernel = KernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
 			params[0] = 5;
@@ -54,8 +55,8 @@ namespace map
 
 			spKernel->setTransformModel(spTransform);
 
-			FieldKernelType::Pointer spFieldKernel = FieldKernelType::New();
-
+      KernelType::Pointer spFieldKernel = KernelType::New();
+      spKernel->setTransformModel(FieldTransformType::New().GetPointer());
 
 			DecomposerType::MatrixType matrix;
 			DecomposerType::OffsetType offset;

@@ -24,7 +24,7 @@
 #define __MAP_IMAGE_REGISTRATION_ALGORITHM_TPP
 
 #include "mapAlgorithmException.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
@@ -136,7 +136,7 @@ namespace map
 				//  spInterimTransformModel->SetParametersByValue(this->getCurrentTransformParameters());
 
 				//  //now build the inverse kernel (main kernel of a image based registration algorithm)
-				//  typedef core::ModelBasedRegistrationKernel<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions> InverseKernelType;
+				//  typedef core::PreCachedRegistrationKernel<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions> InverseKernelType;
 
 				//  InverseKernelType::Pointer spIKernel = InverseKernelType::New();
 				//  spIKernel->setTransformModel(spInterimTransformModel);

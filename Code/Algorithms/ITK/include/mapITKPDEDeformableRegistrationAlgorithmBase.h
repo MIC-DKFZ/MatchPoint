@@ -28,6 +28,7 @@
 
 #include "itkSimpleFastMutexLock.h"
 #include "itkPDEDeformableRegistrationFilter.h"
+#include "itkDisplacementFieldTransform.h"
 
 #include "mapContinuous.h"
 #include "mapDiscreteElements.h"
@@ -140,6 +141,7 @@ namespace map
 				typedef TInternalRegistrationFilter InternalRegistrationMethodType;
 				typedef typename Superclass::InterimRegistrationType InterimRegistrationType;
 				typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
+        typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, TImageType::ImageDimension> FieldTransformType;
 
 				/*! @overwrite
 				 * This default implementation does nothing.*/

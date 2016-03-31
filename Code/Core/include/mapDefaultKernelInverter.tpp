@@ -20,13 +20,17 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-#ifndef __MAP_MODEL_BASED_KERNEL_INVERTER_TPP
-#define __MAP_MODEL_BASED_KERNEL_INVERTER_TPP
+#ifndef __MAP_DEFAULT_KERNEL_INVERTER_TPP
+#define __MAP_DEFAULT_KERNEL_INVERTER_TPP
 
-#include "mapModelBasedKernelInverter.h"
+#include "mapDefaultKernelInverter.h"
 #include "mapServiceException.h"
 #include "mapFieldByModelInversionFunctor.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapFieldByFieldInversionFunctor.h"
+#include "mapInvertingRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
+
+#include "itkDisplacementFieldTransform.h"
 
 namespace map
 {
@@ -35,7 +39,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		unsigned long
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		getFunctorNumberOfIterations() const
 		{
 			return _functorNrOfIterations;
@@ -43,7 +47,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		setFunctorNumberOfIterations(unsigned long nrOfIterations)
 		{
 			_functorNrOfIterations = nrOfIterations;
@@ -51,7 +55,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		double
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		getFunctorStopValue() const
 		{
 			return _functorStopValue;
@@ -59,7 +63,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		setFunctorStopValue(double stopValue)
 		{
 			_functorStopValue = stopValue;
@@ -68,10 +72,10 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		canHandleRequest(const RequestType& request) const
 		{
-			// if the kernel "request" is a model-based kernel, then we can handle it.
+			// if the kernel "request" is a regular kernel, then we can handle it.
 			const KernelType* pKernel = dynamic_cast<const KernelType*>(&request);
 			return (pKernel != NULL);
 		}
@@ -79,7 +83,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		String
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
 			return Self::getStaticProviderName();
@@ -87,30 +91,30 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		String
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
 			OStringStream os;
-			os << "ModelBasedKernelInverter<" << VInputDimensions << "," << VOutputDimensions << ">";
+			os << "DefaultKernelInverter<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		String
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
 			OStringStream os;
-			os << "ModelBasedKernelInverter, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
+			os << "DefaultKernelInverter, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
 			   VOutputDimensions << ".";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		typename ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::InverseKernelBasePointer
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
+		typename DefaultKernelInverter<VInputDimensions, VOutputDimensions>::InverseKernelBasePointer
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		invertKernel(const KernelBaseType& kernel,
 					 const FieldRepresentationType* pFieldRepresentation,
 					 const InverseFieldRepresentationType* pInverseFieldRepresentation) const
@@ -120,7 +124,7 @@ namespace map
 			if (pKernel == NULL)
 			{
 				mapExceptionMacro(ServiceException,
-								  << "Error: cannot invert kernel. Reason: cannot cast to ModelBasedKernel: " << pKernel);
+								  << "Error: cannot invert kernel. Reason: cannot cast to RegistrationKernel: " << pKernel);
 			}
 
 			const typename KernelType::TransformType* pTransformModel = pKernel->getTransformModel();
@@ -131,7 +135,7 @@ namespace map
 			if (spInverseTransformModel.IsNotNull())
 			{
 				// analytic inversion worked, so we just have to create the kernel and return it
-				typedef ModelBasedRegistrationKernel<VOutputDimensions, VInputDimensions> InverseKernelType;
+				typedef PreCachedRegistrationKernel<VOutputDimensions, VInputDimensions> InverseKernelType;
 				typename InverseKernelType::Pointer spInverseKernel = InverseKernelType::New();
 				spInverseKernel->setTransformModel(spInverseTransformModel);
 				spResultKernel = spInverseKernel;
@@ -145,18 +149,34 @@ namespace map
 									  << "Error: cannot invert kernel. Reason: pInverseFieldRepresentation not present.");
 				}
 
-				typedef typename FieldKernels<VOutputDimensions, VInputDimensions>::LazyFieldBasedRegistrationKernel
-				LazyFieldKernelType;
-				typename LazyFieldKernelType::Pointer spInverseKernel = LazyFieldKernelType::New();
+        typedef InvertingRegistrationKernel<VOutputDimensions, VInputDimensions> InvertingKernelType;
+				typename InvertingKernelType::Pointer spInverseKernel = InvertingKernelType::New();
 
-				typedef typename functors::FieldByModelInversionFunctor<VOutputDimensions, VInputDimensions>
-				FunctorType;
-				typename FunctorType::Pointer spFunctor = FunctorType::New(*pTransformModel,
-						pInverseFieldRepresentation);
-				spFunctor->setStopValue(_functorStopValue);
-				spFunctor->setNumberOfIterations(_functorNrOfIterations);
+        spInverseKernel->setSourceKernel(pKernel);
 
-				spInverseKernel->setFieldFunctor(*(spFunctor.GetPointer()));
+        typedef itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VInputDimensions> FieldTransformType;
+        const FieldTransformType* pFieldTransformModel = dynamic_cast<const FieldTransformType*>(pTransformModel);
+        if (pFieldTransformModel)
+        { //the model is represented by a displacement field -> FieldByFieldInversionFunctor
+            typedef functors::FieldByFieldInversionFunctor<VOutputDimensions, VInputDimensions> FunctorType;
+            typename FunctorType::Pointer spFunctor = FunctorType::New(pKernel, pInverseFieldRepresentation);
+            spFunctor->setStopValue(_functorStopValue);
+            spFunctor->setNumberOfIterations(_functorNrOfIterations);
+
+            spInverseKernel->setTransformFunctor(spFunctor.GetPointer());
+        }
+        else
+        { //the model is represented by some transform model -> FieldByModelInversionFunctor
+            typedef typename functors::FieldByModelInversionFunctor<VOutputDimensions, VInputDimensions>
+                FunctorType;
+            typename FunctorType::Pointer spFunctor = FunctorType::New(pTransformModel,
+                pInverseFieldRepresentation);
+            spFunctor->setStopValue(_functorStopValue);
+            spFunctor->setNumberOfIterations(_functorNrOfIterations);
+
+            spInverseKernel->setTransformFunctor(spFunctor.GetPointer());
+        }
+
 
 				spResultKernel = spInverseKernel;
 			}
@@ -167,8 +187,8 @@ namespace map
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		ModelBasedKernelInverter<VInputDimensions, VOutputDimensions>::
-		ModelBasedKernelInverter(): _functorNrOfIterations(20), _functorStopValue(0.0)
+		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
+		DefaultKernelInverter(): _functorNrOfIterations(20), _functorStopValue(0.0)
 		{};
 
 

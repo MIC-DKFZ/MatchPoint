@@ -33,9 +33,6 @@ namespace map
 
 			//! Default scalar type used in MatchPoint
 			typedef double ScalarType;
-			/*! Default scalar type used for the precision of
-			vector fields in MatchPoint*/
-			typedef float FieldScalarType;
 
 		} // end namespace continuous
 	} // end namespace core

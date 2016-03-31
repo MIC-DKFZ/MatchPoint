@@ -115,30 +115,6 @@ namespace map
 				return OutputDimensions;
 			};
 
-      /*! Returns pointer to the transform model used by the kernel
-      @eguarantee strong
-      @return const pointer to the internal tranform model
-      */
-      virtual const TransformType* getTransformModel() const = 0;
-
-      typedef itk::Matrix<continuous::ScalarType, VOutputDimensions, VInputDimensions> MatrixType;
-
-      /*! Tries to decompose the transform model into an affine matrix and an offset. It is indecated by the return value if
-      * the actual modell can be decomposed.\n
-      * Usage of the return values: Point_trans = Matrix*Point + Offset
-      *
-      * @eguarantee strong
-      * @remark Implement the function for special transform model classes.
-      * @param [out] matrix Reference to the matrix that define the affine non-translation part (e.g. rotation and scaling).
-      * @param [out] offset Reference to a vector that defines the translation offset.
-      * @return Indicates if the transform model can be decomposed in a affine transformation matrix plus offset. If it returns false, it cannot be decomposed
-      * and the referenced output parameters are invalid.*/
-      virtual bool getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const;
-
-      virtual const MappingVectorType& getNullVector() const = 0;
-
-      virtual bool usesNullVector() const = 0;
-
 		protected:
 
 			/*! Methods invoked by itk::LightObject::Print().  */

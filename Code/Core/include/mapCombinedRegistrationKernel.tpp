@@ -49,7 +49,7 @@ namespace map
 		{
 			bool result = false;
 
-			if (this->_spField.IsNotNull())
+			if (this->transformExists())
 			{
 				//use default implementation
 				result = Superclass::doMapPoint(inPoint, outPoint);
@@ -75,7 +75,7 @@ namespace map
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		void
 		CombinedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		setFieldFunctor(const FieldGenerationFunctorType& functor)
+    setTransformFunctor(const TransformGenerationFunctorType* functor)
 		{
 			const FieldCombinationFunctorInterfaceType* pInterface =
 				dynamic_cast<const FieldCombinationFunctorInterfaceType*>(&functor);
@@ -83,7 +83,7 @@ namespace map
 
 			_pCombinationInterface = pInterface;
 
-			TransformPolicyType::setFieldFunctor(functor);
+			Superclass::setFieldFunctor(functor);
 		};
 
 		template<unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>

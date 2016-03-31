@@ -28,7 +28,6 @@
 #include "mapDiscreteElements.h"
 #include "itkTransform.h"
 
-
 namespace map
 {
 	namespace core
@@ -59,7 +58,6 @@ namespace map
 			typedef typename DirectFieldType::RegionType DirectFieldRegionType;
       typedef ::itk::Transform<continuous::ScalarType, DirectInputDimension, DirectOutputDimension>	DirectTransformType;
 
-
 			//inverse mapping
 			itkStaticConstMacro(InverseInputDimension, unsigned int, VTargetDimensions);
 			itkStaticConstMacro(InverseOutputDimension, unsigned int, VMovingDimensions);
@@ -70,6 +68,10 @@ namespace map
 			typedef typename InverseFieldType::Pointer InverseFieldPointer;
 			typedef typename InverseFieldType::RegionType InverseFieldRegionType;
       typedef ::itk::Transform<continuous::ScalarType, InverseInputDimension, InverseOutputDimension>	InverseTransformType;
+
+      //general
+      typedef typename continuous::Elements<VMovingDimensions>::PointType			MovingPointType;
+      typedef typename continuous::Elements<VTargetDimensions>::PointType		  TargetPointType;
 
 		private:
 			typedef RegistrationTopology<VMovingDimensions, VTargetDimensions> Self;

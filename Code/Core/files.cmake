@@ -38,7 +38,6 @@ SET(H_FILES
     include/mapConvert.h
 	include/mapClassMacros.h
 	include/mapCombinedRegistrationKernel.h
-	include/mapConcreteRegistrationKernel.h
 	include/mapContinuous.h
 	include/mapContinuousElements.h
 	include/mapDefaultRegistrationTopologyPolicy.h
@@ -48,9 +47,6 @@ SET(H_FILES
 	include/mapEvents.h
 	include/mapExceptionObject.h
 	include/mapExceptionObjectMacros.h
-	include/mapFieldBasedKernelInverter.h
-	include/mapFieldBasedRegistrationKernel.h
-	include/mapRegistrationKernels.h
 	include/mapFieldFieldKernelCombinator.h
 	include/mapFieldModelKernelCombinator.h
 	include/mapFieldRepresentationDescriptor.h
@@ -62,10 +58,11 @@ SET(H_FILES
 	include/mapImageMappingPerformerRequest.h
 	include/mapImageMappingTask.h
 	include/mapInverseRegistrationKernelGenerator.h
-	include/mapInvertingFieldBasedRegistrationKernel.h
+	include/mapInvertingRegistrationKernel.h
 	include/mapKernelCombinatorLoadPolicy.h
 	include/mapKernelInverterLoadPolicy.h
-	include/mapLazyTransformPolicy.h
+	include/mapLazyRegistrationKernel.h
+	include/mapLazyRegistrationKernelInterface.h
 	include/mapLogbook.h
 	include/mapLogbookImplementation.h
 	include/mapLogbookMacros.h
@@ -81,7 +78,7 @@ SET(H_FILES
 	include/mapMetaPropertyAccessor.h
 	include/mapMetaPropertyBase.h
 	include/mapMissingProviderException.h
-	include/mapModelBasedKernelInverter.h
+	include/mapDefaultKernelInverter.h
 	include/mapModelFieldKernelCombinator.h
 	include/mapModelModelKernelCombinator.h
 	include/mapModificationTimeValidator.h
@@ -97,12 +94,14 @@ SET(H_FILES
 	include/mapPointSetMappingPerformerRequest.h
 	include/mapPointSetMappingTask.h
 	include/mapPointVectorCombinationPolicy.h
-	include/mapPreCachedTransformPolicy.h
+	include/mapPreCachedRegistrationKernel.h
+	include/mapPreCachedRegistrationKernelInterface.h
 	include/mapRegistration.h
 	include/mapRegistrationBase.h
 	include/mapRegistrationCombinationRequest.h
 	include/mapRegistrationCombinator.h
 	include/mapRegistrationException.h
+	include/mapRegistrationKernel.h
 	include/mapRegistrationKernelBase.h
 	include/mapRegistrationKernelCombinatorBase.h
 	include/mapRegistrationKernelInverterBase.h
@@ -153,8 +152,7 @@ SET(H_FILES
 SET(TPP_FILES
 	include/mapAffineMatrixDecomposer.tpp
 	include/mapCombinedRegistrationKernel.tpp
-	include/mapConcreteRegistrationKernel.tpp
-	include/mapFieldBasedKernelInverter.tpp
+	include/mapRegistrationKernel.tpp
 	include/mapFieldFieldKernelCombinator.tpp
 	include/mapFieldModelKernelCombinator.tpp
 	include/mapFieldRepresentationDescriptor.tpp
@@ -165,17 +163,17 @@ SET(TPP_FILES
 	include/mapImageMappingPerformerRequest.tpp
 	include/mapImageMappingTask.tpp
 	include/mapInverseRegistrationKernelGenerator.tpp
-	include/mapInvertingFieldBasedRegistrationKernel.tpp
+	include/mapInvertingRegistrationKernel.tpp
 	include/mapKernelCombinatorLoadPolicy.tpp
 	include/mapKernelInverterLoadPolicy.tpp
-	include/mapLazyTransformPolicy.tpp
+	include/mapLazyRegistrationKernel.tpp
 	include/mapMappingPerformerRequestBase.tpp
 	include/mapMappingTaskBase.tpp
 	include/mapMappingTaskBatch.tpp
 	include/mapMappingTaskBatchThread.tpp
 	include/mapMetaProperty.tpp
 	include/mapMetaPropertyAccessor.tpp
-	include/mapModelBasedKernelInverter.tpp
+	include/mapDefaultKernelInverter.tpp
 	include/mapModelFieldKernelCombinator.tpp
 	include/mapModelModelKernelCombinator.tpp
 	include/mapNoneMappingPerformerLoadPolicy.tpp
@@ -187,10 +185,11 @@ SET(TPP_FILES
 	include/mapPointSetMappingPerformerLoadPolicy.tpp
 	include/mapPointSetMappingPerformerRequest.tpp
 	include/mapPointSetMappingTask.tpp
-	include/mapPreCachedTransformPolicy.tpp
+	include/mapPreCachedRegistrationKernel.tpp
 	include/mapRegistration.tpp
 	include/mapRegistrationCombinationRequest.tpp
 	include/mapRegistrationCombinator.tpp
+	include/mapRegistrationKernel.tpp
 	include/mapRegistrationKernelBase.tpp
 	include/mapRegistrationKernelCombinatorBase.tpp
 	include/mapRegistrationManipulator.tpp

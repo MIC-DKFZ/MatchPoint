@@ -27,7 +27,7 @@
 #include <itkHistogramMatchingImageFilter.h>
 
 #include "mapAlgorithmException.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
@@ -159,8 +159,11 @@ namespace map
 					::map::core::FieldKernels<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
 					InverseKernelType;
 
+          typename FieldTransformType::Pointer transform = FieldTransformType::New();
+          transform->SetDisplacementField(_internalRegistrationMethod->GetDisplacementField());
+
 					typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
-					spIKernel->setField(*(_internalRegistrationMethod->GetDisplacementField()));
+          spIKernel->setTransformModel(transform);
 
 					//now build the direct kernel via inversion of the inverse kernel
 					typedef core::InverseRegistrationKernelGenerator<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>
@@ -348,11 +351,13 @@ namespace map
 
 				//now build the inverse kernel (main kernel of a image based registration algorithm)
 				typedef typename
-				::map::core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
-				InverseKernelType;
+				::map::core::PreCachedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> InverseKernelType;
 
 				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
-				spIKernel->setField(*(this->getFinalDisplacementField()));
+        
+        typename FieldTransformType::Pointer transform = FieldTransformType::New();
+        transform->SetDisplacementField(this->getFinalDisplacementField());
+        spIKernel->setTransformModel(transform);
 
 				//now build the direct kernel via inversion of the inverse kernel
 				typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>

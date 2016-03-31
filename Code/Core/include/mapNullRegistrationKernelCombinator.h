@@ -32,8 +32,8 @@ namespace map
 	namespace core
 	{
 		/*! @class NullRegistrationKernelCombinator
-		* @brief Combinator class that combines two transform model kernels to a new kernel.
-		*
+		* @brief Combinator class that combines two kernels (at least one is a Null kernel) to a new kernel.
+		* Combinations with a Null kernel always result in a new Null kernel.
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the  first kernel.
 		* @tparam VInterimDimensions Dimensions of the output space of the first kernel and the input space of the second.

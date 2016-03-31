@@ -26,7 +26,7 @@
 #include "mapFieldGenerationFunctor.h"
 #include "mapFieldCombinationFunctorInterface.h"
 #include "mapFieldBasedRegistrationKernel.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 
 namespace map
 {
@@ -75,7 +75,7 @@ namespace map
 				typedef FieldBasedRegistrationKernel < VInputDimensions,
 						VInterimDimensions >          SourceFieldKernelType;
 				typedef typename SourceFieldKernelType::ConstPointer              SourceFieldKernelConstPointer;
-				typedef ModelBasedRegistrationKernel < VInterimDimensions,
+				typedef PreCachedRegistrationKernel < VInterimDimensions,
 						VOutputDimensions >          SourceModelKernelType;
 				typedef typename SourceModelKernelType::ConstPointer              SourceModelKernelConstPointer;
 				typedef typename CombinationInterface::SourceKernel1BaseType SourceKernel1BaseType;

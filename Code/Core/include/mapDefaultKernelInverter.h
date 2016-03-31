@@ -20,51 +20,54 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-#ifndef __MAP_FIELD_BASED_KERNEL_INVERTER_H
-#define __MAP_FIELD_BASED_KERNEL_INVERTER_H
+#ifndef __MAP_DEFAULT_KERNEL_INVERTER_H
+#define __MAP_DEFAULT_KERNEL_INVERTER_H
 
 #include "mapRegistrationKernelInverterBase.h"
-#include "mapFieldBasedRegistrationKernel.h"
+#include "mapRegistrationKernel.h"
 
 namespace map
 {
 	namespace core
 	{
-		/*! @class FieldBasedKernelInverter
-		* @brief Provider that is able to invert a FieldBasedRegistrationKernel.
+		/*! @class DefaultKernelInverter
+		* @brief Provider that is able to invert a RegistrationKernel.
 		*
-		* The provider generates an inverted kernel by creatinge a LazyFieldBasedRegistrationKernel
-		* an populates it with a parametrized FieldByFieldInversionFunctor.
+		* If the tranformation model of the given kernel can be inverted analyticaly
+		* the inverter will create PreCachedRegistrationKernel based on the model inversion.
+		* If the inversion is not possible the inverter will create a InvertingRegistrationKernel
+		* an populates it with a parametrized inversion functor.
 		*
-		* @sa FieldByFieldInversionFunctor
-		* @sa LazyFieldBasedRegistrationKernel
-		* @sa FieldBasedRegistrationKernel
+		* @sa FieldByModelInversionFunctor
+    * @sa FieldByFieldInversionFunctor
+    * @sa InvertingRegistrationKernel
+		* @sa PreCachedRegistrationKernel
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the kernel that should be inverted.
 		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class FieldBasedKernelInverter : public
+		class DefaultKernelInverter : public
 			RegistrationKernelInverterBase<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef FieldBasedKernelInverter<VInputDimensions, VOutputDimensions>				Self;
+			typedef DefaultKernelInverter<VInputDimensions, VOutputDimensions>				Self;
 			typedef RegistrationKernelInverterBase<VInputDimensions, VOutputDimensions>	Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
-			itkTypeMacro(FieldBasedKernelInverter, RegistrationKernelInverterBase);
+			itkTypeMacro(DefaultKernelInverter, RegistrationKernelInverterBase);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::KernelBaseType	                KernelBaseType;
-			typedef typename Superclass::KernelBasePointer	            KernelBasePointer;
-			typedef typename Superclass::InverseKernelBaseType	        InverseKernelBaseType;
-			typedef typename Superclass::InverseKernelBasePointer	      InverseKernelBasePointer;
-			typedef typename Superclass::FieldRepresentationType	      FieldRepresentationType;
+			typedef typename Superclass::KernelBaseType	KernelBaseType;
+			typedef typename Superclass::KernelBasePointer	KernelBasePointer;
+			typedef typename Superclass::InverseKernelBaseType	InverseKernelBaseType;
+			typedef typename Superclass::InverseKernelBasePointer	InverseKernelBasePointer;
+			typedef typename Superclass::FieldRepresentationType	FieldRepresentationType;
 			typedef typename Superclass::InverseFieldRepresentationType	InverseFieldRepresentationType;
-			typedef typename Superclass::RequestType	                  RequestType;
-			typedef FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
+			typedef typename Superclass::RequestType	RequestType;
+			typedef RegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
 
 
 			/*! gets the number of iterations that has been set for the numeric inversion
@@ -87,7 +90,6 @@ namespace map
 					 * @eguarantee no fail */
 			void setFunctorStopValue(double stopValue);
 
-
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request.
 			 * @return Indicates if the provider offers the right solution.
@@ -103,7 +105,6 @@ namespace map
 			 * @return Service provider ID.*/
 			static String getStaticProviderName();
 
-
 			/*! Returns an ID of the provider as string. May be equal to GetClassName(), but it may differ.
 			 * @return Service provider ID.
 			 * @remark It is a return by value, becaus it might be possible that the description is generated on line
@@ -117,9 +118,9 @@ namespace map
 				 * @param [in] pFieldRepresentation Pointer to the field representation of the kernel,
 				 * may be null if no representation is defined.
 				 * @param [in] pInverseFieldRepresentation Pointer to the field representation of the inverse kernel,
-				 * may not be NULL!.
+				 * may not be NULL, if the transform model cannot be inverted analyticaly.
 				 * @return Smart pointer to the inverse kernel.
-				 * @pre pInverseFieldRepresentation must not be NULL.
+				 * @pre The inverter service provider may require the inverse field representation
 				 * @post If the method returns with no exception, there is always an inverse kernel (smart pointer is not NULL)
 				 * @remark This function might cause an exception/assertion if the responsible service provider needs
 				 * pInverseFieldRepresentation not to be NULL but it is.
@@ -129,16 +130,16 @@ namespace map
 					const InverseFieldRepresentationType* pInverseFieldRepresentation) const;
 
 		protected:
-			/*!Cached properties that should be used on the FieldByFieldInversionFunctor*/
+			/*!Cached properties that should be used on the FieldByModelInversionFunctor*/
 			unsigned long _functorNrOfIterations;
-			/*!Cached properties that should be used on the FieldByFieldInversionFunctor*/
+			/*!Cached properties that should be used on the FieldByModelInversionFunctor*/
 			double _functorStopValue;
 
-			FieldBasedKernelInverter();
-			virtual ~FieldBasedKernelInverter() {};
+			DefaultKernelInverter();
+			virtual ~DefaultKernelInverter() {};
 
 		private:
-			FieldBasedKernelInverter(const Self&);  //purposely not implemented
+			DefaultKernelInverter(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented
 		};
 
@@ -146,7 +147,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapFieldBasedKernelInverter.tpp"
+# include "mapDefaultKernelInverter.tpp"
 #endif
 
 #endif

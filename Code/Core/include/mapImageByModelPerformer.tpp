@@ -26,6 +26,7 @@
 
 #include "mapImageByModelPerformer.h"
 #include "mapServiceException.h"
+#include "mapRegistrationKernel.h"
 
 #include "itkResampleImageFilter.h"
 
@@ -66,7 +67,7 @@ namespace map
 			typedef typename RequestType::ResultDataType ResultDataType;
 			typedef typename RequestType::ResultDataType::Pointer ResultDataPointer;
 			typedef typename RequestType::RegistrationType::InverseMappingType InverseKernelBaseType;
-			typedef ModelBasedRegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions>
+			typedef RegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions>
 			ModelKernelType;
 
 			static ResultDataPointer performMapping(const RequestType& request)
@@ -112,7 +113,9 @@ namespace map
 		ImageByModelPerformer<TRegistration, TInputData, TResultData>::
 		performMapping(const RequestType& request) const
 		{
-			const InverseKernelBaseType& inverseKernelBase = request._spRegistration->getInverseMapping();
+      typedef RegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions>
+            ModelKernelType;
+      const InverseKernelBaseType& inverseKernelBase = request._spRegistration->getInverseMapping();
 			const ModelKernelType* pInverseKernel = dynamic_cast<const ModelKernelType*>(&inverseKernelBase);
 
 			if (pInverseKernel == NULL)

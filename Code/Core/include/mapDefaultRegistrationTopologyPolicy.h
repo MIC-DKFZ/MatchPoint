@@ -64,8 +64,9 @@ namespace map
 			typedef RegistrationKernelBase<DirectInputDimensions, DirectOutputDimensions> DirectMappingType;
 			typedef RegistrationKernelBase<InverseInputDimensions, InverseOutputDimensions> InverseMappingType;
 
-			typedef typename continuous::Elements<VMovingDimensions>::PointType			MovingPointType;
-			typedef typename continuous::Elements<VTargetDimensions>::PointType		  TargetPointType;
+      //general
+      typedef typename RegistrationTopologyType::MovingPointType			MovingPointType;
+      typedef typename RegistrationTopologyType::TargetPointType		  TargetPointType;
 		};
 
 	}

@@ -25,7 +25,7 @@
 #define __ITK_MULTI_RES_IMAGE_REGISTRATION_ALGORITHM_TPP
 
 #include "mapAlgorithmException.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
