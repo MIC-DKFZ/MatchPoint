@@ -21,10 +21,10 @@
 */
 
 
-#ifndef __MAP_FIELD_COMBINATION_FUNCTOR_INTERFACE_TPP
-#define __MAP_FIELD_COMBINATION_FUNCTOR_INTERFACE_TPP
+#ifndef __MAP_COMBINATION_FUNCTOR_INTERFACE_TPP
+#define __MAP_COMBINATION_FUNCTOR_INTERFACE_TPP
 
-#include "mapFieldCombinationFunctorInterface.h"
+#include "mapCombinationFunctorInterface.h"
 
 namespace map
 {
@@ -35,7 +35,7 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 			void
-			FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			setUsePadding(bool usePadding)
 			{
 				_usePadding = usePadding;
@@ -43,7 +43,7 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 			void
-			FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			setPaddingVector(const PaddingVectorType& vector)
 			{
 				_paddingVector = vector;
@@ -51,7 +51,7 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 			bool
-			FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			getUsePadding() const
 			{
 				return _usePadding;
@@ -59,28 +59,28 @@ namespace map
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 			const typename
-			FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::PaddingVectorType&
+			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::PaddingVectorType&
 
-			FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			getPaddingVector() const
 			{
 				return _paddingVector;
 			};
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			FieldCombinationFunctorInterface() : _usePadding(false)
+			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+			CombinationFunctorInterface() : _usePadding(false)
 			{
 				_paddingVector.Fill(0.0);
 			};
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			~FieldCombinationFunctorInterface() {};
+			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+			~CombinationFunctorInterface() {};
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 			void
-			FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
 				os << indent << "Use padding:    " << _usePadding << std::endl;

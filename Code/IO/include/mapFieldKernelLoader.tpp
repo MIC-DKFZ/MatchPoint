@@ -110,16 +110,15 @@ namespace map
             bool usesNullVector = this->hasNullVector(request, nullVector);
 
 			typedef typename
-			::map::core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
-			KernelType;
+          ::map::core::PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelType;
 			typename KernelType::Pointer spCachedKernel = KernelType::New();
 
 			typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
 			typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath);
 
-			typename KernelType::FieldType::Pointer spField = spFunctor->generateField();
+      typename FunctorsType::TransformType::Pointer spFieldTransform = spFunctor->generateTransform();
 
-			spCachedKernel->setField(*(spField.GetPointer()));
+      spCachedKernel->setTransformModel(spFieldTransform.GetPointer());
 			spCachedKernel->setNullVectorUsage(usesNullVector);
 			spCachedKernel->setNullVector(nullVector);
 			spKernel = spCachedKernel;

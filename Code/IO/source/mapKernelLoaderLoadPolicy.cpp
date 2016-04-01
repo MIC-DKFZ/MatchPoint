@@ -80,16 +80,6 @@ namespace map
 				mapLogWarningObjMacro("InvertingFieldKernelLoader<3,3> was not added because it was already on the service stack!");
 			}
 
-			if (!loader.addProviderByPolicy(LazyFileFieldKernelLoader<2, 2>::New()))
-			{
-				mapLogWarningObjMacro("LazyFileFieldKernelLoader<2,2> was not added because it was already on the service stack!");
-			}
-
-			if (!loader.addProviderByPolicy(LazyFileFieldKernelLoader<3, 3>::New()))
-			{
-				mapLogWarningObjMacro("LazyFileFieldKernelLoader<3,3> was not added because it was already on the service stack!");
-			}
-
 			if (!loader.addProviderByPolicy(FieldKernelLoader<2, 2>::New()))
 			{
 				mapLogWarningObjMacro("FieldKernelLoader<2,2> was not added because it was already on the service stack!");
@@ -99,6 +89,16 @@ namespace map
 			{
 				mapLogWarningObjMacro("FieldKernelLoader<3,3> was not added because it was already on the service stack!");
 			}
+
+      if (!loader.addProviderByPolicy(LazyFileFieldKernelLoader<2, 2>::New()))
+      {
+          mapLogWarningObjMacro("LazyFileFieldKernelLoader<2,2> was not added because it was already on the service stack!");
+      }
+
+      if (!loader.addProviderByPolicy(LazyFileFieldKernelLoader<3, 3>::New()))
+      {
+          mapLogWarningObjMacro("LazyFileFieldKernelLoader<3,3> was not added because it was already on the service stack!");
+      }
 		}
 
 

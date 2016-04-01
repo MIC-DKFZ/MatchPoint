@@ -24,14 +24,14 @@
 #define __MAP_MATRIX_MODEL_BASED_KERNEL_WRITER_H
 
 #include "mapRegistrationKernelWriterBase.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 
 namespace map
 {
 	namespace io
 	{
 		/*! @class MatrixModelBasedKernelWriter
-		* @brief Provider that is able to store ModelBasedRegistrationKernels that are based on a matrix.
+		* @brief Provider that is able to store PreCachedRegistrationKernel that are based on a matrix.
 		*
 		* If the tranformation model of the given kernel is based on a matrix
 		* the writer will directly store it in the SDElement.
@@ -58,7 +58,7 @@ namespace map
 			typedef typename Superclass::KernelBaseType	KernelBaseType;
 			typedef typename Superclass::KernelBasePointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
-			typedef core::ModelBasedRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
+			typedef core::PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request. Thus if the kernel is model based and a matrix

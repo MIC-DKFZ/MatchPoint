@@ -28,6 +28,7 @@
 #include "mapRepresentationException.h"
 
 #include "itkImageFileReader.h"
+#include "itkDisplacementFieldTransform.h"
 #include "itkMetaImageIO.h"
 
 namespace map
@@ -37,46 +38,96 @@ namespace map
 		namespace functors
 		{
 
+        /*! Helper class for a workaround.
+        * right now we only support symmetric inversion. Must be implemented later on.
+        * Template specialization allows the compiling of the code even in unsupported
+        * cases.
+        * @todo: Implement suitable solutions for unsymmetric cases (like VectorCombinationPolicy)
+        */
+        template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        class FieldByFileLoadFunctorHelper
+        {
+        public:
+            typedef typename FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::TransformPointer TransformPointer;
+            typedef typename
+                FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
+                InFieldRepresentationType;
+
+            static inline TransformPointer generate(const ::map::core::String& filePath,
+                const InFieldRepresentationType* pInFieldRepresentation)
+            {
+                mapExceptionStaticMacro(ExceptionObject,
+                    << "Error unsymmetric field inversion not implemented yet.");
+                return NULL;
+            }
+        };
+
+        template <unsigned int VDimensions>
+        class FieldByFileLoadFunctorHelper<VDimensions, VDimensions>
+        {
+        public:
+            typedef typename FieldByFileLoadFunctor<VDimensions, VDimensions>::FieldType FieldType;
+            typedef typename FieldByFileLoadFunctor<VDimensions, VDimensions>::TransformType TransformType;
+            typedef typename FieldByFileLoadFunctor<VDimensions, VDimensions>::TransformPointer TransformPointer;
+            typedef typename FieldByFileLoadFunctor<VDimensions, VDimensions>::InFieldRepresentationType
+                InFieldRepresentationType;
+
+            typedef typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
+
+            static inline TransformPointer generate(const ::map::core::String& filePath,
+                const InFieldRepresentationType* pInFieldRepresentation)
+            {
+                typedef ::itk::ImageFileReader< FieldType > FieldReaderType;
+                typename FieldReaderType::Pointer spFieldReader = FieldReaderType::New();
+
+                typename FieldType::Pointer spField = NULL;
+
+                try
+                {
+                    spFieldReader->SetFileName(filePath.c_str());
+                    spField = spFieldReader->GetOutput();
+                    spFieldReader->Update();
+                }
+                catch (itk::ExceptionObject& e)
+                {
+                    e.SetDescription(String("Error in FieldByFileLoadFunctor while loading field. File name: ")+ filePath +String(". Description: ") +
+                        e.GetDescription());
+                    throw;
+                }
+                catch (const std::exception& e)
+                {
+                    mapExceptionStaticMacro(ExceptionObject, << "Error in FieldByFileLoadFunctor while loading field. File name: " << filePath << ". Description: " <<
+                        e.what());
+                }
+                catch (...)
+                {
+                    mapExceptionStaticMacro(ExceptionObject, <<
+                        "Unknown error in FieldByFileLoadFunctor while loading field. File name: " << filePath);
+                }
+
+                /**@TODO Have to add check of the field representation (the specified one and the one set
+                set in the functor.**/
+                //Superclass::_spInFieldRepresentation = createFieldRepresentation(*spField).GetPointer();
+
+                typedef typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
+                typename FieldTransformType::Pointer spResult = FieldTransformType::New();
+                spResult->SetDisplacementField(spField);
+                return spResult.GetPointer();
+            }
+        };
+
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			typename FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::FieldPointer
+      typename FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::TransformPointer
 			FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::
-			generateField() const
+      generateTransform() const
 			{
 				mapLogInfoMacro( << "Generate field by file loading. File name: " << _filePath);
 
-				typedef ::itk::ImageFileReader< FieldType > FieldReaderType;
-				typename FieldReaderType::Pointer spFieldReader  = FieldReaderType::New();
+        TransformPointer spResult =
+            FieldByFileLoadFunctorHelper<VInputDimensions, VOutputDimensions>::generate(_filePath,
+            Superclass::_spInFieldRepresentation);
 
-				FieldPointer spField = NULL;
-
-				try
-				{
-					spFieldReader->SetFileName(_filePath.c_str());
-					spField = spFieldReader->GetOutput();
-					spFieldReader->Update();
-				}
-				catch (itk::ExceptionObject& e)
-				{
-					e.SetDescription(String("Error in FieldByFileLoadFunctor while loading field. Description: ") +
-									 e.GetDescription());
-					throw;
-				}
-				catch (const std::exception& e)
-				{
-					mapDefaultExceptionMacro( << "Error in FieldByFileLoadFunctor while loading field. Description: " <<
-											  e.what());
-				}
-				catch (...)
-				{
-					mapDefaultExceptionMacro( <<
-											  "Unknown error in FieldByFileLoadFunctor while loading field. File name: " << _filePath);
-				}
-
-				/**@TODO Have to add check of the field representation (the specified one and the one set
-				 set in the functor.**/
-				//Superclass::_spInFieldRepresentation = createFieldRepresentation(*spField).GetPointer();
-
-				return spField;
+        return spResult;
 			}
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

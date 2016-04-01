@@ -110,8 +110,7 @@ namespace map
             bool usesNullVector = this->hasNullVector(request, nullVector);
 
 			typedef typename
-			::map::core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
-			KernelType;
+			::map::core::LazyRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
 			typename KernelType::Pointer spLazyKernel = KernelType::New();
 
 			typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
@@ -121,7 +120,7 @@ namespace map
 
 			typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath, spFieldDescriptor);
 
-			spLazyKernel->setFieldFunctor(*(spFunctor.GetPointer()));
+			spLazyKernel->setTransformFunctor(spFunctor.GetPointer());
 			spLazyKernel->setNullVectorUsage(usesNullVector);
 			spLazyKernel->setNullVector(nullVector);
 

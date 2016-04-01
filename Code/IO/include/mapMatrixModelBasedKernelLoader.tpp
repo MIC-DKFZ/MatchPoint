@@ -126,7 +126,7 @@ namespace map
 				mapExceptionMacro(::map::core::ServiceException, << "Error: cannot load kernel. Reason: no matrix found.");
 			}
 
-			typedef typename KernelType::TransformType::MatrixType MatrixType;
+      typedef typename KernelBaseType::TransformType::MatrixType MatrixType;
 			MatrixType matrix;
 
 			try
@@ -148,7 +148,7 @@ namespace map
 				mapExceptionMacro(::map::core::ServiceException, << "Error: cannot load kernel. Reason: no offset found.");
 			}
 
-			typedef typename KernelType::TransformType::OutputVectorType OutputVectorType;
+      typedef typename KernelBaseType::TransformType::OutputVectorType OutputVectorType;
 			OutputVectorType offset;
 
 			try

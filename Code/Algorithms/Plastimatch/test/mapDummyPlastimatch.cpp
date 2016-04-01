@@ -80,8 +80,8 @@ int main(int argc, char* argv[])
     typedef itk::TranslationTransform<map::core::continuous::ScalarType, 3>
 	TransformType;
 
-	FunctorType::TransformModelType::Pointer spModel = TransformType::New().GetPointer();
-	FunctorType::TransformModelType::ParametersType params(3);
+    TransformType::Pointer spModel = TransformType::New().GetPointer();
+    TransformType::ParametersType params(3);
 	params[0] = 10.0;
 	params[1] = -16.0;
 	params[2] = -5.0;
@@ -93,10 +93,9 @@ int main(int argc, char* argv[])
 	FunctorType::InFieldRepresentationType::Pointer spInRep = map::core::createFieldRepresentation(*
 			(spTargetImage.GetPointer()));
 
-	FunctorType::Pointer spFunc = FunctorType::New(*spModel, spInRep);
-	FunctorType::FieldPointer spField = spFunc->generateField();
+  ::map::core::RegistrationTopology<3,3>::DirectFieldPointer spField = ::map::core::generateFieldFromTransform<3, 3>(spModel, spInRep);
 
-	typedef ::itk::ImageFileWriter< typename FunctorType::FieldType  > FieldWriterType;
+  typedef ::itk::ImageFileWriter< ::map::core::RegistrationTopology<3, 3>::DirectFieldType  > FieldWriterType;
 	FieldWriterType::Pointer  spFieldWriter  = FieldWriterType::New();
 
 	spFieldWriter->SetFileName(outputPath.c_str());

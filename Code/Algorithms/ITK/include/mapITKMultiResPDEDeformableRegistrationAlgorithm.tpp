@@ -24,13 +24,7 @@
 #ifndef __ITK_MULTI_RES_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_TPP
 #define __ITK_MULTI_RES_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_TPP
 
-#include <itkHistogramMatchingImageFilter.h>
-
 #include "mapAlgorithmException.h"
-#include "mapFieldBasedRegistrationKernels.h"
-#include "mapInverseRegistrationKernelGenerator.h"
-#include "mapRegistrationManipulator.h"
-#include "mapAlgorithmWrapperEvent.h"
 #include "mapMetaProperty.h"
 
 namespace map

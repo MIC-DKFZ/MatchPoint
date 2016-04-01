@@ -161,11 +161,11 @@ namespace map
 			CHECK_EQUAL(FSL3DRegistrationAlgorithmType::AlgorithmState::Finalized,
 						spAlgorithm->getCurrentState());
 
-			const core::PreCachedRegistrationKernel<3, 3>* pInverseKernel =
-				dynamic_cast<const core::PreCachedRegistrationKernel<3, 3>* >(&
+			const core::RegistrationKernel<3, 3>* pInverseKernel =
+          dynamic_cast<const core::RegistrationKernel<3, 3>* >(&
 						(spRegistration->getInverseMapping()));
-			::map::core::PreCachedRegistrationKernel<3, 3>::ParametersType parameters =
-				pInverseKernel->getParameters();
+      ::map::core::RegistrationKernel<3, 3>::TransformType::ParametersType parameters =
+				pInverseKernel->getTransformModel()->GetParameters();
 
 			CHECK_CLOSE(1.0574, parameters[0], 0.0001);
 			CHECK_CLOSE(0.0110152, parameters[1], 0.0001);

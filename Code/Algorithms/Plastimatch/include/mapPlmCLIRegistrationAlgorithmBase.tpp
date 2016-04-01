@@ -28,7 +28,7 @@
 #include "itkImage.h"
 
 #include "mapAlgorithmException.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
@@ -536,7 +536,14 @@ namespace map
 				FunctorType;
 				typename FunctorType::Pointer spFunctor = FunctorType::New(_finalFieldTempPath);
 
-				FinalFieldPointer spField = spFunctor->generateField();
+        FinalFieldPointer spField;
+
+        typedef typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, TTargetImage::ImageDimension> FieldTransformType;
+        typename FieldTransformType::Pointer castedFieldTransform = dynamic_cast<FieldTransformType*>(spFunctor->generateTransform().GetPointer());
+        if (castedFieldTransform)
+        { //try to directly use the field
+            spField = dynamic_cast<FinalFieldType*>(castedFieldTransform->GetDisplacementField());
+        }
 
 				if (spField.IsNull())
 				{
@@ -586,11 +593,13 @@ namespace map
 					_spFinalizedField = this->generateField();
 
 					typedef typename
-					map::core::FieldKernels<Superclass::TargetDimensions, Superclass::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
-					InverseKernelType;
-					typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
+					map::core::PreCachedRegistrationKernel<Superclass::TargetDimensions, Superclass::MovingDimensions> InverseKernelType;
 
-					spIKernel->setField(*(_spFinalizedField.GetPointer()));
+          typename FieldTransformType::Pointer transform = FieldTransformType::New();
+          transform->SetDisplacementField(_spFinalizedField.GetPointer());
+
+          typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
+          spIKernel->setTransformModel(transform);
 
 					//now build the direct kernel via inversion of the inverse kernel
 					typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>

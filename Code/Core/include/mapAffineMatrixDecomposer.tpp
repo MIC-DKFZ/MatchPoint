@@ -27,6 +27,7 @@
 #define __AFFINE_MATRIX_DECOMPOSER_TPP
 
 #include "mapAffineMatrixDecomposer.h"
+#include "mapRegistrationKernel.h"
 
 namespace map
 {
@@ -46,7 +47,13 @@ namespace map
 												"Error decomposing affine matrix of kernel. Passed kernel pointer is NULL.");
 			};
 
-      return pKernel->getAffineMatrixDecomposition(matrix, offset);
+      const RegistrationKernel<VInputDimensions, VOutputDimensions>* castedKernel = dynamic_cast<const RegistrationKernel<VInputDimensions, VOutputDimensions>*>(pKernel);
+
+      if (castedKernel)
+      {
+          result = castedKernel->getAffineMatrixDecomposition(matrix, offset);
+      }
+      return result;
 		};
 
 	}

@@ -21,12 +21,12 @@
 */
 
 
-#ifndef __MAP_MODEL_MODEL_KERNEL_COMBINATOR_TPP
-#define __MAP_MODEL_MODEL_KERNEL_COMBINATOR_TPP
+#ifndef __MAP_PRE_CACHED_KERNEL_COMBINATOR_TPP
+#define __MAP_PRE_CACHED_KERNEL_COMBINATOR_TPP
 
 #include "itkMatrixOffsetTransformBase.h"
-
-#include "mapModelModelKernelCombinator.h"
+#include "itkCompositeTransform.h"
+#include "mapPreCachedKernelCombinator.h"
 #include "mapServiceException.h"
 
 namespace map
@@ -35,8 +35,8 @@ namespace map
 	{
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		typename ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::CombinedKernelBasePointer
-		ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+		typename PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::CombinedKernelBasePointer
+		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
 		combineKernels(const RequestType& request,
 					   const InputFieldRepresentationType* pInputFieldRepresentation,
 					   bool usePadding,
@@ -61,22 +61,25 @@ namespace map
 
 			CombinedKernelBasePointer spResult = this->combineAsMatrixKernels(pKernel1, pKernel2);
 
-			if (spResult.IsNull())
-			{
-				/*!@todo Must implement combination of non matrix based transform models. Therefore a kinde of itk::CombinationTransform is needed.
-				 current insight journal implementation of Steiner is a good start but has flaws (only access to the parameters of the second transform)
-				 Exception is a reminder for the open business.
-				 */
-				mapExceptionMacro(ServiceException,
-								  << "Error: TransformModel combination for non matrix based transformation models is not implemented yet.");
-			}
+      if (spResult.IsNull() && VInputDimensions == VInterimDimensions && VInterimDimensions == VOutputDimensions)
+      { //composite approach
+          typedef itk::CompositeTransform<::map::core::continuous::ScalarType, VOutputDimensions> CompositeType;
+          CompositeType::Pointer composite = CompositeType::New();
+          composite->AddTransform(pKernel1->getTransformModel());
+          composite->AddTransform(pKernel2->getTransformModel());
+          typename NewKernelType::Pointer newKernel = NewKernelType::New();
+          newKernel->setTransformModel(newModel);
+          spResult = dynamic_cast<CombinedKernelBaseType*>(newKernel.GetPointer());
+      }
+
+      assert(spResult.IsNotNull());
 
 			return spResult;
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		typename ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::CombinedKernelBasePointer
-		ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+		typename PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::CombinedKernelBasePointer
+		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
 		combineAsMatrixKernels(const Kernel1Type* kernel1, const Kernel2Type* kernel2) const
 		{
 
@@ -129,7 +132,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		bool
-		ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
 		canHandleRequest(const RequestType& request) const
 		{
 			// get the two kernels from the request (which is a RegistrationCombinationRequest object)
@@ -137,12 +140,12 @@ namespace map
 			const Kernel1Type* pKernel1 = dynamic_cast<const Kernel1Type*>(request._spKernel1.GetPointer());
 			const Kernel2Type* pKernel2 = dynamic_cast<const Kernel2Type*>(request._spKernel2.GetPointer());
 
-			return ((pKernel1 != NULL) && (pKernel2 != NULL));
+      return ((pKernel1 != NULL) && (pKernel2 != NULL)) && (VInputDimensions == VInterimDimensions && VInterimDimensions == VOutputDimensions);
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		String
-		ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
 		getProviderName() const
 		{
 			return Self::getStaticProviderName();
@@ -150,22 +153,22 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		String
-		ModelModelKernelCombinator<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+		PreCachedKernelCombinator<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
 			OStringStream os;
-			os << "ModelModelKernelCombinator<" << VInputDimensions << "," << VInterimDimensions << "," <<
+			os << "PreCachedKernelCombinator<" << VInputDimensions << "," << VInterimDimensions << "," <<
 			   VOutputDimensions << ">";
 			return os.str();
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
 		String
-		ModelModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
 		getDescription() const
 		{
 			OStringStream os;
-			os << "ModelModelKernelCombinator, VInputDimensions: " << VInputDimensions <<
+			os << "PreCachedKernelCombinator, VInputDimensions: " << VInputDimensions <<
 			   ", VInterimDimensions: " << VInterimDimensions << ", VOutputDimensions: " << VOutputDimensions <<
 			   ".";
 			return os.str();

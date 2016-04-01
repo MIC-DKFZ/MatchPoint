@@ -77,8 +77,8 @@ namespace map
 		CombinedRegistrationKernel<VInputDimensions, VInterimDimensions, VOutputDimensions>::
     setTransformFunctor(const TransformGenerationFunctorType* functor)
 		{
-			const FieldCombinationFunctorInterfaceType* pInterface =
-				dynamic_cast<const FieldCombinationFunctorInterfaceType*>(&functor);
+			const CombinationFunctorInterfaceType* pInterface =
+				dynamic_cast<const CombinationFunctorInterfaceType*>(&functor);
 			assert(pInterface);
 
 			_pCombinationInterface = pInterface;

@@ -24,7 +24,7 @@
 #define __MAP_EXPANDING_FIELD_KERNEL_WRITER_H
 
 #include "mapRegistrationKernelWriterBase.h"
-#include "mapFieldBasedRegistrationKernel.h"
+#include "mapRegistrationKernel.h"
 
 namespace map
 {
@@ -58,7 +58,7 @@ namespace map
 			typedef typename Superclass::KernelBaseType	KernelBaseType;
 			typedef typename Superclass::KernelBasePointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
-			typedef core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
+			typedef core::RegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request. Thus if the kernel is field based with a concrete vector field or expanding is

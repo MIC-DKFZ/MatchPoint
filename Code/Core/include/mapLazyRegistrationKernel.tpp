@@ -26,8 +26,7 @@
 #include "mapExceptionObjectMacros.h"
 #include "mapPointVectorCombinationPolicy.h"
 
-#include "itkVectorLinearInterpolateImageFunction.h"
-#include "mapNULLVectorAwareLinearInterpolateImageFunction.h"
+#include "itkMutexLockHolder.h"
 
 namespace map
 {
@@ -113,7 +112,9 @@ namespace map
     
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
 		LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::
-        LazyRegistrationKernel() : _spGenerationFunctor(NULL), _spTransform(NULL)
+        LazyRegistrationKernel() : _spGenerationFunctor(NULL), _spTransform(NULL), _nullVector(
+        ::itk::NumericTraits< typename MappingVectorType::ValueType >::NonpositiveMin()),
+        _useNullVector(false)
 		{
 		};
 

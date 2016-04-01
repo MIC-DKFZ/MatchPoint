@@ -126,11 +126,11 @@ namespace map
 
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
 
-      const core::ModelBasedRegistrationKernel<3, 3>* pDirectKernel =
-        dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&
+      const core::RegistrationKernel<3, 3>* pDirectKernel =
+          dynamic_cast<const core::RegistrationKernel<3, 3>* >(&
         (spRegistration->getDirectMapping()));
-      core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
-        pDirectKernel->getParameters();
+      core::RegistrationKernel<3, 3>::TransformType::ParametersType parameters =
+        pDirectKernel->getTransformModel()->GetParameters();
 
       CHECK_CLOSE(0.0, parameters[0], 0.01);
       CHECK_CLOSE(0.0, parameters[1], 0.01);
@@ -139,10 +139,10 @@ namespace map
       CHECK_CLOSE(-17.0, parameters[4], 0.01);
       CHECK_CLOSE(-5.0, parameters[5], 0.01);
 
-			const core::ModelBasedRegistrationKernel<3, 3>* pInverseKernel =
-				dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&
+      const core::RegistrationKernel<3, 3>* pInverseKernel =
+          dynamic_cast<const core::RegistrationKernel<3, 3>* >(&
 						(spRegistration->getInverseMapping()));
-			parameters = pInverseKernel->getParameters();
+      parameters = pInverseKernel->getTransformModel()->GetParameters();
 
 			CHECK_CLOSE(13.0, parameters[9], 0.01);
 			CHECK_CLOSE(17.0, parameters[10], 0.01);

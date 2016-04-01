@@ -20,32 +20,35 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-#ifndef __MAP_FIELD_MODEL_KERNEL_COMBINATOR_H
-#define __MAP_FIELD_MODEL_KERNEL_COMBINATOR_H
+
+#ifndef __MAP_PRE_CACHED_KERNEL_COMBINATOR_H
+#define __MAP_PRE_CACHED_KERNEL_COMBINATOR_H
 
 #include "mapRegistrationKernelCombinatorBase.h"
-#include "mapFieldBasedRegistrationKernel.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 
 namespace map
 {
 	namespace core
 	{
-		/*! @class FieldModelKernelCombinator
-		* @brief Combinator class that combines a field kernel and a subsequent transform model kernel to a new kernel.
-		*
+		/*! @class PreCachedKernelCombinator
+		* @brief Combinator class that combines two PreCached kernels to a new kernel.
+		* If the Kernels can be decomposed to a matrix transform, the will be directly composed to
+    * a new matrix transform. In all other cases they will be packed into a aggregating transform
+    * wrapper.
+    * @remark Currently it can only handle combinations of same dimensionality
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the  first kernel.
 		* @tparam VInterimDimensions Dimensions of the output space of the first kernel and the input space of the second.
 		* @tparam VOutputDimensions Dimensions of the output space of the second kernel.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		class FieldModelKernelCombinator : public
+		class PreCachedKernelCombinator : public
 			RegistrationKernelCombinatorBase< VInputDimensions, VInterimDimensions, VOutputDimensions >
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef FieldModelKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >  Self;
+			typedef PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >  Self;
 			typedef RegistrationKernelCombinatorBase< VInputDimensions, VInterimDimensions, VOutputDimensions >
 			Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
@@ -66,20 +69,20 @@ namespace map
 
 			typedef typename Superclass::PaddingVectorType							PaddingVectorType;
 
-			typedef FieldBasedRegistrationKernel<VInputDimensions, VInterimDimensions> Kernel1Type;
+			typedef PreCachedRegistrationKernel<VInputDimensions, VInterimDimensions> Kernel1Type;
 			typedef typename Kernel1Type::Pointer                        Kernel1Pointer;
 
-			typedef ModelBasedRegistrationKernel<VInterimDimensions, VOutputDimensions>  Kernel2Type;
+			typedef PreCachedRegistrationKernel<VInterimDimensions, VOutputDimensions>  Kernel2Type;
 			typedef typename Kernel2Type::Pointer                        Kernel2Pointer;
 
-			itkTypeMacro(FieldModelKernelCombinator, RegistrationKernelCombinatorBase);
+			itkTypeMacro(PreCachedKernelCombinator, RegistrationKernelCombinatorBase);
 			itkNewMacro(Self);
 
 			/*! Combines two kernel.
 				 * Returns a smpart pointer to an kernel that realizes the combination of two registration kernel.
 				 * @eguarantee strong
 				 * @param [in] request Referenz to the request that contains the both kernels that should be combined
-				 * @param [in] pInputFieldRepresentation Pointer to the field representation of the input space of the combined kernel; may not be null.
+				 * @param [in] pInputFieldRepresentation Pointer to the field representation of the input space of the combined kernel; may be null.
 				 * @param [in] usePadding Indicicates how the recombinator and its functor should handel points that cannot be mapped
 			* through both kernels (e.g. a point that is mapped by the first kernel outside of the supported region of the second
 			* registration kernel). If the _usePadding is true, _paddingVector will be used as padding value in each of the mentioned
@@ -88,7 +91,7 @@ namespace map
 				 * @return Smart pointer to the inverse kernel.
 				 * @pre input representation must be coverd by the first kernel and the mapped input representation must be covered by the input
 				 * representation of the second kernel.
-			* @pre pInputFieldRepresentation must be set and not NULL.
+				 * @pre in its current implementation matrix combination is only possible when input, interim and output dimension are equal.
 				 */
 			virtual CombinedKernelBasePointer combineKernels(const RequestType& request,
 					const InputFieldRepresentationType* pInputFieldRepresentation,
@@ -117,11 +120,19 @@ namespace map
 			virtual String getDescription() const;
 
 		protected:
-			FieldModelKernelCombinator() {};
-			virtual ~FieldModelKernelCombinator() {};
+			PreCachedKernelCombinator() {};
+			virtual ~PreCachedKernelCombinator() {};
+
+			/* Member tries to combine the given kernels as matrices and generate a new matrix
+			 * based combined kernel. This will only be successfull if both support matrix
+			 * decomposition.
+			 * @return Null if kernels cannot be combined as matrices. Otherwise it returns the pointer
+			   to the combination result.*/
+			CombinedKernelBasePointer combineAsMatrixKernels(const Kernel1Type* kernel1,
+					const Kernel2Type* kernel2) const;
 
 		private:
-			FieldModelKernelCombinator(const Self&);  //purposely not implemented
+			PreCachedKernelCombinator(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented
 		};
 
@@ -129,7 +140,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapFieldModelKernelCombinator.tpp"
+# include "mapPreCachedKernelCombinator.tpp"
 #endif
 
 #endif

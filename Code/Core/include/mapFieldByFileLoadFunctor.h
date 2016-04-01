@@ -23,7 +23,7 @@
 #ifndef __MAP_FIELD_BY_FILE_LOAD_FUNCTOR_H
 #define __MAP_FIELD_BY_FILE_LOAD_FUNCTOR_H
 
-#include "mapFieldGenerationFunctor.h"
+#include "mapTransformGenerationFunctor.h"
 #include "mapMacros.h"
 
 namespace map
@@ -48,12 +48,12 @@ namespace map
 			* @tparam VOutputDimensions Dimensions of the output space the field should map into.
 			*/
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			class FieldByFileLoadFunctor: public FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
+			class FieldByFileLoadFunctor: public TransformGenerationFunctor<VInputDimensions, VOutputDimensions>
 			{
 			public:
 				/*! Standard class typedefs. */
 				typedef FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>  Self;
-				typedef FieldGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
+				typedef TransformGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
 				typedef itk::SmartPointer<Self>        Pointer;
 				typedef itk::SmartPointer<const Self>  ConstPointer;
 
@@ -64,16 +64,18 @@ namespace map
 				typedef typename Superclass::InFieldRepresentationConstPointer  InFieldRepresentationConstPointer;
 				typedef typename Superclass::OutFieldRepresentationType         OutFieldRepresentationType;
 				typedef typename Superclass::OutFieldRepresentationConstPointer OutFieldRepresentationConstPointer;
-				typedef typename Superclass::FieldType                          FieldType;
-				typedef typename Superclass::FieldPointer                       FieldPointer;
+        typedef typename RegistrationTopology < VInputDimensions,
+            VOutputDimensions >::DirectFieldType                          FieldType;
+        typedef typename Superclass::TransformType                      TransformType;
+        typedef typename Superclass::TransformPointer                   TransformPointer;
 
-				itkTypeMacro(FieldByFileLoadFunctor, FieldGenerationFunctor);
+				itkTypeMacro(FieldByFileLoadFunctor, TransformGenerationFunctor);
 
-				/*! Generates the field an returns the result as a smart pointer.
-				 * @eguarantee should be strong
-				 * @return Smart pointer to the generated field.
-				 */
-				virtual FieldPointer generateField() const;
+        /*! Generates the field an returns the result as a smart pointer.
+        * @eguarantee should be strong
+        * @return Smart pointer to the generated field.
+        */
+        virtual TransformPointer generateTransform() const override;
 
 				/*! Returns the file path from where the field will be/was loaded.
 				 * @eguarantee no fail

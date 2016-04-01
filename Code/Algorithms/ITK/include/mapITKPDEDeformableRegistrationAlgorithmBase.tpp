@@ -156,8 +156,7 @@ namespace map
 				{
 					//now build the inverse kernel (main kernel of a image based registration algorithm)
 					typedef typename
-					::map::core::FieldKernels<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
-					InverseKernelType;
+              ::map::core::PreCachedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> InverseKernelType;
 
           typename FieldTransformType::Pointer transform = FieldTransformType::New();
           transform->SetDisplacementField(_internalRegistrationMethod->GetDisplacementField());

@@ -20,19 +20,18 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-#ifndef __MAP_MODEL_FIELD_KERNEL_COMBINATOR_H
-#define __MAP_MODEL_FIELD_KERNEL_COMBINATOR_H
+#ifndef __MAP_LAZY_FIELD_KERNEL_COMBINATOR_H
+#define __MAP_LAZY_FIELD_KERNEL_COMBINATOR_H
 
 #include "mapRegistrationKernelCombinatorBase.h"
-#include "mapFieldBasedRegistrationKernel.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapLazyRegistrationKernel.h"
 
 namespace map
 {
 	namespace core
 	{
-		/*! @class ModelFieldKernelCombinator
-		* @brief Combinator class that combines a transform model kernel and a subsequent field kernel to a new kernel.
+		/*! @class LazyFieldKernelCombinator
+		* @brief Combinator class that combines two field kernels to a new kernel.
 		*
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the  first kernel.
@@ -40,12 +39,12 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the second kernel.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		class ModelFieldKernelCombinator : public
+		class LazyFieldKernelCombinator : public
 			RegistrationKernelCombinatorBase< VInputDimensions, VInterimDimensions, VOutputDimensions >
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef ModelFieldKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >  Self;
+			typedef LazyFieldKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >  Self;
 			typedef RegistrationKernelCombinatorBase< VInputDimensions, VInterimDimensions, VOutputDimensions >
 			Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
@@ -66,13 +65,13 @@ namespace map
 
 			typedef typename Superclass::PaddingVectorType							PaddingVectorType;
 
-			typedef ModelBasedRegistrationKernel<VInputDimensions, VInterimDimensions>  Kernel1Type;
+			typedef LazyRegistrationKernel<VInputDimensions, VInterimDimensions>  Kernel1Type;
 			typedef typename Kernel1Type::Pointer                        Kernel1Pointer;
 
-			typedef FieldBasedRegistrationKernel<VInterimDimensions, VOutputDimensions> Kernel2Type;
+			typedef LazyRegistrationKernel<VInterimDimensions, VOutputDimensions> Kernel2Type;
 			typedef typename Kernel2Type::Pointer                        Kernel2Pointer;
 
-			itkTypeMacro(ModelFieldKernelCombinator, RegistrationKernelCombinatorBase);
+			itkTypeMacro(LazyFieldKernelCombinator, RegistrationKernelCombinatorBase);
 			itkNewMacro(Self);
 
 			/*! Combines two kernel.
@@ -117,11 +116,11 @@ namespace map
 			virtual String getDescription() const;
 
 		protected:
-			ModelFieldKernelCombinator() {};
-			virtual ~ModelFieldKernelCombinator() {};
+			LazyFieldKernelCombinator() {};
+			virtual ~LazyFieldKernelCombinator() {};
 
 		private:
-			ModelFieldKernelCombinator(const Self&);  //purposely not implemented
+			LazyFieldKernelCombinator(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented
 		};
 
@@ -129,7 +128,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapModelFieldKernelCombinator.tpp"
+# include "mapLazyFieldKernelCombinator.tpp"
 #endif
 
 #endif

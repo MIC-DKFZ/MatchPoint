@@ -26,7 +26,6 @@
 #include "mapInvertingFieldKernelWriter.h"
 #include "mapServiceException.h"
 #include "mapRegistrationFileTags.h"
-#include "mapFieldBasedRegistrationKernels.h"
 #include "mapConvert.h"
 #include "mapLogbook.h"
 #include "mapFileDispatch.h"

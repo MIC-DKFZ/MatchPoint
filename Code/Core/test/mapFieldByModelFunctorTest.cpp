@@ -30,7 +30,7 @@
 
 #include "itkScaleTransform.h"
 
-#include "itkImageRegionIterator.h"
+#include "mapArtifactGenerator.h"
 
 namespace map
 {
@@ -47,14 +47,14 @@ namespace map
 			//Model kernel generation
 			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 3> ScaleTransformType;
 
-			FunctorType::TransformModelType::Pointer spModel = ScaleTransformType::New().GetPointer();
+      FunctorType::TransformType::Pointer spModel = ScaleTransformType::New().GetPointer();
 
 			FunctorType::InFieldRepresentationType::SpacingType spacing(0.5);
 			FunctorType::InFieldRepresentationType::PointType origin;
 			origin.Fill(0);
 			FunctorType::InFieldRepresentationType::SizeType size;
 			size.fill(2);
-			FunctorType::TransformModelType::ParametersType params(3);
+      FunctorType::TransformType::ParametersType params(3);
 			params.fill(2.0);
 			spModel->SetParameters(params);
 
@@ -64,26 +64,27 @@ namespace map
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
 
-			FunctorType::Pointer spFunc = FunctorType::New(*spModel, spInRep);
+			FunctorType::Pointer spFunc = FunctorType::New(spModel, spInRep);
 
 
 			CHECK(spFunc.IsNotNull());
 
-			CHECK(spModel == spFunc->getTransformModel());
+      CHECK(spModel == spFunc->getSourceTransformModel());
 
 			FunctorType::Pointer spFuncAnother = dynamic_cast<FunctorType*>
 												 (spFunc->CreateAnother().GetPointer());
-			CHECK(spFuncAnother->getTransformModel() == spFunc->getTransformModel());
+      CHECK(spFuncAnother->getSourceTransformModel() == spFunc->getSourceTransformModel());
 			CHECK(spFuncAnother->getInFieldRepresentation() == spFunc->getInFieldRepresentation());
 			CHECK(spFuncAnother->GetNameOfClass() == spFunc->GetNameOfClass());
 
 			// test generateField
 
-			FunctorType::FieldPointer spField = NULL;
-			CHECK_NO_THROW(spField = spFunc->generateField());
-			CHECK(spField.IsNotNull());
+      FunctorType::TransformPointer spFieldTransform = NULL;
+      CHECK_NO_THROW(spFieldTransform = spFunc->generateTransform());
+      CHECK(spFieldTransform.IsNotNull());
+      FunctorType::FieldType::Pointer spField = testing::convertTransformToField(spFieldTransform.GetPointer());
 
-			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType>
+      lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformType>
 			tester;
 			tester.setReferenceTransform(spModel);
 			tester.setActualField(spField);

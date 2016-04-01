@@ -20,13 +20,12 @@
 // Subversion HeadURL: $HeadURL$
 */
 
-#ifndef __MAP_FIELD_BY_FIELD_MODEL_COMBINATION_FUNCTOR_H
-#define __MAP_FIELD_BY_FIELD_MODEL_COMBINATION_FUNCTOR_H
+#ifndef __MAP_GENERIC_FIELD_GENERATING_COMBINATION_FUNCTOR_H
+#define __MAP_GENERIC_FIELD_GENERATING_COMBINATION_FUNCTOR_H
 
-#include "mapFieldGenerationFunctor.h"
-#include "mapFieldCombinationFunctorInterface.h"
-#include "mapFieldBasedRegistrationKernel.h"
-#include "mapPreCachedRegistrationKernel.h"
+#include "mapTransformGenerationFunctor.h"
+#include "mapCombinationFunctorInterface.h"
+#include "mapRegistrationKernel.h"
 
 namespace map
 {
@@ -35,14 +34,15 @@ namespace map
 		namespace functors
 		{
 
-			/*! @class FieldByFieldModelCombinationFunctor
-			* @brief Functors generates a field by combining two mappings (field + transform)
+			/*! @class GenericFieldGeneratingCombinationFunctor
+			* @brief Functors generates a transform field by combining two kernels
 			*
-			* This field functors generates a field by combining two mappings (field, transform).
-			* The functor assumes that the field kernel maps from input into interim space and that
-			* the transform maps from interim space into output space.\n
+			* This functors generates a transform (displacement field) by combining two kernels.
 			* This functor needs the input field representation to be set, other wise it wouldn't
 			* be clear how to generate the field (size, spacing).
+      * The functor makes a mapping for each point of the input field representation through
+      * both kernels and computes the resulting combined transform factor in order to store
+      * it in the displacement field.
 			* The output field representation is not used by this functor.
 			*
 			* @ingroup RegFunctors
@@ -51,18 +51,18 @@ namespace map
 			* @tparam VOutputDimensions Dimensions of the output space the field should map into.
 			*/
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			class FieldByFieldModelCombinationFunctor: public
-				FieldGenerationFunctor<VInputDimensions, VOutputDimensions>,
-			public FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			class GenericFieldGeneratingCombinationFunctor: public
+				TransformGenerationFunctor<VInputDimensions, VOutputDimensions>,
+			public CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef FieldByFieldModelCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>
+				typedef GenericFieldGeneratingCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>
 				Self;
-				typedef FieldGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
+				typedef TransformGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
 				typedef itk::SmartPointer<Self>        Pointer;
 				typedef itk::SmartPointer<const Self>  ConstPointer;
-				typedef FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+				typedef CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
 				CombinationInterface;
 
 				typedef typename Superclass::InFieldRepresentationType            InFieldRepresentationType;
@@ -70,39 +70,20 @@ namespace map
 				typedef typename Superclass::OutFieldRepresentationType           OutFieldRepresentationType;
 				typedef typename Superclass::OutFieldRepresentationConstPointer
 				OutFieldRepresentationConstPointer;
-				typedef typename Superclass::FieldType                            FieldType;
-				typedef typename Superclass::FieldPointer                         FieldPointer;
-				typedef FieldBasedRegistrationKernel < VInputDimensions,
-						VInterimDimensions >          SourceFieldKernelType;
-				typedef typename SourceFieldKernelType::ConstPointer              SourceFieldKernelConstPointer;
-				typedef PreCachedRegistrationKernel < VInterimDimensions,
-						VOutputDimensions >          SourceModelKernelType;
-				typedef typename SourceModelKernelType::ConstPointer              SourceModelKernelConstPointer;
+        typedef typename RegistrationTopology < VInputDimensions,
+            VOutputDimensions >::DirectFieldType                          FieldType;
+        typedef typename Superclass::TransformType                      TransformType;
+        typedef typename Superclass::TransformPointer                   TransformPointer;
 				typedef typename CombinationInterface::SourceKernel1BaseType SourceKernel1BaseType;
 				typedef typename CombinationInterface::SourceKernel2BaseType SourceKernel2BaseType;
-				itkTypeMacro(FieldByFieldModelCombinationFunctor, FieldGenerationFunctor);
+
+        itkTypeMacro(GenericFieldGeneratingCombinationFunctor, TransformGenerationFunctor);
 
 				/*! Generates the field an returns the result as a smart pointer.
 				 * @eguarantee should be strong
 				 * @return Smart pointer to the generated field.
 				 */
-				virtual FieldPointer generateField() const;
-
-				/*! Returns a const pointer to the source field kernel that will be used in order
-				 * to generate the field.
-				 * @eguarantee no fail
-				 * @return Pointer to the source field kernel.
-				 * @post Return value is guaranteed not to be NULL.
-				 */
-				const SourceFieldKernelType* getSourceFieldKernel(void) const;
-
-				/*! Returns a const pointer to the source transformation model kernel that will be used
-				 * in order to generate the combined field.
-				 * @eguarantee no fail
-				 * @return Pointer to the transform model kernel.
-				 * @post Return value is guaranteed not to be NULL.
-				 */
-				const SourceModelKernelType* getSourceModelKernel(void) const;
+        virtual TransformPointer generateTransform() const override;
 
 				/*! Returns a const pointer to the first source kernel base (source field kernel)
 				* that will be used in order to generate the field.
@@ -110,7 +91,7 @@ namespace map
 				 * @return Pointer to the source field kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				virtual const SourceKernel1BaseType* get1stSourceKernelBase(void) const;
+				virtual const SourceKernel1BaseType* get1stSourceKernelBase(void) const override;
 
 				/*! Returns a const pointer to the second source kernel base (source model kernel)
 				* that will be used in order to generate the field.
@@ -118,19 +99,21 @@ namespace map
 				 * @return Pointer to the source field kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				virtual const SourceKernel2BaseType* get2ndSourceKernelBase(void) const;
+				virtual const SourceKernel2BaseType* get2ndSourceKernelBase(void) const override;
 
 				/*! Static methods that creates the functor.
 				 * Thus it is a specialized version of the itkNewMacro()
 				 * @eguarantee strong
-				 * @param [in] modelKernel Reference to the source transformation model that should be used.
-				 * @param [in] fieldKernel Reference to the source field kernel that should be used.
+				 * @param [in] kernel1 Pointer to the 1st source kernel that should be used.
+				 * @param [in] kernel2 Pointer to the 2nd source kernel that should be used.
 				 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
 				 * may not be null for this functor.
 				 * @return Smart pointer to the new functor
-				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				static Pointer New(const SourceFieldKernelType& fieldKernel,
-								   const SourceModelKernelType& modelKernel,
+				 * @pre kernel1 must be set, may not be NULL
+         * @pre kernel2 must be set, may not be NULL
+         * @pre pInFieldRepresentation must be set, may not be NULL*/
+        static Pointer New(const SourceKernel1BaseType* kernel1,
+            const SourceKernel2BaseType* kernel2,
 								   const InFieldRepresentationType* pInFieldRepresentation);
 
 				/*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
@@ -141,28 +124,31 @@ namespace map
 			protected:
 				/*! Protected constructor used by New.
 				 * @eguarantee strong
-				 * @param [in] modelKernel Reference to the source transformation model that should be used.
-				 * @param [in] fieldKernel Reference to the source field kernel that should be used.
+         * @param [in] kernel1 Pointer to the 1st source kernel that should be used.
+				 * @param [in] kernel2 Pointer to the 2nd source kernel that should be used.
 				 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
 				 * may not be null for this functor.
-				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				FieldByFieldModelCombinationFunctor(const SourceFieldKernelType& fieldKernel,
-													const SourceModelKernelType& modelKernel,
-													const InFieldRepresentationType* pInFieldRepresentation);
+				 * @return Smart pointer to the new functor
+				 * @pre kernel1 must be set, may not be NULL
+         * @pre kernel2 must be set, may not be NULL
+         * @pre pInFieldRepresentation must be set, may not be NULL*/
+          GenericFieldGeneratingCombinationFunctor(const SourceKernel1BaseType* kernel1,
+              const SourceKernel2BaseType* kernel2,
+              const InFieldRepresentationType* pInFieldRepresentation);
 
-				virtual ~FieldByFieldModelCombinationFunctor();
+				virtual ~GenericFieldGeneratingCombinationFunctor();
 
 				/*! The source field kernel.*/
-				SourceFieldKernelConstPointer _spSourceFieldKernel;
+        SourceKernel1BaseType _spSourceKernel1;
 
 				/*! The transformation model.*/
-				SourceModelKernelConstPointer _spSourceModelKernel;
+        SourceKernel2BaseType _spSourceKernel2;
 
 				/*! Methods invoked by itk::LightObject::Print().  */
 				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			private:
-				FieldByFieldModelCombinationFunctor(const Self&);  //purposely not implemented
+				GenericFieldGeneratingCombinationFunctor(const Self&);  //purposely not implemented
 				void operator=(const Self&);  //purposely not implemented
 			};
 
@@ -171,7 +157,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapFieldByFieldModelCombinationFunctor.tpp"
+ #include "mapGenericFieldGeneratingCombinationFunctor.tpp"
 #endif
 
 #endif

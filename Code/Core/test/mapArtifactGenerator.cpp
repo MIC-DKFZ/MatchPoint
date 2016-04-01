@@ -45,11 +45,8 @@ namespace map
 			params[1] = 0.4;
 			spTransform->SetParameters(params);
 
-			typedef core::functors::FieldByModelFunctor<2, 2> FunctorType;
-			FunctorType::Pointer spFieldFunctor = FunctorType::New(*spTransform, pRepDesc);
-			//uses this functor to generate the test field
-			FunctorType::FieldPointer spField = spFieldFunctor->generateField();
-
+      ::map::core::discrete::Elements<2>::VectorFieldType::Pointer spField = core::generateFieldFromTransform<2, 2>(spTransform, pRepDesc); 
+      
 			return spField;
 		}
 
@@ -66,5 +63,12 @@ namespace map
 
 			return spField;
 		}
+
+    ::map::core::discrete::Elements<2>::VectorFieldType::Pointer generate2DSumField(
+        const core::FieldRepresentationDescriptor<2>* pRepDesc)
+    {
+        return generateSumField<2>(pRepDesc);
+    }
+
 	} //namespace testing
 } //namespace map

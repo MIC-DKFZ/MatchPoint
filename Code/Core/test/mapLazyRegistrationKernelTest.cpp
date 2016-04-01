@@ -24,7 +24,7 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapLazyRegistrationKernel.h"
 #include "mapTestFieldGenerationFunctor.h"
 
 #include "litCheckMacros.h"
@@ -36,28 +36,18 @@ namespace map
 {
 	namespace testing
 	{
-		typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel KernelType;
+    typedef core::LazyRegistrationKernel<2, 2> KernelType;
 		typedef TestFieldGenerationFunctor<2, 2> FieldFunctorType;
 
-		void generateKernel(KernelType::Pointer& spKernel, FieldFunctorType::Pointer& spFunctor)
+    void generateKernel(KernelType::Pointer& spKernel, FieldFunctorType::Pointer spFunctor)
 		{
 			spKernel = KernelType::New();
 
-			FieldFunctorType::InFieldRepresentationType::SpacingType spacing(0.5);
-			FieldFunctorType::InFieldRepresentationType::PointType origin;
-			origin.Fill(0);
-			FieldFunctorType::InFieldRepresentationType::SizeType size;
-			size.fill(10);
-
-			FieldFunctorType::InFieldRepresentationType::Pointer spInRep =
-				FieldFunctorType::InFieldRepresentationType::New();
-			spInRep->setSize(size);
-			spInRep->setSpacing(spacing);
-			spInRep->setOrigin(origin);
+      KernelType::RepresentationDescriptorPointer spInRep = testing::createSimpleDescriptor<2>(10, 0.5);
 
 			spFunctor = FieldFunctorType::New(spInRep);
 
-			spKernel->setFieldFunctor(*(spFunctor.GetPointer()));
+			spKernel->setTransformFunctor(spFunctor.GetPointer());
 		}
 
 		int mapLazyFieldBasedRegistrationKernelTest(int, char* [])
@@ -85,9 +75,34 @@ namespace map
 
 			KernelType::OutputPointType resultPoint;
 
-			//TESTS #1
-			const KernelType::FieldType* pKernelGeneratedField = spKernel->getField();
-			const KernelType::FieldType* pReferenceField = spFunctor->_spCurrentFieldPointer.GetPointer();
+      KernelType::MappingVectorType nullVectorRef;
+      nullVectorRef.Fill(99);
+      KernelType::MappingVectorType defaultNullVector(
+          ::itk::NumericTraits< KernelType::MappingVectorType::ValueType >::NonpositiveMin());
+
+			//TESTS basic api /behavior of uninitialized kernel
+      KernelType::Pointer emptyKernel = KernelType::New();
+
+      CHECK_EQUAL(true, emptyKernel->transformExists());
+      CHECK_EQUAL(false, emptyKernel->hasLimitedRepresentation());
+      CHECK_EQUAL(true, emptyKernel->getLargestPossibleRepresentation().IsNull());
+      CHECK_EQUAL("Unkown", emptyKernel->getModelName().c_str());
+
+      CHECK(NULL == emptyKernel->getTransformFunctor());
+      CHECK_NO_THROW(emptyKernel->setTransformFunctor(spFunctor));
+      CHECK_EQUAL(spFunctor.GetPointer(), emptyKernel->getTransformFunctor());
+
+      CHECK_EQUAL(false, emptyKernel->usesNullVector());
+      CHECK_NO_THROW(emptyKernel->setNullVectorUsage(true));
+      CHECK_EQUAL(true, emptyKernel->usesNullVector());
+
+      CHECK_EQUAL(defaultNullVector, emptyKernel->getNullVector());
+      CHECK_NO_THROW(emptyKernel->setNullVector(nullVectorRef));
+      CHECK_EQUAL(nullVectorRef, emptyKernel->getNullVector());
+
+      /// configured kernel
+      const KernelType::TransformType* pKernelGeneratedField = spKernel->getTransformModel();
+      const KernelType::TransformType* pReferenceField = spFunctor->_spCurrentTransform.GetPointer();
 
 			CHECK(NULL != pKernelGeneratedField);
 			CHECK_EQUAL(pReferenceField, pKernelGeneratedField);
@@ -95,9 +110,10 @@ namespace map
 			/// #2
 			generateKernel(spKernel, spFunctor);
 
-			CHECK_NO_THROW(spKernel->precomputeKernel());
-
-			CHECK_EQUAL(spFunctor->_spCurrentFieldPointer, spKernel->getField());
+      CHECK(spFunctor->_spCurrentTransform.IsNull()); //triggered by precompute
+      CHECK_NO_THROW(spKernel->precomputeKernel());
+      CHECK(spFunctor->_spCurrentTransform.IsNotNull()); //triggered by precompute
+      CHECK_EQUAL(spFunctor->_spCurrentTransform, spKernel->getTransformModel());
 
 			/// #3
 			generateKernel(spKernel, spFunctor);
@@ -105,13 +121,11 @@ namespace map
 			KernelType::RepresentationDescriptorConstPointer spKernelRep =
 				spKernel->getLargestPossibleRepresentation();
 			CHECK(NULL ==
-				  spFunctor->_spCurrentFieldPointer.GetPointer()); //if not null, the kernel has illegally created the field
+          spFunctor->_spCurrentTransform.GetPointer()); //if not null, the kernel has illegally created the field
 			//instead of just passing through the representation
 			CHECK_EQUAL(spFunctor->getInFieldRepresentation(), spKernelRep.GetPointer());
 
 			/// #4
-
-
 			resultPoint.Fill(0);
 			CHECK_EQUAL(true, spKernel->mapPoint(inPoint, resultPoint));
 			CHECK_EQUAL(referencePoint, resultPoint);
@@ -121,8 +135,6 @@ namespace map
 			resultPoint.Fill(11);
 			CHECK_EQUAL(false, spKernel->mapPoint(invalidInPoint, resultPoint));
 			CHECK_EQUAL(invalidReferencePoint, resultPoint);
-
-			CHECK_EQUAL(spFunctor->_spCurrentFieldPointer, spKernel->getField());
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

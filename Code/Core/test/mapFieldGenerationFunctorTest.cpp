@@ -36,7 +36,7 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef map::core::functors::FieldGenerationFunctor<2, 2>::InFieldRepresentationType
+			typedef map::core::functors::TransformGenerationFunctor<2, 2>::InFieldRepresentationType
 			InFieldRepresentationType;
 
 			InFieldRepresentationType::Pointer spInField = InFieldRepresentationType::New();

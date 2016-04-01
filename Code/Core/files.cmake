@@ -47,11 +47,9 @@ SET(H_FILES
 	include/mapEvents.h
 	include/mapExceptionObject.h
 	include/mapExceptionObjectMacros.h
-	include/mapFieldFieldKernelCombinator.h
-	include/mapFieldModelKernelCombinator.h
+	include/mapLazyFieldKernelCombinator.h
 	include/mapFieldRepresentationDescriptor.h
 	include/mapFileDispatch.h
-	include/mapImageByFieldPerformer.h
 	include/mapImageByModelPerformer.h
 	include/mapImageMappingPerformerBase.h
 	include/mapImageMappingPerformerLoadPolicy.h
@@ -79,8 +77,7 @@ SET(H_FILES
 	include/mapMetaPropertyBase.h
 	include/mapMissingProviderException.h
 	include/mapDefaultKernelInverter.h
-	include/mapModelFieldKernelCombinator.h
-	include/mapModelModelKernelCombinator.h
+	include/mapPreCachedKernelCombinator.h
 	include/mapModificationTimeValidator.h
 	include/mapNoneMappingPerformerLoadPolicy.h
 	include/mapNullRegistrationKernel.h
@@ -88,7 +85,6 @@ SET(H_FILES
 	include/mapNullRegistrationKernelInverter.h
 	include/mapObserverSentinel.h
 	include/mapPMVolume.h
-	include/mapPointSetByFieldPerformer.h
 	include/mapPointSetByModelPerformer.h
 	include/mapPointSetMappingPerformerLoadPolicy.h
 	include/mapPointSetMappingPerformerRequest.h
@@ -142,10 +138,8 @@ SET(H_FILES
     include/mapFieldByModelFunctor.h
     include/mapFieldByModelInversionFunctor.h
     include/mapFieldByFieldInversionFunctor.h
-    include/mapFieldCombinationFunctorInterface.h
-    include/mapFieldByModelFieldCombinationFunctor.h
-    include/mapFieldByFieldModelCombinationFunctor.h
-    include/mapFieldByFieldFieldCombinationFunctor.h
+    include/mapCombinationFunctorInterface.h
+    include/mapGenericFieldGeneratingCombinationFunctor.h
     include/mapFieldByFileLoadFunctor.h    
 )
 
@@ -153,10 +147,8 @@ SET(TPP_FILES
 	include/mapAffineMatrixDecomposer.tpp
 	include/mapCombinedRegistrationKernel.tpp
 	include/mapRegistrationKernel.tpp
-	include/mapFieldFieldKernelCombinator.tpp
-	include/mapFieldModelKernelCombinator.tpp
+	include/mapLazyFieldKernelCombinator.tpp
 	include/mapFieldRepresentationDescriptor.tpp
-	include/mapImageByFieldPerformer.tpp
 	include/mapImageByModelPerformer.tpp
 	include/mapImageMappingPerformerBase.tpp
 	include/mapImageMappingPerformerLoadPolicy.tpp
@@ -174,13 +166,11 @@ SET(TPP_FILES
 	include/mapMetaProperty.tpp
 	include/mapMetaPropertyAccessor.tpp
 	include/mapDefaultKernelInverter.tpp
-	include/mapModelFieldKernelCombinator.tpp
-	include/mapModelModelKernelCombinator.tpp
+	include/mapPreCachedKernelCombinator.tpp
 	include/mapNoneMappingPerformerLoadPolicy.tpp
 	include/mapNullRegistrationKernel.tpp
 	include/mapNullRegistrationKernelCombinator.tpp
 	include/mapNullRegistrationKernelInverter.tpp
-	include/mapPointSetByFieldPerformer.tpp
 	include/mapPointSetByModelPerformer.tpp
 	include/mapPointSetMappingPerformerLoadPolicy.tpp
 	include/mapPointSetMappingPerformerRequest.tpp
@@ -205,10 +195,8 @@ SET(TPP_FILES
     include/mapFieldByModelFunctor.tpp
     include/mapFieldByModelInversionFunctor.tpp
     include/mapFieldByFieldInversionFunctor.tpp
-    include/mapFieldCombinationFunctorInterface.tpp
-    include/mapFieldByModelFieldCombinationFunctor.tpp
-    include/mapFieldByFieldModelCombinationFunctor.tpp
-    include/mapFieldByFieldFieldCombinationFunctor.tpp
+    include/mapCombinationFunctorInterface.tpp
+    include/mapGenericFieldGeneratingCombinationFunctor.tpp
     include/mapFieldByFileLoadFunctor.tpp  
 )
 
@@ -222,8 +210,7 @@ test/mapFieldRepresentationDescriptorTest.cpp
 test/mapExceptionObjectMacrosTest.cpp
 test/mapRegistrationBaseTest.cpp
 test/mapRegistrationTest.cpp
-test/mapModelBasedRegistrationKernelTest.cpp
-test/mapPreCachedFieldBasedRegistrationKernelTest.cpp
+test/mapPreCachedRegistrationKernelTest.cpp
 test/mapServiceStackTest.cpp
 test/mapTestServiceProvider.h
 test/mapTestLoadPolicy.h
@@ -231,7 +218,7 @@ test/mapGenericStaticLoadPolicyTest.cpp
 test/mapStaticServiceStackTest.cpp
 test/mapTestFieldGenerationFunctor.h
 test/mapFieldGenerationFunctorTest.cpp
-test/mapLazyFieldBasedRegistrationKernelTest.cpp
+test/mapLazyRegistrationKernelTest.cpp
 test/mapFieldByModelFunctorTest.cpp
 test/mapFieldByModelInversionFunctorTest.cpp
 test/mapFieldByFieldInversionFunctorTest.cpp
@@ -258,9 +245,7 @@ test/mapTestKernelBase.h
 test/mapPointSetMappingPerformerRequestTest.cpp
 test/mapImageMappingPerformerRequestTest.cpp
 test/mapPointSetByModelPerformerTest.cpp
-test/mapPointSetByFieldPerformerTest.cpp
 test/mapImageByModelPerformerTest.cpp
-test/mapImageByFieldPerformerTest.cpp
 test/mapTestMappingTask.h
 test/mapMappingTaskBaseTest.cpp
 test/mapTestMappingPerformer.h

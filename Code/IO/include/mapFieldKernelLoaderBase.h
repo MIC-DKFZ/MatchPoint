@@ -24,14 +24,14 @@
 #define __MAP_FIELD_KERNEL_LOADER_BASE_H
 
 #include "mapRegistrationKernelLoaderBase.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapRegistrationKernel.h"
 
 namespace map
 {
 	namespace io
 	{
 		/*! @class FieldKernelLoaderBase
-		* @brief Base class for provider that are able to load field kernels.
+		* @brief Base class for provider that are able to load stored vector fields as kernels.
 		*
 		* @sa FieldBasedRegistrationKernels
 		* @ingroup RegOperation
@@ -50,7 +50,7 @@ namespace map
 
 			itkTypeMacro(FieldKernelLoaderBase, RegistrationKernelLoaderBase);
 
-			typedef  core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
+			typedef  core::RegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
 			typedef typename KernelBaseType::Pointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
 

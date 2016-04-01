@@ -21,8 +21,8 @@
 */
 
 
-#ifndef __MAP_FIELD_COMBINATION_FUNCTOR_INTERFACE_H
-#define __MAP_FIELD_COMBINATION_FUNCTOR_INTERFACE_H
+#ifndef __MAP_COMBINATION_FUNCTOR_INTERFACE_H
+#define __MAP_COMBINATION_FUNCTOR_INTERFACE_H
 
 #include "mapRegistrationTopology.h"
 #include "mapRegistrationKernelBase.h"
@@ -36,7 +36,7 @@ namespace map
 		namespace functors
 		{
 
-			/*! @class FieldCombinationFunctorInterface
+			/*! @class CombinationFunctorInterface
 			* @brief Interface class for combination functors that gernerate vector fields
 			* by kernel combination
 			*
@@ -46,11 +46,11 @@ namespace map
 			* @tparam VOutputDimensions Dimensions of the output space the field should map into.
 			*/
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			class FieldCombinationFunctorInterface
+			class CombinationFunctorInterface
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+				typedef CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
 				Self;
 				typedef itk::SmartPointer<Self>        Pointer;
 				typedef itk::SmartPointer<const Self>  ConstPointer;
@@ -118,14 +118,14 @@ namespace map
 				 */
 				bool _usePadding;
 
-				FieldCombinationFunctorInterface();
-				virtual ~FieldCombinationFunctorInterface();
+				CombinationFunctorInterface();
+				virtual ~CombinationFunctorInterface();
 
 				/*! Methods invoked by itk::LightObject::Print().  */
 				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
 			private:
-				FieldCombinationFunctorInterface(const Self&);  //purposely not implemented
+				CombinationFunctorInterface(const Self&);  //purposely not implemented
 				void operator=(const Self&);  //purposely not implemented
 			};
 
@@ -134,7 +134,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapFieldCombinationFunctorInterface.tpp"
+# include "mapCombinationFunctorInterface.tpp"
 #endif
 
 #endif

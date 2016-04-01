@@ -31,6 +31,7 @@
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapSDTags.h"
 #include "mapFileDispatch.h"
+#include "mapLazyRegistrationKernel.h"
 
 namespace map
 {
@@ -133,8 +134,8 @@ namespace map
 			typename core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult =
 				generator->generateInverse(*sourceKernel, spInverseFieldRep);
 
-			::map::core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>* fieldKernel =
-				dynamic_cast<::map::core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>*>
+			::map::core::LazyRegistrationKernel<VInputDimensions, VOutputDimensions>* fieldKernel =
+          dynamic_cast<::map::core::LazyRegistrationKernel<VInputDimensions, VOutputDimensions>*>
 				(spResult.GetPointer());
 
 			if (fieldKernel)

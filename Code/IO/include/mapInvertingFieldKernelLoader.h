@@ -24,7 +24,7 @@
 #define __MAP_INVERTING_FIELD_KERNEL_LOADER_H
 
 #include "mapFieldKernelLoaderBase.h"
-#include "mapInvertingFieldBasedRegistrationKernel.h"
+#include "mapInvertingRegistrationKernel.h"
 
 namespace map
 {
@@ -54,7 +54,7 @@ namespace map
 			itkTypeMacro(InvertingFieldKernelLoader, FieldKernelLoaderBase);
 			itkNewMacro(Self);
 
-			typedef  core::InvertingFieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>
+			typedef  core::InvertingRegistrationKernel<VInputDimensions, VOutputDimensions>
 			KernelBaseType;
 			typedef typename KernelBaseType::Pointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;

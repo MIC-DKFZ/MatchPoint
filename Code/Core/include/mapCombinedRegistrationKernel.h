@@ -24,7 +24,7 @@
 #define __COMBINED_REGISTRATION_KERNEL_H
 
 #include "mapLazyRegistrationKernel.h"
-#include "mapFieldCombinationFunctorInterface.h"
+#include "mapCombinationFunctorInterface.h"
 
 
 /*! @namespace map The namespace map::core is for the library of MatchPoint
@@ -73,18 +73,18 @@ namespace map
       virtual void setTransformFunctor(const TransformGenerationFunctorType* functor) override;
 
 		protected:
-			typedef functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
-			FieldCombinationFunctorInterfaceType;
-			typedef typename FieldCombinationFunctorInterfaceType::SourceKernel1BaseType SourceKernel1BaseType;
-			typedef typename FieldCombinationFunctorInterfaceType::SourceKernel2BaseType SourceKernel2BaseType;
+			typedef functors::CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+			CombinationFunctorInterfaceType;
+			typedef typename CombinationFunctorInterfaceType::SourceKernel1BaseType SourceKernel1BaseType;
+			typedef typename CombinationFunctorInterfaceType::SourceKernel2BaseType SourceKernel2BaseType;
 
-			const FieldCombinationFunctorInterfaceType* _pCombinationInterface;
+			const CombinationFunctorInterfaceType* _pCombinationInterface;
 
 			/*! maps a given point by using both source kernel. In contrast to other LazyRegistrationKernel classes,
 			 * calling this methos will not trigger the generation of the kernel field.
 			  @eguarantee no fail
 			  @param functor Reference to the functor that is responsible for generating the field
-			  @pre Functor must have implemented FieldCombinationFunctorInterface
+			  @pre Functor must have implemented CombinationFunctorInterface
 			*/
 			virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const;
 

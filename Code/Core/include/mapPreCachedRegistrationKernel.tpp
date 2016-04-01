@@ -101,7 +101,9 @@ namespace map
     
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
 		PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-        PreCachedRegistrationKernel() : _spTransform(NULL)
+        PreCachedRegistrationKernel() : _spTransform(NULL), _nullVector(
+        ::itk::NumericTraits< typename MappingVectorType::ValueType >::NonpositiveMin()),
+        _useNullVector(false)
 		{
 		};
 

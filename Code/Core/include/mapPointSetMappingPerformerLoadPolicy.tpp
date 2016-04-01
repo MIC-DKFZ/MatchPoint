@@ -27,7 +27,6 @@
 #include "mapPointSetMappingPerformerLoadPolicy.h"
 
 #include "mapPointSetByModelPerformer.h"
-#include "mapPointSetByFieldPerformer.h"
 
 namespace map
 {
@@ -40,13 +39,9 @@ namespace map
 		{
 			typedef PointSetByModelPerformer<typename ProviderBaseType::RegistrationType, typename ProviderBaseType::InputDataType, typename ProviderBaseType::ResultDataType>
 			PointSetByModelPerformerType;
-			typedef PointSetByFieldPerformer<typename ProviderBaseType::RegistrationType, typename ProviderBaseType::InputDataType, typename ProviderBaseType::ResultDataType>
-			PointSetByFieldPerformerType;
 
 			typename PointSetByModelPerformerType::Pointer spModelPerformer =
 				PointSetByModelPerformerType::New();
-			typename PointSetByFieldPerformerType::Pointer spFieldPerformer =
-				PointSetByFieldPerformerType::New();
 
 			services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(Superclass::_pLoadInterface);
 
@@ -55,10 +50,6 @@ namespace map
 				mapLogWarningObjMacro("PointSetByModelPerformer was not added because it was already on the service stack!");
 			}
 
-			if (!loader.addProviderByPolicy(spFieldPerformer))
-			{
-				mapLogWarningObjMacro("PointSetByFieldPerformer was not added because it was already on the service stack!");
-			}
 		};
 
 		template <class TProviderBase>

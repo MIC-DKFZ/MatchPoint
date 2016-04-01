@@ -172,6 +172,9 @@ namespace map
 		canHandleRequest(const RequestType& request) const
 		{
 			const InverseKernelBaseType& inverseKernelBase = request._spRegistration->getInverseMapping();
+
+      typedef RegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions>
+          ModelKernelType;
 			const ModelKernelType* pInverseKernel = dynamic_cast<const ModelKernelType*>(&inverseKernelBase);
 
 			return (pInverseKernel != NULL) && (request._spInputData.IsNotNull());
