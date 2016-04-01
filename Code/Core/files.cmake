@@ -34,6 +34,7 @@ SET(CPP_FILES
 
 SET(H_FILES 
 	include/mapAffineMatrixDecomposer.h
+	include/mapFieldDecomposer.h
 	include/mapAffineMatrixOffsetDecompositionPolicy.h
     include/mapConvert.h
 	include/mapClassMacros.h
@@ -145,6 +146,7 @@ SET(H_FILES
 
 SET(TPP_FILES
 	include/mapAffineMatrixDecomposer.tpp
+	include/mapFieldDecomposer.tpp
 	include/mapCombinedRegistrationKernel.tpp
 	include/mapRegistrationKernel.tpp
 	include/mapLazyFieldKernelCombinator.tpp

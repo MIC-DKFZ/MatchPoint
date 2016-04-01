@@ -73,13 +73,13 @@ namespace map
 
             typedef functors::GenericFieldGeneratingCombinationFunctor < VInputDimensions, VInterimDimensions, VOutputDimensions >
                 FunctorType;
-            typename FunctorType::Pointer spFunctor = FunctorType::New(*pKernel1, *pKernel2,
+            typename FunctorType::Pointer spFunctor = FunctorType::New(pKernel1, pKernel2,
                 pInputFieldRepresentation);
 
             spFunctor->setUsePadding(usePadding);
             spFunctor->setPaddingVector(paddingVector);
 
-            spCombinedKernel->setFieldFunctor(*(spFunctor.GetPointer()));
+            spCombinedKernel->setTransformFunctor(spFunctor.GetPointer());
 
             if (pKernel1->usesNullVector() || pKernel2->usesNullVector())
             {

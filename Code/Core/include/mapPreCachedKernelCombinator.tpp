@@ -31,151 +31,155 @@
 
 namespace map
 {
-	namespace core
-	{
+    namespace core
+    {
 
-		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		typename PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::CombinedKernelBasePointer
-		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
-		combineKernels(const RequestType& request,
-					   const InputFieldRepresentationType* pInputFieldRepresentation,
-					   bool usePadding,
-					   const PaddingVectorType& paddingVector) const
-		{
-			const Kernel1Type* pKernel1 = dynamic_cast<const Kernel1Type*>(request._spKernel1.GetPointer());
-			const Kernel2Type* pKernel2 = dynamic_cast<const Kernel2Type*>(request._spKernel2.GetPointer());
+        template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
+        typename PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::CombinedKernelBasePointer
+            PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+            combineKernels(const RequestType& request,
+            const InputFieldRepresentationType* pInputFieldRepresentation,
+            bool usePadding,
+            const PaddingVectorType& paddingVector) const
+        {
+            const Kernel1Type* pKernel1 = dynamic_cast<const Kernel1Type*>(request._spKernel1.GetPointer());
+            const Kernel2Type* pKernel2 = dynamic_cast<const Kernel2Type*>(request._spKernel2.GetPointer());
 
-			if (pKernel1 == NULL)
-			{
-				mapExceptionMacro(ServiceException,
-								  << "Error: cannot combine kernels. Reason: cannot cast first kernel to ModelBasedRegistrationKernel: "
-								  << pKernel1);
-			}
+            if (pKernel1 == NULL)
+            {
+                mapExceptionMacro(ServiceException,
+                    << "Error: cannot combine kernels. Reason: cannot cast first kernel to ModelBasedRegistrationKernel: "
+                    << pKernel1);
+            }
 
-			if (pKernel2 == NULL)
-			{
-				mapExceptionMacro(ServiceException,
-								  << "Error: cannot combine kernels. Reason: cannot cast second kernel to ModelBasedRegistrationKernel: "
-								  << pKernel2);
-			}
+            if (pKernel2 == NULL)
+            {
+                mapExceptionMacro(ServiceException,
+                    << "Error: cannot combine kernels. Reason: cannot cast second kernel to ModelBasedRegistrationKernel: "
+                    << pKernel2);
+            }
 
-			CombinedKernelBasePointer spResult = this->combineAsMatrixKernels(pKernel1, pKernel2);
+            CombinedKernelBasePointer spResult = this->combineAsMatrixKernels(pKernel1, pKernel2);
 
-      if (spResult.IsNull() && VInputDimensions == VInterimDimensions && VInterimDimensions == VOutputDimensions)
-      { //composite approach
-          typedef itk::CompositeTransform<::map::core::continuous::ScalarType, VOutputDimensions> CompositeType;
-          CompositeType::Pointer composite = CompositeType::New();
-          composite->AddTransform(pKernel1->getTransformModel());
-          composite->AddTransform(pKernel2->getTransformModel());
-          typename NewKernelType::Pointer newKernel = NewKernelType::New();
-          newKernel->setTransformModel(newModel);
-          spResult = dynamic_cast<CombinedKernelBaseType*>(newKernel.GetPointer());
-      }
+            if (spResult.IsNull() && VInputDimensions == VInterimDimensions && VInterimDimensions == VOutputDimensions)
+            { //composite approach
+                typedef itk::CompositeTransform<::map::core::continuous::ScalarType, VOutputDimensions> CompositeType;
+                CompositeType::Pointer composite = CompositeType::New();
+                //we decided to const cast instead of cloning (the composite transform can only take non const transforms),
+                //1) to avoid the payload of copying (e.g. fields),
+                //2) the compsite transform will be const, so the const removal will only be temporary 
+                composite->AddTransform(const_cast<Kernel1Type::TransformType*>(pKernel1->getTransformModel()));
+                composite->AddTransform(const_cast<Kernel2Type::TransformType*>(pKernel2->getTransformModel()));
+                typedef map::core::PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions> NewKernelType;
+                typename NewKernelType::Pointer newKernel = NewKernelType::New();
+                newKernel->setTransformModel(composite);
+                spResult = dynamic_cast<CombinedKernelBaseType*>(newKernel.GetPointer());
+            }
 
-      assert(spResult.IsNotNull());
+            assert(spResult.IsNotNull());
 
-			return spResult;
-		}
+            return spResult;
+        }
 
-		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		typename PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::CombinedKernelBasePointer
-		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
-		combineAsMatrixKernels(const Kernel1Type* kernel1, const Kernel2Type* kernel2) const
-		{
+        template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
+        typename PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::CombinedKernelBasePointer
+            PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+            combineAsMatrixKernels(const Kernel1Type* kernel1, const Kernel2Type* kernel2) const
+        {
 
-			CombinedKernelBasePointer result;
+            CombinedKernelBasePointer result;
 
-			if (kernel1->getTransformModel() == NULL)
-			{
-				mapExceptionMacro(ServiceException,
-								  << "Error: cannot combine kernels. Reason: 1st ModelBasedRegistrationKernel has undefined transform model (NULL).");
-			}
+            if (kernel1->getTransformModel() == NULL)
+            {
+                mapExceptionMacro(ServiceException,
+                    << "Error: cannot combine kernels. Reason: 1st ModelBasedRegistrationKernel has undefined transform model (NULL).");
+            }
 
-			if (kernel2->getTransformModel() == NULL)
-			{
-				mapExceptionMacro(ServiceException,
-								  << "Error: cannot combine kernels. Reason: 2nd ModelBasedRegistrationKernel has undefined transform model (NULL).");
-			}
+            if (kernel2->getTransformModel() == NULL)
+            {
+                mapExceptionMacro(ServiceException,
+                    << "Error: cannot combine kernels. Reason: 2nd ModelBasedRegistrationKernel has undefined transform model (NULL).");
+            }
 
-			if (VInputDimensions == VInterimDimensions && VInterimDimensions == VOutputDimensions)
-			{
-				/**@Remark: The current implementation only implements the combination of kernels with same input and output dimension (square matrices)
-				   Because of the limited api of the used MatrixOffsetTransformBase and the usage of the cloned second kernel*/
-				typedef itk::MatrixOffsetTransformBase<typename Kernel1Type::TransformType::ScalarType, VOutputDimensions, VOutputDimensions>
-				Transform1Type;
-				typedef itk::MatrixOffsetTransformBase<typename Kernel2Type::TransformType::ScalarType, VOutputDimensions, VOutputDimensions>
-				Transform2Type;
-				typedef map::core::ModelBasedRegistrationKernel<VOutputDimensions, VOutputDimensions> NewKernelType;
+            if (VInputDimensions == VInterimDimensions && VInterimDimensions == VOutputDimensions)
+            {
+                /**@Remark: The current implementation only implements the combination of kernels with same input and output dimension (square matrices)
+                   Because of the limited api of the used MatrixOffsetTransformBase and the usage of the cloned second kernel*/
+                typedef itk::MatrixOffsetTransformBase < typename Kernel1Type::TransformType::ScalarType, VOutputDimensions, VOutputDimensions >
+                    Transform1Type;
+                typedef itk::MatrixOffsetTransformBase < typename Kernel2Type::TransformType::ScalarType, VOutputDimensions, VOutputDimensions >
+                    Transform2Type;
+                typedef map::core::PreCachedRegistrationKernel<VOutputDimensions, VOutputDimensions> NewKernelType;
 
-				const Transform1Type* transform1 = dynamic_cast<const Transform1Type*>
-												   (kernel1->getTransformModel());
-				const Transform2Type* transform2 = dynamic_cast<const Transform2Type*>
-												   (kernel2->getTransformModel());
+                const Transform1Type* transform1 = dynamic_cast<const Transform1Type*>
+                    (kernel1->getTransformModel());
+                const Transform2Type* transform2 = dynamic_cast<const Transform2Type*>
+                    (kernel2->getTransformModel());
 
-				if (transform1 && transform2)
-				{
-					typename Transform2Type::Pointer newModel = dynamic_cast<Transform2Type*>(transform2->Clone().GetPointer());
+                if (transform1 && transform2)
+                {
+                    typename Transform2Type::Pointer newModel = dynamic_cast<Transform2Type*>(transform2->Clone().GetPointer());
 
-					if (newModel)
-					{
-						newModel->Compose(transform1, true);
+                    if (newModel)
+                    {
+                        newModel->Compose(transform1, true);
 
-						typename NewKernelType::Pointer newKernel = NewKernelType::New();
-						newKernel->setTransformModel(newModel);
-						result = dynamic_cast<CombinedKernelBaseType*>(newKernel.GetPointer());
-					}
-				}
-			}
+                        typename NewKernelType::Pointer newKernel = NewKernelType::New();
+                        newKernel->setTransformModel(newModel);
+                        result = dynamic_cast<CombinedKernelBaseType*>(newKernel.GetPointer());
+                    }
+                }
+            }
 
-			return result;
-		};
+            return result;
+        };
 
-		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		bool
-		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
-		canHandleRequest(const RequestType& request) const
-		{
-			// get the two kernels from the request (which is a RegistrationCombinationRequest object)
-			// and check if they are both FieldKernels
-			const Kernel1Type* pKernel1 = dynamic_cast<const Kernel1Type*>(request._spKernel1.GetPointer());
-			const Kernel2Type* pKernel2 = dynamic_cast<const Kernel2Type*>(request._spKernel2.GetPointer());
+        template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
+        bool
+            PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+            canHandleRequest(const RequestType& request) const
+        {
+            // get the two kernels from the request (which is a RegistrationCombinationRequest object)
+            // and check if they are both FieldKernels
+            const Kernel1Type* pKernel1 = dynamic_cast<const Kernel1Type*>(request._spKernel1.GetPointer());
+            const Kernel2Type* pKernel2 = dynamic_cast<const Kernel2Type*>(request._spKernel2.GetPointer());
 
-      return ((pKernel1 != NULL) && (pKernel2 != NULL)) && (VInputDimensions == VInterimDimensions && VInterimDimensions == VOutputDimensions);
-		}
+            return ((pKernel1 != NULL) && (pKernel2 != NULL)) && (VInputDimensions == VInterimDimensions && VInterimDimensions == VOutputDimensions);
+        }
 
-		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		String
-		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
-		getProviderName() const
-		{
-			return Self::getStaticProviderName();
-		}
+        template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
+        String
+            PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+            getProviderName() const
+        {
+            return Self::getStaticProviderName();
+        }
 
-		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		String
-		PreCachedKernelCombinator<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-		getStaticProviderName()
-		{
-			OStringStream os;
-			os << "PreCachedKernelCombinator<" << VInputDimensions << "," << VInterimDimensions << "," <<
-			   VOutputDimensions << ">";
-			return os.str();
-		}
+        template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
+        String
+            PreCachedKernelCombinator<VInputDimensions, VInterimDimensions, VOutputDimensions>::
+            getStaticProviderName()
+        {
+            OStringStream os;
+            os << "PreCachedKernelCombinator<" << VInputDimensions << "," << VInterimDimensions << "," <<
+                VOutputDimensions << ">";
+            return os.str();
+        }
 
-		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		String
-		PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
-		getDescription() const
-		{
-			OStringStream os;
-			os << "PreCachedKernelCombinator, VInputDimensions: " << VInputDimensions <<
-			   ", VInterimDimensions: " << VInterimDimensions << ", VOutputDimensions: " << VOutputDimensions <<
-			   ".";
-			return os.str();
-		}
+        template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
+        String
+            PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >::
+            getDescription() const
+        {
+            OStringStream os;
+            os << "PreCachedKernelCombinator, VInputDimensions: " << VInputDimensions <<
+                ", VInterimDimensions: " << VInterimDimensions << ", VOutputDimensions: " << VOutputDimensions <<
+                ".";
+            return os.str();
+        }
 
 
-	} // end namespace core
+    } // end namespace core
 } // end namespace map
 
 #endif

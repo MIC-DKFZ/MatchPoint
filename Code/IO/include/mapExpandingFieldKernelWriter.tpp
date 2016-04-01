@@ -32,6 +32,7 @@
 #include "mapLogbook.h"
 #include "mapFileDispatch.h"
 #include "mapFieldByModelFunctor.h"
+#include "mapFieldDecomposer.h"
 
 #include "itkImageFileWriter.h"
 
@@ -161,14 +162,8 @@ namespace map
       typename FieldType::ConstPointer spField;
 
       //check if the transformation alread containes the vectorfield
-      typedef typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VOutputDimensions> FieldTransformType;
-      const FieldTransformType* castedFieldTransform= dynamic_cast<const FieldTransformType*>(spTransform.GetPointer());
-      if (castedFieldTransform)
-      { //try to directly use the field
-          spField = dynamic_cast<const FieldType*>(castedFieldTransform->GetDisplacementField());
-      }
-      if (spField.IsNull())
-      {
+      if (!::map::core::FieldDecomposer<VInputDimensions, VOutputDimensions>::decomposeTransform(spTransform, spField))
+      { //no direct field -> generate out of transform
           spField = ::map::core::generateFieldFromTransform<VInputDimensions, VOutputDimensions>(spTransform, pKernel->getLargestPossibleRepresentation());
       }
 

@@ -156,6 +156,7 @@ namespace map
 
         typedef itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VInputDimensions> FieldTransformType;
         const FieldTransformType* pFieldTransformModel = dynamic_cast<const FieldTransformType*>(pTransformModel);
+
         if (pFieldTransformModel)
         { //the model is represented by a displacement field -> FieldByFieldInversionFunctor
             typedef functors::FieldByFieldInversionFunctor<VOutputDimensions, VInputDimensions> FunctorType;
