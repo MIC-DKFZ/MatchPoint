@@ -26,6 +26,7 @@
 #include "mapGenericFieldGeneratingCombinationFunctor.h"
 #include "mapRepresentationException.h"
 #include "mapPointVectorCombinationPolicy.h"
+#include "mapRegistrationKernel.h"
 
 #include "itkImageRegionIterator.h"
 #include "itkDisplacementFieldTransform.h"
@@ -41,7 +42,7 @@ namespace map
                 GenericFieldGeneratingCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
                 generateTransform() const
             {
-                FieldPointer spField = FieldType::New();
+                typename FieldType::Pointer spField = FieldType::New();
 
                 typename InFieldRepresentationType::ImageRegionType region =
                     Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
@@ -60,15 +61,26 @@ namespace map
                     typename FieldType::PointType inPoint;
                     spField->TransformIndexToPhysicalPoint(index, inPoint);
 
-                    typename SourceKernel1BaseType::OutputPointType interimPoint = _spSourceKernel1->transformPoint(
-                        inPoint);
+                    typename SourceKernel1BaseType::OutputPointType interimPoint;
+                    
+                    bool valid = _spSourceKernel1->mapPoint(inPoint, interimPoint);
 
-                    typename SourceKernel2BaseType::OutputPointType endPoint = _spSourceKernel2->transformPoint(
-                        interimPoint);
+                    typename SourceKernel2BaseType::OutputPointType endPoint;
+                    bool valid2 = _spSourceKernel2->mapPoint(interimPoint, endPoint);
 
-                    typename SourceKernel2BaseType::OutputVectorType outVector;
-                    PointVectorCombinationPolicy<VInputDimensions, VOutputDimensions>::computeVector(inPoint,
-                        endPoint, outVector);
+                    typename SourceKernel2BaseType::OutputVectorType outVector = _paddingVector;
+                    if (valid && valid2)
+                    {
+                        PointVectorCombinationPolicy<VInputDimensions, VOutputDimensions>::computeVector(inPoint,
+                            endPoint, outVector);
+                    }
+                    else
+                    {
+                        if (!_usePadding)
+                        {
+                            mapDefaultExceptionMacro(<< "Error. Cannot generate combined kernel. At least one source kernel was not able to map points. valid source kernel 1: " << valid << "; valid source kernel 2:" << valid2);
+                        }
+                    }
 
                     iterator.Set(outVector);
                 }
@@ -118,7 +130,7 @@ namespace map
                 CreateAnother(void) const
             {
                 ::itk::LightObject::Pointer smartPtr;
-                Pointer spNew = Self::New(kernel1, kernel2,
+                Pointer spNew = Self::New(_spSourceKernel1, _spSourceKernel2,
                     Superclass::_spInFieldRepresentation).GetPointer();
                 smartPtr = spNew;
                 return smartPtr;

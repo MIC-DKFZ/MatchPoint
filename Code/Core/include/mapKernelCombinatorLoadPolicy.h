@@ -34,10 +34,8 @@ namespace map
 		* @brief Load class used by RegistrationCombinator to populate its service stack.
 		*
 		* It loads the following providers:
-		* - ModelModelKernelCombinator
-		* - FieldModelKernelCombinator
-		* - ModelFieldKernelCombinator
-		* - FieldFieldKernelCombinator
+		* - LazyRegistrationKernelCombinator
+		* - PreChachedRegistrationKernelCombinator
 		* - NullRegistrationKernelCombinator
 		*
 		* @ingroup LoadPolicies

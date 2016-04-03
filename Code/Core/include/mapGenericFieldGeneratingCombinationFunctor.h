@@ -70,8 +70,6 @@ namespace map
                 typedef typename Superclass::OutFieldRepresentationType           OutFieldRepresentationType;
                 typedef typename Superclass::OutFieldRepresentationConstPointer
                     OutFieldRepresentationConstPointer;
-                typedef typename RegistrationTopology < VInputDimensions,
-                    VOutputDimensions >::DirectFieldType                          FieldType;
                 typedef typename Superclass::TransformType                      TransformType;
                 typedef typename Superclass::TransformPointer                   TransformPointer;
                 typedef typename CombinationInterface::SourceKernel1BaseType SourceKernel1BaseType;
@@ -122,6 +120,9 @@ namespace map
                 virtual ::itk::LightObject::Pointer CreateAnother(void) const;
 
             protected:
+                typedef typename RegistrationTopology < VInputDimensions,
+                    VOutputDimensions >::DirectFieldType   FieldType;
+
                 /*! Protected constructor used by New.
                  * @eguarantee strong
                  * @param [in] kernel1 Pointer to the 1st source kernel that should be used.

@@ -539,7 +539,7 @@ namespace map
 
                 FinalFieldPointer spField;
 
-                ::map::core::FieldDecomposer<Superclass::MovingDimensions, Superclass::TargetDimensions>::decomposeTransform(spFunctor, spField);
+                ::map::core::FieldDecomposer<Superclass::MovingDimensions, Superclass::TargetDimensions>::decomposeTransform(spFunctor->generateTransform(), spField);
 
                 if (spField.IsNull())
                 {
