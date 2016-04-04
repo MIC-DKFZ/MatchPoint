@@ -24,12 +24,13 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapCombinedFieldBasedRegistrationKernel.h"
-#include "mapFieldByModelFieldCombinationFunctor.h"
+#include "mapCombinedRegistrationKernel.h"
+#include "mapGenericFieldGeneratingCombinationFunctor.h"
 #include "mapFieldByModelFunctor.h"
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapLazyRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 
 #include "itkScaleTransform.h"
 
@@ -38,12 +39,12 @@ namespace map
 	namespace testing
 	{
 
-		typedef core::functors::FieldByModelFieldCombinationFunctor<2, 2, 2> CombinatorFunctorType;
-		typedef core::CombinedFieldBasedRegistrationKernel<2, 2, 2> KernelType;
+		typedef core::functors::GenericFieldGeneratingCombinationFunctor<2, 2, 2> CombinatorFunctorType;
+		typedef core::CombinedRegistrationKernel<2, 2, 2> KernelType;
 
 		void generateKernel(KernelType::Pointer& spKernel, CombinatorFunctorType::Pointer& spFunctor)
 		{
-			typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> ModelKernelType;
 
 			ModelKernelType::RepresentationDescriptorType::SpacingType spacing(0.5);
 			ModelKernelType::RepresentationDescriptorType::PointType origin;
@@ -72,25 +73,23 @@ namespace map
 			TransformType::InverseTransformBasePointer spInverseTransform =	spTransform->GetInverseTransform();
 
 			typedef core::functors::FieldByModelFunctor<2, 2> FunctorType;
-			FunctorType::Pointer spFieldFunctor = FunctorType::New(*spInverseTransform, spInRep);
+			FunctorType::Pointer spFieldFunctor = FunctorType::New(spInverseTransform, spInRep);
 			//uses this functor to generate the test field
-			FunctorType::FieldPointer spField = spFieldFunctor->generateField();
 
-			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel FieldKernelType;
+			typedef core::LazyRegistrationKernel<2, 2> FieldKernelType;
 
 			FieldKernelType::Pointer spFieldKernel = FieldKernelType::New();
 
-			spFieldKernel->setField(*(spField.GetPointer()));
+			spFieldKernel->setTransformFunctor(spFieldFunctor);
 
 			//Establish combination functor for test
-			spFunctor = CombinatorFunctorType::New(*(spModelKernel.GetPointer()), *(spFieldKernel.GetPointer()),
-												   spInRep);
+			spFunctor = CombinatorFunctorType::New(spModelKernel, spFieldKernel, spInRep);
 
 			spKernel = KernelType::New();
-			spKernel->setFieldFunctor(*(spFunctor.GetPointer()));
+			spKernel->setTransformFunctor(spFunctor);
 		}
 
-		int mapCombinedFieldBasedRegistrationKernelTest(int, char* [])
+		int mapCombinedRegistrationKernelTest(int, char* [])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -113,18 +112,18 @@ namespace map
 			//TESTS #1
 			KernelType::RepresentationDescriptorConstPointer spKernelRep =
 				spKernel->getLargestPossibleRepresentation();
-			CHECK(!(spKernel->fieldExists())); //if field exists, the kernel has illegally created the field
+			CHECK(!(spKernel->transformExists())); //if field exists, the kernel has illegally created the field
 			//instead of just passing through the representation
 			/// #2
 			resultPoint.Fill(0);
 			CHECK_EQUAL(true, spKernel->mapPoint(inPoint, resultPoint));
 			CHECK_ARRAY_CLOSE(referencePoint, resultPoint, 2, 1e-5);
-			CHECK(!(spKernel->fieldExists())); //if field exists, the kernel has illegally created the field
+      CHECK(!(spKernel->transformExists())); //if field exists, the kernel has illegally created the field
 			//instead of just using the source kernels for point mapping.
 			resultPoint.Fill(11);
 			CHECK_EQUAL(false, spKernel->mapPoint(invalidInPoint, resultPoint));
 			CHECK_EQUAL(invalidReferencePoint, resultPoint);
-			CHECK(!(spKernel->fieldExists())); //if field exists, the kernel has illegally created the field
+      CHECK(!(spKernel->transformExists())); //if field exists, the kernel has illegally created the field
 			//instead of just using the source kernels for point mapping.
 
 			RETURN_AND_REPORT_TEST_SUCCESS;

@@ -228,7 +228,7 @@ test/mapGenericFieldGeneratingCombinationFunctorTest.cpp
 test/mapFieldByFileLoadFunctorTest.cpp
 test/mapPointVectorCombinationPolicyTest.cpp
 test/mapCombinationFunctorInterfaceTest.cpp
-test/mapCombinedFieldBasedRegistrationKernelTest.cpp
+test/mapCombinedRegistrationKernelTest.cpp
 test/mapConcreteFieldBasedRegistrationKernelTest.cpp
 test/mapDefaultKernelInverterTest.cpp
 test/mapInverseRegistrationKernelGeneratorTest.cpp
