@@ -29,7 +29,7 @@
 #include "mapMatrixModelBasedKernelWriter.h"
 #include "mapNullRegistrationKernelWriter.h"
 #include "mapExpandingFieldKernelWriter.h"
-#include "mapInvertingFieldKernelWriter.h"
+#include "mapInvertingKernelWriter.h"
 
 namespace map
 {
@@ -54,15 +54,15 @@ namespace map
 				mapLogWarningObjMacro("MatrixModelBasedKernelWriter was not added because it was already on the service stack!");
 			}
 
-			typedef InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>
-			InvertingFieldKernelWriterType;
+			typedef InvertingKernelWriter<VInputDimensions, VOutputDimensions>
+			InvertingKernelWriterType;
 
-			typename InvertingFieldKernelWriterType::Pointer spInvertingFieldWriter =
-				InvertingFieldKernelWriterType::New();
+			typename InvertingKernelWriterType::Pointer spInvertingFieldWriter =
+				InvertingKernelWriterType::New();
 
 			if (!loader.addProviderByPolicy(spInvertingFieldWriter))
 			{
-				mapLogWarningObjMacro("InvertingFieldKernelWriter was not added because it was already on the service stack!");
+				mapLogWarningObjMacro("InvertingKernelWriter was not added because it was already on the service stack!");
 			}
 
 			typedef ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>

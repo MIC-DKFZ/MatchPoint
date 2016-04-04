@@ -85,7 +85,7 @@ namespace map
     /**Wraps a given field into a displacment transform to be used in kernels*/
     template<unsigned int VDimension>
     typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimension>::Pointer
-        convertFieldToTransform(typename ::map::core::discrete::Elements<VDimension>::VectorFieldType* field)
+        wrapFieldInTransform(typename ::map::core::discrete::Elements<VDimension>::VectorFieldType* field)
     {
         ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimension>::Pointer transform = ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimension>::New();
         transform->SetDisplacementField(field);
@@ -108,7 +108,7 @@ namespace map
     /**unwraps a field stored in a displacment transform. If not possible returns null.*/
     template<unsigned int VDimension>
     typename ::map::core::discrete::Elements<VDimension>::VectorFieldType::Pointer
-        convertTransformToField(typename::itk::Transform<::map::core::continuous::ScalarType, VDimension, VDimension>* transform)
+        unwrapTransformField(typename::itk::Transform<::map::core::continuous::ScalarType, VDimension, VDimension>* transform)
     {
         typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimension> FieldTransformType;
         

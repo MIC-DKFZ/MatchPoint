@@ -57,7 +57,7 @@ namespace map
 
       virtual TransformPointer generateTransform() const
 			{
-          _spCurrentTransform = convertFieldToTransform<VOutputDimensions>(testing::generateSumField<VOutputDimensions>(Superclass::_spInFieldRepresentation));
+          _spCurrentTransform = wrapFieldInTransform<VOutputDimensions>(testing::generateSumField<VOutputDimensions>(Superclass::_spInFieldRepresentation));
           return _spCurrentTransform;
 			}
 

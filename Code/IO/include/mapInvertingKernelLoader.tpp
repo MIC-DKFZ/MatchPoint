@@ -23,7 +23,7 @@
 #ifndef __MAP_INVERTING_FIELD_KERNEL_LOADER_TPP
 #define __MAP_INVERTING_FIELD_KERNEL_LOADER_TPP
 
-#include "mapInvertingFieldKernelLoader.h"
+#include "mapInvertingKernelLoader.h"
 #include "mapServiceException.h"
 #include "mapRegistrationFileTags.h"
 #include "mapRegistrationManipulator.h"
@@ -40,7 +40,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
-		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
+		InvertingKernelLoader<VInputDimensions, VOutputDimensions>::
 		canHandleRequest(const RequestType& request) const
 		{
 			structuredData::Element::ConstSubElementIteratorType typePos = structuredData::findNextSubElement(
@@ -51,7 +51,11 @@ namespace map
 
 			if (typePos != request._spKernelDescriptor->getSubElementEnd())
 			{
-				canHandle = ((*typePos)->getValue() == "InvertingFieldKernel") && Superclass::canHandleRequest(request) && request._spComplementaryKernel.IsNotNull();
+          //The check "InvertingFieldKernel" is for backwards compatibility in order to be able to load files
+          //of MatchPoint versions <0.12 (Naming changed with Issue #1505)
+          canHandle = ((*typePos)->getValue() == "InvertingKernel") || ((*typePos)->getValue() == "InvertingFieldKernel");
+          
+          canHandle = canHandle && Superclass::canHandleRequest(request) && request._spComplementaryKernel.IsNotNull();
 			}
 
 			return canHandle;
@@ -60,7 +64,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		::map::core::String
-		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
+		InvertingKernelLoader<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
 			return Self::getStaticProviderName();
@@ -68,30 +72,30 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		::map::core::String
-		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
+		InvertingKernelLoader<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
 			::map::core::OStringStream os;
-			os << "InvertingFieldKernelLoader<" << VInputDimensions << "," << VOutputDimensions << ">";
+			os << "InvertingKernelLoader<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		::map::core::String
-		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
+		InvertingKernelLoader<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
 			::map::core::OStringStream os;
-			os << "InvertingFieldKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
+			os << "InvertingKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
 			   VOutputDimensions << ".";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		typename InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::GenericKernelPointer
-		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
+		typename InvertingKernelLoader<VInputDimensions, VOutputDimensions>::GenericKernelPointer
+		InvertingKernelLoader<VInputDimensions, VOutputDimensions>::
 		loadKernel(const RequestType& request) const
 		{
 			if (!canHandleRequest(request))
@@ -153,8 +157,8 @@ namespace map
 		}
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>::
-		InvertingFieldKernelLoader()
+		InvertingKernelLoader<VInputDimensions, VOutputDimensions>::
+		InvertingKernelLoader()
 		{};
 
 

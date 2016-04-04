@@ -30,10 +30,9 @@
 #include "litCheckMacros.h"
 #include "litFieldTester.h"
 
-#include "mapModelBasedRegistrationKernel.h"
-#include "mapFieldBasedRegistrationKernels.h"
-#include "mapInvertingFieldBasedRegistrationKernel.h"
-#include "mapInvertingFieldKernelWriter.h"
+#include "mapPreCachedRegistrationKernel.h"
+#include "mapInvertingRegistrationKernel.h"
+#include "mapInvertingKernelWriter.h"
 #include "mapFieldByModelInversionFunctor.h"
 #include "mapSDXMLStrWriter.h"
 #include "mapFileDispatch.h"
@@ -44,7 +43,7 @@ namespace map
 	namespace testing
 	{
 
-		int mapInvertingFieldKernelWriterTest(int argc, char* argv[])
+		int mapInvertingKernelWriterTest(int argc, char* argv[])
 		{
 			//ARGUMENTS: 1: test storage path
 			//           2: ref path
@@ -66,7 +65,7 @@ namespace map
 
 			//////////////////////////////////////
 			//Kernel setup
-			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 			typedef itk::Euler2DTransform<::map::core::continuous::ScalarType> TransformType;
 
 			KernelType::Pointer spSourceKernel = KernelType::New();
@@ -91,18 +90,18 @@ namespace map
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
-			FieldFunctorType::Pointer spFunctor = FieldFunctorType::New(*spTransform, spInRep);
+			FieldFunctorType::Pointer spFunctor = FieldFunctorType::New(spTransform, spInRep);
 
-			typedef core::InvertingFieldBasedRegistrationKernel<2, 2> InvertingKernelType;
+			typedef core::InvertingRegistrationKernel<2, 2> InvertingKernelType;
 			InvertingKernelType::Pointer spInvertingKernel = InvertingKernelType::New();
 			spInvertingKernel->setSourceKernel(spSourceKernel);
-			spInvertingKernel->setFieldFunctor(*spFunctor);
+			spInvertingKernel->setTransformFunctor(spFunctor);
 
 			InvertingKernelType::Pointer spInvertingKernel_missingSource = InvertingKernelType::New();
-			spInvertingKernel_missingSource->setFieldFunctor(*spFunctor);
+			spInvertingKernel_missingSource->setTransformFunctor(spFunctor);
 
-			typedef io::InvertingFieldKernelWriter<2, 2> WriterType;
-			typedef io::InvertingFieldKernelWriter<2, 3> Writer23Type;
+			typedef io::InvertingKernelWriter<2, 2> WriterType;
+			typedef io::InvertingKernelWriter<2, 3> Writer23Type;
 
 			////////////////////////////////////////////
 			//Writer setup
@@ -114,7 +113,7 @@ namespace map
 			WriterType::RequestType illegalRequest_missingSource1(spInvertingKernel, "", "", false);
 			WriterType::RequestType illegalRequest_missingSource2(spInvertingKernel, "", "", false, NULL);
 			WriterType::RequestType illegalRequest_expandLazy(spInvertingKernel, "", "", true, spSourceKernel);
-			WriterType::RequestType request(spInvertingKernel, testPath, "InvertingFieldKernelWriterTest",
+			WriterType::RequestType request(spInvertingKernel, testPath, "InvertingKernelWriterTest",
 											false, spSourceKernel);
 
 			//////////////////////////////////////
@@ -127,8 +126,8 @@ namespace map
 			CHECK_EQUAL(false, spWriter->canHandleRequest(illegalRequest_expandLazy));
 			CHECK_EQUAL(true, spWriter->canHandleRequest(request));
 
-			CHECK_EQUAL("InvertingFieldKernelWriter<2,2>", spWriter->getProviderName());
-			CHECK_EQUAL("InvertingFieldKernelWriter<2,3>", Writer23Type::getStaticProviderName());
+			CHECK_EQUAL("InvertingKernelWriter<2,2>", spWriter->getProviderName());
+			CHECK_EQUAL("InvertingKernelWriter<2,3>", Writer23Type::getStaticProviderName());
 
 			//test processing of illegal requests
 			CHECK_THROW_EXPLICIT(spWriter->storeKernel(illegalRequest_invalidKernelType),
@@ -148,7 +147,7 @@ namespace map
 
 			::map::core::String data = spStrWriter->write(spData);
 			::map::core::String ref =
-				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingFieldKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.797693135e+308</Value><Value Row='1'>-1.797693135e+308</Value></NullVector></Kernel>";
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.797693135e+308</Value><Value Row='1'>-1.797693135e+308</Value></NullVector></Kernel>";
 
 			CHECK_EQUAL(ref, data);
 

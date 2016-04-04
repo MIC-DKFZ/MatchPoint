@@ -26,11 +26,13 @@
 
 #include "itkScaleTransform.h"
 
-#include "mapFieldByModelFieldCombinationFunctor.h"
+#include "mapGenericFieldGeneratingCombinationFunctor.h"
 #include "mapFieldByModelFunctor.h"
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
+#include "mapLazyRegistrationKernel.h"
+#include "mapFieldDecomposer.h"
 
 #include "itkIdentityTransform.h"
 
@@ -40,27 +42,27 @@ namespace map
 	{
 
 
-		int mapFieldByModelFieldCombinationFunctorTest(int, char* [])
+		int mapGenericFieldGeneratingCombinationFunctorTest(int, char* [])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> PreCachedKernelType;
 
-			ModelKernelType::RepresentationDescriptorType::SpacingType spacing(0.5);
-			ModelKernelType::RepresentationDescriptorType::PointType origin;
+			PreCachedKernelType::RepresentationDescriptorType::SpacingType spacing(0.5);
+			PreCachedKernelType::RepresentationDescriptorType::PointType origin;
 			origin.Fill(0);
-			ModelKernelType::RepresentationDescriptorType::SizeType size;
+			PreCachedKernelType::RepresentationDescriptorType::SizeType size;
 			size.fill(10);
-			ModelKernelType::RepresentationDescriptorType::Pointer spInRep =
-				ModelKernelType::RepresentationDescriptorType::New();
+			PreCachedKernelType::RepresentationDescriptorType::Pointer spInRep =
+				PreCachedKernelType::RepresentationDescriptorType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
 
-			ModelKernelType::RepresentationDescriptorType::PointType illegalOrigin;
+			PreCachedKernelType::RepresentationDescriptorType::PointType illegalOrigin;
 			illegalOrigin.Fill(100);
-			ModelKernelType::RepresentationDescriptorType::Pointer spIllegalInRep =
-				ModelKernelType::RepresentationDescriptorType::New();
+			PreCachedKernelType::RepresentationDescriptorType::Pointer spIllegalInRep =
+				PreCachedKernelType::RepresentationDescriptorType::New();
 			spIllegalInRep->setSize(size);
 			spIllegalInRep->setSpacing(spacing);
 			spIllegalInRep->setOrigin(illegalOrigin);
@@ -68,7 +70,7 @@ namespace map
 			//Model kernel generation
 			typedef ::itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
 
-			ModelKernelType::Pointer spModelKernel = ModelKernelType::New();
+			PreCachedKernelType::Pointer spModelKernel = PreCachedKernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);
 			params[0] = 0.3;
@@ -81,64 +83,62 @@ namespace map
 			spModelKernel->setTransformModel(spTransform);
 
 			typedef core::functors::FieldByModelFunctor<2, 2> FunctorType;
-			FunctorType::Pointer spFieldFunctor = FunctorType::New(*spInverseTransform, spInRep);
+			FunctorType::Pointer spFieldFunctor = FunctorType::New(spInverseTransform, spInRep);
 			//uses this functor to generate the test field
-			FunctorType::FieldPointer spField = spFieldFunctor->generateField();
 
-			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel FieldKernelType;
+			typedef core::LazyRegistrationKernel<2, 2> FieldKernelType;
 
 			FieldKernelType::Pointer spFieldKernel = FieldKernelType::New();
 
-			spFieldKernel->setField(*(spField.GetPointer()));
+			spFieldKernel->setTransformFunctor(spFieldFunctor);
 
 			//Establish combination functor for test
-			typedef core::functors::FieldByModelFieldCombinationFunctor<2, 2, 2> CombinatorFunctorType;
-			CombinatorFunctorType::Pointer spTestFunctor = CombinatorFunctorType::New(*
-					(spModelKernel.GetPointer()), *(spFieldKernel.GetPointer()), spInRep);
-
+			typedef core::functors::GenericFieldGeneratingCombinationFunctor<2, 2, 2> CombinatorFunctorType;
+			CombinatorFunctorType::Pointer spTestFunctor = CombinatorFunctorType::New(
+					spModelKernel, spFieldKernel, spInRep);
 
 			//Test the functor io
 			CHECK(spTestFunctor.IsNotNull());
 
-			CHECK(spFieldKernel == spTestFunctor->getSourceFieldKernel());
-			CHECK(spModelKernel == spTestFunctor->getSourceModelKernel());
 			CHECK(spModelKernel.GetPointer() == spTestFunctor->get1stSourceKernelBase());
 			CHECK(spFieldKernel.GetPointer() == spTestFunctor->get2ndSourceKernelBase());
 
 			CombinatorFunctorType::Pointer spFuncAnother = dynamic_cast<CombinatorFunctorType*>
 					(spTestFunctor->CreateAnother().GetPointer());
-			CHECK(spFuncAnother->getSourceFieldKernel() == spTestFunctor->getSourceFieldKernel());
-			CHECK(spFuncAnother->getSourceModelKernel() == spTestFunctor->getSourceModelKernel());
+			CHECK(spFuncAnother->get1stSourceKernelBase() == spTestFunctor->get1stSourceKernelBase());
+			CHECK(spFuncAnother->get2ndSourceKernelBase() == spTestFunctor->get2ndSourceKernelBase());
 			CHECK(spFuncAnother->getInFieldRepresentation() == spTestFunctor->getInFieldRepresentation());
 			CHECK(spFuncAnother->GetNameOfClass() == spTestFunctor->GetNameOfClass());
 
 
 			//Test field generation, hence we've combined a field with its inverse transform model
 			//the resulting field must be an identity transform
-			CombinatorFunctorType::FieldPointer spResultField = NULL;
-			CHECK_NO_THROW(spResultField = spTestFunctor->generateField());
-			CHECK(spResultField.IsNotNull());
+			CombinatorFunctorType::TransformPointer spResult = NULL;
+			CHECK_NO_THROW(spResult = spTestFunctor->generateTransform());
+			CHECK(spResult.IsNotNull());
 
-			lit::TransformFieldTester<CombinatorFunctorType::FieldType, ModelKernelType::TransformType>
+      ::map::core::FieldDecomposer<2, 2>::FieldConstPointer actualField;
+      bool validField = ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spResult, actualField);
+      CHECK(validField);
+
+      lit::TransformFieldTester<::map::core::FieldDecomposer<2, 2>::FieldType, PreCachedKernelType::TransformType>
 			tester;
 			typedef itk::IdentityTransform<::map::core::continuous::ScalarType, 2> IdentityTransformType;
 
 			IdentityTransformType::Pointer spIdentityTransform = IdentityTransformType::New();
 
 			tester.setReferenceTransform(spIdentityTransform);
-			tester.setActualField(spResultField);
+      tester.setActualField(actualField);
 			tester.setCheckThreshold(1e-6);
 
 			CHECK_TESTER(tester);
 
 			//Test invalid mapping request: In field representation descriptor specifies unsupported region
-			typedef core::functors::FieldByModelFieldCombinationFunctor<2, 2, 2> CombinatorFunctorType;
-			CombinatorFunctorType::Pointer spIllegalTestFunctor = CombinatorFunctorType::New(*
-					(spModelKernel.GetPointer()), *(spFieldKernel.GetPointer()), spIllegalInRep);
+			CombinatorFunctorType::Pointer spIllegalTestFunctor = CombinatorFunctorType::New(spModelKernel, spFieldKernel, spIllegalInRep);
 
-			CombinatorFunctorType::FieldPointer spIllegalResultField = NULL;
+			CombinatorFunctorType::TransformPointer spIllegalResultFieldTransform = NULL;
 
-			CHECK_THROW_EXPLICIT(spIllegalResultField = spIllegalTestFunctor->generateField(),
+      CHECK_THROW_EXPLICIT(spIllegalResultFieldTransform = spIllegalTestFunctor->generateTransform(),
 								 core::RepresentationException);
 
 			//now activiate padding to avoid the exception and get a padded field
@@ -148,15 +148,18 @@ namespace map
 			paddingValue.Fill(42);
 			spIllegalTestFunctor->setPaddingVector(paddingValue);
 
-			CHECK_NO_THROW(spIllegalResultField = spIllegalTestFunctor->generateField());
+      CHECK_NO_THROW(spIllegalResultFieldTransform = spIllegalTestFunctor->generateTransform());
 			CHECK(spIllegalTestFunctor.IsNotNull());
+
+      validField = ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spIllegalResultFieldTransform, actualField);
+      CHECK(validField);
 
 			//check if the padding value was used
 
-			FieldKernelType::FieldType::IndexType index;
+      ::map::core::FieldDecomposer<2, 2>::FieldType::IndexType index;
 			index.Fill(1);
 
-			CHECK_EQUAL(spIllegalResultField->GetPixel(index), paddingValue);
+      CHECK_EQUAL(actualField->GetPixel(index), paddingValue);
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

@@ -28,14 +28,11 @@
 #include "litTextFileTester.h"
 
 #include "mapMatrixModelBasedKernelLoader.h"
-#include "mapModelBasedRegistrationKernel.h"
 #include "mapRegistrationFileReader.h"
-#include "test/mapTestKernelBase.h"
-#include "mapNullRegistrationKernel.h"
 #include "mapNullRegistrationKernelLoader.h"
 #include "mapFieldKernelLoader.h"
 #include "mapLazyFileFieldKernelLoader.h"
-#include "mapInvertingFieldKernelLoader.h"
+#include "mapInvertingKernelLoader.h"
 
 namespace map
 {
@@ -92,9 +89,9 @@ namespace map
 			CHECK(NULL != LoaderStackType::getProvider(
 					  io::LazyFileFieldKernelLoader<3, 3>::getStaticProviderName()));
 			CHECK(NULL != LoaderStackType::getProvider(
-					  io::InvertingFieldKernelLoader<2, 2>::getStaticProviderName()));
+					  io::InvertingKernelLoader<2, 2>::getStaticProviderName()));
 			CHECK(NULL != LoaderStackType::getProvider(
-					  io::InvertingFieldKernelLoader<3, 3>::getStaticProviderName()));
+					  io::InvertingKernelLoader<3, 3>::getStaticProviderName()));
 
 			// create a ModelBasedKernels for testing
 

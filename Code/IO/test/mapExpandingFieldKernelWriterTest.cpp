@@ -24,12 +24,14 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapModelBasedRegistrationKernel.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapNullRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
+#include "mapLazyRegistrationKernel.h"
 #include "mapExpandingFieldKernelWriter.h"
 #include "mapSDXMLStrWriter.h"
 #include "test/mapTestFieldGenerationFunctor.h"
 #include "mapFileDispatch.h"
+#include "mapFieldDecomposer.h"
 
 #include "litCheckMacros.h"
 #include "litFieldTester.h"
@@ -78,20 +80,18 @@ namespace map
 
       //////////////////////////////////////
       //Kernel setup
-      typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
-
-      typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel LazyKernelType;
-      typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel PreCachedKernelType;
-      typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
+      typedef core::LazyRegistrationKernel<2, 2> LazyKernelType;
+      typedef core::PreCachedRegistrationKernel<2, 2> PreCachedKernelType;
+      typedef core::NullRegistrationKernel<2, 2> IllegalKernelType;
 
       typedef io::ExpandingFieldKernelWriter<2, 2> WriterType;
       typedef io::ExpandingFieldKernelWriter<2, 3> Writer23Type;
 
-      ModelKernelType::Pointer spModelKernel = ModelKernelType::New();
+      IllegalKernelType::Pointer spIllegalKernel = IllegalKernelType::New();
       LazyKernelType::Pointer spLazyKernel = LazyKernelType::New();
       PreCachedKernelType::Pointer spCachedKernel = PreCachedKernelType::New();
 
-      spLazyKernel->setFieldFunctor(*(spFunctor.GetPointer()));
+      spLazyKernel->setTransformFunctor(spFunctor.GetPointer());
       LazyKernelType::MappingVectorType nullVector;
       nullVector[0] = -1;
       nullVector[1] = -2;
@@ -104,7 +104,7 @@ namespace map
       //Writer setup
       WriterType::Pointer spWriter = WriterType::New();
 
-      WriterType::RequestType illegalRequest1(spModelKernel, "", "", false);
+      WriterType::RequestType illegalRequest1(spIllegalKernel, "", "", false);
       WriterType::RequestType illegalRequest2(spLazyKernel, "", "", false);
       WriterType::RequestType requestLazy(spLazyKernel, testPath, "ExpandingFieldKernelWriterTest_lazy",
                                           true);
@@ -133,7 +133,7 @@ namespace map
       CHECK_NO_THROW(spDataLazy = spWriter->storeKernel(requestLazy));
 
       //make the cached kernel legal
-      spCachedKernel->setField(*(spLazyKernel->getField()));
+      spCachedKernel->setTransformModel(spFunctor->_spCurrentTransform);
       structuredData::Element::Pointer spDataCached;
       CHECK_NO_THROW(spDataCached = spWriter->storeKernel(requestCached));
 
@@ -147,23 +147,28 @@ namespace map
       CHECK_EQUAL(ref, data);
 
       //test the fields
+      map::core::FieldDecomposer<2, 2>::FieldConstPointer actualField;
       map::core::String refFieldPath = map::core::FileDispatch::createFullPath(refPath,
                                        "expandingFieldKernelWriterTest_ref.mhd");
-      typedef ::itk::ImageFileReader<LazyKernelType::FieldType> ReaderType;
+      typedef ::itk::ImageFileReader<map::core::FieldDecomposer<2, 2>::FieldType> ReaderType;
       ReaderType::Pointer spReader = ReaderType::New();
       spReader->SetFileName(refFieldPath);
-      FieldFunctorType::FieldPointer spRefField = spReader->GetOutput();
+      map::core::FieldDecomposer<2, 2>::FieldPointer spRefField = spReader->GetOutput();
       spReader->Update();
 
-      lit::FieldTester<FieldFunctorType::FieldType> tester;
+      map::core::FieldDecomposer<2, 2>::decomposeKernel(spLazyKernel, actualField);
+
+      lit::FieldTester<map::core::FieldDecomposer<2, 2>::FieldType> tester;
       double checkThreshold = 0.1;
       tester.setCheckThreshold(checkThreshold);
       tester.setExpectedField(spRefField);
 
-      tester.setActualField(spLazyKernel->getField());
+      map::core::FieldDecomposer<2, 2>::decomposeKernel(spLazyKernel, actualField);
+      tester.setActualField(actualField);
       CHECK_TESTER(tester);
 
-      tester.setActualField(spCachedKernel->getField());
+      map::core::FieldDecomposer<2, 2>::decomposeKernel(spCachedKernel, actualField);
+      tester.setActualField(actualField);
       CHECK_TESTER(tester);
 
       RETURN_AND_REPORT_TEST_SUCCESS;

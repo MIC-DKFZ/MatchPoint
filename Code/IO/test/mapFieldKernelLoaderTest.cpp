@@ -24,13 +24,13 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapModelBasedRegistrationKernel.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapFieldKernelLoader.h"
 #include "test/mapTestFieldGenerationFunctor.h"
 #include "mapFileDispatch.h"
 #include "mapSDXMLStrReader.h"
 #include "mapSDXMLStrWriter.h"
+#include "mapFieldDecomposer.h"
 
 #include "litCheckMacros.h"
 #include "litFieldTester.h"
@@ -78,8 +78,7 @@ namespace map
 			spInRep->setOrigin(origin);
 			FieldFunctorType::Pointer spRefFunctor = FieldFunctorType::New(spInRep);
 
-			typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel LazyKernelType;
-			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel PreCachedKernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> PreCachedKernelType;
 
 			typedef io::FieldKernelLoader<2, 2> LoaderType;
 			typedef io::FieldKernelLoader<2, 3> Loader23Type;
@@ -177,33 +176,44 @@ namespace map
 			CHECK_NO_THROW(spKernel_noNull_lazy = spLoader->loadKernel(validRequest_noNull_lazy));
 
 			//test the fields
-			lit::FieldTester<FieldFunctorType::FieldType> tester;
+      ::map::core::FieldDecomposer<2, 2>::FieldConstPointer actualField;
+      ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spRefFunctor->generateTransform(), actualField);
+
+      lit::FieldTester<::map::core::FieldDecomposer<2, 2>::FieldType> tester;
 			double checkThreshold = 0.1;
 			tester.setCheckThreshold(checkThreshold);
-			tester.setExpectedField(spRefFunctor->generateField());
+      tester.setExpectedField(actualField);
 
 			PreCachedKernelType* pKernel = dynamic_cast<PreCachedKernelType*>(spKernel.GetPointer());
 			CHECK(pKernel != NULL);
-			tester.setActualField(pKernel->getField());
+      bool validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
+      CHECK(validField);
+      tester.setActualField(actualField);
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
 			pKernel = dynamic_cast<PreCachedKernelType*>(spKernel.GetPointer());
 			CHECK(pKernel != NULL);
-			tester.setActualField(pKernel->getField());
-			CHECK_TESTER(tester);
+      validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
+      CHECK(validField);
+      tester.setActualField(actualField);
+      CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
 			pKernel = dynamic_cast<PreCachedKernelType*>(spKernel_noNull.GetPointer());
 			CHECK(pKernel != NULL);
-			tester.setActualField(pKernel->getField());
-			CHECK_TESTER(tester);
+      validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
+      CHECK(validField);
+      tester.setActualField(actualField);
+      CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
 			pKernel = dynamic_cast<PreCachedKernelType*>(spKernel_noNull_lazy.GetPointer());
 			CHECK(pKernel != NULL);
-			tester.setActualField(pKernel->getField());
-			CHECK_TESTER(tester);
+      validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
+      CHECK(validField);
+      tester.setActualField(actualField);
+      CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
 

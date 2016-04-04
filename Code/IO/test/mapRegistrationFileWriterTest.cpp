@@ -29,7 +29,7 @@
 #include "litCheckMacros.h"
 #include "litTextFileTester.h"
 #include "mapMatrixModelBasedKernelWriter.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapRegistrationFileWriter.h"
 #include "test/mapTestKernelBase.h"
 #include "mapNullRegistrationKernel.h"
@@ -84,7 +84,7 @@ namespace map
 			CHECK(NULL != DirectStackType::getProvider(
 					  io::ExpandingFieldKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != DirectStackType::getProvider(
-					  io::InvertingFieldKernelWriter<2, 2>::getStaticProviderName()));
+					  io::InvertingKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != InverseStackType::getProvider(
 					  io::MatrixModelBasedKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != InverseStackType::getProvider(
@@ -92,10 +92,10 @@ namespace map
 			CHECK(NULL != InverseStackType::getProvider(
 					  io::ExpandingFieldKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != InverseStackType::getProvider(
-					  io::InvertingFieldKernelWriter<2, 2>::getStaticProviderName()));
+					  io::InvertingKernelWriter<2, 2>::getStaticProviderName()));
 
 			// create a ModelBasedKernels for testing
-			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 			KernelType::Pointer spKernel = KernelType::New();
 			KernelType::Pointer spKernel2 = KernelType::New();
 

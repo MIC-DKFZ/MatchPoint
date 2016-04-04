@@ -30,7 +30,7 @@ namespace map
 {
 	namespace io
 	{
-		/*! @class InvertingFieldKernelLoader
+		/*! @class InvertingKernelLoader
 		* @brief Provider that is able to load InvertingFiledBasedKernels.
 		*
 		* The "loading" is done by using the related kernel of the loader request and inferting that kernel
@@ -42,16 +42,16 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class InvertingFieldKernelLoader : public FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>
+		class InvertingKernelLoader : public FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef InvertingFieldKernelLoader<VInputDimensions, VOutputDimensions>				Self;
+			typedef InvertingKernelLoader<VInputDimensions, VOutputDimensions>				Self;
 			typedef FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>   Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
-			itkTypeMacro(InvertingFieldKernelLoader, FieldKernelLoaderBase);
+			itkTypeMacro(InvertingKernelLoader, FieldKernelLoaderBase);
 			itkNewMacro(Self);
 
 			typedef  core::InvertingRegistrationKernel<VInputDimensions, VOutputDimensions>
@@ -95,11 +95,11 @@ namespace map
 
 		protected:
 
-			InvertingFieldKernelLoader();
-			virtual ~InvertingFieldKernelLoader() {};
+			InvertingKernelLoader();
+			virtual ~InvertingKernelLoader() {};
 
 		private:
-			InvertingFieldKernelLoader(const Self&);  //purposely not implemented
+			InvertingKernelLoader(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented
 		};
 
@@ -107,7 +107,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapInvertingFieldKernelLoader.tpp"
+# include "mapInvertingKernelLoader.tpp"
 #endif
 
 #endif

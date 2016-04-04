@@ -49,7 +49,7 @@ namespace map
       KernelType::Pointer spFieldKernel = KernelType::New();
 
       KernelType::RepresentationDescriptorPointer spReferenceFieldRepresentation = testing::createSimpleDescriptor<2>(10, 0.5);
-      KernelType::TransformType::Pointer refFieldTransform = testing::convertFieldToTransform<2>(testing::generate2DSumField(spReferenceFieldRepresentation)).GetPointer();
+      KernelType::TransformType::Pointer refFieldTransform = testing::wrapFieldInTransform<2>(testing::generate2DSumField(spReferenceFieldRepresentation)).GetPointer();
       spFieldKernel->setTransformModel(refFieldTransform);
 
       //generate kernel with model transform

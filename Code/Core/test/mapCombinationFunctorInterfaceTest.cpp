@@ -24,7 +24,7 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapFieldCombinationFunctorInterface.h"
+#include "mapCombinationFunctorInterface.h"
 #include "litCheckMacros.h"
 
 namespace map
@@ -34,14 +34,14 @@ namespace map
 
 		// create derived class from interface to be able to instantiate interface class standalone
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-		class TestFieldCombinationFunctorInterface: public
-			::map::core::functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+		class TestCombinationFunctorInterface: public
+			::map::core::functors::CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
 		{
 		public:
-			typedef core::functors::FieldCombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
+        typedef core::functors::CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
 			Superclass;
 
-			TestFieldCombinationFunctorInterface()
+        TestCombinationFunctorInterface()
 			{}
 
 			virtual const typename Superclass::SourceKernel1BaseType* get1stSourceKernelBase(void) const
@@ -60,11 +60,11 @@ namespace map
 
 
 
-		int mapFieldCombinationFunctorInterfaceTest(int, char* [])
+		int mapCombinationFunctorInterfaceTest(int, char* [])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef TestFieldCombinationFunctorInterface<2, 2, 2> InterfaceType;
+      typedef TestCombinationFunctorInterface<2, 2, 2> InterfaceType;
 
 			InterfaceType ifc;
 

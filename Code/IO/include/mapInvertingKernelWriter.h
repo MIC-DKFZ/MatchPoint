@@ -30,7 +30,7 @@ namespace map
 {
 	namespace io
 	{
-		/*! @class InvertingFieldKernelWriter
+		/*! @class InvertingKernelWriter
 		* @brief Provider that is able to store field based kernels based on the class InvertingFiledBasedKernels (thus lazy field
 		* based kernels that invert an other kernel) if the source kernel is part of the registration instance that should be stored.
 		*
@@ -43,17 +43,17 @@ namespace map
 		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.
 		*/
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		class InvertingFieldKernelWriter : public
+		class InvertingKernelWriter : public
 			RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>				Self;
+			typedef InvertingKernelWriter<VInputDimensions, VOutputDimensions>				Self;
 			typedef RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions>	Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
-			itkTypeMacro(InvertingFieldKernelWriter, RegistrationKernelWriterBase);
+			itkTypeMacro(InvertingKernelWriter, RegistrationKernelWriterBase);
 			itkNewMacro(Self);
 
 			typedef typename Superclass::KernelBaseType	KernelBaseType;
@@ -93,11 +93,11 @@ namespace map
 
 		protected:
 
-			InvertingFieldKernelWriter();
-			virtual ~InvertingFieldKernelWriter() {};
+			InvertingKernelWriter();
+			virtual ~InvertingKernelWriter() {};
 
 		private:
-			InvertingFieldKernelWriter(const Self&);  //purposely not implemented
+			InvertingKernelWriter(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented
 		};
 
@@ -105,7 +105,7 @@ namespace map
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
-# include "mapInvertingFieldKernelWriter.tpp"
+# include "mapInvertingKernelWriter.tpp"
 #endif
 
 #endif
