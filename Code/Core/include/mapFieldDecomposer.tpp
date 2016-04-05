@@ -83,7 +83,7 @@ namespace map
                     result = true;
                 }
 
-                return true;
+                return result;
             };
 
             static bool decomposeTransform(TransformType* pTransform, FieldPointer& field)
@@ -98,7 +98,7 @@ namespace map
                     result = true;
                 }
 
-                return true;
+                return result;
             };
 
         };

@@ -87,48 +87,11 @@ namespace map
 										  "Error. Transform is not ready and cannot be prepared. Unable to map point.");
 			}
 
+      outPoint = this->getTransformModel()->TransformPoint(inPoint);
 
-      if (this->usesNullVector())
-			{
-        mapDefaultExceptionMacro(<<
-            "Error. NULL vector support is currently deactivated. Has to be reactivated after kernel merge (issue #1505).");
+      bool result = !this->usesNullVector() || this->getNullVector().Superclass::operator ==(outPoint);
 
-        //typedef itk::map::NULLVectorAwareLinearInterpolateImageFunction<FieldType, continuous::ScalarType>
-        //    NULLAwareInterpolatorType;
-        //typename NULLAwareInterpolatorType::Pointer spNullAwareInterpolator =
-				//	NULLAwareInterpolatorType::New();
-				//spNullAwareInterpolator->SetNullVector(Superclass::_nullVector);
-				//spNullAwareInterpolator->SetNullVectorUsage(true);
-        //spNullAwareInterpolator->SetInputImage(TransformPolicyType::_spTransform);
-
-        //bool result = spNullAwareInterpolator->IsInsideBuffer(inPoint);
-
-
-        //if (result)
-        //{
-        //    /*!@todo Unschön da itk im moment ein fixed array rausgibt anstatt eines vectors. an die Bug liste schreiben
-        //    später noch mal prüfen ob schon ausgebessert oder doch lieber alte interpolator variante mit dem linearImageInterpolator verwendet werden soll
-        //    */
-        //    typename FieldType::ValueType vector = spNullAwareInterpolator->Evaluate(inPoint).GetDataPointer();
-
-        //    if (Superclass::_useNullVector && vector == Superclass::_nullVector)
-        //    {
-        //        result = false;
-        //    }
-        //    else
-        //    {
-        //        PointVectorCombinationPolicy<VInputDimensions, VOutputDimensions>::mapPoint(inPoint, vector,
-        //            outPoint);
-        //    }
-        //}
-
-        //return result;
-			}
-			else
-			{
-        outPoint = this->getTransformModel()->TransformPoint(inPoint);
-        return true;
-      }
+      return result;
 		};
 
 

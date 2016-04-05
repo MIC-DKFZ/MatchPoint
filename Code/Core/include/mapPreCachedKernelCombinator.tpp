@@ -68,8 +68,9 @@ namespace map
                 //we decided to const cast instead of cloning (the composite transform can only take non const transforms),
                 //1) to avoid the payload of copying (e.g. fields),
                 //2) the compsite transform will be const, so the const removal will only be temporary 
-                composite->AddTransform(const_cast<Kernel1Type::TransformType*>(pKernel1->getTransformModel()));
+                //Remark: The composite transform applies in reversed order, thus 2nd kernel is added first.
                 composite->AddTransform(const_cast<Kernel2Type::TransformType*>(pKernel2->getTransformModel()));
+                composite->AddTransform(const_cast<Kernel1Type::TransformType*>(pKernel1->getTransformModel()));
                 typedef map::core::PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions> NewKernelType;
                 typename NewKernelType::Pointer newKernel = NewKernelType::New();
                 newKernel->setTransformModel(composite);

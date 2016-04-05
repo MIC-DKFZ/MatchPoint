@@ -27,7 +27,7 @@
 #include "mapPointSetByModelPerformer.h"
 #include "mapRegistration.h"
 #include "mapRegistrationManipulator.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapTestKernelBase.h"
 #include "mapITKTranslationTransform.h"
 
@@ -47,7 +47,7 @@ namespace map
 			typedef core::continuous::Elements<2>::InternalPointSetType InputDataType;
 			typedef core::continuous::Elements<2>::InternalPointSetType ResultDataType;
 			typedef core::continuous::Elements<3>::InternalPointSetType ResultData2Type;
-			typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 			typedef TestKernelBase<2, 2> IllegalKernelType;
 
 			typedef core::PointSetByModelPerformer<RegistrationType, InputDataType, ResultDataType>
@@ -56,9 +56,9 @@ namespace map
 			Performer2Type;
 
 			//Now we create the kernels
-			ModelKernelType::Pointer spKernel = ModelKernelType::New();
+			KernelType::Pointer spKernel = KernelType::New();
 			IllegalKernelType::Pointer spIllegalKernel = IllegalKernelType::New();
-			ModelKernelType::Pointer spIllegalModelKernel = ModelKernelType::New(); //has no transform model
+			KernelType::Pointer spIllegalModelKernel = KernelType::New(); //has no transform model
 
 			//setting up model kernel
 			typedef ::itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;

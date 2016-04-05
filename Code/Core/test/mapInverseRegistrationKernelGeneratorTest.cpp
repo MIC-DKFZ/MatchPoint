@@ -24,9 +24,9 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapModelBasedKernelInverter.h"
-#include "mapFieldBasedKernelInverter.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapDefaultKernelInverter.h"
+#include "mapNullRegistrationKernelInverter.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "litCheckMacros.h"
 #include "mapITKTranslationTransform.h"
 #include "mapInverseRegistrationKernelGenerator.h"
@@ -49,12 +49,14 @@ namespace map
 			// check whether the LoadPolicy worked
 			typedef GeneratorType::InverterStackType InverterStackType;
 			CHECK(NULL != InverterStackType::getProvider(
-					  core::ModelBasedKernelInverter<2, 2>::getStaticProviderName()));
+					  core::NullRegistrationKernelInverter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != InverterStackType::getProvider(
-					  core::FieldBasedKernelInverter<2, 2>::getStaticProviderName()));
+					  core::DefaultKernelInverter<2, 2>::getStaticProviderName()));
 
-			// create a ModelBasedKernel we can invert
-			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
+      CHECK_EQUAL(2, InverterStackType::size());
+
+      // create a kernel we can invert
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 			KernelType::Pointer spKernel = KernelType::New();
 
 			typedef itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
@@ -74,10 +76,8 @@ namespace map
 
 			CHECK_NO_THROW(spInverseKernel = spGenerator->generateInverse(*(spKernel.GetPointer()), NULL));
 			CHECK(spInverseKernel.IsNotNull());
-
 			// We did not check for correctness of the inversion because this is the job of the corresponding kernel inverter test.
 			// We just check if the call chain has worked properly.
-
 
 			// We also have to check if the generator throws an exception if he can't invert something we give to him
 			TestKernelBase<2, 2>::Pointer spIllegalKernel = TestKernelBase<2, 2>::New();

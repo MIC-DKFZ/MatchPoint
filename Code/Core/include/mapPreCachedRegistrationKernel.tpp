@@ -54,8 +54,6 @@ namespace map
             PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
             getLargestPossibleRepresentation() const
         {
-            assert(_spTransform.IsNotNull());
-
             if (_spTransform.IsNull())
             {
                 mapDefaultExceptionStaticMacro(<<

@@ -24,8 +24,7 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapConcreteFieldBasedRegistrationKernel.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapArtifactGenerator.h"
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
@@ -35,11 +34,11 @@ namespace map
 	namespace testing
 	{
 
-		int mapConcreteFieldBasedRegistrationKernelTest(int, char* [])
+		int mapRegistrationKernelTest(int, char* [])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel KernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 
 			KernelType::RepresentationDescriptorType::SpacingType spacing(0.5);
 			KernelType::RepresentationDescriptorType::PointType origin;
@@ -58,7 +57,7 @@ namespace map
 
 			KernelType::Pointer spKernel = KernelType::New();
 
-			spKernel->setField(*(generate2DScaleFieldWithNull(spInRep, nullVector).GetPointer()));
+			spKernel->setTransformModel(testing::wrapFieldInTransform<2>(generate2DScaleFieldWithNull(createSimpleDescriptor<2>(5, 0.5), nullVector).GetPointer()));
 
 			KernelType::InputPointType inPoint;
 			inPoint.Fill(3);
@@ -88,21 +87,23 @@ namespace map
 
 
 			//check defaults
-			CHECK_EQUAL(true, spKernel->usesNullVector());
+			CHECK_EQUAL(false, spKernel->usesNullVector());
 			CHECK_EQUAL(defaultNullVector, spKernel->getNullVector());
 
 			//check null vector setter
-			CHECK_NO_THROW(spKernel->setNullVectorUsage(false));
+			CHECK_NO_THROW(spKernel->setNullVectorUsage(true));
 			CHECK_NO_THROW(spKernel->setNullVector(nullVector));
 
-			CHECK_EQUAL(false, spKernel->usesNullVector());
+			CHECK_EQUAL(true, spKernel->usesNullVector());
 			CHECK_EQUAL(nullVector, spKernel->getNullVector());
 
 			//check the null vector aware implementation of map point
 
 			//1st without Null vector awarenes
-			resultPoint.Fill(0);
-			CHECK_EQUAL(true, spKernel->mapPoint(inPoint, resultPoint));
+      CHECK_NO_THROW(spKernel->setNullVectorUsage(false));
+      
+      resultPoint.Fill(0);
+      CHECK_EQUAL(true, spKernel->mapPoint(inPoint, resultPoint));
 			CHECK_ARRAY_CLOSE(referencePoint, resultPoint, 2, 1e-5);
 
 			resultPoint.Fill(11);

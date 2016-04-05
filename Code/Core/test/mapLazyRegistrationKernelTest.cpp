@@ -39,7 +39,7 @@ namespace map
     typedef core::LazyRegistrationKernel<2, 2> KernelType;
 		typedef TestFieldGenerationFunctor<2, 2> FieldFunctorType;
 
-    void generateKernel(KernelType::Pointer& spKernel, FieldFunctorType::Pointer spFunctor)
+    void generateKernel(KernelType::Pointer& spKernel, FieldFunctorType::Pointer& spFunctor)
 		{
 			spKernel = KernelType::New();
 
@@ -50,7 +50,7 @@ namespace map
 			spKernel->setTransformFunctor(spFunctor.GetPointer());
 		}
 
-		int mapLazyFieldBasedRegistrationKernelTest(int, char* [])
+		int mapLazyRegistrationKernelTest(int, char* [])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -83,7 +83,7 @@ namespace map
 			//TESTS basic api /behavior of uninitialized kernel
       KernelType::Pointer emptyKernel = KernelType::New();
 
-      CHECK_EQUAL(true, emptyKernel->transformExists());
+      CHECK_EQUAL(false, emptyKernel->transformExists());
       CHECK_EQUAL(false, emptyKernel->hasLimitedRepresentation());
       CHECK_EQUAL(true, emptyKernel->getLargestPossibleRepresentation().IsNull());
       CHECK_EQUAL("Unkown", emptyKernel->getModelName().c_str());
@@ -109,11 +109,12 @@ namespace map
 
 			/// #2
 			generateKernel(spKernel, spFunctor);
-
+      CHECK_EQUAL(false, spKernel->transformExists());
       CHECK(spFunctor->_spCurrentTransform.IsNull()); //triggered by precompute
       CHECK_NO_THROW(spKernel->precomputeKernel());
       CHECK(spFunctor->_spCurrentTransform.IsNotNull()); //triggered by precompute
       CHECK_EQUAL(spFunctor->_spCurrentTransform, spKernel->getTransformModel());
+      CHECK_EQUAL(true, spKernel->transformExists());
 
 			/// #3
 			generateKernel(spKernel, spFunctor);
@@ -124,6 +125,7 @@ namespace map
           spFunctor->_spCurrentTransform.GetPointer()); //if not null, the kernel has illegally created the field
 			//instead of just passing through the representation
 			CHECK_EQUAL(spFunctor->getInFieldRepresentation(), spKernelRep.GetPointer());
+      CHECK_EQUAL(false, spKernel->transformExists());
 
 			/// #4
 			resultPoint.Fill(0);
@@ -135,6 +137,7 @@ namespace map
 			resultPoint.Fill(11);
 			CHECK_EQUAL(false, spKernel->mapPoint(invalidInPoint, resultPoint));
 			CHECK_EQUAL(invalidReferencePoint, resultPoint);
+      CHECK_EQUAL(true, spKernel->transformExists());
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

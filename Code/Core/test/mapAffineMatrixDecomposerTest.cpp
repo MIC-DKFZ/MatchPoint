@@ -56,7 +56,7 @@ namespace map
 			spKernel->setTransformModel(spTransform);
 
       KernelType::Pointer spFieldKernel = KernelType::New();
-      spKernel->setTransformModel(FieldTransformType::New().GetPointer());
+      spFieldKernel->setTransformModel(FieldTransformType::New().GetPointer());
 
 			DecomposerType::MatrixType matrix;
 			DecomposerType::OffsetType offset;

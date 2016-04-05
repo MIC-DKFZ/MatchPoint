@@ -24,10 +24,9 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapModelModelKernelCombinator.h"
-#include "mapFieldByFieldModelCombinationFunctor.h"
-#include "mapModelBasedRegistrationKernel.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedKernelCombinator.h"
+#include "mapPreCachedRegistrationKernel.h"
+#include "mapNullRegistrationKernel.h"
 
 #include "mapITKTranslationTransform.h"
 #include "mapITKEuler2DTransform.h"
@@ -53,44 +52,58 @@ namespace map
 			return transform;
 		}
 
-		int mapModelModelKernelCombinatorTest(int argc, char* argv[])
+    ::itk::TranslationTransform<map::core::continuous::ScalarType,2>::Pointer
+        generateTestTranslationTransform(double x, double y)
+    {
+        typedef ::itk::TranslationTransform<map::core::continuous::ScalarType,2> ModelType;
+        ModelType::Pointer transform = ModelType::New();
+        ::itk::TranslationTransform<map::core::continuous::ScalarType, 2>::ParametersType offset(2);
+        offset[0] = x;
+        offset[1] = y;
+        transform->SetParameters(offset);
+
+        return transform;
+    }
+
+    int mapPreCachedKernelCombinatorTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef core::ModelBasedRegistrationKernel<2, 2> ModelKernelType;
-			typedef core::FieldKernels<2, 2>::LazyFieldBasedRegistrationKernel FieldKernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
+      typedef core::NullRegistrationKernel<2, 2> IllegalKernelType;
 
-			typedef core::ModelModelKernelCombinator<2, 2, 2> CombinatorType;
-			typedef core::ModelModelKernelCombinator<2, 3, 2> Combinator2Type;
-			typedef core::ModelModelKernelCombinator<3, 2, 2> Combinator3Type;
-			typedef core::ModelModelKernelCombinator<2, 2, 3> Combinator4Type;
+			typedef core::PreCachedKernelCombinator<2, 2, 2> CombinatorType;
+      
+      /**@todo Deactivated till issue #2179 is done*/
+			//typedef core::ModelModelKernelCombinator<2, 3, 2> Combinator2Type;
+			//typedef core::ModelModelKernelCombinator<3, 2, 2> Combinator3Type;
+			//typedef core::ModelModelKernelCombinator<2, 2, 3> Combinator4Type;
 
 			// setting up the representation descriptor based on the model kernel
-			ModelKernelType::RepresentationDescriptorType::SpacingType spacing(0.5);
-			ModelKernelType::RepresentationDescriptorType::PointType origin;
+			KernelType::RepresentationDescriptorType::SpacingType spacing(0.5);
+			KernelType::RepresentationDescriptorType::PointType origin;
 			origin.Fill(0);
-			ModelKernelType::RepresentationDescriptorType::SizeType size;
+			KernelType::RepresentationDescriptorType::SizeType size;
 			size.fill(20);
 
-			ModelKernelType::RepresentationDescriptorType::Pointer spInRep =
-				ModelKernelType::RepresentationDescriptorType::New();
+			KernelType::RepresentationDescriptorType::Pointer spInRep =
+				KernelType::RepresentationDescriptorType::New();
 			spInRep->setSize(size);
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
 
 			//Now we create the kernels
-			ModelKernelType::Pointer spKernel1 = ModelKernelType::New();
-			ModelKernelType::Pointer spKernel2 = ModelKernelType::New();
-			ModelKernelType::Pointer spMOKernel1 = ModelKernelType::New();
-			ModelKernelType::Pointer spMOKernel2 = ModelKernelType::New();
+			KernelType::Pointer spKernel1 = KernelType::New();
+			KernelType::Pointer spKernel2 = KernelType::New();
+			KernelType::Pointer spMOKernel1 = KernelType::New();
+			KernelType::Pointer spMOKernel2 = KernelType::New();
 
-			spKernel1->setTransformModel(::itk::TranslationTransform< map::core::continuous::ScalarType, 2>::New());
-			spKernel2->setTransformModel(::itk::TranslationTransform< map::core::continuous::ScalarType, 2>::New());
+      spKernel1->setTransformModel(generateTestTranslationTransform(11, -80));
 
-			spMOKernel1->setTransformModel(generateTestTransform(-10, 11, -80));
-			spMOKernel2->setTransformModel(generateTestTransform(21, 2, 78));
+      spMOKernel1->setTransformModel(generateTestTransform(itk::Math::pi/2.0, 11, -80));
+      spMOKernel2->setTransformModel(generateTestTransform(-0.2, 2, 78));
 
-			FieldKernelType::Pointer spIllegalKernel = FieldKernelType::New();
+      IllegalKernelType::Pointer spIllegalKernel = IllegalKernelType::New();
 
 
 			//creating the combinator
@@ -98,8 +111,8 @@ namespace map
 
 			//Create requests
 
-			// valid request: model, model
-			CombinatorType::RequestType request(spKernel1, spKernel2);
+			// valid request: model and matrix offset based model
+      CombinatorType::RequestType request(spKernel1, spMOKernel1);
 			// valid request: with 2 matrix offset based models
 			CombinatorType::RequestType request2(spMOKernel1, spMOKernel2);
 			// illegal request: field, field
@@ -115,10 +128,11 @@ namespace map
 			CHECK_EQUAL(false, spCombinator->canHandleRequest(illegalRequest3));
 			CHECK_EQUAL(true, spCombinator->canHandleRequest(request));
 
-			CHECK_EQUAL("ModelModelKernelCombinator<2,2,2>", CombinatorType::getStaticProviderName());
-			CHECK_EQUAL("ModelModelKernelCombinator<2,3,2>", Combinator2Type::getStaticProviderName());
-			CHECK_EQUAL("ModelModelKernelCombinator<3,2,2>", Combinator3Type::getStaticProviderName());
-			CHECK_EQUAL("ModelModelKernelCombinator<2,2,3>", Combinator4Type::getStaticProviderName());
+			CHECK_EQUAL("PreCachedKernelCombinator<2,2,2>", CombinatorType::getStaticProviderName());
+      /**@todo Deactivated till issue #2179 is done*/
+      //CHECK_EQUAL("ModelModelKernelCombinator<2,3,2>", Combinator2Type::getStaticProviderName());
+			//CHECK_EQUAL("ModelModelKernelCombinator<3,2,2>", Combinator3Type::getStaticProviderName());
+			//CHECK_EQUAL("ModelModelKernelCombinator<2,2,3>", Combinator4Type::getStaticProviderName());
 			CHECK_EQUAL(CombinatorType::getStaticProviderName(), spCombinator->getProviderName());
 
 			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest1, spInRep),
@@ -127,11 +141,6 @@ namespace map
 								 core::ServiceException);
 			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest3, spInRep),
 								 core::ServiceException);
-
-			// test combination support for matrix offset based transform with uniform dimensionality
-			// this should not be thrown any more as soon as the ModelModelKernelCombinator has been
-			// completly implemented
-			CHECK_THROW_EXPLICIT(spCombinator->combineKernels(request, spInRep), core::ServiceException);
 
 			// test combination support for matrix offset based transform with uniform dimensionality
 			CombinatorType::CombinedKernelBasePointer resultKernel;
@@ -163,6 +172,41 @@ namespace map
 			CHECK_CLOSE(refPoint1[1], combinedResult1[1], 0.0000001);
 			CHECK_CLOSE(refPoint2[0], combinedResult2[0], 0.0000001);
 			CHECK_CLOSE(refPoint2[1], combinedResult2[1], 0.0000001);
+
+      // test if combination of transforms with uniform dimensionality and matrix offset based
+      // produces the right transform
+      const KernelType* castedResultKernel = dynamic_cast<const KernelType*>(resultKernel.GetPointer());
+      CHECK(castedResultKernel != NULL);
+
+      typedef ::itk::MatrixOffsetTransformBase<map::core::continuous::ScalarType, 2, 2> MatrixOffsetTransformType;
+      const MatrixOffsetTransformType* matrixOffsetTransform = dynamic_cast<const MatrixOffsetTransformType*>(castedResultKernel->getTransformModel());
+      CHECK(matrixOffsetTransform != NULL);
+
+      // test combination support of transforms with uniform dimensionality but not all are matrix offset based
+      CHECK_NO_THROW(resultKernel = spCombinator->combineKernels(request, spInRep));
+
+      CHECK(resultKernel->mapPoint(inPoint1, combinedResult1));
+      CHECK(resultKernel->mapPoint(inPoint2, combinedResult2));
+
+      spKernel1->mapPoint(inPoint1, refPoint1);
+      spMOKernel1->mapPoint(refPoint1, refPoint1);
+
+      spKernel1->mapPoint(inPoint2, refPoint2);
+      spMOKernel1->mapPoint(refPoint2, refPoint2);
+
+      CHECK_CLOSE(refPoint1[0], combinedResult1[0], 0.0000001);
+      CHECK_CLOSE(refPoint1[1], combinedResult1[1], 0.0000001);
+      CHECK_CLOSE(refPoint2[0], combinedResult2[0], 0.0000001);
+      CHECK_CLOSE(refPoint2[1], combinedResult2[1], 0.0000001);
+
+      // test if combination of transforms with uniform dimensionality but not all are matrix offset based
+      // produces the right transform
+      castedResultKernel = dynamic_cast<const KernelType*>(resultKernel.GetPointer());
+      CHECK(castedResultKernel != NULL);
+
+      typedef ::itk::CompositeTransform<map::core::continuous::ScalarType, 2> CompositeTransformType;
+      const CompositeTransformType* compositeTransform = dynamic_cast<const CompositeTransformType*>(castedResultKernel->getTransformModel());
+      CHECK(compositeTransform != NULL);
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

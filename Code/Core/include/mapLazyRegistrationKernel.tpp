@@ -69,8 +69,11 @@ namespace map
 		LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::
 		getLargestPossibleRepresentation() const
 		{
-        assert(_spGenerationFunctor.IsNotNull());
-        RepresentationDescriptorConstPointer spRep = _spGenerationFunctor->getInFieldRepresentation();
+        RepresentationDescriptorConstPointer spRep;
+        if (_spGenerationFunctor.IsNotNull())
+        {
+            spRep = _spGenerationFunctor->getInFieldRepresentation();
+        }
         return spRep;
 		};
 

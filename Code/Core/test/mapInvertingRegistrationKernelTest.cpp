@@ -24,21 +24,21 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapInvertingFieldBasedRegistrationKernel.h"
+#include "mapInvertingRegistrationKernel.h"
 #include "litCheckMacros.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 
 namespace map
 {
 	namespace testing
 	{
 
-		int mapInvertingFieldBasedRegistrationKernelTest(int, char* [])
+		int mapInvertingRegistrationKernelTest(int, char* [])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef core::InvertingFieldBasedRegistrationKernel<3, 2> KernelType;
-			typedef core::ModelBasedRegistrationKernel<2, 3> SourcelKernelType;
+			typedef core::InvertingRegistrationKernel<3, 2> KernelType;
+			typedef core::PreCachedRegistrationKernel<2, 3> SourcelKernelType;
 
 			SourcelKernelType::Pointer spSourceKernel = SourcelKernelType::New();
 			KernelType::Pointer spKernel = KernelType::New();
