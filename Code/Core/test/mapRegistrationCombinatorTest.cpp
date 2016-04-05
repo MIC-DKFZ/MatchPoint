@@ -27,11 +27,12 @@
 #include "litCheckMacros.h"
 #include "mapTestKernelBase.h"
 #include "mapRegistrationCombinator.h"
-#include "mapPreCachedRegistrationKernel.h"
+#include "mapLazyRegistrationKernel.h"
 #include "mapCombinedRegistrationKernel.h"
 #include "mapRegistrationManipulator.h"
 #include "mapArtifactGenerator.h"
 #include "mapCombinationFunctorInterface.h"
+#include "mapTestFieldGenerationFunctor.h"
 
 namespace map
 {
@@ -39,14 +40,13 @@ namespace map
 	{
 
 
-		typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
+		typedef core::LazyRegistrationKernel<2, 2> KernelType;
 
 
 		KernelType::Pointer generateKernel()
 		{
-			KernelType::Pointer spKernel = KernelType::New();
-
-      spKernel->setTransformModel(testing::wrapFieldInTransform<2>(testing::generate2DSumField(testing::createSimpleDescriptor<2>(10, 0.5))));
+            KernelType::Pointer spKernel = KernelType::New();
+            spKernel->setTransformFunctor(testing::TestFieldGenerationFunctor<2,2>::New(testing::createSimpleDescriptor<2>(10, 0.5)));
 
 			return spKernel;
 		}
@@ -54,10 +54,10 @@ namespace map
 
 		bool transformExists(const core::RegistrationKernelBase<2, 2>& kernel)
 		{
-			typedef core::CombinedRegistrationKernel<2, 2, 2> CombinedKernelType;
+			typedef core::RegistrationKernel<2, 2> KernelType;
 
-			const CombinedKernelType* pCombinedKernel = dynamic_cast<const CombinedKernelType*>(&kernel);
-			return pCombinedKernel->transformExists();
+            const KernelType* pKernel = dynamic_cast<const KernelType*>(&kernel);
+            return pKernel->transformExists();
 		}
 
 		bool isKernelCorrectlyComposed(const core::RegistrationKernelBase<2, 2>& kernelToCheck,
