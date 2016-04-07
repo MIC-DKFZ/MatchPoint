@@ -16,5 +16,5 @@ ADD_TEST(mapNullRegistrationKernelWriterTest ${MODULE_TESTS} mapNullRegistration
 ADD_TEST(mapExpandingFieldKernelWriterTest ${MODULE_TESTS} mapExpandingFieldKernelWriterTest "${TEMP}" "${TEST_DATA_ROOT}/Core")
 ADD_TEST(mapFieldKernelLoaderTest ${MODULE_TESTS} mapFieldKernelLoaderTest "${TEMP}" "${TEST_DATA_ROOT}/Core")
 ADD_TEST(mapLazyFileFieldKernelLoaderTest ${MODULE_TESTS} mapLazyFileFieldKernelLoaderTest "${TEMP}" "${TEST_DATA_ROOT}/Core")
-ADD_TEST(mapInvertingFieldKernelWriterTest ${MODULE_TESTS} mapInvertingFieldKernelWriterTest "${TEMP}" "${TEST_DATA_ROOT}/Core")
-ADD_TEST(mapInvertingFieldKernelLoaderTest ${MODULE_TESTS} mapInvertingFieldKernelLoaderTest "${TEMP}" "${TEST_DATA_ROOT}/Core")
+ADD_TEST(mapInvertingKernelWriterTest ${MODULE_TESTS} mapInvertingKernelWriterTest "${TEMP}" "${TEST_DATA_ROOT}/Core")
+ADD_TEST(mapInvertingKernelLoaderTest ${MODULE_TESTS} mapInvertingKernelLoaderTest "${TEMP}" "${TEST_DATA_ROOT}/Core")

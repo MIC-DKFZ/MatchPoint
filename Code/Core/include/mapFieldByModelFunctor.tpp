@@ -41,6 +41,16 @@ namespace map
             generateFieldFromTransform(const typename RegistrationTopology < VInputDimensions,
             VOutputDimensions >::DirectTransformType* transform, const FieldRepresentationDescriptor<VInputDimensions>* inDesc)
         {
+            if (!transform)
+            {
+                mapDefaultExceptionStaticMacro(<< "Error. Cannot generate field out of transform. Passed transform is NULL.")
+            }
+
+            if (!inDesc)
+            {
+                mapDefaultExceptionStaticMacro(<< "Error. Cannot generate field out of transform. Passed input field representation descriptor is is NULL.")
+            }
+
             typedef typename RegistrationTopology <VInputDimensions, VOutputDimensions >::DirectFieldType FieldType;
             typename RegistrationTopology <VInputDimensions, VOutputDimensions >::DirectFieldPointer spField = FieldType::New();
             typedef itk::ImageRegionIterator< FieldType > IteratorType;

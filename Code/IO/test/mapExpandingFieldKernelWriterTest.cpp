@@ -96,6 +96,7 @@ namespace map
       nullVector[0] = -1;
       nullVector[1] = -2;
       spLazyKernel->setNullVector(nullVector);
+      spLazyKernel->setNullVectorUsage(true);
       //the cached kernel is not set by purpose now to check the behavior when the field is missing
 
       spCachedKernel->setNullVectorUsage(false);

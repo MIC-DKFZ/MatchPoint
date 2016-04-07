@@ -45,7 +45,18 @@ namespace map
 			::map::core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(
 				Superclass::_pLoadInterface);
 
-			typedef MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions> ModelKernelWriterType;
+            typedef ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>
+                ExpandingFieldKernelWriterType;
+
+            typename ExpandingFieldKernelWriterType::Pointer spExpandingFieldWriter =
+                ExpandingFieldKernelWriterType::New();
+
+            if (!loader.addProviderByPolicy(spExpandingFieldWriter))
+            {
+                mapLogWarningObjMacro("ExpandingFieldKernelWriter was not added because it was already on the service stack!");
+            }
+            
+            typedef MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions> ModelKernelWriterType;
 
 			typename ModelKernelWriterType::Pointer spModelWriter = ModelKernelWriterType::New();
 
@@ -63,17 +74,6 @@ namespace map
 			if (!loader.addProviderByPolicy(spInvertingFieldWriter))
 			{
 				mapLogWarningObjMacro("InvertingKernelWriter was not added because it was already on the service stack!");
-			}
-
-			typedef ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>
-			ExpandingFieldKernelWriterType;
-
-			typename ExpandingFieldKernelWriterType::Pointer spExpandingFieldWriter =
-				ExpandingFieldKernelWriterType::New();
-
-			if (!loader.addProviderByPolicy(spExpandingFieldWriter))
-			{
-				mapLogWarningObjMacro("ExpandingFieldKernelWriter was not added because it was already on the service stack!");
 			}
 
 			typedef NullRegistrationKernelWriter<VInputDimensions, VOutputDimensions> NullKernelWriterType;

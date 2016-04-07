@@ -122,7 +122,7 @@ namespace map
 			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
 										   this->getProviderName()));
 			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
-										   "InvertingFieldKernel"));
+										   "InvertingKernel"));
 
 			typename KernelType::RepresentationDescriptorConstPointer spInverseFieldRepresentation =
 				pKernel->getLargestPossibleRepresentation();

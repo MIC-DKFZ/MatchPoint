@@ -96,6 +96,7 @@ namespace map
 			InvertingKernelType::Pointer spInvertingKernel = InvertingKernelType::New();
 			spInvertingKernel->setSourceKernel(spSourceKernel);
 			spInvertingKernel->setTransformFunctor(spFunctor);
+            spInvertingKernel->setNullVectorUsage(true);
 
 			InvertingKernelType::Pointer spInvertingKernel_missingSource = InvertingKernelType::New();
 			spInvertingKernel_missingSource->setTransformFunctor(spFunctor);
