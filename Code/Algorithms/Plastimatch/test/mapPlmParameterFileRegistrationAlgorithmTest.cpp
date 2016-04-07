@@ -195,8 +195,11 @@ namespace map
                 (spRegistration->getInverseMapping()));
             CHECK(pKernel != NULL);
 
+            ::map::core::FieldDecomposer<3, 3>::FieldConstPointer actualField;
+            ::map::core::FieldDecomposer<3, 3>::decomposeKernel(pKernel, actualField);
+
             tester.setReferenceTransform(generateInverseReferenceTransformModel());
-            tester.setActualField(testing::unwra pKernel->getTransformModel());
+            tester.setActualField(actualField);
             tester.setCheckThreshold(0.01);
             CHECK_TESTER(tester);
 
