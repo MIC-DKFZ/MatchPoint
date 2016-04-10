@@ -86,37 +86,7 @@ namespace map
 				 */
 				virtual const SourceKernel2BaseType* get2ndSourceKernelBase(void) const = 0;
 
-				/* gets _usePadding
-				  @eguarantee no fail
-				 */
-				bool getUsePadding() const;
-
-				/*! Sets _usePadding
-				@eguarantee no fail
-				*/
-				void setUsePadding(bool usePadding);
-
-				/* gets _paddingVector
-				 * @eguarantee no fail
-				 */
-				const PaddingVectorType& getPaddingVector() const;
-
-				/*! Sets _paddingVector by vector and _usePadding to true.
-				* @eguarantee basic
-				 * @param [in] vector The new value for _paddingVector*/
-				void setPaddingVector(const PaddingVectorType& vector);
-
 			protected:
-
-				PaddingVectorType _paddingVector;
-
-				/*! Indicicates how the functor should handel points that cannot be mapped through both kernels
-				 * (e.g. a point that is mapped by the first kernel outside of the supported region of the second registration
-				 * kernel). If the _usePadding is true, _paddingVector will be used as padding value in each of the mentioned cases.
-				 * If _usePadding value is false, functor throws an RepresentationException
-				 * By default _usePadding is false.
-				 */
-				bool _usePadding;
 
 				CombinationFunctorInterface();
 				virtual ~CombinationFunctorInterface();

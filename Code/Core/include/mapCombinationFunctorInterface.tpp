@@ -34,44 +34,9 @@ namespace map
 		{
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			void
 			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			setUsePadding(bool usePadding)
+			CombinationFunctorInterface()
 			{
-				_usePadding = usePadding;
-			};
-
-			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			void
-			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			setPaddingVector(const PaddingVectorType& vector)
-			{
-				_paddingVector = vector;
-			};
-
-			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			bool
-			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			getUsePadding() const
-			{
-				return _usePadding;
-			};
-
-			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			const typename
-			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::PaddingVectorType&
-
-			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			getPaddingVector() const
-			{
-				return _paddingVector;
-			};
-
-			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
-			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-			CombinationFunctorInterface() : _usePadding(false)
-			{
-				_paddingVector.Fill(0.0);
 			};
 
 			template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
@@ -83,8 +48,6 @@ namespace map
 			CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>::
 			PrintSelf(std::ostream& os, itk::Indent indent) const
 			{
-				os << indent << "Use padding:    " << _usePadding << std::endl;
-				os << indent << "Padding vector: " << _paddingVector << std::endl;
 			};
 
 		} // end namespace functors

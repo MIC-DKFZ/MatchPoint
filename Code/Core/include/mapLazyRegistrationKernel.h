@@ -99,10 +99,6 @@ namespace map
             */
             virtual const TransformType* getTransformModel() const override;
 
-            void setNullVector(const MappingVectorType& nullVector);
-
-            void setNullVectorUsage(bool use);
-
             virtual const MappingVectorType& getNullVector() const override;
 
             virtual bool usesNullVector() const override;
@@ -116,9 +112,6 @@ namespace map
             mutable TransformPointer _spTransform;
 
             TransformGenerationFunctorConstPointer _spGenerationFunctor;
-
-            MappingVectorType _nullVector;
-            bool _useNullVector;
 
             /*! checks the transform that has been set for correctness and prepares it to be used
             @eguarantee strong

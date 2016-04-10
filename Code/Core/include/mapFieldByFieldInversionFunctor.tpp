@@ -28,7 +28,7 @@
 #include "mapLogbookMacros.h"
 
 #include "itkIterativeInverseDisplacementFieldImageFilter.h"
-#include "itkDisplacementFieldTransform.h"
+#include "mapGenericVectorFieldTransform.h"
 
 namespace map
 {
@@ -49,16 +49,16 @@ namespace map
             public:
                 typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::FieldType
                     FieldType;
-                typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::TransformPointer TransformPointer;
-                typedef typename FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::TransformType TransformType;
                 typedef typename
                     FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType
                     SourceFieldKernelType;
                 typedef typename
                     FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
                     InFieldRepresentationType;
+                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
+                typedef typename FieldTransformType::Pointer FieldTransformPointer;
 
-                static inline TransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
+                static inline FieldTransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
                     const InFieldRepresentationType* pInFieldRepresentation,
                     double stopValue, unsigned int nrOfIterations)
                 {
@@ -73,8 +73,6 @@ namespace map
             {
             public:
                 typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::FieldType    FieldType;
-                typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::TransformPointer TransformPointer;
-                typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::TransformType TransformType;
                 typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldType
                     SourceFieldType;
                 typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::SourceFieldKernelType
@@ -82,9 +80,10 @@ namespace map
                 typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::InFieldRepresentationType
                     InFieldRepresentationType;
 
-                typedef typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
+                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimensions, VDimensions> FieldTransformType;
+                typedef typename FieldTransformType::Pointer FieldTransformPointer;
 
-                static inline TransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
+                static inline FieldTransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
                     const InFieldRepresentationType* pInFieldRepresentation,
                     double stopValue, unsigned int nrOfIterations)
                 {
@@ -120,11 +119,16 @@ namespace map
                 FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
                 generateTransform() const
             {
-                TransformPointer spResult =
+                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
+                
+                typename FieldTransformType::Pointer spResult =
                     FieldByFieldInversionFunctorHelper<VInputDimensions, VOutputDimensions>::generate(
                     _spSourceFieldKernel, Superclass::_spInFieldRepresentation, _stopValue, _nrOfIterations);
 
-                return spResult;
+                spResult->SetUseNullPoint(_useNullVector);
+                spResult->SetNullPoint(_nullVector);
+
+                return spResult.GetPointer();
             }
 
             template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
@@ -171,7 +175,6 @@ namespace map
             {
                 assert(sourceFieldKernel);
                 assert(pInFieldRepresentation);
-
             }
 
             template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

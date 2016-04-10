@@ -30,7 +30,7 @@
 #include "mapInvertingRegistrationKernel.h"
 #include "mapPreCachedRegistrationKernel.h"
 
-#include "itkDisplacementFieldTransform.h"
+#include "mapGenericVectorFieldTransform.h"
 
 namespace map
 {
@@ -154,7 +154,7 @@ namespace map
 
         spInverseKernel->setSourceKernel(pKernel);
 
-        typedef itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VInputDimensions> FieldTransformType;
+        typedef itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VOutputDimensions, VInputDimensions> FieldTransformType;
         const FieldTransformType* pFieldTransformModel = dynamic_cast<const FieldTransformType*>(pTransformModel);
 
         if (pFieldTransformModel)

@@ -76,29 +76,10 @@ namespace map
             typename FunctorType::Pointer spFunctor = FunctorType::New(pKernel1, pKernel2,
                 pInputFieldRepresentation);
 
-            spFunctor->setUsePadding(usePadding);
-            spFunctor->setPaddingVector(paddingVector);
+            spFunctor->setNullVectorUsage(usePadding);
+            spFunctor->setNullVector(paddingVector);
 
             spCombinedKernel->setTransformFunctor(spFunctor.GetPointer());
-
-            if (pKernel1->usesNullVector() || pKernel2->usesNullVector())
-            {
-                spCombinedKernel->setNullVectorUsage(true);
-
-                if (pKernel1->usesNullVector() && pKernel2->usesNullVector() && (pKernel1->getNullVector() != pKernel2->getNullVector()))
-                {
-                    mapExceptionMacro(ServiceException,
-                        << "Error: cannot combine kernels. Reason: Kernels have activated but different null vectors. Cannot solve conflict. Null vector 1: " << pKernel1->getNullVector() << "; null vector 2:" << pKernel2->getNullVector());
-                }
-                if (pKernel1->usesNullVector())
-                {
-                    spCombinedKernel->setNullVector(pKernel1->getNullVector());
-                }
-                else
-                {
-                    spCombinedKernel->setNullVector(pKernel2->getNullVector());
-                }
-            }
 
             CombinedKernelBasePointer spResult = spCombinedKernel.GetPointer();
             return spResult;

@@ -24,6 +24,7 @@
 #define __PRE_CACHED_REGISTRATION_KERNEL_TPP
 
 #include "mapExceptionObjectMacros.h"
+#include "mapGenericVectorFieldTransform.h"
 
 #include "mapFieldDecomposer.h"
 
@@ -89,26 +90,20 @@ namespace map
             return _spTransform.IsNotNull();
         };
 
-        template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
-        PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            PreCachedRegistrationKernel() : _spTransform(NULL), _nullVector(
-            ::itk::NumericTraits< typename MappingVectorType::ValueType >::NonpositiveMin()),
-            _useNullVector(false)
-        {
-        };
-
-        template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
-        PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            ~PreCachedRegistrationKernel()
-        {
-        };
-
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
         const typename PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::MappingVectorType&
             PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
             getNullVector() const
         {
-            return _nullVector;
+            typedef itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> CastedTransformType;
+            const CastedTransformType* castedTrans = dynamic_cast<const CastedTransformType*>(_spTransform.GetPointer());
+
+            MappingVectorType result;
+            if (castedTrans)
+            {
+                result.C =  castedTrans->GetNullPoint();
+            }
+            return result;
         };
 
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
@@ -116,23 +111,29 @@ namespace map
             PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
             usesNullVector() const
         {
-            return _useNullVector;
+            typedef itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> CastedTransformType;
+            const CastedTransformType* castedTrans = dynamic_cast<const CastedTransformType*>(_spTransform.GetPointer());
+
+            if (castedTrans)
+            {
+                return castedTrans->GetUseNullPoint();
+            }
+            else
+            {
+                return false;
+            }
         };
 
-        template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-        void
-            PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            setNullVector(const MappingVectorType& nullVector)
+        template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
+        PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
+            PreCachedRegistrationKernel() : _spTransform(NULL)
         {
-            _nullVector = nullVector;
         };
 
-        template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-        void
-            PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            setNullVectorUsage(bool use)
+        template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
+        PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
+            ~PreCachedRegistrationKernel()
         {
-            _useNullVector = use;
         };
 
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
@@ -151,8 +152,8 @@ namespace map
                 os << indent << "Transform : NULL" << std::endl;
             }
 
-            os << indent << "Use null vector: " << _useNullVector << std::endl;
-            os << indent << "Null vector: " << this->_nullVector << std::endl;
+            os << indent << "Use null vector: " << this->usesNullVector() << std::endl;
+            os << indent << "Null vector: " << this->getNullVector() << std::endl;
         };
 
     } // end namespace core

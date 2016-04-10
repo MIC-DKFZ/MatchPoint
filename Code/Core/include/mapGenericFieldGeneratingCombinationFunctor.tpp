@@ -27,9 +27,9 @@
 #include "mapRepresentationException.h"
 #include "mapPointVectorCombinationPolicy.h"
 #include "mapRegistrationKernel.h"
+#include "mapGenericVectorFieldTransform.h"
 
 #include "itkImageRegionIterator.h"
-#include "itkDisplacementFieldTransform.h"
 
 namespace map
 {
@@ -68,7 +68,7 @@ namespace map
                     typename SourceKernel2BaseType::OutputPointType endPoint;
                     bool valid2 = _spSourceKernel2->mapPoint(interimPoint, endPoint);
 
-                    typename SourceKernel2BaseType::OutputVectorType outVector = _paddingVector;
+                    typename SourceKernel2BaseType::OutputVectorType outVector = _nullVector;
                     if (valid && valid2)
                     {
                         PointVectorCombinationPolicy<VInputDimensions, VOutputDimensions>::computeVector(inPoint,
@@ -76,7 +76,7 @@ namespace map
                     }
                     else
                     {
-                        if (!_usePadding)
+                        if (!_useNullVector)
                         {
                             mapDefaultExceptionMacro(<< "Error. Cannot generate combined kernel. At least one source kernel was not able to map points. valid source kernel 1: " << valid << "; valid source kernel 2:" << valid2);
                         }
@@ -85,9 +85,12 @@ namespace map
                     iterator.Set(outVector);
                 }
 
-                typedef typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VOutputDimensions> FieldTransformType;
+                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
                 typename FieldTransformType::Pointer spResult = FieldTransformType::New();
                 spResult->SetDisplacementField(spField);
+
+                spResult->SetUseNullPoint(_useNullVector);
+                spResult->SetNullPoint(_nullVector);
                 return spResult.GetPointer();
             }
 

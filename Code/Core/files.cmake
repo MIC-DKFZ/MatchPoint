@@ -141,7 +141,8 @@ SET(H_FILES
     include/mapFieldByFieldInversionFunctor.h
     include/mapCombinationFunctorInterface.h
     include/mapGenericFieldGeneratingCombinationFunctor.h
-    include/mapFieldByFileLoadFunctor.h    
+    include/mapFieldByFileLoadFunctor.h
+    include/mapGenericVectorFieldTransform.h	
 )
 
 SET(TPP_FILES
@@ -200,6 +201,7 @@ SET(TPP_FILES
     include/mapCombinationFunctorInterface.tpp
     include/mapGenericFieldGeneratingCombinationFunctor.tpp
     include/mapFieldByFileLoadFunctor.tpp  
+    include/mapGenericVectorFieldTransform.tpp
 )
 
 SET( TEST_CPP_FILES

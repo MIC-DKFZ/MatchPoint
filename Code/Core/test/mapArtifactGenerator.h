@@ -26,7 +26,7 @@
 #include "mapDiscreteElements.h"
 #include "mapFieldRepresentationDescriptor.h"
 
-#include "itkDisplacementFieldTransform.h"
+#include "mapGenericVectorFieldTransform.h"
 
 namespace map
 {
@@ -84,10 +84,10 @@ namespace map
 
     /**Wraps a given field into a displacment transform to be used in kernels*/
     template<unsigned int VDimension>
-    typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimension>::Pointer
+    typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimension, VDimension>::Pointer
         wrapFieldInTransform(typename ::map::core::discrete::Elements<VDimension>::VectorFieldType* field)
     {
-        ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimension>::Pointer transform = ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimension>::New();
+        ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimension, VDimension>::Pointer transform = ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimension, VDimension>::New();
         transform->SetDisplacementField(field);
         return transform;
     }
@@ -110,7 +110,7 @@ namespace map
     typename ::map::core::discrete::Elements<VDimension>::VectorFieldType::Pointer
         unwrapTransformField(typename::itk::Transform<::map::core::continuous::ScalarType, VDimension, VDimension>* transform)
     {
-        typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimension> FieldTransformType;
+        typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimension, VDimension> FieldTransformType;
         
         FieldTransformType* fieldTransform = dynamic_cast<FieldTransformType*> (transform);
 

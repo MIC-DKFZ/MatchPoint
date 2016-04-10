@@ -36,7 +36,7 @@
 #include "mapMetaPropertyAlgorithmBase.h"
 #include "mapMaskedRegistrationAlgorithmBase.h"
 
-#include "itkDisplacementFieldTransform.h"
+#include "mapGenericVectorFieldTransform.h"
 
 namespace map
 {
@@ -151,7 +151,7 @@ namespace map
 				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
 				TargetImageConstPointer;
 
-        typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, TTargetImage::ImageDimension> FieldTransformType;
+                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, TTargetImage::ImageDimension, TTargetImage::ImageDimension> FieldTransformType;
 
 				typedef typename
 				map::core::RegistrationTopology<Superclass::MovingDimensions, Superclass::TargetDimensions>::InverseFieldType

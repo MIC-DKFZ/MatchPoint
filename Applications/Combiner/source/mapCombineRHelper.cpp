@@ -102,16 +102,12 @@ map::core::RegistrationBase::Pointer
 
   result = doCombination<2,2,2>(reg1,reg2);
   if (result.IsNull()) result = doCombination<3,3,3>(reg1,reg2);
-  /** The following combination options have bin termporarily deactivated.
-   with the rework of issue #1505 the new combiner version provoke compiler
-   errors. If this problem is fixed (issue #2179),
-   the lines should be reaktivated.*/
-//  if (result.IsNull()) result = doCombination<2,3,2>(reg1,reg2);
-//  if (result.IsNull()) result = doCombination<2,2,3>(reg1,reg2);
-//  if (result.IsNull()) result = doCombination<3,2,2>(reg1,reg2);
-//  if (result.IsNull()) result = doCombination<2,3,3>(reg1,reg2);
-//  if (result.IsNull()) result = doCombination<3,3,2>(reg1,reg2);
-//  if (result.IsNull()) result = doCombination<3,2,3>(reg1,reg2);
+  if (result.IsNull()) result = doCombination<2,3,2>(reg1,reg2);
+  if (result.IsNull()) result = doCombination<2,2,3>(reg1,reg2);
+  if (result.IsNull()) result = doCombination<3,2,2>(reg1,reg2);
+  if (result.IsNull()) result = doCombination<2,3,3>(reg1,reg2);
+  if (result.IsNull()) result = doCombination<3,3,2>(reg1,reg2);
+  if (result.IsNull()) result = doCombination<3,2,3>(reg1,reg2);
 
   return result;
 };

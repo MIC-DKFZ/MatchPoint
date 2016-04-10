@@ -26,9 +26,9 @@
 #include "mapFieldByModelFunctor.h"
 #include "mapLogbookMacros.h"
 #include "mapPointVectorCombinationPolicy.h"
+#include "mapGenericVectorFieldTransform.h"
 
 #include "itkImageRegionIterator.h"
-#include "itkDisplacementFieldTransform.h"
 
 namespace map
 {
@@ -99,7 +99,8 @@ namespace map
             class FieldByModelFunctorHelper
             {
             public:
-                typedef typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::TransformPointer TransformPointer;
+                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> TransformType;
+                typedef typename TransformType::Pointer TransformPointer;
                 typedef typename FieldByModelFunctor<VInputDimensions, VOutputDimensions>::SourceTransformModelType
                     SourceTransformModelType;
                 typedef typename
@@ -120,21 +121,19 @@ namespace map
             {
             public:
                 typedef typename FieldByModelFunctor<VDimensions, VDimensions>::FieldType FieldType;
-                typedef typename FieldByModelFunctor<VDimensions, VDimensions>::TransformType TransformType;
-                typedef typename FieldByModelFunctor<VDimensions, VDimensions>::TransformPointer TransformPointer;
+                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimensions, VDimensions> TransformType;
+                typedef typename TransformType::Pointer TransformPointer;
                 typedef typename FieldByModelFunctor<VDimensions, VDimensions>::SourceTransformModelType
                     SourceTransformModelType;
                 typedef typename FieldByModelFunctor<VDimensions, VDimensions>::InFieldRepresentationType
                     InFieldRepresentationType;
-
-                typedef typename ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
 
                 static inline TransformPointer generate(const SourceTransformModelType* pTransformModel,
                     const InFieldRepresentationType* pInFieldRepresentation)
                 {
                     typename FieldType::Pointer spField = generateFieldFromTransform<VDimensions, VDimensions>(pTransformModel, pInFieldRepresentation);
 
-                    typename FieldTransformType::Pointer spResult = FieldTransformType::New();
+                    typename TransformPointer spResult = TransformType::New();
                     spResult->SetDisplacementField(spField);
                     return spResult.GetPointer();
                 }
@@ -147,11 +146,14 @@ namespace map
             {
                 mapLogInfoMacro(<< "Generate field by model sampling");
 
-                TransformPointer spResult =
+                FieldByModelFunctorHelper<VInputDimensions, VOutputDimensions>::TransformPointer spResult =
                     FieldByModelFunctorHelper<VInputDimensions, VOutputDimensions>::generate(_spTransformModel,
                     Superclass::_spInFieldRepresentation);
 
-                return spResult;
+                spResult->SetUseNullPoint(_useNullVector);
+                spResult->SetNullPoint(_nullVector);
+
+                return spResult.GetPointer();
             }
 
             template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

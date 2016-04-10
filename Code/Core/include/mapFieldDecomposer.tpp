@@ -25,6 +25,7 @@
 
 #include "mapFieldDecomposer.h"
 #include "mapRegistrationKernel.h"
+#include "mapGenericVectorFieldTransform.h"
 #include "itkDisplacementFieldTransform.h"
 
 namespace map
@@ -46,16 +47,32 @@ namespace map
 
             static bool decomposeTransform(const TransformType* pTransform, FieldConstPointer& field)
             {
-                mapDefaultExceptionStaticMacro(<<
-                    "Error decomposing field. Currently field with different input and output dimensions are not supported.");
+                bool result = false;
+                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> GenericFieldTransformType;
 
+                const GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<const GenericFieldTransformType*>(pTransform);
+                if (castedGenericFieldTransform)
+                { //try to directly use the field
+                    field = dynamic_cast<const FieldType*>(castedGenericFieldTransform->GetDisplacementField());
+                    result = true;
+                }
+
+                return result;
             };
 
             static bool decomposeTransform(TransformType* pTransform, FieldPointer& field)
             {
-                mapDefaultExceptionStaticMacro(<<
-                    "Error decomposing field. Currently field with different input and output dimensions are not supported.");
+                bool result = false;
+                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> GenericFieldTransformType;
 
+                GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<GenericFieldTransformType*>(pTransform);
+                if (castedGenericFieldTransform)
+                { //try to directly use the field
+                    field = dynamic_cast<const FieldType*>(castedGenericFieldTransform->GetDisplacementField());
+                    result = true;
+                }
+
+                return result;
             };
 
         };
@@ -75,11 +92,18 @@ namespace map
             {
                 bool result = false;
                 typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
+                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimensions, VDimensions> GenericFieldTransformType;
 
                 const FieldTransformType* castedFieldTransform = dynamic_cast<const FieldTransformType*>(pTransform);
+                const GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<const GenericFieldTransformType*>(pTransform);
                 if (castedFieldTransform)
                 { //try to directly use the field
                     field = dynamic_cast<const FieldType*>(castedFieldTransform->GetDisplacementField());
+                    result = true;
+                }
+                else if (castedGenericFieldTransform)
+                { //try to directly use the field
+                    field = dynamic_cast<const FieldType*>(castedGenericFieldTransform->GetDisplacementField());
                     result = true;
                 }
 
@@ -90,11 +114,18 @@ namespace map
             {
                 bool result = false;
                 typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
+                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimensions, VDimensions> GenericFieldTransformType;
 
                 FieldTransformType* castedFieldTransform = dynamic_cast<FieldTransformType*>(pTransform);
+                GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<GenericFieldTransformType*>(pTransform);
                 if (castedFieldTransform)
                 { //try to directly use the field
-                    field = dynamic_cast<FieldType*>(castedFieldTransform->GetDisplacementField());
+                    field = dynamic_cast<const FieldType*>(castedFieldTransform->GetDisplacementField());
+                    result = true;
+                }
+                else if (castedGenericFieldTransform)
+                { //try to directly use the field
+                    field = dynamic_cast<const FieldType*>(castedGenericFieldTransform->GetDisplacementField());
                     result = true;
                 }
 

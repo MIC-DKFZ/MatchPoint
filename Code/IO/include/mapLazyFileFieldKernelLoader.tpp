@@ -119,10 +119,10 @@ namespace map
 				::map::core::createFieldRepresentationOfMetaImageFile<VInputDimensions>(filePath);
 
 			typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath, spFieldDescriptor);
+            spFunctor->setNullVectorUsage(usesNullVector);
+            spFunctor->setNullVector(nullVector);
 
 			spLazyKernel->setTransformFunctor(spFunctor.GetPointer());
-			spLazyKernel->setNullVectorUsage(usesNullVector);
-			spLazyKernel->setNullVector(nullVector);
 
 			spKernel = spLazyKernel;
 
