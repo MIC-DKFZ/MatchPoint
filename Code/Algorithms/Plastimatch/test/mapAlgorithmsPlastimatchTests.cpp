@@ -34,6 +34,8 @@ namespace map
 	namespace testing
 	{
 
+    const char* _callingAppPath = NULL;
+
 		void registerTests()
 		{
 			LIT_REGISTER_TEST(mapPlmParameterFileRegistrationAlgorithmTest);
@@ -47,6 +49,11 @@ int main(int argc, char* argv[])
 	int result = 0;
 
 	map::testing::registerTests();
+
+  if (argc > 0)
+  {
+      map::testing::_callingAppPath = argv[0];
+  }
 
 	try
 	{

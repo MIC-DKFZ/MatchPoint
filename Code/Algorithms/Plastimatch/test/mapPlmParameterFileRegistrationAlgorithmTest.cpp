@@ -40,6 +40,12 @@ namespace map
     namespace testing
     {
 
+        //defined by mapAlgorithmsPlastimatchTests.cpp. It is the path to the current running executable.
+        //It is needed to bypass 2 problems: 1) that when using MS Visual Studio the actual binary
+        //path depends of the compile mode (release/debug) and is not the CMake binary path.
+        //2) we want to ensure that the dummy plastimatich is used.
+        extern const char* _callingAppPath;
+
         mapGenerateAlgorithmUIDPolicyMacro(TestPlm3DRegistrationUIDPolicy,
             "de.dkfz.matchpoint.plastimatch.test", "ProgramFileRegistration.3D.default", "1.0.0", "");
 
@@ -127,6 +133,9 @@ namespace map
             ::map::core::String targetImageFileName = "";
             ::map::core::String paramFileName = "";
 
+            ::map::core::String callingAppPath = _callingAppPath;
+            ::map::core::String plastimatichPath = map::core::FileDispatch::getPath(_callingAppPath);
+
             if (argc > 1)
             {
                 movingImageFileName = argv[1];
@@ -178,6 +187,7 @@ namespace map
             spAlgorithm->setMovingImage(spMovingImage);
             spAlgorithm->setTargetImage(spTargetImage);
             spAlgorithm->setParameterFilePath(paramFileName);
+            spAlgorithm->setPlastimatchDirectory(plastimatichPath);
 
             ///////////////////////////////////////////////////////
             //Test legal algorithm execution and registration result
@@ -210,7 +220,7 @@ namespace map
             CHECK(spAlgorithm->getDeleteTempDirectory(delDir));
             CHECK_EQUAL(true, delDir);
             CHECK_NO_THROW(spAlgorithm->determineRegistration());
-            ArgumentsType cmdArg = getLoggedArguments("plastimatchDummyCall.log");
+            ArgumentsType cmdArg = getLoggedArguments(::map::core::FileDispatch::createFullPath(plastimatichPath,"plastimatchDummyCall.log"));
             ::map::core::String tempDir = getLoggedTempDir(cmdArg);
 
             CHECK(!(itksys::SystemTools::FileExists(tempDir.c_str(), false)));
@@ -220,7 +230,7 @@ namespace map
             CHECK(spAlgorithm->getDeleteTempDirectory(delDir));
             CHECK_EQUAL(false, delDir);
             CHECK_NO_THROW(spAlgorithm->determineRegistration());
-            cmdArg = getLoggedArguments("plastimatchDummyCall.log");
+            cmdArg = getLoggedArguments(::map::core::FileDispatch::createFullPath(plastimatichPath, "plastimatchDummyCall.log"));
             tempDir = getLoggedTempDir(cmdArg);
 
             CHECK(itksys::SystemTools::FileExists(tempDir.c_str(), false));
@@ -250,6 +260,7 @@ namespace map
 
             ///////////////////////////////////////////////////////
             //Check other public methods
+            spAlgorithm = Plm3DRegistrationAlgorithmType::New();
 
             CHECK_EQUAL(false, spAlgorithm->hasCurrentOptimizerValue());
             CHECK_EQUAL(false, spAlgorithm->hasMaxIterationCount());
@@ -257,7 +268,7 @@ namespace map
             CHECK_EQUAL(false, spAlgorithm->isStoppable());
 
             ::map::core::String envPlastimatchPath = "";
-            itksys::SystemTools::GetEnv("MAPPlastimatchPath", envPlastimatchPath);
+            itksys::SystemTools::GetEnv("MAP_PLASTIMATCH_PATH", envPlastimatchPath);
 
             ::map::core::String dir;
             CHECK(spAlgorithm->getWorkingDirectory(dir));

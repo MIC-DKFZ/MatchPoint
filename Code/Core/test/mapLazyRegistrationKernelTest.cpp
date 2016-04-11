@@ -46,6 +46,7 @@ namespace map
       KernelType::RepresentationDescriptorPointer spInRep = testing::createSimpleDescriptor<2>(10, 0.5);
 
 			spFunctor = FieldFunctorType::New(spInRep);
+      spFunctor->setNullPointUsage(true);
 
 			spKernel->setTransformFunctor(spFunctor.GetPointer());
 		}
@@ -75,10 +76,10 @@ namespace map
 
 			KernelType::OutputPointType resultPoint;
 
-      KernelType::MappingVectorType nullVectorRef;
-      nullVectorRef.Fill(99);
-      KernelType::MappingVectorType defaultNullVector(
-          ::itk::NumericTraits< KernelType::MappingVectorType::ValueType >::NonpositiveMin());
+      KernelType::OutputPointType nullPointRef;
+      nullPointRef.Fill(99);
+      KernelType::OutputPointType defaultNullPoint(
+          ::itk::NumericTraits< KernelType::OutputPointType::ValueType >::NonpositiveMin());
 
 			//TESTS basic api /behavior of uninitialized kernel
       KernelType::Pointer emptyKernel = KernelType::New();
@@ -92,13 +93,8 @@ namespace map
       CHECK_NO_THROW(emptyKernel->setTransformFunctor(spFunctor));
       CHECK_EQUAL(spFunctor.GetPointer(), emptyKernel->getTransformFunctor());
 
-      CHECK_EQUAL(false, emptyKernel->usesNullVector());
-      CHECK_NO_THROW(emptyKernel->setNullVectorUsage(true));
-      CHECK_EQUAL(true, emptyKernel->usesNullVector());
-
-      CHECK_EQUAL(defaultNullVector, emptyKernel->getNullVector());
-      CHECK_NO_THROW(emptyKernel->setNullVector(nullVectorRef));
-      CHECK_EQUAL(nullVectorRef, emptyKernel->getNullVector());
+      CHECK_EQUAL(true, emptyKernel->usesNullPoint());
+      CHECK_EQUAL(defaultNullPoint, emptyKernel->getNullPoint());
 
       /// configured kernel
       const KernelType::TransformType* pKernelGeneratedField = spKernel->getTransformModel();
@@ -138,6 +134,13 @@ namespace map
 			CHECK_EQUAL(false, spKernel->mapPoint(invalidInPoint, resultPoint));
 			CHECK_EQUAL(invalidReferencePoint, resultPoint);
       CHECK_EQUAL(true, spKernel->transformExists());
+
+      CHECK_EQUAL(true, spKernel->usesNullPoint());
+      CHECK_EQUAL(defaultNullPoint, spKernel->getNullPoint());
+      spFunctor->setNullPointUsage(false);
+      spFunctor->setNullPoint(nullPointRef);
+      CHECK_EQUAL(false, spKernel->usesNullPoint());
+      CHECK_EQUAL(nullPointRef, spKernel->getNullPoint());
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

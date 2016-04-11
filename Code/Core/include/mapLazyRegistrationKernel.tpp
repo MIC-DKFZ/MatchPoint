@@ -126,14 +126,14 @@ namespace map
         };
 
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-        const typename LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::MappingVectorType&
+        const typename LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::OutputPointType
             LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            getNullVector() const
+            getNullPoint() const
         {
-            MappingVectorType result;
+            OutputPointType result;
             if (_spGenerationFunctor.IsNotNull())
             {
-                result = _spGenerationFunctor->getNullVector();
+                result = _spGenerationFunctor->getNullPoint();
             }
 
             return result;
@@ -142,12 +142,12 @@ namespace map
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
         bool
             LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            usesNullVector() const
+            usesNullPoint() const
         {
             bool result = false;
             if (_spGenerationFunctor.IsNotNull())
             {
-                result = _spGenerationFunctor->getNullVectorUsage();
+                result = _spGenerationFunctor->getNullPointUsage();
             }
 
             return result;
@@ -177,8 +177,8 @@ namespace map
                 os << indent << "Transform : NULL" << std::endl;
             }
 
-            os << indent << "Use null vector: " << this->usesNullVector() << std::endl;
-            os << indent << "Null vector: " << this->getNullVector() << std::endl;
+            os << indent << "Use null vector: " << this->usesNullPoint() << std::endl;
+            os << indent << "Null vector: " << this->getNullPoint() << std::endl;
         };
 
     } // end namespace core

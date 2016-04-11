@@ -28,6 +28,7 @@
 #include "mapPointVectorCombinationPolicy.h"
 #include "mapRegistrationKernel.h"
 #include "mapGenericVectorFieldTransform.h"
+#include "mapNULLVectorAwareLinearInterpolateImageFunction.h"
 
 #include "itkImageRegionIterator.h"
 
@@ -68,7 +69,8 @@ namespace map
                     typename SourceKernel2BaseType::OutputPointType endPoint;
                     bool valid2 = _spSourceKernel2->mapPoint(interimPoint, endPoint);
 
-                    typename SourceKernel2BaseType::OutputVectorType outVector = _nullVector;
+                    typename SourceKernel2BaseType::MappingVectorType outVector;
+                        outVector.Superclass::operator = (_nullPoint);
                     if (valid && valid2)
                     {
                         PointVectorCombinationPolicy<VInputDimensions, VOutputDimensions>::computeVector(inPoint,
@@ -76,7 +78,7 @@ namespace map
                     }
                     else
                     {
-                        if (!_useNullVector)
+                        if (!_useNullPoint)
                         {
                             mapDefaultExceptionMacro(<< "Error. Cannot generate combined kernel. At least one source kernel was not able to map points. valid source kernel 1: " << valid << "; valid source kernel 2:" << valid2);
                         }
@@ -89,8 +91,16 @@ namespace map
                 typename FieldTransformType::Pointer spResult = FieldTransformType::New();
                 spResult->SetDisplacementField(spField);
 
-                spResult->SetUseNullPoint(_useNullVector);
-                spResult->SetNullPoint(_nullVector);
+                typedef typename ::itk::map::NULLVectorAwareLinearInterpolateImageFunction < FieldTransformType::GenericVectorFieldType, FieldTransformType::ScalarType> InterpolatorType;
+                typename InterpolatorType::Pointer interpolator = InterpolatorType::New();
+                interpolator->SetNullVectorUsage(_useNullPoint);
+                InterpolatorType::OutputType nullVector;
+                nullVector.Superclass::operator = (_nullPoint);
+                interpolator->SetNullVector(nullVector);
+
+                spResult->SetInterpolator(interpolator);
+                spResult->SetUseNullPoint(_useNullPoint);
+                spResult->SetNullPoint(_nullPoint);
                 return spResult.GetPointer();
             }
 

@@ -69,6 +69,8 @@ namespace map
 			typedef typename InverterBaseType::FieldRepresentationType					FieldRepresentationType;
 			typedef typename InverterBaseType::InverseFieldRepresentationType   InverseFieldRepresentationType;
 
+      typedef typename InverseKernelBaseType::OutputPointType NullPointType;
+
 		protected:
 			typedef services::ServiceStack<InverterBaseType, KernelInverterLoadPolicy<VInputDimensions, VOutputDimensions> >
 			ConcreteInverterStackType;
@@ -94,6 +96,10 @@ namespace map
 			InverseKernelBasePointer generateInverse(const KernelBaseType& kernel,
 					const InverseFieldRepresentationType* pInverseFieldRepresentation) const;
 
+      mapSetVarMacro(NullPoint, NullPointType, _nullPoint);
+      mapGetConstVarMacro(NullPoint, NullPointType, _nullPoint);
+      mapSetVarMacro(NullPointUsage, bool, _useNullPoint);
+      mapGetConstVarMacro(NullPointUsage, bool, _useNullPoint);
 
 		protected:
 			/*! Generates an inverse kernel by requesting a responsible service provider from InverterStackType.
@@ -121,6 +127,9 @@ namespace map
 
 			InverseRegistrationKernelGenerator();
 			virtual ~InverseRegistrationKernelGenerator();
+
+      NullPointType _nullPoint;
+      bool _useNullPoint;
 
 		private:
 			InverseRegistrationKernelGenerator(const Self&);  //purposely not implemented

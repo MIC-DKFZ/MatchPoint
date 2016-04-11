@@ -143,10 +143,10 @@ namespace map
 
 			//now activiate padding to avoid the exception and get a padded field
 
-			spIllegalTestFunctor->setNullVectorUsage(true);
+			spIllegalTestFunctor->setNullPointUsage(true);
 			CombinatorFunctorType::PaddingVectorType paddingValue;
 			paddingValue.Fill(42);
-			spIllegalTestFunctor->setNullVector(paddingValue);
+			spIllegalTestFunctor->setNullPoint(paddingValue);
 
       CHECK_NO_THROW(spIllegalResultFieldTransform = spIllegalTestFunctor->generateTransform());
 			CHECK(spIllegalTestFunctor.IsNotNull());

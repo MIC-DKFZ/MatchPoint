@@ -91,9 +91,9 @@ namespace map
         };
 
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
-        const typename PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::MappingVectorType&
+        const typename PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::OutputPointType
             PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            getNullVector() const
+            getNullPoint() const
         {
             typedef itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> CastedTransformType;
             const CastedTransformType* castedTrans = dynamic_cast<const CastedTransformType*>(_spTransform.GetPointer());
@@ -101,7 +101,7 @@ namespace map
             MappingVectorType result;
             if (castedTrans)
             {
-                result.C =  castedTrans->GetNullPoint();
+                result.Superclass::operator = (castedTrans->GetNullPoint());
             }
             return result;
         };
@@ -109,7 +109,7 @@ namespace map
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
         bool
             PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            usesNullVector() const
+            usesNullPoint() const
         {
             typedef itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> CastedTransformType;
             const CastedTransformType* castedTrans = dynamic_cast<const CastedTransformType*>(_spTransform.GetPointer());
@@ -152,8 +152,8 @@ namespace map
                 os << indent << "Transform : NULL" << std::endl;
             }
 
-            os << indent << "Use null vector: " << this->usesNullVector() << std::endl;
-            os << indent << "Null vector: " << this->getNullVector() << std::endl;
+            os << indent << "Use null vector: " << this->usesNullPoint() << std::endl;
+            os << indent << "Null vector: " << this->getNullPoint() << std::endl;
         };
 
     } // end namespace core

@@ -146,12 +146,21 @@ namespace map
             {
                 mapLogInfoMacro(<< "Generate field by model sampling");
 
-                FieldByModelFunctorHelper<VInputDimensions, VOutputDimensions>::TransformPointer spResult =
+                typedef typename FieldByModelFunctorHelper<VInputDimensions, VOutputDimensions>::TransformType FieldTransformType;
+                    typename FieldTransformType::Pointer spResult =
                     FieldByModelFunctorHelper<VInputDimensions, VOutputDimensions>::generate(_spTransformModel,
                     Superclass::_spInFieldRepresentation);
 
-                spResult->SetUseNullPoint(_useNullVector);
-                spResult->SetNullPoint(_nullVector);
+                typedef typename ::itk::map::NULLVectorAwareLinearInterpolateImageFunction < FieldTransformType::GenericVectorFieldType, FieldTransformType::ScalarType> InterpolatorType;
+                typename InterpolatorType::Pointer interpolator = InterpolatorType::New();
+                interpolator->SetNullVectorUsage(_useNullPoint);
+                InterpolatorType::OutputType nullVector;
+                nullVector.Superclass::operator = (_nullPoint);
+                interpolator->SetNullVector(nullVector);
+
+                spResult->SetInterpolator(interpolator);
+                spResult->SetUseNullPoint(_useNullPoint);
+                spResult->SetNullPoint(_nullPoint);
 
                 return spResult.GetPointer();
             }

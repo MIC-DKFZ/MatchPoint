@@ -57,7 +57,7 @@ namespace map
 			}
 
 			InverseKernelBasePointer spInverseKernel = pInverter->invertKernel(kernel, pFieldRepresentation,
-					pInverseFieldRepresentation);
+					pInverseFieldRepresentation, _useNullPoint, _nullPoint);
 
 			assert(spInverseKernel.IsNotNull());
 
@@ -67,8 +67,9 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::
-		InverseRegistrationKernelGenerator()
+        InverseRegistrationKernelGenerator() : _useNullPoint(false)
 		{
+        _nullPoint.Fill(itk::NumericTraits<map::core::continuous::ScalarType>::NonpositiveMin());
 		};
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

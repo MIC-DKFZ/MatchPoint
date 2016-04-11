@@ -135,19 +135,19 @@ namespace map
 				spKernelElement->addSubElement(spRepElement);
 			}
 
-			structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
-			spUseNullVectorElement->setTag(tags::UseNullVector);
-			spUseNullVectorElement->setValue(::map::core::convert::toStr(pKernel->usesNullVector()));
-			spKernelElement->addSubElement(spUseNullVectorElement);
+			structuredData::Element::Pointer spUseNullPointElement = structuredData::Element::New();
+			spUseNullPointElement->setTag(tags::UseNullPoint);
+			spUseNullPointElement->setValue(::map::core::convert::toStr(pKernel->usesNullPoint()));
+			spKernelElement->addSubElement(spUseNullPointElement);
 
-			if (pKernel->usesNullVector())
+			if (pKernel->usesNullPoint())
 			{
-				typename KernelType::MappingVectorType nullVector = pKernel->getNullVector();
-				structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(
-							nullVector);
-				spNullVectorElement->setTag(tags::NullVector);
+				typename KernelType::OutputPointType nullPoint = pKernel->getNullPoint();
+				structuredData::Element::Pointer spNullPointElement = structuredData::streamITKFixedArrayToSD(
+							nullPoint);
+				spNullPointElement->setTag(tags::NullPoint);
 
-				spKernelElement->addSubElement(spNullVectorElement);
+				spKernelElement->addSubElement(spNullPointElement);
 			}
 
 			return spKernelElement;

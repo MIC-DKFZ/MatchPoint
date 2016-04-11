@@ -47,9 +47,14 @@ namespace map
 		const char* const MatrixStr = "MatrixStr";
 		const char* const OffsetStr = "OffsetStr";
 		const char* const FieldPath = "FieldPath";
-		const char* const NullVector = "NullVector";
-		const char* const UseNullVector = "UseNullVector";
-		const char* const InverseFieldRepresentation = "InverseFieldRepresentation";
+		const char* const NullPoint = "NullPoint";
+    const char* const UseNullPoint = "UseNullPoint";
+    const char* const InverseFieldRepresentation = "InverseFieldRepresentation";
+
+    //This is an legacy tag. It is deprecated and should not be used activaly any more.
+    const char* const NullVector = "NullVector";
+    //This is an legacy tag. It is deprecated and should not be used activaly any more.
+    const char* const UseNullVector = "UseNullVector";
 
 
 	}

@@ -76,8 +76,8 @@ namespace map
             typename FunctorType::Pointer spFunctor = FunctorType::New(pKernel1, pKernel2,
                 pInputFieldRepresentation);
 
-            spFunctor->setNullVectorUsage(usePadding);
-            spFunctor->setNullVector(paddingVector);
+            spFunctor->setNullPointUsage(usePadding);
+            spFunctor->setNullPoint(paddingVector);
 
             spCombinedKernel->setTransformFunctor(spFunctor.GetPointer());
 

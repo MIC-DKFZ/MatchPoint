@@ -122,11 +122,21 @@ namespace map
             {
                 mapLogInfoMacro(<< "Generate field by file loading. File name: " << _filePath);
 
-                FieldByFileLoadFunctorHelper<VInputDimensions, VOutputDimensions>::TransformPointer spResult =
+                typedef typename FieldByFileLoadFunctorHelper<VInputDimensions, VOutputDimensions>::TransformType FieldTransformType;
+                typename FieldTransformType::Pointer spResult =
                     FieldByFileLoadFunctorHelper<VInputDimensions, VOutputDimensions>::generate(_filePath,
                     Superclass::_spInFieldRepresentation);
-                spResult->SetUseNullPoint(_useNullVector);
-                spResult->SetNullPoint(_nullVector);
+
+                typedef typename ::itk::map::NULLVectorAwareLinearInterpolateImageFunction < typename FieldTransformType::GenericVectorFieldType, typename FieldTransformType::ScalarType> InterpolatorType;
+                typename InterpolatorType::Pointer interpolator = InterpolatorType::New();
+                interpolator->SetNullVectorUsage(_useNullPoint);
+                InterpolatorType::OutputType nullVector;
+                nullVector.Superclass::operator = (_nullPoint);
+                interpolator->SetNullVector(nullVector);
+
+                spResult->SetInterpolator(interpolator);
+                spResult->SetUseNullPoint(_useNullPoint);
+                spResult->SetNullPoint(_nullPoint);
 
                 return spResult.GetPointer();
             }

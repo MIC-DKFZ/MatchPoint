@@ -56,7 +56,8 @@ namespace map
 			std::string refRegFile2 = refPath + "/registrationFileWriterReader_Ref2.mapr";
 			std::string refRegFile3 = refPath + "/registrationFileWriterReader_Ref3.mapr";
 			std::string refRegFile4 = refPath + "/registrationFileWriterReader_Ref4.mapr";
-			std::string refRegFile5 = refPath + "/registrationFileWriterReader_Ref5.mapr";
+      std::string refRegFile4_legacy = refPath + "/registrationFileWriterReader_Ref4_legacy.mapr";
+      std::string refRegFile5 = refPath + "/registrationFileWriterReader_Ref5.mapr";
 			std::string refRegFile6 = refPath + "/registrationFileWriterReader_Ref6.mapr";
 
 			// create the generator
@@ -108,6 +109,9 @@ namespace map
 
 			CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile4));
 			CHECK_EQUAL("RegistrationFileWriterTest.reg4", spRegistrationBase->getRegistrationUID());
+
+      CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile4_legacy));
+      CHECK_EQUAL("RegistrationFileWriterTest.reg4", spRegistrationBase->getRegistrationUID());
 
 			CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile5));
 			CHECK_EQUAL("RegistrationFileReaderTest.invertingKernel1",

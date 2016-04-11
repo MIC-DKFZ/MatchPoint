@@ -95,9 +95,9 @@ namespace map
             * and the referenced output parameters are invalid.*/
             virtual bool getAffineMatrixDecomposition(MatrixType& matrix, OutputVectorType& offset) const;
 
-            virtual const MappingVectorType& getNullVector() const;
+            virtual const OutputPointType getNullPoint() const = 0;
 
-            virtual bool usesNullVector() const;
+            virtual bool usesNullPoint() const = 0;
 
         protected:
             RegistrationKernel();

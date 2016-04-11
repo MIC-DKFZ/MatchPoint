@@ -99,9 +99,9 @@ namespace map
             */
             virtual const TransformType* getTransformModel() const override;
 
-            virtual const MappingVectorType& getNullVector() const override;
+            virtual const OutputPointType getNullPoint() const override;
 
-            virtual bool usesNullVector() const override;
+            virtual bool usesNullPoint() const override;
 
         protected:
             LazyRegistrationKernel();

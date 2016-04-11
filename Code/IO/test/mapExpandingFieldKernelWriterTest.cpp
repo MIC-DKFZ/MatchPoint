@@ -77,6 +77,7 @@ namespace map
       spInRep->setSpacing(spacing);
       spInRep->setOrigin(origin);
       FieldFunctorType::Pointer spFunctor = FieldFunctorType::New(spInRep);
+      FieldFunctorType::TransformPointer spPreCachedTransform = spFunctor->generateTransform();
 
       //////////////////////////////////////
       //Kernel setup
@@ -92,14 +93,11 @@ namespace map
       PreCachedKernelType::Pointer spCachedKernel = PreCachedKernelType::New();
 
       spLazyKernel->setTransformFunctor(spFunctor.GetPointer());
-      LazyKernelType::MappingVectorType nullVector;
-      nullVector[0] = -1;
-      nullVector[1] = -2;
-      spLazyKernel->setNullVector(nullVector);
-      spLazyKernel->setNullVectorUsage(true);
-      //the cached kernel is not set by purpose now to check the behavior when the field is missing
-
-      spCachedKernel->setNullVectorUsage(false);
+      LazyKernelType::OutputPointType nullPoint;
+      nullPoint[0] = -1;
+      nullPoint[1] = -2;
+      spFunctor->setNullPointUsage(true);
+      spFunctor->setNullPoint(nullPoint);
 
       ////////////////////////////////////////////
       //Writer setup
@@ -134,7 +132,7 @@ namespace map
       CHECK_NO_THROW(spDataLazy = spWriter->storeKernel(requestLazy));
 
       //make the cached kernel legal
-      spCachedKernel->setTransformModel(spFunctor->_spCurrentTransform);
+      spCachedKernel->setTransformModel(spPreCachedTransform);
       structuredData::Element::Pointer spDataCached;
       CHECK_NO_THROW(spDataCached = spWriter->storeKernel(requestCached));
 
@@ -143,7 +141,7 @@ namespace map
 
       core::String data = spStrWriter->write(spDataLazy);
       core::String ref =
-        "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>ExpandingFieldKernelWriterTest_lazy_field.nrrd</FieldPath><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullVector></Kernel>";
+        "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>ExpandingFieldKernelWriterTest_lazy_field.nrrd</FieldPath><UseNullPoint>1</UseNullPoint><NullPoint><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullPoint></Kernel>";
 
       CHECK_EQUAL(ref, data);
 

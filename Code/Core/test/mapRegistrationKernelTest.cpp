@@ -51,13 +51,20 @@ namespace map
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
 
-			KernelType::MappingVectorType nullVector(-100000000);
-			KernelType::MappingVectorType defaultNullVector(
-				::itk::NumericTraits<KernelType::MappingVectorType::ValueType>::NonpositiveMin());
+      KernelType::OutputVectorType nullVector(-100000000);
+      KernelType::OutputPointType nullVectorAsPoint(-100000000);
+      KernelType::OutputPointType defaultNullPoint(
+          ::itk::NumericTraits<KernelType::OutputPointType::ValueType>::NonpositiveMin());
 
 			KernelType::Pointer spKernel = KernelType::New();
 
-			spKernel->setTransformModel(testing::wrapFieldInTransform<2>(generate2DScaleFieldWithNull(createSimpleDescriptor<2>(5, 0.5), nullVector).GetPointer()));
+      typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, 2, 2> FieldTransformType;
+      FieldTransformType::Pointer transformModel = testing::wrapFieldInTransform<2>(generate2DScaleFieldWithNull(createSimpleDescriptor<2>(10, 0.5), nullVector).GetPointer());
+      spKernel->setTransformModel(transformModel);
+
+      typedef ::itk::map::NULLVectorAwareLinearInterpolateImageFunction < FieldTransformType::GenericVectorFieldType, FieldTransformType::ScalarType> InterpolatorType;
+      InterpolatorType::Pointer interpolator = InterpolatorType::New();
+      transformModel->SetInterpolator(interpolator);
 
 			KernelType::InputPointType inPoint;
 			inPoint.Fill(3);
@@ -87,28 +94,21 @@ namespace map
 
 
 			//check defaults
-			CHECK_EQUAL(false, spKernel->usesNullVector());
-			CHECK_EQUAL(defaultNullVector, spKernel->getNullVector());
-
-			//check null vector setter
-			CHECK_NO_THROW(spKernel->setNullVectorUsage(true));
-			CHECK_NO_THROW(spKernel->setNullVector(nullVector));
-
-			CHECK_EQUAL(true, spKernel->usesNullVector());
-			CHECK_EQUAL(nullVector, spKernel->getNullVector());
+			CHECK_EQUAL(false, spKernel->usesNullPoint());
+			CHECK_EQUAL(defaultNullPoint, spKernel->getNullPoint());
 
 			//check the null vector aware implementation of map point
 
 			//1st without Null vector awarenes
-      CHECK_NO_THROW(spKernel->setNullVectorUsage(false));
+      transformModel->SetUseNullPoint(false);
       
       resultPoint.Fill(0);
       CHECK_EQUAL(true, spKernel->mapPoint(inPoint, resultPoint));
 			CHECK_ARRAY_CLOSE(referencePoint, resultPoint, 2, 1e-5);
 
 			resultPoint.Fill(11);
-			CHECK_EQUAL(false, spKernel->mapPoint(invalidInPoint, resultPoint));
-			CHECK_EQUAL(invalidReferencePoint, resultPoint);
+			CHECK_EQUAL(true, spKernel->mapPoint(invalidInPoint, resultPoint));
+      CHECK_EQUAL(invalidInPoint, resultPoint);
 
 			resultPoint.Fill(11);
 			CHECK_EQUAL(true, spKernel->mapPoint(nullPoint, resultPoint));
@@ -118,7 +118,10 @@ namespace map
 			CHECK_EQUAL(true, spKernel->mapPoint(closeNullPoint, resultPoint));
 
 			//2nd with Null vector awarenes
-			CHECK_NO_THROW(spKernel->setNullVectorUsage(true));
+      transformModel->SetUseNullPoint(true);
+      interpolator->SetNullVectorUsage(true);
+
+      CHECK_EQUAL(true, spKernel->usesNullPoint());
 
 			resultPoint.Fill(0);
 			CHECK_EQUAL(true, spKernel->mapPoint(inPoint, resultPoint));
@@ -129,30 +132,32 @@ namespace map
 			CHECK_EQUAL(invalidReferencePoint, resultPoint);
 
 			resultPoint.Fill(11);
-			CHECK_EQUAL(false, spKernel->mapPoint(nullPoint, resultPoint));
-			CHECK_EQUAL(invalidReferencePoint, resultPoint);
-
-			resultPoint.Fill(11);
-			CHECK_EQUAL(false, spKernel->mapPoint(closeNullPoint, resultPoint));
-			CHECK_ARRAY_CLOSE(invalidReferencePoint, resultPoint, 2, 1e-5);
-
-			//3rd with Null vector awarenes (other null vector)
-			CHECK_NO_THROW(spKernel->setNullVector(defaultNullVector));
-
-			resultPoint.Fill(0);
-			CHECK_EQUAL(true, spKernel->mapPoint(inPoint, resultPoint));
-			CHECK_ARRAY_CLOSE(referencePoint, resultPoint, 2, 1e-5);
-
-			resultPoint.Fill(11);
-			CHECK_EQUAL(false, spKernel->mapPoint(invalidInPoint, resultPoint));
-			CHECK_EQUAL(invalidReferencePoint, resultPoint);
-
-			resultPoint.Fill(11);
-			CHECK_EQUAL(true, spKernel->mapPoint(nullPoint, resultPoint));
-			CHECK_ARRAY_CLOSE(nullReferencePoint, resultPoint, 2, 1e-5);
+      CHECK_EQUAL(true, spKernel->mapPoint(nullPoint, resultPoint));
+      CHECK_ARRAY_CLOSE(nullReferencePoint, resultPoint, 2, 1e-5);
 
 			resultPoint.Fill(11);
 			CHECK_EQUAL(true, spKernel->mapPoint(closeNullPoint, resultPoint));
+
+			//3rd with Null vector awarenes (other null vector)
+      transformModel->SetNullPoint(nullVectorAsPoint);
+      interpolator->SetNullVector(nullVector);
+
+      CHECK_EQUAL(nullVectorAsPoint, spKernel->getNullPoint());
+
+			resultPoint.Fill(0);
+			CHECK_EQUAL(true, spKernel->mapPoint(inPoint, resultPoint));
+			CHECK_ARRAY_CLOSE(referencePoint, resultPoint, 2, 1e-5);
+
+			resultPoint.Fill(11);
+			CHECK_EQUAL(false, spKernel->mapPoint(invalidInPoint, resultPoint));
+			CHECK_EQUAL(invalidReferencePoint, resultPoint);
+
+			resultPoint.Fill(11);
+      CHECK_EQUAL(false, spKernel->mapPoint(nullPoint, resultPoint));
+      CHECK_EQUAL(invalidReferencePoint, resultPoint);
+
+			resultPoint.Fill(11);
+			CHECK_EQUAL(false, spKernel->mapPoint(closeNullPoint, resultPoint));
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

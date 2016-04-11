@@ -74,7 +74,8 @@ namespace map
 
 			typedef core::functors::FieldByModelFunctor<2, 2> FunctorType;
 			FunctorType::Pointer spFieldFunctor = FunctorType::New(spInverseTransform, spInRep);
-			//uses this functor to generate the test field
+      spFieldFunctor->setNullPointUsage(true);
+      //uses this functor to generate the test field
 
 			typedef core::LazyRegistrationKernel<2, 2> FieldKernelType;
 
@@ -84,7 +85,7 @@ namespace map
 
 			//Establish combination functor for test
 			spFunctor = CombinatorFunctorType::New(spModelKernel, spFieldKernel, spInRep);
-
+      spFunctor->setNullPointUsage(true);
 			spKernel = KernelType::New();
 			spKernel->setTransformFunctor(spFunctor);
 		}

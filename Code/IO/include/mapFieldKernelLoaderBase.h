@@ -89,10 +89,10 @@ namespace map
 			::map::core::String getFilePath(const RequestType& request) const;
 			
 			/** Checks the passed request if a null vector is defined and returns its value.
-			 * @param nullVector Values of the null vector. Valid if method returns true. If it returns false, no vector was defined and the value is 0.
+			 * @param nullPoint Values of the null vector. Valid if method returns true. If it returns false, no vector was defined and the value is 0.
 			 * @result true if a null vector exists.
 			 * @eguarantee strong*/
-			bool hasNullVector(const RequestType& request, typename KernelBaseType::MappingVectorType& nullVector) const;
+      bool hasNullPoint(const RequestType& request, typename KernelBaseType::OutputPointType& nullPoint) const;
 			
 			FieldKernelLoaderBase();
 			virtual ~FieldKernelLoaderBase() {};

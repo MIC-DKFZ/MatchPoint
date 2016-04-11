@@ -57,7 +57,10 @@ namespace map
 
       virtual TransformPointer generateTransform() const
 			{
-          _spCurrentTransform = wrapFieldInTransform<VOutputDimensions>(testing::generateSumField<VOutputDimensions>(Superclass::_spInFieldRepresentation));
+          ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions>::Pointer transform = wrapFieldInTransform<VOutputDimensions>(testing::generateSumField<VOutputDimensions>(Superclass::_spInFieldRepresentation));
+          transform->SetUseNullPoint(_useNullPoint);
+
+          _spCurrentTransform = transform;
           return _spCurrentTransform;
 			}
 

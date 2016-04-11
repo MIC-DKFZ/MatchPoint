@@ -117,7 +117,9 @@ namespace map
 		DefaultKernelInverter<VInputDimensions, VOutputDimensions>::
 		invertKernel(const KernelBaseType& kernel,
 					 const FieldRepresentationType* pFieldRepresentation,
-					 const InverseFieldRepresentationType* pInverseFieldRepresentation) const
+           const InverseFieldRepresentationType* pInverseFieldRepresentation,
+           bool useNullPoint,
+           NullPointType nullPoint) const
 		{
 			const KernelType* pKernel = dynamic_cast<const KernelType*>(&kernel);
 
@@ -163,7 +165,8 @@ namespace map
             typename FunctorType::Pointer spFunctor = FunctorType::New(pKernel, pInverseFieldRepresentation);
             spFunctor->setStopValue(_functorStopValue);
             spFunctor->setNumberOfIterations(_functorNrOfIterations);
-
+            spFunctor->setNullPointUsage(useNullPoint);
+            spFunctor->setNullPoint(nullPoint);
             spInverseKernel->setTransformFunctor(spFunctor.GetPointer());
         }
         else
@@ -174,6 +177,8 @@ namespace map
                 pInverseFieldRepresentation);
             spFunctor->setStopValue(_functorStopValue);
             spFunctor->setNumberOfIterations(_functorNrOfIterations);
+            spFunctor->setNullPointUsage(useNullPoint);
+            spFunctor->setNullPoint(nullPoint);
 
             spInverseKernel->setTransformFunctor(spFunctor.GetPointer());
         }

@@ -91,12 +91,12 @@ namespace map
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
 			FieldFunctorType::Pointer spFunctor = FieldFunctorType::New(spTransform, spInRep);
+      spFunctor->setNullPointUsage(true);
 
 			typedef core::InvertingRegistrationKernel<2, 2> InvertingKernelType;
 			InvertingKernelType::Pointer spInvertingKernel = InvertingKernelType::New();
 			spInvertingKernel->setSourceKernel(spSourceKernel);
 			spInvertingKernel->setTransformFunctor(spFunctor);
-            spInvertingKernel->setNullVectorUsage(true);
 
 			InvertingKernelType::Pointer spInvertingKernel_missingSource = InvertingKernelType::New();
 			spInvertingKernel_missingSource->setTransformFunctor(spFunctor);
@@ -148,7 +148,7 @@ namespace map
 
 			::map::core::String data = spStrWriter->write(spData);
 			::map::core::String ref =
-				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullVector>1</UseNullVector><NullVector><Value Row='0'>-1.797693135e+308</Value><Value Row='1'>-1.797693135e+308</Value></NullVector></Kernel>";
+				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>InvertingKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>InvertingKernel</KernelType><InverseFieldRepresentation Dimensions='2'><Size><Value Row='0'>10.00000000</Value><Value Row='1'>10.00000000</Value></Size><Origin><Value Row='0'>0.0000000000</Value><Value Row='1'>0.0000000000</Value></Origin><Spacing><Value Row='0'>0.5000000000</Value><Value Row='1'>0.5000000000</Value></Spacing><Direction><Value Column='0' Row='0'>1.000000000</Value><Value Column='1' Row='0'>0.0000000000</Value><Value Column='0' Row='1'>0.0000000000</Value><Value Column='1' Row='1'>1.000000000</Value></Direction></InverseFieldRepresentation><UseNullPoint>1</UseNullPoint><NullPoint><Value Row='0'>-1.797693135e+308</Value><Value Row='1'>-1.797693135e+308</Value></NullPoint></Kernel>";
 
 			CHECK_EQUAL(ref, data);
 

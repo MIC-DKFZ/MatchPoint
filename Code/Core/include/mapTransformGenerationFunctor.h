@@ -75,8 +75,8 @@ namespace map
                     VOutputDimensions >::DirectTransformType TransformType;
                 typedef typename TransformType::Pointer TransformPointer;
 
-                typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType
-                    NullVectorType;
+                typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::TargetPointType
+                    NullPointType;
 
                 itkTypeMacro(TransformGenerationFunctor, itk::Object);
 
@@ -94,10 +94,10 @@ namespace map
                  */
                 const InFieldRepresentationType* getInFieldRepresentation(void) const;
 
-                mapSetVarMacro(NullVector, NullVectorType, _nullVector);
-                mapGetConstVarMacro(NullVector, NullVectorType, _nullVector);
-                mapSetVarMacro(NullVectorUsage, bool, _useNullVector);
-                mapGetConstVarMacro(NullVectorUsage, bool, _useNullVector);
+                mapSetVarMacro(NullPoint, NullPointType, _nullPoint);
+                mapGetConstVarMacro(NullPoint, NullPointType, _nullPoint);
+                mapSetVarMacro(NullPointUsage, bool, _useNullPoint);
+                mapGetConstVarMacro(NullPointUsage, bool, _useNullPoint);
 
             protected:
                 TransformGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation);
@@ -105,8 +105,8 @@ namespace map
 
                 InFieldRepresentationConstPointer _spInFieldRepresentation;
 
-                NullVectorType _nullVector;
-                bool _useNullVector;
+                NullPointType _nullPoint;
+                bool _useNullPoint;
 
 
                 /*! Methods invoked by itk::LightObject::Print().  */

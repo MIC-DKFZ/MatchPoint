@@ -7,11 +7,11 @@
     <StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider>
     <KernelType>ExpandedFieldKernel</KernelType>
     <FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath>
-    <UseNullVector>1</UseNullVector>
-    <NullVector>
+    <UseNullPoint>1</UseNullPoint>
+    <NullPoint>
       <Value Row='0'>-1.000000000</Value>
       <Value Row='1'>-2.000000000</Value>
-    </NullVector>
+    </NullPoint>
   </Kernel>
   <Kernel ID='inverse' InputDimensions='2' OutputDimensions='2'>
 	<StreamProvider>InvertingFieldKernelWriter&lt;2,2&gt;</StreamProvider>
@@ -35,10 +35,10 @@
 			<Value Column='1' Row='1'>1.000000000</Value>
 		</Direction>
 	</InverseFieldRepresentation>
-    <UseNullVector>1</UseNullVector>
-    <NullVector>
+    <UseNullPoint>1</UseNullPoint>
+    <NullPoint>
       <Value Row='0'>-1.000000000</Value>
       <Value Row='1'>-2.000000000</Value>
-    </NullVector>
+    </NullPoint>
   </Kernel>
 </Registration>

@@ -127,9 +127,9 @@ namespace map
             CHECK_EQUAL(true, spCombinator->canHandleRequest(request));
 
             CHECK_EQUAL("PreCachedKernelCombinator<2,2,2>", CombinatorType::getStaticProviderName());
-            CHECK_EQUAL("ModelModelKernelCombinator<2,3,2>", Combinator2Type::getStaticProviderName());
-            CHECK_EQUAL("ModelModelKernelCombinator<3,2,2>", Combinator3Type::getStaticProviderName());
-            CHECK_EQUAL("ModelModelKernelCombinator<2,2,3>", Combinator4Type::getStaticProviderName());
+            CHECK_EQUAL("PreCachedKernelCombinator<2,3,2>", Combinator2Type::getStaticProviderName());
+            CHECK_EQUAL("PreCachedKernelCombinator<3,2,2>", Combinator3Type::getStaticProviderName());
+            CHECK_EQUAL("PreCachedKernelCombinator<2,2,3>", Combinator4Type::getStaticProviderName());
             CHECK_EQUAL(CombinatorType::getStaticProviderName(), spCombinator->getProviderName());
 
             CHECK_THROW_EXPLICIT(spCombinator->combineKernels(illegalRequest1, spInRep),

@@ -199,32 +199,6 @@ namespace map
 
             CHECK_TESTER(tester);
 
-            //now check the inversion of a kernel that uses a field transform
-            //use the numerich inversion result and invert it again. -> should equal spNumericTransform 
-
-            InverterType::InverseKernelBasePointer spInverseFieldKernel;
-            CHECK_NO_THROW(spInverseFieldKernel = spInverter->invertKernel(*(spInverseNumericKernel.GetPointer()),
-                NULL, spInverseRep));
-
-            //test if the kernel was really inverted numerically
-            CHECK(spInverseFieldKernel.IsNotNull());
-            FieldBasedRegistrationKernelType* pInverseConcreteNumericFieldKernel =
-                dynamic_cast<FieldBasedRegistrationKernelType*>(spInverseFieldKernel.GetPointer());
-            CHECK(NULL != pInverseConcreteNumericFieldKernel);
-            
-            //test if the functor was used as expected
-            typedef ::map::core::functors::FieldByFieldInversionFunctor<2, 2> FieldInversionFunctorType;
-            const FieldInversionFunctorType* fieldByFieldFunctor = dynamic_cast<const FieldInversionFunctorType*>(pInverseConcreteNumericFieldKernel->getTransformFunctor());
-            CHECK(fieldByFieldFunctor != NULL);
-
-            //check correct inversion
-            ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pInverseConcreteNumericFieldKernel, actualField);
-            tester.setReferenceTransform(spNumericTransform);
-            tester.setActualField(actualField);
-            tester.setCheckThreshold(0.1);
-
-            CHECK_TESTER(tester);
-
 
             RETURN_AND_REPORT_TEST_SUCCESS;
         }

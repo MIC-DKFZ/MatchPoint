@@ -106,8 +106,8 @@ namespace map
 			::map::core::String filePath = Superclass::getFilePath(request);
 			
 			//determin null vector (support)
-			typename KernelBaseType::MappingVectorType nullVector;
-            bool usesNullVector = this->hasNullVector(request, nullVector);
+      typename KernelBaseType::OutputPointType nullPoint;
+            bool usesNullPoint = this->hasNullPoint(request, nullPoint);
 
 			typedef typename
 			::map::core::LazyRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
@@ -119,8 +119,8 @@ namespace map
 				::map::core::createFieldRepresentationOfMetaImageFile<VInputDimensions>(filePath);
 
 			typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath, spFieldDescriptor);
-            spFunctor->setNullVectorUsage(usesNullVector);
-            spFunctor->setNullVector(nullVector);
+            spFunctor->setNullPointUsage(usesNullPoint);
+            spFunctor->setNullPoint(nullPoint);
 
 			spLazyKernel->setTransformFunctor(spFunctor.GetPointer());
 

@@ -128,25 +128,18 @@ namespace map
 			}
 
 			//determin null vector (support)
-			typename KernelBaseType::MappingVectorType nullVector;
-            bool usesNullVector = this->hasNullVector(request, nullVector);
+      typename KernelBaseType::OutputPointType nullPoint;
+            bool usesNullPoint = this->hasNullPoint(request, nullPoint);
 
 			typedef core::InverseRegistrationKernelGenerator<VOutputDimensions, VInputDimensions>
 			InversionGeneratorType;
 
 			typename InversionGeneratorType::Pointer generator = InversionGeneratorType::New();
-			typename core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult =
+      generator->setNullPointUsage(usesNullPoint);
+      generator->setNullPoint(nullPoint);
+      
+      typename core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>::Pointer spResult =
 				generator->generateInverse(*sourceKernel, spInverseFieldRep);
-
-			::map::core::LazyRegistrationKernel<VInputDimensions, VOutputDimensions>* fieldKernel =
-          dynamic_cast<::map::core::LazyRegistrationKernel<VInputDimensions, VOutputDimensions>*>
-				(spResult.GetPointer());
-
-			if (fieldKernel)
-			{
-				fieldKernel->setNullVectorUsage(usesNullVector);
-				fieldKernel->setNullVector(nullVector);
-			}
 
 			if (!request._preferLazyLoading)
 			{

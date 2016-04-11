@@ -106,8 +106,8 @@ namespace map
             ::map::core::String filePath = Superclass::getFilePath(request);
 
             //determin null vector (support)
-            typename KernelBaseType::MappingVectorType nullVector;
-            bool usesNullVector = this->hasNullVector(request, nullVector);
+            typename KernelBaseType::OutputPointType nullPoint;
+            bool usesNullPoint = this->hasNullPoint(request, nullPoint);
 
             typedef typename
                 ::map::core::PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelType;
@@ -115,8 +115,8 @@ namespace map
 
             typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
             typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath);
-            spFunctor->setNullPointUsage(usesNullVector);
-            spFunctor->setNullPoint(nullVector);
+            spFunctor->setNullPointUsage(usesNullPoint);
+            spFunctor->setNullPoint(nullPoint);
 
             typename FunctorsType::TransformType::Pointer spFieldTransform = spFunctor->generateTransform();
 

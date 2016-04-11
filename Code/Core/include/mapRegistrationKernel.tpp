@@ -89,7 +89,7 @@ namespace map
 
       outPoint = this->getTransformModel()->TransformPoint(inPoint);
 
-      bool result = !this->usesNullVector() || this->getNullVector().Superclass::operator ==(outPoint);
+      bool result = !this->usesNullPoint() || this->getNullPoint() != outPoint;
 
       return result;
 		};

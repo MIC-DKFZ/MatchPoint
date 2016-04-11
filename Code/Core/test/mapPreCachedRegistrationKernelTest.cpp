@@ -49,7 +49,7 @@ namespace map
       KernelType::Pointer spFieldKernel = KernelType::New();
 
       KernelType::RepresentationDescriptorPointer spReferenceFieldRepresentation = testing::createSimpleDescriptor<2>(10, 0.5);
-      KernelType::TransformType::Pointer refFieldTransform = testing::wrapFieldInTransform<2>(testing::generate2DSumField(spReferenceFieldRepresentation)).GetPointer();
+      ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, 2, 2>::Pointer refFieldTransform = testing::wrapFieldInTransform<2>(testing::generate2DSumField(spReferenceFieldRepresentation)).GetPointer();
       spFieldKernel->setTransformModel(refFieldTransform);
 
       //generate kernel with model transform
@@ -83,9 +83,9 @@ namespace map
 
 			KernelType::OutputPointType resultPoint;
 
-      KernelType::MappingVectorType nullVectorRef;
-      nullVectorRef.Fill(99);
-      KernelType::MappingVectorType defaultNullVector(
+      KernelType::OutputPointType nullPointRef;
+      nullPointRef.Fill(99999);
+      KernelType::OutputPointType defaultNullPoint(
           ::itk::NumericTraits< KernelType::MappingVectorType::ValueType >::NonpositiveMin());
 
       //////////////////////////////////////////////////
@@ -99,8 +99,14 @@ namespace map
 			CHECK(*(spReferenceFieldRepresentation.GetPointer()) == *(spFieldRepresentation.GetPointer()));
       CHECK_EQUAL(refFieldTransform->GetNameOfClass(), spFieldKernel->getModelName());
 
-			//reset result
-			resultPoint.Fill(0);
+      CHECK_EQUAL(false, spFieldKernel->usesNullPoint());
+      CHECK_EQUAL(defaultNullPoint, spFieldKernel->getNullPoint());
+      refFieldTransform->UseNullPointOn();
+      refFieldTransform->SetNullPoint(nullPointRef);
+      CHECK_EQUAL(true, spFieldKernel->usesNullPoint());
+      CHECK_EQUAL(nullPointRef, spFieldKernel->getNullPoint());
+
+      resultPoint.Fill(0);
       CHECK_EQUAL(true, spFieldKernel->mapPoint(inPoint, resultPoint));
       CHECK_EQUAL(referencePoint_field, resultPoint);
 			resultPoint.Fill(0);
@@ -128,14 +134,6 @@ namespace map
 
       //////////////////////////////////////////////////
       //check invalid empty kernel
-      CHECK_EQUAL(false, spEmptyKernel->usesNullVector());
-      CHECK_NO_THROW(spEmptyKernel->setNullVectorUsage(true));
-      CHECK_EQUAL(true, spEmptyKernel->usesNullVector());
-
-      CHECK_EQUAL(defaultNullVector, spEmptyKernel->getNullVector());
-      CHECK_NO_THROW(spEmptyKernel->setNullVector(nullVectorRef));
-      CHECK_EQUAL(nullVectorRef, spEmptyKernel->getNullVector());
-
       CHECK_EQUAL(false, spEmptyKernel->transformExists());
       CHECK_THROW_EXPLICIT(spEmptyKernel->hasLimitedRepresentation(), map::core::ExceptionObject);
       CHECK_THROW_EXPLICIT(spEmptyKernel->getLargestPossibleRepresentation(), map::core::ExceptionObject);
