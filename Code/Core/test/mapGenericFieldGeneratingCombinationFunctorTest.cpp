@@ -68,7 +68,7 @@ namespace map
 			spIllegalInRep->setOrigin(illegalOrigin);
 
 			//Model kernel generation
-			typedef ::itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
+			typedef ::itk::ScaleTransform< ::map::core::continuous::ScalarType, 2> TransformType;
 
 			PreCachedKernelType::Pointer spModelKernel = PreCachedKernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();
@@ -121,9 +121,9 @@ namespace map
       bool validField = ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spResult, actualField);
       CHECK(validField);
 
-      lit::TransformFieldTester<::map::core::FieldDecomposer<2, 2>::FieldType, PreCachedKernelType::TransformType>
+      lit::TransformFieldTester< ::map::core::FieldDecomposer<2, 2>::FieldType, PreCachedKernelType::TransformType>
 			tester;
-			typedef itk::IdentityTransform<::map::core::continuous::ScalarType, 2> IdentityTransformType;
+			typedef itk::IdentityTransform< ::map::core::continuous::ScalarType, 2> IdentityTransformType;
 
 			IdentityTransformType::Pointer spIdentityTransform = IdentityTransformType::New();
 

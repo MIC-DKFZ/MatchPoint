@@ -112,7 +112,7 @@ namespace map
 												  (targetLMFileName);
 
 
-			typedef algorithm::itk::ITKLandmarkKernelRegistrationAlgorithm<LandmarksType, ::itk::VolumeSplineKernelTransform<::map::core::continuous::ScalarType, 3>, ITKLandmarkKernelRegistrationAlgorithmUIDPolicy>
+			typedef algorithm::itk::ITKLandmarkKernelRegistrationAlgorithm<LandmarksType, ::itk::VolumeSplineKernelTransform< ::map::core::continuous::ScalarType, 3>, ITKLandmarkKernelRegistrationAlgorithmUIDPolicy>
 			RegistrationAlgorithmType;
 
 			RegistrationAlgorithmType::Pointer spAlgorithm = RegistrationAlgorithmType::New();

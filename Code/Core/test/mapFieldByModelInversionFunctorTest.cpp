@@ -73,7 +73,7 @@ namespace map
 			}
 
 			typedef core::functors::FieldByModelInversionFunctor<2, 2> FunctorType;
-			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 2>	TransformType;
+			typedef itk::ScaleTransform< ::map::core::continuous::ScalarType, 2>	TransformType;
 
 			TransformType::Pointer spModel = TransformType::New();
 

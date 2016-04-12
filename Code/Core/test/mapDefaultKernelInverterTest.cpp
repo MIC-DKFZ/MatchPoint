@@ -102,9 +102,9 @@ namespace map
             typedef core::PreCachedRegistrationKernel<2, 2> InverseKernelType;
 
             typedef core::NullRegistrationKernel<2, 2> IllegalKernelType;
-            typedef itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
+            typedef itk::TranslationTransform< ::map::core::continuous::ScalarType, 2> TransformType;
 
-            typedef TestNonInvertingTranslationTransform<::map::core::continuous::ScalarType, 2>	NumericTransformType;
+            typedef TestNonInvertingTranslationTransform< ::map::core::continuous::ScalarType, 2>	NumericTransformType;
 
             typedef core::DefaultKernelInverter<2, 2> InverterType;
             typedef core::DefaultKernelInverter<2, 3> Inverter2Type;

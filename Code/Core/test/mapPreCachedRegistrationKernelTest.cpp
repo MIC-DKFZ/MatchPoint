@@ -49,11 +49,11 @@ namespace map
       KernelType::Pointer spFieldKernel = KernelType::New();
 
       KernelType::RepresentationDescriptorPointer spReferenceFieldRepresentation = testing::createSimpleDescriptor<2>(10, 0.5);
-      ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, 2, 2>::Pointer refFieldTransform = testing::wrapFieldInTransform<2>(testing::generate2DSumField(spReferenceFieldRepresentation)).GetPointer();
+      ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, 2, 2>::Pointer refFieldTransform = testing::wrapFieldInTransform<2>(testing::generate2DSumField(spReferenceFieldRepresentation)).GetPointer();
       spFieldKernel->setTransformModel(refFieldTransform);
 
       //generate kernel with model transform
-      typedef itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
+      typedef itk::TranslationTransform< ::map::core::continuous::ScalarType, 2> TransformType;
       TransformType::Pointer spTransform = TransformType::New();
       TransformType::ParametersType params(2);
       params[0] = 5;

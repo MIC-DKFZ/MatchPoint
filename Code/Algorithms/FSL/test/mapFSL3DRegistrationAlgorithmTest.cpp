@@ -40,7 +40,7 @@ namespace map
 		mapGenerateAlgorithmUIDPolicyMacro(TestFSL3DRegistrationUIDPolicy, "de.dkfz.matchpoint.test",
 										   "FSL.3D.default", "1.0.0", "");
 
-		typedef std::map<::map::core::String, core::String> ArgumentMapType;
+		typedef std::map< ::map::core::String, core::String> ArgumentMapType;
 
 		ArgumentMapType getLoggedArguments()
 		{
@@ -53,7 +53,7 @@ namespace map
 			}
 
 			::map::core::String item;
-			std::vector<::map::core::String> list;
+			std::vector< ::map::core::String> list;
 
 			while (std::getline(logFile, item))
 			{
@@ -62,7 +62,7 @@ namespace map
 
 			ArgumentMapType result;
 
-			for (std::vector<::map::core::String>::const_iterator pos = list.begin(); pos != list.end(); ++pos)
+			for (std::vector< ::map::core::String>::const_iterator pos = list.begin(); pos != list.end(); ++pos)
 			{
 				if (pos->find("-") == 0)
 				{

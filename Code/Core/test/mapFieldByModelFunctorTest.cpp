@@ -45,7 +45,7 @@ namespace map
 
 
 			//Model kernel generation
-			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 3> ScaleTransformType;
+			typedef itk::ScaleTransform< ::map::core::continuous::ScalarType, 3> ScaleTransformType;
 
       FunctorType::TransformType::Pointer spModel = ScaleTransformType::New().GetPointer();
 

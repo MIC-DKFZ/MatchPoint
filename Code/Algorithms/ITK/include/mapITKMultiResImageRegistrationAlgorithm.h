@@ -56,7 +56,7 @@ namespace map
 					 class TMetricPolicy = ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>,
 					 class TOptimizerPolicy = ArbitrarySVNLOptimizerPolicy,
 					 class TTransformPolicy =
-					 ArbitraryTransformPolicy<::map::core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+					 ArbitraryTransformPolicy< ::map::core::continuous::ScalarType, TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
 					 class TPyramidesPolicy = ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage>,
 					 class TInternalRegistrationMethod =
 					 ::itk::MultiResolutionImageRegistrationMethod<TTargetImage, TMovingImage> >

@@ -87,7 +87,7 @@ namespace map
                     iterator.Set(outVector);
                 }
 
-                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
+                typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
                 typename FieldTransformType::Pointer spResult = FieldTransformType::New();
                 spResult->SetDisplacementField(spField);
 

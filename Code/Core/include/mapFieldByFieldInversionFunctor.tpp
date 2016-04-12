@@ -55,7 +55,7 @@ namespace map
                 typedef typename
                     FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
                     InFieldRepresentationType;
-                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
+                typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
                 typedef typename FieldTransformType::Pointer FieldTransformPointer;
 
                 static inline FieldTransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
@@ -80,7 +80,7 @@ namespace map
                 typedef typename FieldByFieldInversionFunctor<VDimensions, VDimensions>::InFieldRepresentationType
                     InFieldRepresentationType;
 
-                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimensions, VDimensions> FieldTransformType;
+                typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimensions, VDimensions> FieldTransformType;
                 typedef typename FieldTransformType::Pointer FieldTransformPointer;
 
                 static inline FieldTransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
@@ -119,7 +119,7 @@ namespace map
                 FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
                 generateTransform() const
             {
-                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
+                typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
                 
                 typename FieldTransformType::Pointer spResult =
                     FieldByFieldInversionFunctorHelper<VInputDimensions, VOutputDimensions>::generate(

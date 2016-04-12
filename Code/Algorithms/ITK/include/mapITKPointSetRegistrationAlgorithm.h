@@ -61,7 +61,7 @@ namespace map
 					 class TMetricPolicy = ArbitraryPointSetToPointSetMetricPolicy<TMovingPointSet, TTargetPointSet>,
 					 class TOptimizerPolicy = ArbitraryMVNLOptimizerPolicy,
 					 class TTransformPolicy =
-					 ArbitraryTransformPolicy<::map::core::continuous::ScalarType, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>
+					 ArbitraryTransformPolicy< ::map::core::continuous::ScalarType, TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>
 					 >
 			class ITKPointSetRegistrationAlgorithm : public
 				IterativeRegistrationAlgorithm<TMovingPointSet::PointDimension, TTargetPointSet::PointDimension>,

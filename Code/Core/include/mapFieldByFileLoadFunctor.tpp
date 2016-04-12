@@ -48,7 +48,7 @@ namespace map
             class FieldByFileLoadFunctorHelper
             {
             public:
-                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> TransformType;
+                typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> TransformType;
                 typedef typename TransformType::Pointer TransformPointer;
                 typedef typename
                     FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
@@ -68,7 +68,7 @@ namespace map
             {
             public:
                 typedef typename FieldByFileLoadFunctor<VDimensions, VDimensions>::FieldType FieldType;
-                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimensions, VDimensions> TransformType;
+                typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimensions, VDimensions> TransformType;
                 typedef typename TransformType::Pointer TransformPointer;
                 typedef typename FieldByFileLoadFunctor<VDimensions, VDimensions>::InFieldRepresentationType
                     InFieldRepresentationType;

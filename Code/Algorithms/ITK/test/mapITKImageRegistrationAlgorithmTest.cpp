@@ -137,7 +137,7 @@ namespace map
 			OptimizerControlType;
 			typedef ::itk::LinearInterpolateImageFunction<TestImageType, core::continuous::ScalarType>
 			InterpolatorType;
-			typedef ::itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TranformModelType;
+			typedef ::itk::TranslationTransform< ::map::core::continuous::ScalarType, 2> TranformModelType;
 
 			OptimizerControlType::Pointer spOptimizer = OptimizerControlType::New();
 			MetricControlType::Pointer spMetric = MetricControlType::New();

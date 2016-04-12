@@ -141,7 +141,7 @@ namespace map
                 typedef TInternalRegistrationFilter InternalRegistrationMethodType;
                 typedef typename Superclass::InterimRegistrationType InterimRegistrationType;
                 typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
-                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, TImageType::ImageDimension, TImageType::ImageDimension> FieldTransformType;
+                typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, TImageType::ImageDimension, TImageType::ImageDimension> FieldTransformType;
 
                 /*! @overwrite
                  * This default implementation does nothing.*/

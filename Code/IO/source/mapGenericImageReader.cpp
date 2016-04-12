@@ -226,7 +226,7 @@ namespace map
 		//  {
 		//  case ::itk::ImageIOBase::UCHAR:
 		//    {
-		//      this->_spImage = readImageA<::itk::RGBPixel<unsigned char>, ::itk::RGBPixel<unsigned char>, IDimension>(_fileName,_seriesReadStyle);
+		//      this->_spImage = readImageA< ::itk::RGBPixel<unsigned char>, ::itk::RGBPixel<unsigned char>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
 		//  case ::itk::ImageIOBase::CHAR:

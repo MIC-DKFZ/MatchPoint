@@ -95,7 +95,7 @@ namespace map
             PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
             getNullPoint() const
         {
-            typedef itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> CastedTransformType;
+            typedef itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> CastedTransformType;
             const CastedTransformType* castedTrans = dynamic_cast<const CastedTransformType*>(_spTransform.GetPointer());
 
             MappingVectorType result;
@@ -111,7 +111,7 @@ namespace map
             PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
             usesNullPoint() const
         {
-            typedef itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> CastedTransformType;
+            typedef itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> CastedTransformType;
             const CastedTransformType* castedTrans = dynamic_cast<const CastedTransformType*>(_spTransform.GetPointer());
 
             if (castedTrans)

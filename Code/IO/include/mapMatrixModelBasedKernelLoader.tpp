@@ -164,7 +164,7 @@ namespace map
       typedef core::PreCachedRegistrationKernel<VInputDimensions, VInputDimensions> KernelType;
       typename KernelType::Pointer spKernel = KernelType::New();
 
-			typedef ::itk::AffineTransform<::map::core::continuous::ScalarType, VInputDimensions> TransformType;
+			typedef ::itk::AffineTransform< ::map::core::continuous::ScalarType, VInputDimensions> TransformType;
 			typename TransformType::Pointer spModel = TransformType::New();
 
 			spModel->SetMatrix(matrix);

@@ -66,7 +66,7 @@ namespace map
 
 			//////////////////////////////////////
 			//Kernel setup
-			typedef itk::Euler2DTransform<::map::core::continuous::ScalarType> TransformType;
+			typedef itk::Euler2DTransform< ::map::core::continuous::ScalarType> TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(3);

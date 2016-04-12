@@ -37,7 +37,7 @@ namespace map
 			const core::FieldRepresentationDescriptor<2>* pRepDesc)
 		{
 			//Model kernel generation
-			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
+			typedef itk::ScaleTransform< ::map::core::continuous::ScalarType, 2> TransformType;
 
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::ParametersType params(2);

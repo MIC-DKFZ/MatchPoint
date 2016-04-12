@@ -58,7 +58,7 @@ namespace map
 			spInRep->setOrigin(origin);
 
 			//Model kernel generation
-			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
+			typedef itk::ScaleTransform< ::map::core::continuous::ScalarType, 2> TransformType;
 
 			ModelKernelType::Pointer spModelKernel = ModelKernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();

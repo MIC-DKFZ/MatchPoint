@@ -48,7 +48,7 @@ namespace map
             static bool decomposeTransform(const TransformType* pTransform, FieldConstPointer& field)
             {
                 bool result = false;
-                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> GenericFieldTransformType;
+                typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> GenericFieldTransformType;
 
                 const GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<const GenericFieldTransformType*>(pTransform);
                 if (castedGenericFieldTransform)
@@ -63,7 +63,7 @@ namespace map
             static bool decomposeTransform(TransformType* pTransform, FieldPointer& field)
             {
                 bool result = false;
-                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> GenericFieldTransformType;
+                typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> GenericFieldTransformType;
 
                 GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<GenericFieldTransformType*>(pTransform);
                 if (castedGenericFieldTransform)
@@ -91,8 +91,8 @@ namespace map
             static bool decomposeTransform(const TransformType* pTransform, FieldConstPointer& field)
             {
                 bool result = false;
-                typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
-                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimensions, VDimensions> GenericFieldTransformType;
+                typedef ::itk::DisplacementFieldTransform< ::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
+                typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimensions, VDimensions> GenericFieldTransformType;
 
                 const FieldTransformType* castedFieldTransform = dynamic_cast<const FieldTransformType*>(pTransform);
                 const GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<const GenericFieldTransformType*>(pTransform);
@@ -113,8 +113,8 @@ namespace map
             static bool decomposeTransform(TransformType* pTransform, FieldPointer& field)
             {
                 bool result = false;
-                typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
-                typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimensions, VDimensions> GenericFieldTransformType;
+                typedef ::itk::DisplacementFieldTransform< ::map::core::continuous::ScalarType, VDimensions> FieldTransformType;
+                typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimensions, VDimensions> GenericFieldTransformType;
 
                 FieldTransformType* castedFieldTransform = dynamic_cast<FieldTransformType*>(pTransform);
                 GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<GenericFieldTransformType*>(pTransform);

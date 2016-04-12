@@ -44,7 +44,7 @@ namespace map
             class FieldByModelInversionFunctorHelper
             {
             public:
-                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> TransformType;
+                typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> TransformType;
                 typedef typename TransformType::Pointer TransformPointer;
                 typedef typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::SourceTransformModelType
                     SourceTransformModelType;
@@ -67,7 +67,7 @@ namespace map
             {
             public:
                 typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::FieldType FieldType;
-                typedef typename ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VDimensions, VDimensions> TransformType;
+                typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimensions, VDimensions> TransformType;
                 typedef typename TransformType::Pointer TransformPointer;
                 typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::SourceTransformModelType
                     SourceTransformModelType;

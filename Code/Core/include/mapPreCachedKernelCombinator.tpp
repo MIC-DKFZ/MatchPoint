@@ -98,7 +98,7 @@ namespace map
 
                 if (spResult.IsNull())
                 { //composite approach
-                    typedef itk::CompositeTransform<::map::core::continuous::ScalarType, VDimensions> CompositeType;
+                    typedef itk::CompositeTransform< ::map::core::continuous::ScalarType, VDimensions> CompositeType;
                     CompositeType::Pointer composite = CompositeType::New();
                     //we decided to const cast instead of cloning (the composite transform can only take non const transforms),
                     //1) to avoid the payload of copying (e.g. fields),

@@ -102,7 +102,7 @@ namespace map
 			typedef TestKernelBase<2, 2> IllegalKernelType;
 			typedef core::NullRegistrationKernel<2, 2> NullKernelType;
 
-			typedef ::itk::Euler2DTransform<::map::core::continuous::ScalarType> TransformType;
+			typedef ::itk::Euler2DTransform< ::map::core::continuous::ScalarType> TransformType;
 			TransformType::Pointer spTransform = TransformType::New();
 			TransformType::Pointer spTransform2 = TransformType::New();
 

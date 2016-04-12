@@ -388,7 +388,7 @@ namespace map
 						{
 							if (boundedRegion.Crop(this->getInternalTargetImage()->GetLargestPossibleRegion()))
 							{
-								os << "Target mask: set -> target image space region is set to: " <<::std::endl << boundedRegion;
+								os << "Target mask: set -> target image space region is set to: " << ::std::endl << boundedRegion;
 								typename TargetExtractFilterType::Pointer targetFilter = TargetExtractFilterType::New();
 								targetFilter->SetExtractionRegion(boundedRegion);
 								targetFilter->SetInput(this->getInternalTargetImage());
@@ -424,7 +424,7 @@ namespace map
 						{
 							if (boundedRegion.Crop(this->getInternalMovingImage()->GetLargestPossibleRegion()))
 							{
-								os2 << "Moving mask: set -> moving image space region is set to: " <<::std::endl << boundedRegion;
+								os2 << "Moving mask: set -> moving image space region is set to: " << ::std::endl << boundedRegion;
 								typename MovingExtractFilterType::Pointer movingFilter = MovingExtractFilterType::New();
 								movingFilter->SetExtractionRegion(boundedRegion);
 								movingFilter->SetInput(this->getInternalMovingImage());

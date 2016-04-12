@@ -130,7 +130,7 @@ namespace map
 			MetricControlType;
 			typedef algorithm::itk::ITKOptimizerControl< ::itk::LevenbergMarquardtOptimizer>
 			OptimizerControlType;
-			typedef ::itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TranformModelType;
+			typedef ::itk::TranslationTransform< ::map::core::continuous::ScalarType, 2> TranformModelType;
 
 			OptimizerControlType::Pointer spOptimizer = OptimizerControlType::New();
 			MetricControlType::Pointer spMetric = MetricControlType::New();

@@ -156,7 +156,7 @@ namespace map
 
         spInverseKernel->setSourceKernel(pKernel);
 
-        typedef itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, VOutputDimensions, VInputDimensions> FieldTransformType;
+        typedef itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VOutputDimensions, VInputDimensions> FieldTransformType;
         const FieldTransformType* pFieldTransformModel = dynamic_cast<const FieldTransformType*>(pTransformModel);
 
         if (pFieldTransformModel)

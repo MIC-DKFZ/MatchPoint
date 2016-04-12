@@ -179,7 +179,7 @@ namespace map
       ::map::core::FieldDecomposer<2, 2>::FieldConstPointer actualField;
       ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spRefFunctor->generateTransform(), actualField);
 
-      lit::FieldTester<::map::core::FieldDecomposer<2, 2>::FieldType> tester;
+      lit::FieldTester< ::map::core::FieldDecomposer<2, 2>::FieldType> tester;
 			double checkThreshold = 0.1;
 			tester.setCheckThreshold(checkThreshold);
       tester.setExpectedField(actualField);

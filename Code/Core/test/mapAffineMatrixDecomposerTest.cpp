@@ -43,8 +43,8 @@ namespace map
 			typedef core::AffineMatrixDecomposer<2, 2> DecomposerType;
 
 			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
-			typedef ::itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
-      typedef ::itk::DisplacementFieldTransform<::map::core::continuous::ScalarType, 2> FieldTransformType;
+			typedef ::itk::TranslationTransform< ::map::core::continuous::ScalarType, 2> TransformType;
+      typedef ::itk::DisplacementFieldTransform< ::map::core::continuous::ScalarType, 2> FieldTransformType;
 
 			KernelType::Pointer spKernel = KernelType::New();
 			TransformType::Pointer spTransform = TransformType::New();

@@ -49,7 +49,7 @@ namespace map
         mapGenerateAlgorithmUIDPolicyMacro(TestPlm3DRegistrationUIDPolicy,
             "de.dkfz.matchpoint.plastimatch.test", "ProgramFileRegistration.3D.default", "1.0.0", "");
 
-        typedef std::vector<::map::core::String> ArgumentsType;
+        typedef std::vector< ::map::core::String> ArgumentsType;
 
         ArgumentsType getLoggedArguments(const core::String& logFilePath)
         {
@@ -240,10 +240,10 @@ namespace map
             //use date of the last run (where the temp dir was not deleted).
 
             ImageType::Pointer spStoredMovingImage =
-                lit::TestImageIO<::map::core::discrete::InternalPixelType, ImageType>::readImage(
+                lit::TestImageIO< ::map::core::discrete::InternalPixelType, ImageType>::readImage(
                 ::map::core::FileDispatch::createFullPath(tempDir, "moving.mhd"));
             ImageType::Pointer spStoredTargetImage =
-                lit::TestImageIO<::map::core::discrete::InternalPixelType, ImageType>::readImage(
+                lit::TestImageIO< ::map::core::discrete::InternalPixelType, ImageType>::readImage(
                 ::map::core::FileDispatch::createFullPath(tempDir, "target.mhd"));
 
             lit::ImageTester<ImageType, ImageType> imageTester;

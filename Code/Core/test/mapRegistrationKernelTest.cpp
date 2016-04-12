@@ -58,7 +58,7 @@ namespace map
 
 			KernelType::Pointer spKernel = KernelType::New();
 
-      typedef ::itk::GenericVectorFieldTransform<::map::core::continuous::ScalarType, 2, 2> FieldTransformType;
+      typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, 2, 2> FieldTransformType;
       FieldTransformType::Pointer transformModel = testing::wrapFieldInTransform<2>(generate2DScaleFieldWithNull(createSimpleDescriptor<2>(10, 0.5), nullVector).GetPointer());
       spKernel->setTransformModel(transformModel);
 

@@ -59,7 +59,7 @@ namespace map
 			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 			KernelType::Pointer spKernel = KernelType::New();
 
-			typedef itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TransformType;
+			typedef itk::TranslationTransform< ::map::core::continuous::ScalarType, 2> TransformType;
 			TransformType::Pointer spTransform = TransformType::New();
 
 			TransformType::ParametersType params(2);
