@@ -63,7 +63,7 @@ namespace map
 
             RepresentationDescriptorConstPointer spRepresentation = NULL;
 
-            ::map::core::FieldDecomposer<VInputDimensions, VOutputDimensions>::FieldConstPointer pField;
+            typename ::map::core::FieldDecomposer<VInputDimensions, VOutputDimensions>::FieldConstPointer pField;
 
             if (::map::core::FieldDecomposer<VInputDimensions, VOutputDimensions>::decomposeTransform(_spTransform, pField))
             {
@@ -101,7 +101,8 @@ namespace map
             MappingVectorType result;
             if (castedTrans)
             {
-                result.Superclass::operator = (castedTrans->GetNullPoint());
+                typedef typename MappingVectorType::Superclass VectorSuperclassType;
+                result.VectorSuperclassType::operator = (castedTrans->GetNullPoint());
             }
             return result;
         };

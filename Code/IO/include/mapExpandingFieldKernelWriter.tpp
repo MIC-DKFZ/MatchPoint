@@ -170,7 +170,7 @@ namespace map
       core::String fieldPath =  request._name + "_field.nrrd";
       core::String absoluteFieldPath = core::FileDispatch::createFullPath(request._path, fieldPath);
 
-      typedef ::itk::ImageFileWriter< typename FieldType  > FieldWriterType;
+      typedef ::itk::ImageFileWriter< FieldType  > FieldWriterType;
       typename FieldWriterType::Pointer  spFieldWriter  = FieldWriterType::New();
 
       spFieldWriter->SetFileName(absoluteFieldPath.c_str());

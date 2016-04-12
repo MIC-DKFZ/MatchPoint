@@ -234,12 +234,14 @@ namespace map
 				typename RegistrationType::Pointer spResult = NULL;
 
 				//now build the inverse kernel (main kernel of a image based registration algorithm)
-				typedef typename
-				::map::core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
-				InverseKernelType;
+                typedef typename
+                ::map::core::PreCachedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> InverseKernelType;
 
-				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
-				spIKernel->setField(this->_internalRegistrationMethod->GetDeformationField());
+                typename FieldTransformType::Pointer transform = FieldTransformType::New();
+                transform->SetDisplacementField(this->_internalRegistrationMethod->GetDeformationField());
+
+                typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
+                spIKernel->setTransformModel(transform);
 
 				//now build the direct kernel via inversion of the inverse kernel
 				typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>

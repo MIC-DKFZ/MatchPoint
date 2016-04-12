@@ -99,13 +99,13 @@ namespace map
                 if (spResult.IsNull())
                 { //composite approach
                     typedef itk::CompositeTransform< ::map::core::continuous::ScalarType, VDimensions> CompositeType;
-                    CompositeType::Pointer composite = CompositeType::New();
+                    typename CompositeType::Pointer composite = CompositeType::New();
                     //we decided to const cast instead of cloning (the composite transform can only take non const transforms),
                     //1) to avoid the payload of copying (e.g. fields),
                     //2) the compsite transform will be const, so the const removal will only be temporary 
                     //Remark: The composite transform applies in reversed order, thus 2nd kernel is added first.
-                    composite->AddTransform(const_cast<Kernel2Type::TransformType*>(pKernel2->getTransformModel()));
-                    composite->AddTransform(const_cast<Kernel1Type::TransformType*>(pKernel1->getTransformModel()));
+                    composite->AddTransform(const_cast< typename Kernel2Type::TransformType*>(pKernel2->getTransformModel()));
+                    composite->AddTransform(const_cast< typename Kernel1Type::TransformType*>(pKernel1->getTransformModel()));
                     typedef map::core::PreCachedRegistrationKernel<VDimensions, VDimensions> NewKernelType;
                     typename NewKernelType::Pointer newKernel = NewKernelType::New();
                     newKernel->setTransformModel(composite);

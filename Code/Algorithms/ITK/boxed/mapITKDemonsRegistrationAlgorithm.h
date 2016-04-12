@@ -34,6 +34,7 @@
 #include "mapIterativeRegistrationAlgorithm.h"
 #include "mapImageRegistrationAlgorithmBase.h"
 #include "mapMetaPropertyAlgorithmBase.h"
+#include "mapGenericVectorFieldTransform.h"
 
 /*! @namespace map The namespace map is used throughout the MatchPoint project to
     mark code as components of this project
@@ -116,7 +117,8 @@ namespace map
 				ITKDemonsRegistrationAlgorithm();
 				virtual ~ITKDemonsRegistrationAlgorithm();
 
-				typedef typename ::map::core::discrete::Elements< Superclass::TargetDimensions >::VectorFieldType
+                typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, TTargetImage::ImageDimension, TTargetImage::ImageDimension> FieldTransformType;
+                typedef typename ::map::core::discrete::Elements< Superclass::TargetDimensions >::VectorFieldType
 				DisplacementFieldType;
 				typedef ::itk::DemonsRegistrationFilter<TTargetImage, TMovingImage, DisplacementFieldType>
 				InternalRegistrationMethodType;

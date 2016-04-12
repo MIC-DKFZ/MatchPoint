@@ -56,6 +56,10 @@ namespace map
                 typedef itk::ImageRegionIterator<FieldType> IteratorType;
                 IteratorType iterator(spField, region);
 
+                typedef typename SourceKernel2BaseType::MappingVectorType::Superclass VectorSuperclassType;
+                typename SourceKernel2BaseType::MappingVectorType nullVector;
+                    nullVector.VectorSuperclassType::operator = (this->_nullPoint);
+
                 for (iterator.GoToBegin(); !iterator.IsAtEnd(); ++iterator)
                 {
                     typename IteratorType::IndexType index = iterator.GetIndex();
@@ -69,8 +73,8 @@ namespace map
                     typename SourceKernel2BaseType::OutputPointType endPoint;
                     bool valid2 = _spSourceKernel2->mapPoint(interimPoint, endPoint);
 
-                    typename SourceKernel2BaseType::MappingVectorType outVector;
-                        outVector.Superclass::operator = (_nullPoint);
+                    typename SourceKernel2BaseType::MappingVectorType outVector = nullVector;
+
                     if (valid && valid2)
                     {
                         PointVectorCombinationPolicy<VInputDimensions, VOutputDimensions>::computeVector(inPoint,
@@ -78,7 +82,7 @@ namespace map
                     }
                     else
                     {
-                        if (!_useNullPoint)
+                        if (! this->_useNullPoint)
                         {
                             mapDefaultExceptionMacro(<< "Error. Cannot generate combined kernel. At least one source kernel was not able to map points. valid source kernel 1: " << valid << "; valid source kernel 2:" << valid2);
                         }
@@ -87,20 +91,18 @@ namespace map
                     iterator.Set(outVector);
                 }
 
-                typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
+                typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
                 typename FieldTransformType::Pointer spResult = FieldTransformType::New();
                 spResult->SetDisplacementField(spField);
 
-                typedef typename ::itk::map::NULLVectorAwareLinearInterpolateImageFunction < FieldTransformType::GenericVectorFieldType, FieldTransformType::ScalarType> InterpolatorType;
+                typedef ::itk::map::NULLVectorAwareLinearInterpolateImageFunction < typename FieldTransformType::GenericVectorFieldType, typename FieldTransformType::ScalarType> InterpolatorType;
                 typename InterpolatorType::Pointer interpolator = InterpolatorType::New();
-                interpolator->SetNullVectorUsage(_useNullPoint);
-                InterpolatorType::OutputType nullVector;
-                nullVector.Superclass::operator = (_nullPoint);
+                interpolator->SetNullVectorUsage(this->_useNullPoint);
                 interpolator->SetNullVector(nullVector);
 
                 spResult->SetInterpolator(interpolator);
-                spResult->SetUseNullPoint(_useNullPoint);
-                spResult->SetNullPoint(_nullPoint);
+                spResult->SetUseNullPoint(this->_useNullPoint);
+                spResult->SetNullPoint(this->_nullPoint);
                 return spResult.GetPointer();
             }
 

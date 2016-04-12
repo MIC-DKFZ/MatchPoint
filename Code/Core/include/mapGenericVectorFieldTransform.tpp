@@ -95,8 +95,9 @@ namespace itk
         {
             this->m_DisplacementField->TransformPhysicalPointToContinuousIndex(point, cidx);
             typename InterpolatorType::OutputType displacement = this->m_Interpolator->EvaluateAtContinuousIndex(cidx);
+            typedef typename InterpolatorType::OutputType::Superclass VectorSuperclassType;
 
-            if (!displacement.Superclass::operator == (m_NullPoint))
+            if (!displacement.VectorSuperclassType::operator == (m_NullPoint))
             { //displacement does not equal nullpoint, which would indicate not supported field
                 ::map::core::PointVectorCombinationPolicy<InDimensions, OutDimensions>::mapPoint(inputPoint, displacement, outputPoint);
             }

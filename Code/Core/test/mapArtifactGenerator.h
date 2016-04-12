@@ -28,6 +28,8 @@
 
 #include "mapGenericVectorFieldTransform.h"
 
+#include "itkImageRegionIterator.h"
+
 namespace map
 {
 	namespace testing
@@ -54,7 +56,7 @@ namespace map
         typedef typename ::map::core::discrete::Elements<VDimension>::VectorFieldType FieldType;
         typename FieldType::Pointer spField = FieldType::New();
 
-        typedef itk::ImageRegionIterator< FieldType > IteratorType;
+        typedef ::itk::ImageRegionIterator< FieldType > IteratorType;
 
         spField->SetRegions(pRepDesc->getRepresentedLocalImageRegion());
         spField->SetOrigin(pRepDesc->getOrigin());
@@ -87,7 +89,7 @@ namespace map
     typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimension, VDimension>::Pointer
         wrapFieldInTransform(typename ::map::core::discrete::Elements<VDimension>::VectorFieldType* field)
     {
-        ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimension, VDimension>::Pointer transform = ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimension, VDimension>::New();
+        typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimension, VDimension>::Pointer transform = ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimension, VDimension>::New();
         transform->SetDisplacementField(field);
         return transform;
     }
@@ -114,7 +116,7 @@ namespace map
         
         FieldTransformType* fieldTransform = dynamic_cast<FieldTransformType*> (transform);
 
-        ::map::core::discrete::Elements<VDimension>::VectorFieldType::Pointer result;
+        typename ::map::core::discrete::Elements<VDimension>::VectorFieldType::Pointer result;
 
         if (fieldTransform)
         {

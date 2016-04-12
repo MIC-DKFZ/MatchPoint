@@ -61,6 +61,7 @@ namespace map
 			typedef typename Superclass::InverseFieldRepresentationType	InverseFieldRepresentationType;
 			typedef typename Superclass::RequestType	RequestType;
 			typedef NullRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
+            typedef typename Superclass::NullPointType NullPointType;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request.

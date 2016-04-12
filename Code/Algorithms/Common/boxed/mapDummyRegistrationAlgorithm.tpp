@@ -27,7 +27,7 @@
 #include <itkAffineTransform.h>
 
 #include "mapAlgorithmException.h"
-#include "mapPrecachedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapRegistrationManipulator.h"
 
 namespace map

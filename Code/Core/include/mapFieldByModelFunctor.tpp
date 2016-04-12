@@ -133,7 +133,7 @@ namespace map
                 {
                     typename FieldType::Pointer spField = generateFieldFromTransform<VDimensions, VDimensions>(pTransformModel, pInFieldRepresentation);
 
-                    typename TransformPointer spResult = TransformType::New();
+                    TransformPointer spResult = TransformType::New();
                     spResult->SetDisplacementField(spField);
                     return spResult.GetPointer();
                 }
@@ -151,16 +151,19 @@ namespace map
                     FieldByModelFunctorHelper<VInputDimensions, VOutputDimensions>::generate(_spTransformModel,
                     Superclass::_spInFieldRepresentation);
 
-                typedef typename ::itk::map::NULLVectorAwareLinearInterpolateImageFunction < FieldTransformType::GenericVectorFieldType, FieldTransformType::ScalarType> InterpolatorType;
+                typedef ::itk::map::NULLVectorAwareLinearInterpolateImageFunction < typename FieldTransformType::GenericVectorFieldType, typename FieldTransformType::ScalarType> InterpolatorType;
                 typename InterpolatorType::Pointer interpolator = InterpolatorType::New();
-                interpolator->SetNullVectorUsage(_useNullPoint);
-                InterpolatorType::OutputType nullVector;
-                nullVector.Superclass::operator = (_nullPoint);
+                interpolator->SetNullVectorUsage(this->_useNullPoint);
+
+                typename InterpolatorType::OutputType nullVector;
+                typedef typename InterpolatorType::OutputType::Superclass VectorSuperclassType;
+
+                nullVector.VectorSuperclassType::operator = (this->_nullPoint);
                 interpolator->SetNullVector(nullVector);
 
                 spResult->SetInterpolator(interpolator);
-                spResult->SetUseNullPoint(_useNullPoint);
-                spResult->SetNullPoint(_nullPoint);
+                spResult->SetUseNullPoint(this->_useNullPoint);
+                spResult->SetNullPoint(this->_nullPoint);
 
                 return spResult.GetPointer();
             }

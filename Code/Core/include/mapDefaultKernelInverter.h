@@ -66,8 +66,9 @@ namespace map
 			typedef typename Superclass::InverseKernelBasePointer	InverseKernelBasePointer;
 			typedef typename Superclass::FieldRepresentationType	FieldRepresentationType;
 			typedef typename Superclass::InverseFieldRepresentationType	InverseFieldRepresentationType;
-			typedef typename Superclass::RequestType	RequestType;
+            typedef typename Superclass::RequestType	RequestType;
 			typedef RegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
+            typedef typename Superclass::NullPointType NullPointType;
 
 
 			/*! gets the number of iterations that has been set for the numeric inversion

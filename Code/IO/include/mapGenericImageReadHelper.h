@@ -29,6 +29,21 @@ namespace map
 {
     namespace io
     {
+
+    template <typename TOutputImageType, typename TInputPixelType>
+    typename TOutputImageType::Pointer
+        castGenericImageHelper(map::io::GenericImageReader::GenericOutputImageType::Pointer genericImage)
+    {
+        typedef itk::Image<TInputPixelType, TOutputImageType::ImageDimension> InputImageType;
+        typedef itk::CastImageFilter<InputImageType, TOutputImageType> CastFilterType;
+        typename CastFilterType::Pointer filter = CastFilterType::New();
+        typename InputImageType::ConstPointer input = dynamic_cast<InputImageType*>(genericImage.GetPointer());
+        filter->SetInput(input);
+        filter->Update();
+        typename TOutputImageType::Pointer result = filter->GetOutput();
+        return result;
+    }
+
         /**
         * @brief Helper function for the use of GenericImageReader in on statement and directly casts the result image.
         *
@@ -140,20 +155,6 @@ namespace map
             }
             }
 
-            return result;
-        }
-
-        template <typename TOutputImageType, typename TInputPixelType>
-        typename TOutputImageType::Pointer
-            castGenericImageHelper(map::io::GenericImageReader::GenericOutputImageType::Pointer genericImage)
-        {
-            typedef itk::Image<TInputPixelType, TOutputImageType::ImageDimension> InputImageType;
-            typedef itk::CastImageFilter<InputImageType, TOutputImageType> CastFilterType;
-            typename CastFilterType::Pointer filter = CastFilterType::New();
-            InputImageType::ConstPointer input = dynamic_cast<InputImageType*>(genericImage.GetPointer());
-            filter->SetInput(input);
-            filter->Update();
-            typename TOutputImageType::Pointer result = filter->GetOutput();
             return result;
         }
 

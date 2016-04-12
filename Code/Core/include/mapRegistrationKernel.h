@@ -58,6 +58,7 @@ namespace map
                 RepresentationDescriptorConstPointer;
             typedef typename Superclass::InputPointType  InputPointType;
             typedef typename Superclass::OutputPointType OutputPointType;
+            typedef typename Superclass::OutputVectorType OutputVectorType;
 
             /*! Returns pointer to the transform model used by the kernel
             @eguarantee strong

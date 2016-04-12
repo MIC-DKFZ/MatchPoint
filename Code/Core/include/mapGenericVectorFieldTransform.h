@@ -106,6 +106,9 @@ public:
   /** New macro for creation of through a Smart Pointer */
   itkNewMacro( Self );
 
+  typedef typename Superclass::InverseTransformBaseType InverseTransformBaseType;
+  typedef typename Superclass::InverseTransformBasePointer InverseTransformBasePointer;
+
   /** Scalar type. */
   typedef typename Superclass::ScalarType ScalarType;
 

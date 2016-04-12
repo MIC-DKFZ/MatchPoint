@@ -31,6 +31,8 @@
 #include "itkImageFileReader.h"
 #include "itkMetaImageIO.h"
 
+#include "mapNULLVectorAwareLinearInterpolateImageFunction.h"
+
 namespace map
 {
     namespace core
@@ -129,14 +131,15 @@ namespace map
 
                 typedef typename ::itk::map::NULLVectorAwareLinearInterpolateImageFunction < typename FieldTransformType::GenericVectorFieldType, typename FieldTransformType::ScalarType> InterpolatorType;
                 typename InterpolatorType::Pointer interpolator = InterpolatorType::New();
-                interpolator->SetNullVectorUsage(_useNullPoint);
-                InterpolatorType::OutputType nullVector;
-                nullVector.Superclass::operator = (_nullPoint);
+                interpolator->SetNullVectorUsage(this->_useNullPoint);
+                typename InterpolatorType::OutputType nullVector;
+                typedef typename InterpolatorType::OutputType::Superclass VectorSuperclassType;
+                nullVector.VectorSuperclassType::operator = (this->_nullPoint);
                 interpolator->SetNullVector(nullVector);
 
                 spResult->SetInterpolator(interpolator);
-                spResult->SetUseNullPoint(_useNullPoint);
-                spResult->SetNullPoint(_nullPoint);
+                spResult->SetUseNullPoint(this->_useNullPoint);
+                spResult->SetNullPoint(this->_nullPoint);
 
                 return spResult.GetPointer();
             }
