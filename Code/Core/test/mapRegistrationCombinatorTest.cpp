@@ -27,10 +27,12 @@
 #include "litCheckMacros.h"
 #include "mapTestKernelBase.h"
 #include "mapRegistrationCombinator.h"
-#include "mapFieldBasedRegistrationKernels.h"
-#include "mapCombinedFieldBasedRegistrationKernel.h"
+#include "mapLazyRegistrationKernel.h"
+#include "mapCombinedRegistrationKernel.h"
 #include "mapRegistrationManipulator.h"
-#include "mapFieldCombinationFunctorInterface.h"
+#include "mapArtifactGenerator.h"
+#include "mapCombinationFunctorInterface.h"
+#include "mapTestFieldGenerationFunctor.h"
 
 namespace map
 {
@@ -38,57 +40,31 @@ namespace map
 	{
 
 
-		typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel KernelType;
+		typedef core::LazyRegistrationKernel<2, 2> KernelType;
 
 
 		KernelType::Pointer generateKernel()
 		{
-			KernelType::Pointer spKernel = KernelType::New();
-
-			// create field
-			KernelType::FieldType::Pointer spField = KernelType::FieldType::New();
-
-			typedef itk::ImageRegionIterator< KernelType::FieldType > IteratorType;
-
-			KernelType::FieldType::RegionType::SizeType size = {10, 10};
-			KernelType::FieldType::RegionType region(size);
-			KernelType::FieldType::SpacingType spacing(0.5);
-			//Generate imagegrid
-			spField->SetRegions(region);
-			spField->SetSpacing(spacing);
-			spField->Allocate();
-
-			IteratorType iterator(spField, spField->GetLargestPossibleRegion());
-
-			for (iterator.GoToBegin(); !(iterator.IsAtEnd()); ++iterator)
-			{
-				KernelType::FieldType::IndexType index = iterator.GetIndex();
-				KernelType::FieldType::ValueType value;
-				value.Fill(index[0] + index[1]);
-
-				iterator.Set(value);
-			}
-
-			// creating field done, set field to kernel.
-			spKernel->setField(*(spField.GetPointer()));
+            KernelType::Pointer spKernel = KernelType::New();
+            spKernel->setTransformFunctor(testing::TestFieldGenerationFunctor<2,2>::New(testing::createSimpleDescriptor<2>(10, 0.5)));
 
 			return spKernel;
 		}
 
 
-		bool fieldExists(const core::RegistrationKernelBase<2, 2>& kernel)
+		bool transformExists(const core::RegistrationKernelBase<2, 2>& kernel)
 		{
-			typedef core::CombinedFieldBasedRegistrationKernel<2, 2, 2> CombinedKernelType;
+			typedef core::RegistrationKernel<2, 2> KernelType;
 
-			const CombinedKernelType* pCombinedKernel = dynamic_cast<const CombinedKernelType*>(&kernel);
-			return pCombinedKernel->fieldExists();
+            const KernelType* pKernel = dynamic_cast<const KernelType*>(&kernel);
+            return pKernel->transformExists();
 		}
 
 		bool isKernelCorrectlyComposed(const core::RegistrationKernelBase<2, 2>& kernelToCheck,
 									   const core::RegistrationKernelBase<2, 2>& kernel1,
 									   const core::RegistrationKernelBase<2, 2>& kernel2)
 		{
-			typedef core::CombinedFieldBasedRegistrationKernel<2, 2, 2> CombinedKernelType;
+			typedef core::CombinedRegistrationKernel<2, 2, 2> CombinedKernelType;
 
 			const CombinedKernelType* pCombinedKernel = dynamic_cast<const CombinedKernelType*>(&kernelToCheck);
 
@@ -96,9 +72,9 @@ namespace map
 
 			if (pCombinedKernel)
 			{
-				typedef core::functors::FieldCombinationFunctorInterface<2, 2, 2> FunctorInterfaceType;
+				typedef core::functors::CombinationFunctorInterface<2, 2, 2> FunctorInterfaceType;
 				const FunctorInterfaceType* pFunctor = dynamic_cast<const FunctorInterfaceType*>
-													   (pCombinedKernel->getFieldFunctor());
+													   (pCombinedKernel->getTransformFunctor());
 
 				if (pFunctor)
 				{
@@ -207,29 +183,29 @@ namespace map
 			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()),
 									  *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::None));
 			CHECK(spResult.IsNotNull());
-			CHECK(!fieldExists(spResult->getDirectMapping()));
-			CHECK(!fieldExists(spResult->getInverseMapping()));
+			CHECK(!transformExists(spResult->getDirectMapping()));
+			CHECK(!transformExists(spResult->getInverseMapping()));
 
-			// both kernels must not be initialized
+			// direct kernel must be initialized
 			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()),
 									  *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::DirectMapping));
 			CHECK(spResult.IsNotNull());
-			CHECK(fieldExists(spResult->getDirectMapping()));
-			CHECK(!fieldExists(spResult->getInverseMapping()));
+			CHECK(transformExists(spResult->getDirectMapping()));
+			CHECK(!transformExists(spResult->getInverseMapping()));
 
-			// both kernels must not be initialized
+			// inverse kernel must be initialized
 			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()),
 									  *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::InverseMapping));
 			CHECK(spResult.IsNotNull());
-			CHECK(!fieldExists(spResult->getDirectMapping()));
-			CHECK(fieldExists(spResult->getInverseMapping()));
+			CHECK(!transformExists(spResult->getDirectMapping()));
+			CHECK(transformExists(spResult->getInverseMapping()));
 
-			// both kernels must not be initialized
+			// both kernels must be initialized
 			CHECK_NO_THROW(spResult = spCombinator->process(*(spValidPreRegistration.GetPointer()),
 									  *(spValidRegistration.GetPointer()), CombinatorType::InitialisationStyle::CompleteRegistration));
 			CHECK(spResult.IsNotNull());
-			CHECK(fieldExists(spResult->getDirectMapping()));
-			CHECK(fieldExists(spResult->getInverseMapping()));
+			CHECK(transformExists(spResult->getDirectMapping()));
+			CHECK(transformExists(spResult->getInverseMapping()));
 
 			// check if the kernels are at the right position:
 			CHECK(isKernelCorrectlyComposed(spResult->getDirectMapping(),

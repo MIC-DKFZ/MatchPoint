@@ -25,6 +25,8 @@
 #endif
 
 #include "mapFieldByModelInversionFunctor.h"
+#include "mapFieldDecomposer.h"
+
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
 
@@ -71,7 +73,7 @@ namespace map
 			}
 
 			typedef core::functors::FieldByModelInversionFunctor<2, 2> FunctorType;
-			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 2>	TransformType;
+			typedef itk::ScaleTransform< ::map::core::continuous::ScalarType, 2>	TransformType;
 
 			TransformType::Pointer spModel = TransformType::New();
 
@@ -80,7 +82,7 @@ namespace map
 			origin.Fill(0);
 			FunctorType::InFieldRepresentationType::SizeType size;
 			size.fill(10);
-			FunctorType::TransformModelType::ParametersType params(2);
+			FunctorType::SourceTransformModelType::ParametersType params(2);
 			params.fill(3.0);
 			spModel->SetParameters(params);
 
@@ -90,7 +92,7 @@ namespace map
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
 
-			FunctorType::Pointer spFunc = FunctorType::New(*spModel, spInRep);
+			FunctorType::Pointer spFunc = FunctorType::New(spModel, spInRep);
 			spFunc->setStopValue(stopValue);
 			spFunc->setNumberOfIterations(nrOfIterations);
 
@@ -98,25 +100,27 @@ namespace map
 
 			CHECK(spFunc->getStopValue() == stopValue);
 			CHECK(spFunc->getNumberOfIterations() == nrOfIterations);
-			CHECK(spModel == spFunc->getTransformModel());
+			CHECK(spModel == spFunc->getSourceTransformModel());
 
 			FunctorType::Pointer spFuncAnother = dynamic_cast<FunctorType*>
 												 (spFunc->CreateAnother().GetPointer());
-			CHECK(spFuncAnother->getTransformModel() == spFunc->getTransformModel());
+			CHECK(spFuncAnother->getSourceTransformModel() == spFunc->getSourceTransformModel());
 			CHECK(spFuncAnother->getInFieldRepresentation() == spFunc->getInFieldRepresentation());
 			CHECK(spFuncAnother->GetNameOfClass() == spFunc->GetNameOfClass());
 			CHECK(spFuncAnother->getStopValue() == spFunc->getStopValue());
 			CHECK(spFuncAnother->getNumberOfIterations() == spFunc->getNumberOfIterations());
 
 			// test generateField
-			FunctorType::FieldPointer spField = NULL;
-			CHECK_NO_THROW(spField = spFunc->generateField());
-			CHECK(spField.IsNotNull());
+			FunctorType::TransformPointer spTransform = NULL;
+            CHECK_NO_THROW(spTransform = spFunc->generateTransform());
+            CHECK(spTransform.IsNotNull());
 
 			TransformType::InverseTransformBasePointer	spInverseModel = spModel->GetInverseTransform();
 
+            FunctorType::FieldType::Pointer spField;
+            ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spTransform, spField);
 
-			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformModelType>
+			lit::TransformFieldTester<FunctorType::FieldType, FunctorType::TransformType>
 			tester;
 			tester.setReferenceTransform(spInverseModel);
 			tester.setActualField(spField);

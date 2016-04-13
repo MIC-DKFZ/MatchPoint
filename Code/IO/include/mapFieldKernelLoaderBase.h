@@ -24,14 +24,14 @@
 #define __MAP_FIELD_KERNEL_LOADER_BASE_H
 
 #include "mapRegistrationKernelLoaderBase.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapRegistrationKernel.h"
 
 namespace map
 {
 	namespace io
 	{
 		/*! @class FieldKernelLoaderBase
-		* @brief Base class for provider that are able to load field kernels.
+		* @brief Base class for provider that are able to load stored vector fields as kernels.
 		*
 		* @sa FieldBasedRegistrationKernels
 		* @ingroup RegOperation
@@ -50,7 +50,7 @@ namespace map
 
 			itkTypeMacro(FieldKernelLoaderBase, RegistrationKernelLoaderBase);
 
-			typedef  core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
+			typedef  core::RegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
 			typedef typename KernelBaseType::Pointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
 
@@ -89,10 +89,10 @@ namespace map
 			::map::core::String getFilePath(const RequestType& request) const;
 			
 			/** Checks the passed request if a null vector is defined and returns its value.
-			 * @param nullVector Values of the null vector. Valid if method returns true. If it returns false, no vector was defined and the value is 0.
+			 * @param nullPoint Values of the null vector. Valid if method returns true. If it returns false, no vector was defined and the value is 0.
 			 * @result true if a null vector exists.
 			 * @eguarantee strong*/
-			bool hasNullVector(const RequestType& request, typename KernelBaseType::MappingVectorType& nullVector) const;
+      bool hasNullPoint(const RequestType& request, typename KernelBaseType::OutputPointType& nullPoint) const;
 			
 			FieldKernelLoaderBase();
 			virtual ~FieldKernelLoaderBase() {};

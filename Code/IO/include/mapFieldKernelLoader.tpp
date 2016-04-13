@@ -34,107 +34,106 @@
 
 namespace map
 {
-	namespace io
-	{
+    namespace io
+    {
 
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		bool
-		FieldKernelLoader<VInputDimensions, VOutputDimensions>::
-		canHandleRequest(const RequestType& request) const
-		{
-			structuredData::Element::ConstSubElementIteratorType typePos = structuredData::findNextSubElement(
-						request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
-						tags::KernelType);
+        template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        bool
+            FieldKernelLoader<VInputDimensions, VOutputDimensions>::
+            canHandleRequest(const RequestType& request) const
+        {
+            structuredData::Element::ConstSubElementIteratorType typePos = structuredData::findNextSubElement(
+                request._spKernelDescriptor->getSubElementBegin(), request._spKernelDescriptor->getSubElementEnd(),
+                tags::KernelType);
 
-			bool canHandle = false;
+            bool canHandle = false;
 
-			if (typePos != request._spKernelDescriptor->getSubElementEnd())
-			{
-				canHandle = ((*typePos)->getValue() == "ExpandedFieldKernel")
-							&& Superclass::canHandleRequest(request);
-			}
+            if (typePos != request._spKernelDescriptor->getSubElementEnd())
+            {
+                canHandle = ((*typePos)->getValue() == "ExpandedFieldKernel")
+                    && Superclass::canHandleRequest(request);
+            }
 
-			return canHandle;
-		}
-
-
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		::map::core::String
-		FieldKernelLoader<VInputDimensions, VOutputDimensions>::
-		getProviderName() const
-		{
-			return Self::getStaticProviderName();
-		}
-
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		::map::core::String
-		FieldKernelLoader<VInputDimensions, VOutputDimensions>::
-		getStaticProviderName()
-		{
-			::map::core::OStringStream os;
-			os << "FieldKernelLoader<" << VInputDimensions << "," << VOutputDimensions << ">";
-			return os.str();
-		}
+            return canHandle;
+        }
 
 
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		::map::core::String
-		FieldKernelLoader<VInputDimensions, VOutputDimensions>::
-		getDescription() const
-		{
-			::map::core::OStringStream os;
-			os << "FieldKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
-			   VOutputDimensions << ".";
-			return os.str();
-		}
+        template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        ::map::core::String
+            FieldKernelLoader<VInputDimensions, VOutputDimensions>::
+            getProviderName() const
+        {
+            return Self::getStaticProviderName();
+        }
+
+        template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        ::map::core::String
+            FieldKernelLoader<VInputDimensions, VOutputDimensions>::
+            getStaticProviderName()
+        {
+            ::map::core::OStringStream os;
+            os << "FieldKernelLoader<" << VInputDimensions << "," << VOutputDimensions << ">";
+            return os.str();
+        }
 
 
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		typename FieldKernelLoader<VInputDimensions, VOutputDimensions>::GenericKernelPointer
-		FieldKernelLoader<VInputDimensions, VOutputDimensions>::
-		loadKernel(const RequestType& request) const
-		{
-			if (!canHandleRequest(request))
-			{
-				mapExceptionMacro(::map::core::ServiceException,
-								  << "Error: cannot load kernel. Reason: cannot handle request.");
-			}
-
-			typename KernelBaseType::Pointer spKernel;
-
-			//get file path
-			::map::core::String filePath = Superclass::getFilePath(request);
-			
-			//determin null vector (support)
-			typename KernelBaseType::MappingVectorType nullVector;
-            bool usesNullVector = this->hasNullVector(request, nullVector);
-
-			typedef typename
-			::map::core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
-			KernelType;
-			typename KernelType::Pointer spCachedKernel = KernelType::New();
-
-			typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
-			typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath);
-
-			typename KernelType::FieldType::Pointer spField = spFunctor->generateField();
-
-			spCachedKernel->setField(*(spField.GetPointer()));
-			spCachedKernel->setNullVectorUsage(usesNullVector);
-			spCachedKernel->setNullVector(nullVector);
-			spKernel = spCachedKernel;
-
-			GenericKernelPointer spResult = spKernel.GetPointer();
-			return spResult;
-		}
-
-		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		FieldKernelLoader<VInputDimensions, VOutputDimensions>::
-		FieldKernelLoader()
-		{};
+        template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        ::map::core::String
+            FieldKernelLoader<VInputDimensions, VOutputDimensions>::
+            getDescription() const
+        {
+            ::map::core::OStringStream os;
+            os << "FieldKernelLoader, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
+                VOutputDimensions << ".";
+            return os.str();
+        }
 
 
-	} // end namespace io
+        template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        typename FieldKernelLoader<VInputDimensions, VOutputDimensions>::GenericKernelPointer
+            FieldKernelLoader<VInputDimensions, VOutputDimensions>::
+            loadKernel(const RequestType& request) const
+        {
+            if (!canHandleRequest(request))
+            {
+                mapExceptionMacro(::map::core::ServiceException,
+                    << "Error: cannot load kernel. Reason: cannot handle request.");
+            }
+
+            typename KernelBaseType::Pointer spKernel;
+
+            //get file path
+            ::map::core::String filePath = Superclass::getFilePath(request);
+
+            //determin null vector (support)
+            typename KernelBaseType::OutputPointType nullPoint;
+            bool usesNullPoint = this->hasNullPoint(request, nullPoint);
+
+            typedef typename
+                ::map::core::PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelType;
+            typename KernelType::Pointer spCachedKernel = KernelType::New();
+
+            typedef core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> FunctorsType;
+            typename FunctorsType::Pointer spFunctor = FunctorsType::New(filePath);
+            spFunctor->setNullPointUsage(usesNullPoint);
+            spFunctor->setNullPoint(nullPoint);
+
+            typename FunctorsType::TransformType::Pointer spFieldTransform = spFunctor->generateTransform();
+
+            spCachedKernel->setTransformModel(spFieldTransform.GetPointer());
+            spKernel = spCachedKernel;
+
+            GenericKernelPointer spResult = spKernel.GetPointer();
+            return spResult;
+        }
+
+        template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        FieldKernelLoader<VInputDimensions, VOutputDimensions>::
+            FieldKernelLoader()
+        {};
+
+
+    } // end namespace io
 } // end namespace map
 
 #endif

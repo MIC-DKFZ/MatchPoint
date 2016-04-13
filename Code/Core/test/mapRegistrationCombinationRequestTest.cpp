@@ -25,7 +25,7 @@
 #endif
 
 #include "mapRegistrationCombinationRequest.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 
 #include "litCheckMacros.h"
 
@@ -38,7 +38,7 @@ namespace map
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			// generate kernels for testing
-			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 			KernelType::Pointer spKernel1 = KernelType::New();
 			KernelType::Pointer spKernel2 = KernelType::New();
 			KernelType::Pointer spKernel3 = KernelType::New();

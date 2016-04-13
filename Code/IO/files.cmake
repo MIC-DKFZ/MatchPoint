@@ -28,8 +28,8 @@ include/mapImageReader.h
 include/mapImageWriter.h
 include/mapGenericImageReader.h
 include/mapGenericImageReadHelper.h
-include/mapInvertingFieldKernelWriter.h
-include/mapInvertingFieldKernelLoader.h
+include/mapInvertingKernelWriter.h
+include/mapInvertingKernelLoader.h
 )
 
 SET(TPP_FILES
@@ -47,8 +47,8 @@ include/mapRegistrationKernelWriteRequest.tpp
 include/mapKernelWriterLoadPolicy.tpp
 include/mapImageReader.tpp
 include/mapImageWriter.tpp
-include/mapInvertingFieldKernelWriter.tpp
-include/mapInvertingFieldKernelLoader.tpp
+include/mapInvertingKernelWriter.tpp
+include/mapInvertingKernelLoader.tpp
 )
 
 SET(TEST_CPP_FILES
@@ -61,6 +61,6 @@ test/mapNullRegistrationKernelWriterTest.cpp
 test/mapExpandingFieldKernelWriterTest.cpp
 test/mapLazyFileFieldKernelLoaderTest.cpp
 test/mapFieldKernelLoaderTest.cpp
-test/mapInvertingFieldKernelWriterTest.cpp
-test/mapInvertingFieldKernelLoaderTest.cpp
+test/mapInvertingKernelWriterTest.cpp
+test/mapInvertingKernelLoaderTest.cpp
 )

@@ -26,8 +26,7 @@
 
 #include "itkEuler2DTransform.h"
 
-#include "mapModelBasedRegistrationKernel.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapMatrixModelBasedKernelLoader.h"
 #include "mapSDXMLStrReader.h"
 
@@ -44,7 +43,7 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 
 			typedef io::MatrixModelBasedKernelLoader<2> LoaderType;
 

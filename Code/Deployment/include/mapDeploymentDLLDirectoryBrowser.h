@@ -66,7 +66,7 @@ namespace map
 			itkFactorylessNewMacro(Self);
 
 			typedef std::vector<DLLInfo::Pointer> DLLInfoListType;
-			typedef std::vector<::map::core::String> PathListType;
+			typedef std::vector< ::map::core::String> PathListType;
 
 			/** Sets the base that is used to collapse relative search paths when added as search locations.
 			* @eguarantee strong

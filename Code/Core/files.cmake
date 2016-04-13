@@ -34,11 +34,11 @@ SET(CPP_FILES
 
 SET(H_FILES 
 	include/mapAffineMatrixDecomposer.h
+	include/mapFieldDecomposer.h
 	include/mapAffineMatrixOffsetDecompositionPolicy.h
     include/mapConvert.h
 	include/mapClassMacros.h
-	include/mapCombinedFieldBasedRegistrationKernel.h
-	include/mapConcreteFieldBasedRegistrationKernel.h
+	include/mapCombinedRegistrationKernel.h
 	include/mapContinuous.h
 	include/mapContinuousElements.h
 	include/mapDefaultRegistrationTopologyPolicy.h
@@ -48,25 +48,20 @@ SET(H_FILES
 	include/mapEvents.h
 	include/mapExceptionObject.h
 	include/mapExceptionObjectMacros.h
-	include/mapFieldBasedKernelInverter.h
-	include/mapFieldBasedRegistrationKernel.h
-	include/mapFieldBasedRegistrationKernelInterface.h
-	include/mapFieldBasedRegistrationKernels.h
-	include/mapFieldFieldKernelCombinator.h
-	include/mapFieldModelKernelCombinator.h
+	include/mapLazyFieldKernelCombinator.h
 	include/mapFieldRepresentationDescriptor.h
 	include/mapFileDispatch.h
-	include/mapImageByFieldPerformer.h
 	include/mapImageByModelPerformer.h
 	include/mapImageMappingPerformerBase.h
 	include/mapImageMappingPerformerLoadPolicy.h
 	include/mapImageMappingPerformerRequest.h
 	include/mapImageMappingTask.h
 	include/mapInverseRegistrationKernelGenerator.h
-	include/mapInvertingFieldBasedRegistrationKernel.h
+	include/mapInvertingRegistrationKernel.h
 	include/mapKernelCombinatorLoadPolicy.h
 	include/mapKernelInverterLoadPolicy.h
-	include/mapLazyFieldPolicy.h
+	include/mapLazyRegistrationKernel.h
+	include/mapLazyRegistrationKernelInterface.h
 	include/mapLogbook.h
 	include/mapLogbookImplementation.h
 	include/mapLogbookMacros.h
@@ -82,11 +77,8 @@ SET(H_FILES
 	include/mapMetaPropertyAccessor.h
 	include/mapMetaPropertyBase.h
 	include/mapMissingProviderException.h
-	include/mapModelBasedKernelInverter.h
-	include/mapModelBasedRegistrationKernel.h
-	include/mapModelBasedRegistrationKernelInterface.h
-	include/mapModelFieldKernelCombinator.h
-	include/mapModelModelKernelCombinator.h
+	include/mapDefaultKernelInverter.h
+	include/mapPreCachedKernelCombinator.h
 	include/mapModificationTimeValidator.h
 	include/mapNoneMappingPerformerLoadPolicy.h
 	include/mapNullRegistrationKernel.h
@@ -94,18 +86,19 @@ SET(H_FILES
 	include/mapNullRegistrationKernelInverter.h
 	include/mapObserverSentinel.h
 	include/mapPMVolume.h
-	include/mapPointSetByFieldPerformer.h
 	include/mapPointSetByModelPerformer.h
 	include/mapPointSetMappingPerformerLoadPolicy.h
 	include/mapPointSetMappingPerformerRequest.h
 	include/mapPointSetMappingTask.h
 	include/mapPointVectorCombinationPolicy.h
-	include/mapPreCachedFieldPolicy.h
+	include/mapPreCachedRegistrationKernel.h
+	include/mapPreCachedRegistrationKernelInterface.h
 	include/mapRegistration.h
 	include/mapRegistrationBase.h
 	include/mapRegistrationCombinationRequest.h
 	include/mapRegistrationCombinator.h
 	include/mapRegistrationException.h
+	include/mapRegistrationKernel.h
 	include/mapRegistrationKernelBase.h
 	include/mapRegistrationKernelCombinatorBase.h
 	include/mapRegistrationKernelInverterBase.h
@@ -142,59 +135,54 @@ SET(H_FILES
     include/mapDefaultSLStaticPolicy.h
     include/mapFastLockedThreadingStaticPolicy.h
     include/mapFastMutexLockSentinel.h
-    include/mapFieldGenerationFunctor.h
+    include/mapTransformGenerationFunctor.h
     include/mapFieldByModelFunctor.h
     include/mapFieldByModelInversionFunctor.h
     include/mapFieldByFieldInversionFunctor.h
-    include/mapFieldCombinationFunctorInterface.h
-    include/mapFieldByModelFieldCombinationFunctor.h
-    include/mapFieldByFieldModelCombinationFunctor.h
-    include/mapFieldByFieldFieldCombinationFunctor.h
-    include/mapFieldByFileLoadFunctor.h    
+    include/mapCombinationFunctorInterface.h
+    include/mapGenericFieldGeneratingCombinationFunctor.h
+    include/mapFieldByFileLoadFunctor.h
+    include/mapGenericVectorFieldTransform.h	
 )
 
 SET(TPP_FILES
 	include/mapAffineMatrixDecomposer.tpp
-	include/mapCombinedFieldBasedRegistrationKernel.tpp
-	include/mapConcreteFieldBasedRegistrationKernel.tpp
-	include/mapFieldBasedKernelInverter.tpp
-	include/mapFieldFieldKernelCombinator.tpp
-	include/mapFieldModelKernelCombinator.tpp
+	include/mapFieldDecomposer.tpp
+	include/mapCombinedRegistrationKernel.tpp
+	include/mapRegistrationKernel.tpp
+	include/mapLazyFieldKernelCombinator.tpp
 	include/mapFieldRepresentationDescriptor.tpp
-	include/mapImageByFieldPerformer.tpp
 	include/mapImageByModelPerformer.tpp
 	include/mapImageMappingPerformerBase.tpp
 	include/mapImageMappingPerformerLoadPolicy.tpp
 	include/mapImageMappingPerformerRequest.tpp
 	include/mapImageMappingTask.tpp
 	include/mapInverseRegistrationKernelGenerator.tpp
-	include/mapInvertingFieldBasedRegistrationKernel.tpp
+	include/mapInvertingRegistrationKernel.tpp
 	include/mapKernelCombinatorLoadPolicy.tpp
 	include/mapKernelInverterLoadPolicy.tpp
-	include/mapLazyFieldPolicy.tpp
+	include/mapLazyRegistrationKernel.tpp
 	include/mapMappingPerformerRequestBase.tpp
 	include/mapMappingTaskBase.tpp
 	include/mapMappingTaskBatch.tpp
 	include/mapMappingTaskBatchThread.tpp
 	include/mapMetaProperty.tpp
 	include/mapMetaPropertyAccessor.tpp
-	include/mapModelBasedKernelInverter.tpp
-	include/mapModelBasedRegistrationKernel.tpp
-	include/mapModelFieldKernelCombinator.tpp
-	include/mapModelModelKernelCombinator.tpp
+	include/mapDefaultKernelInverter.tpp
+	include/mapPreCachedKernelCombinator.tpp
 	include/mapNoneMappingPerformerLoadPolicy.tpp
 	include/mapNullRegistrationKernel.tpp
 	include/mapNullRegistrationKernelCombinator.tpp
 	include/mapNullRegistrationKernelInverter.tpp
-	include/mapPointSetByFieldPerformer.tpp
 	include/mapPointSetByModelPerformer.tpp
 	include/mapPointSetMappingPerformerLoadPolicy.tpp
 	include/mapPointSetMappingPerformerRequest.tpp
 	include/mapPointSetMappingTask.tpp
-	include/mapPreCachedFieldPolicy.tpp
+	include/mapPreCachedRegistrationKernel.tpp
 	include/mapRegistration.tpp
 	include/mapRegistrationCombinationRequest.tpp
 	include/mapRegistrationCombinator.tpp
+	include/mapRegistrationKernel.tpp
 	include/mapRegistrationKernelBase.tpp
 	include/mapRegistrationKernelCombinatorBase.tpp
 	include/mapRegistrationManipulator.tpp
@@ -206,15 +194,14 @@ SET(TPP_FILES
     include/mapGenericStaticLoadPolicyBase.tpp
     include/mapStaticServiceStack.tpp
     include/mapDefaultSLStaticPolicy.tpp	
-    include/mapFieldGenerationFunctor.tpp
+    include/mapTransformGenerationFunctor.tpp
     include/mapFieldByModelFunctor.tpp
     include/mapFieldByModelInversionFunctor.tpp
     include/mapFieldByFieldInversionFunctor.tpp
-    include/mapFieldCombinationFunctorInterface.tpp
-    include/mapFieldByModelFieldCombinationFunctor.tpp
-    include/mapFieldByFieldModelCombinationFunctor.tpp
-    include/mapFieldByFieldFieldCombinationFunctor.tpp
+    include/mapCombinationFunctorInterface.tpp
+    include/mapGenericFieldGeneratingCombinationFunctor.tpp
     include/mapFieldByFileLoadFunctor.tpp  
+    include/mapGenericVectorFieldTransform.tpp
 )
 
 SET( TEST_CPP_FILES
@@ -227,8 +214,7 @@ test/mapFieldRepresentationDescriptorTest.cpp
 test/mapExceptionObjectMacrosTest.cpp
 test/mapRegistrationBaseTest.cpp
 test/mapRegistrationTest.cpp
-test/mapModelBasedRegistrationKernelTest.cpp
-test/mapPreCachedFieldBasedRegistrationKernelTest.cpp
+test/mapPreCachedRegistrationKernelTest.cpp
 test/mapServiceStackTest.cpp
 test/mapTestServiceProvider.h
 test/mapTestLoadPolicy.h
@@ -236,36 +222,29 @@ test/mapGenericStaticLoadPolicyTest.cpp
 test/mapStaticServiceStackTest.cpp
 test/mapTestFieldGenerationFunctor.h
 test/mapFieldGenerationFunctorTest.cpp
-test/mapLazyFieldBasedRegistrationKernelTest.cpp
+test/mapLazyRegistrationKernelTest.cpp
 test/mapFieldByModelFunctorTest.cpp
 test/mapFieldByModelInversionFunctorTest.cpp
 test/mapFieldByFieldInversionFunctorTest.cpp
-test/mapFieldByModelFieldCombinationFunctorTest.cpp
+test/mapGenericFieldGeneratingCombinationFunctorTest.cpp
 test/mapFieldByFileLoadFunctorTest.cpp
 test/mapPointVectorCombinationPolicyTest.cpp
-test/mapFieldCombinationFunctorInterfaceTest.cpp
-test/mapFieldByFieldModelCombinationFunctorTest.cpp
-test/mapFieldByFieldFieldCombinationFunctorTest.cpp
-test/mapCombinedFieldBasedRegistrationKernelTest.cpp
-test/mapConcreteFieldBasedRegistrationKernelTest.cpp
-test/mapModelBasedKernelInverterTest.cpp
-test/mapFieldBasedKernelInverterTest.cpp
+test/mapCombinationFunctorInterfaceTest.cpp
+test/mapCombinedRegistrationKernelTest.cpp
+test/mapRegistrationKernelTest.cpp
+test/mapDefaultKernelInverterTest.cpp
 test/mapInverseRegistrationKernelGeneratorTest.cpp
-test/mapInvertingFieldBasedRegistrationKernelTest.cpp
+test/mapInvertingRegistrationKernelTest.cpp
 test/mapRegistrationCombinationRequestTest.cpp
 test/mapRegistrationKernelCombinatorBaseTest.cpp
-test/mapFieldFieldKernelCombinatorTest.cpp
-test/mapModelFieldKernelCombinatorTest.cpp
-test/mapFieldModelKernelCombinatorTest.cpp
-test/mapModelModelKernelCombinatorTest.cpp
+test/mapLazyFieldKernelCombinatorTest.cpp
+test/mapPreCachedKernelCombinatorTest.cpp
 test/mapRegistrationCombinatorTest.cpp
 test/mapTestKernelBase.h
 test/mapPointSetMappingPerformerRequestTest.cpp
 test/mapImageMappingPerformerRequestTest.cpp
 test/mapPointSetByModelPerformerTest.cpp
-test/mapPointSetByFieldPerformerTest.cpp
 test/mapImageByModelPerformerTest.cpp
-test/mapImageByFieldPerformerTest.cpp
 test/mapTestMappingTask.h
 test/mapMappingTaskBaseTest.cpp
 test/mapTestMappingPerformer.h

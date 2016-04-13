@@ -137,7 +137,7 @@ namespace map
 			OptimizerControlType;
 			typedef ::itk::LinearInterpolateImageFunction<TestImageType, core::continuous::ScalarType>
 			InterpolatorType;
-			typedef ::itk::TranslationTransform<::map::core::continuous::ScalarType, 2> TranformModelType;
+			typedef ::itk::TranslationTransform< ::map::core::continuous::ScalarType, 2> TranformModelType;
 
 			OptimizerControlType::Pointer spOptimizer = OptimizerControlType::New();
 			MetricControlType::Pointer spMetric = MetricControlType::New();
@@ -172,11 +172,11 @@ namespace map
 			CHECK_EQUAL(ArbitraryITKImageRegistrationAlgorithmType::AlgorithmState::Finalized,
 						spAlgorithm->getCurrentState());
 
-			const core::ModelBasedRegistrationKernel<2, 2>* pInverseKernel =
-				dynamic_cast<const core::ModelBasedRegistrationKernel<2, 2>* >(&
+			const core::RegistrationKernel<2, 2>* pInverseKernel =
+          dynamic_cast<const core::RegistrationKernel<2, 2>* >(&
 						(spRegistration->getInverseMapping()));
-			::map::core::ModelBasedRegistrationKernel<2, 2>::ParametersType parameters =
-				pInverseKernel->getParameters();
+      ::map::core::RegistrationKernel<2, 2>::TransformType::ParametersType parameters =
+				pInverseKernel->getTransformModel()->GetParameters();
 
 			CHECK_CLOSE(13.0, parameters[0], 0.01);
 			CHECK_CLOSE(17.0, parameters[1], 0.01);

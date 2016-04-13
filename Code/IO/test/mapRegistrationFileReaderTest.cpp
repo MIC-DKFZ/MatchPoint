@@ -28,14 +28,11 @@
 #include "litTextFileTester.h"
 
 #include "mapMatrixModelBasedKernelLoader.h"
-#include "mapModelBasedRegistrationKernel.h"
 #include "mapRegistrationFileReader.h"
-#include "test/mapTestKernelBase.h"
-#include "mapNullRegistrationKernel.h"
 #include "mapNullRegistrationKernelLoader.h"
 #include "mapFieldKernelLoader.h"
 #include "mapLazyFileFieldKernelLoader.h"
-#include "mapInvertingFieldKernelLoader.h"
+#include "mapInvertingKernelLoader.h"
 
 namespace map
 {
@@ -59,7 +56,8 @@ namespace map
 			std::string refRegFile2 = refPath + "/registrationFileWriterReader_Ref2.mapr";
 			std::string refRegFile3 = refPath + "/registrationFileWriterReader_Ref3.mapr";
 			std::string refRegFile4 = refPath + "/registrationFileWriterReader_Ref4.mapr";
-			std::string refRegFile5 = refPath + "/registrationFileWriterReader_Ref5.mapr";
+      std::string refRegFile4_legacy = refPath + "/registrationFileWriterReader_Ref4_legacy.mapr";
+      std::string refRegFile5 = refPath + "/registrationFileWriterReader_Ref5.mapr";
 			std::string refRegFile6 = refPath + "/registrationFileWriterReader_Ref6.mapr";
 
 			// create the generator
@@ -92,9 +90,9 @@ namespace map
 			CHECK(NULL != LoaderStackType::getProvider(
 					  io::LazyFileFieldKernelLoader<3, 3>::getStaticProviderName()));
 			CHECK(NULL != LoaderStackType::getProvider(
-					  io::InvertingFieldKernelLoader<2, 2>::getStaticProviderName()));
+					  io::InvertingKernelLoader<2, 2>::getStaticProviderName()));
 			CHECK(NULL != LoaderStackType::getProvider(
-					  io::InvertingFieldKernelLoader<3, 3>::getStaticProviderName()));
+					  io::InvertingKernelLoader<3, 3>::getStaticProviderName()));
 
 			// create a ModelBasedKernels for testing
 
@@ -111,6 +109,9 @@ namespace map
 
 			CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile4));
 			CHECK_EQUAL("RegistrationFileWriterTest.reg4", spRegistrationBase->getRegistrationUID());
+
+      CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile4_legacy));
+      CHECK_EQUAL("RegistrationFileWriterTest.reg4", spRegistrationBase->getRegistrationUID());
 
 			CHECK_NO_THROW(spRegistrationBase = spReader->read(refRegFile5));
 			CHECK_EQUAL("RegistrationFileReaderTest.invertingKernel1",

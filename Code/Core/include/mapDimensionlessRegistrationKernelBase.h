@@ -28,6 +28,7 @@
 
 #include "itkObject.h"
 #include "mapMAPCoreExports.h"
+#include "mapString.h"
 
 namespace map
 {

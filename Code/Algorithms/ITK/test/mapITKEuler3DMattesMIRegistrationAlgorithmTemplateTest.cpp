@@ -125,11 +125,11 @@ namespace map
 			RegistrationAlgorithmType::RegistrationPointer spRegistration;
 			CHECK_NO_THROW(spRegistration = spAlgorithm->getRegistration());
 
-			const core::ModelBasedRegistrationKernel<3, 3>* pInverseKernel =
-				dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&
+			const core::RegistrationKernel<3, 3>* pInverseKernel =
+          dynamic_cast<const core::RegistrationKernel<3, 3>* >(&
 						(spRegistration->getInverseMapping()));
-			::map::core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
-				pInverseKernel->getParameters();
+      ::map::core::RegistrationKernel<3, 3>::TransformType::ParametersType parameters =
+				pInverseKernel->getTransformModel()->GetParameters();
 
 			CHECK_CLOSE(0.0, parameters[0], 0.05);
 			CHECK_CLOSE(0.0, parameters[1], 0.05);

@@ -25,10 +25,8 @@
 #define __MAP_KERNEL_COMBINATOR_LOAD_POLICY_TPP
 
 #include "mapKernelCombinatorLoadPolicy.h"
-#include "mapModelModelKernelCombinator.h"
-#include "mapFieldModelKernelCombinator.h"
-#include "mapModelFieldKernelCombinator.h"
-#include "mapFieldFieldKernelCombinator.h"
+#include "mapPreCachedKernelCombinator.h"
+#include "mapLazyFieldKernelCombinator.h"
 #include "mapNullRegistrationKernelCombinator.h"
 #include "mapServiceRepositoryPolicyLoadInterface.h"
 
@@ -42,21 +40,15 @@ namespace map
 		KernelCombinatorLoadPolicy<TProviderBase>::
 		doLoading()
 		{
-			typedef ModelModelKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
-			ModelModelCombinatorType;
-			typedef FieldModelKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
-			FieldModelCombinatorType;
-			typedef ModelFieldKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
-			ModelFieldCombinatorType;
-			typedef FieldFieldKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
-			FieldFieldCombinatorType;
+        typedef PreCachedKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
+            PreCachedKernelCombinatorType;
+      typedef LazyFieldKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
+          LazyFieldKernelCombinatorType;
 			typedef NullRegistrationKernelCombinator<TProviderBase::InputDimensions, TProviderBase::InterimDimensions, TProviderBase::OutputDimensions>
 			NullRegistrationKernelCombinatorType;
 
-			typename ModelModelCombinatorType::Pointer spModelModelCombinator = ModelModelCombinatorType::New();
-			typename FieldModelCombinatorType::Pointer spFieldModelCombinator = FieldModelCombinatorType::New();
-			typename ModelFieldCombinatorType::Pointer spModelFieldCombinator = ModelFieldCombinatorType::New();
-			typename FieldFieldCombinatorType::Pointer spFieldFieldCombinator = FieldFieldCombinatorType::New();
+      typename PreCachedKernelCombinatorType::Pointer spPreCachedCombinator = PreCachedKernelCombinatorType::New();
+      typename LazyFieldKernelCombinatorType::Pointer spLazyFieldCombinator = LazyFieldKernelCombinatorType::New();
 			typename NullRegistrationKernelCombinatorType::Pointer spNullCombinator =
 				NullRegistrationKernelCombinatorType::New();
 
@@ -67,24 +59,14 @@ namespace map
 				mapLogWarningObjMacro("NullRegistationKernelCombinator was not added because it was already on the service stack!");
 			}
 
-			if (!loader.addProviderByPolicy(spModelModelCombinator))
+      if (!loader.addProviderByPolicy(spLazyFieldCombinator))
 			{
 				mapLogWarningObjMacro("ModelModelKernelCombinator was not added because it was already on the service stack!");
 			}
 
-			if (!loader.addProviderByPolicy(spFieldModelCombinator))
+      if (!loader.addProviderByPolicy(spPreCachedCombinator))
 			{
 				mapLogWarningObjMacro("FieldModelKernelCombinator was not added because it was already on the service stack!");
-			}
-
-			if (!loader.addProviderByPolicy(spModelFieldCombinator))
-			{
-				mapLogWarningObjMacro("ModelFieldKernelCombinator was not added because it was already on the service stack!");
-			}
-
-			if (!loader.addProviderByPolicy(spFieldFieldCombinator))
-			{
-				mapLogWarningObjMacro("FieldFieldKernelCombinator was not added because it was already on the service stack!");
 			}
 		}
 

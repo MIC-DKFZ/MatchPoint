@@ -26,7 +26,7 @@
 
 #include "mapMappingPerformerBase.h"
 #include "mapPointSetMappingPerformerRequest.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapRegistrationKernel.h"
 
 namespace map
 {
@@ -101,7 +101,7 @@ namespace map
 
 		protected:
 			typedef typename RegistrationType::DirectMappingType DirectKernelBaseType;
-			typedef ModelBasedRegistrationKernel<DirectKernelBaseType::InputDimensions, DirectKernelBaseType::OutputDimensions>
+			typedef RegistrationKernel<DirectKernelBaseType::InputDimensions, DirectKernelBaseType::OutputDimensions>
 			ModelKernelType;
 
 			PointSetByModelPerformer();

@@ -33,7 +33,7 @@ namespace map
 		/*! @class NullRegistrationKernelLoader
 		* @brief Provider that is able to load NullRegistrationKernels.
 		*
-		* @sa ModelBasedRegistrationKernel
+		* @sa PreCachedRegistrationKernel
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the kernel that should be inverted.
 		* @tparam VOutputDimensions Dimensions of the output space of the kernel that should be inverted.

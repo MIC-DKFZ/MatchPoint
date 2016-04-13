@@ -24,7 +24,7 @@
 #define __MAP_MATRIX_MODEL_BASED_KERNEL_LOADER_H
 
 #include "mapRegistrationKernelLoaderBase.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapRegistrationKernelBase.h"
 
 namespace map
 {
@@ -33,7 +33,10 @@ namespace map
 		/*! @class MatrixModelBasedKernelLoader
 		* @brief Provider that is able to load MatrixModelBasedKernels.
 		*
-		* @sa ModelBasedRegistrationKernel
+    * @remark The loader is kept for backwards compatibility. We do not have the MatrixModelBasedKernel
+    * any more. It is now covered by the PreCachedRegistrationKernel. But the loader/writer are usefull
+    * if the transform is matrix based in order to store it directly in the matchpoint xml file.
+		* @sa PreCachedRegistrationKernel
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the kernel that should be inverted.
 		*/
@@ -53,7 +56,6 @@ namespace map
 			typedef core::RegistrationKernelBase<VInputDimensions, VInputDimensions>	KernelBaseType;
 			typedef typename KernelBaseType::Pointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
-			typedef core::ModelBasedRegistrationKernel<VInputDimensions, VInputDimensions> KernelType;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request. Thus if the kernel is model based and a matrix

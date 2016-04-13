@@ -26,7 +26,7 @@
 #ifndef __AFFINE_MATRIX_DECOMPOSER_H
 #define __AFFINE_MATRIX_DECOMPOSER_H
 
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapRegistrationKernelBase.h"
 
 namespace map
 {
@@ -39,8 +39,7 @@ namespace map
 		public:
 
 			typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions> KernelType;
-			typedef ModelBasedRegistrationKernel<VInputDimensions, VOutputDimensions> ModelKernelType;
-			typedef typename ModelKernelType::TransformType TransformType;
+      typedef typename KernelType::TransformType TransformType;
 			typedef typename TransformType::MatrixType MatrixType;
 			typedef typename TransformType::OutputVectorType OffsetType;
 

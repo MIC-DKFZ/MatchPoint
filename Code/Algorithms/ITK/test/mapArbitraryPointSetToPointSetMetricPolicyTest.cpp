@@ -87,20 +87,20 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			TestPolicy<::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			TestPolicy< ::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
 			policy;
-			const TestPolicy<::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			const TestPolicy< ::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
 			& constPolicy = policy;
 
-			typedef algorithm::itk::ITKMetricControl< ::itk::EuclideanDistancePointMetric<::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType> >
+			typedef algorithm::itk::ITKMetricControl< ::itk::EuclideanDistancePointMetric< ::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType> >
 			MetricType;
 
 			MetricType::Pointer spMetricControl1 = MetricType::New();
 			MetricType::Pointer spMetricControl2 = MetricType::New();
 
-			::map::algorithm::itk::ITKPointSetToPointSetMetricControlInterface<::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			::map::algorithm::itk::ITKPointSetToPointSetMetricControlInterface< ::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
 			* pMetricControl = NULL;
-			const algorithm::itk::ITKPointSetToPointSetMetricControlInterface<::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
+			const algorithm::itk::ITKPointSetToPointSetMetricControlInterface< ::map::core::continuous::Elements<3>::InternalPointSetType, core::continuous::Elements<3>::InternalPointSetType>
 			* pConstMetricControl = NULL;
 
 			CHECK_NO_THROW(pMetricControl = policy.getMetricInternal());

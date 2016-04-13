@@ -52,6 +52,7 @@ namespace map
 
 			typedef KernelBaseType RequestType;
 
+      typedef typename InverseKernelBaseType::OutputPointType NullPointType;
 
 			/*! Standard class typedefs. */
 			typedef RegistrationKernelInverterBase<VInputDimensions, VOutputDimensions>  Self;
@@ -81,10 +82,13 @@ namespace map
 				 */
 			virtual InverseKernelBasePointer invertKernel(const KernelBaseType& kernel,
 					const FieldRepresentationType* pFieldRepresentation,
-					const InverseFieldRepresentationType* pInverseFieldRepresentation) const = 0;
+          const InverseFieldRepresentationType* pInverseFieldRepresentation, bool useNullPoint = false, NullPointType nullPoint = NullPointType(itk::NumericTraits<map::core::continuous::ScalarType>::NonpositiveMin())) const = 0;
 
 		protected:
-			RegistrationKernelInverterBase() {};
+        RegistrationKernelInverterBase()
+      {
+      };
+
 			virtual ~RegistrationKernelInverterBase() {};
 
 		private:

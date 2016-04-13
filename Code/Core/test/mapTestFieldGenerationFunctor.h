@@ -23,7 +23,8 @@
 #ifndef __MAP_TEST_FIELD_GENERATION_FUNCTOR_H
 #define __MAP_TEST_FIELD_GENERATION_FUNCTOR_H
 
-#include "mapFieldGenerationFunctor.h"
+#include "mapTransformGenerationFunctor.h"
+#include "mapArtifactGenerator.h"
 
 #include "itkImageRegionIterator.h"
 
@@ -33,17 +34,17 @@ namespace map
 	{
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		class TestFieldGenerationFunctor : public
-			map::core::functors::FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
+			map::core::functors::TransformGenerationFunctor<VInputDimensions, VOutputDimensions>
 		{
 		public:
 			/*! Standard class typedefs. */
 			typedef TestFieldGenerationFunctor<VInputDimensions, VOutputDimensions>  Self;
-			typedef map::core::functors::FieldGenerationFunctor<VInputDimensions, VOutputDimensions> Superclass;
+      typedef map::core::functors::TransformGenerationFunctor<VInputDimensions, VOutputDimensions> Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 			typedef typename Superclass::InFieldRepresentationType InFieldRepresentationType;
-			typedef typename Superclass::FieldType FieldType;
-			typedef typename Superclass::FieldPointer FieldPointer;
+      typedef typename Superclass::TransformType TransformType;
+      typedef typename Superclass::TransformPointer TransformPointer;
 
 			itkTypeMacro(TestFieldGenerationFunctor, FieldGenerationFunctor);
 
@@ -54,42 +55,18 @@ namespace map
 				return smartPtr;
 			}
 
-			virtual FieldPointer generateField() const
+      virtual TransformPointer generateTransform() const
 			{
-				FieldPointer spFieldPointer = doGenerateField();
-				_spCurrentFieldPointer = spFieldPointer;
-				return spFieldPointer;
+          typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions>::Pointer transform = wrapFieldInTransform<VOutputDimensions>(testing::generateSumField<VOutputDimensions>(Superclass::_spInFieldRepresentation));
+          transform->SetUseNullPoint(this->_useNullPoint);
+
+          _spCurrentTransform = transform;
+          return _spCurrentTransform;
 			}
 
-			mutable FieldPointer _spCurrentFieldPointer;
+      mutable TransformPointer _spCurrentTransform;
 
 		protected:
-
-			FieldPointer doGenerateField() const
-			{
-				FieldPointer spField = FieldType::New();
-
-				typedef itk::ImageRegionIterator< FieldType > IteratorType;
-				typename InFieldRepresentationType::ImageRegionType region =
-					Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
-
-				spField->SetRegions(region);
-				spField->SetSpacing(Superclass::_spInFieldRepresentation->getSpacing());
-				spField->Allocate();
-
-				IteratorType iterator(spField, spField->GetLargestPossibleRegion());
-
-				for (iterator.GoToBegin(); !(iterator.IsAtEnd()); ++iterator)
-				{
-					typename FieldType::IndexType index = iterator.GetIndex();
-					typename FieldType::ValueType value;
-					value.Fill(index[0] + index[1]);
-
-					iterator.Set(value);
-				}
-
-				return spField;
-			}
 
 			TestFieldGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation):
 				Superclass(pInFieldRepresentation)

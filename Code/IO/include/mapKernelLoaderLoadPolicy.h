@@ -38,8 +38,8 @@ namespace map
 		* It loads the following providers:
 		* - MatrixModelBasedKernelLoader<2,2>
 		* - MatrixModelBasedKernelLoader<3,3>
-		* - InvertingFieldKernelLoader<2,2>
-		* - InvertingFieldKernelLoader<3,3>
+		* - InvertingKernelLoader<2,2>
+		* - InvertingKernelLoader<3,3>
 		* - LazyFileFieldKernelLoader<2,2>
 		* - LazyFileFieldKernelLoader<3,3>
 		* - FieldKernelLoader<2,2>

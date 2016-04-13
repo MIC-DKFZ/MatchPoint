@@ -83,7 +83,7 @@ namespace map
 			else
 			{
 				spDirectKernel = pDirectLoader->loadKernel(directRequest);
-				inverseRequest._spComplementaryKernel = dynamic_cast<::map::core::DimensionlessRegistrationKernelBase*>
+				inverseRequest._spComplementaryKernel = dynamic_cast< ::map::core::DimensionlessRegistrationKernelBase*>
 														(spDirectKernel.GetPointer());
 			}
 
@@ -103,7 +103,7 @@ namespace map
 			if (spDirectKernel.IsNull())
 			{
 				//retry direct kernel loading with additional complimentary kernel information
-				directRequest._spComplementaryKernel = dynamic_cast<::map::core::DimensionlessRegistrationKernelBase*>
+				directRequest._spComplementaryKernel = dynamic_cast< ::map::core::DimensionlessRegistrationKernelBase*>
 													   (spInverseKernel.GetPointer());
 				pDirectLoader = LoaderStackType::getProvider(directRequest);
 

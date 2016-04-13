@@ -25,7 +25,7 @@
 #define __ITK_LANDMARK_KERNEL_REGISTRATION_ALGORITHM_TPP
 
 #include "mapAlgorithmException.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
@@ -178,7 +178,7 @@ namespace map
 
 
 				//now build the inverse kernel (main kernel of a closed form based registration algorithm using itk::LandmarkInitializer)
-				typedef core::ModelBasedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>
+				typedef core::PreCachedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>
 				InverseKernelType;
 
 				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();

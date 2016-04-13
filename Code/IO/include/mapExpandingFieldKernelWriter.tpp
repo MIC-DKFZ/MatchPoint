@@ -26,10 +26,13 @@
 #include "mapExpandingFieldKernelWriter.h"
 #include "mapServiceException.h"
 #include "mapRegistrationFileTags.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapLazyRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapConvert.h"
 #include "mapLogbook.h"
 #include "mapFileDispatch.h"
+#include "mapFieldByModelFunctor.h"
+#include "mapFieldDecomposer.h"
 
 #include "itkImageFileWriter.h"
 
@@ -46,11 +49,9 @@ namespace map
       // if the kernel "request" is a field-based kernel, then we can maybe handle it.
 
       typedef typename
-      core::FieldKernels<VInputDimensions, VOutputDimensions>::PreCachedFieldBasedRegistrationKernel
-      CachedKernelType;
+      core::PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions> CachedKernelType;
       typedef typename
-      core::FieldKernels<VInputDimensions, VOutputDimensions>::LazyFieldBasedRegistrationKernel
-      LazyKernelType;
+      core::LazyRegistrationKernel<VInputDimensions, VOutputDimensions> LazyKernelType;
 
       const CachedKernelType* pCachedKernel = dynamic_cast<const CachedKernelType*>
                                               (request._spKernel.GetPointer());
@@ -123,12 +124,12 @@ namespace map
                           request._spKernel.GetPointer());
       }
 
-      const typename KernelType::FieldType::ConstPointer spField = pKernel->getField();
+      const typename KernelType::TransformType::ConstPointer spTransform = pKernel->getTransformModel();
 
-      if (spField.IsNull())
+      if (spTransform.IsNull())
       {
         mapExceptionMacro(::map::core::ServiceException,
-                          << "Error: cannot store kernel. Reason: Kernel seems to have no valid field. Kernel: " << pKernel);
+                          << "Error: cannot store kernel. Reason: Kernel seems to have no valid transform model. Kernel: " << pKernel);
       }
 
       structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
@@ -156,10 +157,20 @@ namespace map
         core::Logbook::warning("No request name specified. Field will be stored to unspecified file '_field.nrrd'.");
       }
 
+      typedef typename ::map::core::RegistrationTopology < VInputDimensions, VOutputDimensions >::DirectFieldType FieldType;
+
+      typename FieldType::ConstPointer spField;
+
+      //check if the transformation alread containes the vectorfield
+      if (!::map::core::FieldDecomposer<VInputDimensions, VOutputDimensions>::decomposeTransform(spTransform, spField))
+      { //no direct field -> generate out of transform
+          spField = ::map::core::generateFieldFromTransform<VInputDimensions, VOutputDimensions>(spTransform, pKernel->getLargestPossibleRepresentation());
+      }
+
       core::String fieldPath =  request._name + "_field.nrrd";
       core::String absoluteFieldPath = core::FileDispatch::createFullPath(request._path, fieldPath);
 
-      typedef ::itk::ImageFileWriter< typename KernelType::FieldType  > FieldWriterType;
+      typedef ::itk::ImageFileWriter< FieldType  > FieldWriterType;
       typename FieldWriterType::Pointer  spFieldWriter  = FieldWriterType::New();
 
       spFieldWriter->SetFileName(absoluteFieldPath.c_str());
@@ -174,20 +185,20 @@ namespace map
 
       spKernelElement->addSubElement(spFieldPathElement);
 
-      //add null vector
-      structuredData::Element::Pointer spUseNullVectorElement = structuredData::Element::New();
-      spUseNullVectorElement->setTag(tags::UseNullVector);
-      spUseNullVectorElement->setValue(::map::core::convert::toStr(pKernel->usesNullVector()));
-      spKernelElement->addSubElement(spUseNullVectorElement);
+      //add null point
+      structuredData::Element::Pointer spUseNullPointElement = structuredData::Element::New();
+      spUseNullPointElement->setTag(tags::UseNullPoint);
+      spUseNullPointElement->setValue(::map::core::convert::toStr(pKernel->usesNullPoint()));
+      spKernelElement->addSubElement(spUseNullPointElement);
 
-      if (pKernel->usesNullVector())
+      if (pKernel->usesNullPoint())
       {
-        typename KernelType::MappingVectorType nullVector = pKernel->getNullVector();
-        structuredData::Element::Pointer spNullVectorElement = structuredData::streamITKFixedArrayToSD(
-              nullVector);
-        spNullVectorElement->setTag(tags::NullVector);
+          typename KernelType::OutputPointType nullPoint = pKernel->getNullPoint();
+        structuredData::Element::Pointer spNullPointElement = structuredData::streamITKFixedArrayToSD(
+              nullPoint);
+        spNullPointElement->setTag(tags::NullPoint);
 
-        spKernelElement->addSubElement(spNullVectorElement);
+        spKernelElement->addSubElement(spNullPointElement);
       }
 
       return spKernelElement;

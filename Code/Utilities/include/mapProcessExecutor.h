@@ -79,7 +79,7 @@ namespace map
 			mapSetMacro(SharedOutputPipes, bool);
 			mapGetConstMacro(SharedOutputPipes, bool);
 
-			typedef std::vector<::map::core::String> ArgumentListType;
+			typedef std::vector< ::map::core::String> ArgumentListType;
 
 			bool execute(const core::String& executionPath, const core::String& executableName,
 						 ArgumentListType argumentList);

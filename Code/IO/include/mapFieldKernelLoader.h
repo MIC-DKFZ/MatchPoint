@@ -24,7 +24,7 @@
 #define __MAP_FIELD_KERNEL_LOADER_H
 
 #include "mapFieldKernelLoaderBase.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 
 namespace map
 {
@@ -51,7 +51,7 @@ namespace map
 			itkTypeMacro(FieldKernelLoader, FieldKernelLoaderBase);
 			itkNewMacro(Self);
 
-			typedef  core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
+			typedef  core::RegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
 			typedef typename KernelBaseType::Pointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
             typedef typename Superclass::GenericKernelType       GenericKernelType;

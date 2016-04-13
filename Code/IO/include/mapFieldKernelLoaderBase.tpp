@@ -107,46 +107,70 @@ namespace map
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
 		FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>::
-		hasNullVector(const RequestType& request, typename KernelBaseType::MappingVectorType& nullVector) const
+		hasNullPoint(const RequestType& request, typename KernelBaseType::OutputPointType& nullPoint) const
 		{
 			//determin null vector (support)
-			bool usesNullVector = false;
+			bool usesNullPoint = false;
+
 			structuredData::Element::ConstSubElementIteratorType usesNullPos =
 				structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(),
-												   request._spKernelDescriptor->getSubElementEnd(), tags::UseNullVector);
+												   request._spKernelDescriptor->getSubElementEnd(), tags::UseNullPoint);
 
-			if (usesNullPos != request._spKernelDescriptor->getSubElementEnd())
+      structuredData::Element::ConstSubElementIteratorType usesNullPos_legacy =
+          structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(),
+          request._spKernelDescriptor->getSubElementEnd(), tags::UseNullVector);
+
+      if (usesNullPos != request._spKernelDescriptor->getSubElementEnd())
 			{
-				usesNullVector = core::convert::toBool((*usesNullPos)->getValue());
+				usesNullPoint = core::convert::toBool((*usesNullPos)->getValue());
 			}
+      else if ((usesNullPos_legacy != request._spKernelDescriptor->getSubElementEnd()))
+      { 
+          usesNullPoint = core::convert::toBool((*usesNullPos_legacy)->getValue());
+      }
 			else
 			{
 				mapExceptionMacro(::map::core::ServiceException,
 								  << "Error. Cannot load kernel. Field kernel description as no null vector usage information.")
 			}
 
-			typename KernelBaseType::MappingVectorType newNullVector;
-			newNullVector.Fill(0);
+      typename KernelBaseType::OutputPointType newNullPoint;
+			newNullPoint.Fill(0);
 
-			structuredData::Element::ConstSubElementIteratorType nullVecPos =
+			structuredData::Element::ConstSubElementIteratorType nullPointPos =
 				structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(),
-												   request._spKernelDescriptor->getSubElementEnd(), tags::NullVector);
+												   request._spKernelDescriptor->getSubElementEnd(), tags::NullPoint);
+      structuredData::Element::ConstSubElementIteratorType nullVecPos_legacy =
+          structuredData::findNextSubElement(request._spKernelDescriptor->getSubElementBegin(),
+          request._spKernelDescriptor->getSubElementEnd(), tags::NullVector);
 
-			if (nullVecPos != request._spKernelDescriptor->getSubElementEnd())
+      if (nullPointPos != request._spKernelDescriptor->getSubElementEnd())
 			{
 				try
 				{
-					newNullVector = structuredData::streamSDToITKFixedArray<typename KernelBaseType::MappingVectorType>
-								 (*nullVecPos);
+            newNullPoint = structuredData::streamSDToITKFixedArray<typename KernelBaseType::OutputPointType>
+              (*nullPointPos);
 				}
 				catch (::map::core::ExceptionObject& ex)
 				{
 					mapExceptionMacro(::map::core::ServiceException, << ex.GetDescription());
 				}
 			}
+      else if (nullVecPos_legacy != request._spKernelDescriptor->getSubElementEnd())
+      {
+          try
+          {
+              newNullPoint = structuredData::streamSDToITKFixedArray<typename KernelBaseType::OutputPointType>
+                  (*nullVecPos_legacy);
+          }
+          catch (::map::core::ExceptionObject& ex)
+          {
+              mapExceptionMacro(::map::core::ServiceException, << ex.GetDescription());
+          }
+      }
 
-			nullVector = newNullVector;
-			return usesNullVector;
+			nullPoint = newNullPoint;
+			return usesNullPoint;
 		}		
 		
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

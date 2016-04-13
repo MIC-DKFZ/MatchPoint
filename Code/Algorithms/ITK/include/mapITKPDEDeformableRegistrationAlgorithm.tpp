@@ -27,8 +27,7 @@
 #include <itkHistogramMatchingImageFilter.h>
 
 #include "mapAlgorithmException.h"
-#include "mapFieldBasedRegistrationKernels.h"
-#include "mapInverseRegistrationKernelGenerator.h"
+
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
 #include "mapMetaProperty.h"

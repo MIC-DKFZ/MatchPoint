@@ -27,7 +27,8 @@
 #include "mapFieldByFileLoadFunctor.h"
 #include "litCheckMacros.h"
 #include "litFieldTester.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapLazyRegistrationKernel.h"
+#include "mapFieldDecomposer.h"
 
 #include "itkImageRegionIterator.h"
 #include "itkImageFileReader.h"
@@ -74,16 +75,20 @@ namespace map
 			CHECK(spFieldFuncAnother->GetNameOfClass() == spFieldFunc->GetNameOfClass());
 			CHECK(spFieldFuncAnother->getFieldFilePath() == spFieldFunc->getFieldFilePath());
 
-			// test generateField
-			FieldFunctorType::FieldPointer spGeneratedField = NULL;
-			CHECK_NO_THROW(spGeneratedField = spFieldFunc->generateField());
-			CHECK(spGeneratedField.IsNotNull());
+			// test generateTransform
+			FieldFunctorType::FieldType::Pointer spGeneratedField = NULL;
+      FieldFunctorType::TransformPointer spGeneratedFieldTransform = NULL;
+      CHECK_NO_THROW(spGeneratedFieldTransform = spFieldFunc->generateTransform());
+      ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spGeneratedFieldTransform, spGeneratedField);
+      CHECK(spGeneratedField.IsNotNull());
 
 			typedef ::itk::ImageFileReader<FieldFunctorType::FieldType> ReaderType;
 			ReaderType::Pointer spReader = ReaderType::New();
 			spReader->SetFileName(filePath);
-			FieldFunctorType::FieldPointer spRefField = spReader->GetOutput();
+			FieldFunctorType::FieldType::Pointer spRefField = spReader->GetOutput();
 			spReader->Update();
+
+      //test the fields
 
 			lit::FieldTester<FieldFunctorType::FieldType> tester;
 			tester.setExpectedField(spRefField);
@@ -94,7 +99,7 @@ namespace map
 
 			//test invalid path
 			FieldFunctorType::Pointer spInvalidFieldFunc = FieldFunctorType::New("lalalal", NULL);
-			CHECK_THROW_EXPLICIT(spGeneratedField = spInvalidFieldFunc->generateField(),
+      CHECK_THROW_EXPLICIT(spGeneratedFieldTransform = spInvalidFieldFunc->generateTransform(),
 								 ::itk::ExceptionObject);
 
 

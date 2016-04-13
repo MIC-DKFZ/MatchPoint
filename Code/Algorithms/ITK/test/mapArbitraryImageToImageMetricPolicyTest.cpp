@@ -86,20 +86,20 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			TestPolicy<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			TestPolicy< ::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
 			policy;
-			const TestPolicy<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			const TestPolicy< ::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
 			& constPolicy = policy;
 
-			typedef algorithm::itk::ITKMetricControl< ::itk::MeanSquaresImageToImageMetric<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> >
+			typedef algorithm::itk::ITKMetricControl< ::itk::MeanSquaresImageToImageMetric< ::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType> >
 			MetricType;
 
 			MetricType::Pointer spMetricControl1 = MetricType::New();
 			MetricType::Pointer spMetricControl2 = MetricType::New();
 
-			::map::algorithm::itk::ITKImageToImageMetricControlInterface<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			::map::algorithm::itk::ITKImageToImageMetricControlInterface< ::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
 			* pMetricControl = NULL;
-			const algorithm::itk::ITKImageToImageMetricControlInterface<::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
+			const algorithm::itk::ITKImageToImageMetricControlInterface< ::map::core::discrete::Elements<3>::InternalImageType, core::discrete::Elements<3>::InternalImageType>
 			* pConstMetricControl = NULL;
 
 			CHECK_NO_THROW(pMetricControl = policy.getMetricInternal());

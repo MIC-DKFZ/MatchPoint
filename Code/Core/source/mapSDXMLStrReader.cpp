@@ -91,8 +91,8 @@ namespace map
 				return "XMLStrReaderImpl";
 			};
 
-			typedef std::pair<::map::core::String, core::String> AttributeType;
-			typedef std::map<::map::core::String, core::String> AttributesType;
+			typedef std::pair< ::map::core::String, core::String> AttributeType;
+			typedef std::map< ::map::core::String, core::String> AttributesType;
 			//uses vector for saving, to avoid automatic sort feature of stl::map
 			typedef std::vector<AttributeType> AttributesSaveListType;
 

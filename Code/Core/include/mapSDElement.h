@@ -64,10 +64,10 @@ namespace map
 
 		protected:
 			typedef std::vector<Pointer> SubElementVectorType;
-			typedef std::map<::map::core::String, core::String> AttributeMapType;
+			typedef std::map< ::map::core::String, core::String> AttributeMapType;
 
 		public:
-			typedef std::vector<::map::core::String> AttributeNameVectorType;
+			typedef std::vector< ::map::core::String> AttributeNameVectorType;
 			typedef SubElementVectorType::iterator SubElementIteratorType;
 			typedef SubElementVectorType::const_iterator ConstSubElementIteratorType;
 			typedef SubElementVectorType::size_type SubElementIndexType;

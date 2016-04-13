@@ -89,16 +89,16 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			TestPolicy<::map::core::continuous::ScalarType, 3, 3> policy;
-			const TestPolicy<::map::core::continuous::ScalarType, 3, 3>& constPolicy = policy;
+			TestPolicy< ::map::core::continuous::ScalarType, 3, 3> policy;
+			const TestPolicy< ::map::core::continuous::ScalarType, 3, 3>& constPolicy = policy;
 
-			typedef ::itk::ScaleTransform<::map::core::continuous::ScalarType, 3> ModelType;
+			typedef ::itk::ScaleTransform< ::map::core::continuous::ScalarType, 3> ModelType;
 
 			ModelType::Pointer spModel1 = ModelType::New();
 			ModelType::Pointer spModel2 = ModelType::New();
 
-			itk::Transform<::map::core::continuous::ScalarType, 3, 3>* pModel = NULL;
-			const itk::Transform<::map::core::continuous::ScalarType, 3, 3>* pConstModel = NULL;
+			itk::Transform< ::map::core::continuous::ScalarType, 3, 3>* pModel = NULL;
+			const itk::Transform< ::map::core::continuous::ScalarType, 3, 3>* pConstModel = NULL;
 
 			CHECK_NO_THROW(pModel = policy.getTransformInternal());
 			CHECK_NO_THROW(pConstModel = constPolicy.getTransformInternal());

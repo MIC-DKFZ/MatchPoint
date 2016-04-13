@@ -40,7 +40,7 @@ namespace map
 		mapGenerateAlgorithmUIDPolicyMacro(TestFSL3DRegistrationUIDPolicy, "de.dkfz.matchpoint.test",
 										   "FSL.3D.default", "1.0.0", "");
 
-		typedef std::map<::map::core::String, core::String> ArgumentMapType;
+		typedef std::map< ::map::core::String, core::String> ArgumentMapType;
 
 		ArgumentMapType getLoggedArguments()
 		{
@@ -53,7 +53,7 @@ namespace map
 			}
 
 			::map::core::String item;
-			std::vector<::map::core::String> list;
+			std::vector< ::map::core::String> list;
 
 			while (std::getline(logFile, item))
 			{
@@ -62,7 +62,7 @@ namespace map
 
 			ArgumentMapType result;
 
-			for (std::vector<::map::core::String>::const_iterator pos = list.begin(); pos != list.end(); ++pos)
+			for (std::vector< ::map::core::String>::const_iterator pos = list.begin(); pos != list.end(); ++pos)
 			{
 				if (pos->find("-") == 0)
 				{
@@ -161,11 +161,11 @@ namespace map
 			CHECK_EQUAL(FSL3DRegistrationAlgorithmType::AlgorithmState::Finalized,
 						spAlgorithm->getCurrentState());
 
-			const core::ModelBasedRegistrationKernel<3, 3>* pInverseKernel =
-				dynamic_cast<const core::ModelBasedRegistrationKernel<3, 3>* >(&
+			const core::RegistrationKernel<3, 3>* pInverseKernel =
+          dynamic_cast<const core::RegistrationKernel<3, 3>* >(&
 						(spRegistration->getInverseMapping()));
-			::map::core::ModelBasedRegistrationKernel<3, 3>::ParametersType parameters =
-				pInverseKernel->getParameters();
+      ::map::core::RegistrationKernel<3, 3>::TransformType::ParametersType parameters =
+				pInverseKernel->getTransformModel()->GetParameters();
 
 			CHECK_CLOSE(1.0574, parameters[0], 0.0001);
 			CHECK_CLOSE(0.0110152, parameters[1], 0.0001);

@@ -78,7 +78,9 @@ namespace map
 		NullRegistrationKernelInverter<VInputDimensions, VOutputDimensions>::
 		invertKernel(const KernelBaseType& kernel,
 					 const FieldRepresentationType* pFieldRepresentation,
-					 const InverseFieldRepresentationType* pInverseFieldRepresentation) const
+           const InverseFieldRepresentationType* pInverseFieldRepresentation,
+           bool useNullPoint,
+           NullPointType nullPoint) const
 		{
 			const KernelType* pKernel = dynamic_cast<const KernelType*>(&kernel);
 

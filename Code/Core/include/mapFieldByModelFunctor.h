@@ -25,106 +25,134 @@
 
 #include <itkTransform.h>
 
-#include "mapFieldGenerationFunctor.h"
+#include "mapTransformGenerationFunctor.h"
+#include "mapRegistrationKernel.h"
+#include "mapRegistrationTopology.h"
 
 namespace map
 {
-	namespace core
-	{
-		namespace functors
-		{
+    namespace core
+    {
+        namespace functors
+        {
 
-			/*! @class FieldByModelFunctor
-			* @brief Functors generates a field by sampling a transformation model
-			*
-			* This field functors generates a field by sampling a transformation which is
-			* assumed to model the same mapping direction.\n
-			* This functor needs the input field representation to be set, other wise it wouldn't
-			* be clear how to generate the field (size, spacing).
-			* The output field representation is not used by this functor.
-			*
-			* @ingroup RegFunctors
-			* @tparam VInputDimensions Dimensions of the input space the field should map from.
-			* @tparam VOutputDimensions Dimensions of the output space the field should map into.
-			*/
-			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			class FieldByModelFunctor: public FieldGenerationFunctor<VInputDimensions, VOutputDimensions>
-			{
-			public:
-				/*! Standard class typedefs. */
-				typedef FieldByModelFunctor<VInputDimensions, VOutputDimensions>  Self;
-				typedef FieldGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
-				typedef itk::SmartPointer<Self>        Pointer;
-				typedef itk::SmartPointer<const Self>  ConstPointer;
+            /*! @class FieldByModelFunctor
+            * @brief Functors generates a field by sampling a transformation model
+            *
+            * This field functors generates a field by sampling a transformation which is
+            * assumed to model the same mapping direction.\n
+            * This functor needs the input field representation to be set, other wise it wouldn't
+            * be clear how to generate the field (size, spacing).
+            * The output field representation is not used by this functor.
+            *
+            * @ingroup RegFunctors
+            * @tparam VInputDimensions Dimensions of the input space the field should map from.
+            * @tparam VOutputDimensions Dimensions of the output space the field should map into.
+            */
+            template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+            class FieldByModelFunctor : public TransformGenerationFunctor < VInputDimensions, VOutputDimensions >
+            {
+            public:
+                /*! Standard class typedefs. */
+                typedef FieldByModelFunctor<VInputDimensions, VOutputDimensions>  Self;
+                typedef TransformGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
+                typedef itk::SmartPointer<Self>        Pointer;
+                typedef itk::SmartPointer<const Self>  ConstPointer;
 
-				itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
-				itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);
+                itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
+                itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);
 
-				typedef typename Superclass::InFieldRepresentationType          InFieldRepresentationType;
-				typedef typename Superclass::InFieldRepresentationConstPointer  InFieldRepresentationConstPointer;
-				typedef typename Superclass::OutFieldRepresentationType         OutFieldRepresentationType;
-				typedef typename Superclass::OutFieldRepresentationConstPointer OutFieldRepresentationConstPointer;
-				typedef typename Superclass::FieldType                          FieldType;
-				typedef typename Superclass::FieldPointer                       FieldPointer;
-				typedef ::itk::Transform < map::core::continuous::ScalarType,
-						VOutputDimensions, VInputDimensions >  TransformModelType;
-				typedef typename TransformModelType::ConstPointer               TransformModelConstPointer;
+                typedef typename Superclass::InFieldRepresentationType          InFieldRepresentationType;
+                typedef typename Superclass::InFieldRepresentationConstPointer  InFieldRepresentationConstPointer;
+                typedef typename Superclass::OutFieldRepresentationType         OutFieldRepresentationType;
+                typedef typename Superclass::OutFieldRepresentationConstPointer OutFieldRepresentationConstPointer;
+                typedef typename RegistrationTopology < VInputDimensions,
+                    VOutputDimensions >::DirectFieldType                          FieldType;
+                typedef typename Superclass::TransformType                      TransformType;
+                typedef typename Superclass::TransformPointer                   TransformPointer;
+                typedef typename RegistrationTopology < VInputDimensions,
+                    VOutputDimensions >::DirectTransformType SourceTransformModelType;
+                typedef typename SourceTransformModelType::ConstPointer               SourceTransformModelConstPointer;
 
-				itkTypeMacro(FieldByModelFunctor, FieldGenerationFunctor);
+                itkTypeMacro(FieldByModelFunctor, TransformGenerationFunctor);
 
-				/*! Generates the field an returns the result as a smart pointer.
-				 * @eguarantee should be strong
-				 * @return Smart pointer to the generated field.
-				 */
-				virtual FieldPointer generateField() const;
+                /*! Generates the field an returns the result as a smart pointer.
+                * @eguarantee should be strong
+                * @return Smart pointer to the generated field.
+                */
+                virtual TransformPointer generateTransform() const override;
 
-				/*! Returns a const pointer to the transform model used to generate the field.
-				 * @eguarantee no fail
-				 * @return Pointer to the transform model.
-				 * @post Return value is guaranteed not to be NULL.
-				 */
-				const TransformModelType* getTransformModel(void) const;
+                /*! Returns a const pointer to the transform model that will be inverted in order
+                * to generate the field.
+                * @eguarantee no fail
+                * @return Pointer to the transform model.
+                * @post Return value is guaranteed not to be NULL.
+                */
+                const SourceTransformModelType* getSourceTransformModel(void) const;
 
-				/*! Static methods that creates the functor.
-				 * Thus it is a specialized version of the itkNewMacro()
-				 * @eguarantee strong
-				 * @param [in] model Reference to the transform model that should be used.
-				 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
-				 * may not be null for this functor.
-				 * @return Smart pointer to the new functor
-				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				static Pointer New(const TransformModelType& model,
-								   const InFieldRepresentationType* pInFieldRepresentation);
+                /*! Static methods that creates the functor.
+                * Thus it is a specialized version of the itkNewMacro()
+                * @eguarantee strong
+                * @param [in] model Pointer to the transform model that should be used.
+                * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
+                * may not be null for this functor.
+                * @return Smart pointer to the new functor
+                * @pre pInFieldRepresentation musst be set, may not be NULL
+                * @pre model musst be set, may not be NULL */
+                static Pointer New(const SourceTransformModelType* model,
+                    const InFieldRepresentationType* pInFieldRepresentation);
 
-				/*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
-				 * @eguarantee strong
-				 * @return Smart pointer to the new functor as itk::LightObject*/
-				virtual ::itk::LightObject::Pointer CreateAnother(void) const;
+                /*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
+                 * @eguarantee strong
+                 * @return Smart pointer to the new functor as itk::LightObject*/
+                virtual ::itk::LightObject::Pointer CreateAnother(void) const;
 
-			protected:
-				/*! Protected constructor used by New.
-				 * @eguarantee strong
-				 * @param [in] model Reference to the transform model that should be used.
-				 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
-				 * may not be null for this functor.
-				 * @pre pInFieldRepresentation musst be set, may not be NULL*/
-				FieldByModelFunctor(const TransformModelType& model,
-									const InFieldRepresentationType* pInFieldRepresentation);
+            protected:
+                /*! Protected constructor used by New.
+                 * @eguarantee strong
+                 * @param [in] model Reference to the transform model that should be used.
+                 * @param [in] pInFieldRepresentation Pointer to the field representation in the input space,
+                 * may not be null for this functor.
+                 * @pre pInFieldRepresentation musst be set, may not be NULL
+                 * @pre model musst be set, may not be NULL */
+                FieldByModelFunctor(const SourceTransformModelType* model,
+                    const InFieldRepresentationType* pInFieldRepresentation);
 
-				virtual ~FieldByModelFunctor();
+                virtual ~FieldByModelFunctor();
 
-				TransformModelConstPointer _spTransformModel;
+                SourceTransformModelConstPointer _spTransformModel;
 
-				/*! Methods invoked by itk::LightObject::Print().  */
-				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+                /*! Methods invoked by itk::LightObject::Print().  */
+                virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
-			private:
-				FieldByModelFunctor(const Self&);  //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
-			};
+            private:
+                FieldByModelFunctor(const Self&);  //purposely not implemented
+                void operator=(const Self&);  //purposely not implemented
+            };
 
-		} // end namespace functors
-	} // end namespace core
+        } // end namespace functors
+
+        /*! @brief Helper function that samples a given transform into a deformation field
+        *
+        * This function generates a field by sampling a transformation which is
+        * assumed to model the same mapping direction.\n
+        * This function needs the input field representation to be set, other wise it wouldn't
+        * be clear how to generate the field (size, spacing).
+        * @pre transform must be valid and not null.
+        * @pre inDesc must be valid and not null.
+        * @param transform Pointer to the transform that should be sampled
+        * @param inDesc Pointer to field descriptor, specifieng the geometry of the field.
+        * @ingroup RegFunctors
+        * @tparam VInputDimensions Dimensions of the input space the field should map from.
+        * @tparam VOutputDimensions Dimensions of the output space the field should map into.
+        */
+        template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        typename RegistrationTopology < VInputDimensions,
+            VOutputDimensions >::DirectFieldPointer
+            generateFieldFromTransform(const typename RegistrationTopology < VInputDimensions,
+            VOutputDimensions >::DirectTransformType* transform, const FieldRepresentationDescriptor<VInputDimensions>* inDesc);
+
+    } // end namespace core
 } // end namespace map
 
 #ifndef MatchPoint_MANUAL_TPP

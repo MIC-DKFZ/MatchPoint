@@ -27,8 +27,8 @@
 #include "itkEuler2DTransform.h"
 #include "itkBSplineTransform.h"
 
-#include "mapModelBasedRegistrationKernel.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
+#include "mapLazyRegistrationKernel.h"
 #include "mapMatrixModelBasedKernelWriter.h"
 #include "mapSDXMLStrWriter.h"
 
@@ -45,12 +45,12 @@ namespace map
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
-			typedef core::ModelBasedRegistrationKernel<2, 2> KernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;
 
-			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel IllegalKernelType;
-			typedef itk::Euler2DTransform<::map::core::continuous::ScalarType>	TransformType;
+			typedef core::LazyRegistrationKernel<2, 2> IllegalKernelType;
+			typedef itk::Euler2DTransform< ::map::core::continuous::ScalarType>	TransformType;
       //define non matrix-offset-decomposable type
-      typedef itk::BSplineTransform<::map::core::continuous::ScalarType,2,2> IllegalTransformType; 
+      typedef itk::BSplineTransform< ::map::core::continuous::ScalarType,2,2> IllegalTransformType; 
 
 			typedef io::MatrixModelBasedKernelWriter<2, 2> WriterType;
 			typedef io::MatrixModelBasedKernelWriter<2, 3> Writer23Type;

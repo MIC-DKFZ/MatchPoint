@@ -31,6 +31,7 @@
 #include "mapRegistrationManipulator.h"
 #include "mapConvert.h"
 #include "mapSDITKStreamingHelper.h"
+#include "mapPreCachedRegistrationKernel.h"
 
 namespace map
 {
@@ -125,7 +126,7 @@ namespace map
 				mapExceptionMacro(::map::core::ServiceException, << "Error: cannot load kernel. Reason: no matrix found.");
 			}
 
-			typedef typename KernelType::TransformType::MatrixType MatrixType;
+      typedef typename KernelBaseType::TransformType::MatrixType MatrixType;
 			MatrixType matrix;
 
 			try
@@ -147,7 +148,7 @@ namespace map
 				mapExceptionMacro(::map::core::ServiceException, << "Error: cannot load kernel. Reason: no offset found.");
 			}
 
-			typedef typename KernelType::TransformType::OutputVectorType OutputVectorType;
+      typedef typename KernelBaseType::TransformType::OutputVectorType OutputVectorType;
 			OutputVectorType offset;
 
 			try
@@ -160,9 +161,10 @@ namespace map
 			}
 
 			//establish transform & kernel
-			typename KernelType::Pointer spKernel = KernelType::New();
+      typedef core::PreCachedRegistrationKernel<VInputDimensions, VInputDimensions> KernelType;
+      typename KernelType::Pointer spKernel = KernelType::New();
 
-			typedef ::itk::AffineTransform<::map::core::continuous::ScalarType, VInputDimensions> TransformType;
+			typedef ::itk::AffineTransform< ::map::core::continuous::ScalarType, VInputDimensions> TransformType;
 			typename TransformType::Pointer spModel = TransformType::New();
 
 			spModel->SetMatrix(matrix);

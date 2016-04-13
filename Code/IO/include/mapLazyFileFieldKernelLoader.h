@@ -24,7 +24,7 @@
 #define __MAP_LAZY_FILE_FIELD_KERNEL_LOADER_H
 
 #include "mapFieldKernelLoaderBase.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapLazyRegistrationKernel.h"
 
 namespace map
 {
@@ -51,7 +51,7 @@ namespace map
 			itkTypeMacro(LazyFileFieldKernelLoader, FieldKernelLoaderBase);
 			itkNewMacro(Self);
 
-			typedef  core::FieldBasedRegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
+			typedef  core::RegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
 			typedef typename KernelBaseType::Pointer	KernelBasePointer;
 			typedef typename Superclass::RequestType	RequestType;
 

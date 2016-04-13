@@ -26,7 +26,6 @@
 
 #include "mapMappingPerformerBase.h"
 #include "mapPointSetMappingPerformerRequest.h"
-#include "mapModelBasedRegistrationKernel.h"
 
 namespace map
 {

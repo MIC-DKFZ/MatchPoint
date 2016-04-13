@@ -24,7 +24,7 @@
 #pragma warning ( disable : 4786 )
 #endif
 
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapNullRegistrationKernel.h"
 #include "mapNullRegistrationKernelWriter.h"
 #include "mapSDXMLStrWriter.h"
@@ -43,7 +43,7 @@ namespace map
 
 			typedef core::NullRegistrationKernel<2, 2> KernelType;
 
-			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel IllegalKernelType;
+			typedef core::PreCachedRegistrationKernel<2, 2> IllegalKernelType;
 
 			typedef io::NullRegistrationKernelWriter<2, 2> WriterType;
 			typedef io::NullRegistrationKernelWriter<2, 3> Writer23Type;

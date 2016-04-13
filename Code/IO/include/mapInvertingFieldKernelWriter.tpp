@@ -14,19 +14,18 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 1287 $ (last changed revision)
+// @date    $Date: 2016-04-01 18:02:24 +0200 (Fr, 01 Apr 2016) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: https://svn/sbr/Sources/SBR-Projects/MatchPoint/branches/Issue-1505/Code/IO/include/mapInvertingKernelWriter.tpp $
 */
 
 #ifndef __MAP_INVERTING_FIELD_KERNEL_WRITER_TPP
 #define __MAP_INVERTING_FIELD_KERNEL_WRITER_TPP
 
-#include "mapInvertingFieldKernelWriter.h"
+#include "mapInvertingKernelWriter.h"
 #include "mapServiceException.h"
 #include "mapRegistrationFileTags.h"
-#include "mapFieldBasedRegistrationKernels.h"
 #include "mapConvert.h"
 #include "mapLogbook.h"
 #include "mapFileDispatch.h"
@@ -40,7 +39,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		bool
-		InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+		InvertingKernelWriter<VInputDimensions, VOutputDimensions>::
 		canHandleRequest(const RequestType& request) const
 		{
 			// if the kernel "request" is a field-based kernel, then we can maybe handle it.
@@ -64,7 +63,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		::map::core::String
-		InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+		InvertingKernelWriter<VInputDimensions, VOutputDimensions>::
 		getProviderName() const
 		{
 			return Self::getStaticProviderName();
@@ -72,22 +71,22 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		::map::core::String
-		InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+		InvertingKernelWriter<VInputDimensions, VOutputDimensions>::
 		getStaticProviderName()
 		{
 			::map::core::OStringStream os;
-			os << "InvertingFieldKernelWriter<" << VInputDimensions << "," << VOutputDimensions << ">";
+			os << "InvertingKernelWriter<" << VInputDimensions << "," << VOutputDimensions << ">";
 			return os.str();
 		}
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		::map::core::String
-		InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+		InvertingKernelWriter<VInputDimensions, VOutputDimensions>::
 		getDescription() const
 		{
 			::map::core::OStringStream os;
-			os << "InvertingFieldKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
+			os << "InvertingKernelWriter, InputDimension: " << VInputDimensions << ", OutputDimension: " <<
 			   VOutputDimensions << ".";
 			return os.str();
 		}
@@ -95,7 +94,7 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		structuredData::Element::Pointer
-		InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
+		InvertingKernelWriter<VInputDimensions, VOutputDimensions>::
 		storeKernel(const RequestType& request) const
 		{
 			if (!canHandleRequest(request))
@@ -123,7 +122,7 @@ namespace map
 			spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
 										   this->getProviderName()));
 			spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
-										   "InvertingFieldKernel"));
+										   "InvertingKernel"));
 
 			typename KernelType::RepresentationDescriptorConstPointer spInverseFieldRepresentation =
 				pKernel->getLargestPossibleRepresentation();
@@ -156,8 +155,8 @@ namespace map
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
-		InvertingFieldKernelWriter<VInputDimensions, VOutputDimensions>::
-		InvertingFieldKernelWriter()
+		InvertingKernelWriter<VInputDimensions, VOutputDimensions>::
+		InvertingKernelWriter()
 		{};
 
 

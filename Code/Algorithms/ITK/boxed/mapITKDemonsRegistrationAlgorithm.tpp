@@ -24,7 +24,7 @@
 #define __MAP_IMAGE_REGISTRATION_ALGORITHM_TPP
 
 #include "mapAlgorithmException.h"
-#include "mapModelBasedRegistrationKernel.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
@@ -136,7 +136,7 @@ namespace map
 				//  spInterimTransformModel->SetParametersByValue(this->getCurrentTransformParameters());
 
 				//  //now build the inverse kernel (main kernel of a image based registration algorithm)
-				//  typedef core::ModelBasedRegistrationKernel<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions> InverseKernelType;
+				//  typedef core::PreCachedRegistrationKernel<InterimRegistrationType::TargetDimensions, InterimRegistrationType::MovingDimensions> InverseKernelType;
 
 				//  InverseKernelType::Pointer spIKernel = InverseKernelType::New();
 				//  spIKernel->setTransformModel(spInterimTransformModel);
@@ -234,12 +234,14 @@ namespace map
 				typename RegistrationType::Pointer spResult = NULL;
 
 				//now build the inverse kernel (main kernel of a image based registration algorithm)
-				typedef typename
-				::map::core::FieldKernels<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
-				InverseKernelType;
+                typedef typename
+                ::map::core::PreCachedRegistrationKernel<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions> InverseKernelType;
 
-				typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
-				spIKernel->setField(this->_internalRegistrationMethod->GetDeformationField());
+                typename FieldTransformType::Pointer transform = FieldTransformType::New();
+                transform->SetDisplacementField(this->_internalRegistrationMethod->GetDeformationField());
+
+                typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
+                spIKernel->setTransformModel(transform);
 
 				//now build the direct kernel via inversion of the inverse kernel
 				typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>

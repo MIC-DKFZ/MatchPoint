@@ -40,7 +40,7 @@ namespace map
 
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		RegistrationKernelBase<VInputDimensions, VOutputDimensions> ::
-		RegistrationKernelBase()
+        RegistrationKernelBase()
 		{
 		};
 

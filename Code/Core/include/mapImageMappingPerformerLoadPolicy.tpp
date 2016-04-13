@@ -27,7 +27,6 @@
 #include "mapImageMappingPerformerLoadPolicy.h"
 
 #include "mapImageByModelPerformer.h"
-#include "mapImageByFieldPerformer.h"
 #include "mapServiceRepositoryPolicyLoadInterface.h"
 
 namespace map
@@ -42,22 +41,14 @@ namespace map
 		{
 			typedef ImageByModelPerformer<typename ProviderBaseType::RegistrationType, typename ProviderBaseType::InputDataType, typename ProviderBaseType::ResultDataType>
 			ImageByModelPerformerType;
-			typedef ImageByFieldPerformer<typename ProviderBaseType::RegistrationType, typename ProviderBaseType::InputDataType, typename ProviderBaseType::ResultDataType>
-			ImageByFieldPerformerType;
 
 			typename ImageByModelPerformerType::Pointer spModelPerformer = ImageByModelPerformerType::New();
-			typename ImageByFieldPerformerType::Pointer spFieldPerformer = ImageByFieldPerformerType::New();
 
 			services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(Superclass::_pLoadInterface);
 
 			if (!loader.addProviderByPolicy(spModelPerformer))
 			{
 				mapLogWarningObjMacro("ImageByModelPerformer was not added because it was already on the service stack!");
-			}
-
-			if (!loader.addProviderByPolicy(spFieldPerformer))
-			{
-				mapLogWarningObjMacro("ImageByFieldPerformer was not added because it was already on the service stack!");
 			}
 		}
 

@@ -28,7 +28,8 @@
 #include "mapFieldByFieldInversionFunctor.h"
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
+#include "mapArtifactGenerator.h"
 
 #include "itkScaleTransform.h"
 #include "itkImageRegionIterator.h"
@@ -76,7 +77,7 @@ namespace map
 
 			// We need a field, so we build one here using the FieldByModelFunctor
 			typedef core::functors::FieldByModelFunctor<2, 2> ModelFunctorType;
-			typedef itk::ScaleTransform<::map::core::continuous::ScalarType, 2> TransformType;
+			typedef itk::ScaleTransform< ::map::core::continuous::ScalarType, 2> TransformType;
 
 			TransformType::Pointer spModel = TransformType::New();
 
@@ -85,7 +86,7 @@ namespace map
 			origin.Fill(0);
 			ModelFunctorType::InFieldRepresentationType::SizeType size;
 			size.fill(2);
-			ModelFunctorType::TransformModelType::ParametersType params(2);
+			ModelFunctorType::TransformType::ParametersType params(2);
 			params.fill(3.0);
 			spModel->SetParameters(params);
 
@@ -95,10 +96,10 @@ namespace map
 			spInRep->setSpacing(spacing);
 			spInRep->setOrigin(origin);
 
-			ModelFunctorType::Pointer spFunc = ModelFunctorType::New(*spModel, spInRep);
+			ModelFunctorType::Pointer spFunc = ModelFunctorType::New(spModel, spInRep);
 
-			ModelFunctorType::FieldPointer spSourceField = NULL;
-			spSourceField = spFunc->generateField();
+			ModelFunctorType::TransformPointer spSourceFieldTransform = NULL;
+			spSourceFieldTransform = spFunc->generateTransform();
 
 
 			// we use the source model for analytic inversion
@@ -108,13 +109,13 @@ namespace map
 
 			// test the FieldByFieldInversionFunctor
 			typedef core::functors::FieldByFieldInversionFunctor<2, 2> FieldInversionFunctorType;
-			typedef core::FieldKernels<2, 2>::PreCachedFieldBasedRegistrationKernel PreCachedFieldKernelType;
-			PreCachedFieldKernelType::Pointer spSourceKernel = PreCachedFieldKernelType::New();
-			spSourceKernel->setField(*(spSourceField.GetPointer()));
+			typedef core::PreCachedRegistrationKernel<2,2> PreCachedKernelType;
+			PreCachedKernelType::Pointer spSourceKernel = PreCachedKernelType::New();
+			spSourceKernel->setTransformModel(spSourceFieldTransform.GetPointer());
 
 			// reuse of spInRep
 			FieldInversionFunctorType::Pointer spFieldInversionFunc = FieldInversionFunctorType::New(
-						*spSourceKernel, spInRep);
+						spSourceKernel, spInRep);
 			spFieldInversionFunc->setStopValue(stopValue);
 			spFieldInversionFunc->setNumberOfIterations(nrOfIterations);
 
@@ -137,13 +138,14 @@ namespace map
 				  spFieldInversionFunc->getNumberOfIterations());
 
 			// test generateField
-			FieldInversionFunctorType::FieldPointer spGeneratedField = NULL;
-			CHECK_NO_THROW(spGeneratedField = spFieldInversionFunc->generateField());
-			CHECK(spGeneratedField.IsNotNull());
+      FieldInversionFunctorType::TransformPointer spGeneratedFieldTransform = NULL;
+      CHECK_NO_THROW(spGeneratedFieldTransform = spFieldInversionFunc->generateTransform());
+      CHECK(spGeneratedFieldTransform.IsNotNull());
+      FieldInversionFunctorType::FieldType::Pointer spGeneratedField = testing::unwrapTransformField(spGeneratedFieldTransform.GetPointer());
 
 			// use the inverted model spInverseModel to compare results
 
-			lit::TransformFieldTester<FieldInversionFunctorType::FieldType, ModelFunctorType::TransformModelType>
+			lit::TransformFieldTester<FieldInversionFunctorType::FieldType, ModelFunctorType::TransformType>
 			tester;
 			tester.setReferenceTransform(spInverseModel);
 			tester.setActualField(spGeneratedField);
