@@ -29,7 +29,7 @@
 #include "mapGenericVectorFieldTransform.h"
 
 #include "itkImageFileReader.h"
-#include "itkMetaImageIO.h"
+#include "itkImageIOFactory.h"
 
 #include "mapNULLVectorAwareLinearInterpolateImageFunction.h"
 
@@ -212,7 +212,15 @@ namespace map
                     filePath);
             }
 
-            ::itk::MetaImageIO::Pointer spImageIO = ::itk::MetaImageIO::New();
+            itk::ImageIOBase::Pointer spImageIO = itk::ImageIOFactory::CreateImageIO(filePath.c_str(), itk::ImageIOFactory::ReadMode);
+
+            if (spImageIO.IsNull())
+            {
+                mapExceptionStaticMacro(::itk::ImageFileReaderException,
+                    << "Cannot create field description. No image io available for field file." << std::endl << "Filename = " <<
+                    filePath);
+            }
+
             spImageIO->SetFileName(filePath);
             spImageIO->ReadImageInformation();
 

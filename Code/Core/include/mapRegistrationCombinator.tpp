@@ -191,9 +191,11 @@ namespace map
 
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy >
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::
-		RegistrationCombinator(): _useDirectPadding(false), _useInversePadding(false),
-			_directPaddingVector(0.0), _inversePaddingVector(0.0)
-		{}
+		RegistrationCombinator(): _useDirectPadding(false), _useInversePadding(false)
+		{
+        _directPaddingVector.Fill(itk::NumericTraits<map::core::continuous::ScalarType>::NonpositiveMin());
+        _inversePaddingVector.Fill(itk::NumericTraits<map::core::continuous::ScalarType>::NonpositiveMin());
+    }
 
 		template <class TPreRegistration, class TRegistration, template <typename> class TLoadPolicy >
 		RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>::

@@ -54,11 +54,6 @@ namespace map
 
 			services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(Superclass::_pLoadInterface);
 
-			if (!loader.addProviderByPolicy(spNullCombinator))
-			{
-				mapLogWarningObjMacro("NullRegistationKernelCombinator was not added because it was already on the service stack!");
-			}
-
       if (!loader.addProviderByPolicy(spLazyFieldCombinator))
 			{
 				mapLogWarningObjMacro("ModelModelKernelCombinator was not added because it was already on the service stack!");
@@ -68,7 +63,13 @@ namespace map
 			{
 				mapLogWarningObjMacro("FieldModelKernelCombinator was not added because it was already on the service stack!");
 			}
-		}
+
+      if (!loader.addProviderByPolicy(spNullCombinator))
+      {
+          mapLogWarningObjMacro("NullRegistationKernelCombinator was not added because it was already on the service stack!");
+      }
+
+    }
 
 		template <class TProviderBase>
 		KernelCombinatorLoadPolicy<TProviderBase>::

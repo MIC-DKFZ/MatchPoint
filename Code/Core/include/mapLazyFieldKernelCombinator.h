@@ -31,7 +31,7 @@ namespace map
 	namespace core
 	{
 		/*! @class LazyFieldKernelCombinator
-		* @brief Combinator class that combines two field kernels to a new kernel.
+		* @brief Combinator class that combines two kernels (lazy or precached) to a new lazy kernel.
 		*
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the  first kernel.
@@ -65,10 +65,10 @@ namespace map
 
 			typedef typename Superclass::PaddingVectorType							PaddingVectorType;
 
-			typedef LazyRegistrationKernel<VInputDimensions, VInterimDimensions>  Kernel1Type;
+			typedef RegistrationKernel<VInputDimensions, VInterimDimensions>  Kernel1Type;
 			typedef typename Kernel1Type::Pointer                        Kernel1Pointer;
 
-			typedef LazyRegistrationKernel<VInterimDimensions, VOutputDimensions> Kernel2Type;
+			typedef RegistrationKernel<VInterimDimensions, VOutputDimensions> Kernel2Type;
 			typedef typename Kernel2Type::Pointer                        Kernel2Pointer;
 
 			itkTypeMacro(LazyFieldKernelCombinator, RegistrationKernelCombinatorBase);
