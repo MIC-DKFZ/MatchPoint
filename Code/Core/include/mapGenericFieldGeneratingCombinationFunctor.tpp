@@ -29,8 +29,7 @@
 #include "mapRegistrationKernel.h"
 #include "mapGenericVectorFieldTransform.h"
 #include "mapNULLVectorAwareLinearInterpolateImageFunction.h"
-
-#include "itkImageRegionIterator.h"
+#include "mapGenericKernelCombinationFieldSource.h"
 
 namespace map
 {
@@ -43,53 +42,26 @@ namespace map
                 GenericFieldGeneratingCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
                 generateTransform() const
             {
-                typename FieldType::Pointer spField = FieldType::New();
-
-                typename InFieldRepresentationType::ImageRegionType region =
-                    Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion();
-                spField->SetRegions(region);
-                spField->SetOrigin(Superclass::_spInFieldRepresentation->getOrigin());
-                spField->SetSpacing(Superclass::_spInFieldRepresentation->getSpacing());
-                spField->SetDirection(Superclass::_spInFieldRepresentation->getDirection());
-                spField->Allocate();
-
-                typedef itk::ImageRegionIterator<FieldType> IteratorType;
-                IteratorType iterator(spField, region);
+                typedef map::core::GenericKernelCombinationFieldSource<VInputDimensions, VInterimDimensions, VOutputDimensions, typename FieldType::PixelType::ValueType> FieldSourceType;
+                typename FieldSourceType::Pointer source = FieldSourceType::New();
 
                 typedef typename SourceKernel2BaseType::MappingVectorType::Superclass VectorSuperclassType;
                 typename SourceKernel2BaseType::MappingVectorType nullVector;
-                    nullVector.VectorSuperclassType::operator = (this->_nullPoint);
+                nullVector.VectorSuperclassType::operator = (this->_nullPoint);
 
-                for (iterator.GoToBegin(); !iterator.IsAtEnd(); ++iterator)
-                {
-                    typename IteratorType::IndexType index = iterator.GetIndex();
-                    typename FieldType::PointType inPoint;
-                    spField->TransformIndexToPhysicalPoint(index, inPoint);
+                source->SetSize(Superclass::_spInFieldRepresentation->getRepresentedLocalImageRegion().GetSize());
+                source->SetOrigin(Superclass::_spInFieldRepresentation->getOrigin());
+                source->SetSpacing(Superclass::_spInFieldRepresentation->getSpacing());
+                source->SetDirection(Superclass::_spInFieldRepresentation->getDirection());
 
-                    typename SourceKernel1BaseType::OutputPointType interimPoint;
-                    
-                    bool valid = _spSourceKernel1->mapPoint(inPoint, interimPoint);
+                source->SetSourceKernel1(_spSourceKernel1);
+                source->SetSourceKernel2(_spSourceKernel2);
+                source->SetUseNullPoint(this->_useNullPoint);
+                source->SetNullPoint(this->_nullPoint);
 
-                    typename SourceKernel2BaseType::OutputPointType endPoint;
-                    bool valid2 = _spSourceKernel2->mapPoint(interimPoint, endPoint);
+                source->Update();
 
-                    typename SourceKernel2BaseType::MappingVectorType outVector = nullVector;
-
-                    if (valid && valid2)
-                    {
-                        PointVectorCombinationPolicy<VInputDimensions, VOutputDimensions>::computeVector(inPoint,
-                            endPoint, outVector);
-                    }
-                    else
-                    {
-                        if (! this->_useNullPoint)
-                        {
-                            mapDefaultExceptionMacro(<< "Error. Cannot generate combined kernel. At least one source kernel was not able to map points. valid source kernel 1: " << valid << "; valid source kernel 2:" << valid2);
-                        }
-                    }
-
-                    iterator.Set(outVector);
-                }
+                typename FieldType::Pointer spField = source->GetOutput();
 
                 typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
                 typename FieldTransformType::Pointer spResult = FieldTransformType::New();
