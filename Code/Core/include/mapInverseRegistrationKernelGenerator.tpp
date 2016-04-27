@@ -36,28 +36,28 @@ namespace map
 		typename InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::InverseKernelBasePointer
 		InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::
 		generateInverse(const KernelBaseType& kernel,
-						const InverseFieldRepresentationType* pInverseFieldRepresentation) const
+		                const InverseFieldRepresentationType* pInverseFieldRepresentation) const
 		{
 			return generateInverse(kernel, kernel.getLargestPossibleRepresentation(),
-								   pInverseFieldRepresentation);
+			                       pInverseFieldRepresentation);
 		};
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		typename InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::InverseKernelBasePointer
 		InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::
 		generateInverse(const KernelBaseType& kernel, const FieldRepresentationType* pFieldRepresentation,
-						const InverseFieldRepresentationType* pInverseFieldRepresentation) const
+		                const InverseFieldRepresentationType* pInverseFieldRepresentation) const
 		{
 			InverterBaseType* pInverter = InverterStackType::getProvider(kernel);
 
 			if (!pInverter)
 			{
 				mapExceptionMacro(MissingProviderException,
-								  << "No responsible inverter available for given kernel. Kernel:" << kernel);
+				                  << "No responsible inverter available for given kernel. Kernel:" << kernel);
 			}
 
 			InverseKernelBasePointer spInverseKernel = pInverter->invertKernel(kernel, pFieldRepresentation,
-					pInverseFieldRepresentation, _useNullPoint, _nullPoint);
+			        pInverseFieldRepresentation, _useNullPoint, _nullPoint);
 
 			assert(spInverseKernel.IsNotNull());
 
@@ -67,9 +67,9 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::
-        InverseRegistrationKernelGenerator() : _useNullPoint(false)
+		InverseRegistrationKernelGenerator() : _useNullPoint(false)
 		{
-        _nullPoint.Fill(itk::NumericTraits<map::core::continuous::ScalarType>::NonpositiveMin());
+			_nullPoint.Fill(itk::NumericTraits<::map::core::continuous::ScalarType>::NonpositiveMin());
 		};
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

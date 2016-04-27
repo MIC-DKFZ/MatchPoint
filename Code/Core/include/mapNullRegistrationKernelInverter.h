@@ -61,7 +61,7 @@ namespace map
 			typedef typename Superclass::InverseFieldRepresentationType	InverseFieldRepresentationType;
 			typedef typename Superclass::RequestType	RequestType;
 			typedef NullRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
-            typedef typename Superclass::NullPointType NullPointType;
+			typedef typename Superclass::NullPointType NullPointType;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request.
@@ -99,9 +99,10 @@ namespace map
 				 * pInverseFieldRepresentation not to be NULL but it is.
 				 */
 			virtual InverseKernelBasePointer invertKernel(const KernelBaseType& kernel,
-					const FieldRepresentationType* pFieldRepresentation,
-					const InverseFieldRepresentationType* pInverseFieldRepresentation,
-          bool useNullPoint = false, NullPointType nullPoint = NullPointType(itk::NumericTraits<map::core::continuous::ScalarType>::NonpositiveMin())) const override;
+			        const FieldRepresentationType* pFieldRepresentation,
+			        const InverseFieldRepresentationType* pInverseFieldRepresentation,
+			        bool useNullPoint = false, NullPointType nullPoint = NullPointType(
+			                    itk::NumericTraits<::map::core::continuous::ScalarType>::NonpositiveMin())) const override;
 
 		protected:
 			NullRegistrationKernelInverter();

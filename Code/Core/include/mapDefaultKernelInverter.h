@@ -39,8 +39,8 @@ namespace map
 		* an populates it with a parametrized inversion functor.
 		*
 		* @sa FieldByModelInversionFunctor
-    * @sa FieldByFieldInversionFunctor
-    * @sa InvertingRegistrationKernel
+		* @sa FieldByFieldInversionFunctor
+		* @sa InvertingRegistrationKernel
 		* @sa PreCachedRegistrationKernel
 		* @ingroup RegOperation
 		* @tparam VInputDimensions Dimensions of the input space of the kernel that should be inverted.
@@ -66,9 +66,9 @@ namespace map
 			typedef typename Superclass::InverseKernelBasePointer	InverseKernelBasePointer;
 			typedef typename Superclass::FieldRepresentationType	FieldRepresentationType;
 			typedef typename Superclass::InverseFieldRepresentationType	InverseFieldRepresentationType;
-            typedef typename Superclass::RequestType	RequestType;
+			typedef typename Superclass::RequestType	RequestType;
 			typedef RegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
-            typedef typename Superclass::NullPointType NullPointType;
+			typedef typename Superclass::NullPointType NullPointType;
 
 
 			/*! gets the number of iterations that has been set for the numeric inversion
@@ -127,8 +127,10 @@ namespace map
 				 * pInverseFieldRepresentation not to be NULL but it is.
 				 */
 			virtual InverseKernelBasePointer invertKernel(const KernelBaseType& kernel,
-					const FieldRepresentationType* pFieldRepresentation,
-          const InverseFieldRepresentationType* pInverseFieldRepresentation, bool useNullPoint = false, NullPointType nullPoint = NullPointType(itk::NumericTraits<map::core::continuous::ScalarType>::NonpositiveMin())) const override;
+			        const FieldRepresentationType* pFieldRepresentation,
+			        const InverseFieldRepresentationType* pInverseFieldRepresentation, bool useNullPoint = false,
+			        NullPointType nullPoint = NullPointType(itk::NumericTraits<::map::core::continuous::ScalarType>::NonpositiveMin()))
+			const override;
 
 		protected:
 			/*!Cached properties that should be used on the FieldByModelInversionFunctor*/
