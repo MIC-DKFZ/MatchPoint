@@ -266,4 +266,5 @@ test/mapSDXMLFileWriterTest.cxx
 test/mapArtifactGenerator.h
 test/mapArtifactGenerator.cpp
 test/mapModificationTimeValidatorTest.cpp
+test/mapGenericKernelCombiningFieldSourceTest.cpp
 )

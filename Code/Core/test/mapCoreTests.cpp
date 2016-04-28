@@ -57,7 +57,9 @@ namespace map
 			LIT_REGISTER_TEST(mapPointVectorCombinationPolicyTest);
 			LIT_REGISTER_TEST(mapCombinationFunctorInterfaceTest);
 			LIT_REGISTER_TEST(mapFieldByFileLoadFunctorTest);
-			LIT_REGISTER_TEST(mapCombinedRegistrationKernelTest);
+      LIT_REGISTER_TEST(mapGenericFieldGeneratingCombinationFunctorTest);
+      LIT_REGISTER_TEST(mapGenericKernelCombiningFieldSourceTest);
+      LIT_REGISTER_TEST(mapCombinedRegistrationKernelTest);
 			LIT_REGISTER_TEST(mapRegistrationKernelTest);
 			LIT_REGISTER_TEST(mapDefaultKernelInverterTest);
 			LIT_REGISTER_TEST(mapInverseRegistrationKernelGeneratorTest);

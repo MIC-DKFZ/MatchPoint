@@ -14,10 +14,10 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision$ (last changed revision)
-// @date    $Date$ (last change date)
-// @author  $Author$ (last changed by)
-// Subversion HeadURL: $HeadURL$
+// @version $Revision: 1316 $ (last changed revision)
+// @date    $Date: 2016-04-13 14:50:09 +0200 (Mi, 13 Apr 2016) $ (last change date)
+// @author  $Author: floca $ (last changed by)
+// Subversion HeadURL: $HeadURL: https://svn.inet.dkfz-heidelberg.de/sbr/Sources/SBR-Projects/MatchPoint/trunk/Code/Core/test/mapGenericFieldGeneratingCombinationFunctorTest.cpp $
 */
 
 #if defined(_MSC_VER)
@@ -26,10 +26,11 @@
 
 #include "itkScaleTransform.h"
 
-#include "mapGenericFieldGeneratingCombinationFunctor.h"
-#include "mapFieldByModelFunctor.h"
 #include "litCheckMacros.h"
 #include "litTransformFieldTester.h"
+
+#include "mapGenericKernelCombinationFieldSource.h"
+#include "mapFieldByModelFunctor.h"
 #include "mapPreCachedRegistrationKernel.h"
 #include "mapLazyRegistrationKernel.h"
 #include "mapFieldDecomposer.h"
@@ -42,7 +43,7 @@ namespace map
 	{
 
 
-		int mapGenericFieldGeneratingCombinationFunctorTest(int, char* [])
+    int mapGenericKernelCombiningFieldSourceTest(int, char*[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
@@ -84,8 +85,6 @@ namespace map
 
 			typedef core::functors::FieldByModelFunctor<2, 2> FunctorType;
 			FunctorType::Pointer spFieldFunctor = FunctorType::New(spInverseTransform, spInRep);
-      spFieldFunctor->setNullPointUsage(true);
-
 			//uses this functor to generate the test field
 
 			typedef core::LazyRegistrationKernel<2, 2> FieldKernelType;
@@ -95,72 +94,45 @@ namespace map
 			spFieldKernel->setTransformFunctor(spFieldFunctor);
 
 			//Establish combination functor for test
-			typedef core::functors::GenericFieldGeneratingCombinationFunctor<2, 2, 2> CombinatorFunctorType;
-			CombinatorFunctorType::Pointer spTestFunctor = CombinatorFunctorType::New(
-					spModelKernel, spFieldKernel, spInRep);
+			typedef core::GenericKernelCombinationFieldSource<2, 2, 2, ::map::core::continuous::ScalarType> SourceType;
+      SourceType::Pointer spSource = SourceType::New();
+
+      CHECK(NULL == spSource->GetSourceKernel1());
+      CHECK(NULL == spSource->GetSourceKernel2());
+
+      spSource->SetSourceKernel1(spModelKernel);
+      spSource->SetSourceKernel2(spFieldKernel);
+
+      spSource->SetSize(spInRep->getRepresentedLocalImageRegion().GetSize());
+      spSource->SetOrigin(spInRep->getOrigin());
+      spSource->SetSpacing(spInRep->getSpacing());
+      spSource->SetDirection(spInRep->getDirection());
 
 			//Test the functor io
-			CHECK(spTestFunctor.IsNotNull());
+      CHECK(spSource.IsNotNull());
 
-			CHECK(spModelKernel.GetPointer() == spTestFunctor->get1stSourceKernelBase());
-			CHECK(spFieldKernel.GetPointer() == spTestFunctor->get2ndSourceKernelBase());
-
-			CombinatorFunctorType::Pointer spFuncAnother = dynamic_cast<CombinatorFunctorType*>
-					(spTestFunctor->CreateAnother().GetPointer());
-			CHECK(spFuncAnother->get1stSourceKernelBase() == spTestFunctor->get1stSourceKernelBase());
-			CHECK(spFuncAnother->get2ndSourceKernelBase() == spTestFunctor->get2ndSourceKernelBase());
-			CHECK(spFuncAnother->getInFieldRepresentation() == spTestFunctor->getInFieldRepresentation());
-			CHECK(spFuncAnother->GetNameOfClass() == spTestFunctor->GetNameOfClass());
-
+      CHECK(spModelKernel.GetPointer() == spSource->GetSourceKernel1());
+      CHECK(spFieldKernel.GetPointer() == spSource->GetSourceKernel2());
 
 			//Test field generation, hence we've combined a field with its inverse transform model
 			//the resulting field must be an identity transform
-			CombinatorFunctorType::TransformPointer spResult = NULL;
-			CHECK_NO_THROW(spResult = spTestFunctor->generateTransform());
+      SourceType::OutputImageType::Pointer spResult = NULL;
+
+			CHECK_NO_THROW(spSource->Update());
+      spResult = spSource->GetOutput();
 			CHECK(spResult.IsNotNull());
 
-      ::map::core::FieldDecomposer<2, 2>::FieldConstPointer actualField;
-      bool validField = ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spResult, actualField);
-      CHECK(validField);
-
-      lit::TransformFieldTester< ::map::core::FieldDecomposer<2, 2>::FieldType, PreCachedKernelType::TransformType>
+      lit::TransformFieldTester< SourceType::OutputImageType, PreCachedKernelType::TransformType>
 			tester;
 			typedef itk::IdentityTransform< ::map::core::continuous::ScalarType, 2> IdentityTransformType;
 
 			IdentityTransformType::Pointer spIdentityTransform = IdentityTransformType::New();
 
 			tester.setReferenceTransform(spIdentityTransform);
-      tester.setActualField(actualField);
+      tester.setActualField(spResult);
 			tester.setCheckThreshold(1e-6);
 
 			CHECK_TESTER(tester);
-
-			//Test invalid mapping request: In field representation descriptor specifies unsupported region
-			CombinatorFunctorType::Pointer spIllegalTestFunctor = CombinatorFunctorType::New(spModelKernel, spFieldKernel, spIllegalInRep);
-
-			CombinatorFunctorType::TransformPointer spIllegalResultFieldTransform = NULL;
-      spIllegalTestFunctor->setNullPointUsage(false);
-      CHECK_THROW(spIllegalResultFieldTransform = spIllegalTestFunctor->generateTransform());
-
-			//now activiate padding to avoid the exception and get a padded field
-
-			spIllegalTestFunctor->setNullPointUsage(true);
-			CombinatorFunctorType::PaddingVectorType paddingValue;
-			paddingValue.Fill(42);
-			spIllegalTestFunctor->setNullPoint(paddingValue);
-
-      CHECK_NO_THROW(spIllegalResultFieldTransform = spIllegalTestFunctor->generateTransform());
-			CHECK(spIllegalTestFunctor.IsNotNull());
-
-      validField = ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spIllegalResultFieldTransform, actualField);
-      CHECK(validField);
-
-			//check if the padding value was used
-
-      ::map::core::FieldDecomposer<2, 2>::FieldType::IndexType index;
-			index.Fill(1);
-
-      CHECK_EQUAL(actualField->GetPixel(index), paddingValue);
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

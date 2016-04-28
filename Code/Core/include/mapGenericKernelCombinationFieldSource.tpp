@@ -25,6 +25,7 @@
 #define __MAP_GENERIC_KERNEL_COMBINATION_FIELD_SOURCE_TPP
 
 #include "mapGenericKernelCombinationFieldSource.h"
+#include "mapRepresentationException.h"
 #include "itkProgressReporter.h"
 #include "itkImageRegionIteratorWithIndex.h"
 
@@ -91,7 +92,7 @@ namespace map
                 {
                     if (!this->m_UseNullPoint)
                     {
-                        mapDefaultExceptionMacro(<< "Error. Cannot generate combined kernel. At least one source kernel was not able to map points. valid source kernel 1: " << valid << "; valid source kernel 2:" << valid2);
+                        mapExceptionMacro(::map::core::RepresentationException, << "Error. Cannot generate combined kernel. At least one source kernel was not able to map points. valid source kernel 1: " << valid << "; valid source kernel 2:" << valid2);
                     }
                 }
 
