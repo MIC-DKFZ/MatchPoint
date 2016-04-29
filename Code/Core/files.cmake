@@ -143,6 +143,7 @@ SET(H_FILES
     include/mapGenericFieldGeneratingCombinationFunctor.h
     include/mapFieldByFileLoadFunctor.h
     include/mapGenericVectorFieldTransform.h	
+	include/mapGenericKernelCombinationFieldSource.h
 )
 
 SET(TPP_FILES
@@ -202,6 +203,7 @@ SET(TPP_FILES
     include/mapGenericFieldGeneratingCombinationFunctor.tpp
     include/mapFieldByFileLoadFunctor.tpp  
     include/mapGenericVectorFieldTransform.tpp
+	include/mapGenericKernelCombinationFieldSource.tpp
 )
 
 SET( TEST_CPP_FILES
@@ -264,4 +266,5 @@ test/mapSDXMLFileWriterTest.cxx
 test/mapArtifactGenerator.h
 test/mapArtifactGenerator.cpp
 test/mapModificationTimeValidatorTest.cpp
+test/mapGenericKernelCombiningFieldSourceTest.cpp
 )

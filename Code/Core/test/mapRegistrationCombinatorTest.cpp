@@ -162,15 +162,15 @@ namespace map
 			CHECK_EQUAL(true, spCombinator->getUseInversePadding());
 
 
-			CombinatorType::DirectMappingVectorType emptyVector(0.0);
+      CombinatorType::DirectMappingVectorType nullVector(::itk::NumericTraits<::map::core::continuous::ScalarType>::NonpositiveMin());
 			CombinatorType::DirectMappingVectorType filledVector1(1.1);
 			CombinatorType::DirectMappingVectorType filledVector2(2.2);
 
-			CHECK_EQUAL(emptyVector, spCombinator->getDirectPaddingVector());
+      CHECK_EQUAL(nullVector, spCombinator->getDirectPaddingVector());
 			CHECK_NO_THROW(spCombinator->setDirectPaddingVector(filledVector1));
 			CHECK_EQUAL(filledVector1, spCombinator->getDirectPaddingVector());
 
-			CHECK_EQUAL(emptyVector, spCombinator->getInversePaddingVector());
+      CHECK_EQUAL(nullVector, spCombinator->getInversePaddingVector());
 			CHECK_NO_THROW(spCombinator->setInversePaddingVector(filledVector2));
 			CHECK_EQUAL(filledVector2, spCombinator->getInversePaddingVector());
 
