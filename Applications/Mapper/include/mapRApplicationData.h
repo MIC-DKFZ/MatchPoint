@@ -63,6 +63,8 @@ namespace map
 
 				::map::core::String  _outputFileName;
 
+        ::map::core::String  _logFileName;
+
 				int _upperSeriesLimit;
 				::map::io::ImageSeriesReadStyle::Type _seriesReadStyle;
 				::map::core::String _seriesReadStyleStr;

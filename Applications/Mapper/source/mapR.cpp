@@ -86,6 +86,7 @@ int main(int argc, char** argv)
     return 2;
   }
 
+  map::core::Logbook::setDefaultLogFileName(appData._logFileName);
   ::itk::StdStreamLogOutput::Pointer spStreamLogOutput = ::itk::StdStreamLogOutput::New();
   spStreamLogOutput->SetStream(std::cout);
   map::core::Logbook::addAdditionalLogOutput(spStreamLogOutput);

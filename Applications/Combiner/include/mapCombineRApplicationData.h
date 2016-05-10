@@ -46,6 +46,8 @@ namespace map
 
 				::map::core::String  _outputFileName;
 
+        ::map::core::String  _logFileName;
+
 				bool _showVersion;
 				bool _detailedOutput;
 				bool _showHelp;
