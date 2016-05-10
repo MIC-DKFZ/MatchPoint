@@ -33,6 +33,96 @@ namespace map
 	namespace core
 	{
 
+      /*! @class SharedFileStreamBase
+      * @brief Helper class realizing an std stream handled as a object with smart pointer
+      *
+      * Reason: Need for a shared_ptr to handle the same stream across different logbook
+      * implementations. VS2005 has no std::tr1::shared_ptr. Thus uses the itk::SmartPointer
+      * functionality.
+      * @ingroup Logging
+      */
+      class SharedFileStreamBase : public itk::LightObject
+      {
+      public:
+          typedef SharedFileStreamBase  Self;
+          typedef itk::LightObject  Superclass;
+          typedef itk::SmartPointer<Self>        Pointer;
+          typedef itk::SmartPointer<const Self>  ConstPointer;
+
+          itkTypeMacro(SharedFileStreamBase, itk::LightObject);
+
+          virtual std::ostream& getStream() = 0;
+
+          virtual const std::ostream& getStream() const = 0;
+
+      protected:
+          SharedFileStreamBase()
+          {};
+
+          virtual ~SharedFileStreamBase()
+          {};
+
+      private:
+
+          SharedFileStreamBase(const SharedFileStreamBase&);  //purposely not implemented
+          void operator=(const SharedFileStreamBase&);  //purposely not implemented
+      };
+
+
+    /*! @class SharedDefaultLogFileStream
+    * @brief Helper class realizing an dummy stream handled as a object with smart pointer
+    *
+    * Reason: Need for a shared_ptr to handle the same stream across different logbook
+    * implementations. VS2005 has no std::tr1::shared_ptr. Thus uses the itk::SmartPointer
+    * functionality.
+    * @ingroup Logging
+    */
+      class SharedNULLStream : public SharedFileStreamBase
+    {
+    public:
+        typedef SharedNULLStream  Self;
+        typedef itk::LightObject  Superclass;
+        typedef itk::SmartPointer<Self>        Pointer;
+        typedef itk::SmartPointer<const Self>  ConstPointer;
+
+        itkTypeMacro(SharedNULLStream, itk::LightObject);
+        itkNewMacro(Self);
+
+        std::ostream& getStream() override
+        {
+            return _stream;
+        };
+
+        const std::ostream& getStream() const  override
+        {
+            return _stream;
+        };
+
+    protected:
+        /*! Helper class that allows to generate a dummy os*/
+        class NullBuffer : public std::streambuf
+        {
+        public:
+            int overflow(int c) { return c; }
+        };
+
+        NullBuffer _buffer;
+        std::ostream _stream;
+
+        SharedNULLStream() : _stream(&_buffer)
+        {
+        };
+
+        virtual ~SharedNULLStream()
+        {};
+
+    private:
+
+        SharedNULLStream(const SharedNULLStream&);  //purposely not implemented
+        void operator=(const SharedNULLStream&);  //purposely not implemented
+    };
+
+
 		/*! @class SharedDefaultLogFileStream
 		* @brief Helper class realizing an std stream handled as a object with smart pointer
 		*
@@ -41,26 +131,36 @@ namespace map
 		* functionality.
 		* @ingroup Logging
 		*/
-		class SharedDefaultLogFileStream : public itk::LightObject
+      class SharedDefaultLogFileStream : public SharedFileStreamBase
 		{
 		public:
 			typedef SharedDefaultLogFileStream  Self;
-			typedef itk::LightObject  Superclass;
+      typedef SharedFileStreamBase  Superclass;
 			typedef itk::SmartPointer<Self>        Pointer;
 			typedef itk::SmartPointer<const Self>  ConstPointer;
 
-			itkTypeMacro(SharedDefaultLogFileStream, itk::LightObject);
+      itkTypeMacro(SharedDefaultLogFileStream, SharedFileStreamBase);
 			itkNewMacro(Self);
 
-			std::ofstream& getStream()
+			std::ostream& getStream() override
 			{
 				return _stream;
 			};
 
-			const std::ofstream& getStream() const
+      const std::ostream& getStream() const override
 			{
 				return _stream;
 			};
+
+      std::ofstream& getOFStream()
+      {
+          return _stream;
+      };
+
+      const std::ofstream& getOFStream() const
+      {
+          return _stream;
+      };
 
 		protected:
 			std::ofstream _stream;
@@ -94,20 +194,28 @@ namespace map
 		LogbookImplementation::
 		initializeOutputs(const String& defaultOutputFileName)
 		{
-			SharedDefaultLogFileStream::Pointer spNewStream = SharedDefaultLogFileStream::New();
+        if (!defaultOutputFileName.empty())
+        {
+            SharedDefaultLogFileStream::Pointer spNewStream = SharedDefaultLogFileStream::New();
 
-			spNewStream->getStream().open(defaultOutputFileName.c_str(), std::ios::out | std::ios::app);
+            spNewStream->getOFStream().open(defaultOutputFileName.c_str(), std::ios::out | std::ios::app);
 
-			if (!(spNewStream->getStream().is_open()))
-			{
-				mapLogbookCheckDefaultExceptionMacro( <<
-													  "Error: cannot open specified file as default logbook output file. Filename: " <<
-													  defaultOutputFileName);
-			}
+            if (!(spNewStream->getOFStream().is_open()))
+            {
+                mapLogbookCheckDefaultExceptionMacro(<<
+                    "Error: cannot open specified file as default logbook output file. Filename: " <<
+                    defaultOutputFileName);
+            }
 
-			_spDefaultFileStream = spNewStream;
+            _spDefaultStream = spNewStream;
 
-			_spDefaultOutput->SetStream(_spDefaultFileStream->getStream());
+            _spDefaultOutput->SetStream(_spDefaultStream->getStream());
+        }
+        else
+        {
+            _spDefaultStream = SharedNULLStream::New();
+            _spDefaultOutput->SetStream(_spDefaultStream->getStream());
+        }
 
 			initializeAdditionalOutputs();
 
@@ -139,8 +247,8 @@ namespace map
 		{
 			Pointer spNewImpl = LogbookImplementation::New();
 			spNewImpl->_additionalOutputs = this->_additionalOutputs;
-			spNewImpl->_spDefaultFileStream = this->_spDefaultFileStream;
-			spNewImpl->_spDefaultOutput->SetStream(spNewImpl->_spDefaultFileStream->getStream());
+			spNewImpl->_spDefaultStream = this->_spDefaultStream;
+			spNewImpl->_spDefaultOutput->SetStream(spNewImpl->_spDefaultStream->getStream());
 			spNewImpl->_spItkOutputWindow = this->_spItkOutputWindow;
 			spNewImpl->_currentPriorityLevel = this->_currentPriorityLevel;
 			spNewImpl->initializeAdditionalOutputs();
