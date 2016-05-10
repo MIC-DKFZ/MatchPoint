@@ -15,7 +15,7 @@ SET(MatchPoint_LIBRARY_DEPENDS_FILE ${MatchPoint_BINARY_DIR}/MatchPointLibraryDe
 SET(MatchPoint_LIBRARY_DIRS_CONFIG ${MatchPoint_LIBRARY_PATH})
 
 # Determine the include directories needed.
-SET(MatchPoint_INCLUDE_DIRS_CONFIG ${MatchPoint_BINARY_DIR} ${MatchPoint_BINARY_DIR}/modulesConf ${MatchPoint_SOURCE_DIR}/Code ${MatchPoint_SOURCE_DIR}/Algorithm)
+SET(MatchPoint_INCLUDE_DIRS_CONFIG ${MatchPoint_BINARY_DIR} ${MatchPoint_BINARY_DIR}/modulesConf ${MatchPoint_SOURCE_DIR}/Code)
 
 foreach(dir Algorithms/Common Algorithms/ITK Core Deployment IO ITK Utilities)
   list(APPEND MatchPoint_INCLUDE_DIRS_CONFIG ${MatchPoint_SOURCE_DIR}/Code/${dir} ${MatchPoint_SOURCE_DIR}/Code/${dir}/include)
