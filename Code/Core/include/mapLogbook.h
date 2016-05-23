@@ -47,8 +47,9 @@ namespace map
 		*
 		* This class offers a logger as singeltons and a centralized access to its
 		* logging functionality. This class is used within MatchPoint for default logging purposes. By
-		* default the logging will be saved in a xml files (matchpoint.log). The file may be changed
-		* any time, also you may add additional outputs.
+		* default the logging will be saved in a xml file (matchpoint.log in the current working directory).
+    * The file may be changed any time, also you may add additional outputs. You can also deactivate the
+    * default file output by setting the default log output file to an empty string.
 		* @ingroup Logging
 		*/
 		class MAPCore_EXPORT Logbook
@@ -116,6 +117,7 @@ namespace map
 			static void flush();
 
 			/*! opens file stream to the new file. If it succeeds the the current default file stream will be closed and exchanged.
+       * You can deactivate the default log out put by passing an empty string.
 			 * @eguarantee strong*/
 			static void setDefaultLogFileName(const String& fileName);
 

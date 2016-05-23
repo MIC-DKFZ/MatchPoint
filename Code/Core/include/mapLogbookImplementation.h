@@ -39,7 +39,7 @@ namespace map
 	namespace core
 	{
 		//forward declaration
-		class SharedDefaultLogFileStream;
+    class SharedFileStreamBase;
 
 		/*! @class LogbookImplementation
 		* @brief Helper class realizing the internel implemntation of the logbook.
@@ -108,9 +108,9 @@ namespace map
 			typedef DefaultOutputType::Pointer  DefaultOutputPointer;
 			DefaultOutputPointer _spDefaultOutput;
 
-			typedef itk::SmartPointer<SharedDefaultLogFileStream> StreamPointer;
+      typedef itk::SmartPointer<SharedFileStreamBase> StreamPointer;
 
-			StreamPointer _spDefaultFileStream;
+			StreamPointer _spDefaultStream;
 
 			LogbookImplementation();
 

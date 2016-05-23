@@ -53,6 +53,7 @@ namespace map
 				_outputFileName = "";
 				_regFileName = "";
 				_refFileName = "";
+        _logFileName = "";
 
 				_showVersion = false;
 				_showHelp = false;
@@ -167,6 +168,12 @@ namespace map
 
         cmdParser.AddArgument("--handleMappingFailure", itksys::CommandLineArguments::NO_ARGUMENT, &_noFailOnErrors,
             "If this flag is activated the mapping process will not faile if the registration is not sufficiently defined. Instead it will use the padding value (-p) to mark any voxel that could not be map due to the insufficent registration with the padding value.");
+
+        cmdParser.AddArgument("--log", itksys::CommandLineArguments::SPACE_ARGUMENT, &_logFileName,
+            "Specifies name and location of the log file. Default (flag not set) is that no log file is written.");
+        cmdParser.AddArgument("-l", itksys::CommandLineArguments::SPACE_ARGUMENT, &_logFileName,
+            "Specifies name and location of the log file. Default (flag not set) is that no log file is written.");
+
 
         if (!cmdParser.Parse())
 				{

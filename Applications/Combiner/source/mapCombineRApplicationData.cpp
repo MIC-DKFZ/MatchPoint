@@ -54,6 +54,7 @@ namespace map
         _inversionList.clear();
 
         _outputFileName = "";
+        _logFileName = "";
 
         _showVersion = false;
         _showHelp = false;

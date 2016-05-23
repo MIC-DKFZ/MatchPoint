@@ -4,7 +4,7 @@ SET(TEMP ${MatchPointTesting_BINARY_DIR}/Temporary)
 SET(EXAMPLES_DATA_ROOT "${MatchPoint_SOURCE_DIR}/Examples/Data")
 
 #-----------------------------------------------------------------------------
-ADD_TEST(mapLogbookTest ${MODULE_TESTS} mapLogbookTest)
+ADD_TEST(mapLogbookTest ${MODULE_TESTS} mapLogbookTest "${TEMP}/logbook_test.log")
 ADD_TEST(mapPMVolumeTest ${MODULE_TESTS} mapPMVolumeTest)
 ADD_TEST(mapVolumeSizeTest ${MODULE_TESTS} mapVolumeSizeTest)
 ADD_TEST(mapFileDispatchTest ${MODULE_TESTS} mapFileDispatchTest)
