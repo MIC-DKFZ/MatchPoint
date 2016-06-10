@@ -14,17 +14,19 @@
 //------------------------------------------------------------------------
 /*!
 // @file
-// @version $Revision: 1026 $ (last changed revision)
-// @date    $Date: 2015-08-05 16:27:57 +0200 (Mi, 05 Aug 2015) $ (last change date)
+// @version $Revision: 797 $ (last changed revision)
+// @date    $Date: 2014-10-10 11:42:05 +0200 (Fr, 10 Okt 2014) $ (last change date)
 // @author  $Author: floca $ (last changed by)
-// Subversion HeadURL: $HeadURL: https://svn.inet.dkfz-heidelberg.de/sbr/Sources/SBR-Projects/MatchPoint/trunk/Applications/Mapper/test/invertRBasicUsageTest.cpp $
+// Subversion HeadURL: $HeadURL: https://svn.inet.dkfz-heidelberg.de/sbr/Sources/SBR-Projects/MatchPoint/trunk/Applications/Mapper/test/invertRSimpleMappingTest.cpp $
 */
 
 #include "itksys/SystemTools.hxx"
 
 #include "litCheckMacros.h"
+#include "litImageTester.h"
 
 #include "mapProcessExecutor.h"
+#include "mapImageReader.h"
 
 namespace map
 {
@@ -36,49 +38,53 @@ namespace map
 		//path depends of the compile mode (release/debug) and is not the CMake binary path.
 		extern const char* _callingAppPath;
 
-		int invertRBasicUsageTest(int argc, char* argv[])
+		int invertRSimpleMappingTest(int argc, char* argv[])
 		{
 			PREPARE_DEFAULT_TEST_REPORTING;
 
 			std::string invertRPath = itksys::SystemTools::GetProgramPath(_callingAppPath);
 
-			std::string dataPath = "Data path not set.";
-
-			if (argc > 1)
-			{
-				dataPath = argv[1];
-			}
-
+      std::string regPath = "Reg data path not set.";
+      std::string outputPath = "Output data path not set.";
+      std::string refPath = "Reference data path not set.";
 
 			map::utilities::ProcessExecutor::Pointer spExec = map::utilities::ProcessExecutor::New();
+      spExec->setSharedOutputPipes(true);
 
 			map::utilities::ProcessExecutor::ArgumentListType args;
+
+      if (argc > 1)
+      {
+        regPath = argv[1];
+      }
+
+      if (argc > 2)
+      {
+        outputPath = argv[2];
+      }
+
+      if (argc > 3)
+      {
+        refPath = argv[3];
+      }
+
+      args.push_back(regPath);
+      args.push_back("-o");
+      args.push_back(outputPath);
+
+      unsigned int index = 4;
+      while (index < argc)
+      {
+        args.push_back(argv[index++]);
+      }
+
 			//////////////////////////////////////////////////
-			// Test: behavior on basic usage.
+			// Test: behavior on simple mapping task.
 
-			//Test not enough parameters
 			CHECK(spExec->execute(invertRPath, "invertR", args));
-			CHECK_EQUAL(2, spExec->getExitValue());
+			CHECK_EQUAL(0, spExec->getExitValue());
 
-			args.clear();
-			args.push_back("-h");
-			CHECK(spExec->execute(invertRPath, "invertR", args));
-			CHECK_EQUAL(1, spExec->getExitValue());
-
-			args.clear();
-			args.push_back("--help");
-			CHECK(spExec->execute(invertRPath, "invertR", args));
-			CHECK_EQUAL(1, spExec->getExitValue());
-
-			args.clear();
-			args.push_back("-?");
-			CHECK(spExec->execute(invertRPath, "invertR", args));
-			CHECK_EQUAL(1, spExec->getExitValue());
-
-			args.clear();
-			args.push_back("-v");
-			CHECK(spExec->execute(invertRPath, "invertR", args));
-			CHECK_EQUAL(1, spExec->getExitValue());
+      // TODO: Check result against reference
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

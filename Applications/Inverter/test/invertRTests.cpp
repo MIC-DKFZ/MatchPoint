@@ -38,8 +38,8 @@ namespace map
 
 		void registerTests()
 		{
-			LIT_REGISTER_TEST(mapRBasicUsageTest);
-      LIT_REGISTER_TEST(mapRSimpleMappingTest);
+			LIT_REGISTER_TEST(invertRBasicUsageTest);
+      LIT_REGISTER_TEST(invertRSimpleMappingTest);
 		}
 
 	} //namespace testing

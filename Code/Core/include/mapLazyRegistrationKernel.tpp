@@ -153,6 +153,18 @@ namespace map
             return result;
         };
 
+        template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        ::itk::LightObject::Pointer
+          LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::
+          InternalClone() const
+        {
+          Pointer clone = Self::New();
+          clone->_spTransform = this->_spTransform;
+          clone->_spGenerationFunctor = this->_spGenerationFunctor;
+
+          return clone.GetPointer();
+        };
+
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
         void
             LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::

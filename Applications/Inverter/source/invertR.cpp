@@ -158,19 +158,19 @@ int main(int argc, char** argv)
 
     if (mdim == 2 && tdim == 2)
     {
-      map::apps::invertR::ProcessingLogic<2, 2>(appData);
+      map::apps::invertR::ProcessingLogic<2, 2>::processData(appData);
     }
     else if (mdim == 2 && tdim == 3)
     {
-      map::apps::invertR::ProcessingLogic<2, 3>(appData);
+      map::apps::invertR::ProcessingLogic<2, 3>::processData(appData);
     }
     else if (mdim == 3 && tdim == 2)
     {
-      map::apps::invertR::ProcessingLogic<3, 2>(appData);
+      map::apps::invertR::ProcessingLogic<3, 2>::processData(appData);
     }
     else
     {
-      map::apps::invertR::ProcessingLogic<3, 3>(appData);
+      map::apps::invertR::ProcessingLogic<3, 3>::processData(appData);
     }
 
   }

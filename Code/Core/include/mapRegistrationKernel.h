@@ -50,6 +50,7 @@ namespace map
             typedef itk::SmartPointer<const Self> ConstPointer;
 
             itkTypeMacro(RegistrationKernel, RegistrationKernelBase);
+            itkCloneMacro(Self);
 
             typedef typename Superclass::TransformType TransformType;
             typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;

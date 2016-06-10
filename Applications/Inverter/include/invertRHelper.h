@@ -85,7 +85,7 @@ namespace map
 
           typename RegFileWriterType::Pointer writer = RegFileWriterType::New();
 
-          writer->expandLazyKernels(true);
+          writer->setExpandLazyKernels(true);
           if (writer->write(pReg, appData._outputFileName))
           {
             std::cout << "done." << std::endl;
@@ -101,7 +101,7 @@ namespace map
 				{
           typedef map::core::RegistrationManipulator<InvertedRegType> RegistrationManipulatorType;
 
-          const RegType* pReg = dynamic_cast<const RegType*>(appData._spReg);
+          const RegType* pReg = dynamic_cast<const RegType*>(appData._spReg.GetPointer());
 
           if (!pReg)
           {
@@ -110,21 +110,58 @@ namespace map
 
           typename InvertedRegType::Pointer spIReg = InvertedRegType::New();
           RegistrationManipulatorType manipulator(spIReg);
+          typename InvertedRegType::DirectMappingType::Pointer newDKernel = pReg->getInverseMapping().Clone();
+          typename InvertedRegType::InverseMappingType::Pointer newIKernel = pReg->getDirectMapping().Clone();
+          manipulator.setDirectMapping(newDKernel);
+          manipulator.setInverseMapping(newIKernel);
 
-          manipulator.setDirectMapping(pReg->getInverseMapping());
-          manipulator.setInverseMapping(pReg->getDirectMapping());
           manipulator.getTagValues()[tags::AlgorithmUID] = "map::InverteR";
           std::string sourceID = "unknown";
           pReg->getTagValue(map::tags::RegistrationUID, sourceID);
           manipulator.getTagValues()["SourceRegistrationUID"] = sourceID;
+
+          typedef map::core::NullRegistrationKernel<InvertedRegType::InverseMappingType::InputDimensions, InvertedRegType::InverseMappingType::OutputDimensions> InverseNullType;
+          typedef map::core::NullRegistrationKernel<InvertedRegType::DirectMappingType::InputDimensions, InvertedRegType::DirectMappingType::OutputDimensions> DirectNullType;
+
+          if (appData._ensureInverseMapping && (newIKernel.IsNull() || dynamic_cast<InverseNullType*>(newIKernel.GetPointer())))
+          {
+            std::cout << "Generation of inverse Kernel is needed. Invert direct kernel..." << std::endl;
+            typedef map::core::InverseRegistrationKernelGenerator<InvertedRegType::DirectMappingType::InputDimensions, InvertedRegType::DirectMappingType::OutputDimensions> KernelInverterType;
+            KernelInverterType::Pointer inverter = KernelInverterType::New();
+
+            typedef ::itk::ImageBase<IMDim> TemplateImageType;
+            TemplateImageType* tempImage = dynamic_cast<TemplateImageType*>(appData._spRefImage.GetPointer());
+            typename map::core::FieldRepresentationDescriptor<IMDim>::Pointer fieldDesc;
+            if (tempImage)
+            {
+              fieldDesc = map::core::createFieldRepresentation(*tempImage);
+            }
+            manipulator.setInverseMapping(inverter->generateInverse(*newDKernel, fieldDesc).GetPointer());
+          }
+
+          if (appData._ensureDirectMapping && (newDKernel.IsNull() || dynamic_cast<DirectNullType*>(newDKernel.GetPointer())))
+          {
+            std::cout << "Generation of direct Kernel is needed. Invert inverse kernel..." << std::endl;
+            typedef map::core::InverseRegistrationKernelGenerator<InvertedRegType::InverseMappingType::InputDimensions, InvertedRegType::InverseMappingType::OutputDimensions> KernelInverterType;
+            KernelInverterType::Pointer inverter = KernelInverterType::New();
+
+            typedef ::itk::ImageBase<ITDim> TemplateImageType;
+            TemplateImageType* tempImage = dynamic_cast<TemplateImageType*>(appData._spRefImage.GetPointer());
+            typename map::core::FieldRepresentationDescriptor<ITDim>::Pointer fieldDesc;
+            if (tempImage)
+            {
+              fieldDesc = map::core::createFieldRepresentation(*tempImage);
+            }
+            manipulator.setDirectMapping(inverter->generateInverse(*newIKernel, fieldDesc).GetPointer());
+          }
 
           return spIReg;
 				};
 
 				static void processData(const ApplicationData& appData)
 				{
-					typename ImageType::Pointer mappedImage = doMapping(appData);
-					doWriting(mappedImage, appData);
+          typename InvertedRegType::Pointer reg = doInversion(appData);
+					doWriting(reg, appData);
 				}
 
 			};

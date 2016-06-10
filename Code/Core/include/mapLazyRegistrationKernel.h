@@ -122,6 +122,10 @@ namespace map
             /*! Methods invoked by itk::LightObject::Print().  */
             virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
 
+            /** @reimplementation
+            Reimplementation of the itk::LightObject::InternalClone*/
+            virtual ::itk::LightObject::Pointer	InternalClone()	const;
+
         private:
             typedef ::itk::SimpleFastMutexLock MutexType;
             /*!Mutex to make the checks of the policy thread safe*/

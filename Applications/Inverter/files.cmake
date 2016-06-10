@@ -15,4 +15,5 @@ SET(TPP_FILES
 SET(TEST_CPP_FILES
 test/invertRTests.cpp
 test/invertRBasicUsageTest.cpp
+test/invertRSimpleMappingTest.cpp
 )
