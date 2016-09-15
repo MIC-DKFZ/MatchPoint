@@ -70,12 +70,7 @@ namespace map
 
 				int _fileCount;
 
-				::map::io::GenericImageReader::LoadedPixelType _loadedPixelType;
-				::map::io::GenericImageReader::LoadedComponentType _loadedComponentType;
 				unsigned int _loadedDimensions;
-
-				::map::io::GenericImageReader::MetaDataDictionaryArrayType _loadedMetaDataDictArray;
-				::map::io::GenericImageReader::MetaDataDictionaryArrayType _loadedTargetMetaDataDictArray;
 
 				/** Parse the application argument passed when starting the application.
 				* If no error or special request occurred the return is 0. Otherwise the return values

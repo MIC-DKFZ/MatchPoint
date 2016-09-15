@@ -121,11 +121,9 @@ int main(int argc, char** argv)
   std::cout << "Series read style: " << appData._seriesReadStyleStr << std::endl;
 
  
-  map::apps::matchR::LoadingLogic loadingLogic(appData);
-
   try
   {
-    loadingLogic.loadMovingImage();
+    map::apps::matchR::loadMovingImage(appData);
   }
   catch (::itk::ExceptionObject& e)
   {
@@ -141,13 +139,13 @@ int main(int argc, char** argv)
   }
   catch (...)
   {
-    std::cerr << "Error!!! unknown error while reading input image." << std::endl;
+    std::cerr << "Error!!! unknown error while reading moving image." << std::endl;
     return 4;
   }
 
   try
   {
-    loadingLogic.loadTargetImage();
+    map::apps::matchR::loadTargetImage(appData);
   }
   catch (::itk::ExceptionObject& e)
   {
@@ -163,13 +161,13 @@ int main(int argc, char** argv)
   }
   catch (...)
   {
-    std::cerr << "Error!!! unknown error while reading template image." << std::endl;
+    std::cerr << "Error!!! unknown error while reading target image." << std::endl;
     return 6;
   }
 
   try
   {
-    loadingLogic.loadAlgorithm();
+    map::apps::matchR::loadAlgorithm(appData);
   }
   catch (::itk::ExceptionObject& e)
   {
