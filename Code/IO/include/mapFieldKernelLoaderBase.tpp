@@ -131,7 +131,7 @@ namespace map
 			else
 			{
 				mapExceptionMacro(::map::core::ServiceException,
-								  << "Error. Cannot load kernel. Field kernel description as no null vector usage information.")
+								  << "Error. Cannot load kernel. Field kernel description has no null vector usage information.")
 			}
 
       typename KernelBaseType::OutputPointType newNullPoint;
