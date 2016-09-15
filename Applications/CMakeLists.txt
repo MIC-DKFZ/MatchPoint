@@ -1,6 +1,7 @@
 MESSAGE (STATUS "processing MatchPoint applications/tools code")
 
 ADD_SUBDIRECTORY (Mapper)
+ADD_SUBDIRECTORY (Matcher)
 ADD_SUBDIRECTORY (Combiner)
 
 OPTION(MAP_BUILD_VIRTUOS_SUPPORT "Enable application support for virtuos files. Activate to build a special mapR version (mapR4V) that handles also virtuos files." OFF)
