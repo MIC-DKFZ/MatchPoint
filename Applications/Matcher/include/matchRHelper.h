@@ -43,6 +43,7 @@
 #include <mapAlgorithmWrapperEvent.h>
 #include <mapRegistrationAlgorithm.h>
 #include <mapMetaPropertyInfo.h>
+#include <mapMetaPropertyBase.h>
 
 #include "matchRApplicationData.h"
 
@@ -61,6 +62,9 @@ namespace map
       void loadTargetImage(ApplicationData& appData);
       /** Helper function to load the meta parameter map for the algorithm into the passed app data structure.*/
       void loadParameterMap(ApplicationData& appData);
+
+      ::map::core::MetaPropertyBase::Pointer
+        wrapMetaProperty(const ::map::algorithm::MetaPropertyInfo* pInfo, const ::map::core::String& valueStr);
 
 			template <unsigned int IDim>
 			class ProcessingLogic
@@ -124,35 +128,49 @@ namespace map
           }
           else if (pIterationEvent)
           {
-            typedef map::algorithm::facet::IterativeAlgorithmInterface IIterativeAlgorithm;
-
-            const IIterativeAlgorithm* pIterative = dynamic_cast<const IIterativeAlgorithm*>
-              (this->_appData->_algorithm.GetPointer());
-
-            IIterativeAlgorithm::IterationCountType count = 0;
-
-            std::cout << "[";
-            if (pIterative && pIterative->hasIterationCount())
+            if (_appData->_detailedOutput)
             {
-              std::cout << pIterative->getCurrentIteration();
+              typedef map::algorithm::facet::IterativeAlgorithmInterface IIterativeAlgorithm;
+
+              const IIterativeAlgorithm* pIterative = dynamic_cast<const IIterativeAlgorithm*>
+                (this->_appData->_algorithm.GetPointer());
+
+              IIterativeAlgorithm::IterationCountType count = 0;
+
+              std::cout << "[";
+              if (pIterative && pIterative->hasIterationCount())
+              {
+                std::cout << pIterative->getCurrentIteration();
+              }
+              std::cout << "] " << pIterationEvent->getComment() << std::endl;
             }
-            std::cout << "] " << pIterationEvent->getComment() << std::endl;
+            else
+            {
+              std::cout << ".";
+            }
           }
           else if (pLevelEvent)
           {
-            typedef map::algorithm::facet::MultiResRegistrationAlgorithmInterface IMultiResAlgorithm;
-            const IMultiResAlgorithm* pResAlg = dynamic_cast<const IMultiResAlgorithm*>
-              (this->_appData->_algorithm.GetPointer());
-
-            map::algorithm::facet::MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType count = 0;
-
-            std::cout << std::endl << "**************************************" << std::endl;
-            std::cout << "New resolution level";
-            if (pResAlg && pResAlg->hasLevelCount())
+            if (_appData->_detailedOutput)
             {
-              std::cout << " [# " << pResAlg->getCurrentLevel() + 1 << "]";
+              typedef map::algorithm::facet::MultiResRegistrationAlgorithmInterface IMultiResAlgorithm;
+              const IMultiResAlgorithm* pResAlg = dynamic_cast<const IMultiResAlgorithm*>
+                (this->_appData->_algorithm.GetPointer());
+
+              map::algorithm::facet::MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType count = 0;
+
+              std::cout << std::endl << "**************************************" << std::endl;
+              std::cout << "New resolution level";
+              if (pResAlg && pResAlg->hasLevelCount())
+              {
+                std::cout << " [# " << pResAlg->getCurrentLevel() + 1 << "]";
+              }
+              std::cout << std::endl << "**************************************" << std::endl << std::endl;
             }
-            std::cout << std::endl << "**************************************" << std::endl << std::endl;
+            else
+            {
+              std::cout << std::endl;
+            }
           }
           else if (pAlgEvent && !pWrapEvent)
           {
@@ -222,13 +240,17 @@ namespace map
               if (info.IsNotNull() && info->isWritable())
               {
                 std::cout << "Set meta property: " << paramItr.first << " = " <<paramItr.second << std::endl;
-
+                ::map::core::MetaPropertyBase::Pointer prop = wrapMetaProperty(info, paramItr.second);
+                if (prop.IsNull())
+                {
+                  mapDefaultExceptionStaticMacro(<< "Error. Cannot set specified meta property. Type conversion is not supported or value cannot be converted into type. Type info " << *info);
+                }
+                else
+                {
+                  pMetaInterface->setProperty(paramItr.first, prop);
+                }
               }
             }
-            const ImageType* moving = dynamic_cast<const ImageType*>(appData._spMovingImage.GetPointer());
-            const ImageType* target = dynamic_cast<const ImageType*>(appData._spTargetImage.GetPointer());
-            pImageInterface->setMovingImage(moving);
-            pImageInterface->setTargetImage(target);
           }
 
           //Cast algorithm, start the registration and get the result

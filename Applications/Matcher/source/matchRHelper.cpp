@@ -25,6 +25,8 @@
 #include "mapGenericImageReader.h"
 #include "mapDeploymentDLLAccess.h"
 #include "mapDeploymentDLLHandle.h"
+#include "mapMetaProperty.h"
+
 #include "itkCastImageFilter.h"
 
 
@@ -293,50 +295,71 @@ void
 void
 ::map::apps::matchR::loadParameterMap(::map::apps::matchR::ApplicationData& appData)
 {
+  for (const auto& iter : appData._parameterStrs)
+  {
+    auto pos = iter.find_first_of("=");
+    ::map::core::String name = iter.substr(0, pos);
+    ::map::core::String value;
+
+    if (pos != ::map::core::String::npos)
+    {
+      value = iter.substr(pos + 1);
+    }
+
+    appData._parameterMap.insert(std::make_pair(name, value));
+  }
 };
 
-//
-//template <typename TValueType>
-//bool
-//QmitkMAPAlgorithmModel::
-//CheckCastAndSetProp(const map::algorithm::MetaPropertyInfo* pInfo, const QVariant& value)
-//{
-//  bool result = false;
-//  if (pInfo->getTypeInfo() == typeid(TValueType) && value.canConvert<TValueType>())
-//  {
-//    /**@TODO: Not save, because canConvert may say true but the actual value is not really convertible (e.g. string to int for the value "a")*/
-//    TValueType val = value.value<TValueType>();
-//    map::core::MetaPropertyBase::Pointer spMetaProp = map::core::MetaProperty<TValueType>::New(val).GetPointer();
-//
-//    result = m_pMetaInterface->setProperty(pInfo, spMetaProp);
-//  }
-//  return result;
-//};
-//
-//bool
-//QmitkMAPAlgorithmModel::
-//SetPropertyValue(const map::algorithm::MetaPropertyInfo* pInfo, const QVariant& value)
-//{
-//  if (!m_pMetaInterface)
-//  {
-//    return false;
-//  }
-//
-//  bool result = CheckCastAndSetProp<bool>(pInfo, value);
-//
-//  if (!result) result = CheckCastAndSetProp<int>(pInfo, value);
-//  if (!result) result = CheckCastAndSetProp<unsigned int>(pInfo, value);
-//  if (!result) result = CheckCastAndSetProp<long>(pInfo, value);
-//  if (!result) result = CheckCastAndSetProp<unsigned long>(pInfo, value);
-//  if (!result) result = CheckCastAndSetProp<float>(pInfo, value);
-//  if (!result) result = CheckCastAndSetProp<double>(pInfo, value);
-//  if (!result  && pInfo->getTypeInfo() == typeid(map::core::String))
-//  {
-//    map::core::String val = value.toString().toStdString();
-//    map::core::MetaPropertyBase::Pointer spMetaProp = map::core::MetaProperty<map::core::String>::New(val).GetPointer();
-//
-//    result = m_pMetaInterface->setProperty(pInfo, spMetaProp);
-//  };
-//
-//  return result;
-//};
+/**Helper function that converts, if possible */
+template <typename TElement>
+bool checkNConvert(const ::map::core::String& valueStr, TElement& value)
+{
+  try
+  {
+    value = map::core::convert::toValueGeneric<TElement>(valueStr);
+    return true;
+  }
+  catch (...)
+  { }
+
+  return false;
+};
+
+template <typename TValueType>
+map::core::MetaPropertyBase::Pointer
+checkCastAndSetProp(const ::map::core::String& valueStr)
+{
+  bool result = false;
+  TValueType value;
+  map::core::MetaPropertyBase::Pointer prop;
+
+  if (checkNConvert(valueStr, value))
+  {
+    prop = map::core::MetaProperty<TValueType>::New(value).GetPointer();
+  }
+  return prop;
+};
+
+::map::core::MetaPropertyBase::Pointer
+map::apps::matchR::wrapMetaProperty(const ::map::algorithm::MetaPropertyInfo* pInfo, const ::map::core::String& valueStr)
+{
+  map::core::MetaPropertyBase::Pointer metaProp;
+
+  if (!pInfo)
+  {
+    return metaProp;
+  }
+
+  if (pInfo->getTypeInfo() == typeid(int)) metaProp = checkCastAndSetProp<int>(valueStr);
+  else if (pInfo->getTypeInfo() == typeid(unsigned int)) metaProp = checkCastAndSetProp<unsigned int>(valueStr);
+  else if (pInfo->getTypeInfo() == typeid(long)) metaProp = checkCastAndSetProp<long>(valueStr);
+  else if (pInfo->getTypeInfo() == typeid(unsigned long)) metaProp = checkCastAndSetProp<unsigned long>(valueStr);
+  else if (pInfo->getTypeInfo() == typeid(float)) metaProp = checkCastAndSetProp<float>(valueStr);
+  else if (pInfo->getTypeInfo() == typeid(double)) metaProp = checkCastAndSetProp<double>(valueStr);
+  else if (pInfo->getTypeInfo() == typeid(::map::core::String))
+  {
+    metaProp = map::core::MetaProperty<map::core::String>::New(valueStr).GetPointer();
+  }
+
+  return metaProp;
+};
