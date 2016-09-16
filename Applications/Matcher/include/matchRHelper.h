@@ -35,6 +35,15 @@
 #include "mapMaskedRegistrationAlgorithmInterface.h"
 #include "mapMetaPropertyAlgorithmInterface.h"
 
+#include <mapImageRegistrationAlgorithmInterface.h>
+#include <mapRegistrationAlgorithmInterface.h>
+#include <mapIterativeAlgorithmInterface.h>
+#include <mapMultiResRegistrationAlgorithmInterface.h>
+#include <mapAlgorithmEvents.h>
+#include <mapAlgorithmWrapperEvent.h>
+#include <mapRegistrationAlgorithm.h>
+#include <mapMetaPropertyInfo.h>
+
 #include "matchRApplicationData.h"
 
 namespace map
@@ -50,17 +59,108 @@ namespace map
       void loadMovingImage(ApplicationData& appData);
       /** Helper function to load the algorithm into the passed app data structure.*/
       void loadTargetImage(ApplicationData& appData);
-
-      void onMapAlgorithmEvent(::itk::Object*, const itk::EventObject& event);
-
+      /** Helper function to load the meta parameter map for the algorithm into the passed app data structure.*/
+      void loadParameterMap(ApplicationData& appData);
 
 			template <unsigned int IDim>
 			class ProcessingLogic
 			{
 			public:
 				typedef ::map::core::Registration<IDim, IDim> RegistrationType;
+        typedef ::map::algorithm::RegistrationAlgorithm<IDim, IDim> AlgorithmType;
 
-				/**write the registration data according to the settings in appData.
+        void onMapAlgorithmEvent(::itk::Object*, const itk::EventObject& event)
+        {
+          const map::events::AlgorithmEvent* pAlgEvent = dynamic_cast<const map::events::AlgorithmEvent*>
+            (&event);
+          const map::events::AlgorithmIterationEvent* pIterationEvent =
+            dynamic_cast<const map::events::AlgorithmIterationEvent*>(&event);
+          const map::events::AlgorithmWrapperEvent* pWrapEvent =
+            dynamic_cast<const map::events::AlgorithmWrapperEvent*>(&event);
+          const map::events::AlgorithmResolutionLevelEvent* pLevelEvent =
+            dynamic_cast<const map::events::AlgorithmResolutionLevelEvent*>(&event);
+
+          const map::events::InitializingAlgorithmEvent* pInitEvent =
+            dynamic_cast<const map::events::InitializingAlgorithmEvent*>(&event);
+          const map::events::StartingAlgorithmEvent* pStartEvent =
+            dynamic_cast<const map::events::StartingAlgorithmEvent*>(&event);
+          const map::events::StoppingAlgorithmEvent* pStoppingEvent =
+            dynamic_cast<const map::events::StoppingAlgorithmEvent*>(&event);
+          const map::events::StoppedAlgorithmEvent* pStoppedEvent =
+            dynamic_cast<const map::events::StoppedAlgorithmEvent*>(&event);
+          const map::events::FinalizingAlgorithmEvent* pFinalizingEvent =
+            dynamic_cast<const map::events::FinalizingAlgorithmEvent*>(&event);
+          const map::events::FinalizedAlgorithmEvent* pFinalizedEvent =
+            dynamic_cast<const map::events::FinalizedAlgorithmEvent*>(&event);
+
+          if (pInitEvent)
+          {
+            std::cout << "Initializing algorithm ..." << std::endl;
+          }
+          else if (pStartEvent)
+          {
+            std::cout << "Starting algorithm ..." << std::endl;
+          }
+          else if (pStoppingEvent)
+          {
+            std::cout << "Stopping algorithm ..." << std::endl;
+          }
+          else if (pStoppedEvent)
+          {
+            std::cout << "Stopped algorithm ..." << std::endl;
+
+            if (!pStoppedEvent->getComment().empty())
+            {
+              std::cout << "Stopping condition: " << pStoppedEvent->getComment() << std::endl;
+            }
+          }
+          else if (pFinalizingEvent)
+          {
+            std::cout << "Finalizing algorithm and results ..." << std::endl;
+          }
+          else if (pFinalizedEvent)
+          {
+            std::cout << "Finalized algorithm ..." << std::endl;
+          }
+          else if (pIterationEvent)
+          {
+            typedef map::algorithm::facet::IterativeAlgorithmInterface IIterativeAlgorithm;
+
+            const IIterativeAlgorithm* pIterative = dynamic_cast<const IIterativeAlgorithm*>
+              (this->_appData->_algorithm.GetPointer());
+
+            IIterativeAlgorithm::IterationCountType count = 0;
+
+            std::cout << "[";
+            if (pIterative && pIterative->hasIterationCount())
+            {
+              std::cout << pIterative->getCurrentIteration();
+            }
+            std::cout << "] " << pIterationEvent->getComment() << std::endl;
+          }
+          else if (pLevelEvent)
+          {
+            typedef map::algorithm::facet::MultiResRegistrationAlgorithmInterface IMultiResAlgorithm;
+            const IMultiResAlgorithm* pResAlg = dynamic_cast<const IMultiResAlgorithm*>
+              (this->_appData->_algorithm.GetPointer());
+
+            map::algorithm::facet::MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType count = 0;
+
+            std::cout << std::endl << "**************************************" << std::endl;
+            std::cout << "New resolution level";
+            if (pResAlg && pResAlg->hasLevelCount())
+            {
+              std::cout << " [# " << pResAlg->getCurrentLevel() + 1 << "]";
+            }
+            std::cout << std::endl << "**************************************" << std::endl << std::endl;
+          }
+          else if (pAlgEvent && !pWrapEvent)
+          {
+            std::cout << pAlgEvent->getComment() << std::endl;
+          }
+        };
+
+        /**write the registration data according to the settings in appData.
 				* @pre pReg must point to a valid instance.*/
         void doWriting(RegistrationType* pReg)
 				{
@@ -105,27 +205,60 @@ namespace map
 
           //Add observer for algorithm events.
           ::itk::MemberCommand< ProcessingLogic<IDim> >::Pointer command = ::itk::MemberCommand< ProcessingLogic<IDim> >::New();
-          command->SetCallback(this, &ProcessingLogic<IDim>::onRegistrationEvent);
+          command->SetCallbackFunction(this, &ProcessingLogic<IDim>::onMapAlgorithmEvent);
 
-          unsigned long oservID = _appData._algorithm->AddObserver(map::events::AlgorithmEvent(), command);
+          unsigned long observerID = _appData->_algorithm->AddObserver(map::events::AlgorithmEvent(), command);
 
+          //Set meta properties
+          ::map::algorithm::facet::MetaPropertyAlgorithmInterface* pMetaInterface =
+            dynamic_cast<::map::algorithm::facet::MetaPropertyAlgorithmInterface*>(appData._algorithm.GetPointer());
 
-					return spResult;
+          if (pMetaInterface)
+          {
+            for (auto paramItr : _appData->_parameterMap)
+            {
+              ::map::algorithm::MetaPropertyInfo::Pointer info = pMetaInterface->getPropertyInfo(paramItr.first);
+
+              if (info.IsNotNull() && info->isWritable())
+              {
+                std::cout << "Set meta property: " << paramItr.first << " = " <<paramItr.second << std::endl;
+
+              }
+            }
+            const ImageType* moving = dynamic_cast<const ImageType*>(appData._spMovingImage.GetPointer());
+            const ImageType* target = dynamic_cast<const ImageType*>(appData._spTargetImage.GetPointer());
+            pImageInterface->setMovingImage(moving);
+            pImageInterface->setTargetImage(target);
+          }
+
+          //Cast algorithm, start the registration and get the result
+          RegistrationType::Pointer result;
+          AlgorithmType* castedAlgorithm = dynamic_cast<AlgorithmType*>(appData._algorithm.GetPointer());
+          if (castedAlgorithm)
+          {
+            result = castedAlgorithm->getRegistration();
+          }
+          else
+          {
+            mapDefaultExceptionStaticMacro("Error. Wrong algorithm seemed to be loaded. Cannot be casted to determine the registration. Check DLL.");
+          }
+
+					return result;
 				};
 
 				void processData()
 				{
           typename RegistrationType::Pointer reg = doRegistration();
 					doWriting(reg);
-				}
+        };
 
-        ProcessLogic(const ApplicationData* appData) : _appData(appData)
+        ProcessingLogic(const ApplicationData& appData) : _appData(&appData)
         {
-        }
+        };
 
-        protected:
+      protected:
 
-        const ApplicationData* _appData
+          const ApplicationData* _appData;
 			};
 
 

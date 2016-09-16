@@ -189,13 +189,37 @@ int main(int argc, char** argv)
 
   try
   {
+    map::apps::matchR::loadParameterMap(appData);
+  }
+  catch (::itk::ExceptionObject& e)
+  {
+    std::cerr << "Error!!!" << std::endl;
+    std::cerr << e << std::endl;
+    return 7;
+  }
+  catch (std::exception& e)
+  {
+    std::cerr << "Error!!!" << std::endl;
+    std::cerr << e.what() << std::endl;
+    return 7;
+  }
+  catch (...)
+  {
+    std::cerr << "Error!!! unknown error while parsing the meta parameters." << std::endl;
+    return 7;
+  }
+
+  try
+  {
     if (appData._loadedDimensions == 2)
     {
-      map::apps::matchR::handleGenericImage<2, map::apps::matchR::ProcessingLogic>(appData);
+      map::apps::matchR::ProcessingLogic<2> logic(appData);
+      logic.processData();
     }
     else if (appData._loadedDimensions == 3)
     {
-      map::apps::matchR::handleGenericImage<3, map::apps::matchR::ProcessingLogic>(appData);
+      map::apps::matchR::ProcessingLogic<3> logic(appData);
+      logic.processData();
     }
   }
   catch (::itk::ExceptionObject& e)

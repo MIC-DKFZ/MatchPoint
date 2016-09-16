@@ -63,7 +63,10 @@ namespace map
 				::map::io::ImageSeriesReadStyle::Type _seriesReadStyle;
         ::map::core::String _seriesReadStyleStr;
 
-        std::vector<::map::core::String> _parameters;
+        std::vector<::map::core::String> _parameterStrs;
+        typedef std::map<::map::core::String, ::map::core::String> ParameterMapType;
+        ParameterMapType _parameterMap;
+
 				bool _showVersion;
 				bool _detailedOutput;
 				bool _showHelp;

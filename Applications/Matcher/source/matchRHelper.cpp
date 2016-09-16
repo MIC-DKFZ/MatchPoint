@@ -27,19 +27,14 @@
 #include "mapDeploymentDLLHandle.h"
 #include "itkCastImageFilter.h"
 
-#include <mapImageRegistrationAlgorithmInterface.h>
-#include <mapRegistrationAlgorithmInterface.h>
-#include <mapIterativeAlgorithmInterface.h>
-#include <mapMultiResRegistrationAlgorithmInterface.h>
-#include <mapAlgorithmEvents.h>
-#include <mapAlgorithmWrapperEvent.h>
 
-template <unsigned int IDimension, typename TPixelType>
+
+template <typename TPixelType, unsigned int IDimension>
 void handleImageCast(const ::map::io::GenericImageReader::GenericOutputImageType* inputImage, ::map::io::GenericImageReader::GenericOutputImageType::Pointer& castedImage)
 {
-  typename ::itk::Image<TPixelType, IDimension> InputImageType;
-  typename ::map::core::discrete::Elements<IDimension>::InternalImageType CastedImageType;
-  typename ::itk::CastImageFilter<InputImageType, CastedImageType> FilterType;
+  typedef ::itk::Image<TPixelType, IDimension> InputImageType;
+  typedef ::map::core::discrete::Elements<IDimension>::InternalImageType CastedImageType;
+  typedef ::itk::CastImageFilter<InputImageType, CastedImageType> FilterType;
 
   const InputImageType* input = dynamic_cast<const InputImageType*>(inputImage);
 
@@ -128,11 +123,11 @@ void handleGenericImageCast(map::io::GenericImageReader::LoadedComponentType loa
 
 
 void
-loadAlgorithm(::map::apps::matchR::ApplicationData& appData)
+::map::apps::matchR::loadAlgorithm(::map::apps::matchR::ApplicationData& appData)
 {
   map::deployment::RegistrationAlgorithmBasePointer spAlgorithmBase = NULL;
 
-  std::cout << "Load registration algorithm..." << std::endl;
+  std::cout << std::endl << "Load registration algorithm..." << std::endl;
 
   map::deployment::DLLHandle::Pointer spHandle = NULL;
 
@@ -144,17 +139,22 @@ loadAlgorithm(::map::apps::matchR::ApplicationData& appData)
       "Cannot open deployed registration algorithm file.");
   }
 
-  std::cout << "Algorithm information: " << std::endl;
-  spHandle->getAlgorithmUID().Print(std::cout, 2);
+  std::cout << "... libary opened..." << std::endl;
+
+  if (appData._detailedOutput)
+  {
+    std::cout << "Algorithm information: " << std::endl;
+    spHandle->getAlgorithmUID().Print(std::cout, 2);
+    std::cout << std::endl;
+  }
 
   //Now load the algorthm from DLL
   spAlgorithmBase = map::deployment::getRegistrationAlgorithm(spHandle);
 
-  std::cout << "... algorithm is loaded" << std::endl;
 
   if (spAlgorithmBase.IsNotNull())
   {
-    std::cout << "... done" << std::endl;
+    std::cout << "... done" << std::endl << std::endl;
 
     if (spAlgorithmBase->getMovingDimensions() != spAlgorithmBase->getTargetDimensions()
       || spAlgorithmBase->getMovingDimensions() != appData._loadedDimensions)
@@ -171,7 +171,7 @@ loadAlgorithm(::map::apps::matchR::ApplicationData& appData)
 };
 
 void
-loadMovingImage(::map::apps::matchR::ApplicationData& appData)
+::map::apps::matchR::loadMovingImage(::map::apps::matchR::ApplicationData& appData)
 {
   map::io::GenericImageReader::GenericOutputImageType::Pointer loadedImage;
   unsigned int loadedDimensions;
@@ -184,7 +184,7 @@ loadMovingImage(::map::apps::matchR::ApplicationData& appData)
   spReader->setFileName(appData._movingFileName);
   spReader->setUpperSeriesLimit(appData._upperSeriesLimit);
 
-  std::cout << std::endl << "read moving image file... ";
+  std::cout << std::endl << "Read moving image file... ";
   loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
     loadedComponentType);
   loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
@@ -233,7 +233,7 @@ loadMovingImage(::map::apps::matchR::ApplicationData& appData)
 };
 
 void
-loadTargetImage(::map::apps::matchR::ApplicationData& appData)
+::map::apps::matchR::loadTargetImage(::map::apps::matchR::ApplicationData& appData)
 {
   if (!(appData._targetFileName.empty()))
   {
@@ -248,7 +248,7 @@ loadTargetImage(::map::apps::matchR::ApplicationData& appData)
     spReader->setFileName(appData._targetFileName);
     spReader->setUpperSeriesLimit(appData._upperSeriesLimit);
 
-    std::cout << std::endl << "read target file... ";
+    std::cout << std::endl << "Read target file... ";
     loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
       loadedComponentType);
     loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
@@ -290,93 +290,53 @@ loadTargetImage(::map::apps::matchR::ApplicationData& appData)
   }
 };
 
-void ::map::apps::matchR::onMapAlgorithmEvent(::itk::Object*, const itk::EventObject& event)
+void
+::map::apps::matchR::loadParameterMap(::map::apps::matchR::ApplicationData& appData)
 {
-  const map::events::AlgorithmEvent* pAlgEvent = dynamic_cast<const map::events::AlgorithmEvent*>
-    (&event);
-  const map::events::AlgorithmIterationEvent* pIterationEvent =
-    dynamic_cast<const map::events::AlgorithmIterationEvent*>(&event);
-  const map::events::AlgorithmWrapperEvent* pWrapEvent =
-    dynamic_cast<const map::events::AlgorithmWrapperEvent*>(&event);
-  const map::events::AlgorithmResolutionLevelEvent* pLevelEvent =
-    dynamic_cast<const map::events::AlgorithmResolutionLevelEvent*>(&event);
+};
 
-  const map::events::InitializingAlgorithmEvent* pInitEvent =
-    dynamic_cast<const map::events::InitializingAlgorithmEvent*>(&event);
-  const map::events::StartingAlgorithmEvent* pStartEvent =
-    dynamic_cast<const map::events::StartingAlgorithmEvent*>(&event);
-  const map::events::StoppingAlgorithmEvent* pStoppingEvent =
-    dynamic_cast<const map::events::StoppingAlgorithmEvent*>(&event);
-  const map::events::StoppedAlgorithmEvent* pStoppedEvent =
-    dynamic_cast<const map::events::StoppedAlgorithmEvent*>(&event);
-  const map::events::FinalizingAlgorithmEvent* pFinalizingEvent =
-    dynamic_cast<const map::events::FinalizingAlgorithmEvent*>(&event);
-  const map::events::FinalizedAlgorithmEvent* pFinalizedEvent =
-    dynamic_cast<const map::events::FinalizedAlgorithmEvent*>(&event);
-
-  if (pInitEvent)
-  {
-    std::cout <<"Initializing algorithm ..."<< std::endl;
-  }
-  else if (pStartEvent)
-  {
-    std::cout <<"Starting algorithm ..."<< std::endl;
-  }
-  else if (pStoppingEvent)
-  {
-    std::cout <<"Stopping algorithm ..."<< std::endl;
-  }
-  else if (pStoppedEvent)
-  {
-    std::cout <<"Stopped algorithm ..."<< std::endl;
-
-    if (!pStoppedEvent->getComment().empty())
-    {
-      std::cout << "Stopping condition: "<< pStoppedEvent->getComment() << std::endl;
-    }
-  }
-  else if (pFinalizingEvent)
-  {
-    std::cout <<"Finalizing algorithm and results ..."<< std::endl;
-  }
-  else if (pFinalizedEvent)
-  {
-    std::cout <<"Finalized algorithm ..."<< std::endl;
-  }
-  else if (pIterationEvent)
-  {
-    typedef map::algorithm::facet::IterativeAlgorithmInterface IIterativeAlgorithm;
-
-    const IIterativeAlgorithm* pIterative = dynamic_cast<const IIterativeAlgorithm*>
-      (appDthis->m_spLoadedAlgorithm.GetPointer());
-
-    IIterativeAlgorithm::IterationCountType count = 0;
-
-    std::cout << "[";
-    if (pIterative && pIterative->hasIterationCount())
-    {
-      std::cout << pIterative->getCurrentIteration();
-    }
-    std::cout << "] " << pIterationEvent->getComment() << std::endl;
-  }
-  else if (pLevelEvent)
-  {
-    typedef map::algorithm::facet::MultiResRegistrationAlgorithmInterface IMultiResAlgorithm;
-    const IMultiResAlgorithm* pResAlg = dynamic_cast<const IMultiResAlgorithm*>
-      (this->m_spLoadedAlgorithm.GetPointer());
-
-    map::algorithm::facet::MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType count = 0;
-
-    std::cout << std::endl << "**************************************" << std::endl;
-    std::cout << "New resolution level";
-    if (pResAlg && pResAlg->hasLevelCount())
-    {
-      std::cout << "[# " <<pResAlg->getCurrentLevel() + 1 <<"]";
-    }
-    std::cout << std::endl << "**************************************" << std::endl << std::endl;
-  }
-  else if (pAlgEvent && !pWrapEvent)
-  {
-    std::cout << pAlgEvent->getComment() << std::endl;
-  }
-}
+//
+//template <typename TValueType>
+//bool
+//QmitkMAPAlgorithmModel::
+//CheckCastAndSetProp(const map::algorithm::MetaPropertyInfo* pInfo, const QVariant& value)
+//{
+//  bool result = false;
+//  if (pInfo->getTypeInfo() == typeid(TValueType) && value.canConvert<TValueType>())
+//  {
+//    /**@TODO: Not save, because canConvert may say true but the actual value is not really convertible (e.g. string to int for the value "a")*/
+//    TValueType val = value.value<TValueType>();
+//    map::core::MetaPropertyBase::Pointer spMetaProp = map::core::MetaProperty<TValueType>::New(val).GetPointer();
+//
+//    result = m_pMetaInterface->setProperty(pInfo, spMetaProp);
+//  }
+//  return result;
+//};
+//
+//bool
+//QmitkMAPAlgorithmModel::
+//SetPropertyValue(const map::algorithm::MetaPropertyInfo* pInfo, const QVariant& value)
+//{
+//  if (!m_pMetaInterface)
+//  {
+//    return false;
+//  }
+//
+//  bool result = CheckCastAndSetProp<bool>(pInfo, value);
+//
+//  if (!result) result = CheckCastAndSetProp<int>(pInfo, value);
+//  if (!result) result = CheckCastAndSetProp<unsigned int>(pInfo, value);
+//  if (!result) result = CheckCastAndSetProp<long>(pInfo, value);
+//  if (!result) result = CheckCastAndSetProp<unsigned long>(pInfo, value);
+//  if (!result) result = CheckCastAndSetProp<float>(pInfo, value);
+//  if (!result) result = CheckCastAndSetProp<double>(pInfo, value);
+//  if (!result  && pInfo->getTypeInfo() == typeid(map::core::String))
+//  {
+//    map::core::String val = value.toString().toStdString();
+//    map::core::MetaPropertyBase::Pointer spMetaProp = map::core::MetaProperty<map::core::String>::New(val).GetPointer();
+//
+//    result = m_pMetaInterface->setProperty(pInfo, spMetaProp);
+//  };
+//
+//  return result;
+//};

@@ -57,7 +57,8 @@ namespace map
         _outputFileName = "";
         _logFileName = "";
 
-        _parameters.clear();
+        _parameterStrs.clear();
+        _parameterMap.clear();
 
 				_showVersion = false;
 				_showHelp = false;
@@ -136,9 +137,9 @@ namespace map
         cmdParser.AddArgument("-m", itksys::CommandLineArguments::SPACE_ARGUMENT, &_movingMaskFileName,
           "Specifies name and location of the file that serves as template for the target field of view. Thus this file defines spacing, size, origin and orientation of the output image. Default is that the input image is used as template.");
 
-        cmdParser.AddArgument("--parameters", itksys::CommandLineArguments::MULTI_ARGUMENT, &_parameters,
+        cmdParser.AddArgument("--parameters", itksys::CommandLineArguments::MULTI_ARGUMENT, &_parameterStrs,
 				                      "Specifies the value that should be used for pixels of the result image that are not covered by the mapped input image. Default value is '0.0'.");
-        cmdParser.AddArgument("-p", itksys::CommandLineArguments::MULTI_ARGUMENT, &_parameters,
+        cmdParser.AddArgument("-p", itksys::CommandLineArguments::MULTI_ARGUMENT, &_parameterStrs,
 				                      "Specifies the value that should be used for pixels of the result image that are not covered by the mapped input image. Default value is '0.0'.");
 
 				cmdParser.AddArgument("-v", itksys::CommandLineArguments::NO_ARGUMENT, &_showVersion,
