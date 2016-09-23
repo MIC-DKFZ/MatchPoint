@@ -188,31 +188,31 @@ namespace map
 					}
 
 					std::cout << std::endl << "save output file ... ";
-  				std::cout << "(" << appData._outputFileName << ")... ";
+  				std::cout << "(" << this->_appData->_outputFileName << ")... ";
 
 					typedef ::map::io::RegistrationFileWriter<IDim, IDim> WriterType;
 					typename WriterType::Pointer spWriter  = WriterType::New();
 
-					spWriter->write(pReg, appData._outputFileName);
+					spWriter->write(pReg, this->_appData->_outputFileName);
 
 					std::cout << "done." << std::endl;
 				};
 
 				typename RegistrationType::Pointer doRegistration()
 				{
-					typedef ::map::core::discrete::Elements<IDim>::InternalImageType ImageType;
+					typedef typename ::map::core::discrete::Elements<IDim>::InternalImageType ImageType;
 
           //Now cast to the right interface (ImageRegistrationAlgorithmBase)
           //to set the images
           typedef map::algorithm::facet::ImageRegistrationAlgorithmInterface<ImageType, ImageType>
             ImageRegistrationAlgorithmInterfaceType;
           ImageRegistrationAlgorithmInterfaceType* pImageInterface =
-            dynamic_cast<ImageRegistrationAlgorithmInterfaceType*>(appData._algorithm.GetPointer());
+            dynamic_cast<ImageRegistrationAlgorithmInterfaceType*>(this->_appData->_algorithm.GetPointer());
 
           if (pImageInterface)
           {
-            const ImageType* moving = dynamic_cast<const ImageType*>(appData._spMovingImage.GetPointer());
-            const ImageType* target = dynamic_cast<const ImageType*>(appData._spTargetImage.GetPointer());
+            const ImageType* moving = dynamic_cast<const ImageType*>(this->_appData->_spMovingImage.GetPointer());
+            const ImageType* target = dynamic_cast<const ImageType*>(this->_appData->_spTargetImage.GetPointer());
             pImageInterface->setMovingImage(moving);
             pImageInterface->setTargetImage(target);
           }
@@ -222,18 +222,18 @@ namespace map
           }
 
           //Add observer for algorithm events.
-          ::itk::MemberCommand< ProcessingLogic<IDim> >::Pointer command = ::itk::MemberCommand< ProcessingLogic<IDim> >::New();
+          typename ::itk::MemberCommand< ProcessingLogic<IDim> >::Pointer command = ::itk::MemberCommand< ProcessingLogic<IDim> >::New();
           command->SetCallbackFunction(this, &ProcessingLogic<IDim>::onMapAlgorithmEvent);
 
-          unsigned long observerID = _appData->_algorithm->AddObserver(map::events::AlgorithmEvent(), command);
+          unsigned long observerID = this->_appData->_algorithm->AddObserver(map::events::AlgorithmEvent(), command);
 
           //Set meta properties
           ::map::algorithm::facet::MetaPropertyAlgorithmInterface* pMetaInterface =
-            dynamic_cast<::map::algorithm::facet::MetaPropertyAlgorithmInterface*>(appData._algorithm.GetPointer());
+            dynamic_cast<::map::algorithm::facet::MetaPropertyAlgorithmInterface*>(this->_appData->_algorithm.GetPointer());
 
           if (pMetaInterface)
           {
-            for (auto paramItr : _appData->_parameterMap)
+            for (auto paramItr : this->_appData->_parameterMap)
             {
               ::map::algorithm::MetaPropertyInfo::Pointer info = pMetaInterface->getPropertyInfo(paramItr.first);
 
@@ -243,7 +243,7 @@ namespace map
                 ::map::core::MetaPropertyBase::Pointer prop = wrapMetaProperty(info, paramItr.second);
                 if (prop.IsNull())
                 {
-                  mapDefaultExceptionStaticMacro(<< "Error. Cannot set specified meta property. Type conversion is not supported or value cannot be converted into type. Type info " << *info);
+                  mapDefaultExceptionStaticMacro(<< "Error. Cannot set specified meta property. Type conversion is not supported or value cannot be converted into type. Property name: " << info->getName() << "; property type: " << info->getTypeName());
                 }
                 else
                 {
@@ -254,8 +254,8 @@ namespace map
           }
 
           //Cast algorithm, start the registration and get the result
-          RegistrationType::Pointer result;
-          AlgorithmType* castedAlgorithm = dynamic_cast<AlgorithmType*>(appData._algorithm.GetPointer());
+          typename RegistrationType::Pointer result;
+          AlgorithmType* castedAlgorithm = dynamic_cast<AlgorithmType*>(this->_appData->_algorithm.GetPointer());
           if (castedAlgorithm)
           {
             result = castedAlgorithm->getRegistration();

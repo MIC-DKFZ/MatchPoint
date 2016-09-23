@@ -35,16 +35,16 @@ template <typename TPixelType, unsigned int IDimension>
 void handleImageCast(const ::map::io::GenericImageReader::GenericOutputImageType* inputImage, ::map::io::GenericImageReader::GenericOutputImageType::Pointer& castedImage)
 {
   typedef ::itk::Image<TPixelType, IDimension> InputImageType;
-  typedef ::map::core::discrete::Elements<IDimension>::InternalImageType CastedImageType;
+  typedef typename ::map::core::discrete::Elements<IDimension>::InternalImageType CastedImageType;
   typedef ::itk::CastImageFilter<InputImageType, CastedImageType> FilterType;
 
   const InputImageType* input = dynamic_cast<const InputImageType*>(inputImage);
 
-  FilterType::Pointer caster = FilterType::New();
+  typename FilterType::Pointer caster = FilterType::New();
 
   caster->SetInput(input);
   caster->Update();
-  CastedImageType::Pointer casted = caster->GetOutput();
+  typename CastedImageType::Pointer casted = caster->GetOutput();
 
   castedImage = casted.GetPointer();
 }
