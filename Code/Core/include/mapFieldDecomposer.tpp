@@ -98,12 +98,12 @@ namespace map
                 const GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<const GenericFieldTransformType*>(pTransform);
                 if (castedFieldTransform)
                 { //try to directly use the field
-                    field = dynamic_cast<FieldType*>(castedFieldTransform->GetDisplacementField());
+                    field = dynamic_cast<const FieldType*>(castedFieldTransform->GetDisplacementField());
                     result = true;
                 }
                 else if (castedGenericFieldTransform)
                 { //try to directly use the field
-                    field = dynamic_cast<FieldType*>(castedGenericFieldTransform->GetDisplacementField());
+                    field = dynamic_cast<const FieldType*>(castedGenericFieldTransform->GetDisplacementField());
                     result = true;
                 }
 
@@ -159,8 +159,12 @@ namespace map
                 mapDefaultExceptionStaticMacro(<<
                     "Error decomposing field of transform. Passed kernel pointer is NULL.");
             };
-
-            bool result = FieldDecomposerHelper<VInputDimensions, VOutputDimensions>::decomposeTransform(pTransform, field);
+            FieldConstPointer constField;
+            bool result = FieldDecomposerHelper<VInputDimensions, VOutputDimensions>::decomposeTransform(pTransform, constField);
+            if (result)
+            {
+              field = const_cast<FieldType*>(constField.GetPointer());
+            }
             return result;
         };
 
