@@ -98,12 +98,12 @@ namespace map
                 const GenericFieldTransformType* castedGenericFieldTransform = dynamic_cast<const GenericFieldTransformType*>(pTransform);
                 if (castedFieldTransform)
                 { //try to directly use the field
-                    field = dynamic_cast<const FieldType*>(castedFieldTransform->GetDisplacementField());
+                    field = dynamic_cast<FieldType*>(castedFieldTransform->GetDisplacementField());
                     result = true;
                 }
                 else if (castedGenericFieldTransform)
                 { //try to directly use the field
-                    field = dynamic_cast<const FieldType*>(castedGenericFieldTransform->GetDisplacementField());
+                    field = dynamic_cast<FieldType*>(castedGenericFieldTransform->GetDisplacementField());
                     result = true;
                 }
 
