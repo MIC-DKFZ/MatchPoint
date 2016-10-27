@@ -180,13 +180,13 @@ namespace map
       lit::FieldTester< ::map::core::FieldDecomposer<2, 2>::FieldType> tester;
 			double checkThreshold = 0.1;
 			tester.setCheckThreshold(checkThreshold);
-      tester.setExpectedField(actualField);
+      tester.setExpectedField(actualField->Clone());
 
 			LazyKernelType* pKernel = dynamic_cast<LazyKernelType*>(spKernel.GetPointer());
 			CHECK(pKernel != NULL);
       bool validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
       CHECK(validField);
-      tester.setActualField(actualField);
+      tester.setActualField(actualField->Clone());
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
@@ -194,11 +194,11 @@ namespace map
 			CHECK(pKernel != NULL);
       validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
       CHECK(validField);
-      tester.setActualField(actualField);
+      tester.setActualField(actualField->Clone());
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
-			//*@TODO Noch Test für: wenn man ein meta file unterschiebt, dass die falsche Dimension hat, also .mapr noch richtige dimension und dann das meta image falsch.
+			//*@TODO Noch Test fuer: wenn man ein meta file unterschiebt, dass die falsche Dimension hat, also .mapr noch richtige dimension und dann das meta image falsch.
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}

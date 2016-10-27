@@ -47,7 +47,7 @@ namespace map
 			TransformGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation):
 				_spInFieldRepresentation(pInFieldRepresentation), _useNullPoint(false)
 			{
-				_nullPoint.Fill(itk::NumericTraits<::map::core::continuous::ScalarType>::NonpositiveMin());
+				_nullPoint.Fill(itk::NumericTraits< ::map::core::continuous::ScalarType>::NonpositiveMin());
 			};
 
 			template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

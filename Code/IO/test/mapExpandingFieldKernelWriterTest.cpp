@@ -163,11 +163,11 @@ namespace map
       tester.setExpectedField(spRefField);
 
       map::core::FieldDecomposer<2, 2>::decomposeKernel(spLazyKernel, actualField);
-      tester.setActualField(actualField);
+      tester.setActualField(actualField->Clone());
       CHECK_TESTER(tester);
 
       map::core::FieldDecomposer<2, 2>::decomposeKernel(spCachedKernel, actualField);
-      tester.setActualField(actualField);
+      tester.setActualField(actualField->Clone());
       CHECK_TESTER(tester);
 
       RETURN_AND_REPORT_TEST_SUCCESS;

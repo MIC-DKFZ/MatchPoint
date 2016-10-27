@@ -129,7 +129,7 @@ namespace map
 			virtual InverseKernelBasePointer invertKernel(const KernelBaseType& kernel,
 			        const FieldRepresentationType* pFieldRepresentation,
 			        const InverseFieldRepresentationType* pInverseFieldRepresentation, bool useNullPoint = false,
-			        NullPointType nullPoint = NullPointType(itk::NumericTraits<::map::core::continuous::ScalarType>::NonpositiveMin()))
+			        NullPointType nullPoint = NullPointType(itk::NumericTraits< ::map::core::continuous::ScalarType>::NonpositiveMin()))
 			const override;
 
 		protected:

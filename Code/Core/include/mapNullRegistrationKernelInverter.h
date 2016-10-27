@@ -102,7 +102,7 @@ namespace map
 			        const FieldRepresentationType* pFieldRepresentation,
 			        const InverseFieldRepresentationType* pInverseFieldRepresentation,
 			        bool useNullPoint = false, NullPointType nullPoint = NullPointType(
-			                    itk::NumericTraits<::map::core::continuous::ScalarType>::NonpositiveMin())) const override;
+			                    itk::NumericTraits< ::map::core::continuous::ScalarType>::NonpositiveMin())) const override;
 
 		protected:
 			NullRegistrationKernelInverter();

@@ -69,7 +69,7 @@ namespace map
 		InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>::
 		InverseRegistrationKernelGenerator() : _useNullPoint(false)
 		{
-			_nullPoint.Fill(itk::NumericTraits<::map::core::continuous::ScalarType>::NonpositiveMin());
+			_nullPoint.Fill(itk::NumericTraits< ::map::core::continuous::ScalarType>::NonpositiveMin());
 		};
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

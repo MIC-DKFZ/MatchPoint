@@ -26,6 +26,7 @@
 
 #include "mapGenericKernelCombinationFieldSource.h"
 #include "mapRepresentationException.h"
+#include "mapPointVectorCombinationPolicy.h"
 #include "itkProgressReporter.h"
 #include "itkImageRegionIteratorWithIndex.h"
 
