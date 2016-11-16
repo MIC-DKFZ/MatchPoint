@@ -25,21 +25,6 @@ SET(MatchPoint_DLL_INTERFACE_VERSION_MINOR "0")
 SET(MatchPoint_DLL_INTERFACE_VERSION_STRING "${MatchPoint_DLL_INTERFACE_VERSION_MAJOR}.${MatchPoint_DLL_INTERFACE_VERSION_MINOR}")
 
 #-----------------------------------------------------------------------------
-# generate the AssemblyLine version config file for this project
-#-----------------------------------------------------------------------------
-SET(AL_VersionFileContent
-    "[VersionInfo]\n"
-    "name=MatchPoint\n"
-    "full_version=${MatchPoint_FULL_VERSION_STRING}\n"
-    "major_version=${MatchPoint_VERSION_MAJOR}\n"
-    "minor_version=${MatchPoint_VERSION_MINOR}\n"
-    "patch_version=${MatchPoint_VERSION_PATCH}\n"
-    )
-
-FILE (WRITE ${MatchPoint_BINARY_DIR}/version.config.al ${AL_VersionFileContent}) 
-
-
-#-----------------------------------------------------------------------------
 # CMake Function(s) and Macro(s)
 #-----------------------------------------------------------------------------
 
@@ -121,6 +106,8 @@ SET(CXX_TEST_PATH ${EXECUTABLE_OUTPUT_PATH})
 # Remark: needs directory are stored with no leading slash (CMake 2.4 and newer)
 #-----------------------------------------------------------------------------
 
+SET(MatchPoint_INSTALL_VERSION_PATH "MatchPoint-${MatchPoint_VERSION_MAJOR}.${MatchPoint_VERSION_MINOR}")
+
 IF(NOT MatchPoint_INSTALL_BIN_DIR)
   SET(MatchPoint_INSTALL_BIN_DIR "bin")
 ENDIF(NOT MatchPoint_INSTALL_BIN_DIR)
@@ -130,23 +117,23 @@ IF(NOT MatchPoint_INSTALL_LIB_DIR)
 ENDIF(NOT MatchPoint_INSTALL_LIB_DIR)
 
 IF(NOT MatchPoint_INSTALL_DEP_DIR)
-  SET(MatchPoint_INSTALL_DEP_DIR "deployed")
+  SET(MatchPoint_INSTALL_DEP_DIR "deployed/${MatchPoint_INSTALL_VERSION_PATH}")
 ENDIF(NOT MatchPoint_INSTALL_DEP_DIR)
 
 IF(NOT MatchPoint_INSTALL_DATA_DIR)
-  SET(MatchPoint_INSTALL_DATA_DIR "share")
+  SET(MatchPoint_INSTALL_DATA_DIR "share/${MatchPoint_INSTALL_VERSION_PATH}")
 ENDIF(NOT MatchPoint_INSTALL_DATA_DIR)
 
 IF(NOT MatchPoint_INSTALL_INCLUDE_DIR)
-  SET(MatchPoint_INSTALL_INCLUDE_DIR "include")
+  SET(MatchPoint_INSTALL_INCLUDE_DIR "include/${MatchPoint_INSTALL_VERSION_PATH}")
 ENDIF(NOT MatchPoint_INSTALL_INCLUDE_DIR)
 
 IF(NOT MatchPoint_INSTALL_EXAMPLE_DIR)
-  SET(MatchPoint_INSTALL_EXAMPLE_DIR "examples")
+  SET(MatchPoint_INSTALL_EXAMPLE_DIR "examples/${MatchPoint_INSTALL_VERSION_PATH}")
 ENDIF(NOT MatchPoint_INSTALL_EXAMPLE_DIR)
 
 IF(NOT MatchPoint_INSTALL_PACKAGE_DIR)
-  SET(MatchPoint_INSTALL_PACKAGE_DIR ${MatchPoint_INSTALL_LIB_DIR}
+  SET(MatchPoint_INSTALL_PACKAGE_DIR "${MatchPoint_INSTALL_LIB_DIR}/cmake/${MatchPoint_INSTALL_VERSION_PATH}"
     CACHE INTERNAL "")
 ENDIF(NOT MatchPoint_INSTALL_PACKAGE_DIR)
 
