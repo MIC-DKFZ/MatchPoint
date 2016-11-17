@@ -1,6 +1,7 @@
 MESSAGE (STATUS "processing MatchPoint applications/tools code")
 
 ADD_SUBDIRECTORY (Mapper)
+ADD_SUBDIRECTORY (Matcher)
 ADD_SUBDIRECTORY (Combiner)
 ADD_SUBDIRECTORY (Inverter)
 
