@@ -175,13 +175,13 @@ namespace map
 			lit::FieldTester<FieldFunctorType::FieldType> tester;
 			double checkThreshold = 0.1;
 			tester.setCheckThreshold(checkThreshold);
-      tester.setExpectedField(extractedField->Clone());
+      tester.setExpectedField(extractedField);
 
 			InvertingKernelType* pKernel = dynamic_cast<InvertingKernelType*>(spKernel.GetPointer());
 			CHECK(pKernel != NULL);
       validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, extractedField);
       CHECK(validField);
-      tester.setActualField(extractedField->Clone());
+      tester.setActualField(extractedField);
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
@@ -189,7 +189,7 @@ namespace map
 			CHECK(pKernel_lazy != NULL);
       validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel_lazy, extractedField);
       CHECK(validField);
-      tester.setActualField(extractedField->Clone());
+      tester.setActualField(extractedField);
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel_lazy->getLargestPossibleRepresentation()) == *spInRep);
 

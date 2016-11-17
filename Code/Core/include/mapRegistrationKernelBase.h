@@ -49,6 +49,7 @@ namespace map
             typedef itk::SmartPointer<const Self> ConstPointer;
 
             itkTypeMacro(RegistrationKernelBase, DimensionlessRegistrationKernelBase);
+            itkCloneMacro(Self);
 
             itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
             itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);

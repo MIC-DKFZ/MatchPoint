@@ -90,6 +90,10 @@ namespace map
 			NullRegistrationKernel();
 			virtual ~NullRegistrationKernel();
 
+      /** @reimplementation
+      Reimplementation of the itk::LightObject::InternalClone*/
+      virtual ::itk::LightObject::Pointer	InternalClone()	const;
+
 		private:
 			//No copy constructor allowed
 			NullRegistrationKernel(const Self& source);

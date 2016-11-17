@@ -155,19 +155,17 @@ namespace map
       map::core::FieldDecomposer<2, 2>::FieldPointer spRefField = spReader->GetOutput();
       spReader->Update();
 
-      map::core::FieldDecomposer<2, 2>::decomposeKernel(spLazyKernel, actualField);
-
       lit::FieldTester<map::core::FieldDecomposer<2, 2>::FieldType> tester;
       double checkThreshold = 0.1;
       tester.setCheckThreshold(checkThreshold);
       tester.setExpectedField(spRefField);
 
-      map::core::FieldDecomposer<2, 2>::decomposeKernel(spLazyKernel, actualField);
-      tester.setActualField(actualField->Clone());
+      bool valid = map::core::FieldDecomposer<2, 2>::decomposeKernel(spLazyKernel, actualField);
+      tester.setActualField(actualField);
       CHECK_TESTER(tester);
 
       map::core::FieldDecomposer<2, 2>::decomposeKernel(spCachedKernel, actualField);
-      tester.setActualField(actualField->Clone());
+      tester.setActualField(actualField);
       CHECK_TESTER(tester);
 
       RETURN_AND_REPORT_TEST_SUCCESS;

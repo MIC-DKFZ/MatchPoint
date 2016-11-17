@@ -137,6 +137,16 @@ namespace map
         {
         };
 
+        template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
+        ::itk::LightObject::Pointer
+          PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
+          InternalClone() const
+        {
+          Pointer clone = Self::New();
+          clone->_spTransform = this->_spTransform;
+          return clone.GetPointer();
+        }
+
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
         void
             PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::

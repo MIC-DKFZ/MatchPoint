@@ -182,13 +182,13 @@ namespace map
       lit::FieldTester< ::map::core::FieldDecomposer<2, 2>::FieldType> tester;
 			double checkThreshold = 0.1;
 			tester.setCheckThreshold(checkThreshold);
-      tester.setExpectedField(actualField->Clone());
+      tester.setExpectedField(actualField);
 
 			PreCachedKernelType* pKernel = dynamic_cast<PreCachedKernelType*>(spKernel.GetPointer());
 			CHECK(pKernel != NULL);
       bool validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
       CHECK(validField);
-      tester.setActualField(actualField->Clone());
+      tester.setActualField(actualField);
 			CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
@@ -196,7 +196,7 @@ namespace map
 			CHECK(pKernel != NULL);
       validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
       CHECK(validField);
-      tester.setActualField(actualField->Clone());
+      tester.setActualField(actualField);
       CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
@@ -204,7 +204,7 @@ namespace map
 			CHECK(pKernel != NULL);
       validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
       CHECK(validField);
-      tester.setActualField(actualField->Clone());
+      tester.setActualField(actualField);
       CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 
@@ -212,7 +212,7 @@ namespace map
 			CHECK(pKernel != NULL);
       validField = ::map::core::FieldDecomposer<2, 2>::decomposeKernel(pKernel, actualField);
       CHECK(validField);
-      tester.setActualField(actualField->Clone());
+      tester.setActualField(actualField);
       CHECK_TESTER(tester);
 			CHECK(*(pKernel->getLargestPossibleRepresentation()) == *spInRep);
 

@@ -77,6 +77,15 @@ namespace map
 			Superclass::PrintSelf(os, indent);
 		};
 
+    template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
+    ::itk::LightObject::Pointer
+      NullRegistrationKernel<VInputDimensions, VOutputDimensions>::
+      InternalClone() const
+    {
+      Pointer clone = Self::New();
+      return clone.GetPointer();
+    }
+
 	} // end namespace core
 } // end namespace map
 
