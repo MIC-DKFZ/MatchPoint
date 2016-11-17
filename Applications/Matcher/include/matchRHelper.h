@@ -192,7 +192,7 @@ namespace map
 
 					typedef ::map::io::RegistrationFileWriter<IDim, IDim> WriterType;
 					typename WriterType::Pointer spWriter  = WriterType::New();
-
+          spWriter->setExpandLazyKernels(false);
 					spWriter->write(pReg, this->_appData->_outputFileName);
 
 					std::cout << "done." << std::endl;

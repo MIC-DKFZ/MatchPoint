@@ -175,6 +175,7 @@ namespace map
 
       spFieldWriter->SetFileName(absoluteFieldPath.c_str());
       spFieldWriter->SetInput(spField);
+      spFieldWriter->SetUseCompression(true);
       spFieldWriter->Update();
 
       //add field file
