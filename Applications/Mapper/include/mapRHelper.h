@@ -355,6 +355,7 @@ namespace map
 
 						spImageWriter->SetInput(pImage);
 						spImageWriter->SetFileName(appData._outputFileName.c_str());
+            spImageWriter->SetUseCompression(true);
 						spImageWriter->Update();
 					}
 
