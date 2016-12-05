@@ -127,7 +127,7 @@ namespace map
           {
             std::cout << "Generation of inverse Kernel is needed. Invert direct kernel..." << std::endl;
             typedef map::core::InverseRegistrationKernelGenerator<InvertedRegType::DirectMappingType::InputDimensions, InvertedRegType::DirectMappingType::OutputDimensions> KernelInverterType;
-            KernelInverterType::Pointer inverter = KernelInverterType::New();
+            typename KernelInverterType::Pointer inverter = KernelInverterType::New();
 
             typedef ::itk::ImageBase<IMDim> TemplateImageType;
             TemplateImageType* tempImage = dynamic_cast<TemplateImageType*>(appData._spRefImage.GetPointer());
@@ -143,7 +143,7 @@ namespace map
           {
             std::cout << "Generation of direct Kernel is needed. Invert inverse kernel..." << std::endl;
             typedef map::core::InverseRegistrationKernelGenerator<InvertedRegType::InverseMappingType::InputDimensions, InvertedRegType::InverseMappingType::OutputDimensions> KernelInverterType;
-            KernelInverterType::Pointer inverter = KernelInverterType::New();
+            typename KernelInverterType::Pointer inverter = KernelInverterType::New();
 
             typedef ::itk::ImageBase<ITDim> TemplateImageType;
             TemplateImageType* tempImage = dynamic_cast<TemplateImageType*>(appData._spRefImage.GetPointer());

@@ -229,7 +229,7 @@ namespace map
 
           //Set meta properties
           ::map::algorithm::facet::MetaPropertyAlgorithmInterface* pMetaInterface =
-            dynamic_cast<::map::algorithm::facet::MetaPropertyAlgorithmInterface*>(this->_appData->_algorithm.GetPointer());
+            dynamic_cast< ::map::algorithm::facet::MetaPropertyAlgorithmInterface*>(this->_appData->_algorithm.GetPointer());
 
           if (pMetaInterface)
           {
