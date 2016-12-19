@@ -312,7 +312,7 @@ namespace map
 						                         1));
 
 						// Generate the file names
-						map::core::String tempLen = map::core::convert::toStr(outputNames->GetEndIndex());
+						map::core::String tempLen = map::core::convert::toStr(static_cast<unsigned int>(outputNames->GetEndIndex()));
 						map::core::String seriesFormat = map::core::FileDispatch::createFullPath(
 						                                     map::core::FileDispatch::getPath(appData._outputFileName),
 						                                     map::core::FileDispatch::getName(appData._outputFileName) + ".%0" +
