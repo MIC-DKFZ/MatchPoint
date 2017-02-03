@@ -72,7 +72,6 @@ namespace map
                 typedef ::itk::SmartPointer<Self>                                     Pointer;
                 typedef ::itk::SmartPointer<const Self>                               ConstPointer;
                 itkTypeMacro(ITKPDEDeformableRegistrationAlgorithmBase, IterativeRegistrationAlgorithm);
-                mapNewAlgorithmMacro(Self);
 
                 typedef typename Superclass::UIDType UIDType;
                 typedef typename Superclass::UIDPointer UIDPointer;
