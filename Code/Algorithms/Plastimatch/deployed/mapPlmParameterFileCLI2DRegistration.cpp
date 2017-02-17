@@ -29,7 +29,9 @@
 #include "PlmParameterFileCLI2DRegistration_ProfileResource.h"
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::plastimatch::ParameterFileRegistrationAlgorithm<ImageType, ImageType, map::algorithm::PlmParameterFileCLI2DRegistrationUIDPolicy>
+typedef map::core::continuous::Elements<2>::InternalPointSetType PointSetType;
+
+typedef map::algorithm::plastimatch::ParameterFileRegistrationAlgorithm<ImageType, ImageType, PointSetType, PointSetType, map::algorithm::PlmParameterFileCLI2DRegistrationUIDPolicy>
 AlgorithmType;
 
 mapDeployAlgorithmMacro(AlgorithmType);

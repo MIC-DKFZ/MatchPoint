@@ -31,21 +31,21 @@ namespace map
 		namespace boxed
 		{
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			PlmBSplineCLIRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
+			PlmBSplineCLIRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			PlmBSplineCLIRegistrationAlgorithm()
 			{
 			};
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			PlmBSplineCLIRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
+			PlmBSplineCLIRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			~PlmBSplineCLIRegistrationAlgorithm()
 			{
 			};
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
 			void
-			PlmBSplineCLIRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			PlmBSplineCLIRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			prepConfigurationPLM()
 			{
 				this->_configurationPLM.clear();

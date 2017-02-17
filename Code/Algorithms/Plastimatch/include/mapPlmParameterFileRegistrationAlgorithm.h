@@ -30,6 +30,7 @@
 #include "mapContinuous.h"
 
 #include "mapPlmCLIRegistrationAlgorithmBase.h"
+
 #include "mapClassMacros.h"
 
 namespace map
@@ -46,13 +47,13 @@ namespace map
 			    @ingroup Algorithms
 						@ingroup Plastimatch
 			 */
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			class ParameterFileRegistrationAlgorithm : public
-				CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
+      class ParameterFileRegistrationAlgorithm :
+        public CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>
 			{
 			public:
-				typedef ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
-				typedef CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>  Superclass;
+        typedef ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy> Self;
+				typedef CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>  Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;
 				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
@@ -67,7 +68,7 @@ namespace map
 				typedef typename Superclass::MovingRepresentationDescriptorType MovingRepresentationDescriptorType;
 				typedef typename Superclass::TargetRepresentationDescriptorType TargetRepresentationDescriptorType;
 
-				typedef typename Superclass::RegistrationPointer RegistrationPointer;
+        typedef typename Superclass::RegistrationPointer RegistrationPointer;
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
 
@@ -100,8 +101,6 @@ namespace map
 				 @eguarantee strong
 				*/
 				virtual void prepConfigurationPLM();
-
-				::map::core::String _parameterFilePath;
 
 			private:
 

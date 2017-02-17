@@ -47,13 +47,13 @@ namespace map
 						@ingroup Plastimatch
 						@ingroup Boxed
 			 */
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			class PlmBSplineCLIRegistrationAlgorithm : public
-				plastimatch::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
+      template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
+      class PlmBSplineCLIRegistrationAlgorithm : public
+				plastimatch::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>
 			{
 			public:
-				typedef PlmBSplineCLIRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
-				typedef plastimatch::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>
+				typedef PlmBSplineCLIRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy> Self;
+				typedef plastimatch::CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>
 				Superclass;
 
 				typedef ::itk::SmartPointer<Self>                                     Pointer;

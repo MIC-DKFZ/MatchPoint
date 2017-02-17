@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Registration>
+  <Tag Name='AlgorithmUID'>de.dkfz.matchpoint.common::TranslationMattesMIMultiResAlgorithm.3D.default::1.1.0::Feb  3 2017 14:26:05; MAP 0.12.0; ITK 4.9.0</Tag>
+  <Tag Name='RegistrationUID'>1.2.826.0.1.3680043.2.1143.6270050253496206843181312134131753123</Tag>
+  <MovingDimensions>3</MovingDimensions>
+  <TargetDimensions>3</TargetDimensions>
+  <Kernel ID='direct' InputDimensions='3' OutputDimensions='3'>
+    <StreamProvider>MatrixModelBasedKernelWriter&lt;3,3&gt;</StreamProvider>
+    <KernelType>MatrixModelKernel</KernelType>
+    <Matrix>
+      <Value Column='0' Row='0'>1.000000000</Value>
+      <Value Column='1' Row='0'>0.0000000000</Value>
+      <Value Column='2' Row='0'>0.0000000000</Value>
+      <Value Column='0' Row='1'>0.0000000000</Value>
+      <Value Column='1' Row='1'>1.000000000</Value>
+      <Value Column='2' Row='1'>0.0000000000</Value>
+      <Value Column='0' Row='2'>0.0000000000</Value>
+      <Value Column='1' Row='2'>0.0000000000</Value>
+      <Value Column='2' Row='2'>1.000000000</Value>
+    </Matrix>
+    <MatrixStr>1 0 0 0 1 0 0 0 1 </MatrixStr>
+    <Offset>
+      <Value Row='0'>10.01014343</Value>
+      <Value Row='1'>-16.00259049</Value>
+      <Value Row='2'>-4.990374015</Value>
+    </Offset>
+    <OffsetStr>10.0101 -16.0026 -4.99037 </OffsetStr>
+  </Kernel>
+  <Kernel ID='inverse' InputDimensions='3' OutputDimensions='3'>
+    <StreamProvider>MatrixModelBasedKernelWriter&lt;3,3&gt;</StreamProvider>
+    <KernelType>MatrixModelKernel</KernelType>
+    <Matrix>
+      <Value Column='0' Row='0'>1.000000000</Value>
+      <Value Column='1' Row='0'>0.0000000000</Value>
+      <Value Column='2' Row='0'>0.0000000000</Value>
+      <Value Column='0' Row='1'>0.0000000000</Value>
+      <Value Column='1' Row='1'>1.000000000</Value>
+      <Value Column='2' Row='1'>0.0000000000</Value>
+      <Value Column='0' Row='2'>0.0000000000</Value>
+      <Value Column='1' Row='2'>0.0000000000</Value>
+      <Value Column='2' Row='2'>1.000000000</Value>
+    </Matrix>
+    <MatrixStr>1 0 0 0 1 0 0 0 1 </MatrixStr>
+    <Offset>
+      <Value Row='0'>-10.01014343</Value>
+      <Value Row='1'>16.00259049</Value>
+      <Value Row='2'>4.990374015</Value>
+    </Offset>
+    <OffsetStr>-10.0101 16.0026 4.99037 </OffsetStr>
+  </Kernel>
+</Registration>

@@ -10,7 +10,7 @@ Please load and compile the following third party libraries/tool:
 
 1. CMake (version 2.8 or higher)
 2. Litmus (in this distribution; see \Utilities\Litmus; if you want tests) 
-3. itk (4.0.0 or higher) 
+3. itk (4.6.0 or higher) 
 5. doxygen (if you want to generate a source code documentation)
 
 Installation instruction

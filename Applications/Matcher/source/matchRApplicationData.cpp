@@ -56,6 +56,8 @@ namespace map
         _targetMaskFileName = "";
         _outputFileName = "";
         _logFileName = "";
+        _targetPointSetFileName = "";
+        _movingPointSetFileName = "";
 
         _parameterStrs.clear();
         _parameterMap.clear();
@@ -129,13 +131,18 @@ namespace map
 				cmdParser.AddArgument("-o", itksys::CommandLineArguments::SPACE_ARGUMENT, &_outputFileName,
 				                      "Specifies name and location of the output file. Default is the location of the input file and a name constructed from the name of the input file and the registration file.");
 				cmdParser.AddArgument("--target-mask", itksys::CommandLineArguments::SPACE_ARGUMENT, &_targetMaskFileName,
-				                      "Specifies name and location of the file that serves as template for the target field of view. Thus this file defines spacing, size, origin and orientation of the output image. Default is that the input image is used as template.");
+				                      "Specifies name and location of the file that specifies a target mask image.");
         cmdParser.AddArgument("-t", itksys::CommandLineArguments::SPACE_ARGUMENT, &_targetMaskFileName,
-				                      "Specifies name and location of the file that serves as template for the target field of view. Thus this file defines spacing, size, origin and orientation of the output image. Default is that the input image is used as template.");
+          "Specifies name and location of the file that specifies a target mask image.");
         cmdParser.AddArgument("--moving-mask", itksys::CommandLineArguments::SPACE_ARGUMENT, &_movingMaskFileName,
-          "Specifies name and location of the file that serves as template for the target field of view. Thus this file defines spacing, size, origin and orientation of the output image. Default is that the input image is used as template.");
+          "Specifies name and location of the file that specifies a moving mask image.");
         cmdParser.AddArgument("-m", itksys::CommandLineArguments::SPACE_ARGUMENT, &_movingMaskFileName,
-          "Specifies name and location of the file that serves as template for the target field of view. Thus this file defines spacing, size, origin and orientation of the output image. Default is that the input image is used as template.");
+          "Specifies name and location of the file that specifies a moving mask image.");
+
+        cmdParser.AddArgument("--target-pointset", itksys::CommandLineArguments::SPACE_ARGUMENT, &_targetPointSetFileName,
+          "Specifies name and location of the file that specifies the optional target point set.");
+        cmdParser.AddArgument("--moving-pointset", itksys::CommandLineArguments::SPACE_ARGUMENT, &_movingPointSetFileName,
+          "Specifies name and location of the file that specifies the optional moving point set.");
 
         cmdParser.AddArgument("--parameters", itksys::CommandLineArguments::MULTI_ARGUMENT, &_parameterStrs,
 				                      "Specifies the value that should be used for pixels of the result image that are not covered by the mapped input image. Default value is '0.0'.");

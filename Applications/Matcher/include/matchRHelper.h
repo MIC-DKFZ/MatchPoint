@@ -34,7 +34,7 @@
 #include "mapImageRegistrationAlgorithmInterface.h"
 #include "mapMaskedRegistrationAlgorithmInterface.h"
 #include "mapMetaPropertyAlgorithmInterface.h"
-
+#include "mapPointSetRegistrationAlgorithmInterfaceV2.h"
 #include <mapImageRegistrationAlgorithmInterface.h>
 #include <mapRegistrationAlgorithmInterface.h>
 #include <mapIterativeAlgorithmInterface.h>
@@ -44,6 +44,7 @@
 #include <mapRegistrationAlgorithm.h>
 #include <mapMetaPropertyInfo.h>
 #include <mapMetaPropertyBase.h>
+#include <mapContinuousElements.h>
 
 #include "matchRApplicationData.h"
 
@@ -56,10 +57,16 @@ namespace map
 
 			/** Helper function to load the algorithm into the passed app data structure.*/
       void loadAlgorithm(ApplicationData& appData);
-      /** Helper function to load the algorithm into the passed app data structure.*/
+      /** Helper function to load the moving image into the passed app data structure.*/
       void loadMovingImage(ApplicationData& appData);
-      /** Helper function to load the algorithm into the passed app data structure.*/
+      /** Helper function to load the target image into the passed app data structure.*/
       void loadTargetImage(ApplicationData& appData);
+
+      /** Helper function to load the target point set (if set) into the passed app data structure.*/
+      void loadTargetPointSet(ApplicationData& appData);
+      /** Helper function to load the moving point set (if set) into the passed app data structure.*/
+      void loadMovingPointSet(ApplicationData& appData);
+
       /** Helper function to load the meta parameter map for the algorithm into the passed app data structure.*/
       void loadParameterMap(ApplicationData& appData);
 
@@ -201,6 +208,7 @@ namespace map
 				typename RegistrationType::Pointer doRegistration()
 				{
 					typedef typename ::map::core::discrete::Elements<IDim>::InternalImageType ImageType;
+          typedef typename ::map::core::continuous::Elements<IDim>::InternalPointSetType PointSetType;
 
           //Now cast to the right interface (ImageRegistrationAlgorithmBase)
           //to set the images
@@ -219,6 +227,45 @@ namespace map
           else
           {
             mapDefaultExceptionStaticMacro("Error. Wrong algorithm seemed to be loaded. Image Registration interface is missing. Check DLL.");
+          }
+
+          //Now cast to the right interface (PointSetRegistrationAlgorithmInterfaceV2)
+          //to set the images
+          typedef map::algorithm::facet::PointSetRegistrationAlgorithmInterfaceV2<PointSetType, PointSetType>
+            PointSetRegistrationAlgorithmInterfaceType;
+          PointSetRegistrationAlgorithmInterfaceType* pPSInterface =
+            dynamic_cast<PointSetRegistrationAlgorithmInterfaceType*>(this->_appData->_algorithm.GetPointer());
+
+          if (pPSInterface)
+          {
+            const PointSetType* moving = dynamic_cast<const PointSetType*>(this->_appData->_genericMovingPointSet.GetPointer());
+            const PointSetType* target = dynamic_cast<const PointSetType*>(this->_appData->_genericTargetPointSet.GetPointer());
+
+            if (pPSInterface->getMovingPointSetCount()>0)
+            {
+              if (moving)
+                pPSInterface->setMovingPointSet(moving);
+              else
+              {
+                if (pPSInterface->getMovingPointSetCount(true) > 0)
+                {
+                  mapDefaultExceptionStaticMacro("Error. Algorithm requires moving point set, but no point set specified.");
+                }
+              }
+            }
+
+            if (pPSInterface->getTargetPointSetCount()>0)
+            {
+              if (target)
+                pPSInterface->setTargetPointSet(target);
+              else
+              {
+                if (pPSInterface->getTargetPointSetCount(true) > 0)
+                {
+                  mapDefaultExceptionStaticMacro("Error. Algorithm requires target point set, but no point set specified.");
+                }
+              }
+            }
           }
 
           //Add observer for algorithm events.
