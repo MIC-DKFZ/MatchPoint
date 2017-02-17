@@ -35,7 +35,7 @@ namespace map
 		    This function is used for some tests and examples. It asumes the standard itk coordinate system (LPS)
 		*/
 		template <class TPointSet>
-		typename bool saveLandMarksToFile(const core::String& lmFileName, const TPointSet* pointSet)
+		bool saveLandMarksToFile(const core::String& lmFileName, const TPointSet* pointSet)
 		{
       typedef TPointSet LandmarksType;
 
@@ -57,11 +57,11 @@ namespace map
         spLMs->SetPoints(LandmarksType::PointsContainer::New());
 
         typename LandmarksType::PointsContainer::ConstPointer points = pointSet->GetPoints();
-        auto pointIterator = points->Begin();
-        const auto end = points->End();
+        typename LandmarksType::PointsContainer::ConstIterator pointIterator = points->Begin();
+        typename LandmarksType::PointsContainer::ConstIterator end = points->End();
         while (pointIterator != end)
         {
-          LandmarksType::PointType p = pointIterator.Value();
+          typename LandmarksType::PointType p = pointIterator.Value();
           for (unsigned int i = 0; i < LandmarksType::PointDimension; ++i)
           {
             if (i > 0)

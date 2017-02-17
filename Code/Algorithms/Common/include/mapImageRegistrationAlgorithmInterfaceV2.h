@@ -66,7 +66,7 @@ namespace map
         typedef typename Superclass::TargetImageConstPointer TargetImageConstPointer;
         typedef unsigned int SlotIndexType;
 
-        itkTypeMacro(ImageRegistrationAlgorithmInterfaceV2, ImageRegistrationAlgorithmInterface);
+        itkTypeMacroNoParent(ImageRegistrationAlgorithmInterfaceV2);
 
         /*! @brief gets a const pointer to the moving image for the specified index
         @eguarantee strong

@@ -65,7 +65,7 @@ namespace map
         typedef typename Superclass::TargetPointSetConstPointer TargetPointSetConstPointer;
         typedef unsigned int SlotIndexType;
 
-        itkTypeMacro(PointSetRegistrationAlgorithmInterfaceV2, PointSetRegistrationAlgorithmInterface);
+        itkTypeMacroNoParent(PointSetRegistrationAlgorithmInterfaceV2);
 
         /*! @brief gets a const pointer to the moving point set for the specified index
         @eguarantee strong

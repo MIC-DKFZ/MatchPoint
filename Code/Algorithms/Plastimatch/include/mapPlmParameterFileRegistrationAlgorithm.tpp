@@ -51,7 +51,7 @@ namespace map
 				if (this->isFirstConfiguration())
 				{
 					Superclass::configureAlgorithm();
-					_parameterFilePath = "";
+					this->_parameterFilePath = "";
 				}
 			};
 
