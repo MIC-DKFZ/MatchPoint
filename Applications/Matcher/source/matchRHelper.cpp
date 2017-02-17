@@ -26,7 +26,10 @@
 #include "mapDeploymentDLLAccess.h"
 #include "mapDeploymentDLLHandle.h"
 #include "mapMetaProperty.h"
+#include "mapContinuousElements.h"
+#include "mapSimpleLandMarkFileReader.h"
 
+#include "itkDataObject.h"
 #include "itkCastImageFilter.h"
 
 
@@ -289,6 +292,70 @@ void
     }
 
     appData._spTargetImage = loadedImage;
+  }
+};
+
+::itk::DataObject::Pointer
+loadGenericPointSet(const ::map::core::String& filename, unsigned int dim)
+{
+  ::itk::DataObject::Pointer result;
+
+  if (!(filename.empty()))
+  {
+    if (dim == 2)
+    {
+      typedef ::map::core::continuous::Elements<2>::InternalPointSetType PointSetType;
+      result = ::map::utilities::loadLandMarksFromFile<PointSetType>(filename).GetPointer();
+    }
+    else
+    {
+      typedef ::map::core::continuous::Elements<2>::InternalPointSetType PointSetType;
+      result = ::map::utilities::loadLandMarksFromFile<PointSetType>(filename).GetPointer();
+    }
+  }
+
+  return result;
+};
+
+void
+::map::apps::matchR::loadTargetPointSet(::map::apps::matchR::ApplicationData& appData)
+{
+  if (!(appData._targetPointSetFileName.empty()))
+  {
+    std::cout << std::endl << "Read target point set file... ";
+
+    appData._genericTargetPointSet = loadGenericPointSet(appData._targetPointSetFileName, appData._loadedDimensions);
+
+    if (appData._genericTargetPointSet.IsNotNull())
+    {
+      std::cout << "done." << std::endl;
+    }
+    else
+    {
+      mapDefaultExceptionStaticMacro(<<
+        " Unable to load target point set. File is not existing or has an unsupported format.");
+    }
+  }
+};
+
+void
+::map::apps::matchR::loadMovingPointSet(::map::apps::matchR::ApplicationData& appData)
+{
+  if (!(appData._movingPointSetFileName.empty()))
+  {
+    std::cout << std::endl << "Read moving point set file... ";
+
+    appData._genericMovingPointSet = loadGenericPointSet(appData._movingPointSetFileName, appData._loadedDimensions);
+
+    if (appData._genericMovingPointSet.IsNotNull())
+    {
+      std::cout << "done." << std::endl;
+    }
+    else
+    {
+      mapDefaultExceptionStaticMacro(<<
+        " Unable to load moving point set. File is not existing or has an unsupported format.");
+    }
   }
 };
 

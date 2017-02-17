@@ -55,7 +55,13 @@ namespace map
         ::map::io::GenericImageReader::GenericOutputImageType::Pointer _spTargetMaskImage;
         ::map::core::String  _targetMaskFileName;
 
-				::map::core::String  _outputFileName;
+        ::itk::DataObject::Pointer _genericTargetPointSet;
+        ::map::core::String  _targetPointSetFileName;
+
+        ::itk::DataObject::Pointer _genericMovingPointSet;
+        ::map::core::String  _movingPointSetFileName;
+
+        ::map::core::String  _outputFileName;
 
         ::map::core::String  _logFileName;
 
@@ -78,13 +84,9 @@ namespace map
 				/** Parse the application argument passed when starting the application.
 				* If no error or special request occurred the return is 0. Otherwise the return values
 				* have the following meaning: \n
-				* 1: incorrect use of flag -ex. -ex is last argument, but parameter name is missing.\n
-				* 2: incorrect use of flag -m. -m is last argument, but media id is missing.\n
-				* 3: incorrect use of flag -p. -p is last argument, but parameter name is missing.\n
-				* 4: incorrect use of flag -l, -m and -p. Only one of them can be set.\n
-				* 5: incorrect use of flag -m or -p. ControllerID must be specified.\n
-				* 6: help flag was set.\n
-				* 7: version flag was set.\n
+				* 1: help or "show version" was requested.\n
+				* 2: Error. Not all mandatory arguments where given.\n
+				* 3: Incorrect use of flag(s).\n
 				* @param argc Number of parameter arguments
 				* @param argv Pointer to the passed arguments
 				* @return Result code of the parsing (see above).**/

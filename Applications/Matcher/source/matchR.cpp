@@ -39,15 +39,37 @@ void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
   std::cout << std::endl;
 }
 
+#define mapCatchAppMacro(rcode, x) \
+  catch (::itk::ExceptionObject& e) \
+  { \
+    std::cerr << "Error!!!" << std::endl; \
+    std::cerr << e << std::endl; \
+    return rcode; \
+  } \
+  catch (std::exception& e) \
+  { \
+    std::cerr << "Error!!!" << std::endl; \
+    std::cerr << e.what() << std::endl; \
+    return rcode; \
+  } \
+  catch (...) \
+  { \
+    std::cerr << x << std::endl; \
+    return rcode; \
+  }
+
 /** Main entry point for the application.
  * @retval 0 normal exit.
  * @retval 1 showed help or version info.
  * @retval 2 Invalid usage. Missing parameters.
  * @retval 3 Invalid usage. Wrong option usage.
- * @retval 4 Error while loading input image.
- * @retval 5 Error while loading registration.
- * @retval 6 Error while loading reference image.
- * @retval 9 Error while mapping or writing result image.
+ * @retval 4 Error while loading moving image.
+ * @retval 5 Error while loading target image.
+ * @retval 6 Error while loading algorithm.
+ * @retval 7 Error while loading meta parameter.
+ * @retval 8 Error while registering and storing registration.
+ * @retval 9 Error while loading moving point set.
+ * @retval 10 Error while loading target point set.
  */
 int main(int argc, char** argv)
 {
@@ -109,6 +131,7 @@ int main(int argc, char** argv)
   {
     std::cout << appData._movingMaskFileName << std::endl;
   }
+  std::cout << "Target mask file:   ";
   if (appData._targetMaskFileName.empty())
   {
     std::cout << "disabled" << std::endl;
@@ -116,6 +139,24 @@ int main(int argc, char** argv)
   else
   {
     std::cout << appData._targetMaskFileName << std::endl;
+  }
+  std::cout << "Moving point set file:   ";
+  if (appData._movingPointSetFileName.empty())
+  {
+    std::cout << "disabled" << std::endl;
+  }
+  else
+  {
+    std::cout << appData._movingPointSetFileName << std::endl;
+  }
+  std::cout << "Target point set file:   ";
+  if (appData._targetPointSetFileName.empty())
+  {
+    std::cout << "disabled" << std::endl;
+  }
+  else
+  {
+    std::cout << appData._targetPointSetFileName << std::endl;
   }
 
   std::cout << "Series read style: " << appData._seriesReadStyleStr << std::endl;
@@ -125,90 +166,39 @@ int main(int argc, char** argv)
   {
     map::apps::matchR::loadMovingImage(appData);
   }
-  catch (::itk::ExceptionObject& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e << std::endl;
-    return 4;
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e.what() << std::endl;
-    return 4;
-  }
-  catch (...)
-  {
-    std::cerr << "Error!!! unknown error while reading moving image." << std::endl;
-    return 4;
-  }
+  mapCatchAppMacro(4, "Error!!! unknown error while reading moving image.")
 
   try
   {
     map::apps::matchR::loadTargetImage(appData);
   }
-  catch (::itk::ExceptionObject& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e << std::endl;
-    return 6;
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e.what() << std::endl;
-    return 6;
-  }
-  catch (...)
-  {
-    std::cerr << "Error!!! unknown error while reading target image." << std::endl;
-    return 6;
-  }
+  mapCatchAppMacro(5, "Error!!! unknown error while reading target image.")
 
   try
   {
     map::apps::matchR::loadAlgorithm(appData);
   }
-  catch (::itk::ExceptionObject& e)
+  mapCatchAppMacro(6, "Error!!! unknown error while reading registration file.")
+
+  try
   {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e << std::endl;
-    return 5;
+    map::apps::matchR::loadTargetPointSet(appData);
   }
-  catch (std::exception& e)
+  mapCatchAppMacro(9, "Error!!! unknown error while reading target point set.")
+    
+  try
   {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e.what() << std::endl;
-    return 5;
+    map::apps::matchR::loadMovingPointSet(appData);
   }
-  catch (...)
-  {
-    std::cerr << "Error!!! unknown error while reading registration file." << std::endl;
-    return 5;
-  }
+  mapCatchAppMacro(10, "Error!!! unknown error while reading moving point set.")
+
 
   try
   {
     map::apps::matchR::loadParameterMap(appData);
   }
-  catch (::itk::ExceptionObject& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e << std::endl;
-    return 7;
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e.what() << std::endl;
-    return 7;
-  }
-  catch (...)
-  {
-    std::cerr << "Error!!! unknown error while parsing the meta parameters." << std::endl;
-    return 7;
-  }
-
+  mapCatchAppMacro(7, "Error!!! unknown error while parsing the meta parameters.")
+    
   try
   {
     if (appData._loadedDimensions == 2)
@@ -222,23 +212,7 @@ int main(int argc, char** argv)
       logic.processData();
     }
   }
-  catch (::itk::ExceptionObject& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e << std::endl;
-    return 9;
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << "Error!!!" << std::endl;
-    std::cerr << e.what() << std::endl;
-    return 9;
-  }
-  catch (...)
-  {
-    std::cerr << "Error!!! unknown error while mapping and writing image." << std::endl;
-    return 9;
-  }
+  mapCatchAppMacro(8, "Error!!! unknown error while mapping and writing image.")
 
   std::cout << std::endl;
 
