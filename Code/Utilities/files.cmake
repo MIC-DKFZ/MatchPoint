@@ -4,6 +4,7 @@ source/mapProcessExecutor.cpp
 
 SET(H_FILES 
 include/mapSimpleLandMarkFileReader.h
+include/mapSimpleLandMarkFileWriter.h
 include/mapProcessExecutor.h
 include/mapITKTypeMacroNoParent.h
 )

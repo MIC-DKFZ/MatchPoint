@@ -35,6 +35,7 @@
 #include "mapPlmAlgorithmHelper.h"
 #include "mapMetaPropertyAlgorithmBase.h"
 #include "mapMaskedRegistrationAlgorithmBase.h"
+#include "mapPointSetRegistrationAlgorithmInterfaceV2.h"
 
 #include "mapGenericVectorFieldTransform.h"
 
@@ -58,16 +59,17 @@ namespace map
 			    @ingroup Algorithms
 						@ingroup Plastimatch
 			 */
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			class CLIRegistrationAlgorithmBase : public
+      template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
+      class CLIRegistrationAlgorithmBase : public
 				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
 			public ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>,
 			public MetaPropertyAlgorithmBase,
-			public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+      public MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>,
+      public facet::PointSetRegistrationAlgorithmInterfaceV2<TMovingPointSet, TTargetPointSet>,
 			public TIdentificationPolicy
 			{
 			public:
-				typedef CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy> Self;
+				typedef CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy> Self;
 				typedef IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>
 				Superclass;
 
@@ -93,6 +95,13 @@ namespace map
 				typedef typename Superclass::RegistrationPointer RegistrationPointer;
 				typedef typename Superclass::RegistrationType RegistrationType;
 				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
+
+        typedef facet::PointSetRegistrationAlgorithmInterfaceV2<TMovingPointSet, TTargetPointSet> PointSetInterfaceType;
+        typedef typename PointSetInterfaceType::MovingPointSetConstPointer MovingPointSetConstPointer;
+        typedef typename PointSetInterfaceType::TargetPointSetConstPointer TargetPointSetConstPointer;
+        typedef typename PointSetInterfaceType::SlotIndexType SlotIndexType;
+        typedef typename PointSetInterfaceType::MovingPointSetType MovingPointSetType;
+        typedef typename PointSetInterfaceType::TargetPointSetType TargetPointSetType;
 
 				typedef typename MetaPropertyAlgorithmBase::MetaPropertyType MetaPropertyType;
 				typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
@@ -138,6 +147,37 @@ namespace map
 
 				mapGetMetaMacro(DeleteTempDirectory, bool);
 				mapSetMetaMacro(DeleteTempDirectory, bool);
+
+        virtual bool hasCoupledPointSetInputs() const override
+        {
+          return true;
+        };
+
+        virtual bool isOptionalTargetPointSet(SlotIndexType index) const override
+        {
+          return true;
+        };
+
+        virtual bool isOptionalMovingPointSet(SlotIndexType index) const override
+        {
+          return true;
+        };
+
+        virtual SlotIndexType getTargetPointSetCount(bool onlyMandatory = false) const override
+        {
+          if (onlyMandatory) return 0;
+          return 1;
+        };
+
+        virtual SlotIndexType getMovingPointSetCount(bool onlyMandatory = false) const override
+        {
+          if (onlyMandatory) return 0;
+          return 1;
+        };
+
+        virtual unsigned long getNthTargetPointSetMTime(SlotIndexType index) const override;
+
+        virtual unsigned long getNthMovingPointSetMTime(SlotIndexType index) const override;
 
 			protected:
 				CLIRegistrationAlgorithmBase();
@@ -199,7 +239,6 @@ namespace map
 				virtual bool registrationIsOutdated() const;
 
 				virtual bool doStopAlgorithm();
-
 
 				/*! This method should do all preparation tasks right before the algorithm is executed. At the end of this method
 				 the algorithm should be set up and ready to use.\n
@@ -331,6 +370,8 @@ namespace map
 				::map::core::String _finalFieldTempPath;
 				::map::core::String _movingMaskTempPath;
 				::map::core::String _targetMaskTempPath;
+        ::map::core::String _movingPointSetTempPath;
+        ::map::core::String _targetPointSetTempPath;
 
 				bool _deleteTempDirectory;
 
@@ -341,7 +382,24 @@ namespace map
 				 * @eguarantee no throw*/
 				void cleanTempDir() const;
 
-			private:
+        ::map::core::String _parameterFilePath;
+
+        virtual MovingPointSetConstPointer doGetNthMovingPointSet(SlotIndexType index) const override;
+
+        virtual TargetPointSetConstPointer doGetNthTargetPointSet(SlotIndexType index) const override;;
+
+        virtual void doSetNthMovingPointSet(SlotIndexType index, const MovingPointSetType* pMovingPointSet) override;;
+
+        virtual void doSetNthTargetPointSet(SlotIndexType index, const TargetPointSetType* pTargetPointSet) override;;
+
+        ::map::core::ModificationTimeValidator _targetPSMTime;
+        ::map::core::ModificationTimeValidator _movingPSMTime;
+
+        MovingPointSetConstPointer _spMovingPointSet;
+
+        TargetPointSetConstPointer _spTargetPointSet;
+
+      private:
 
 				/*! The parameters of the registration field generated by plastimatch.*/
 				FinalFieldPointer _spFinalizedField;

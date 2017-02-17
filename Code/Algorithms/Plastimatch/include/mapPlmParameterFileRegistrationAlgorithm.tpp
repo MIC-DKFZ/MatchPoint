@@ -31,21 +31,21 @@ namespace map
 		namespace plastimatch
 		{
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
+			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			ParameterFileRegistrationAlgorithm()
 			{
 			};
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
+			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			~ParameterFileRegistrationAlgorithm()
 			{
 			};
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
 			void
-			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			configureAlgorithm()
 			{
 				if (this->isFirstConfiguration())
@@ -55,9 +55,9 @@ namespace map
 				}
 			};
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
 			void
-			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			compileInfos(MetaPropertyVectorType& infos) const
 			{
 				Superclass::compileInfos(infos);
@@ -67,9 +67,9 @@ namespace map
 #endif
 			};
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
-			typename ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::MetaPropertyPointer
-			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
+			typename ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::MetaPropertyPointer
+			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			doGetProperty(const MetaPropertyNameType& name) const
 			{
 				MetaPropertyPointer spResult;
@@ -86,9 +86,9 @@ namespace map
 				return spResult;
 			};
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
 			void
-			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty)
 			{
 				if (name == "ParameterFilePath")
@@ -103,16 +103,17 @@ namespace map
 				}
 			};
 
-			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy>
+			template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
 			void
-			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
+			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
 			prepConfigurationPLM()
 			{
 				this->_configurationPLM = loadConfigurationFromFile(this->_parameterFilePath);
 			}
 
 		} // end namespace plastimatch
-	} // end namespace algorithm
+
+  } // end namespace algorithm
 } // end namespace map
 
 #endif

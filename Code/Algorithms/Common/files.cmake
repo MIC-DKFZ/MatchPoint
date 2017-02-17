@@ -27,6 +27,7 @@ include/mapImagePyramidesGetterInterface.h
 include/mapImagePyramidesSetterInterface.h
 include/mapImageRegistrationAlgorithmBase.h
 include/mapImageRegistrationAlgorithmInterface.h
+include/mapImageRegistrationAlgorithmInterfaceV2.h
 include/mapInterimRegistrationResultAccessInterface.h
 include/mapIterativeAlgorithmBase.h
 include/mapIterativeAlgorithmInterface.h
@@ -46,6 +47,7 @@ include/mapOptimizerControlInterface.h
 include/mapOptimizerGetterInterface.h
 include/mapPointSetRegistrationAlgorithmBase.h
 include/mapPointSetRegistrationAlgorithmInterface.h
+include/mapPointSetRegistrationAlgorithmInterfaceV2.h
 include/mapRegistrationAlgorithm.h
 include/mapRegistrationAlgorithmBase.h
 include/mapRegistrationAlgorithmInterface.h

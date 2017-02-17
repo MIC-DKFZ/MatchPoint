@@ -22,13 +22,16 @@
 
 #include "mapDeploymentDLLHelper.h"
 #include "mapDiscreteElements.h"
+#include "mapContinuousElements.h"
 #include "mapConfigure.h"
 
 #include "mapPlmBSplineCLIRegistrationAlgorithm.h"
 #include "PlmBSplineCLI2DRegistration_ProfileResource.h"
 
 typedef map::core::discrete::Elements<2>::InternalImageType ImageType;
-typedef map::algorithm::boxed::PlmBSplineCLIRegistrationAlgorithm<ImageType, ImageType, map::algorithm::PlmBSplineCLI2DRegistrationUIDPolicy>
+typedef map::core::continuous::Elements<2>::InternalPointSetType PointSetType;
+
+typedef map::algorithm::boxed::PlmBSplineCLIRegistrationAlgorithm<ImageType, ImageType, PointSetType, PointSetType, map::algorithm::PlmBSplineCLI2DRegistrationUIDPolicy>
 AlgorithmType;
 
 mapDeployAlgorithmMacro(AlgorithmType);

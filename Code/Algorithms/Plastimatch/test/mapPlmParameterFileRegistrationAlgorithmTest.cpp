@@ -30,10 +30,12 @@
 #include "litTestImageIO.h"
 #include "litTransformFieldTester.h"
 #include "litImageTester.h"
+#include "litPointSetTester.h"
 
 #include "mapDiscreteElements.h"
 #include "mapPlmParameterFileRegistrationAlgorithm.h"
 #include "mapITKTranslationTransform.h"
+#include "mapSimpleLandMarkFileReader.h"
 
 namespace map
 {
@@ -126,12 +128,16 @@ namespace map
             //ARGUMENTS: 1: moving image
             //           2: target image
             //           3: parameter file
+            //           4: moving point set
+            //           5: target point set
 
             PREPARE_DEFAULT_TEST_REPORTING;
 
             ::map::core::String movingImageFileName = "";
             ::map::core::String targetImageFileName = "";
             ::map::core::String paramFileName = "";
+            ::map::core::String movingPointSetFileName = "";
+            ::map::core::String targetPointSetFileName = "";
 
             ::map::core::String callingAppPath = _callingAppPath;
             ::map::core::String plastimatichPath = map::core::FileDispatch::getPath(_callingAppPath);
@@ -151,16 +157,30 @@ namespace map
                 paramFileName = argv[3];
             }
 
+            if (argc > 4)
+            {
+              movingPointSetFileName = argv[4];
+            }
+
+            if (argc > 5)
+            {
+              targetPointSetFileName = argv[5];
+            }
+
             //load input data
             typedef map::core::discrete::Elements<3>::InternalImageType ImageType;
+            typedef map::core::continuous::Elements<3>::InternalPointSetType PointSetType;
 
-            typedef algorithm::plastimatch::ParameterFileRegistrationAlgorithm < ImageType, ImageType, TestPlm3DRegistrationUIDPolicy >
+            typedef algorithm::plastimatch::ParameterFileRegistrationAlgorithm < ImageType, ImageType, PointSetType, PointSetType, TestPlm3DRegistrationUIDPolicy >
                 Plm3DRegistrationAlgorithmType;
 
             ImageType::Pointer spMovingImage = lit::TestImageIO<unsigned char, ImageType>::readImage(
                 movingImageFileName);
             ImageType::Pointer spTargetImage = lit::TestImageIO<unsigned char, ImageType>::readImage(
                 targetImageFileName);
+
+            PointSetType::Pointer movingPoints = ::map::utilities::loadLandMarksFromFile<PointSetType>(movingPointSetFileName);
+            PointSetType::Pointer targetPoints = ::map::utilities::loadLandMarksFromFile<PointSetType>(targetPointSetFileName);
 
             Plm3DRegistrationAlgorithmType::Pointer spAlgorithm = Plm3DRegistrationAlgorithmType::New();
 
@@ -237,7 +257,7 @@ namespace map
 
             ///////////////////////////////////////////////////////
             //Test the correct temp storage of target and moving image
-            //use date of the last run (where the temp dir was not deleted).
+            //use data of the last run (where the temp dir was not deleted).
 
             ImageType::Pointer spStoredMovingImage =
                 lit::TestImageIO< ::map::core::discrete::InternalPixelType, ImageType>::readImage(
@@ -255,6 +275,10 @@ namespace map
             imageTester.setExpectedImage(spTargetImage);
             imageTester.setActualImage(spStoredTargetImage);
             CHECK_TESTER(imageTester);
+
+            //point set files should not exist because they are not set.
+            CHECK(!(itksys::SystemTools::FileExists(::map::core::FileDispatch::createFullPath(tempDir, "movingPointSet.txt").c_str(), true)));
+            CHECK(!(itksys::SystemTools::FileExists(::map::core::FileDispatch::createFullPath(tempDir, "targetPointSet.txt").c_str(), true)));
 
             itksys::SystemTools::RemoveADirectory(tempDir.c_str());
 
@@ -283,9 +307,42 @@ namespace map
             CHECK(spAlgorithm->getPlastimatchDirectory(dir));
             CHECK_EQUAL("../newPlastimatchDir", dir);
 
+            CHECK_EQUAL(true, spAlgorithm->hasCoupledPointSetInputs());
+            CHECK_EQUAL(1, spAlgorithm->getTargetPointSetCount());
+            CHECK_EQUAL(0, spAlgorithm->getTargetPointSetCount(true));
+            CHECK_EQUAL(1, spAlgorithm->getMovingPointSetCount());
+            CHECK_EQUAL(0, spAlgorithm->getMovingPointSetCount(true));
+
             //////////////////////////////////////////////////////////
             //Check of correct temporal mask storage
             //* @TODO Check of correct temporal mask storage
+
+            //////////////////////////////////////////////////////////
+            //Check of correct temporal point set storage
+            spAlgorithm->setMovingImage(spMovingImage);
+            spAlgorithm->setTargetImage(spTargetImage);
+            spAlgorithm->setMovingPointSet(movingPoints);
+            spAlgorithm->setTargetPointSet(targetPoints);
+            spAlgorithm->setParameterFilePath(paramFileName);
+            spAlgorithm->setPlastimatchDirectory(plastimatichPath);
+            spAlgorithm->setDeleteTempDirectory(false);
+            
+            spAlgorithm->determineRegistration();
+            cmdArg = getLoggedArguments(::map::core::FileDispatch::createFullPath(plastimatichPath, "plastimatchDummyCall.log"));
+            tempDir = getLoggedTempDir(cmdArg);
+
+            PointSetType::Pointer storedMovingPoints = ::map::utilities::loadLandMarksFromFile<PointSetType>(::map::core::FileDispatch::createFullPath(tempDir, "movingPointSet.txt"));
+            PointSetType::Pointer storedTargetPoints = ::map::utilities::loadLandMarksFromFile<PointSetType>(::map::core::FileDispatch::createFullPath(tempDir, "targetPointSet.txt"));
+
+            lit::PointSetTester<PointSetType> pointTester;
+
+            pointTester.setExpectedPointSet(movingPoints);
+            pointTester.setActualPointSet(storedMovingPoints);
+            CHECK_TESTER(pointTester);
+
+            pointTester.setExpectedPointSet(targetPoints);
+            pointTester.setActualPointSet(storedTargetPoints);
+            CHECK_TESTER(pointTester);
 
             RETURN_AND_REPORT_TEST_SUCCESS;
         }
