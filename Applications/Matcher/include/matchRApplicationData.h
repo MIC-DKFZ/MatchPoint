@@ -50,9 +50,11 @@ namespace map
 				::map::core::String  _movingFileName;
 				::map::io::GenericImageReader::GenericOutputImageType::Pointer _spTargetImage;
 				::map::core::String  _targetFileName;
-        ::map::io::GenericImageReader::GenericOutputImageType::Pointer _spMovingMaskImage;
+
+        ::itk::DataObject::Pointer _genericMovingMask;
         ::map::core::String  _movingMaskFileName;
-        ::map::io::GenericImageReader::GenericOutputImageType::Pointer _spTargetMaskImage;
+
+        ::itk::DataObject::Pointer _genericTargetMask;
         ::map::core::String  _targetMaskFileName;
 
         ::itk::DataObject::Pointer _genericTargetPointSet;

@@ -67,6 +67,11 @@ namespace map
       /** Helper function to load the moving point set (if set) into the passed app data structure.*/
       void loadMovingPointSet(ApplicationData& appData);
 
+      /** Helper function to load the moving mask into the passed app data structure.*/
+      void loadMovingMask(ApplicationData& appData);
+      /** Helper function to load the target mask into the passed app data structure.*/
+      void loadTargetMask(ApplicationData& appData);
+
       /** Helper function to load the meta parameter map for the algorithm into the passed app data structure.*/
       void loadParameterMap(ApplicationData& appData);
 
@@ -209,6 +214,7 @@ namespace map
 				{
 					typedef typename ::map::core::discrete::Elements<IDim>::InternalImageType ImageType;
           typedef typename ::map::core::continuous::Elements<IDim>::InternalPointSetType PointSetType;
+          typedef typename ::itk::SpatialObject<IDim> MaskType;
 
           //Now cast to the right interface (ImageRegistrationAlgorithmBase)
           //to set the images
@@ -267,6 +273,31 @@ namespace map
               }
             }
           }
+          else if (this->_appData->_genericMovingPointSet.IsNotNull() || this->_appData->_genericTargetPointSet.IsNotNull())
+          {
+            std::cout << "WARNING: algorithm does not support point sets. User specified point sets will be ignored.";
+          }
+
+          //Now cast to the mask supporting interface
+          //to set the masks
+          typedef map::algorithm::facet::MaskedRegistrationAlgorithmInterface<IDim, IDim>
+            MaskedRegistrationAlgorithmInterfaceType;
+          MaskedRegistrationAlgorithmInterfaceType* pMInterface =
+            dynamic_cast<MaskedRegistrationAlgorithmInterfaceType*>(this->_appData->_algorithm.GetPointer());
+
+          if (pMInterface)
+          {
+            const MaskType* moving = dynamic_cast<const MaskType*>(this->_appData->_genericMovingMask.GetPointer());
+            const MaskType* target = dynamic_cast<const MaskType*>(this->_appData->_genericTargetMask.GetPointer());
+
+            pMInterface->setMovingMask(moving);
+            pMInterface->setTargetMask(target);
+          }
+          else if (this->_appData->_genericMovingMask.IsNotNull() || this->_appData->_genericTargetMask.IsNotNull())
+          {
+            std::cout << "WARNING: algorithm does not support masks. User specified masks will be ignored.";
+          }
+
 
           //Add observer for algorithm events.
           typename ::itk::MemberCommand< ProcessingLogic<IDim> >::Pointer command = ::itk::MemberCommand< ProcessingLogic<IDim> >::New();
