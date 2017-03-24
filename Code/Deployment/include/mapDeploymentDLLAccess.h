@@ -132,7 +132,7 @@ namespace map
 		 */
 		MAPDeployment_EXPORT bool checkFileNameIsMDRACompliant(const char* fileName);
 
-		/**
+    /**
 		 * A function to determine if a file has the shared library extension in its name,
 		 * this converts name to lower
 		 * case before the compare, DynamicLoader always uses
@@ -146,6 +146,13 @@ namespace map
 		 * function returns the os specific extension for deployed algorithms (Windows: .dll; Linux: .so; Mac OS: .dylib).
 		 */
 		MAPDeployment_EXPORT map::core::String getDeploymentDLLExtension();
+
+    /**
+    * function returns the os specific MDRA prefix for MDRA compliant file names:\n
+    * mdra[verioning]\n\n
+    * Example: mdra-D-0-12.
+    */
+    MAPDeployment_EXPORT map::core::String getDeploymentDLLMDRAPrefix();
 
 	} //end of namespace deployment;
 

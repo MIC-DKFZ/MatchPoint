@@ -47,6 +47,22 @@ namespace map
       return result;
     };
 
+    map::core::String getDeploymentDLLMDRAPrefix()
+    {
+      ::map::core::String prefix = core::String("mdra");
+
+#if _DEBUG || (__linux__ && !defined(NDEBUG)) || (__APPLE__ && !defined(NDEBUG))
+      prefix = prefix + "-D";
+#endif
+
+      ::map::core::OStringStream ostr;
+      ostr << "-" << MAP_VERSION_MAJOR << "-" << MAP_VERSION_MINOR;
+
+      prefix = prefix + ostr.str();
+
+      return prefix;
+    };
+
 		bool
 		checkNameIsSharedLibrary(const char* name)
 		{
@@ -78,16 +94,7 @@ namespace map
 			sname = core::FileDispatch::getFullName(sname);
 
 			::map::core::String suffix = core::String(getDeploymentDLLExtension());
-			::map::core::String prefix = core::String("mdra");
-
-			::map::core::OStringStream ostr;
-			ostr << "-" << MAP_VERSION_MAJOR << "-" << MAP_VERSION_MINOR << "_";
-
-#if _DEBUG || (__linux__ && !defined(NDEBUG)) || (__APPLE__ && !defined(NDEBUG))
-			prefix = prefix + "-D";
-#endif
-
-			prefix = prefix + ostr.str();
+			::map::core::String prefix = getDeploymentDLLMDRAPrefix()+"_";
 
 			if (sname.find(prefix) != 0)
 			{
