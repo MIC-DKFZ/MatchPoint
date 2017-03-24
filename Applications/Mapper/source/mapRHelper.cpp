@@ -24,6 +24,7 @@
 #include "mapRHelper.h"
 #include "mapGenericImageReader.h"
 #include "mapDummyRegistrationAlgorithm.h"
+#include "mapSimpleLandMarkFileReader.h"
 
 map::apps::mapR::LoadingLogic::LoadingLogic(ApplicationData& appData): _appData(appData)
 {
@@ -94,14 +95,46 @@ loadRegistration()
   _appData._spReg = spReg;
 };
 
+::itk::DataObject::Pointer
+loadGenericPointSet(const ::map::core::String& filename, unsigned int& loadedDimensions)
+{
+  ::itk::DataObject::Pointer result;
+
+  if (!(filename.empty()))
+  {
+    try
+    {
+      typedef ::map::core::continuous::Elements<2>::InternalPointSetType PointSetType;
+      result = ::map::utilities::loadLandMarksFromFile<PointSetType>(filename).GetPointer();
+      loadedDimensions = 2;
+    }
+    catch (...)
+    {
+
+    }
+    try
+    {
+      typedef ::map::core::continuous::Elements<3>::InternalPointSetType PointSetType;
+      result = ::map::utilities::loadLandMarksFromFile<PointSetType>(filename).GetPointer();
+      loadedDimensions = 3;
+    }
+    catch (...)
+    {
+
+    }
+  }
+  return result;
+};
+
+
 void
 map::apps::mapR::LoadingLogic::
-loadInputImage()
+loadInput()
 {
   map::io::GenericImageReader::GenericOutputImageType::Pointer loadedImage;
-  unsigned int loadedDimensions;
-  map::io::GenericImageReader::LoadedPixelType loadedPixelType;
-  map::io::GenericImageReader::LoadedComponentType loadedComponentType;
+  unsigned int loadedDimensions = 0;
+  map::io::GenericImageReader::LoadedPixelType loadedPixelType = ::itk::ImageIOBase::UNKNOWNPIXELTYPE;
+  map::io::GenericImageReader::LoadedComponentType loadedComponentType = ::itk::ImageIOBase::UNKNOWNCOMPONENTTYPE;
   map::io::GenericImageReader::MetaDataDictionaryArrayType loadedMetaDataDictArray;
 
   map::io::GenericImageReader::Pointer spReader = map::io::GenericImageReader::New();
@@ -110,10 +143,19 @@ loadInputImage()
   spReader->setUpperSeriesLimit(_appData._upperSeriesLimit);
 
   std::cout << std::endl << "read input file... ";
-  loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
-                                    loadedComponentType);
-  loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
 
+  ::map::core::String loadErrorString;
+  try
+  {
+    loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
+      loadedComponentType);
+    loadedMetaDataDictArray = spReader->getMetaDictionaryArray();
+  }
+  catch (const std::exception& e)
+  {
+    loadErrorString = e.what();
+  }
+  
   if (loadedImage.IsNotNull())
   {
     std::cout << "done." << std::endl;
@@ -124,32 +166,45 @@ loadInputImage()
       loadedImage->Print(std::cout);
       std::cout << std::endl;
     }
+
+    if (loadedPixelType != ::itk::ImageIOBase::SCALAR)
+    {
+      mapDefaultExceptionStaticMacro(<<
+        "Unsupported input image. Only simple scalar images are supported in this version.");
+    }
+
+    if (loadedDimensions < 2 || loadedDimensions > 3)
+    {
+      mapDefaultExceptionStaticMacro(<<
+        "Unsupported input image. Only 2D and 3D images are supported in this version.");
+    }
+
+    _appData._input = loadedImage;
+    _appData._inputIsImage = true;
+
+    _appData._loadedDimensions = loadedDimensions;
+    _appData._loadedPixelType = loadedPixelType;
+    _appData._loadedComponentType = loadedComponentType;
+    _appData._loadedMetaDataDictArray = loadedMetaDataDictArray;
   }
-  else
+  else //*try to load simple point set
   {
-    mapDefaultExceptionStaticMacro( <<
-                                    " Unable to load input image. File is not existing or has an unsupported format.");
+    _appData._input = loadGenericPointSet(_appData._inputFileName, loadedDimensions);
+    if (_appData._input.IsNotNull())
+    {
+      std::cout << "Input point set info:" << std::endl;
+      _appData._input->Print(std::cout);
+    }
+    _appData._loadedDimensions = loadedDimensions;
+    _appData._inputIsImage = false;
   }
 
-
-  if (loadedPixelType != ::itk::ImageIOBase::SCALAR)
+  if (_appData._input.IsNull())
   {
-    mapDefaultExceptionStaticMacro( <<
-                                    "Unsupported input image. Only simple scalar images are supported in this version.");
+    mapDefaultExceptionStaticMacro(<<
+      " Unable to load input. File is not existing or has an unsupported format." << std::endl << "Error details: " << loadErrorString);
   }
 
-  if (loadedDimensions < 2 || loadedDimensions > 3)
-  {
-    mapDefaultExceptionStaticMacro( <<
-                                    "Unsupported input image. Only 2D and 3D images are supported in this version.");
-  }
-
-  _appData._spInputImage = loadedImage;
-
-  _appData._loadedDimensions = loadedDimensions;
-  _appData._loadedPixelType = loadedPixelType;
-  _appData._loadedComponentType = loadedComponentType;
-  _appData._loadedMetaDataDictArray = loadedMetaDataDictArray;
 };
 
 void

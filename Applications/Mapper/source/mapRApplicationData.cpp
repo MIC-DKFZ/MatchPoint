@@ -65,6 +65,7 @@ namespace map
 				_loadedPixelType = ::itk::ImageIOBase::SCALAR;
 				_loadedComponentType = ::itk::ImageIOBase::UCHAR;
 				_loadedDimensions = 1;
+        _inputIsImage = true;
 				_seriesReadStyle = io::ImageSeriesReadStyle::Default;
 				_seriesWriteStyle = io::ImageSeriesReadStyle::Default;
 				_seriesReadStyleStr = "default";

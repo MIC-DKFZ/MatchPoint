@@ -54,7 +54,7 @@ namespace map
 			public:
 
 				/** Loaded Image.*/
-				::map::io::GenericImageReader::GenericOutputImageType::Pointer _spInputImage;
+				::itk::DataObject::Pointer _input;
 				::map::core::String  _inputFileName;
 				::map::io::GenericImageReader::GenericOutputImageType::Pointer _spRefImage;
 				::map::core::String  _refFileName;
@@ -70,6 +70,7 @@ namespace map
 				::map::core::String _seriesReadStyleStr;
 				::map::io::ImageSeriesReadStyle::Type _seriesWriteStyle;
 				::map::core::String _seriesWriteStyleStr;
+        bool _inputIsImage;
 
 				ImageMappingInterpolator::Type _interpolatorType;
 				::map::core::String _interpolatorTypeStr;

@@ -134,7 +134,7 @@ int main(int argc, char** argv)
 
   try
   {
-    loadingLogic.loadInputImage();
+    loadingLogic.loadInput();
   }
   catch (::itk::ExceptionObject& e)
   {
