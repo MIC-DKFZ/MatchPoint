@@ -31,6 +31,7 @@
 
 #include "itkDataObject.h"
 #include "itkCastImageFilter.h"
+#include "itkImageMaskSpatialObject.h"
 
 
 
@@ -355,6 +356,194 @@ void
     {
       mapDefaultExceptionStaticMacro(<<
         " Unable to load moving point set. File is not existing or has an unsupported format.");
+    }
+  }
+};
+
+
+template <typename TPixelType, unsigned int IDimension>
+void handleMaskConvert(const ::map::io::GenericImageReader::GenericOutputImageType* inputImage, typename ::itk::ImageMaskSpatialObject<IDimension>::Pointer& mask)
+{
+  typedef ::itk::Image<TPixelType, IDimension> InputImageType;
+  typedef ::itk::Image<typename ::itk::ImageMaskSpatialObject<IDimension>::PixelType, IDimension> MaskImageType;
+  typedef ::itk::CastImageFilter<InputImageType, MaskImageType> FilterType;
+  typedef ::itk::ImageMaskSpatialObject<IDimension> SpatialType;
+
+  const InputImageType* input = dynamic_cast<const InputImageType*>(inputImage);
+
+  typename FilterType::Pointer caster = FilterType::New();
+
+  caster->SetInput(input);
+  caster->Update();
+  
+  SpatialType::Pointer spatial = SpatialType::New();
+  spatial->SetImage(caster->GetOutput());
+
+  mask = spatial;
+}
+
+
+template <unsigned int IDimension>
+void handleGenericMaskConvert(map::io::GenericImageReader::LoadedComponentType loadedComponentType, const ::map::io::GenericImageReader::GenericOutputImageType* inputImage, typename ::itk::ImageMaskSpatialObject<IDimension>::Pointer& mask)
+{
+  switch (loadedComponentType)
+  {
+  case ::itk::ImageIOBase::UCHAR:
+  {
+    handleMaskConvert<unsigned char, IDimension>(inputImage, mask);
+    break;
+  }
+
+  case ::itk::ImageIOBase::CHAR:
+  {
+    handleMaskConvert<char, IDimension>(inputImage, mask);
+    break;
+  }
+
+  case ::itk::ImageIOBase::USHORT:
+  {
+    handleMaskConvert<unsigned short, IDimension>(inputImage, mask);
+    break;
+  }
+
+  case ::itk::ImageIOBase::SHORT:
+  {
+    handleMaskConvert<short, IDimension>(inputImage, mask);
+    break;
+  }
+
+  case ::itk::ImageIOBase::UINT:
+  {
+    handleMaskConvert<unsigned int, IDimension>(inputImage, mask);
+    break;
+  }
+
+  case ::itk::ImageIOBase::INT:
+  {
+    handleMaskConvert<int, IDimension>(inputImage, mask);
+    break;
+  }
+
+  case ::itk::ImageIOBase::ULONG:
+  {
+    handleMaskConvert<unsigned long, IDimension>(inputImage, mask);
+    break;
+  }
+
+  case ::itk::ImageIOBase::LONG:
+  {
+    handleMaskConvert<long, IDimension>(inputImage, mask);
+    break;
+  }
+
+  case ::itk::ImageIOBase::FLOAT:
+  {
+    handleMaskConvert<float, IDimension>(inputImage, mask);
+    break;
+  }
+
+  case ::itk::ImageIOBase::DOUBLE:
+  {
+    handleMaskConvert<double, IDimension>(inputImage, mask);
+    break;
+  }
+
+  default:
+  {
+    mapDefaultExceptionStaticMacro(<<
+      "The file uses a pixel component type that is not supported in this application.");
+  }
+  }
+}
+
+::itk::DataObject::Pointer
+loadGenericMask(const ::map::core::String& filename, const ::map::io::ImageSeriesReadStyle::Type& readStyle, unsigned int dim)
+{
+  ::itk::DataObject::Pointer result;
+
+  if (!(filename.empty()))
+  {
+    map::io::GenericImageReader::GenericOutputImageType::Pointer loadedImage;
+    unsigned int loadedDimensions;
+    map::io::GenericImageReader::LoadedPixelType loadedPixelType;
+    map::io::GenericImageReader::LoadedComponentType loadedComponentType;
+
+    map::io::GenericImageReader::Pointer spReader = map::io::GenericImageReader::New();
+    spReader->setSeriesReadStyle(readStyle);
+    spReader->setFileName(filename);
+
+    loadedImage = spReader->GetOutput(loadedDimensions, loadedPixelType,
+      loadedComponentType);
+
+    if (loadedImage.IsNotNull())
+    {
+      if (loadedDimensions != dim)
+      {
+        mapDefaultExceptionStaticMacro(<<
+          " Unable to load mask. Mask dimension differs from input images.");
+      }
+
+      if (loadedDimensions == 2)
+      {
+        ::itk::ImageMaskSpatialObject<2>::Pointer mask;
+        handleGenericMaskConvert<2>(loadedComponentType, loadedImage, mask);
+        result = mask.GetPointer();
+      }
+      else
+      {
+        ::itk::ImageMaskSpatialObject<3>::Pointer mask;
+        handleGenericMaskConvert<3>(loadedComponentType, loadedImage, mask);
+        result = mask.GetPointer();
+      }
+    }
+    else
+    {
+      mapDefaultExceptionStaticMacro(<<
+        " Unable to load mask. File is not existing or has an unsupported format.");
+    }
+  }
+
+  return result;
+};
+
+void
+::map::apps::matchR::loadTargetMask(::map::apps::matchR::ApplicationData& appData)
+{
+  if (!(appData._targetMaskFileName.empty()))
+  {
+    std::cout << std::endl << "Read target mask file... ";
+
+    appData._genericTargetMask = loadGenericMask(appData._targetMaskFileName, appData._seriesReadStyle, appData._loadedDimensions);
+
+    if (appData._genericTargetMask.IsNotNull())
+    {
+      std::cout << "done." << std::endl;
+    }
+    else
+    {
+      mapDefaultExceptionStaticMacro(<<
+        " Unable to load target mask. File is not existing or has an unsupported format.");
+    }
+  }
+};
+
+void
+::map::apps::matchR::loadMovingMask(::map::apps::matchR::ApplicationData& appData)
+{
+  if (!(appData._movingMaskFileName.empty()))
+  {
+    std::cout << std::endl << "Read moving mask file... ";
+
+    appData._genericMovingMask = loadGenericMask(appData._movingMaskFileName, appData._seriesReadStyle, appData._loadedDimensions);
+
+    if (appData._genericMovingMask.IsNotNull())
+    {
+      std::cout << "done." << std::endl;
+    }
+    else
+    {
+      mapDefaultExceptionStaticMacro(<<
+        " Unable to load moving mask. File is not existing or has an unsupported format.");
     }
   }
 };

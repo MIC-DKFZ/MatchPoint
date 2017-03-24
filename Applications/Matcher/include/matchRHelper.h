@@ -67,6 +67,11 @@ namespace map
       /** Helper function to load the moving point set (if set) into the passed app data structure.*/
       void loadMovingPointSet(ApplicationData& appData);
 
+      /** Helper function to load the moving mask into the passed app data structure.*/
+      void loadMovingMask(ApplicationData& appData);
+      /** Helper function to load the target mask into the passed app data structure.*/
+      void loadTargetMask(ApplicationData& appData);
+
       /** Helper function to load the meta parameter map for the algorithm into the passed app data structure.*/
       void loadParameterMap(ApplicationData& appData);
 

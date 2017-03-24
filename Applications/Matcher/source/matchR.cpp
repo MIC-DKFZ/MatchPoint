@@ -70,6 +70,8 @@ void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
  * @retval 8 Error while registering and storing registration.
  * @retval 9 Error while loading moving point set.
  * @retval 10 Error while loading target point set.
+ * @retval 11 Error while loading moving mask image.
+ * @retval 12 Error while loading target mask image.
  */
 int main(int argc, char** argv)
 {
@@ -192,6 +194,17 @@ int main(int argc, char** argv)
   }
   mapCatchAppMacro(10, "Error!!! unknown error while reading moving point set.")
 
+    try
+  {
+    map::apps::matchR::loadMovingMask(appData);
+  }
+  mapCatchAppMacro(11, "Error!!! unknown error while reading moving mask.")
+
+    try
+  {
+    map::apps::matchR::loadTargetMask(appData);
+  }
+  mapCatchAppMacro(12, "Error!!! unknown error while reading target mask.")
 
   try
   {
