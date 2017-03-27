@@ -104,12 +104,12 @@ namespace map
 
 				cmdParser.AddArgument("-d", itksys::CommandLineArguments::NO_ARGUMENT, &_ensureDirectMapping,
 				                      "Ensure that direct mapping is possible with the inverted new registration. This might cause the inverse kernel to be inverted numerically.");
-        cmdParser.AddArgument("-directMapping", itksys::CommandLineArguments::NO_ARGUMENT, &_ensureDirectMapping,
+        cmdParser.AddArgument("--directMapping", itksys::CommandLineArguments::NO_ARGUMENT, &_ensureDirectMapping,
           "Ensure that direct mapping is possible with the inverted new registration. This might cause the inverse kernel to be inverted numerically.");
 
         cmdParser.AddArgument("-i", itksys::CommandLineArguments::NO_ARGUMENT, &_ensureInverseMapping,
           "Ensure that inverse mapping is possible with the inverted new registration. This might cause the direct kernel to be inverted numerically.");
-        cmdParser.AddArgument("-inverseMapping", itksys::CommandLineArguments::NO_ARGUMENT, &_ensureInverseMapping,
+        cmdParser.AddArgument("--inverseMapping", itksys::CommandLineArguments::NO_ARGUMENT, &_ensureInverseMapping,
           "Ensure that inverse mapping is possible with the inverted new registration. This might cause the direct kernel to be inverted numerically.");
 
         cmdParser.AddArgument("--details", itksys::CommandLineArguments::NO_ARGUMENT, &_detailedOutput,
