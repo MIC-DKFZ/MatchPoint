@@ -16,7 +16,7 @@ Please load and compile the following third party libraries/tool:
 Installation instruction
 ------------------------
 
-Remark: To make sure everything runs smoothly, please make sure that all libraries and the RTToolbox
+Remark: To make sure everything runs smoothly, please make sure that all libraries
 are either compiled with \MD or \MT flags.
 
 If third party library packages cannot be found automatically, cmake will ask for them. 
