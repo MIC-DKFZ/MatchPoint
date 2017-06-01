@@ -1,1 +1,1 @@
-None for the supported ITK versions (ITK 4.0.0 or greater).
+None for the supported ITK versions.
