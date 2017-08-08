@@ -145,9 +145,9 @@ namespace map
           "Specifies name and location of the file that specifies the optional moving point set.");
 
         cmdParser.AddArgument("--parameters", itksys::CommandLineArguments::MULTI_ARGUMENT, &_parameterStrs,
-				                      "Specifies the value that should be used for pixels of the result image that are not covered by the mapped input image. Default value is '0.0'.");
+          "Allows to define meta properties that are passed to the algorithm. Each value defines a meta property and its value(s). The structure of the value string must be <PropertyName>=<Value>; e.g. -p \"myProp=10\". If you want to pass vector values (e.g. algorithm scales) seperate the value by space; e.g. -p \"Scales= 1 2 3 10\".");
         cmdParser.AddArgument("-p", itksys::CommandLineArguments::MULTI_ARGUMENT, &_parameterStrs,
-				                      "Specifies the value that should be used for pixels of the result image that are not covered by the mapped input image. Default value is '0.0'.");
+          "Allows to define meta properties that are passed to the algorithm. Each value defines a meta property and its value(s). The structure of the value string must be <PropertyName>=<Value>; e.g. -p \"myProp=10\". If you want to pass vector values (e.g. algorithm scales) seperate the value by space; e.g. -p \"Scales= 1 2 3 10\".");
 
 				cmdParser.AddArgument("-v", itksys::CommandLineArguments::NO_ARGUMENT, &_showVersion,
 				                      "Shows the version of the program.");

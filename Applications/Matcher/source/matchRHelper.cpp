@@ -33,7 +33,19 @@
 #include "itkCastImageFilter.h"
 #include "itkImageMaskSpatialObject.h"
 
+#include <sstream>
+#include <iterator>
 
+/**helper function that takes a string and splits it by a given delimeter*/
+template<typename Out>
+void split(const ::map::core::String &s, char delim, Out result) {
+  std::stringstream ss;
+  ss.str(s);
+  ::map::core::String item;
+  while (std::getline(ss, item, delim)) {
+    *(result++) = item;
+  }
+}
 
 template <typename TPixelType, unsigned int IDimension>
 void handleImageCast(const ::map::io::GenericImageReader::GenericOutputImageType* inputImage, ::map::io::GenericImageReader::GenericOutputImageType::Pointer& castedImage)
@@ -581,6 +593,32 @@ bool checkNConvert(const ::map::core::String& valueStr, TElement& value)
   return false;
 };
 
+/**Template specification for helper of itk::Array<double>*/
+template <>
+bool checkNConvert(const ::map::core::String& valueStr, ::itk::Array<double>& value)
+{
+  try
+  {
+    std::vector<std::string> valueStrVector;
+    split(valueStr, ' ', std::back_inserter(valueStrVector));
+
+    value.SetSize(valueStrVector.size());
+
+    unsigned int pos = 0;
+    for (const auto& aValue : valueStrVector)
+    {
+      value[pos++] = map::core::convert::toValueGeneric<double>(aValue);
+    }
+
+    return true;
+  }
+  catch (...)
+  {
+  }
+
+  return false;
+};
+
 template <typename TValueType>
 map::core::MetaPropertyBase::Pointer
 checkCastAndSetProp(const ::map::core::String& valueStr)
@@ -612,6 +650,7 @@ map::apps::matchR::wrapMetaProperty(const ::map::algorithm::MetaPropertyInfo* pI
   else if (pInfo->getTypeInfo() == typeid(unsigned long)) metaProp = checkCastAndSetProp<unsigned long>(valueStr);
   else if (pInfo->getTypeInfo() == typeid(float)) metaProp = checkCastAndSetProp<float>(valueStr);
   else if (pInfo->getTypeInfo() == typeid(double)) metaProp = checkCastAndSetProp<double>(valueStr);
+  else if (pInfo->getTypeInfo() == typeid(::itk::Array<double>)) metaProp = checkCastAndSetProp< ::itk::Array<double> >(valueStr);
   else if (pInfo->getTypeInfo() == typeid(::map::core::String))
   {
     metaProp = map::core::MetaProperty<map::core::String>::New(valueStr).GetPointer();
