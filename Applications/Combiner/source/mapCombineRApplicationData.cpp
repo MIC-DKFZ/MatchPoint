@@ -129,7 +129,7 @@ namespace map
         }
         if (appData._showVersion)
         {
-          std::cout << std::endl << "Version: " << MAP_FULL_VERSION_STRING;
+          std::cout << std::endl << "Version: " << MAP_FULL_VERSION_STRING << std::endl;
           return 1;
         }
 

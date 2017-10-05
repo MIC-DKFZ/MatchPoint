@@ -206,7 +206,7 @@ namespace map
 
 				if (_showVersion)
 				{
-					std::cout << std::endl << "Version: " << MAP_FULL_VERSION_STRING;
+					std::cout << std::endl << "Version: " << MAP_FULL_VERSION_STRING << std::endl;
 					return 1;
 				}
 
