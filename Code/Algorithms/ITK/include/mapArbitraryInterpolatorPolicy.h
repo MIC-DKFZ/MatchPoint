@@ -58,7 +58,7 @@ namespace map
 				typedef ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>      Self;
 				typedef facet::ITKInterpolatorSetterInterface<TInputImage, TCoordRep>   Superclass;
 
-				itkTypeMacro(ArbitraryInterpolatorPolicy, facet::ITKInterpolatorSetterInterface);
+                itkTypeMacroNoParent(ArbitraryInterpolatorPolicy);
 
 				typedef ::itk::InterpolateImageFunction<TInputImage, TCoordRep> InterpolatorType;
 				typedef TCoordRep CoordRepType;

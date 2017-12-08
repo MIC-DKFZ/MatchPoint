@@ -57,7 +57,7 @@ namespace map
 			public:
 				typedef ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>      Self;
 				typedef facet::ITKImageToImageMetricSetterInterface<TMovingImage, TTargetImage>   Superclass;
-				itkTypeMacro(ArbitraryImageToImageMetricPolicy, facet::ITKImageToImageMetricSetterInterface);
+                itkTypeMacroNoParent(ArbitraryImageToImageMetricPolicy);
 
 				typedef ITKImageToImageMetricControlInterface<TMovingImage, TTargetImage> MetricControlType;
 

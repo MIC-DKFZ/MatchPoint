@@ -58,8 +58,7 @@ namespace map
 				typedef ArbitraryPointSetToPointSetMetricPolicy<TMovingPointSet, TTargetPointSet>      Self;
 				typedef facet::ITKPointSetToPointSetMetricSetterInterface<TMovingPointSet, TTargetPointSet>
 				Superclass;
-				itkTypeMacro(ArbitraryPointSetToPointSetMetricPolicy,
-							 facet::ITKPointSetToPointSetMetricSetterInterface);
+                itkTypeMacroNoParent(ArbitraryPointSetToPointSetMetricPolicy);
 
 				typedef ITKPointSetToPointSetMetricControlInterface<TMovingPointSet, TTargetPointSet>
 				MetricControlType;

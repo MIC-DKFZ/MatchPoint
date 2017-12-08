@@ -186,3 +186,24 @@
 
 /** \defgroup Examples Examples
  * List of all examples and demo programs offered by MatchPoint.*/
+
+ /** @defgroup Correlation Semantic correlation (Ontology)
+ * MatchPoint Ontology knows the concept of semantic correlations between entities. The relevant classes are listed here.*/
+
+  /** @defgroup CorrelationType Correlation type (Ontology)
+   * @ingroup Correlation
+   * MatchPoint Ontology knows different types of semantic correlations. They are listed and explained here.*/
+
+/** \defgroup Traits Ontology traits
+ * MatchPoint Ontology is implemented on a very generic level and designed to be adapted to different enviroments and/or application. The setup and concrete
+ * specification is done by so called "traits". This traits of every interface or class are listed here.*/
+ 
+/** \defgroup Inference Ontology inference
+ * MatchPoint Ontology has implemented several interfaces and classes to allow queries and inference on the facts of the ontology. These interfaces or classes are listed here.*/
+
+/** \defgroup Integration Ontology integration
+ * MatchPoint Ontology has implemented several interfaces and classes to allow the integration of facts to an conrete ontology. These interfaces or classes are listed here.*/
+
+ /** \defgroup Simple Simple implementation of MatchPoint Ontology
+ * MatchPoint Ontology is heavily templated and can be configured to the application needs by traits.
+ MatchPoint comes along with a simple light weightes concrete implementation of the ontology; named SimpleOntology. This SimpleOntology is a default implementation for demonstration and testing purpose. It can also be used, if you want to use the MatchPoint Ontology but have no preconditions on the used classes and the implemented rules.*/
