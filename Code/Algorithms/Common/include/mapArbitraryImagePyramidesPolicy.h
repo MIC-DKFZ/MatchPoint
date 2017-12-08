@@ -60,7 +60,7 @@ namespace map
 			typedef TMovingImage MovingImageType;
 			typedef TTargetImage TargetImageType;
 
-			itkTypeMacro(ArbitraryImagePyramidesPolicy, ImagePyramidesSetterInterface);
+            itkTypeMacroNoParent(ArbitraryImagePyramidesPolicy);
 
 			/** Type of the image multiresolution pyramids. */
 			typedef typename Superclass::TargetImagePyramideBaseType TargetImagePyramideBaseType;

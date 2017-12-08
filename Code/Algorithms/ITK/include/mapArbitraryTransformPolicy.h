@@ -57,7 +57,7 @@ namespace map
 				typedef ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>      Self;
 				typedef facet::ITKTransformSetterInterface<TScalar, VInputDimensions, VOutputDimensions>
 				Superclass;
-				itkTypeMacro(ArbitraryTransformPolicy, facet::ITKTransformSetterInterface);
+                itkTypeMacroNoParent(ArbitraryTransformPolicy);
 
 				typedef typename Superclass::TransformType TransformType;
 				typedef TScalar TransformScalarType;
