@@ -24,3 +24,13 @@ OPTION(MAP_WRAP_Plastimatch "Activate the wrappers for Plastimatch." OFF)
 IF(MAP_WRAP_Plastimatch)
   ADD_SUBDIRECTORY (Algorithms/Plastimatch)
 ENDIF(MAP_WRAP_Plastimatch)
+
+OPTION(MAP_BUILD_Ontology "Activate the registration ontology." OFF)
+
+IF(MAP_BUILD_Ontology)
+  ADD_SUBDIRECTORY (Ontology/Common)
+  OPTION(MAP_BUILD_Ontology_simple "Activate the simple implementation of registration ontology." OFF)
+  IF(MAP_BUILD_Ontology_simple)
+    ADD_SUBDIRECTORY (Ontology/Simple)
+  ENDIF(MAP_BUILD_Ontology_simple)
+ENDIF(MAP_BUILD_Ontology)

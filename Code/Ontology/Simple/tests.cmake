@@ -1,0 +1,8 @@
+ADD_TEST(mapSimpleProblemStatementTest ${MODULE_TESTS} mapSimpleProblemStatementTest)
+ADD_TEST(mapSimpleProblemModelTest ${MODULE_TESTS} mapSimpleProblemModelTest)
+ADD_TEST(mapSimpleRegistrationInfoTest ${MODULE_TESTS} mapSimpleRegistrationInfoTest)
+ADD_TEST(mapSimpleTransformationInfoTest ${MODULE_TESTS} mapSimpleTransformationInfoTest)
+ADD_TEST(mapSimpleTransformationPathTest ${MODULE_TESTS} mapSimpleTransformationPathTest)
+ADD_TEST(mapSimpleRegistrationPathTest ${MODULE_TESTS} mapSimpleRegistrationPathTest)
+ADD_TEST(mapSimpleOntologyCoreTest ${MODULE_TESTS} mapSimpleOntologyCoreTest)
+ADD_TEST(mapSimpleOntologyTest ${MODULE_TESTS} mapSimpleOntologyTest)
