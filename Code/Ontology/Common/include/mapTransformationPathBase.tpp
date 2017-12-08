@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_TRANSFORMATION_PATH_BASE_TPP
-#define __IRO_TRANSFORMATION_PATH_BASE_TPP
+#ifndef __MAP_TRANSFORMATION_PATH_BASE_TPP
+#define __MAP_TRANSFORMATION_PATH_BASE_TPP
 
 #include "mapTransformationPathBase.h"
 

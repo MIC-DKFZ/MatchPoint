@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_MAPPING_INTEGRATION_H
-#define __IRO_I_MAPPING_INTEGRATION_H
+#ifndef __MAP_I_MAPPING_INTEGRATION_H
+#define __MAP_I_MAPPING_INTEGRATION_H
 
 #include "mapIEntityInference.h"
 #include "mapIProblemInference.h"
@@ -148,7 +148,7 @@ namespace iro
   } // end namespace core
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapIMappingIntegration.tpp"
 #endif
 

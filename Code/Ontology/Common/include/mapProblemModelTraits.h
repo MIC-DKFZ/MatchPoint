@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_PROBLEM_MODEL_TRAITS_H
-#define __IRO_PROBLEM_MODEL_TRAITS_H
+#ifndef __MAP_PROBLEM_MODEL_TRAITS_H
+#define __MAP_PROBLEM_MODEL_TRAITS_H
 
 namespace iro
 {

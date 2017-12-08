@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SEMANTIC_CORRELATION_H
-#define __IRO_SEMANTIC_CORRELATION_H
+#ifndef __MAP_SEMANTIC_CORRELATION_H
+#define __MAP_SEMANTIC_CORRELATION_H
 
 #include "mapISemanticCorrelationType.h"
 #include "mapOntologyExceptions.h"
@@ -119,7 +119,7 @@ namespace iro
 		};
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapSemanticCorrelation.tpp"
 #endif
 

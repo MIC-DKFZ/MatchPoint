@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_PROBLEM_INFERENCE_TPP
-#define __IRO_I_PROBLEM_INFERENCE_TPP
+#ifndef __MAP_I_PROBLEM_INFERENCE_TPP
+#define __MAP_I_PROBLEM_INFERENCE_TPP
 
 #include "mapIProblemInference.h"
 #include "mapOntologyExceptions.h"

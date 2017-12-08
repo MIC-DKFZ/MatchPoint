@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_FOV_SCOPE_H
-#define __IRO_FOV_SCOPE_H
+#ifndef __MAP_FOV_SCOPE_H
+#define __MAP_FOV_SCOPE_H
 
 namespace iro
 {

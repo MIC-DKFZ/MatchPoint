@@ -14,8 +14,8 @@
 //------------------------------------------------------------------------
 
 
-#ifndef __IRO_DATA_REPRESENTATION_H
-#define __IRO_DATA_REPRESENTATION_H
+#ifndef __MAP_DATA_REPRESENTATION_H
+#define __MAP_DATA_REPRESENTATION_H
 
 #include "mapMAPOntologyExports.h"
 

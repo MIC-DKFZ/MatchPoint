@@ -14,8 +14,8 @@
 //------------------------------------------------------------------------
 
 
-#ifndef __IRO_INJECTIV_CORRELATION_H
-#define __IRO_INJECTIV_CORRELATION_H
+#ifndef __MAP_INJECTIV_CORRELATION_H
+#define __MAP_INJECTIV_CORRELATION_H
 
 #include "mapUnkownBijectivCorrelation.h"
 

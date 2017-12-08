@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SEMANTIC_CORRELATION_TPP
-#define __IRO_SEMANTIC_CORRELATION_TPP
+#ifndef __MAP_SEMANTIC_CORRELATION_TPP
+#define __MAP_SEMANTIC_CORRELATION_TPP
 
 #include "mapUnkownInjectivCorrelation.h"
 #include "mapSemanticCorrelation.h"

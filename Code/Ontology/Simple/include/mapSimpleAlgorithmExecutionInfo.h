@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_ALGORITHM_EXECUTION_INFO_H
-#define __IRO_SIMPLE_ALGORITHM_EXECUTION_INFO_H
+#ifndef __MAP_SIMPLE_ALGORITHM_EXECUTION_INFO_H
+#define __MAP_SIMPLE_ALGORITHM_EXECUTION_INFO_H
 
 #include "mapAlgorithmExecutionInfo.h"
 #include "mapAlgorithmExecutionInfoTraits.h"

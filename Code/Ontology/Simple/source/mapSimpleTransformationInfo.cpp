@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_Simple_TRANSFORMATION_INFO_TPP
-#define __IRO_Simple_TRANSFORMATION_INFO_TPP
+#ifndef __MAP_Simple_TRANSFORMATION_INFO_TPP
+#define __MAP_Simple_TRANSFORMATION_INFO_TPP
 
 #include "mapSimpleTransformationInfo.h"
 #include "mapOntologyExceptions.h"

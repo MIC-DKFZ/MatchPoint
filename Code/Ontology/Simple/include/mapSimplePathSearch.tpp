@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_PATH_SEARCH_TXX
-#define __IRO_SIMPLE_PATH_SEARCH_TXX
+#ifndef __MAP_SIMPLE_PATH_SEARCH_TXX
+#define __MAP_SIMPLE_PATH_SEARCH_TXX
 
 #include "mapSimplePathSearch.h"
 

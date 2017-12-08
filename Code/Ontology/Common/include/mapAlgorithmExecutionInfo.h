@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_ALGORITHM_EXECUTION_INFO_H
-#define __IRO_ALGORITHM_EXECUTION_INFO_H
+#ifndef __MAP_ALGORITHM_EXECUTION_INFO_H
+#define __MAP_ALGORITHM_EXECUTION_INFO_H
 
 #include "mapOntologyString.h"
 
@@ -259,7 +259,7 @@ namespace iro
 		};
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapAlgorithmExecutionInfo.tpp"
 #endif
 

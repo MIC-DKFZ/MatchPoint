@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_REGISTRATION_INFO_TPP
-#define __IRO_REGISTRATION_INFO_TPP
+#ifndef __MAP_REGISTRATION_INFO_TPP
+#define __MAP_REGISTRATION_INFO_TPP
 
 #include "mapRegistrationInfo.h"
 #include "mapOntologyExceptions.h"

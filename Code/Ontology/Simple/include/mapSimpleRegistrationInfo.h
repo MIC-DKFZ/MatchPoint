@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_REGISTRATION_INFO_H
-#define __IRO_SIMPLE_REGISTRATION_INFO_H
+#ifndef __MAP_SIMPLE_REGISTRATION_INFO_H
+#define __MAP_SIMPLE_REGISTRATION_INFO_H
 
 #include "mapRegistrationInfo.h"
 #include "mapRegistrationInfoTraits.h"

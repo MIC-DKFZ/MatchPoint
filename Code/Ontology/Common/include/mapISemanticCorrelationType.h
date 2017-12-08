@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_SEMANTIC_CORRELATION_TYPE_H
-#define __IRO_I_SEMANTIC_CORRELATION_TYPE_H
+#ifndef __MAP_I_SEMANTIC_CORRELATION_TYPE_H
+#define __MAP_I_SEMANTIC_CORRELATION_TYPE_H
 
 #include "mapOntologyString.h"
 #include <memory>

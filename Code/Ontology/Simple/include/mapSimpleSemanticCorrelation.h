@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_SEMANTIC_CORRELATION_H
-#define __IRO_SIMPLE_SEMANTIC_CORRELATION_H
+#ifndef __MAP_SIMPLE_SEMANTIC_CORRELATION_H
+#define __MAP_SIMPLE_SEMANTIC_CORRELATION_H
 
 #include "mapSemanticCorrelation.h"
 #include "mapBoostUIDPolicy.h"

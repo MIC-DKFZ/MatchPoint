@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_STRING_H
-#define __IRO_STRING_H
+#ifndef __MAP_ONTOLOGY_STRING_H
+#define __MAP_ONTOLOGY_STRING_H
 
 #include <string>
 #include <sstream>

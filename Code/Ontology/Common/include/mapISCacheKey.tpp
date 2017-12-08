@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_IS_CACHE_KEY_TPP
-#define __IRO_IS_CACHE_KEY_TPP
+#ifndef __MAP_IS_CACHE_KEY_TPP
+#define __MAP_IS_CACHE_KEY_TPP
 
 #include "mapISCacheKey.h"
 

@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_PATH_SEARCH_H
-#define __IRO_SIMPLE_PATH_SEARCH_H
+#ifndef __MAP_SIMPLE_PATH_SEARCH_H
+#define __MAP_SIMPLE_PATH_SEARCH_H
 
 #include "boost/graph/adjacency_list.hpp"
 

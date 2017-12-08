@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_GRAPH_PROPERTIES_H
-#define __IRO_I_GRAPH_PROPERTIES_H
+#ifndef __MAP_I_GRAPH_PROPERTIES_H
+#define __MAP_I_GRAPH_PROPERTIES_H
 
 #include "mapInformationSpaceTraits.h"
 #include "mapTransformationInfoTraits.h"

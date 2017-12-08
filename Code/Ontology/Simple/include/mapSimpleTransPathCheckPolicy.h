@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_TRANS_PATH_CHECK_POLICY_H
-#define __IRO_SIMPLE_TRANS_PATH_CHECK_POLICY_H
+#ifndef __MAP_SIMPLE_TRANS_PATH_CHECK_POLICY_H
+#define __MAP_SIMPLE_TRANS_PATH_CHECK_POLICY_H
 
 #include "mapMappingError.h"
 
@@ -42,7 +42,7 @@ namespace iro
 
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapSimpleTransPathCheckPolicy.tpp"
 #endif
 

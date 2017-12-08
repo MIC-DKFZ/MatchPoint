@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_CONNECTOR_PATH_BASE_TPP
-#define __IRO_CONNECTOR_PATH_BASE_TPP
+#ifndef __MAP_CONNECTOR_PATH_BASE_TPP
+#define __MAP_CONNECTOR_PATH_BASE_TPP
 
 #include "mapISConnectorPathBase.h"
 

@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_PATH_OPTION_H
-#define __IRO_PATH_OPTION_H
+#ifndef __MAP_PATH_OPTION_H
+#define __MAP_PATH_OPTION_H
 
 #include "mapOntologyString.h"
 #include "mapMappingError.h"
@@ -104,7 +104,7 @@ namespace iro
 		};
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapPathOption.tpp"
 #endif
 

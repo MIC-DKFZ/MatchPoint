@@ -14,8 +14,8 @@
 //------------------------------------------------------------------------
 
 
-#ifndef __IRO_EXCEPTIONS_H
-#define __IRO_EXCEPTIONS_H
+#ifndef __MAP_EXCEPTIONS_H
+#define __MAP_EXCEPTIONS_H
 
 #include <stdexcept>
 #include "mapOntologyString.h"

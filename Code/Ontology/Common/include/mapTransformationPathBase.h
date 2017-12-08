@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_TRANSFORMATION_PATH_BASE_H
-#define __IRO_TRANSFORMATION_PATH_BASE_H
+#ifndef __MAP_TRANSFORMATION_PATH_BASE_H
+#define __MAP_TRANSFORMATION_PATH_BASE_H
 
 #include "mapISConnectorPathBase.h"
 #include "mapOntologyExceptions.h"
@@ -86,7 +86,7 @@ namespace iro
 		};
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapTransformationPathBase.tpp"
 #endif
 

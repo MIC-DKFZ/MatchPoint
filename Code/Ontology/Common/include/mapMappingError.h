@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_MAPPING_ERROR_H
-#define __IRO_MAPPING_ERROR_H
+#ifndef __MAP_MAPPING_ERROR_H
+#define __MAP_MAPPING_ERROR_H
 
 namespace iro
 {

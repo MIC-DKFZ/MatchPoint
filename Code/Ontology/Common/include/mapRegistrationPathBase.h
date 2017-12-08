@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_REGISTRATON_PATH_BASE_H
-#define __IRO_REGISTRATON_PATH_BASE_H
+#ifndef __MAP_REGISTRATON_PATH_BASE_H
+#define __MAP_REGISTRATON_PATH_BASE_H
 
 #include "mapISConnectorPathBase.h"
 
@@ -84,7 +84,7 @@ namespace iro
 		};
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapRegistrationPathBase.tpp"
 #endif
 

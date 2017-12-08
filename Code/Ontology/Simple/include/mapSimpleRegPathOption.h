@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_REG_PATH_OPTION_PATH_H
-#define __IRO_SIMPLE_REG_PATH_OPTION_PATH_H
+#ifndef __MAP_SIMPLE_REG_PATH_OPTION_PATH_H
+#define __MAP_SIMPLE_REG_PATH_OPTION_PATH_H
 
 #include "mapPathOption.h"
 #include "mapPathOptionTraits.h"

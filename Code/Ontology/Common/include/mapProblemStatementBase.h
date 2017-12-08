@@ -15,8 +15,8 @@
 
 
 
-#ifndef __IRO_PROBLEM_STATEMENT_BASE_H
-#define __IRO_PROBLEM_STATEMENT_BASE_H
+#ifndef __MAP_PROBLEM_STATEMENT_BASE_H
+#define __MAP_PROBLEM_STATEMENT_BASE_H
 
 #include "mapOntologyString.h"
 #include "mapIProblemComplianceDefinition.h"
@@ -82,7 +82,7 @@ namespace iro
 
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapProblemStatementBase.tpp"
 #endif
 

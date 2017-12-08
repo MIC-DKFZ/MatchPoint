@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_RESULT_H
-#define __IRO_RESULT_H
+#ifndef __MAP_RESULT_H
+#define __MAP_RESULT_H
 
 #include "mapValidityIndicator.h"
 #include <memory>
@@ -106,7 +106,7 @@ namespace iro
 
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapOntologyResult.tpp"
 #endif
 

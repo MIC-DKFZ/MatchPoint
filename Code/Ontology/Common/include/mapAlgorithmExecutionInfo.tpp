@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_ALGORITHM_EXECUTION_INFO_TPP
-#define __IRO_ALGORITHM_EXECUTION_INFO_TPP
+#ifndef __MAP_ALGORITHM_EXECUTION_INFO_TPP
+#define __MAP_ALGORITHM_EXECUTION_INFO_TPP
 
 #include "mapAlgorithmExecutionInfo.h"
 #include "mapOntologyExceptions.h"

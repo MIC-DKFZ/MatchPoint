@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_ENTITY_INFERENCE_TPP
-#define __IRO_I_ENTITY_INFERENCE_TPP
+#ifndef __MAP_I_ENTITY_INFERENCE_TPP
+#define __MAP_I_ENTITY_INFERENCE_TPP
 
 #include "mapIEntityInference.h"
 #include "mapOntologyExceptions.h"

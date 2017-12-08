@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_RESULT_TPP
-#define __IRO_RESULT_TPP
+#ifndef __MAP_RESULT_TPP
+#define __MAP_RESULT_TPP
 
 namespace iro
 {

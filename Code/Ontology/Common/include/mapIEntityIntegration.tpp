@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_ENTITY_INTEGRATION_TPP
-#define __IRO_I_ENTITY_INTEGRATION_TPP
+#ifndef __MAP_I_ENTITY_INTEGRATION_TPP
+#define __MAP_I_ENTITY_INTEGRATION_TPP
 
 #include <assert.h>
 #include "mapIEntityIntegration.h"

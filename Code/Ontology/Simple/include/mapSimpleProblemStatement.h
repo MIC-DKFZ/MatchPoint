@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_PROBLEM_STATEMENT_H
-#define __IRO_SIMPLE_PROBLEM_STATEMENT_H
+#ifndef __MAP_SIMPLE_PROBLEM_STATEMENT_H
+#define __MAP_SIMPLE_PROBLEM_STATEMENT_H
 
 #include "mapProblemStatementBase.h"
 #include "mapProblemStatementTraits.h"

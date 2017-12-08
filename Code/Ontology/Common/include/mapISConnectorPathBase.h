@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_CONNECTOR_PATH_BASE_H
-#define __IRO_CONNECTOR_PATH_BASE_H
+#ifndef __MAP_CONNECTOR_PATH_BASE_H
+#define __MAP_CONNECTOR_PATH_BASE_H
 
 #include "mapIInformationSpaceConnector.h"
 #include "mapIProblemComplianceChecker.h"
@@ -141,7 +141,7 @@ namespace iro
 		};
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapISConnectorPathBase.tpp"
 #endif
 

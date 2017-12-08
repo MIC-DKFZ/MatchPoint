@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_PATH_OPTION_COLLECTION_H
-#define __IRO_PATH_OPTION_COLLECTION_H
+#ifndef __MAP_PATH_OPTION_COLLECTION_H
+#define __MAP_PATH_OPTION_COLLECTION_H
 
 #include "mapPathOption.h"
 #include "mapOntologyExceptions.h"
@@ -126,7 +126,7 @@ namespace iro
 		};
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapPathOptionCollection.tpp"
 #endif
 

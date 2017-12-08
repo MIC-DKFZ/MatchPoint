@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_PROBLEM_COMPLIANCE_CHECKER_H
-#define __IRO_I_PROBLEM_COMPLIANCE_CHECKER_H
+#ifndef __MAP_I_PROBLEM_COMPLIANCE_CHECKER_H
+#define __MAP_I_PROBLEM_COMPLIANCE_CHECKER_H
 
 #include "mapIProblemComplianceDefinition.h"
 

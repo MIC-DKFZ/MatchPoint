@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_VALIDITY_INDICATOR_H
-#define __IRO_VALIDITY_INDICATOR_H
+#ifndef __MAP_VALIDITY_INDICATOR_H
+#define __MAP_VALIDITY_INDICATOR_H
 
 namespace iro
 {

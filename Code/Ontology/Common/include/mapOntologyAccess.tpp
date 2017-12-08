@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_ONTOLOGY_ACCESS_TPP
-#define __IRO_ONTOLOGY_ACCESS_TPP
+#ifndef __MAP_ONTOLOGY_ACCESS_TPP
+#define __MAP_ONTOLOGY_ACCESS_TPP
 
 #include "mapOntologyAccess.h"
 

@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_REGISTRATON_PATH_BASE_TPP
-#define __IRO_REGISTRATON_PATH_BASE_TPP
+#ifndef __MAP_REGISTRATON_PATH_BASE_TPP
+#define __MAP_REGISTRATON_PATH_BASE_TPP
 
 #include "mapRegistrationPathBase.h"
 

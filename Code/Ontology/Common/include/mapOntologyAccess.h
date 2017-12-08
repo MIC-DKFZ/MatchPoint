@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_ONTOLOGY_ACCESS_H
-#define __IRO_ONTOLOGY_ACCESS_H
+#ifndef __MAP_ONTOLOGY_ACCESS_H
+#define __MAP_ONTOLOGY_ACCESS_H
 
 #include "mapIEntityInference.h"
 #include "mapIMappingInference.h"
@@ -123,7 +123,7 @@ namespace iro
   } // end namespace core
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapOntologyAccess.tpp"
 #endif
 

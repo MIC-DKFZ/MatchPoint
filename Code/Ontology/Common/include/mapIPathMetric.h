@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_PATH_METRIC_H
-#define __IRO_I_PATH_METRIC_H
+#ifndef __MAP_I_PATH_METRIC_H
+#define __MAP_I_PATH_METRIC_H
 
 #include "mapOntologyExceptions.h"
 

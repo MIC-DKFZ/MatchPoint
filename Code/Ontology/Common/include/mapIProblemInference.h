@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_PROBLEM_INFERENCE_H
-#define __IRO_I_PROBLEM_INFERENCE_H
+#ifndef __MAP_I_PROBLEM_INFERENCE_H
+#define __MAP_I_PROBLEM_INFERENCE_H
 
 #include "mapOntologyResult.h"
 #include "mapIProblemStatementAssociated.h"
@@ -154,7 +154,7 @@ namespace iro
 	} // end namespace core
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapIProblemInference.tpp"
 #endif
 

@@ -15,8 +15,8 @@
 
 
 
-#ifndef __IRO_PROBLEM_STATEMENT_BASE_TPP
-#define __IRO_PROBLEM_STATEMENT_BASE_TPP
+#ifndef __MAP_PROBLEM_STATEMENT_BASE_TPP
+#define __MAP_PROBLEM_STATEMENT_BASE_TPP
 
 #include "mapProblemStatementBase.h"
 

@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_IS_CACHE_KEY_H
-#define __IRO_IS_CACHE_KEY_H
+#ifndef __MAP_IS_CACHE_KEY_H
+#define __MAP_IS_CACHE_KEY_H
 
 #include "mapDataRepresentation.h"
 
@@ -52,7 +52,7 @@ namespace iro
 
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapISCacheKey.tpp"
 #endif
 

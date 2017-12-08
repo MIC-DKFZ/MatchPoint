@@ -17,8 +17,8 @@
 
 
 
-#ifndef __IRO_I_MAPPING_INFERENCE_TPP
-#define __IRO_I_MAPPING_INFERENCE_TPP
+#ifndef __MAP_I_MAPPING_INFERENCE_TPP
+#define __MAP_I_MAPPING_INFERENCE_TPP
 
 #include <assert.h>
 #include "mapIMappingInference.h"

@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_INFORMATION_SPACE_H
-#define __IRO_SIMPLE_INFORMATION_SPACE_H
+#ifndef __MAP_SIMPLE_INFORMATION_SPACE_H
+#define __MAP_SIMPLE_INFORMATION_SPACE_H
 
 #include <memory>
 #include "mapInformationSpaceTraits.h"

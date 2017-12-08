@@ -14,7 +14,7 @@
 //------------------------------------------------------------------------
 
 
-// this file defines the iroScenarioSimpleTests for the test driver
+// this file defines the mapOntologySimpleTests for the test driver
 // and all it expects is that you have a function called RegisterTests
 #if defined(_MSC_VER)
 #pragma warning ( disable : 4786 )
@@ -53,7 +53,7 @@ namespace iro
     }
     catch(...)
     {
-      std::cerr << "IRO test driver caught an unknown exception!!!\n";
+      std::cerr << "MatchPoint test driver caught an unknown exception!!!\n";
       result = -1;
     }
 

@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_ONTOLOGY_H
-#define __IRO_SIMPLE_ONTOLOGY_H
+#ifndef __MAP_SIMPLE_ONTOLOGY_H
+#define __MAP_SIMPLE_ONTOLOGY_H
 
 #include "mapOntologyAccess.h"
 #include "mapSimpleRegPathOptionCollection.h"

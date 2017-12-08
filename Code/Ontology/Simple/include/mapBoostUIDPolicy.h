@@ -14,8 +14,8 @@
 //------------------------------------------------------------------------
 
 
-#ifndef __IRO_BOOST_UID_POLICY_H
-#define __IRO_BOOST_UID_POLICY_H
+#ifndef __MAP_BOOST_UID_POLICY_H
+#define __MAP_BOOST_UID_POLICY_H
 
 #include "mapMAPOntologySimpleExports.h"
 
@@ -24,7 +24,7 @@
 namespace iro
 {
     /*! @struct BoostUIDPolicy
-    * @brief Policy for using boost::uuid as UID in IRO.
+    * @brief Policy for using boost::uuid as UID in MatchPoint ontologies.
     * 
     * @ingroup UIDPolicy
     */

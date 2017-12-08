@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_TRANSFORMATION_INFO_TRAITS_H
-#define __IRO_TRANSFORMATION_INFO_TRAITS_H
+#ifndef __MAP_TRANSFORMATION_INFO_TRAITS_H
+#define __MAP_TRANSFORMATION_INFO_TRAITS_H
 
 #include "mapIProblemStatementAssociated.h"
 #include "mapIProblemComplianceDefinition.h"

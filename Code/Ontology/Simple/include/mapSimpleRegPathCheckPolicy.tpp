@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_SIMPLE_REG_PATH_CHECK_POLICY_TPP
-#define __IRO_SIMPLE_REG_PATH_CHECK_POLICY_TPP
+#ifndef __MAP_SIMPLE_REG_PATH_CHECK_POLICY_TPP
+#define __MAP_SIMPLE_REG_PATH_CHECK_POLICY_TPP
 
 #include "mapFOVScope.h"
 #include "mapSimpleRegPathCheckPolicy.h"

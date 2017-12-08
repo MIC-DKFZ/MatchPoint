@@ -16,8 +16,8 @@
 
 
 
-#ifndef __IRO_REGISTRATION_INFO_H
-#define __IRO_REGISTRATION_INFO_H
+#ifndef __MAP_REGISTRATION_INFO_H
+#define __MAP_REGISTRATION_INFO_H
 
 #include "mapIInformationSpaceConnector.h"
 #include "mapIProblemStatementAssociated.h"
@@ -114,7 +114,7 @@ namespace iro
 		};
 } // end namespace iro
 
-#ifndef IRO_MANUAL_TPP
+#ifndef MatchPoint_MANUAL_TPP
 #include "mapRegistrationInfo.tpp"
 #endif
 
