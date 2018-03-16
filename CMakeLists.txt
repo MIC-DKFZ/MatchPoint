@@ -277,9 +277,6 @@ EXPORT(PACKAGE MatchPoint)
 CONFIGURE_FILE(${MatchPoint_SOURCE_DIR}/UseMatchPoint.cmake.in
                ${MatchPoint_BINARY_DIR}/UseMatchPoint.cmake COPYONLY IMMEDIATE)
 		   
-# Save library dependencies.
-EXPORT_LIBRARY_DEPENDENCIES(${MatchPoint_BINARY_DIR}/MatchPointLibraryDepends.cmake)
-
 # Create the MatchPointConfig.cmake file containing the MatchPoint configuration.
 INCLUDE(${MAP_MODULES_CONF_DIR}/ITKConfig.cmake)
 INCLUDE(${MatchPoint_SOURCE_DIR}/mapGenerateMatchPointConfig.cmake)
@@ -287,13 +284,14 @@ INCLUDE(${MatchPoint_SOURCE_DIR}/mapGenerateMatchPointConfig.cmake)
 IF(NOT MatchPoint_INSTALL_NO_DEVELOPMENT)
   INSTALL(FILES
     ${MatchPoint_BINARY_DIR}/MatchPointConfig.cmake
-    ${MatchPoint_BINARY_DIR}/MatchPointLibraryDepends.cmake
     ${MatchPoint_BINARY_DIR}/UseMatchPoint.cmake
-    ${MatchPoint_BINARY_DIR}/MatchPointTargets.cmake
     DESTINATION ${MatchPoint_INSTALL_PACKAGE_DIR}
     COMPONENT Development
     )
+
+   INSTALL(EXPORT MatchPointExport DESTINATION ${MatchPoint_INSTALL_PACKAGE_DIR} COMPONENT Development)
 ENDIF(NOT MatchPoint_INSTALL_NO_DEVELOPMENT)
+
 
 #-----------------------------------------------------------------------------
 # Installer
