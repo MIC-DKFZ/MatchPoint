@@ -388,7 +388,7 @@ void handleMaskConvert(const ::map::io::GenericImageReader::GenericOutputImageTy
   caster->SetInput(input);
   caster->Update();
   
-  SpatialType::Pointer spatial = SpatialType::New();
+  typename SpatialType::Pointer spatial = SpatialType::New();
   spatial->SetImage(caster->GetOutput());
 
   mask = spatial;
