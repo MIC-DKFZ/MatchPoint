@@ -21,7 +21,7 @@ LIST(APPEND ALL_LIBRARIES ${ITK_LIBRARIES})
 
 LINK_DIRECTORIES(${ITK_LIBRARY_DIRS}) 
 
-OPTION(MAP_USE_SYSTEM_GDCM "Activate checker to choose a GDCM installation that should be linked with ITK. (This is needed e.g. when building against an ITK that is distributed with MITK. MITK uses its own GDCM and not the one distributed with ITK.)" OFF)     
+OPTION(MAP_USE_SYSTEM_GDCM "Activate checker to choose a GDCM installation that was linked with ITK. (This is needed e.g. when building against an ITK that is distributed with MITK. MITK uses its own GDCM and not the one distributed with ITK.)" OFF)     
 
 IF (MAP_USE_SYSTEM_GDCM)
   IF(DEFINED GDCM_DIR)
@@ -36,5 +36,19 @@ IF (MAP_USE_SYSTEM_GDCM)
   LIST(APPEND ALL_INCLUDE_DIRECTORIES ${GDCM_INCLUDE_DIRS})
   LIST(APPEND ALL_LIBRARIES ${GDCM_LIBRARIES})	  
 ENDIF (MAP_USE_SYSTEM_GDCM)
+
+OPTION(MAP_USE_SYSTEM_HDF5 "Activate checker to choose a HDF5 installation that was linked with ITK. (This is needed e.g. when building against an ITK that is distributed with MITK. MITK uses its own HDF5 and not the one distributed with ITK.)" OFF)     
+
+IF (MAP_USE_SYSTEM_HDF5)
+  IF(DEFINED HDF5_DIR)
+	IF(NOT IS_ABSOLUTE ${HDF5_DIR})
+	  SET(HDF5_DIR "${MatchPoint_BINARY_DIR}/${HDF5_DIR}")
+	ENDIF(NOT IS_ABSOLUTE ${HDF5_DIR})
+  ENDIF(DEFINED HDF5_DIR)
+
+  MESSAGE (STATUS "MatchPoint uses system HDF5 instead of ITK distribution.")
+  FIND_PACKAGE(HDF5)
+ENDIF (MAP_USE_SYSTEM_HDF5)
+
 
 CONFIGURE_FILE(${MatchPoint_SOURCE_DIR}/CMake/ITKConfig.cmake.in ${MAP_MODULES_CONF_DIR}/ITKConfig.cmake @ONLY)
