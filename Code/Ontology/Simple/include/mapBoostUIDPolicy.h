@@ -28,7 +28,7 @@ namespace iro
     * 
     * @ingroup UIDPolicy
     */
-    MAPOntologySimple_EXPORT struct BoostUIDPolicy
+    struct MAPOntologySimple_EXPORT BoostUIDPolicy
     {
       typedef boost::uuids::uuid  UIDType;
 

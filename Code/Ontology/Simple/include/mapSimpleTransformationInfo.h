@@ -43,7 +43,7 @@ namespace iro
     * @brief Simple specific implementation for transformation infos.
     * @ingroup Simple
     */
-    MAPOntologySimple_EXPORT class SimpleTransformationInfo : public IInformationSpaceConnector< SimpleInformationSpaceTraits >, public IProblemStatementAssociated< SimpleProblemStatementTraits >
+    class MAPOntologySimple_EXPORT SimpleTransformationInfo : public IInformationSpaceConnector< SimpleInformationSpaceTraits >, public IProblemStatementAssociated< SimpleProblemStatementTraits >
     {
     public:
       typedef SimpleTransformationInfo Self;
@@ -77,7 +77,7 @@ namespace iro
 
       /** Returns the const pointer to the associated problem statement.
       * Pointer may be null, if no statement is defined.*/
-      virtual ConstProblemPointer getAssociatedProblemStatement() const;
+      virtual ConstProblemPointer getAssociatedProblemStatement() const override;
       /*! Sets the associated problem statement */
       void setAssociatedProblemStatement(ConstProblemPointer problem);
 

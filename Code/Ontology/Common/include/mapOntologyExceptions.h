@@ -27,13 +27,13 @@ namespace iro
   namespace exceptions
   {
 
-    typedef ::std::invalid_argument InvalidArgument;
+    MAPOntology_EXPORT typedef ::std::invalid_argument InvalidArgument;
       
     /** @class InvalidIS
     * Exception class that is thrown when an problem correlated with
     * information spaces occures
     * @ingroup Exception*/
-    MAPOntology_EXPORT class InvalidIS : public InvalidArgument
+    class MAPOntology_EXPORT InvalidIS : public InvalidArgument
     {
     public:
       explicit InvalidIS (const String& what_arg);
@@ -43,7 +43,7 @@ namespace iro
     * Exception class that is thrown when an problem correlated with
     * moving information spaces occures
     * @ingroup Exception*/
-    MAPOntology_EXPORT class InvalidMovingIS : public InvalidIS
+    class MAPOntology_EXPORT InvalidMovingIS : public InvalidIS
     {
     public:
       explicit InvalidMovingIS (const String& what_arg);
@@ -53,7 +53,7 @@ namespace iro
     * Exception class that is thrown when an problem correlated with
     * target information spaces occures
     * @ingroup Exception*/
-    MAPOntology_EXPORT class InvalidTargetIS : public InvalidIS
+    class MAPOntology_EXPORT InvalidTargetIS : public InvalidIS
     {
     public:
       explicit InvalidTargetIS (const String& what_arg);
@@ -63,7 +63,7 @@ namespace iro
     * Exception class that is thrown when an problem correlated with
     * invalid data representation support occures
     * @ingroup Exception*/
-    MAPOntology_EXPORT class InvalidDataRepresentation : public InvalidArgument
+    class MAPOntology_EXPORT InvalidDataRepresentation : public InvalidArgument
     {
     public:
       explicit InvalidDataRepresentation (const String& what_arg);
@@ -73,7 +73,7 @@ namespace iro
     * Exception class that is thrown when an element is used for
     * inference or integration that is not part of the ontology
     * @ingroup Exceptions*/
-    MAPOntology_EXPORT class UndefinedElement : public InvalidArgument
+    class MAPOntology_EXPORT UndefinedElement : public InvalidArgument
     {
     public:
       explicit UndefinedElement (const String& what_arg);

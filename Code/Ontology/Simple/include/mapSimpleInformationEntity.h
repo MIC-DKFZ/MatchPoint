@@ -35,7 +35,7 @@ namespace iro
      * @brief Simple specific implementation of an InformationEntity
      * Uses a string type to store the UID.
      * @ingroup Simple*/
-    MAPOntologySimple_EXPORT class SimpleInformationEntity
+    class MAPOntologySimple_EXPORT SimpleInformationEntity
     {
     public:
       typedef SimpleInformationEntity Self;

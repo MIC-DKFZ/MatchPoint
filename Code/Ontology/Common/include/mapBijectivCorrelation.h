@@ -32,7 +32,7 @@ namespace iro
    * Thus you know for the exact correspondence of one entity (element)
    * in the other information space.
    * @ingroup CorrelationType*/
-  MAPOntology_EXPORT class BijectivCorrelation : public InjectivCorrelation
+  class MAPOntology_EXPORT BijectivCorrelation : public InjectivCorrelation
   {
   public:
     typedef BijectivCorrelation                           Self;

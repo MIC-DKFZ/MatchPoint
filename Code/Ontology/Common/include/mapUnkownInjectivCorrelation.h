@@ -31,7 +31,7 @@ namespace iro
    * that all landmarks are visible in all images), but you don't know which parts
    * correspond. The weakest of all correlations.
    * @ingroup CorrelationType*/
-  MAPOntology_EXPORT class UnkownInjectivCorrelation : public ISemanticCorrelationType
+  class MAPOntology_EXPORT UnkownInjectivCorrelation : public ISemanticCorrelationType
   {
   public:
     typedef UnkownInjectivCorrelation                           Self;

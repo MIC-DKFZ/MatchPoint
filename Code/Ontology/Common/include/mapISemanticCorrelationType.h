@@ -23,6 +23,8 @@
 #include "mapOntologyString.h"
 #include <memory>
 
+#include "mapMAPOntologyExports.h"
+
 namespace iro
 {
 
@@ -30,7 +32,7 @@ namespace iro
    *Interface for all kind of correlation types.
    * @ingroup CorrelationType Interfaces
    */
-  class ISemanticCorrelationType
+  class MAPOntology_EXPORT ISemanticCorrelationType
   {
   public:
     typedef ISemanticCorrelationType                           Self;

@@ -29,7 +29,7 @@ namespace iro
    * Thus you know that to entities have exact correspondence (e.g. the same set of markers in different images)
    * but it is unknown how they match exactly (e.g. which marker is displayed in certain renderings in the image).
    * @ingroup CorrelationType*/
-  MAPOntology_EXPORT class UnkownBijectivCorrelation : public UnkownInjectivCorrelation
+  class MAPOntology_EXPORT UnkownBijectivCorrelation : public UnkownInjectivCorrelation
   {
   public:
     typedef UnkownBijectivCorrelation                           Self;

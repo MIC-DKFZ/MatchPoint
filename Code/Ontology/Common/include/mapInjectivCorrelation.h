@@ -31,7 +31,7 @@ namespace iro
    * are visible in all images. But the landmarks are uniquely identified, so when there is a landmark in to images
    * you are able to determin this).
    * @ingroup CorrelationType*/
-  MAPOntology_EXPORT class InjectivCorrelation : public UnkownBijectivCorrelation
+  class MAPOntology_EXPORT InjectivCorrelation : public UnkownBijectivCorrelation
   {
   public:
     typedef InjectivCorrelation                           Self;

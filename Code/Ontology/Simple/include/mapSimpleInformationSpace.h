@@ -34,7 +34,7 @@ namespace iro
      * @brief Simple specific implementation of an information space
      * Uses a string type to store the UID.
      * @ingroup Simple*/
-    MAPOntologySimple_EXPORT class SimpleInformationSpace
+    class MAPOntologySimple_EXPORT SimpleInformationSpace
     {
     public:
       typedef SimpleInformationSpace Self;

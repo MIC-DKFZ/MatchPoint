@@ -31,7 +31,7 @@ namespace iro
 * - Discrete (e.g. voxel images)
 * - Continuous (e.g. points)
 */
-  MAPOntology_EXPORT struct DataRepresentation
+  struct MAPOntology_EXPORT DataRepresentation
   {
     enum Type {
       Discrete = 1,
@@ -48,7 +48,7 @@ Possible values:
 - Continuous
 - All
 */
-  MAPOntology_EXPORT struct DataRepresentationSupport
+  struct MAPOntology_EXPORT DataRepresentationSupport
   {
     enum Type {
       Arbitrary = 0,
@@ -60,7 +60,7 @@ Possible values:
 
   /** Conversion function for data representation type to data
   * representation support type.*/
-  DataRepresentationSupport::Type convertToSupport(DataRepresentation::Type data);
+  MAPOntology_EXPORT DataRepresentationSupport::Type convertToSupport(DataRepresentation::Type data);
 
 } // end namespace iro
 

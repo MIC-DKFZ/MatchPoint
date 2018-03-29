@@ -45,7 +45,7 @@ namespace iro
     /*! @class SimpleOntology
      * @brief Simple specific implementation of the ontology
      * @ingroup Simple*/
-    MAPOntologySimple_EXPORT class SimpleOntology : public iro::core::OntologyAccess<SimpleOntologyAccessTraits>
+    class MAPOntologySimple_EXPORT SimpleOntology : public iro::core::OntologyAccess<SimpleOntologyAccessTraits>
     {
     public:
       typedef SimpleOntology Self;

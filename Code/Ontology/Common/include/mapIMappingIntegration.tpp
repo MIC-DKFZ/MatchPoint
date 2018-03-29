@@ -97,10 +97,10 @@ namespace iro
         throw exceptions::UndefinedElement("Cannot store transformation info. Referenced target IS is not defined in the ontology.");
       }
 
-      if (transformation->GetAssociatedProblemStatement())
+      if (transformation->getAssociatedProblemStatement())
       {
         typedef typename ProblemStatementTraitsType::ConstPointer ConstStatPointer;
-        ConstStatPointer stat = _pProblemInferenceInterface->actualize(transformation->GetAssociatedProblemStatement());
+        ConstStatPointer stat = _pProblemInferenceInterface->actualize(transformation->getAssociatedProblemStatement());
 
         if (!stat)
         {
