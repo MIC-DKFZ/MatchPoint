@@ -19,6 +19,8 @@
 #ifndef __MAP_SIMPLE_ONTOLOGY_CORE_H
 #define __MAP_SIMPLE_ONTOLOGY_CORE_H
 
+#include <set>
+
 #include "mapValidityIndicator.h"
 #include "mapProblemBasedEdgeValidator.h"
 #include "mapDataRepresentation.h"
@@ -28,13 +30,13 @@
 #include "mapGraphProperties.h"
 #include "mapSimplePathSearch.h"
 
+#include "boost/graph/adjacency_list.hpp"
+
+#define BOOST_DATE_TIME_NO_LIB
 #include "boost/interprocess/sync/interprocess_upgradable_mutex.hpp"
 #include "boost/interprocess/sync/sharable_lock.hpp"
 #include "boost/interprocess/sync/scoped_lock.hpp"
 
-#include "boost/graph/adjacency_list.hpp"
-
-#include <set>
 
 namespace iro
 {

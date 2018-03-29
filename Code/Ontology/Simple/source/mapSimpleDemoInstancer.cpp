@@ -16,8 +16,6 @@
 
 #include "mapSimpleDemoInstancer.h"
 
-#include "litCheckMacros.h"
-
 #include <stdlib.h>
 
 namespace iro
