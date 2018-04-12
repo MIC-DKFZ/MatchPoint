@@ -35,6 +35,7 @@
 #include "mapConvert.h"
 #include "mapLogbook.h"
 #include "mapFileDispatch.h"
+#include "mapExpandingFieldKernelWriter.h"
 
 namespace map
 {
@@ -113,85 +114,91 @@ namespace map
                           request._spKernel.GetPointer());
       }
 
-      auto fileLoadFunctor = dynamic_cast<const ::map::core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> *>(pKernel->getTransformFunctor());
+      structuredData::Element::Pointer spKernelElement;
 
-      if (fileLoadFunctor == nullptr)
-      {
-        mapExceptionMacro(::map::core::ServiceException,
-                          << "Error: cannot store kernel. Reason: Lazy kernel seems to have no FieldByFileLoadFunctor. Kernel: " << pKernel);
-      }
-
-      core::String sourcePath = fileLoadFunctor->getFieldFilePath();
-
-      auto extension = core::FileDispatch::getExtension(sourcePath);
-      std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
-
-      if (extension != ".nrrd")
-      {
-        mapExceptionMacro(::map::core::ServiceException,
-          << "Error: cannot store kernel. Reason: Lazy kernel currently only support savely files in NRRD fromat. Kernel: " << pKernel);
-      }
-
-      structuredData::Element::Pointer spKernelElement = structuredData::Element::New();
-
-      spKernelElement->setTag(tags::Kernel);
-
-      spKernelElement->setAttribute(tags::InputDimensions, core::convert::toStr(VInputDimensions));
-
-      spKernelElement->setAttribute(tags::OutputDimensions, core::convert::toStr(VOutputDimensions));
-
-      spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
-                                     this->getProviderName()));
-
-      spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
-                                     "ExpandedFieldKernel"));
-
-      //generate file name and save field to file
-      if (request._path.empty())
-      {
-        core::Logbook::warning("No request path set for field storing. Will be stored to current directory.");
-      }
-
-      if (request._name.empty())
-      {
-        core::Logbook::warning("No request name specified. Field will be stored to unspecified file '_field.nrrd'.");
-      }
-
-      core::String fieldPath =  request._name + "_field.nrrd";
-      core::String destinationPath = core::FileDispatch::createFullPath(request._path, fieldPath);
-
-      //copy field file
-      if (extension == ".nrrd" || extension == ".mda")
-      { //these format only consist of one file -> we can just copy it.
-        itksys::SystemTools::CopyAFile(sourcePath, destinationPath);
+      if (pKernel->transformExists())
+      { //pKernel is not lazy anymore. So we can just save the transform back to a file.
+        RequestType expandingRequest = request;
+        expandingRequest._expandLazyKernels = true;
+        typedef io::ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions> ExpandingWriterType;
+        ExpandingWriterType::Pointer writer = ExpandingWriterType::New();
+        spKernelElement = writer->storeKernel(expandingRequest);
       }
       else
-      {
-        mapExceptionMacro(::map::core::ServiceException,
-          << "Error: cannot store kernel. Reason: Lazy kernel currently only support savely files in NRRD or MDA fromat. See https://phabricator.mitk.org/T24623 for more details. Kernel: " << pKernel);
-      }
+      { 
+        auto fileLoadFunctor = dynamic_cast<const ::map::core::functors::FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions> *>(pKernel->getTransformFunctor());
 
-      //add field file
-      structuredData::Element::Pointer spFieldPathElement = structuredData::Element::New();
-      spFieldPathElement->setTag(tags::FieldPath);
-      spFieldPathElement->setValue(fieldPath);
+        if (fileLoadFunctor == nullptr)
+        {
+          mapExceptionMacro(::map::core::ServiceException,
+            << "Error: cannot store kernel. Reason: Lazy kernel seems to have no FieldByFileLoadFunctor. Kernel: " << pKernel);
+        }
 
-      spKernelElement->addSubElement(spFieldPathElement);
+        core::String sourcePath = fileLoadFunctor->getFieldFilePath();
 
-      //add null point
-      structuredData::Element::Pointer spUseNullPointElement = structuredData::Element::New();
-      spUseNullPointElement->setTag(tags::UseNullPoint);
-      spUseNullPointElement->setValue(::map::core::convert::toStr(fileLoadFunctor->getNullPointUsage()));
-      spKernelElement->addSubElement(spUseNullPointElement);
+        spKernelElement = structuredData::Element::New();
 
-      if (fileLoadFunctor->getNullPointUsage())
-      {
+        spKernelElement->setTag(tags::Kernel);
+
+        spKernelElement->setAttribute(tags::InputDimensions, core::convert::toStr(VInputDimensions));
+
+        spKernelElement->setAttribute(tags::OutputDimensions, core::convert::toStr(VOutputDimensions));
+
+        spKernelElement->addSubElement(structuredData::Element::createElement(tags::StreamProvider,
+          this->getProviderName()));
+
+        spKernelElement->addSubElement(structuredData::Element::createElement(tags::KernelType,
+          "ExpandedFieldKernel"));
+
+        //generate file name and save field to file
+        if (request._path.empty())
+        {
+          core::Logbook::warning("No request path set for field storing. Will be stored to current directory.");
+        }
+
+        if (request._name.empty())
+        {
+          core::Logbook::warning("No request name specified. Field will be stored to unspecified file '_field.nrrd'.");
+        }
+
+        core::String fieldPath = request._name + "_field.nrrd";
+        core::String destinationPath = core::FileDispatch::createFullPath(request._path, fieldPath);
+
+        //copy field file
+        auto extension = core::FileDispatch::getExtension(sourcePath);
+        std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+        if (extension == ".nrrd" || extension == ".mda")
+        { //these format only consist of one file -> we can just copy it.
+          itksys::SystemTools::CopyAFile(sourcePath, destinationPath);
+        }
+        else
+        {
+          mapExceptionMacro(::map::core::ServiceException,
+            << "Error: cannot store kernel. Reason: Lazy kernel currently only support savely files in NRRD or MDA fromat. See https://phabricator.mitk.org/T24623 for more details. Kernel: " << pKernel);
+        }
+
+        //add field file
+        structuredData::Element::Pointer spFieldPathElement = structuredData::Element::New();
+        spFieldPathElement->setTag(tags::FieldPath);
+        spFieldPathElement->setValue(fieldPath);
+
+        spKernelElement->addSubElement(spFieldPathElement);
+
+        //add null point
+        structuredData::Element::Pointer spUseNullPointElement = structuredData::Element::New();
+        spUseNullPointElement->setTag(tags::UseNullPoint);
+        spUseNullPointElement->setValue(::map::core::convert::toStr(fileLoadFunctor->getNullPointUsage()));
+        spKernelElement->addSubElement(spUseNullPointElement);
+
+        if (fileLoadFunctor->getNullPointUsage())
+        {
           typename KernelType::OutputPointType nullPoint = fileLoadFunctor->getNullPoint();
-        structuredData::Element::Pointer spNullPointElement = structuredData::streamITKFixedArrayToSD(
-              nullPoint);
-        spNullPointElement->setTag(tags::NullPoint);
+          structuredData::Element::Pointer spNullPointElement = structuredData::streamITKFixedArrayToSD(
+            nullPoint);
+          spNullPointElement->setTag(tags::NullPoint);
 
-        spKernelElement->addSubElement(spNullPointElement);
+          spKernelElement->addSubElement(spNullPointElement);
+        }
       }
 
       return spKernelElement;
