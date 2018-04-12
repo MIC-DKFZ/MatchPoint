@@ -88,7 +88,7 @@ namespace map
 			LoaderType::Pointer spLoader = LoaderType::New();
 
 			map::core::String testFilePath = map::structuredData::encodeForXml(
-												 map::core::FileDispatch::createFullPath(refPath, "expandingFieldKernelWriterTest_ref.mhd"));
+												 map::core::FileDispatch::createFullPath(refPath, "expandingFieldKernelWriterTest_ref.nrrd"));
 
 			::map::core::String validData =
 				"<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>"

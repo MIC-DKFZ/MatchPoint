@@ -34,10 +34,11 @@ namespace map
 		* @brief Load class used by RegistrationFileWriter to populate its service stacks.
 		*
 		* It loads the following providers:
+		* - NullRegistrationKernelWriter
+		* - InvertingKernelWriter
 		* - MatrixModelBasedKernelWriter
-		* - FieldBasedKernelWriter
-		* - LazzyFieldBasedKernelWriter
-		* - ComposedKernelWriter
+    * - LazyFieldFileKernelWriter
+		* - ExpandingFieldKernelWriter
 		* .
 		* @TODO Add missing writers
 		* @ingroup LoadPolicies

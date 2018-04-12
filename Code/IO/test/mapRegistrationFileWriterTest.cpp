@@ -34,6 +34,7 @@
 #include "test/mapTestKernelBase.h"
 #include "mapNullRegistrationKernel.h"
 #include "mapExpandingFieldKernelWriter.h"
+#include "mapLazyFieldFileKernelWriter.h"
 
 namespace map
 {
@@ -85,7 +86,9 @@ namespace map
 					  io::ExpandingFieldKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != DirectStackType::getProvider(
 					  io::InvertingKernelWriter<2, 2>::getStaticProviderName()));
-			CHECK(NULL != InverseStackType::getProvider(
+      CHECK(NULL != DirectStackType::getProvider(
+            io::LazyFieldFileKernelWriter<2, 2>::getStaticProviderName()));
+      CHECK(NULL != InverseStackType::getProvider(
 					  io::MatrixModelBasedKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != InverseStackType::getProvider(
 					  io::NullRegistrationKernelWriter<2, 2>::getStaticProviderName()));
@@ -93,6 +96,8 @@ namespace map
 					  io::ExpandingFieldKernelWriter<2, 2>::getStaticProviderName()));
 			CHECK(NULL != InverseStackType::getProvider(
 					  io::InvertingKernelWriter<2, 2>::getStaticProviderName()));
+      CHECK(NULL != InverseStackType::getProvider(
+            io::LazyFieldFileKernelWriter<2, 2>::getStaticProviderName()));
 
 			// create a ModelBasedKernels for testing
 			typedef core::PreCachedRegistrationKernel<2, 2> KernelType;

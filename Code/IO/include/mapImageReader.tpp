@@ -23,6 +23,11 @@
 #ifndef __MAP_IMAGE_READER_TPP
 #define __MAP_IMAGE_READER_TPP
 
+#include <algorithm>
+#include <utility>
+#include <iostream>
+#include <locale>
+
 #include "mapImageReader.h"
 
 #include "mapExceptionObjectMacros.h"
@@ -44,10 +49,6 @@
 #include "itkCastImageFilter.h"
 #include "itkFixedArray.h"
 #include "itksys/SystemTools.hxx"
-
-#include <iostream>
-#include <locale>
-
 
 namespace map
 {
@@ -255,11 +256,7 @@ namespace map
 			::map::core::String	sTemp = dispatch.getExtension();
 			::map::core::String  sDir = dispatch.getPath();
 
-			//Convert to lowercase
-			for (::map::core::String::iterator spos = sTemp.begin(); spos != sTemp.end(); spos++)
-			{
-				(*spos) = std::tolower((*spos), std::locale(""));
-			}
+      std::transform(sTemp.begin(), sTemp.end(), sTemp.begin(), ::tolower);
 
 			typedef ::itk::RescaleIntensityImageFilter< InputImageType, InputImageType > RescaleFilterType;
 			typedef ::itk::CastImageFilter< InputImageType, OutputImageType > CastFilterType;
