@@ -11,6 +11,7 @@ include/mapExpandingFieldKernelWriter.h
 include/mapFieldKernelLoader.h
 include/mapFieldKernelLoaderBase.h
 include/mapLazyFileFieldKernelLoader.h
+include/mapLazyFieldFileKernelWriter.h
 include/mapMatrixModelBasedKernelWriter.h
 include/mapMatrixModelBasedKernelLoader.h
 include/mapNullRegistrationKernelLoader.h
@@ -37,6 +38,7 @@ include/mapExpandingFieldKernelWriter.tpp
 include/mapFieldKernelLoader.tpp
 include/mapFieldKernelLoaderBase.tpp
 include/mapLazyFileFieldKernelLoader.tpp
+include/mapLazyFieldFileKernelWriter.tpp
 include/mapMatrixModelBasedKernelWriter.tpp
 include/mapMatrixModelBasedKernelLoader.tpp
 include/mapNullRegistrationKernelWriter.tpp
@@ -63,4 +65,5 @@ test/mapLazyFileFieldKernelLoaderTest.cpp
 test/mapFieldKernelLoaderTest.cpp
 test/mapInvertingKernelWriterTest.cpp
 test/mapInvertingKernelLoaderTest.cpp
+test/mapLazyFieldFileKernelWriterTest.cpp
 )

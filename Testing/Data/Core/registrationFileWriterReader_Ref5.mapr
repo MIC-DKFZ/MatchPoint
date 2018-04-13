@@ -6,7 +6,7 @@
   <Kernel ID='direct' InputDimensions='2' OutputDimensions='2'>
     <StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider>
     <KernelType>ExpandedFieldKernel</KernelType>
-    <FieldPath>expandingFieldKernelWriterTest_ref.mhd</FieldPath>
+    <FieldPath>expandingFieldKernelWriterTest_ref.nrrd</FieldPath>
     <UseNullPoint>1</UseNullPoint>
     <NullPoint>
       <Value Row='0'>-1.000000000</Value>

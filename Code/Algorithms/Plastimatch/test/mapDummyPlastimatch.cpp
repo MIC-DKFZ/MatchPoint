@@ -61,8 +61,16 @@ int main(int argc, char* argv[])
 
 	map::core::String configPath = argv[2];
 
-	map::algorithm::plastimatch::ConfigurationType config =
-		map::algorithm::plastimatch::loadConfigurationFromFile(configPath);
+  map::algorithm::plastimatch::ConfigurationType config;
+  try
+  {
+    config = map::algorithm::plastimatch::loadConfigurationFromFile(configPath);
+  }
+  catch (const std::exception &e)
+  {
+    std::cerr << "Error. Cannot load config file. Details: " << e.what();
+    return EXIT_FAILURE;
+  }
 
 	if (config.size() < 2)
 	{

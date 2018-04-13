@@ -43,7 +43,7 @@ namespace map
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		void
 		NullRegistrationKernel<VInputDimensions, VOutputDimensions>::
-		precomputeKernel()
+		precomputeKernel() const
 		{
 			mapDefaultExceptionMacro( <<
 									  "Error. Cannot precompute kernel/field. NullRegistrationKernel is not a valid Kernel and cannot be precomputed.");

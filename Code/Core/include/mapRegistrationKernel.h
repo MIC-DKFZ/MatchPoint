@@ -70,7 +70,7 @@ namespace map
             /*! @brief forces kernel to precompute, even if it is a LazyFieldKernel
               @eguarantee strong
               */
-            virtual void precomputeKernel() override;
+            virtual void precomputeKernel() const override;
 
             /*! Returns if the transform was already created or if the generation still is pending / wasn't necessary.
             @eguarantee strong

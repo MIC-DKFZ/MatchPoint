@@ -148,7 +148,7 @@ namespace map
       //test the fields
       map::core::FieldDecomposer<2, 2>::FieldConstPointer actualField;
       map::core::String refFieldPath = map::core::FileDispatch::createFullPath(refPath,
-                                       "expandingFieldKernelWriterTest_ref.mhd");
+                                       "expandingFieldKernelWriterTest_ref.nrrd");
       typedef ::itk::ImageFileReader<map::core::FieldDecomposer<2, 2>::FieldType> ReaderType;
       ReaderType::Pointer spReader = ReaderType::New();
       spReader->SetFileName(refFieldPath);

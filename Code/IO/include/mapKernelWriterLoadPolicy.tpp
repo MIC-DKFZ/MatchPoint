@@ -30,6 +30,7 @@
 #include "mapNullRegistrationKernelWriter.h"
 #include "mapExpandingFieldKernelWriter.h"
 #include "mapInvertingKernelWriter.h"
+#include "mapLazyFieldFileKernelWriter.h"
 
 namespace map
 {
@@ -45,18 +46,27 @@ namespace map
 			::map::core::services::ServiceRepositoryPolicyLoader<LoadInterfaceType> loader(
 				Superclass::_pLoadInterface);
 
-            typedef ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>
-                ExpandingFieldKernelWriterType;
+      typedef ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>
+          ExpandingFieldKernelWriterType;
 
-            typename ExpandingFieldKernelWriterType::Pointer spExpandingFieldWriter =
-                ExpandingFieldKernelWriterType::New();
+      typename ExpandingFieldKernelWriterType::Pointer spExpandingFieldWriter =
+          ExpandingFieldKernelWriterType::New();
 
-            if (!loader.addProviderByPolicy(spExpandingFieldWriter))
-            {
-                mapLogWarningObjMacro("ExpandingFieldKernelWriter was not added because it was already on the service stack!");
-            }
-            
-            typedef MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions> ModelKernelWriterType;
+      if (!loader.addProviderByPolicy(spExpandingFieldWriter))
+      {
+          mapLogWarningObjMacro("ExpandingFieldKernelWriter was not added because it was already on the service stack!");
+      }
+        
+      typedef LazyFieldFileKernelWriter<VInputDimensions, VOutputDimensions> LazyFieldFileKernelWriterType;
+
+      typename LazyFieldFileKernelWriterType::Pointer spLazyFileWriter = LazyFieldFileKernelWriterType::New();
+
+      if (!loader.addProviderByPolicy(spLazyFileWriter))
+      {
+        mapLogWarningObjMacro("LazyFieldFileKernelWriter was not added because it was already on the service stack!");
+      }
+
+      typedef MatrixModelBasedKernelWriter<VInputDimensions, VOutputDimensions> ModelKernelWriterType;
 
 			typename ModelKernelWriterType::Pointer spModelWriter = ModelKernelWriterType::New();
 
