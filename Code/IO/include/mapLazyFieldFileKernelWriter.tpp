@@ -121,7 +121,7 @@ namespace map
         RequestType expandingRequest = request;
         expandingRequest._expandLazyKernels = true;
         typedef io::ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions> ExpandingWriterType;
-        ExpandingWriterType::Pointer writer = ExpandingWriterType::New();
+        typename ExpandingWriterType::Pointer writer = ExpandingWriterType::New();
         spKernelElement = writer->storeKernel(expandingRequest);
       }
       else
