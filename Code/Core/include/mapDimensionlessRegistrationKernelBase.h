@@ -60,7 +60,7 @@ namespace map
 			/*! @brief forces kernel to precompute, even if it is a LazyFieldKernel
 			  @eguarantee strong
 			 */
-			virtual void precomputeKernel() = 0;
+			virtual void precomputeKernel() const = 0;
 
 			/*! @brief Gets the number of input dimensions
 			@eguarantee no fail

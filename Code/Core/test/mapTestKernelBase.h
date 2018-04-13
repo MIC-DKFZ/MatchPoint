@@ -50,7 +50,7 @@ namespace map
 				return spTemp;
 			}
 
-			void precomputeKernel()
+			void precomputeKernel() const override
 			{
 				// do nothing
 			}

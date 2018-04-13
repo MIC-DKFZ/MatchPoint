@@ -38,7 +38,7 @@ namespace map
 		template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
 		void
 		RegistrationKernel<VInputDimensions, VOutputDimensions>::
-		precomputeKernel()
+		precomputeKernel() const
 		{
 			if (! this->checkAndPrepareTransform())
 			{

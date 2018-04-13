@@ -74,13 +74,13 @@ namespace map
 				return _spDummy;
 			};
 
-			virtual void precomputeKernel()
+			virtual void precomputeKernel() const override
 			{
 				_isPreComputed = true;
 			};
 
 
-			bool _isPreComputed;
+			mutable bool _isPreComputed;
 			mutable bool _hasMappedPoint;
 
 			RepresentationDescriptorPointer _spFieldRepresentation;
