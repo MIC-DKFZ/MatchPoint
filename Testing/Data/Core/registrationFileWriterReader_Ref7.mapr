@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Registration>
+  <Tag Name='RegistrationUID'>RegistrationFileReaderTest.onlyInverseKernelAsField</Tag>
+  <MovingDimensions>2</MovingDimensions>
+  <TargetDimensions>2</TargetDimensions>
+  <Kernel ID='direct' InputDimensions='2' OutputDimensions='2'>
+    <StreamProvider>NullRegistrationKernelWriter&lt;2,2&gt;</StreamProvider>
+    <KernelType>NullRegistrationKernel</KernelType>
+  </Kernel>
+  <Kernel ID='inverse' InputDimensions='2' OutputDimensions='2'>
+    <StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider>
+    <KernelType>ExpandedFieldKernel</KernelType>
+    <FieldPath>expandingFieldKernelWriterTest_ref.nrrd</FieldPath>
+    <UseNullPoint>1</UseNullPoint>
+    <NullPoint>
+      <Value Row='0'>-1.000000000</Value>
+      <Value Row='1'>-2.000000000</Value>
+    </NullPoint>
+  </Kernel>
+</Registration>

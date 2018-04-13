@@ -49,7 +49,7 @@ namespace map
       ReaderType::Pointer spReader = ReaderType::New();
       spReader->setPreferLazyLoading(true);
 
-      auto fullpath = ::map::core::FileDispatch::createFullPath(refPath, "registrationFileWriterReader_Ref6.mapr");
+      auto fullpath = ::map::core::FileDispatch::createFullPath(refPath, "registrationFileWriterReader_Ref7.mapr");
       ::map::core::Registration<2,2>::Pointer spRegistration = dynamic_cast<::map::core::Registration<2, 2> *>( spReader->read(fullpath).GetPointer());
 
       return dynamic_cast<const ::map::core::RegistrationKernel<2, 2> *>(&(spRegistration->getInverseMapping()));
@@ -61,7 +61,7 @@ namespace map
       ReaderType::Pointer spReader = ReaderType::New();
       spReader->setPreferLazyLoading(false);
 
-      auto fullpath = ::map::core::FileDispatch::createFullPath(refPath, "registrationFileWriterReader_Ref6.mapr");
+      auto fullpath = ::map::core::FileDispatch::createFullPath(refPath, "registrationFileWriterReader_Ref7.mapr");
       ::map::core::Registration<2, 2>::Pointer spRegistration = dynamic_cast<::map::core::Registration<2, 2> *>(spReader->read(fullpath).GetPointer());
 
       return dynamic_cast<const ::map::core::RegistrationKernel<2, 2> *>(&(spRegistration->getInverseMapping()));
@@ -92,6 +92,8 @@ namespace map
       typedef core::RegistrationKernel<2, 2> KernelType;
 
       KernelType::ConstPointer lazyKernel = LoadLazyKernel(refPath);
+      KernelType::ConstPointer unLazyKernel = LoadLazyKernel(refPath);
+      unLazyKernel->precomputeKernel();
       KernelType::ConstPointer expandedKernel = LoadExpandedKernel(refPath);
 
       typedef core::NullRegistrationKernel<2, 2> IllegalKernelType;
@@ -110,6 +112,7 @@ namespace map
       WriterType::RequestType illegalRequest2(expandedKernel, "", "", false);
       WriterType::RequestType illegalRequest3(lazyKernel, testPath, "LazyFieldFileKernelWriterTest", true);
       WriterType::RequestType request(lazyKernel, testPath, "LazyFieldFileKernelWriterTest",false);
+      WriterType::RequestType unlazyRequest(unLazyKernel, testPath, "UnLazyFieldFileKernelWriterTest", false);
 
       //////////////////////////////////////
       //Tests
@@ -141,6 +144,19 @@ namespace map
 
       auto refFieldPath = ::map::core::FileDispatch::createFullPath(refPath, "expandingFieldKernelWriterTest_ref.nrrd");
       auto testFieldPath = ::map::core::FileDispatch::createFullPath(testPath, "LazyFieldFileKernelWriterTest_field.nrrd");
+
+      CHECK(!itksys::SystemTools::FilesDiffer(refFieldPath, testFieldPath));
+
+      //write again. Now the data is not lazy any more and should be passed to the ExpandingFieldWriter
+      CHECK_NO_THROW(spDataLazy = spWriter->storeKernel(unlazyRequest));
+
+      data = spStrWriter->write(spDataLazy);
+      ref =
+        "<Kernel InputDimensions='2' OutputDimensions='2'><StreamProvider>ExpandingFieldKernelWriter&lt;2,2&gt;</StreamProvider><KernelType>ExpandedFieldKernel</KernelType><FieldPath>UnLazyFieldFileKernelWriterTest_field.nrrd</FieldPath><UseNullPoint>1</UseNullPoint><NullPoint><Value Row='0'>-1.000000000</Value><Value Row='1'>-2.000000000</Value></NullPoint></Kernel>";
+      CHECK_EQUAL(ref, data);
+
+      refFieldPath = ::map::core::FileDispatch::createFullPath(refPath, "expandingFieldKernelWriterTest_ref.nrrd");
+      testFieldPath = ::map::core::FileDispatch::createFullPath(testPath, "UnLazyFieldFileKernelWriterTest_field.nrrd");
 
       CHECK(!itksys::SystemTools::FilesDiffer(refFieldPath, testFieldPath));
 
