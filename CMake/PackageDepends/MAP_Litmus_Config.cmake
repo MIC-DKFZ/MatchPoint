@@ -1,19 +1,9 @@
 #-----------------------------------------------------------------------------
 # Find Litmus
 #-----------------------------------------------------------------------------
-IF(DEFINED Litmus_DIR)
-  IF(NOT IS_ABSOLUTE ${Litmus_DIR})
-    SET(Litmus_DIR "${MatchPoint_BINARY_DIR}/${Litmus_DIR}")
-  ENDIF(NOT IS_ABSOLUTE ${Litmus_DIR})
-ENDIF(DEFINED Litmus_DIR)
 
-FIND_PACKAGE(Litmus)
-IF(Litmus_FOUND)
-  INCLUDE(${Litmus_USE_FILE})
-ELSE(Litmus_FOUND)
-  MESSAGE(FATAL_ERROR
-          "Cannot build without Litmus.  Please set Litmus_DIR.")
-ENDIF(Litmus_FOUND)
+set(Litmus_INCLUDE_DIRS "${LITMUS_SOURCE_DIR}/code/common;${LITMUS_SOURCE_DIR}/code/itk;${LITMUS_BUILD_DIR}")
+set(Litmus_LIBRARY_DIRS "${LITMUS_BUILD_DIR}/bin")
 
 LIST(APPEND ALL_INCLUDE_DIRECTORIES ${Litmus_INCLUDE_DIRS})
 LIST(APPEND ALL_LIBRARIES LitmusCommon LitmusITK)
