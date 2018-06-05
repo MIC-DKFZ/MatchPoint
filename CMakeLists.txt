@@ -163,6 +163,12 @@ OPTION(MAP_DEPLOY_INCLUDED_ALGORITHMS "Activate the generation and deployment of
 #-----------------------------------------------------------------------------
 # Advanced MatchPoint configuration
 #-----------------------------------------------------------------------------
+set(MAP_CXX_STANDARD 14)
+
+set(CMAKE_CXX_EXTENSIONS 0)
+set(CMAKE_CXX_STANDARD ${MAP_CXX_STANDARD})
+set(CMAKE_CXX_STANDARD_REQUIRED 1)
+
 
 #-----------------------------------------------------------------------------
 # turn on concept checking
