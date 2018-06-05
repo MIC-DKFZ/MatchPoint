@@ -13,9 +13,14 @@ MAKE_DIRECTORY(${MatchPointTesting_BINARY_DIR}/Temporary)
 
 include(ExternalProject)
 message(STATUS "Litmus will be automatically downloaded and built.")
-set(LITMUS_SOURCE_DIR "${CMAKE_BINARY_DIR}/external/Litmus-src" PARENT_SCOPE)
-set(LITMUS_BUILD_DIR "${CMAKE_BINARY_DIR}/external/Litmus-build" PARENT_SCOPE)
-set(LITMUS_CMAKE_DIR "${CMAKE_BINARY_DIR}/external/Litmus-cmake" PARENT_SCOPE)
+
+set(LITMUS_SOURCE_DIR "${MatchPoint_BINARY_DIR}/external/Litmus-src" PARENT_SCOPE)
+set(LITMUS_BUILD_DIR "${MatchPoint_BINARY_DIR}/external/Litmus-build" PARENT_SCOPE)
+set(LITMUS_CMAKE_DIR "${MatchPoint_BINARY_DIR}/external/Litmus-cmake" PARENT_SCOPE)
+set(LITMUS_SOURCE_DIR "${MatchPoint_BINARY_DIR}/external/Litmus-src" )
+set(LITMUS_BUILD_DIR "${MatchPoint_BINARY_DIR}/external/Litmus-build" )
+set(LITMUS_CMAKE_DIR "${MatchPoint_BINARY_DIR}/external/Litmus-cmake" )
+
 
 set(ENABLE_ITK "-DLIT_ENABLE_ITK_SUPPORT:BOOL=ON")
 set(ITK_DIRECTORY "-DITK_DIR:PATH=${ITK_DIR}")
