@@ -7,12 +7,14 @@ include/mapPlmCLIRegistrationAlgorithmBase.h
 include/mapPlmParameterFileRegistrationAlgorithm.h
 include/mapPlmAlgorithmHelper.h
 boxed/mapPlmBSplineCLIRegistrationAlgorithm.h
+boxed/mapJOMPlmBSplineCLIRegistrationAlgorithm.h
 )
 
 SET(TPP_FILES
 include/mapPlmCLIRegistrationAlgorithmBase.tpp
 include/mapPlmParameterFileRegistrationAlgorithm.tpp
 boxed/mapPlmBSplineCLIRegistrationAlgorithm.tpp
+boxed/mapJOMPlmBSplineCLIRegistrationAlgorithm.tpp
 )
 
 SET(TEST_CPP_FILES
