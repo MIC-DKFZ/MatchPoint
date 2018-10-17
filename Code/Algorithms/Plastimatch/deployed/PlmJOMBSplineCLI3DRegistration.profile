@@ -1,0 +1,16 @@
+SET(ALGORITHM_PROFILE_UID_Namespace "de.dkfz.matchpoint.plastimatch.cli.jom")
+SET(ALGORITHM_PROFILE_UID_Name "JOM.Plastimatch.BSpline.3D")
+SET(ALGORITHM_PROFILE_UID_Version "1.0.0")
+
+SET(ALGORITHM_PROFILE_Description "This is a MatchPoint wrapper for the registration tool Plastimatch for 3D images for the joint organ motion meeting. The algorithm is in many aspects similar to the SLICER PLastimatch BSpline plugin.	The algorithm has four stages (0. center alignment, 1. rigid registration, 2./3. BSpline registration) It is configured to preform a B-Spline registration on the image. REMARK: You need the plastimatch command line tool installed on this computer to run this algorithm. You can specify the plastimatch location 1) via the algorithm property PlastimatchDirectory or 2) via setting the environment variable MAP_PLASTIMATCH_PATH..")
+SET(ALGORITHM_PROFILE_Contact "Ralf Floca (MatchPoint wrapper)\; sbr@dkfz-heidelberg.de")
+SET(ALGORITHM_PROFILE_Contact "Plastimatch project homepage: www.plastimatch.org")
+
+SET(ALGORITHM_PROFILE_DataType "Image")
+SET(ALGORITHM_PROFILE_DimMoving "3")
+SET(ALGORITHM_PROFILE_ModalityMoving "any (mono modal)")
+SET(ALGORITHM_PROFILE_DimTarget "3")
+SET(ALGORITHM_PROFILE_ModalityTarget "any (mono modal)")
+SET(ALGORITHM_PROFILE_TransformModel "B-Spline")
+SET(ALGORITHM_PROFILE_TransformDomain "local")
+SET(ALGORITHM_PROFILE_Keywords "plastimatch" "wrapper" "mono modal" "bspline")
