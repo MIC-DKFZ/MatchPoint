@@ -42,7 +42,7 @@ namespace map
 				public:
 					typedef MultiModalRigidSlabbedHeadRegistrationAlgorithm Self;
 
-					typedef typename ITKEuler3DMattesMIMultiResRegistrationAlgorithm<TImageType, TImageType, TIdentificationPolicy, TInterpolatorPolicy, TPyramideInitializationPolicy>
+                    typedef ITKEuler3DMattesMIMultiResRegistrationAlgorithm<TImageType, TImageType, TIdentificationPolicy, TInterpolatorPolicy, TPyramideInitializationPolicy>
 					Superclass;
 
 					typedef ::itk::SmartPointer<Self>                                     Pointer;

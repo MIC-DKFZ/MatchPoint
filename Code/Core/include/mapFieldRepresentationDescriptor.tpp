@@ -23,7 +23,7 @@
 #ifndef __FIELD_REPRESENTATION_DESCRIPTOR_TPP
 #define __FIELD_REPRESENTATION_DESCRIPTOR_TPP
 
-#include "itkImageTransformHelper.h"
+#include <itkImageTransformHelper.h>
 
 #include "mapFieldRepresentationDescriptor.h"
 #include "mapExceptionObject.h"

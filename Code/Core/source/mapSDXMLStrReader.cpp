@@ -364,7 +364,7 @@ namespace map
 		{
 			XMLStrReaderImpl implementation;
 
-			ElementPointer spResult = NULL;
+            ElementPointer spResult = nullptr;
 
 			spResult = implementation.LoadFromString(data);
 
@@ -383,7 +383,7 @@ namespace map
 		{
 			XMLStrReaderImpl implementation;
 
-			ElementPointer spResult = NULL;
+            ElementPointer spResult = nullptr;
 
 			spResult = implementation.LoadFromString(data);
 

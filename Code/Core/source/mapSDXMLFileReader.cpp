@@ -43,7 +43,7 @@ namespace map
 		XMLFileReader::
 		read(const core::String& filePath)
 		{
-			ElementPointer spResult = NULL;
+            ElementPointer spResult = nullptr;
 
 			std::ifstream file;
 
@@ -114,7 +114,7 @@ namespace map
 		XMLFileReader::
 		getXMLContent()
 		{
-			ElementPointer spResult = NULL;
+            ElementPointer spResult = nullptr;
 
 			if (_spRoot.IsNotNull())
 			{

@@ -47,7 +47,7 @@ namespace map
         this->_useCenterOfGravity = false;
 
         //optimizer
-        ConcreteOptimizerType::ScalesType scales(6);
+        typename Superclass::ConcreteOptimizerType::ScalesType scales(6);
         scales[0] = 10.0;
         scales[1] = 10.0;
         scales[2] = 10.0;
@@ -77,9 +77,9 @@ namespace map
 
         if (this->getCurrentLevel() != 0)
         {
-          getConcreteMetricControl()->getConcreteMetric()->SetUseAllPixels(false);
+          this->getConcreteMetricControl()->getConcreteMetric()->SetUseAllPixels(false);
 
-          OptimizerBaseType::SVNLOptimizerBaseType::ScalesType scales(6);
+          typename Superclass::OptimizerBaseType::SVNLOptimizerBaseType::ScalesType scales(6);
           scales[0] = 1.0;
           scales[1] = 1.0;
           scales[2] = 1.0;
@@ -87,18 +87,18 @@ namespace map
           scales[4] = 1.0 / 1000;
           scales[5] = 1.0 / 1000;
 
-          getConcreteOptimizerControl()->getConcreteOptimizer()->SetScales(scales);
+          this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetScales(scales);
 
           unsigned int nrOfSmpl = ::itk::Math::Round<unsigned int, double>
             (this->getMovingImage()->GetLargestPossibleRegion().GetNumberOfPixels() * 0.15);
 
-          getConcreteMetricControl()->getConcreteMetric()->SetNumberOfSpatialSamples(nrOfSmpl);
+          this->getConcreteMetricControl()->getConcreteMetric()->SetNumberOfSpatialSamples(nrOfSmpl);
 
           //optimizer adjustment
-          getConcreteOptimizerControl()->getConcreteOptimizer()->SetMaximumStepLength(
-            getConcreteOptimizerControl()->getConcreteOptimizer()->GetCurrentStepLength() * 2.0);
-          getConcreteOptimizerControl()->getConcreteOptimizer()->SetMinimumStepLength(
-            getConcreteOptimizerControl()->getConcreteOptimizer()->GetMinimumStepLength() * 0.5);
+          this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetMaximumStepLength(
+            this->getConcreteOptimizerControl()->getConcreteOptimizer()->GetCurrentStepLength() * 2.0);
+          this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetMinimumStepLength(
+            this->getConcreteOptimizerControl()->getConcreteOptimizer()->GetMinimumStepLength() * 0.5);
 
         }
 			}

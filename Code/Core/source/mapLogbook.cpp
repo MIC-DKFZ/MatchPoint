@@ -35,7 +35,7 @@ namespace map
 	namespace core
 	{
 
-		Logbook::LogImplPointer Logbook::_spLoggerImpl = NULL;
+        Logbook::LogImplPointer Logbook::_spLoggerImpl = nullptr;
 
 		itk::SimpleFastMutexLock Logbook::_testMutex;
 		itk::SimpleFastMutexLock Logbook::_initMutex;
