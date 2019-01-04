@@ -27,6 +27,13 @@ endforeach()
 
 list(APPEND MatchPoint_INCLUDE_DIRS_CONFIG ${MatchPoint_SOURCE_DIR}/Code/Deployment/deployed)
 
+IF(MAP_BUILD_Ontology)
+  list(APPEND MatchPoint_INCLUDE_DIRS_CONFIG ${MatchPoint_SOURCE_DIR}/Code/Ontology/Common/include)
+  IF(MAP_BUILD_Ontology_simple)
+    list(APPEND MatchPoint_INCLUDE_DIRS_CONFIG ${MatchPoint_SOURCE_DIR}/Code/Ontology/Simple/include)
+  ENDIF(MAP_BUILD_Ontology_simple)
+ENDIF(MAP_BUILD_Ontology)
+
 #-----------------------------------------------------------------------------
 # Configure MatchPointConfig.cmake for the build tree.
 CONFIGURE_FILE(${MatchPoint_SOURCE_DIR}/MatchPointConfig.cmake.in
