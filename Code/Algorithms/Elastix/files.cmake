@@ -1,5 +1,6 @@
 SET(CPP_FILES 
  source/mapElxAlgorithmHelper.cpp
+ source/ParameterFileParser/itkParameterFileParser.cxx
 )
 
 SET(H_FILES 
@@ -7,6 +8,7 @@ include/mapElxCLIRegistrationAlgorithmBase.h
 include/mapElxParameterFileRegistrationAlgorithm.h
 include/mapElxAlgorithmHelper.h
 boxed/mapElxBSplineCLIRegistrationAlgorithm.h
+source/ParameterFileParser/itkParameterFileParser.h
 )
 
 SET(TPP_FILES

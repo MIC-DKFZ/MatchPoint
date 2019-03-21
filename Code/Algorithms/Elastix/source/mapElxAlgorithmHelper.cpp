@@ -21,6 +21,8 @@
 */
 
 
+//Elastix
+#include "ParameterFileParser\itkParameterFileParser.h"
 
 //MatchPoint
 #include "mapElxAlgorithmHelper.h"
@@ -62,6 +64,15 @@ namespace map
 
 				file.close();
 			};
+
+
+      ParameterMapType readParameterMapFromFile(const map::core::String& fileName)
+      {
+        itk::ParameterFileParser::Pointer spParser = itk::ParameterFileParser::New();
+        spParser->SetParameterFileName(fileName);
+        spParser->ReadParameterFile();
+        return spParser->GetParameterMap();
+      };
 
 			ParamGenerator::ParamGenerator()
 			{

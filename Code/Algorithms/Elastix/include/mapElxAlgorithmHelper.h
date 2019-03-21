@@ -26,9 +26,6 @@
 #ifndef __MAP_ELX_ALGORITHM_HELPER_H
 #define __MAP_ELX_ALGORITHM_HELPER_H
 
-//Elastix
-#include "itkParameterFileParser.h"
-
 //MatchPoint
 #include "mapContinuous.h"
 #include "mapString.h"
@@ -41,15 +38,17 @@ namespace map
 	{
 		namespace elastix
 		{
-
-			typedef ::itk::ParameterFileParser::ParameterMapType ParameterMapType;
-			typedef ::itk::ParameterFileParser::ParameterValuesType ParameterValuesType;
+      using ParameterValuesType = std::vector< std::string >;
+      using ParameterMapType = std::map< std::string, ParameterValuesType >;
 
 			/**! Helper function that stores the passed parameter map to the given file path.
 			  If the file already exists it is overwritten. The parameter map is stored
 				in the elastix format: (<ParameterName> <Value1> [<Value2> [...]]).*/
 			MAPAlgorithmsElastix_EXPORT void saveParameterMapToFile(const ParameterMapType& parameterMap,
 					const map::core::String& fileName);
+
+      /**! Helper function that loads a given parameter file and returns a parameter map.*/
+      MAPAlgorithmsElastix_EXPORT ParameterMapType readParameterMapFromFile(const map::core::String& fileName);
 
 			class MAPAlgorithmsElastix_EXPORT ParamGenerator
 			{

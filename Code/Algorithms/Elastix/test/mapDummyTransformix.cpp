@@ -29,6 +29,7 @@
 #include "mapString.h"
 #include "test/mapTestFieldGenerationFunctor.h"
 #include "mapFileDispatch.h"
+#include "mapFieldByModelFunctor.h"
 
 int main(int argc, char* argv[])
 {
@@ -61,7 +62,7 @@ int main(int argc, char* argv[])
 	file.close();
 
 	//generate result a field
-	typedef map::testing::TestFieldGenerationFunctor<2, 2> FieldFunctorType;
+	typedef map::testing::TestFieldGenerationFunctor<3, 3> FieldFunctorType;
 	FieldFunctorType::InFieldRepresentationType::SpacingType spacing(0.5);
 	FieldFunctorType::InFieldRepresentationType::PointType origin;
 	origin.Fill(0);
@@ -74,10 +75,12 @@ int main(int argc, char* argv[])
 	spInRep->setSpacing(spacing);
 	spInRep->setOrigin(origin);
 	FieldFunctorType::Pointer spFunctor = FieldFunctorType::New(spInRep);
-	FieldFunctorType::FieldPointer spField = spFunctor->generateField();
+	auto spTransform = spFunctor->generateTransform();
 
-	typedef ::itk::ImageFileWriter< FieldFunctorType::FieldType  > FieldWriterType;
-	FieldWriterType::Pointer  spFieldWriter  = FieldWriterType::New();
+  ::map::core::RegistrationTopology<3, 3>::DirectFieldPointer spField = ::map::core::generateFieldFromTransform<3, 3>(spTransform, spInRep);
+
+  typedef ::itk::ImageFileWriter< ::map::core::RegistrationTopology<3, 3>::DirectFieldType  > FieldWriterType;
+  FieldWriterType::Pointer  spFieldWriter = FieldWriterType::New();
 
 	spFieldWriter->SetFileName(map::core::FileDispatch::createFullPath(outputPath,
 							   "deformationField.mhd").c_str());

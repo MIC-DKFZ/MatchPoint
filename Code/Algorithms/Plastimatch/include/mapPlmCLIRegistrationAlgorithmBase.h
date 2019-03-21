@@ -191,7 +191,7 @@ namespace map
 				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
 				TargetImageConstPointer;
 
-                typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, TTargetImage::ImageDimension, TTargetImage::ImageDimension> FieldTransformType;
+        typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, TTargetImage::ImageDimension, TTargetImage::ImageDimension> FieldTransformType;
 
 				typedef typename
 				map::core::RegistrationTopology<Superclass::MovingDimensions, Superclass::TargetDimensions>::InverseFieldType

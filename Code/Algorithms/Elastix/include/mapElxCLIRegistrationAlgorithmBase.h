@@ -26,9 +26,6 @@
 #ifndef __MAP_ELX_CLI_REGISTRATION_ALGORITHM_BASE_H
 #define __MAP_ELX_CLI_REGISTRATION_ALGORITHM_BASE_H
 
-//Elastix
-#include "itkParameterFileParser.h"
-
 //MatchPoint
 #include "mapContinuous.h"
 
@@ -38,6 +35,8 @@
 #include "mapElxAlgorithmHelper.h"
 #include "mapMetaPropertyAlgorithmBase.h"
 #include "mapMaskedRegistrationAlgorithmBase.h"
+
+#include "mapGenericVectorFieldTransform.h"
 
 namespace map
 {
@@ -151,6 +150,8 @@ namespace map
 				MovingImageConstPointer;
 				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
 				TargetImageConstPointer;
+
+        typedef ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, TTargetImage::ImageDimension, TTargetImage::ImageDimension> FieldTransformType;
 
 				typedef typename
 				map::core::RegistrationTopology<Superclass::MovingDimensions, Superclass::TargetDimensions>::InverseFieldType

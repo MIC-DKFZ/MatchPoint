@@ -28,7 +28,7 @@
 #include "itkImage.h"
 
 #include "mapAlgorithmException.h"
-#include "mapFieldBasedRegistrationKernels.h"
+#include "mapPreCachedRegistrationKernel.h"
 #include "mapInverseRegistrationKernelGenerator.h"
 #include "mapRegistrationManipulator.h"
 #include "mapAlgorithmWrapperEvent.h"
@@ -38,6 +38,7 @@
 #include "mapMetaProperty.h"
 #include "mapString.h"
 #include "mapFieldByFileLoadFunctor.h"
+#include "mapFieldDecomposer.h"
 
 namespace map
 {
@@ -251,7 +252,7 @@ namespace map
 			{
 				srand(time(NULL));
 				core::OStringStream stream;
-				stream << itksys::SystemTools::GetCurrentDateTime("%Y-%m-%d_%H-%M-%S") << "_#" << rand();
+				stream << itksys::SystemTools::GetCurrentDateTime("%Y-%m-%d_%H-%M-%S") << "_" << rand();
 				core::String currentTempDir = core::FileDispatch::createFullPath(_workingDir, stream.str());
 
 				if (!itksys::SystemTools::MakeDirectory(currentTempDir.c_str()))
@@ -557,8 +558,9 @@ namespace map
 				FunctorType;
 				FunctorType::Pointer spFunctor = FunctorType::New(_finalFieldTempPath);
 
-				FinalFieldPointer spField = spFunctor->generateField();
-
+        FinalFieldPointer spField;
+        ::map::core::FieldDecomposer<Superclass::MovingDimensions, Superclass::TargetDimensions>::decomposeTransform(spFunctor->generateTransform(), spField);
+        
 				if (spField.IsNull())
 				{
 					mapExceptionMacro(AlgorithmException,
@@ -608,45 +610,48 @@ namespace map
 				{
 					_spFinalizedField = this->generateField();
 
-					typedef map::core::FieldKernels<Superclass::TargetDimensions, Superclass::MovingDimensions>::PreCachedFieldBasedRegistrationKernel
-					InverseKernelType;
-					typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
+          typedef typename
+            map::core::PreCachedRegistrationKernel<Superclass::TargetDimensions, Superclass::MovingDimensions> InverseKernelType;
 
-					spIKernel->setField(*(_spFinalizedField.GetPointer()));
+          typename FieldTransformType::Pointer transform = FieldTransformType::New();
+          transform->SetDisplacementField(_spFinalizedField.GetPointer());
 
-					//now build the direct kernel via inversion of the inverse kernel
-					typedef core::InverseRegistrationKernelGenerator<RegistrationType::TargetDimensions, RegistrationType::MovingDimensions>
-					GeneratorType;
-					typename GeneratorType::Pointer spGenerator = GeneratorType::New();
-					typedef typename GeneratorType::InverseKernelBaseType DirectKernelType;
-					typename Superclass::MovingRepresentationDescriptorType::ConstPointer spMovingRep =
-						core::createFieldRepresentation(*(this->getMovingImage()));
+          typename InverseKernelType::Pointer spIKernel = InverseKernelType::New();
+          spIKernel->setTransformModel(transform);
 
-					if (this->getMovingRepresentation())
-					{
-						//user has defined a representation descriptor -> use this one
-						spMovingRep = this->getMovingRepresentation();
-					}
+          //now build the direct kernel via inversion of the inverse kernel
+          typedef core::InverseRegistrationKernelGenerator < RegistrationType::TargetDimensions, RegistrationType::MovingDimensions >
+            GeneratorType;
+          typename GeneratorType::Pointer spGenerator = GeneratorType::New();
+          typedef typename GeneratorType::InverseKernelBaseType DirectKernelType;
+          typename Superclass::MovingRepresentationDescriptorType::ConstPointer spMovingRep =
+            ::map::core::createFieldRepresentation(*(this->getMovingImage())).GetPointer();
 
-					typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*
-							(spIKernel.GetPointer()), spMovingRep);
+          if (this->getMovingRepresentation())
+          {
+            //user has defined a representation descriptor -> use this one
+            spMovingRep = this->getMovingRepresentation();
+          }
 
-					if (spDKernel.IsNull())
-					{
-						mapExceptionMacro(AlgorithmException,
-										  << "Error. Cannot determine direct mapping kernel of final registration. Current inverse kernel: "
-										  << spIKernel);
-					}
+          typename DirectKernelType::Pointer spDKernel = spGenerator->generateInverse(*
+            (spIKernel.GetPointer()), spMovingRep);
 
-					//now create the registration and set the kernels
-					spResult = RegistrationType::New();
-					core::RegistrationManipulator<RegistrationType> manipulator(spResult);
+          if (spDKernel.IsNull())
+          {
+            mapExceptionMacro(AlgorithmException,
+              << "Error. Cannot determine direct mapping kernel of final registration. Current inverse kernel: "
+              << spIKernel);
+          }
 
-					manipulator.setDirectMapping(spDKernel);
-					manipulator.setInverseMapping(spIKernel);
-					manipulator.getTagValues()[tags::AlgorithmUID] = this->getUID()->toStr();
+          //now create the registration and set the kernels
+          spResult = RegistrationType::New();
+          ::map::core::RegistrationManipulator<RegistrationType> manipulator(spResult);
 
-					_spFinalizedRegistration = spResult;
+          manipulator.setDirectMapping(spDKernel);
+          manipulator.setInverseMapping(spIKernel);
+          manipulator.getTagValues()[tags::AlgorithmUID] = this->getUID()->toStr();
+
+          _spFinalizedRegistration = spResult;
 				}
 				catch (...)
 				{

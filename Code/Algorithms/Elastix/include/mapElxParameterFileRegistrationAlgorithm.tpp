@@ -25,7 +25,6 @@
 #define __MAP_ELX_PARAMETERFILE_REGISTRATION_ALGORITHM_TPP
 
 //Elastix
-#include "itkParameterFileParser.h"
 
 namespace map
 {
@@ -111,10 +110,7 @@ namespace map
 			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			prepParameterMaps()
 			{
-				itk::ParameterFileParser::Pointer spParser = itk::ParameterFileParser::New();
-				spParser->SetParameterFileName(this->_parameterFilePath);
-				spParser->ReadParameterFile();
-				ParameterMapType map = spParser->GetParameterMap();
+				ParameterMapType map = readParameterMapFromFile(this->_parameterFilePath);
 				this->_parameterMaps.clear();
 				this->_parameterMaps.push_back(map);
 			}
