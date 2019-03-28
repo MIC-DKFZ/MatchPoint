@@ -45,7 +45,7 @@ namespace iro
       using Type = TIEType;
       using Pointer = TIEPointer;
       using ConstPointer = TIEConstPointer;
-      using TEntityIdentificationPolicy::UIDType;
+      using typename TEntityIdentificationPolicy::UIDType;
       using InferencePointer = TInferencePointer;
 
       // implemented by TEntityIdentificationPolicy

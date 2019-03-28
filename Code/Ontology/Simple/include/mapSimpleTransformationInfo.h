@@ -65,13 +65,13 @@ namespace iro
 
       /*! Implementation of abstract member. See documentation in interface.
       * @see IInformationSpaceConnector*/
-      virtual ConstISPointer getMovingIS() const;
+      virtual ConstISPointer getMovingIS() const override;
       /*! Sets the moving information space */
       void setMovingIS(ConstISPointer movingIS);
 
       /*! Implementation of abstract member. See documentation in interface.
       * @see IInformationSpaceConnector*/
-      virtual ConstISPointer getTargetIS() const;
+      virtual ConstISPointer getTargetIS() const override;
       /*! Sets the target information space */
       void setTargetIS(ConstISPointer targetIS);
 
@@ -106,7 +106,7 @@ namespace iro
       /*! Implementation of abstract member. This implementation checks the associated
       * problem statement for compliance. See also documentation in interface.
       * @see IProblemComplianceChecker*/
-			virtual bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const;
+      virtual bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const override;
 
       ConstISPointer _movingIS;
       ConstISPointer _targetIS;
