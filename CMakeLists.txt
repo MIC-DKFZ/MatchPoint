@@ -199,6 +199,8 @@ MARK_AS_ADVANCED(MAP_ENFORCE_MATURE_CODE)
 OPTION(MAP_DISABLE_ITK_IO_FACTORY_AUTO_REGISTER "When activated MatchPoint will disable the ITK io factory auot registration. This is needed for useage in applications like MITK. Please check dokumentation (mapConfigure.h) for more information." OFF)
 MARK_AS_ADVANCED(MAP_DISABLE_ITK_IO_FACTORY_AUTO_REGISTER)
 
+OPTION(MAP_BUILD_ALL "Activate to activate all modules and wrappings." OFF)
+
 #-----------------------------------------------------------------------------
 # MatchPoint build configuration options.
 IF (WIN32)
@@ -270,7 +272,7 @@ ADD_SUBDIRECTORY (Code)
 ADD_SUBDIRECTORY (Documentation)
 
 ADD_SUBDIRECTORY (Examples)
-IF (MAP_BUILD_APPS)
+IF (MAP_BUILD_APPS OR MAP_BUILD_ALL)
     ADD_SUBDIRECTORY (Applications)
 ENDIF()
 
