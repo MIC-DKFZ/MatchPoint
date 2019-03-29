@@ -47,8 +47,7 @@ namespace map
 
 		DLLHandle::
 		~DLLHandle()
-		{
-		};
+		= default;
 
 		DLLHandle::Pointer
 		DLLHandle::
@@ -57,7 +56,7 @@ namespace map
 			const core::String& libraryFile,
 			const core::String& profileStr)
 		{
-			if (!pUID)
+			if (pUID == nullptr)
 			{
 				mapDefaultExceptionStaticMacro( <<
 												"Cannot create DLLHandle instance. Passed UID pointer is NULL. Library: " << libraryFile);

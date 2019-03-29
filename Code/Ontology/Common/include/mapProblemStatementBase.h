@@ -40,13 +40,13 @@ namespace iro
     class ProblemStatementBase : public IProblemComplianceDefinition< ProblemStatementBase<TUIDPolicy> >
     {
     public:
-      typedef ProblemStatementBase<TUIDPolicy> Self;
+      using Self = ProblemStatementBase<TUIDPolicy>;
 
-      typedef iro::String                             NameType;
-      typedef typename TUIDPolicy::UIDType                     UIDType;
+      using NameType = iro::String;
+      using UIDType = typename TUIDPolicy::UIDType;
 
-      typedef std::shared_ptr< Self >               Pointer;
-      typedef std::shared_ptr< const Self >         ConstPointer;
+      using Pointer = std::shared_ptr<Self>;
+      using ConstPointer = std::shared_ptr<const Self>;
 
        /*! returns the UID of the statement.*/
       const UIDType& getUID() const;
@@ -56,7 +56,7 @@ namespace iro
       const NameType& getName() const;
       void setName(const NameType& name);
 
-      ~ProblemStatementBase();
+      ~ProblemStatementBase() override;
       ProblemStatementBase();
 
       /* Clones the content of the ProblemStatement and returns it as
@@ -66,14 +66,14 @@ namespace iro
       Pointer clone() const;
 
     protected:
-      virtual bool doCheckComplianceOfStatement(const Self* pProblem) const;
+      bool doCheckComplianceOfStatement(const Self* pProblem) const override;
 
       NameType _name;
       UIDType _uid;
 
     private:
-      ProblemStatementBase(const Self&); //not implemented by purpose
-      ProblemStatementBase& operator=(const Self&); //not implemented by purpose
+      ProblemStatementBase(const Self&) = delete; //not implemented by purpose
+      ProblemStatementBase& operator=(const Self&) = delete; //not implemented by purpose
 
     };
 

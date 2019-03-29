@@ -48,12 +48,12 @@ namespace map
 		class MAPAlgorithms_EXPORT MetaPropertyAlgorithmBase : public facet::MetaPropertyAlgorithmInterface
 		{
 		public:
-			typedef MetaPropertyAlgorithmBase Self;
+			using Self = MetaPropertyAlgorithmBase;
 
-			typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyVectorType MetaPropertyVectorType;
-			typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyType MetaPropertyType;
-			typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyPointer MetaPropertyPointer;
-			typedef facet::MetaPropertyAlgorithmInterface::MetaPropertyNameType MetaPropertyNameType;
+			using MetaPropertyVectorType = facet::MetaPropertyAlgorithmInterface::MetaPropertyVectorType;
+			using MetaPropertyType = facet::MetaPropertyAlgorithmInterface::MetaPropertyType;
+			using MetaPropertyPointer = facet::MetaPropertyAlgorithmInterface::MetaPropertyPointer;
+			using MetaPropertyNameType = facet::MetaPropertyAlgorithmInterface::MetaPropertyNameType;
 
 
 			/*! Returns the MetaPropertyInfo for the property identified by the passed name
@@ -62,7 +62,7 @@ namespace map
 			if the passed property name is unkown.
 			@retval NULL-pointer Property is unknown
 			*/
-			virtual MetaPropertyInfo::Pointer getPropertyInfo(const MetaPropertyNameType& name) const;
+			MetaPropertyInfo::Pointer getPropertyInfo(const MetaPropertyNameType& name) const override;
 
 			/*! Returns a vector with smart pointer to MetaPropertyInfos for all known and therefor supported
 			* properties.
@@ -71,7 +71,7 @@ namespace map
 			* @eguarantee strong
 			* @return returns vector of smart pointer to the MetaPropertyInfos.
 			*/
-			virtual MetaPropertyVectorType getPropertyInfos() const;
+			MetaPropertyVectorType getPropertyInfos() const override;
 
 			/*! Returns a smart pointer to the MetaProperty identified by the passed name.
 			* This default implementation is:\n
@@ -84,7 +84,7 @@ namespace map
 			* unknown, not readable or not supported the returned smart pointer will point to NULL.
 			* @param name Name that identifies the wanted property.
 			*/
-			virtual MetaPropertyPointer getProperty(const MetaPropertyNameType& name) const;
+			MetaPropertyPointer getProperty(const MetaPropertyNameType& name) const override;
 
 			/*! Returns a smart pointer to the MetaProperty identified by the passed name.
 			* This default implementation is:\n
@@ -102,7 +102,7 @@ namespace map
 			* @exception ::map::core::ExceptionObject Thrown if the precondition is not satisfied (pInfo is NULL or has wrong type).
 			* @overload
 			*/
-			virtual MetaPropertyPointer getProperty(const MetaPropertyInfo* pInfo) const;
+			MetaPropertyPointer getProperty(const MetaPropertyInfo* pInfo) const override;
 
 			/*! Allows the transferring and setting of instance properties via this generic interface.
 			* This base implementation will store the property in the cache (overwrites an already cached instance
@@ -118,7 +118,7 @@ namespace map
 			* @exception ::map::core::ExceptionObject Thrown if a precondition is not satisfied
 			* (pProperty is not valid).
 			*/
-			virtual bool setProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
+			bool setProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty) override;
 
 			/*! Allows the transferring and setting of instance properties via this generic interface.
 			* This base implementation will store the property in the cache (overwrites an already cached instance
@@ -138,11 +138,11 @@ namespace map
 			* (pInfo is NULL or has wrong type; pProperty is not valid).
 			* @overload
 			*/
-			virtual bool setProperty(const MetaPropertyInfo* pInfo, const MetaPropertyType* pProperty);
+			bool setProperty(const MetaPropertyInfo* pInfo, const MetaPropertyType* pProperty) override;
 
 		protected:
 			MetaPropertyAlgorithmBase();
-			virtual ~MetaPropertyAlgorithmBase();
+			~MetaPropertyAlgorithmBase() override;
 
 			/*! This method should be implemented to define how to compile MetaProperties
 			* and add it to the passed info vector.\n\n
@@ -200,12 +200,12 @@ namespace map
 			::itk::TimeStamp _cacheMTime;
 
 			//No copy constructor allowed
-			MetaPropertyAlgorithmBase(const Self& source); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			MetaPropertyAlgorithmBase(const Self& source) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

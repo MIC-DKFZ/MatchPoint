@@ -199,7 +199,7 @@ namespace map
 			//default implementation does nothing;
 		}
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

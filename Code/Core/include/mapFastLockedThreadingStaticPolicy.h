@@ -44,8 +44,8 @@ namespace map
 			class MAPCore_EXPORT FastLockedThreadingStaticPolicy
 			{
 			protected:
-				typedef itk::SimpleFastMutexLock  MutexType;
-				typedef FastMutexLockSentinel SentinelType;
+				using MutexType = itk::SimpleFastMutexLock;
+				using SentinelType = FastMutexLockSentinel;
 
 				/*! Initialize a sentinel and implicitly lock the mutex.
 				 * @eguarantee strong
@@ -70,8 +70,8 @@ namespace map
 				static MutexType _mutex;
 
 				FastLockedThreadingStaticPolicy(const
-												FastLockedThreadingStaticPolicy&);  //purposely not implemented
-				void operator=(const FastLockedThreadingStaticPolicy&);  //purposely not implemented
+												FastLockedThreadingStaticPolicy&) = delete;  //purposely not implemented
+				void operator=(const FastLockedThreadingStaticPolicy&) = delete;  //purposely not implemented
 			};
 
 		} // end namespace services

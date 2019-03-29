@@ -95,10 +95,10 @@ class GenericVectorFieldTransform :
 {
 public:
   /** Standard class typedefs. */
-  typedef GenericVectorFieldTransform                     Self;
+  using Self = GenericVectorFieldTransform<TScalar, InDimensions, OutDimensions>;
   typedef Transform<TScalar, InDimensions, OutDimensions> Superclass;
-  typedef SmartPointer<Self>                           Pointer;
-  typedef SmartPointer<const Self>                     ConstPointer;
+  using Pointer = SmartPointer<Self>;
+  using ConstPointer = SmartPointer<const Self>;
 
   /** Run-time type information (and related methods). */
   itkTypeMacro( GenericVectorFieldTransform, Transform );
@@ -106,51 +106,47 @@ public:
   /** New macro for creation of through a Smart Pointer */
   itkNewMacro( Self );
 
-  typedef typename Superclass::InverseTransformBaseType InverseTransformBaseType;
-  typedef typename Superclass::InverseTransformBasePointer InverseTransformBasePointer;
+  using InverseTransformBaseType = typename Superclass::InverseTransformBaseType;
+  using InverseTransformBasePointer = typename Superclass::InverseTransformBasePointer;
 
   /** Scalar type. */
-  typedef typename Superclass::ScalarType ScalarType;
+  using ScalarType = typename Superclass::ScalarType;
 
   /** Type of the input parameters. */
-  typedef typename Superclass::ParametersType          ParametersType;
-  typedef typename Superclass::ParametersValueType     ParametersValueType;
+  using ParametersType = typename Superclass::ParametersType;
+  using ParametersValueType = typename Superclass::ParametersValueType;
 
   /** Jacobian type. */
-  typedef typename Superclass::JacobianType JacobianType;
+  using JacobianType = typename Superclass::JacobianType;
 
   /** Transform category type. */
-  typedef typename Superclass::TransformCategoryType TransformCategoryType;
+  using TransformCategoryType = typename Superclass::TransformCategoryType;
 
   /** The number of parameters defininig this transform. */
-  typedef typename Superclass::NumberOfParametersType NumberOfParametersType;
+  using NumberOfParametersType = typename Superclass::NumberOfParametersType;
 
   /** Standard coordinate point type for this class. */
-  typedef typename Superclass::InputPointType  InputPointType;
-  typedef typename Superclass::OutputPointType OutputPointType;
+  using InputPointType = typename Superclass::InputPointType;
+  using OutputPointType = typename Superclass::OutputPointType;
 
   /** Standard vector type for this class. */
-  typedef typename Superclass::InputVectorType  InputVectorType;
-  typedef typename Superclass::OutputVectorType OutputVectorType;
+  using InputVectorType = typename Superclass::InputVectorType;
+  using OutputVectorType = typename Superclass::OutputVectorType;
 
-  typedef typename Superclass::InputVectorPixelType  InputVectorPixelType;
-  typedef typename Superclass::OutputVectorPixelType OutputVectorPixelType;
+  using InputVectorPixelType = typename Superclass::InputVectorPixelType;
+  using OutputVectorPixelType = typename Superclass::OutputVectorPixelType;
 
   /** Standard covariant vector type for this class */
-  typedef typename Superclass::InputCovariantVectorType
-  InputCovariantVectorType;
-  typedef typename Superclass::OutputCovariantVectorType
-  OutputCovariantVectorType;
+  using InputCovariantVectorType = typename Superclass::InputCovariantVectorType;
+  using OutputCovariantVectorType = typename Superclass::OutputCovariantVectorType;
 
   /** Standard vnl_vector type for this class. */
-  typedef typename Superclass::InputVnlVectorType  InputVnlVectorType;
-  typedef typename Superclass::OutputVnlVectorType OutputVnlVectorType;
+  using InputVnlVectorType = typename Superclass::InputVnlVectorType;
+  using OutputVnlVectorType = typename Superclass::OutputVnlVectorType;
 
   /** Standard diffusion tensor type for this class */
-  typedef typename Superclass::InputDiffusionTensor3DType
-  InputDiffusionTensor3DType;
-  typedef typename Superclass::OutputDiffusionTensor3DType
-  OutputDiffusionTensor3DType;
+  using InputDiffusionTensor3DType = typename Superclass::InputDiffusionTensor3DType;
+  using OutputDiffusionTensor3DType = typename Superclass::OutputDiffusionTensor3DType;
 
   /** Standard tensor type for this class */
   typedef CovariantVector<ScalarType, InputDiffusionTensor3DType::Dimension>
@@ -158,7 +154,7 @@ public:
   typedef CovariantVector<ScalarType, OutputDiffusionTensor3DType::Dimension>
   OutputTensorEigenVectorType;
   /** Derivative type */
-  typedef typename Superclass::DerivativeType DerivativeType;
+  using DerivativeType = typename Superclass::DerivativeType;
 
   /** Dimension of the domain spaces. */
   itkStaticConstMacro( InDimension, unsigned int, InDimensions );
@@ -166,20 +162,20 @@ public:
 
   /** Define the displacement field type and corresponding interpolator type. */
   typedef Image<OutputVectorType,  InDimensions>        GenericVectorFieldType;
-  typedef typename GenericVectorFieldType::Pointer      GenericVectorFieldPointer;
-  typedef typename GenericVectorFieldType::ConstPointer GenericVectorFieldConstPointer;
+  using GenericVectorFieldPointer = typename GenericVectorFieldType::Pointer;
+  using GenericVectorFieldConstPointer = typename GenericVectorFieldType::ConstPointer;
 
   typedef VectorInterpolateImageFunction
     <GenericVectorFieldType, ScalarType> InterpolatorType;
 
   /** Standard types for the displacement Field */
-  typedef typename GenericVectorFieldType::IndexType      IndexType;
-  typedef typename GenericVectorFieldType::RegionType     RegionType;
-  typedef typename GenericVectorFieldType::SizeType       SizeType;
-  typedef typename GenericVectorFieldType::SpacingType    SpacingType;
-  typedef typename GenericVectorFieldType::DirectionType  DirectionType;
-  typedef typename GenericVectorFieldType::PointType      PointType;
-  typedef typename GenericVectorFieldType::PixelType      PixelType;
+  using IndexType = typename GenericVectorFieldType::IndexType;
+  using RegionType = typename GenericVectorFieldType::RegionType;
+  using SizeType = typename GenericVectorFieldType::SizeType;
+  using SpacingType = typename GenericVectorFieldType::SpacingType;
+  using DirectionType = typename GenericVectorFieldType::DirectionType;
+  using PointType = typename GenericVectorFieldType::PointType;
+  using PixelType = typename GenericVectorFieldType::PixelType;
 
   /** Define the internal parameter helper used to access the field */
   typedef ImageVectorOptimizerParametersHelper<
@@ -210,20 +206,20 @@ public:
 
   /**  Method to transform a vector. */
   using Superclass::TransformVector;
-  virtual OutputVectorType TransformVector(const InputVectorType &) const
+  virtual OutputVectorType TransformVector(const InputVectorType & /*unused*/) const
   {
     itkExceptionMacro( "TransformVector(Vector) unimplemented, use "
                        "TransformVector(Vector,Point)" );
   }
 
-  virtual OutputVectorPixelType TransformVector(const InputVectorPixelType &)
+  virtual OutputVectorPixelType TransformVector(const InputVectorPixelType & /*unused*/)
   const
   {
     itkExceptionMacro( "TransformVector(Vector) unimplemented, use "
                        "TransformVector(Vector,Point)" );
   }
 
-  virtual OutputVnlVectorType TransformVector(const InputVnlVectorType &) const
+  virtual OutputVnlVectorType TransformVector(const InputVnlVectorType & /*unused*/) const
   {
     itkExceptionMacro( "TransformVector(Vector) unimplemented, use "
                        "TransformVector(Vector,Point)" );
@@ -232,13 +228,13 @@ public:
   /** Method to transform a tensor */
   using Superclass::TransformDiffusionTensor3D;
   OutputDiffusionTensor3DType TransformDiffusionTensor(
-    const InputDiffusionTensor3DType & ) const
+    const InputDiffusionTensor3DType &  /*unused*/) const
   {
     itkExceptionMacro( "TransformDiffusionTensor(Tensor) unimplemented, use "
                        "TransformDiffusionTensor(Tensor,Point)" );
   }
 
-  OutputVectorPixelType TransformDiffusionTensor(const InputVectorPixelType & )
+  OutputVectorPixelType TransformDiffusionTensor(const InputVectorPixelType &  /*unused*/)
   const
   {
     itkExceptionMacro( "TransformDiffusionTensor(Tensor) unimplemented, use "
@@ -248,14 +244,14 @@ public:
   /**  Method to transform a CovariantVector. */
   using Superclass::TransformCovariantVector;
   virtual OutputCovariantVectorType TransformCovariantVector(
-    const InputCovariantVectorType &) const
+    const InputCovariantVectorType & /*unused*/) const
   {
     itkExceptionMacro( "TransformCovariantVector(CovariantVector) "
                        "unimplemented, use TransformCovariantVector(CovariantVector,Point)" );
   }
 
   virtual OutputVectorPixelType TransformCovariantVector(
-    const InputVectorPixelType &) const
+    const InputVectorPixelType & /*unused*/) const
   {
     itkExceptionMacro( "TransformCovariantVector(CovariantVector) "
                        "unimplemented, use TransformCovariantVector(CovariantVector,Point)" );
@@ -287,7 +283,7 @@ public:
    * Note:  If a displacement field already exists, this function
    * creates a new one with zero displacement (identity transform).
    */
-  virtual void SetFixedParameters( const ParametersType & );
+  virtual void SetFixedParameters( const ParametersType &  /*fixedParameters*/);
 
   /**
    * Compute the jacobian with respect to the parameters at a point.
@@ -310,7 +306,7 @@ public:
    *
    * TODO: format the above for doxygen formula.
    */
-  virtual void ComputeJacobianWithRespectToParameters(const InputPointType &,
+  virtual void ComputeJacobianWithRespectToParameters(const InputPointType & /*unused*/,
                                                       JacobianType & j) const
   {
       itkExceptionMacro("ComputeJacobianWithRespectToParameters unimplemented");
@@ -322,7 +318,7 @@ public:
    * See \c ComputeJacobianWithRespectToParameters( InputPointType, ... )
    * for rationale.
    */
-  virtual void ComputeJacobianWithRespectToParameters(const IndexType &,
+  virtual void ComputeJacobianWithRespectToParameters(const IndexType & /*unused*/,
                                                       JacobianType & j) const
   {
       itkExceptionMacro("ComputeJacobianWithRespectToParameters unimplemented");
@@ -393,7 +389,7 @@ public:
     return Self::DisplacementField;
   }
 
-  virtual NumberOfParametersType GetNumberOfLocalParameters(void) const
+  virtual NumberOfParametersType GetNumberOfLocalParameters() const
   {
     return InDimension;
   }

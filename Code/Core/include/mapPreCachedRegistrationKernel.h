@@ -45,31 +45,30 @@ namespace map
         public:
             typedef PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>	Self;
             typedef RegistrationKernel<VInputDimensions, VOutputDimensions> Superclass;
-            typedef itk::SmartPointer<Self> Pointer;
-            typedef itk::SmartPointer<const Self> ConstPointer;
+            using Pointer = itk::SmartPointer<Self>;
+            using ConstPointer = itk::SmartPointer<const Self>;
 
             itkNewMacro(Self);
             itkTypeMacro(PreCachedRegistrationKernel, RegistrationKernel);
 
-            typedef typename Superclass::TransformType TransformType;
-            typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;
-            typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
-            typedef typename Superclass::RepresentationDescriptorConstPointer
-                RepresentationDescriptorConstPointer;
-            typedef typename Superclass::InputPointType  InputPointType;
-            typedef typename Superclass::OutputPointType OutputPointType;
-            typedef typename Superclass::MappingVectorType MappingVectorType;
+            using TransformType = typename Superclass::TransformType;
+            using RepresentationDescriptorType = typename Superclass::RepresentationDescriptorType;
+            using RepresentationDescriptorPointer = typename Superclass::RepresentationDescriptorPointer;
+            using RepresentationDescriptorConstPointer = typename Superclass::RepresentationDescriptorConstPointer;
+            using InputPointType = typename Superclass::InputPointType;
+            using OutputPointType = typename Superclass::OutputPointType;
+            using MappingVectorType = typename Superclass::MappingVectorType;
 
             /*! sets the transform
             @eguarantee no fail
             @param transform the transform that shall be set
             */
-            virtual void setTransformModel(TransformType* transform) override;
+            void setTransformModel(TransformType* transform) override;
 
             /*! Returns if the transform was already created (true) or if the generation still is pending / wasn't necessary (false).
             @eguarantee strong
             */
-            virtual bool transformExists() const override;
+            bool transformExists() const override;
 
             /*! @brief gets the largest possible representation descriptor. The descriptor defines
              * the space the kernel guarantees to map.
@@ -78,23 +77,23 @@ namespace map
              * has no mapping limitations and covers the total input space.
              * @eguarantee strong
              */
-            virtual RepresentationDescriptorConstPointer getLargestPossibleRepresentation() const override;
+            RepresentationDescriptorConstPointer getLargestPossibleRepresentation() const override;
 
             /*! Returns pointer to the transform model used by the kernel
             @eguarantee strong
             @return const pointer to the internal tranform model
             */
-            virtual const TransformType* getTransformModel() const override;
+            const TransformType* getTransformModel() const override;
 
-            virtual const OutputPointType getNullPoint() const override;
+            const OutputPointType getNullPoint() const override;
 
-            virtual bool usesNullPoint() const override;
+            bool usesNullPoint() const override;
 
         protected:
             PreCachedRegistrationKernel();
-            virtual ~PreCachedRegistrationKernel();
+            ~PreCachedRegistrationKernel() override;
 
-            typedef typename TransformType::Pointer TransformPointer;
+            using TransformPointer = typename TransformType::Pointer;
             TransformPointer _spTransform;
 
             /*! checks the transform that has been set for correctness and prepares it to be used
@@ -104,11 +103,11 @@ namespace map
             bool checkAndPrepareTransform() const override;
 
             /*! Methods invoked by itk::LightObject::Print().  */
-            virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+            void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
             /** @reimplementation
             Reimplementation of the itk::LightObject::InternalClone*/
-            virtual ::itk::LightObject::Pointer	InternalClone()	const;
+            ::itk::LightObject::Pointer	InternalClone()	const override;
 
         private:
 
@@ -118,8 +117,8 @@ namespace map
 
         };
 
-    }
-}
+    }  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapPreCachedRegistrationKernel.tpp"

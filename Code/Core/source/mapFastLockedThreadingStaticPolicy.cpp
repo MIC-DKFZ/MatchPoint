@@ -54,13 +54,11 @@ namespace map
 
 			FastLockedThreadingStaticPolicy::
 			FastLockedThreadingStaticPolicy()
-			{
-			};
+			= default;
 
 			FastLockedThreadingStaticPolicy::
 			~FastLockedThreadingStaticPolicy()
-			{
-			};
+			= default;
 
 			FastLockedThreadingStaticPolicy::MutexType FastLockedThreadingStaticPolicy::_mutex;
 

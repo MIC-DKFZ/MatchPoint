@@ -47,37 +47,37 @@ namespace map
 			/*! Standard class typedefs. */
 			typedef ImageByModelPerformer<TRegistration, TInputData, TResultData>  Self;
 			typedef ImageMappingPerformerBase<TRegistration, TInputData, TResultData>	 Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(ImageByModelPerformer, ImageMappingPerformerBase);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::RegistrationType		RegistrationType;
-			typedef typename Superclass::RequestType		RequestType;
+			using RegistrationType = typename Superclass::RegistrationType;
+			using RequestType = typename Superclass::RequestType;
 
-			typedef typename Superclass::InputDataType			InputDataType;
-			typedef typename Superclass::InputDataConstPointer		InputDataConstPointer;
-			typedef typename Superclass::ResultDataType			ResultDataType;
-			typedef typename Superclass::ResultDataPointer	ResultDataPointer;
+			using InputDataType = typename Superclass::InputDataType;
+			using InputDataConstPointer = typename Superclass::InputDataConstPointer;
+			using ResultDataType = typename Superclass::ResultDataType;
+			using ResultDataPointer = typename Superclass::ResultDataPointer;
 
 			/*! Registers the input data and returns the result data.
 			 * @eguarantee strong
 			 * @param [in] request Referenz to the request that contains all needed information to perform the image registration
 			 * @return Smart pointer to the result image.
 			 */
-			virtual ResultDataPointer performMapping(const RequestType& request) const;
+			ResultDataPointer performMapping(const RequestType& request) const override;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request.
 			 * @return Indicates if the provider offers the right solution.
 			 * @retval true Provider can handle the request.
 			 * @retval false Provider is not able to handle the request.*/
-			virtual bool canHandleRequest(const RequestType& request) const;
+			bool canHandleRequest(const RequestType& request) const override;
 
 			/*! Returns an ID of the provider as string. Calls getStaticProviderName().
 			 * @return Service provider ID.*/
-			virtual String getProviderName() const;
+			String getProviderName() const override;
 
 			/*! Returns an ID of the provider as string.
 			 * @return Service provider ID.*/
@@ -87,13 +87,13 @@ namespace map
 			 * @return Service provider ID.
 			 * @remark It is a return by value, becaus it might be possible that the description is generated on line
 			 * when calling this method.*/
-			virtual String getDescription() const;
+			String getDescription() const override;
 
 		protected:
-			typedef typename RegistrationType::InverseMappingType InverseKernelBaseType;
+			using InverseKernelBaseType = typename RegistrationType::InverseMappingType;
 
 			ImageByModelPerformer();
-			virtual ~ImageByModelPerformer();
+			~ImageByModelPerformer() override;
 
 		private:
 			ImageByModelPerformer(const Self&);  //purposely not implemented

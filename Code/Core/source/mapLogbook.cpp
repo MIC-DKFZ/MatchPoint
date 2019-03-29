@@ -28,7 +28,7 @@
 
 #include "itkMutexLockHolder.h"
 
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -55,7 +55,7 @@ namespace map
 				initializeLogger();
 			}
 
-			_spLoggerImpl->getLogger().Write(level, content.c_str());
+			_spLoggerImpl->getLogger().Write(level, content);
 		};
 
 
@@ -137,28 +137,28 @@ namespace map
 
 		Logbook::PriorityLevelType
 		Logbook::
-		getLogbookMode(void)
+		getLogbookMode()
 		{
 			return _currentPriorityLevel;
 		};
 
 		void
 		Logbook::
-		setLogbookToDebugMode(void)
+		setLogbookToDebugMode()
 		{
 			setLogbookMode(itk::LoggerBase::DEBUG);
 		};
 
 		void
 		Logbook::
-		setLogbookToInfoMode(void)
+		setLogbookToInfoMode()
 		{
 			setLogbookMode(itk::LoggerBase::INFO);
 		};
 
 		void
 		Logbook::
-		setLogbookToCriticalMode(void)
+		setLogbookToCriticalMode()
 		{
 			setLogbookMode(itk::LoggerBase::CRITICAL);
 		};
@@ -177,14 +177,14 @@ namespace map
 
 		bool
 		Logbook::
-		isInitialized(void)
+		isInitialized()
 		{
 			return _spLoggerImpl.IsNotNull();
 		};
 
 		void
 		Logbook::
-		initializeLogger(void)
+		initializeLogger()
 		{
 			itk::MutexLockHolder<itk::SimpleFastMutexLock> testHolder(_testMutex);
 

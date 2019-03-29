@@ -46,8 +46,7 @@ namespace iro
 
     SimpleInformationSpace::
       ~SimpleInformationSpace()
-    {
-    };
+    = default;
 
 
     SimpleInformationSpace::

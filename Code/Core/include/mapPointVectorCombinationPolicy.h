@@ -48,10 +48,10 @@ namespace map
 		class PointVectorCombinationPolicy
 		{
 		public:
-			typedef typename continuous::Elements<VInDimensions>::PointType     PointType;
-			typedef typename continuous::Elements<VInDimensions>::VectorType    VectorType;
-			typedef typename continuous::Elements<VOutDimensions>::PointType            OutputPointType;
-			typedef typename continuous::Elements<VOutDimensions>::VectorType           OutputVectorType;
+			using PointType = typename continuous::Elements<VInDimensions>::PointType;
+			using VectorType = typename continuous::Elements<VInDimensions>::VectorType;
+			using OutputPointType = typename continuous::Elements<VOutDimensions>::PointType;
+			using OutputVectorType = typename continuous::Elements<VOutDimensions>::VectorType;
 
 			static inline void mapPoint(const PointType& inPoint, const OutputVectorType& mappingVector,
 										OutputPointType& outPoint)
@@ -130,10 +130,10 @@ namespace map
 		class PointVectorCombinationPolicy<VDimensions, VDimensions>
 		{
 		public:
-			typedef typename continuous::Elements<VDimensions>::PointType     PointType;
-			typedef typename continuous::Elements<VDimensions>::VectorType    VectorType;
-			typedef typename continuous::Elements<VDimensions>::PointType     OutputPointType;
-			typedef typename continuous::Elements<VDimensions>::VectorType    OutputVectorType;
+			using PointType = typename continuous::Elements<VDimensions>::PointType;
+			using VectorType = typename continuous::Elements<VDimensions>::VectorType;
+			using OutputPointType = typename continuous::Elements<VDimensions>::PointType;
+			using OutputVectorType = typename continuous::Elements<VDimensions>::VectorType;
 
 			static inline void mapPoint(const PointType& inPoint, const OutputVectorType& mappingVector,
 										OutputPointType& outPoint)

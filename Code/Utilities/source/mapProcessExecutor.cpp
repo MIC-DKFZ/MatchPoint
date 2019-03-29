@@ -45,10 +45,10 @@ namespace map
 			{
 				return name + ".exe";
 			}
-			else
-			{
+			
+			
 				return name;
-			}
+			
 
 #else
 
@@ -77,7 +77,7 @@ namespace map
 		{
 			//convert to char* array with terminating null element;
 			const char** pArguments = new const char*[argumentList.size() + 1];
-			pArguments[argumentList.size()] = 0;
+			pArguments[argumentList.size()] = nullptr;
 
 			for (ArgumentListType::size_type index = 0; index < argumentList.size(); ++index)
 			{
@@ -95,28 +95,28 @@ namespace map
 
 				if (this->_SharedOutputPipes)
 				{
-					itksysProcess_SetPipeShared(processID, itksysProcess_Pipe_STDOUT, true);
-					itksysProcess_SetPipeShared(processID, itksysProcess_Pipe_STDERR, true);
+					itksysProcess_SetPipeShared(processID, itksysProcess_Pipe_STDOUT, 1);
+					itksysProcess_SetPipeShared(processID, itksysProcess_Pipe_STDERR, 1);
 				}
 
 				itksysProcess_Execute(processID);
 
-				char* rawOutput = NULL;
+				char* rawOutput = nullptr;
 				int outputLength = 0;
 
 				while (true)
 				{
-					int dataStatus = itksysProcess_WaitForData(processID, &rawOutput, &outputLength, NULL);
+					int dataStatus = itksysProcess_WaitForData(processID, &rawOutput, &outputLength, nullptr);
 
 					if (dataStatus == itksysProcess_Pipe_STDOUT)
 					{
 						map::core::String data(rawOutput, outputLength);
-						this->InvokeEvent(map::events::ExternalProcessStdOutEvent(NULL, data));
+						this->InvokeEvent(map::events::ExternalProcessStdOutEvent(nullptr, data));
 					}
 					else if (dataStatus == itksysProcess_Pipe_STDERR)
 					{
 						map::core::String data(rawOutput, outputLength);
-						this->InvokeEvent(map::events::ExternalProcessStdErrEvent(NULL, data));
+						this->InvokeEvent(map::events::ExternalProcessStdErrEvent(nullptr, data));
 					}
 					else
 					{
@@ -124,9 +124,9 @@ namespace map
 					}
 				}
 
-				itksysProcess_WaitForExit(processID, 0);
+				itksysProcess_WaitForExit(processID, nullptr);
 
-				itksysProcess_State_e state = static_cast<itksysProcess_State_e>(itksysProcess_GetState(processID));
+				auto state = static_cast<itksysProcess_State_e>(itksysProcess_GetState(processID));
 
 				normalExit = (state == itksysProcess_State_Exited);
 				this->_exitValue = itksysProcess_GetExitValue(processID);
@@ -163,8 +163,7 @@ namespace map
 
 		ProcessExecutor::
 		~ProcessExecutor()
-		{
-		};
+		= default;
 
-	}
-}
+	}  // namespace utilities
+}  // namespace map

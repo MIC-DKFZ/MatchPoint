@@ -55,18 +55,18 @@ namespace map
 			/*! Standard class typedefs. */
 			typedef core::services::GenericStaticLoadPolicyBase<RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions> >
 			Superclass;
-			typedef typename Superclass::ProviderBaseType      ProviderBaseType;
-			typedef typename Superclass::ProviderBasePointer   ProviderBasePointer;
-			typedef typename Superclass::LoadInterfaceType     LoadInterfaceType;
+			using ProviderBaseType = typename Superclass::ProviderBaseType;
+			using ProviderBasePointer = typename Superclass::ProviderBasePointer;
+			using LoadInterfaceType = typename Superclass::LoadInterfaceType;
 
-			virtual void doLoading();
+			void doLoading() override;
 
 			KernelWriterLoadPolicy();
 			~KernelWriterLoadPolicy();
 
 		private:
-			KernelWriterLoadPolicy(const KernelWriterLoadPolicy&);  //purposely not implemented
-			void operator=(const KernelWriterLoadPolicy&);  //purposely not implemented
+			KernelWriterLoadPolicy(const KernelWriterLoadPolicy&) = delete;  //purposely not implemented
+			void operator=(const KernelWriterLoadPolicy&) = delete;  //purposely not implemented
 		};
 
 	} // end namespace io

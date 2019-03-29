@@ -72,12 +72,11 @@ namespace iro
 
     SimpleInformationEntity::
       ~SimpleInformationEntity()
-    {
-    };
+    = default;
 
 
     SimpleInformationEntity::
-      SimpleInformationEntity() : _uid(""), _dataRep(DataRepresentation::Discrete)
+      SimpleInformationEntity() : _uid("") 
     {
     };
 

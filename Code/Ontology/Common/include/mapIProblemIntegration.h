@@ -47,20 +47,20 @@ namespace iro
     class IProblemIntegration
     {
     public:
-      typedef typename TPMTraits::Type                 ProblemModelType;
-      typedef typename TPMTraits::ConstPointer         ConstProblemModelPointer;
-      typedef typename TPMTraits::InferencePointer     ProblemModelInferencePointer;
+      using ProblemModelType = typename TPMTraits::Type;
+      using ConstProblemModelPointer = typename TPMTraits::ConstPointer;
+      using ProblemModelInferencePointer = typename TPMTraits::InferencePointer;
 
       using ProblemStatementTraitsType = typename TPMTraits::ProblemStatementTraitsType;
 
-      typedef typename ProblemStatementTraitsType::Type             ProblemStatementType;
-      typedef typename ProblemStatementTraitsType::ConstPointer     ConstProblemStatementPointer;
-      typedef typename ProblemStatementTraitsType::InferencePointer ProblemStatementInferencePointer;
+      using ProblemStatementType = typename ProblemStatementTraitsType::Type;
+      using ConstProblemStatementPointer = typename ProblemStatementTraitsType::ConstPointer;
+      using ProblemStatementInferencePointer = typename ProblemStatementTraitsType::InferencePointer;
 
-      typedef typename std::vector<ConstProblemStatementPointer>    ConstProblemStatementVectorType;    
+      using ConstProblemStatementVectorType = typename std::vector<ConstProblemStatementPointer>;    
 
-      typedef TPSDReturnType   StatementDeleteReturnType;
-      typedef TPMDReturnType    ModelDeleteReturnType;
+      using StatementDeleteReturnType = TPSDReturnType;
+      using ModelDeleteReturnType = TPMDReturnType;
 
       /*! Defines and stores the copy of the passed statement after checking all relevant integration rules.\n
       * Relevant integration rules:
@@ -144,8 +144,8 @@ namespace iro
 
 
     protected:
-      virtual ~IProblemIntegration() {};
-      IProblemIntegration() {};
+      virtual ~IProblemIntegration() = default;
+      IProblemIntegration() = default;
 
 			/*! virtual abstract part of the NVI idiom. See public member for more information.
       *@see defineProblemStatement*/

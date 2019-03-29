@@ -61,7 +61,7 @@ namespace map
                 itkTypeMacroNoParent(ArbitraryInterpolatorPolicy);
 
 				typedef ::itk::InterpolateImageFunction<TInputImage, TCoordRep> InterpolatorType;
-				typedef TCoordRep CoordRepType;
+				using CoordRepType = TCoordRep;
 
 				/*! sets the interpolator
 				@eguarantee strong
@@ -128,9 +128,9 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapArbitraryInterpolatorPolicy.tpp"

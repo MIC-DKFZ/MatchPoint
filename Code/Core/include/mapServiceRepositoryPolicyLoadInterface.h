@@ -24,7 +24,7 @@
 #define __MAP_SERVICE_REPOSITORY_POLICY_LOAD_INTERFACE_H
 
 #include "itkObject.h"
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -48,10 +48,10 @@ namespace map
 			class ServiceRepositoryPolicyLoadInterface
 			{
 			protected:
-				typedef ServiceRepositoryPolicyLoadInterface<TProviderBase> Self;
+				using Self = ServiceRepositoryPolicyLoadInterface<TProviderBase>;
 				friend class ServiceRepositoryPolicyLoader<Self>;
 
-				typedef TProviderBase  ProviderBaseType;
+				using ProviderBaseType = TProviderBase;
 
 				/*! Registers a given provider in the stack. The new provider will be topmost and therfore
 				 * will be favored over providers registered ealier. The stack will behave like a smartpointer
@@ -80,12 +80,12 @@ namespace map
 				virtual bool removeProviderByPolicy(ProviderBaseType* pProvider) = 0;
 
 			protected:
-				ServiceRepositoryPolicyLoadInterface() {};
-				virtual ~ServiceRepositoryPolicyLoadInterface() {};
+				ServiceRepositoryPolicyLoadInterface() = default;
+				virtual ~ServiceRepositoryPolicyLoadInterface() = default;
 
 			private:
-				ServiceRepositoryPolicyLoadInterface(const Self&);  //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				ServiceRepositoryPolicyLoadInterface(const Self&) = delete;  //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 			};
 
 
@@ -100,8 +100,8 @@ namespace map
 			class ServiceRepositoryPolicyLoader
 			{
 			public:
-				typedef TInterface InterfaceType;
-				typedef typename InterfaceType::ProviderBaseType  ProviderBaseType;
+				using InterfaceType = TInterface;
+				using ProviderBaseType = typename InterfaceType::ProviderBaseType;
 
 				virtual bool addProviderByPolicy(ProviderBaseType* pProvider)
 				{
@@ -118,15 +118,15 @@ namespace map
 					assert(pInterface);
 				};
 
-				virtual ~ServiceRepositoryPolicyLoader() {};
+				virtual ~ServiceRepositoryPolicyLoader() = default;
 
 			protected:
 				InterfaceType* _pInterface;
 
 			private:
-				typedef ServiceRepositoryPolicyLoader<TInterface> Self;
-				ServiceRepositoryPolicyLoader(const Self&);  //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				using Self = ServiceRepositoryPolicyLoader<TInterface>;
+				ServiceRepositoryPolicyLoader(const Self&) = delete;  //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 			};
 
 

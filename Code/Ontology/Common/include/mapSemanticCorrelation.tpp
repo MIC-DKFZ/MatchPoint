@@ -116,7 +116,7 @@ namespace iro
     SemanticCorrelation<TInformationEntityTraits, TUIDPolicy>::
     removeCorrelatedEntity(EntityIterator pos)
   { 
-    EntityIterator result = _entities.erase(pos);
+    auto result = _entities.erase(pos);
 
     return result;
   };
@@ -172,8 +172,7 @@ namespace iro
   template <typename TInformationEntityTraits, typename TUIDPolicy>
   SemanticCorrelation<TInformationEntityTraits, TUIDPolicy>::
     ~SemanticCorrelation()
-  {
-  };
+  = default;
 
   template <typename TInformationEntityTraits, typename TUIDPolicy>
   SemanticCorrelation<TInformationEntityTraits, TUIDPolicy>::

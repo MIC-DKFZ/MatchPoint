@@ -42,22 +42,22 @@ namespace map
 			class AnalyticAlgorithmInterface
 			{
 			public:
-				typedef AnalyticAlgorithmInterface Self;
+				using Self = AnalyticAlgorithmInterface;
 
 
 
 			protected:
-				AnalyticAlgorithmInterface() {};
-				virtual ~AnalyticAlgorithmInterface() {};
+				AnalyticAlgorithmInterface() = default;
+				virtual ~AnalyticAlgorithmInterface() = default;
 
 			private:
 				//No copy constructor allowed
-				AnalyticAlgorithmInterface(const Self& source);
-				void operator=(const Self&);  //purposely not implemented
+				AnalyticAlgorithmInterface(const Self& source) = delete;
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

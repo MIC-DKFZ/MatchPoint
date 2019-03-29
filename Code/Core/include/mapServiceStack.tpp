@@ -55,7 +55,7 @@ namespace map
 			template <class TProviderBase,  class TStaticLoadPolicy, class TThreadingPolicy>
 			::itk::LightObject::Pointer
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
-			CreateAnother(void) const
+			CreateAnother() const
 			{
 				::itk::LightObject::Pointer smartPtr;
 				smartPtr = Self::New(false).GetPointer();
@@ -67,13 +67,13 @@ namespace map
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
 			getProvider(const RequestType& request) const
 			{
-				ProviderBaseType* pResult = NULL;
+				ProviderBaseType* pResult = nullptr;
 
 				this->lock();
 
 				// search vector in reverse order, because ServiceStack should operate by the LIFU principle (last in, first used)
 				// thus the lastest added provider suitable for a request should be used.
-				for (typename ProviderVectorType::const_reverse_iterator pos = _providers.rbegin();
+				for (auto pos = _providers.rbegin();
 					 pos != _providers.rend(); ++pos)
 				{
 					if ((*pos)->canHandleRequest(request))
@@ -141,7 +141,7 @@ namespace map
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
 			registerProviderInternal(ProviderBaseType* pProvider)
 			{
-				typename ProviderVectorType::iterator finding = std::find(_providers.begin(), _providers.end(),
+				auto finding = std::find(_providers.begin(), _providers.end(),
 						pProvider);
 				bool result = false;
 
@@ -175,7 +175,7 @@ namespace map
 			ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>::
 			unregisterProviderByPointerInternal(ProviderBaseType* pProvider)
 			{
-				typename ProviderVectorType::iterator finding = std::find(_providers.begin(), _providers.end(),
+				auto finding = std::find(_providers.begin(), _providers.end(),
 						pProvider);
 				bool result = false;
 
@@ -291,7 +291,7 @@ namespace map
 				os << indent << "Stack content (in descending priority): " << std::endl;
 				itk::Indent indent2 = indent.GetNextIndent();
 
-				for (typename ProviderVectorType::const_reverse_iterator pos = _providers.rbegin();
+				for (auto pos = _providers.rbegin();
 					 pos != _providers.rend(); ++pos)
 				{
 					os << indent2 << (*pos)->getProviderName() << std::endl;

@@ -46,8 +46,8 @@ namespace map
 		class SmartMetaPropertyUntypeHelper<const TValue*>
 		{
 		public:
-			typedef typename SmartMetaProperty<TValue>::LightPointer LightPointer;
-			typedef typename SmartMetaProperty<TValue>::ConstLightPointer ConstLightPointer;
+			using LightPointer = typename SmartMetaProperty<TValue>::LightPointer;
+			using ConstLightPointer = typename SmartMetaProperty<TValue>::ConstLightPointer;
 
 			static bool Convert(const TValue* pValue, LightPointer& pRaw)
 			{
@@ -64,8 +64,8 @@ namespace map
 		class SmartMetaPropertyUntypeHelper<TValue*>
 		{
 		public:
-			typedef typename SmartMetaProperty<TValue>::LightPointer LightPointer;
-			typedef typename SmartMetaProperty<TValue>::ConstLightPointer ConstLightPointer;
+			using LightPointer = typename SmartMetaProperty<TValue>::LightPointer;
+			using ConstLightPointer = typename SmartMetaProperty<TValue>::ConstLightPointer;
 
 			static bool Convert(TValue* pValue, LightPointer& pRaw)
 			{
@@ -99,7 +99,7 @@ namespace map
 		template<typename TValue>
 		::itk::LightObject::Pointer
 		SmartMetaProperty<TValue>::
-		CreateAnother(void) const
+		CreateAnother() const
 		{
 			::itk::LightObject::Pointer smartPtr;
 			smartPtr = Self::New(this->_spValue.GetPointer()).GetPointer();
@@ -127,7 +127,7 @@ namespace map
 		template<typename TValue>
 		const std::type_info&
 		SmartMetaProperty<TValue>::
-		getMetaPropertyTypeInfo(void) const
+		getMetaPropertyTypeInfo() const
 		{
 			return typeid(ValuePointerType);
 		};
@@ -176,8 +176,7 @@ namespace map
 		template<typename TValue>
 		SmartMetaProperty<TValue>::
 		~SmartMetaProperty()
-		{
-		};
+		= default;
 
 		template<typename TValue>
 		SmartMetaProperty<TValue>::
@@ -186,7 +185,7 @@ namespace map
 			_spValue = initValue;
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #endif

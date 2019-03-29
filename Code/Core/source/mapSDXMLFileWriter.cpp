@@ -49,7 +49,7 @@ namespace map
 		XMLFileWriter::
 		write(const core::String& filePath, const Element* pElement)
 		{
-			if (!pElement)
+			if (pElement == nullptr)
 			{
 				mapDefaultExceptionMacro( <<
 										  "Error, cannot write passed StructuredData element to an xml file. Passed element is NULL.");
@@ -70,11 +70,11 @@ namespace map
 										  filePath);
 			}
 
-			file << "<?xml version=\"1.0\" encoding=\"" << _EncodingType << "\"?>\n";
+			file << R"(<?xml version="1.0" encoding=")" << _EncodingType << "\"?>\n";
 
 			if (!_XSLTFile.empty())
 			{
-				file << "<?xml-stylesheet type=\"text/xsl\" href=\"" << _XSLTFile << "\"?>\n";
+				file << R"(<?xml-stylesheet type="text/xsl" href=")" << _XSLTFile << "\"?>\n";
 			}
 
 			file << savedStr;
@@ -85,7 +85,7 @@ namespace map
 		XMLFileWriter::
 		write(const core::String& filePath, const StreamingInterface* pInterface)
 		{
-			if (!pInterface)
+			if (pInterface == nullptr)
 			{
 				mapDefaultExceptionMacro( <<
 										  "Error, cannot write passed object to an xml file. Passed interface is NULL.");
@@ -104,8 +104,7 @@ namespace map
 
 		XMLFileWriter::
 		~XMLFileWriter()
-		{
-		};
+		= default;
 
 	} //end of namespace structuredData
 

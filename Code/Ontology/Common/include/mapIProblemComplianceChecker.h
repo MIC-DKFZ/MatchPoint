@@ -32,7 +32,7 @@ namespace iro
 		class IProblemComplianceChecker
 		{
 		public:
-      typedef IProblemComplianceDefinition<typename TProblemStatementTraits::Type>  ProblemComplianceInterface;
+      using ProblemComplianceInterface = IProblemComplianceDefinition<typename TProblemStatementTraits::Type>;
 
 			/** Checks if the instance that implements this interface is in compliance eith the passed problem compliance definition.
        * @return True: the instance complies with the passed definition. False: the instance is not in compliance (e.g. defined
@@ -41,7 +41,8 @@ namespace iro
        * @exception ::iro::exceptions::InvalidArgument: pProblemCompliance is not valid*/
 			bool checkProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const
       {
-        if (!pProblemCompliance) throw ::iro::exceptions::InvalidArgument("Cannot check compliance. Invalid proplem compliance pointer");
+        if (!pProblemCompliance) { throw ::iro::exceptions::InvalidArgument("Cannot check compliance. Invalid proplem compliance pointer");
+}
         return doCheckProblemCompliance(pProblemCompliance);
       };
 
@@ -49,11 +50,11 @@ namespace iro
 
 			virtual bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const = 0;
 
-      virtual ~IProblemComplianceChecker() {};
-      IProblemComplianceChecker() {};
+      virtual ~IProblemComplianceChecker() = default;
+      IProblemComplianceChecker() = default;
 		private:
-			IProblemComplianceChecker(const IProblemComplianceChecker&); //not implemented by purpose
-			IProblemComplianceChecker& operator=(const IProblemComplianceChecker&); //not implemented by purpose
+			IProblemComplianceChecker(const IProblemComplianceChecker&) = delete; //not implemented by purpose
+			IProblemComplianceChecker& operator=(const IProblemComplianceChecker&) = delete; //not implemented by purpose
 		};
 } // end namespace iro
 

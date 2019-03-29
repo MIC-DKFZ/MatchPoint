@@ -53,21 +53,21 @@ namespace map
 		public:
 			/*! Standard class typedefs. */
 			typedef PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy >  Self;
-			typedef MappingTaskBase<TRegistration>                            Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = MappingTaskBase<TRegistration>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
-			typedef typename MappingTaskBase<TRegistration>::RegistrationType  RegistrationType;
-			typedef TInputPointSet                                                  InputPointSetType;
-			typedef typename InputPointSetType::ConstPointer                        InputPointSetConstPointer;
-			typedef TResultPointSet                                                 ResultPointSetType;
-			typedef typename ResultPointSetType::Pointer                            ResultPointSetPointer;
-			typedef typename ResultPointSetType::PixelType                          ErrorPointValueType;
+			using RegistrationType = typename MappingTaskBase<TRegistration>::RegistrationType;
+			using InputPointSetType = TInputPointSet;
+			using InputPointSetConstPointer = typename InputPointSetType::ConstPointer;
+			using ResultPointSetType = TResultPointSet;
+			using ResultPointSetPointer = typename ResultPointSetType::Pointer;
+			using ErrorPointValueType = typename ResultPointSetType::PixelType;
 
 			typedef PointSetMappingPerformerRequest<RegistrationType, InputPointSetType, ResultPointSetType>
 			PerformerRequestType;
 
-			typedef MappingPerformerBase<PerformerRequestType> TaskPerformerBaseType;
+			using TaskPerformerBaseType = MappingPerformerBase<PerformerRequestType>;
 
 			itkTypeMacro(PointSetMappingTask, MappingTaskBase);
 			itkNewMacro(Self);
@@ -82,13 +82,13 @@ namespace map
 #endif
 
 		protected:
-			typedef TLoadPolicy<TaskPerformerBaseType> LoadPolicyType;
+			using LoadPolicyType = TLoadPolicy<TaskPerformerBaseType>;
 
 			typedef services::ServiceStack<TaskPerformerBaseType, LoadPolicyType >
 			ConcreteTaskPerformerStackType;
 
 		public:
-			typedef services::StaticServiceStack<ConcreteTaskPerformerStackType>  TaskPerformerStackType;
+			using TaskPerformerStackType = services::StaticServiceStack<ConcreteTaskPerformerStackType>;
 
 			/*! Sets _spInputPoints to inputPoints and sets _spResultPoints to null.
 			 * @param [in] inputPoints The pointer to the input points*/
@@ -99,7 +99,7 @@ namespace map
 			 * register the input data.
 			 * @post _spResultPoints is set.
 			 * @pre _spInputPoints and _spRegistration are not null.*/
-			ResultPointSetPointer getResultPointSet(void);
+			ResultPointSetPointer getResultPointSet();
 
 			void setThrowOnMappingError(bool throwOnError);
 			bool getThrowOnMappingError() const;
@@ -127,14 +127,14 @@ namespace map
 			 * @pre _inputPoints must have been set.
 			 * @post _resultPoints are set.
 			 */
-			virtual void doExecution(void) const;
+			virtual void doExecution() const;
 
-			virtual void clearResults(void) const;
+			virtual void clearResults() const;
 
 			/*! clears all input datas of the task used to execute().
 			 * @eguarantee strong
 			 */
-			virtual void clearInputs(void);
+			virtual void clearInputs();
 
 			/*! Methods invoked by itk::LightObject::Print().  */
 			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;

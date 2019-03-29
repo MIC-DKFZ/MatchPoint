@@ -46,20 +46,19 @@ namespace map
             typedef RegistrationKernel < VInputDimensions, VOutputDimensions >
                 Self;
             typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions> Superclass;
-            typedef itk::SmartPointer<Self> Pointer;
-            typedef itk::SmartPointer<const Self> ConstPointer;
+            using Pointer = itk::SmartPointer<Self>;
+            using ConstPointer = itk::SmartPointer<const Self>;
 
             itkTypeMacro(RegistrationKernel, RegistrationKernelBase);
             itkCloneMacro(Self);
 
-            typedef typename Superclass::TransformType TransformType;
-            typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;
-            typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
-            typedef typename Superclass::RepresentationDescriptorConstPointer
-                RepresentationDescriptorConstPointer;
-            typedef typename Superclass::InputPointType  InputPointType;
-            typedef typename Superclass::OutputPointType OutputPointType;
-            typedef typename Superclass::OutputVectorType OutputVectorType;
+            using TransformType = typename Superclass::TransformType;
+            using RepresentationDescriptorType = typename Superclass::RepresentationDescriptorType;
+            using RepresentationDescriptorPointer = typename Superclass::RepresentationDescriptorPointer;
+            using RepresentationDescriptorConstPointer = typename Superclass::RepresentationDescriptorConstPointer;
+            using InputPointType = typename Superclass::InputPointType;
+            using OutputPointType = typename Superclass::OutputPointType;
+            using OutputVectorType = typename Superclass::OutputVectorType;
 
             /*! Returns pointer to the transform model used by the kernel
             @eguarantee strong
@@ -70,7 +69,7 @@ namespace map
             /*! @brief forces kernel to precompute, even if it is a LazyFieldKernel
               @eguarantee strong
               */
-            virtual void precomputeKernel() const override;
+            void precomputeKernel() const override;
 
             /*! Returns if the transform was already created or if the generation still is pending / wasn't necessary.
             @eguarantee strong
@@ -103,9 +102,9 @@ namespace map
 
         protected:
             RegistrationKernel();
-            virtual ~RegistrationKernel();
+            ~RegistrationKernel() override;
 
-            virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const override;
+            bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const override;
 
             /*! checks the transform that has been set for correctness and prepares it to be used
             @eguarantee strong
@@ -114,7 +113,7 @@ namespace map
             virtual bool checkAndPrepareTransform() const = 0;
 
             /*! Methods invoked by itk::LightObject::Print().  */
-            virtual void PrintSelf(std::ostream& os, itk::Indent indent) const override;
+            void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
         private:
 
@@ -124,8 +123,8 @@ namespace map
 
         };
 
-    }
-}
+    }  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapRegistrationKernel.tpp"

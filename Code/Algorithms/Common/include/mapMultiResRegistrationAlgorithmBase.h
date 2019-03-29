@@ -55,25 +55,24 @@ namespace map
 			facet::MultiResRegistrationAlgorithmInterface
 		{
 		public:
-			typedef MultiResRegistrationAlgorithmBase Self;
+			using Self = MultiResRegistrationAlgorithmBase;
 
-			typedef facet::MultiResRegistrationAlgorithmInterface::DimensionCountType DimensionCountType;
-			typedef facet::MultiResRegistrationAlgorithmInterface::ScalingType ScalingType;
-			typedef facet::MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType
-			ResolutionLevelCountType;
-			typedef facet::MultiResRegistrationAlgorithmInterface::ScheduleType ScheduleType;
+			using DimensionCountType = facet::MultiResRegistrationAlgorithmInterface::DimensionCountType;
+			using ScalingType = facet::MultiResRegistrationAlgorithmInterface::ScalingType;
+			using ResolutionLevelCountType = facet::MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType;
+			using ScheduleType = facet::MultiResRegistrationAlgorithmInterface::ScheduleType;
 
 			/*! returns the current schedule for the moving information space
 			@eguarantee strong*/
-			virtual const ScheduleType& getMovingSchedule() const;
+			const ScheduleType& getMovingSchedule() const override;
 
 			/*! returns the current schedule for the target information space
 			@eguarantee strong*/
-			virtual const ScheduleType& getTargetSchedule() const;
+			const ScheduleType& getTargetSchedule() const override;
 
 			/*! returns the the resolution level count
 			@eguarantee strong*/
-			virtual ResolutionLevelCountType getResolutionLevels() const;
+			ResolutionLevelCountType getResolutionLevels() const override;
 
 			/*! @brief gets the number of the algorithm's current resolution level iteration
 			@eguarantee strong
@@ -81,11 +80,11 @@ namespace map
 			@retval an IterationCountType specifying the current iteration
 			@eguarantee strong
 			*/
-			virtual ResolutionLevelCountType getCurrentLevel() const;
+			ResolutionLevelCountType getCurrentLevel() const override;
 
 		protected:
 			MultiResRegistrationAlgorithmBase();
-			virtual ~MultiResRegistrationAlgorithmBase();
+			~MultiResRegistrationAlgorithmBase() override;
 
 			/*! resets the both schedules to the passed level count.
 			The sub sampling rate of a level is 2^(levels - n). n is the
@@ -129,12 +128,12 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			MultiResRegistrationAlgorithmBase(const Self& source); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			MultiResRegistrationAlgorithmBase(const Self& source) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

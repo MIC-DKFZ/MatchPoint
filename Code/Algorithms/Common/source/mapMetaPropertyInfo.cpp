@@ -24,6 +24,8 @@
 
 #include "mapMetaPropertyInfo.h"
 
+#include <utility>
+
 namespace map
 {
 	namespace algorithm
@@ -42,7 +44,7 @@ namespace map
 
 		::itk::LightObject::Pointer
 		MetaPropertyInfo::
-		CreateAnother(void) const
+		CreateAnother() const
 		{
 			::itk::LightObject::Pointer smartPtr;
 			smartPtr = Self::New(this->_name, this->_type_info, this->_isReadable,
@@ -99,16 +101,15 @@ namespace map
 
 		MetaPropertyInfo::
 		~MetaPropertyInfo()
-		{
-		};
+		= default;
 
 		MetaPropertyInfo::
-		MetaPropertyInfo(const core::String& name, const std::type_info& type_info, bool isReadable,
+		MetaPropertyInfo(core::String  name, const std::type_info& type_info, bool isReadable,
 						 bool isWritable) :
-			_name(name), _type_info(type_info), _isReadable(isReadable), _isWritable(isWritable)
+			_name(std::move(name)), _type_info(type_info), _isReadable(isReadable), _isWritable(isWritable)
 		{};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 

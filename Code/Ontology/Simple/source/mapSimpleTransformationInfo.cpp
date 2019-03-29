@@ -123,12 +123,11 @@ namespace iro
 
     SimpleTransformationInfo::
       ~SimpleTransformationInfo()
-    {
-    };
+    = default;
 
 
     SimpleTransformationInfo::
-      SimpleTransformationInfo(): _scope(::iro::FOVScope::Local), _dataRepresentation(::iro::DataRepresentation::Discrete), _uid("")
+      SimpleTransformationInfo():  _uid("")
     {
     };
 

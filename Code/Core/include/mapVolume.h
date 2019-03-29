@@ -51,7 +51,7 @@ namespace map
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef Volume  Self;
+				using Self = Volume<VDimensions>;
 
 				/*! Dimension of the volume available at compile time. */
 				itkStaticConstMacro(VolumeDimension, unsigned int, VDimensions);
@@ -63,13 +63,13 @@ namespace map
 				}
 
 				/*! Point typedef support.*/
-				typedef typename Elements<VDimensions>::PointType PointType;
-				typedef typename Elements<VDimensions>::PointType OriginType;
-				typedef typename PointType::ValueType             OriginValueType;
+				using PointType = typename Elements<VDimensions>::PointType;
+				using OriginType = typename Elements<VDimensions>::PointType;
+				using OriginValueType = typename PointType::ValueType;
 
 				/*! Size typedef support. A size is used to define volume bounds. */
-				typedef VolumeSize<VDimensions>  SizeType;
-				typedef typename SizeType::SizeValueType SizeValueType;
+				using SizeType = VolumeSize<VDimensions>;
+				using SizeValueType = typename SizeType::SizeValueType;
 
 				/*! Constructor. Volume is a lightweight object that is not reference
 				* counted, so the constructor is public.

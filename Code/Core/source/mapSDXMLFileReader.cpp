@@ -24,7 +24,7 @@
 
 #include <map>
 #include <vector>
-#include <assert.h>
+#include <cassert>
 
 #include "itksys/SystemTools.hxx"
 
@@ -58,7 +58,7 @@ namespace map
 
 			::map::core::String data;
 			bool hasError = false;
-			std::streamsize filesize = itksys::SystemTools::FileLength(filePath.c_str());
+			std::streamsize filesize = itksys::SystemTools::FileLength(filePath);
 			char* buffer = new char [filesize];
 
 			try
@@ -100,7 +100,7 @@ namespace map
 		XMLFileReader::
 		read(const core::String& filePath, StreamingInterface* pInterface)
 		{
-			if (!pInterface)
+			if (pInterface == nullptr)
 			{
 				mapDefaultExceptionMacro( <<
 										  "Error, cannot read passed object from xml file. Passed interface is NULL.");
@@ -130,13 +130,12 @@ namespace map
 		XMLFileReader::
 		XMLFileReader()
 		{
-			_spRoot = NULL;
+			_spRoot = nullptr;
 		};
 
 		XMLFileReader::
 		~XMLFileReader()
-		{
-		};
+		= default;
 
 	} //end of namespace structuredData
 

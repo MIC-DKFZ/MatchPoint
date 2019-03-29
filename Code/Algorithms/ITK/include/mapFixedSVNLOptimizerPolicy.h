@@ -50,38 +50,38 @@ namespace map
 				public facet::ITKSVNLOptimizerGetterInterface, public facet::OptimizerGetterInterface
 			{
 			public:
-				typedef FixedSVNLOptimizerPolicy<TConcreteOptimizer>     Self;
-				typedef SealedOptimizerPolicy<TConcreteOptimizer>    Superclass;
+				using Self = FixedSVNLOptimizerPolicy<TConcreteOptimizer>;
+				using Superclass = SealedOptimizerPolicy<TConcreteOptimizer>;
 
-				typedef typename Superclass::ConcreteOptimizerType           ConcreteOptimizerType;
-				typedef typename Superclass::ConcreteOptimizerPointer        ConcreteOptimizerPointer;
-				typedef typename Superclass::ConcreteOptimizerControlType    ConcreteOptimizerControlType;
-				typedef typename Superclass::ConcreteOptimizerControlPointer ConcreteOptimizerControlPointer;
-				typedef typename Superclass::OptimizerType                   OptimizerType;
-				typedef typename Superclass::InternalOptimizerControlType    ITKOptimizerControlType;
-				typedef typename facet::OptimizerGetterInterface::OptimizerControlType    OptimizerControlType;
-
-				/*! @brief gets the optimizer
-				  @eguarantee no fail
-				  @return pointer to an OptimizerControlType object
-				 */
-				virtual ITKOptimizerControlType* getITKOptimizerControl();
-				/*! @brief gets the optimizer
-				  @eguarantee no fail
-				  @return pointer to an OptimizerControlType object
-				 */
-				virtual const ITKOptimizerControlType* getITKOptimizerControl() const;
+				using ConcreteOptimizerType = typename Superclass::ConcreteOptimizerType;
+				using ConcreteOptimizerPointer = typename Superclass::ConcreteOptimizerPointer;
+				using ConcreteOptimizerControlType = typename Superclass::ConcreteOptimizerControlType;
+				using ConcreteOptimizerControlPointer = typename Superclass::ConcreteOptimizerControlPointer;
+				using OptimizerType = typename Superclass::OptimizerType;
+				using ITKOptimizerControlType = typename Superclass::InternalOptimizerControlType;
+				using OptimizerControlType = typename facet::OptimizerGetterInterface::OptimizerControlType;
 
 				/*! @brief gets the optimizer
 				  @eguarantee no fail
 				  @return pointer to an OptimizerControlType object
 				 */
-				virtual OptimizerControlType* getOptimizerControl();
+				ITKOptimizerControlType* getITKOptimizerControl() override;
 				/*! @brief gets the optimizer
 				  @eguarantee no fail
 				  @return pointer to an OptimizerControlType object
 				 */
-				virtual const OptimizerControlType* getOptimizerControl() const;
+				const ITKOptimizerControlType* getITKOptimizerControl() const override;
+
+				/*! @brief gets the optimizer
+				  @eguarantee no fail
+				  @return pointer to an OptimizerControlType object
+				 */
+				OptimizerControlType* getOptimizerControl() override;
+				/*! @brief gets the optimizer
+				  @eguarantee no fail
+				  @return pointer to an OptimizerControlType object
+				 */
+				const OptimizerControlType* getOptimizerControl() const override;
 
 				using Superclass::getConcreteITKOptimizer;
 				using Superclass::getConcreteOptimizerControl;
@@ -89,7 +89,7 @@ namespace map
 			protected:
 
 				FixedSVNLOptimizerPolicy();
-				~FixedSVNLOptimizerPolicy();
+				~FixedSVNLOptimizerPolicy() override;
 
 			private:
 				//No copy constructor allowed
@@ -97,9 +97,9 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifdef MAP_SEAL_ALGORITHMS
 #define SealedFixedSVNLOptimizerPolicyMacro ::map::algorithm::itk::SealedOptimizerPolicy

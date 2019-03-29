@@ -40,24 +40,24 @@ namespace iro
 		{
     public:
       typedef AlgorithmExecutionInfo<TInformationSpaceTraits,TInformationEntityTraits> Self;
-      typedef ::std::shared_ptr<Self> Pointer;
-      typedef ::std::shared_ptr<const Self> ConstPointer;
+      using Pointer = ::std::shared_ptr<Self>;
+      using ConstPointer = ::std::shared_ptr<const Self>;
 
 
-      typedef String RelevantEntityLabelType;
-      typedef typename TInformationEntityTraits::ConstPointer RelevantEntityPointer;
+      using RelevantEntityLabelType = String;
+      using RelevantEntityPointer = typename TInformationEntityTraits::ConstPointer;
 
-      typedef String AdaptedParameterNameType;
-      typedef String AdaptedParameterValueType;
+      using AdaptedParameterNameType = String;
+      using AdaptedParameterValueType = String;
 
-      typedef String QualityMeasureNameType;
-      typedef String QualityMeasureValueType;
+      using QualityMeasureNameType = String;
+      using QualityMeasureValueType = String;
 
-      typedef String TagLabelType;
-      typedef String TagType;
+      using TagLabelType = String;
+      using TagType = String;
 
-      typedef std::chrono::milliseconds DurationType;
-      typedef String AlgorithmIDType;
+      using DurationType = std::chrono::milliseconds;
+      using AlgorithmIDType = String;
 
     protected:
       typedef typename std::multimap<RelevantEntityLabelType,RelevantEntityPointer> RelevantEntityMapType;
@@ -66,23 +66,23 @@ namespace iro
       typedef typename std::multimap<TagLabelType,TagType> TagMapType;
 
     public:
-      typedef typename RelevantEntityMapType::iterator       RelevantEntityIterator;
-      typedef typename RelevantEntityMapType::const_iterator ConstRelevantEntityIterator;
-      typedef typename RelevantEntityMapType::size_type      RelevantEntityCountType;
+      using RelevantEntityIterator = typename RelevantEntityMapType::iterator;
+      using ConstRelevantEntityIterator = typename RelevantEntityMapType::const_iterator;
+      using RelevantEntityCountType = typename RelevantEntityMapType::size_type;
       typedef std::pair<RelevantEntityIterator,RelevantEntityIterator> RelevantEntityRangeType;
       typedef std::pair<ConstRelevantEntityIterator,ConstRelevantEntityIterator> ConstRelevantEntityRangeType;
 
-      typedef typename AdaptedParameterMapType::iterator       AdaptedParameterIterator;
-      typedef typename AdaptedParameterMapType::const_iterator ConstAdaptedParameterIterator;
-      typedef typename AdaptedParameterMapType::size_type      AdaptedParameterCountType;
+      using AdaptedParameterIterator = typename AdaptedParameterMapType::iterator;
+      using ConstAdaptedParameterIterator = typename AdaptedParameterMapType::const_iterator;
+      using AdaptedParameterCountType = typename AdaptedParameterMapType::size_type;
 
-      typedef typename QualityMeasureMapType::iterator       QualityMeasureIterator;
-      typedef typename QualityMeasureMapType::const_iterator ConstQualityMeasureIterator;
-      typedef typename QualityMeasureMapType::size_type      QualityMeasureCountType;
+      using QualityMeasureIterator = typename QualityMeasureMapType::iterator;
+      using ConstQualityMeasureIterator = typename QualityMeasureMapType::const_iterator;
+      using QualityMeasureCountType = typename QualityMeasureMapType::size_type;
 
-      typedef typename TagMapType::iterator       TagIterator;
-      typedef typename TagMapType::const_iterator ConstTagIterator;
-      typedef typename TagMapType::size_type      TagCountType;
+      using TagIterator = typename TagMapType::iterator;
+      using ConstTagIterator = typename TagMapType::const_iterator;
+      using TagCountType = typename TagMapType::size_type;
       typedef std::pair<TagIterator,TagIterator>  TagRangeType;
       typedef std::pair<ConstTagIterator,ConstTagIterator> ConstTagRangeType;
 

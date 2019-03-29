@@ -39,8 +39,8 @@ namespace map
 		class ImageByModelPerformerHelper
 		{
 		public:
-			typedef TRequest RequestType;
-			typedef typename RequestType::ResultDataType::Pointer ResultDataPointer;
+			using RequestType = TRequest;
+			using ResultDataPointer = typename RequestType::ResultDataType::Pointer;
 
 			static ResultDataPointer performMapping(const RequestType& request)
 			{
@@ -62,18 +62,18 @@ namespace map
 		class ImageByModelPerformerHelper<VDimensions, VDimensions, TRequest>
 		{
 		public:
-			typedef TRequest RequestType;
-			typedef typename RequestType::InputDataType InputDataType;
-			typedef typename RequestType::ResultDataType ResultDataType;
-			typedef typename RequestType::ResultDataType::Pointer ResultDataPointer;
-			typedef typename RequestType::RegistrationType::InverseMappingType InverseKernelBaseType;
+			using RequestType = TRequest;
+			using InputDataType = typename RequestType::InputDataType;
+			using ResultDataType = typename RequestType::ResultDataType;
+			using ResultDataPointer = typename RequestType::ResultDataType::Pointer;
+			using InverseKernelBaseType = typename RequestType::RegistrationType::InverseMappingType;
 			typedef RegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions>
 			ModelKernelType;
 
 			static ResultDataPointer performMapping(const RequestType& request)
 			{
 				const InverseKernelBaseType& inverseKernelBase = request._spRegistration->getInverseMapping();
-				const ModelKernelType* pInverseKernel = dynamic_cast<const ModelKernelType*>(&inverseKernelBase);
+				const auto* pInverseKernel = dynamic_cast<const ModelKernelType*>(&inverseKernelBase);
 				//get direct access to the transform model
 				const typename ModelKernelType::TransformType* pTransformModel =
 					pInverseKernel->getTransformModel();
@@ -116,16 +116,16 @@ namespace map
       typedef RegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions>
             ModelKernelType;
       const InverseKernelBaseType& inverseKernelBase = request._spRegistration->getInverseMapping();
-			const ModelKernelType* pInverseKernel = dynamic_cast<const ModelKernelType*>(&inverseKernelBase);
+			const auto* pInverseKernel = dynamic_cast<const ModelKernelType*>(&inverseKernelBase);
 
-			if (pInverseKernel == NULL)
+			if (pInverseKernel == nullptr)
 			{
 				mapExceptionMacro(ServiceException,
 								  << "Error: cannot map image. Reason: inverse mapping kernel of registration is not model based. Registration: "
 								  << request._spRegistration);
 			}
 
-			if (pInverseKernel->getTransformModel() == NULL)
+			if (pInverseKernel->getTransformModel() == nullptr)
 			{
 				mapExceptionMacro(ServiceException,
 								  << "Error: cannot map image. Reason: inverse model based mapping kernel has no transform model. Check correct creation of the registration. Registration: "
@@ -175,9 +175,9 @@ namespace map
 
       typedef RegistrationKernel<InverseKernelBaseType::InputDimensions, InverseKernelBaseType::OutputDimensions>
           ModelKernelType;
-			const ModelKernelType* pInverseKernel = dynamic_cast<const ModelKernelType*>(&inverseKernelBase);
+			const auto* pInverseKernel = dynamic_cast<const ModelKernelType*>(&inverseKernelBase);
 
-			return (pInverseKernel != NULL) && (request._spInputData.IsNotNull());
+			return (pInverseKernel != nullptr) && (request._spInputData.IsNotNull());
 		}
 
 		template <class TRegistration, class TInputData, class TResultData>
@@ -212,11 +212,11 @@ namespace map
 
 		template <class TRegistration, class TInputData, class TResultData>
 		ImageByModelPerformer<TRegistration, TInputData, TResultData>::
-		ImageByModelPerformer() {};
+		ImageByModelPerformer() = default;
 
 		template <class TRegistration, class TInputData, class TResultData>
 		ImageByModelPerformer<TRegistration, TInputData, TResultData>::
-		~ImageByModelPerformer() {};
+		~ImageByModelPerformer() = default;
 
 
 	} // end namespace core

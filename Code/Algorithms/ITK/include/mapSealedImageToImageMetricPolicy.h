@@ -53,11 +53,11 @@ namespace map
 			class SealedImageToImageMetricPolicy
 			{
 			public:
-				typedef SealedImageToImageMetricPolicy<TConcreteMetric>      Self;
+				using Self = SealedImageToImageMetricPolicy<TConcreteMetric>;
 
-				typedef TConcreteMetric ConcreteMetricType;
-				typedef ITKMetricControl<ConcreteMetricType> ConcreteMetricControlType;
-				typedef typename ConcreteMetricControlType::Pointer ConcreteMetricControlPointer;
+				using ConcreteMetricType = TConcreteMetric;
+				using ConcreteMetricControlType = ITKMetricControl<ConcreteMetricType>;
+				using ConcreteMetricControlPointer = typename ConcreteMetricControlType::Pointer;
 				typedef ITKImageToImageMetricControlInterface<typename ConcreteMetricType::MovingImageType, typename ConcreteMetricType::FixedImageType>
 				MetricControlType;
 
@@ -127,9 +127,9 @@ namespace map
 
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 
 #ifndef MatchPoint_MANUAL_TPP

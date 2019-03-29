@@ -47,7 +47,7 @@ namespace map
 				typedef ITKInterpolatorSetterInterface<TInputImage, TCoordRep> Self;
 
 				typedef ::itk::InterpolateImageFunction<TInputImage, TCoordRep> InterpolatorType;
-				typedef TCoordRep CoordRepType;
+				using CoordRepType = TCoordRep;
 
 				/*! sets the interpolator
 				@eguarantee strong
@@ -65,8 +65,8 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

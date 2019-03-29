@@ -113,7 +113,7 @@ namespace map
 				itksys::CommandLineArguments cmdParser;
 			};
 
-		}
-	}
-}
+		}  // namespace mapR
+	}  // namespace apps
+}  // namespace map
 #endif

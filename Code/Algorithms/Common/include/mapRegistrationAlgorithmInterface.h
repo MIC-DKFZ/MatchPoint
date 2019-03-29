@@ -52,8 +52,8 @@ namespace map
 				itkStaticConstMacro(TargetDimensions, unsigned int, VTargetDimensions);
 
 				typedef ::map::core::Registration<VMovingDimensions, VTargetDimensions>  RegistrationType;
-				typedef typename RegistrationType::Pointer                             RegistrationPointer;
-				typedef typename RegistrationType::ConstPointer                        ConstRegistrationPointer;
+				using RegistrationPointer = typename RegistrationType::Pointer;
+				using ConstRegistrationPointer = typename RegistrationType::ConstPointer;
 
 				/*! Checks if the registration is uptodate. If not the registration becomes (re)computed
 				 * the valid registration will be returned.
@@ -64,8 +64,8 @@ namespace map
 				 */
 				virtual RegistrationPointer getRegistration() = 0;
 
-				typedef core::FieldRepresentationDescriptor<VMovingDimensions> MovingRepresentationDescriptorType;
-				typedef core::FieldRepresentationDescriptor<VTargetDimensions> TargetRepresentationDescriptorType;
+				using MovingRepresentationDescriptorType = core::FieldRepresentationDescriptor<VMovingDimensions>;
+				using TargetRepresentationDescriptorType = core::FieldRepresentationDescriptor<VTargetDimensions>;
 
 
 				/*! @brief Defines the state the algorithm is in
@@ -122,17 +122,17 @@ namespace map
 
 			protected:
 
-				RegistrationAlgorithmInterface() {};
-				virtual ~RegistrationAlgorithmInterface() {};
+				RegistrationAlgorithmInterface() = default;
+				virtual ~RegistrationAlgorithmInterface() = default;
 
 			private:
-				RegistrationAlgorithmInterface(const Self& source);  //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				RegistrationAlgorithmInterface(const Self& source) = delete;  //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
 
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

@@ -49,7 +49,7 @@ namespace map
 		template <class TRegistration, class TInputData, class TResultData>
 		ImageMappingPerformerRequest<TRegistration, TInputData, TResultData>::
 		~ImageMappingPerformerRequest()
-		{}
+		= default;
 
 		template <class TRegistration, class TInputData, class TResultData>
 		ImageMappingPerformerRequest<TRegistration, TInputData, TResultData>::

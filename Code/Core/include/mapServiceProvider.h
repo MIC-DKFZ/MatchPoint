@@ -51,14 +51,14 @@ namespace map
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef ServiceProvider<TRequestType>  Self;
-				typedef itk::Object Superclass;
-				typedef itk::SmartPointer<Self>        Pointer;
-				typedef itk::SmartPointer<const Self>  ConstPointer;
+				using Self = ServiceProvider<TRequestType>;
+				using Superclass = itk::Object;
+				using Pointer = itk::SmartPointer<Self>;
+				using ConstPointer = itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ServiceProvider, itk::Object);
 
-				typedef TRequestType RequestType;
+				using RequestType = TRequestType;
 
 				/*! Uses the passed request data to check if the provider is able to provide the service for
 				 * this request.
@@ -78,12 +78,12 @@ namespace map
 				virtual String getDescription() const = 0;
 
 			protected:
-				ServiceProvider() {};
-				virtual ~ServiceProvider() {};
+				ServiceProvider() = default;
+				~ServiceProvider() override = default;
 
 			private:
-				ServiceProvider(const Self&);  //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				ServiceProvider(const Self&) = delete;  //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 			};
 
 

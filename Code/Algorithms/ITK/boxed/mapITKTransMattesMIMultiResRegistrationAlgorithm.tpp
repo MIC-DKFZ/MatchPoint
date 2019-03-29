@@ -31,7 +31,7 @@
 
 #include "itkCenteredTransformInitializer.h"
 
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -316,8 +316,8 @@ namespace map
         }
       };
 
-    }
-  }
-}
+    }  // namespace boxed
+  }  // namespace algorithm
+}  // namespace map
 
 #endif

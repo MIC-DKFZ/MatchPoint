@@ -38,7 +38,7 @@ namespace map
 		class RegistrationBaseManipulator
 		{
 		public:
-			typedef RegistrationBase::TagMapType TagMapType;
+			using TagMapType = RegistrationBase::TagMapType;
 
 			/*! @brief sets the tags of a registration
 			@eguarantee strong
@@ -66,8 +66,8 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			RegistrationBaseManipulator(const RegistrationBaseManipulator& source);
-			void operator=(const RegistrationBaseManipulator&);  //purposely not implemented
+			RegistrationBaseManipulator(const RegistrationBaseManipulator& source) = delete;
+			void operator=(const RegistrationBaseManipulator&) = delete;  //purposely not implemented
 		};
 
 		/*! @class RegistrationManipulator
@@ -77,7 +77,7 @@ namespace map
 		class RegistrationManipulator
 		{
 		public:
-			typedef TRegistration RegistrationType;
+			using RegistrationType = TRegistration;
 
 			/*! sets the DirectMapping kernel
 			  @param pKernel the kernel for direct mapping
@@ -91,7 +91,7 @@ namespace map
 			 */
 			virtual void setInverseMapping(typename RegistrationType::InverseMappingType* pKernel);
 
-			typedef typename RegistrationType::TagMapType TagMapType;
+			using TagMapType = typename RegistrationType::TagMapType;
 
 			/*! @Sets the tags of a registration by replacing the existing tag map with the passed one.
 			 * @remark If tags do not contain the tag "RegistrationUID" it will be added automatically.
@@ -112,12 +112,12 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			RegistrationManipulator(const RegistrationManipulator& source);
-			void operator=(const RegistrationManipulator&);  //purposely not implemented
+			RegistrationManipulator(const RegistrationManipulator& source) = delete;
+			void operator=(const RegistrationManipulator&) = delete;  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 # include "mapRegistrationManipulator.tpp"

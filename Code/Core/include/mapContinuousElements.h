@@ -45,7 +45,7 @@ namespace map
 				typedef itk::Point<ScalarType, VDimensions>   PointType;
 				typedef itk::Vector<ScalarType, VDimensions>  VectorType;
 				typedef itk::Vector<ScalarType, VDimensions>  SpacingType;
-				typedef VolumeSize<VDimensions>               VolumeSizeType;
+				using VolumeSizeType = VolumeSize<VDimensions>;
 				typedef itk::PointSet<ScalarType, VDimensions, itk::DefaultStaticMeshTraits<ScalarType, VDimensions, VDimensions, ScalarType> >
 				InternalPointSetType;
 			};

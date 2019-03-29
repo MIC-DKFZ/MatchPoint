@@ -47,9 +47,9 @@ namespace map
 			{
 			protected:
 				/*! Standard class typedefs. */
-				typedef ServiceRepositoryPolicyLoadInterface<TProviderBase> LoadInterfaceType;
-				typedef TProviderBase                           ProviderBaseType;
-				typedef typename ProviderBaseType::Pointer      ProviderBasePointer;
+				using LoadInterfaceType = ServiceRepositoryPolicyLoadInterface<TProviderBase>;
+				using ProviderBaseType = TProviderBase;
+				using ProviderBasePointer = typename ProviderBaseType::Pointer;
 
 				/*! Loading of all default providers.
 				 * @eguarantee basic
@@ -67,7 +67,7 @@ namespace map
 				~NoneStaticLoadPolicy();
 
 			private:
-				typedef NoneStaticLoadPolicy<TProviderBase> Self;
+				using Self = NoneStaticLoadPolicy<TProviderBase>;
 				NoneStaticLoadPolicy(const Self&);  //purposely not implemented
 				void operator=(const Self&);  //purposely not implemented
 			};

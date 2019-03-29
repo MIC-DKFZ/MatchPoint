@@ -61,7 +61,7 @@ ParameterFileParser
 
 const ParameterFileParser::ParameterMapType &
 ParameterFileParser
-::GetParameterMap( void ) const
+::GetParameterMap( ) const
 {
   return this->m_ParameterMap;
 
@@ -74,7 +74,7 @@ ParameterFileParser
 
 void
 ParameterFileParser
-::ReadParameterFile( void )
+::ReadParameterFile( )
 {
   /** Perform some basic checks. */
   this->BasicFileChecking();
@@ -99,8 +99,8 @@ ParameterFileParser
   this->m_ParameterMap.clear();
 
   /** Loop over the parameter file, line by line. */
-  std::string lineIn  = "";
-  std::string lineOut = "";
+  std::string lineIn;
+  std::string lineOut;
   while( this->m_ParameterFile.good() )
   {
     /** Extract a line. */
@@ -131,10 +131,10 @@ ParameterFileParser
 
 void
 ParameterFileParser
-::BasicFileChecking( void ) const
+::BasicFileChecking( ) const
 {
   /** Check if the file name is given. */
-  if( this->m_ParameterFileName == "" )
+  if( this->m_ParameterFileName.empty() )
   {
     itkExceptionMacro( << "ERROR: FileName has not been set." );
   }
@@ -151,7 +151,7 @@ ParameterFileParser
 
   /** Basic error checking: file or directory. */
   bool isDir = itksys::SystemTools::FileIsDirectory(
-    this->m_ParameterFileName.c_str() );
+    this->m_ParameterFileName );
   if( isDir )
   {
     itkExceptionMacro( << "ERROR: the file "
@@ -292,7 +292,7 @@ ParameterFileParser
   std::vector< std::string > parameterValues;
   for( unsigned int i = 0; i < splittedLine.size(); ++i )
   {
-    if( splittedLine[ i ] != "" )
+    if( !splittedLine[ i ].empty() )
     {
       parameterValues.push_back( splittedLine[ i ] );
     }
@@ -311,20 +311,20 @@ ParameterFileParser
 
   /** 5) Perform checks on the parameter values. */
   itksys::RegularExpression reInvalidCharacters2( "[,;!@#$%&|<>?]" );
-  for( unsigned int i = 0; i < parameterValues.size(); ++i )
+  for(const auto & parameterValue : parameterValues)
   {
     /** For all entries some characters are not allowed. */
-    if( reInvalidCharacters2.find( parameterValues[ i ] ) )
+    if( reInvalidCharacters2.find( parameterValue ) )
     {
       std::string hint = "The parameter value \""
-        + parameterValues[ i ]
+        + parameterValue
         + "\" contains invalid characters (,;!@#$%&|<>?).";
       this->ThrowException( fullLine, hint );
     }
   }
 
   /** 6) Insert this combination in the parameter map. */
-  if( this->m_ParameterMap.count( parameterName ) )
+  if( this->m_ParameterMap.count( parameterName ) != 0u )
   {
     std::string hint = "The parameter \""
       + parameterName
@@ -373,7 +373,7 @@ ParameterFileParser
     if( *it == '"' )
     {
       /** Start a new element. */
-      splittedLine.push_back( "" );
+      splittedLine.emplace_back("" );
       index++;
       numQuotes++;
     }
@@ -384,7 +384,7 @@ ParameterFileParser
        */
       if( numQuotes % 2 == 0 )
       {
-        splittedLine.push_back( "" );
+        splittedLine.emplace_back("" );
         index++;
       }
       else
@@ -430,7 +430,7 @@ ParameterFileParser
 
 std::string
 ParameterFileParser
-::ReturnParameterFileAsString( void )
+::ReturnParameterFileAsString( )
 {
   /** Perform some basic checks. */
   this->BasicFileChecking();
@@ -452,7 +452,7 @@ ParameterFileParser
   }
 
   /** Loop over the parameter file, line by line. */
-  std::string line = "";
+  std::string line;
   std::string output;
   while( this->m_ParameterFile.good() )
   {

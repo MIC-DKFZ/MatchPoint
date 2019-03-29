@@ -29,9 +29,9 @@ namespace iro
     };
 
     UnkownInjectivCorrelation::
-      ~UnkownInjectivCorrelation() {};
+      ~UnkownInjectivCorrelation() = default;
 
     UnkownInjectivCorrelation::
-      UnkownInjectivCorrelation() {};
+      UnkownInjectivCorrelation() = default;
 
 } // end namespace iro

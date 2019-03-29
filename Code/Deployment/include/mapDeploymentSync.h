@@ -45,7 +45,7 @@ namespace map
 		{
 		public:
 			/** Standard class typedefs. */
-			typedef Synchronizer Self;
+			using Self = Synchronizer;
 
 			/** This function is used in deployment DLLs/SOs (by DeploymentDLLHelper) to synchronize
 			* the dll with global settings of the host.

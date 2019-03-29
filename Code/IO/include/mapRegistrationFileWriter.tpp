@@ -86,12 +86,12 @@ namespace map
 			//add tags
 			::map::core::RegistrationBase::TagMapType tagMap = registration->getTags();
 
-			for (::map::core::RegistrationBase::TagMapType::iterator pos = tagMap.begin(); pos != tagMap.end(); ++pos)
+			for (auto & pos : tagMap)
 			{
 				structuredData::Element::Pointer spTagElement = structuredData::Element::New();
 				spTagElement->setTag(tags::RegistrationTag);
-				spTagElement->setValue(pos->second);
-				spTagElement->setAttribute(tags::RegistrationTagName, pos->first);
+				spTagElement->setValue(pos.second);
+				spTagElement->setAttribute(tags::RegistrationTagName, pos.first);
 
 				spRegElement->addSubElement(spTagElement);
 			}
@@ -128,13 +128,13 @@ namespace map
 
 		template <unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		RegistrationFileWriter<VMovingDimensions, VTargetDimensions>::
-		RegistrationFileWriter(): _expandLazyKernels(true)
+		RegistrationFileWriter() 
 		{}
 
 		template <unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		RegistrationFileWriter<VMovingDimensions, VTargetDimensions>::
 		~RegistrationFileWriter()
-		{}
+		= default;
 
 		template <unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		bool

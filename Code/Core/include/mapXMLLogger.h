@@ -52,10 +52,10 @@ namespace map
 		class MAPCore_EXPORT XMLLogger: public itk::Logger
 		{
 		public:
-			typedef XMLLogger  Self;
-			typedef Logger  Superclass;
-			typedef itk::SmartPointer<Self>  Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Self = XMLLogger;
+			using Superclass = Logger;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			/** Run-time type information (and related methods). */
 			itkTypeMacro(XMLLogger, itk::Logger);
@@ -64,19 +64,19 @@ namespace map
 			itkNewMacro(Self);
 
 			/** Provides a xml formatted log entry */
-			virtual std::string BuildFormattedEntry(PriorityLevelType level, std::string const& content);
+			std::string BuildFormattedEntry(PriorityLevelType level, std::string const& content) override;
 
 		protected:
 
 			/** Constructor */
-			XMLLogger() {};
+			XMLLogger() = default;
 
 			/** Destructor */
-			virtual ~XMLLogger() {};
+			~XMLLogger() override = default;
 
 		private:
-			XMLLogger(const Self&);  //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			XMLLogger(const Self&) = delete;  //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 		/*! Converts the passed content and "escapes" any special xml characters.

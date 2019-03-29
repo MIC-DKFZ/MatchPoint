@@ -21,7 +21,7 @@
 */
 
 
-#include <assert.h>
+#include <cassert>
 
 #include "itksys/SystemTools.hxx"
 #include "itkDynamicLoader.h"
@@ -66,25 +66,20 @@ namespace map
 		bool
 		checkNameIsSharedLibrary(const char* name)
 		{
-			if (!name)
+			if (name == nullptr)
 			{
 				mapDefaultExceptionStaticMacro("Error. File name pointer to check is NULL. Cannot determine if its an library.");
 			}
 
 			::map::core::String sname = name;
 
-			if (sname.find(getDeploymentDLLExtension()) != core::String::npos)
-			{
-				return true;
-			}
-
-			return false;
+			return sname.find(getDeploymentDLLExtension()) != core::String::npos;
 		}
 
 		bool
 		checkFileNameIsMDRACompliant(const char* name)
 		{
-			if (!name)
+			if (name == nullptr)
 			{
 				mapDefaultExceptionStaticMacro("Error. File name pointer to check is NULL. Cannot determine if its name is compliant to the naming style for deployed algorithms.");
 			}
@@ -113,7 +108,7 @@ namespace map
 		class DLLGuard
 		{
 		public:
-			typedef itksys::DynamicLoader::LibraryHandle HandleType;
+			using HandleType = itksys::DynamicLoader::LibraryHandle;
 
 			void activate()
 			{
@@ -149,7 +144,7 @@ namespace map
 
 		DLLHandle::Pointer openDeploymentDLL(const char* libraryFile)
 		{
-			if (!libraryFile)
+			if (libraryFile == nullptr)
 			{
 				mapDefaultExceptionStaticMacro("Error. Passed pointer to the library file name is NULL.");
 			}
@@ -169,7 +164,7 @@ namespace map
 
 			itksys::DynamicLoader::LibraryHandle libHandle = itksys::DynamicLoader::OpenLibrary(libraryFile);
 
-			if (!libHandle)
+			if (libHandle == nullptr)
 			{
 				mapExceptionStaticMacro(InvalidDLLException,
 										"Error. Passed library cannot be loaded; seems not to be a valid DLL. File path:" << libraryFile <<
@@ -180,10 +175,10 @@ namespace map
 
 			//DLL is not correctly loaded. Check for the InterfaceVersion Symbol
 			MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER pVersionFunction =
-				(MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(libHandle,
-						"mapGetDLLInterfaceVersion");
+				reinterpret_cast<MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER>(itksys::DynamicLoader::GetSymbolAddress(libHandle,
+						"mapGetDLLInterfaceVersion"));
 
-			if (pVersionFunction == NULL)
+			if (pVersionFunction == nullptr)
 			{
 				mapExceptionStaticMacro(MissingSymbolException,
 										"Error. DLL seems to be invalid; mapGetDLLInterfaceVersion symbol is missing. File path: " <<
@@ -205,30 +200,30 @@ namespace map
 
 			//look for the other expected symbols
 			MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER pUIDFunction =
-				(MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(
-					libHandle, "mapGetRegistrationAlgorithmUID");
+				reinterpret_cast<MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER>(itksys::DynamicLoader::GetSymbolAddress(
+					libHandle, "mapGetRegistrationAlgorithmUID"));
 			MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER pInstanceFunction =
-				(MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(
-					libHandle, "mapGetRegistrationAlgorithmInstance");
+				reinterpret_cast<MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER>(itksys::DynamicLoader::GetSymbolAddress(
+					libHandle, "mapGetRegistrationAlgorithmInstance"));
 			MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER pProfileFunction =
-				(MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(
-					libHandle, "mapGetRegistrationAlgorithmProfile");
+				reinterpret_cast<MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER>(itksys::DynamicLoader::GetSymbolAddress(
+					libHandle, "mapGetRegistrationAlgorithmProfile"));
 
-			if (pUIDFunction == NULL)
+			if (pUIDFunction == nullptr)
 			{
 				mapExceptionStaticMacro(MissingSymbolException,
 										"Error. DLL seems to be invalid; mapGetRegistrationAlgorithmUID symbol is missing. File path: " <<
 										libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
 			}
 
-			if (pProfileFunction == NULL)
+			if (pProfileFunction == nullptr)
 			{
 				mapExceptionStaticMacro(MissingSymbolException,
 										"Error. DLL seems to be invalid; mapGetRegistrationAlgorithmProfile symbol is missing. File path: "
 										<< libraryFile << ". Error note: " << itksys::DynamicLoader::LastError());
 			}
 
-			if (pInstanceFunction == NULL)
+			if (pInstanceFunction == nullptr)
 			{
 				mapExceptionStaticMacro(MissingSymbolException,
 										"Error. DLL seems to be invalid; mapGetRegistrationAlgorithmInstance symbol is missing. File path: "
@@ -269,19 +264,19 @@ namespace map
 
 		void closeDeploymentDLL(const DLLHandle* pDLLHandle)
 		{
-			if (!pDLLHandle)
+			if (pDLLHandle == nullptr)
 			{
 				mapDefaultExceptionStaticMacro("Error. Passed DLL info pointer is NULL.");
 			}
 
-			if (!(pDLLHandle->getLibraryHandle()))
+			if ((pDLLHandle->getLibraryHandle()) == nullptr)
 			{
 				mapExceptionStaticMacro(InvalidDLLException,
 										"Error. Passed library handle is not valid. File path:" << (pDLLHandle->getLibraryFilePath()) <<
 										"; handle: " << pDLLHandle->getLibraryHandle());
 			}
 
-			if (!itksys::DynamicLoader::CloseLibrary(pDLLHandle->getLibraryHandle()))
+			if (itksys::DynamicLoader::CloseLibrary(pDLLHandle->getLibraryHandle()) == 0)
 			{
 				mapExceptionStaticMacro(InvalidDLLException,
 										"Error. Passed library cannot be closed; seems not to be a valid DLL. File path:" <<
@@ -330,14 +325,14 @@ namespace map
 
 		RegistrationAlgorithmBasePointer getRegistrationAlgorithm(const DLLHandle* pDLLHandle)
 		{
-			RegistrationAlgorithmBasePointer spResult = NULL;
+			RegistrationAlgorithmBasePointer spResult = nullptr;
 
-			if (!pDLLHandle)
+			if (pDLLHandle == nullptr)
 			{
 				mapDefaultExceptionStaticMacro("Error. Passed DLL info pointer is NULL.");
 			}
 
-			if (!(pDLLHandle->getLibraryHandle()))
+			if ((pDLLHandle->getLibraryHandle()) == nullptr)
 			{
 				mapExceptionStaticMacro(InvalidDLLException,
 										"Error. Passed library handle is not valid. File path:" << (pDLLHandle->getLibraryFilePath()) <<
@@ -346,10 +341,10 @@ namespace map
 
 			//DLL is not correctly loaded. Check for the InterfaceVersion Symbol
 			MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER pInstanceFunction =
-				(MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER) itksys::DynamicLoader::GetSymbolAddress(
-					pDLLHandle->getLibraryHandle(), "mapGetRegistrationAlgorithmInstance");
+				reinterpret_cast<MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER>(itksys::DynamicLoader::GetSymbolAddress(
+					pDLLHandle->getLibraryHandle(), "mapGetRegistrationAlgorithmInstance"));
 
-			if (pInstanceFunction == NULL)
+			if (pInstanceFunction == nullptr)
 			{
 				mapExceptionStaticMacro(MissingSymbolException,
 										"Error. DLL seems to be invalid; mapGetRegistrationAlgorithmInstance symbol is missing. File path: "

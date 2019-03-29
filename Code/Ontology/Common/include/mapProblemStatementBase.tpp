@@ -66,8 +66,7 @@ namespace iro
     template <typename TUIDPolicy>
     ProblemStatementBase<TUIDPolicy>::
       ~ProblemStatementBase()
-    {
-    };
+    = default;
 
     template <typename TUIDPolicy>
     bool

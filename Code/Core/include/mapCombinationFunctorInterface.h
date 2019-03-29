@@ -52,8 +52,8 @@ namespace map
 				/*! Standard class typedefs. */
 				typedef CombinationFunctorInterface<VInputDimensions, VInterimDimensions, VOutputDimensions>
 				Self;
-				typedef itk::SmartPointer<Self>        Pointer;
-				typedef itk::SmartPointer<const Self>  ConstPointer;
+				using Pointer = itk::SmartPointer<Self>;
+				using ConstPointer = itk::SmartPointer<const Self>;
 
 				itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
 				itkStaticConstMacro(InterimDimensions, unsigned int, VInterimDimensions);
@@ -76,7 +76,7 @@ namespace map
 				 * @return Pointer to the source field kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				virtual const SourceKernel1BaseType* get1stSourceKernelBase(void) const = 0;
+				virtual const SourceKernel1BaseType* get1stSourceKernelBase() const = 0;
 
 				/*! Returns a const pointer to the second source kernel base that will be used in order
 				 * to generate the field.
@@ -84,7 +84,7 @@ namespace map
 				 * @return Pointer to the source field kernel.
 				 * @post Return value is guaranteed not to be NULL.
 				 */
-				virtual const SourceKernel2BaseType* get2ndSourceKernelBase(void) const = 0;
+				virtual const SourceKernel2BaseType* get2ndSourceKernelBase() const = 0;
 
 			protected:
 

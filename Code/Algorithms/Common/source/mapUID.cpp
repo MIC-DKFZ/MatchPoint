@@ -24,6 +24,8 @@
 
 #include "mapUID.h"
 
+#include <utility>
+
 namespace map
 {
 	namespace algorithm
@@ -69,7 +71,7 @@ namespace map
 			return this->_buildTag;
 		};
 
-		const core::String
+		core::String
 		UID::
 		toStr() const
 		{
@@ -95,13 +97,12 @@ namespace map
 
 		UID::
 		~UID()
-		{
-		};
+		= default;
 
 		UID::
-		UID(const NamespaceType& ns, const NameType& name, const VersionType& version,
-			const BuildTagType& buildTag) :
-			_namespace(ns), _name(name), _version(version), _buildTag(buildTag)
+		UID(NamespaceType  ns, NameType  name, VersionType  version,
+			BuildTagType  buildTag) :
+			_namespace(std::move(ns)), _name(std::move(name)), _version(std::move(version)), _buildTag(std::move(buildTag))
 		{};
 
 		bool compareUIDs(const UID& uid1, const UID& uid2, bool wcNamespace, bool wcName, bool wcVersion,
@@ -133,7 +134,7 @@ namespace map
 		bool compareUIDs(const UID* uid1, const UID* uid2, bool wcNamespace, bool wcName, bool wcVersion,
 						 bool wcBuild)
 		{
-			if (!uid1 || !uid2)
+			if ((uid1 == nullptr) || (uid2 == nullptr))
 			{
 
 				return false;
@@ -143,7 +144,7 @@ namespace map
 		};
 
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 

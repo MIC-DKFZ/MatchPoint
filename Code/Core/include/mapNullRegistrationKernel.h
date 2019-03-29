@@ -49,16 +49,15 @@ namespace map
 		public:
 			typedef NullRegistrationKernel<VInputDimensions, VOutputDimensions> Self;
 			typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions> Superclass;
-			typedef itk::SmartPointer<Self> Pointer;
-			typedef itk::SmartPointer<const Self> ConstPointer;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(NullRegistrationKernel, RegistrationKernelBase);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::InputPointType InputPointType;
-			typedef typename Superclass::OutputPointType OutputPointType;
-			typedef typename Superclass::RepresentationDescriptorConstPointer
-			RepresentationDescriptorConstPointer;
+			using InputPointType = typename Superclass::InputPointType;
+			using OutputPointType = typename Superclass::OutputPointType;
+			using RepresentationDescriptorConstPointer = typename Superclass::RepresentationDescriptorConstPointer;
 
 
 			/*! @brief gets the largest possible representation descriptor. The descriptor defines
@@ -73,7 +72,7 @@ namespace map
 			/*! @brief forces kernel to precompute, even if it is a LazyFieldKernel
 			  @eguarantee strong
 			 */
-			virtual void precomputeKernel() const override;
+			void precomputeKernel() const override;
 
 		protected:
 
@@ -109,8 +108,8 @@ namespace map
 			return os;
 		}
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 
 #ifndef MatchPoint_MANUAL_TPP

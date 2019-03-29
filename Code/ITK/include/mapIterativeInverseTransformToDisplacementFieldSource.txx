@@ -66,7 +66,7 @@ namespace itk
     template <class TOutputImage, typename TTransformScalarType  >
     const typename IterativeInverseTransformToDisplacementFieldSource<TOutputImage, TTransformScalarType>::TransformType*  
       IterativeInverseTransformToDisplacementFieldSource<TOutputImage, TTransformScalarType>
-      ::GetTransform(void) const
+      ::GetTransform() const
     {
       return m_Transform;
     };

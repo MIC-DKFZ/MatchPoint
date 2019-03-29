@@ -51,14 +51,14 @@ namespace map
 			class SealedTransformPolicy
 			{
 			public:
-				typedef SealedTransformPolicy<TConcreteITKTransform>      Self;
+				using Self = SealedTransformPolicy<TConcreteITKTransform>;
 
 
-				typedef TConcreteITKTransform ConcreteTransformType;
-				typedef typename ConcreteTransformType::Pointer ConcreteTransformPointer;
+				using ConcreteTransformType = TConcreteITKTransform;
+				using ConcreteTransformPointer = typename ConcreteTransformType::Pointer;
 				typedef ::itk::Transform<typename ConcreteTransformType::ScalarType, ConcreteTransformType::InputSpaceDimension, ConcreteTransformType::OutputSpaceDimension>
 				TransformType;
-				typedef typename TransformType::ScalarType TransformScalarType;
+				using TransformScalarType = typename TransformType::ScalarType;
 
 			protected:
 				SealedTransformPolicy();
@@ -127,9 +127,9 @@ namespace map
 			};
 
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 
 #ifndef MatchPoint_MANUAL_TPP

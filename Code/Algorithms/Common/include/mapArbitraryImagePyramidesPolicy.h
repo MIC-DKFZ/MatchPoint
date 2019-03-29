@@ -57,16 +57,16 @@ namespace map
 			typedef ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage>      Self;
 			typedef facet::ImagePyramidesSetterInterface<TMovingImage, TTargetImage>   Superclass;
 
-			typedef TMovingImage MovingImageType;
-			typedef TTargetImage TargetImageType;
+			using MovingImageType = TMovingImage;
+			using TargetImageType = TTargetImage;
 
             itkTypeMacroNoParent(ArbitraryImagePyramidesPolicy);
 
 			/** Type of the image multiresolution pyramids. */
-			typedef typename Superclass::TargetImagePyramideBaseType TargetImagePyramideBaseType;
-			typedef typename Superclass::TargetImagePyramideBasePointer TargetImagePyramideBasePointer;
-			typedef typename Superclass::MovingImagePyramideBaseType MovingImagePyramideBaseType;
-			typedef typename Superclass::MovingImagePyramideBasePointer MovingImagePyramideBasePointer;
+			using TargetImagePyramideBaseType = typename Superclass::TargetImagePyramideBaseType;
+			using TargetImagePyramideBasePointer = typename Superclass::TargetImagePyramideBasePointer;
+			using MovingImagePyramideBaseType = typename Superclass::MovingImagePyramideBaseType;
+			using MovingImagePyramideBasePointer = typename Superclass::MovingImagePyramideBasePointer;
 
 			/*! @brief sets the moving image pyramide
 			@eguarantee strong
@@ -175,8 +175,8 @@ namespace map
 			void operator=(const Self&);  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapArbitraryImagePyramidesPolicy.tpp"

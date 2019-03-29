@@ -44,23 +44,23 @@ namespace map
 		class MAPCore_EXPORT XMLStrReader: public ::itk::LightObject
 		{
 		public:
-			typedef XMLStrReader Self;
-			typedef ::itk::LightObject Superclass;
-			typedef ::itk::SmartPointer<Self> Pointer;
-			typedef ::itk::SmartPointer<const Self> ConstPointer;
+			using Self = XMLStrReader;
+			using Superclass = ::itk::LightObject;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			itkTypeMacro(XMLStrReader, ::itk::LightObject);
 			itkNewMacro(Self);
 
-			typedef core::String XMLRawDataType;
-			typedef Element::Pointer ElementPointer;
+			using XMLRawDataType = core::String;
+			using ElementPointer = Element::Pointer;
 
 			/**Reads the string and converts the xml top level element and all
 			 * sub elements into structured data elements.
 			 * @param [in] Reference to the xml string
 			 * @return SmartPointer to the top level xml element. If the string contains no XML element
 			 * an exception will be raised.*/
-			ElementPointer readXMLContent(const XMLRawDataType&);
+			ElementPointer readXMLContent(const XMLRawDataType& /*data*/);
 
 			/**Reads the string and converts it into structured
 			 * data elements.
@@ -69,16 +69,16 @@ namespace map
 			 * element designates the string itself. All found
 			 * top level xml elements and information will be added as sub elements
 			 * to the root StructuredData element.*/
-			ElementPointer read(const XMLRawDataType&);
+			ElementPointer read(const XMLRawDataType& /*data*/);
 
 		protected:
 			XMLStrReader();
-			~XMLStrReader();
+			~XMLStrReader() override;
 
 		private:
 			//No copy constructor allowed
-			XMLStrReader(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			XMLStrReader(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 		/**
@@ -89,7 +89,7 @@ namespace map
 		*/
 		MAPCore_EXPORT core::String decodeForXml(const core::String& sSrc);
 
-	} //end of namespace StructuredData
+	}  // namespace structuredData
 
-} //end of namespace free
+}  // namespace map
 #endif

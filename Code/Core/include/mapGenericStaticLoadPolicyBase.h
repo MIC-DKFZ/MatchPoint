@@ -49,10 +49,10 @@ namespace map
 			{
 			protected:
 				/*! Standard class typedefs. */
-				typedef ServiceRepositoryPolicyLoadInterface<TProviderBase> LoadInterfaceType;
-				typedef TProviderBase                               ProviderBaseType;
-				typedef typename ProviderBaseType::Pointer          ProviderBasePointer;
-				typedef GenericStaticLoadPolicyBase<TProviderBase>  Self;
+				using LoadInterfaceType = ServiceRepositoryPolicyLoadInterface<TProviderBase>;
+				using ProviderBaseType = TProviderBase;
+				using ProviderBasePointer = typename ProviderBaseType::Pointer;
+				using Self = GenericStaticLoadPolicyBase<TProviderBase>;
 
 				/*! Loading of all default providers by calling doLoading.
 				 * Before this call it will be checked if the interface has been registered

@@ -21,7 +21,7 @@
 */
 
 
-#include <stdlib.h> // for atoi
+#include <cstdlib> // for atoi
 #include "mapConvert.h"
 #include "mapExceptionObjectMacros.h"
 
@@ -65,10 +65,10 @@ namespace map
 				{
 					return "1";
 				}
-				else
-				{
+				
+				
 					return "0";
-				}
+				
 			};
 
 			String toStr(const int& value)
@@ -134,7 +134,7 @@ namespace map
 				double x;
 				x = strtod(value.c_str(), &pStopstring);
 				String sTemp = pStopstring;
-				return (sTemp == "") & (value != "");
+				return (static_cast<int>(sTemp.empty()) & static_cast<int>(!value.empty())) != 0;
 			};
 
 			float toFloat(const String& value)
@@ -203,7 +203,7 @@ namespace map
 
 			String fileContentToStr(const String& filePath)
 			{
-				String result = "";
+				String result;
 				std::ifstream file;
 
 				std::ios_base::openmode iOpenFlag = std::ios_base::in;
@@ -212,7 +212,7 @@ namespace map
 				if (file.is_open())
 				{
 					bool hasError = false;
-					std::streamsize filesize = itksys::SystemTools::FileLength(filePath.c_str());
+					std::streamsize filesize = itksys::SystemTools::FileLength(filePath);
 					char* buffer = new char [filesize];
 
 					try
@@ -241,6 +241,6 @@ namespace map
 				return result;
 			};
 
-		}
-	}
-} //end of namespace free
+		}  // namespace convert
+	}  // namespace core
+}  // namespace map

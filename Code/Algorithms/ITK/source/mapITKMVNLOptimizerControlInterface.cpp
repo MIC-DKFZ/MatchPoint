@@ -54,9 +54,9 @@ namespace map
 
 				MVNLMeasureType measure = this->doGetCurrentMeasure();
 
-				for (MVNLMeasureType::iterator pos = measure.begin(); pos != measure.end(); ++pos)
+				for (double & pos : measure)
 				{
-					result.push_back(*pos);
+					result.push_back(pos);
 				}
 
 				return result;
@@ -64,14 +64,12 @@ namespace map
 
 			ITKMVNLOptimizerControlInterface::
 			ITKMVNLOptimizerControlInterface()
-			{
-			};
+			= default;
 
 			ITKMVNLOptimizerControlInterface::
 			~ITKMVNLOptimizerControlInterface()
-			{
-			};
+			= default;
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map

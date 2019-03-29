@@ -42,10 +42,10 @@ namespace map
 		class MAPCore_EXPORT DimensionlessRegistrationKernelBase : public itk::Object
 		{
 		public:
-			typedef DimensionlessRegistrationKernelBase Self;
-			typedef itk::Object Superclass;
-			typedef itk::SmartPointer<Self> Pointer;
-			typedef itk::SmartPointer<const Self> ConstPointer;
+			using Self = DimensionlessRegistrationKernelBase;
+			using Superclass = itk::Object;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(DimensionlessRegistrationKernelBase, itk::Object);
 
@@ -75,22 +75,22 @@ namespace map
 		protected:
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 			DimensionlessRegistrationKernelBase();
-			virtual ~DimensionlessRegistrationKernelBase();
+			~DimensionlessRegistrationKernelBase() override;
 
 		private:
 			//No copy constructor allowed
-			DimensionlessRegistrationKernelBase(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			DimensionlessRegistrationKernelBase(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 
 		};
 
 		std::ostream& operator<< (std::ostream& os,
 								  const DimensionlessRegistrationKernelBase& p);
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #endif

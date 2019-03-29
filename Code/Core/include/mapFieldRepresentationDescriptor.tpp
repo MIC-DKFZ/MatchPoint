@@ -39,7 +39,7 @@ namespace map
 		// ************************
 
 		template<unsigned int VDimensions>
-		inline const typename FieldRepresentationDescriptor<VDimensions>::SizeType
+		inline typename FieldRepresentationDescriptor<VDimensions>::SizeType
 		FieldRepresentationDescriptor<VDimensions>::
 		getSize() const
 		{
@@ -51,14 +51,14 @@ namespace map
 		FieldRepresentationDescriptor<VDimensions>::
 		setSize(const SizeType& value)
 		{
-			SizeType* pNewSize = new SizeType(value);
+			auto* pNewSize = new SizeType(value);
 			delete _pFieldSize;
 			_pFieldSize = pNewSize;
 		}
 
 
 		template<unsigned int VDimensions>
-		inline const typename FieldRepresentationDescriptor<VDimensions>::PointType
+		inline typename FieldRepresentationDescriptor<VDimensions>::PointType
 		FieldRepresentationDescriptor<VDimensions>::
 		getOrigin() const
 		{
@@ -71,14 +71,14 @@ namespace map
 		FieldRepresentationDescriptor<VDimensions>::
 		setOrigin(const PointType& value)
 		{
-			PointType* pNewPoint = new PointType(value);
+			auto* pNewPoint = new PointType(value);
 			delete _pFieldOrigin;
 			_pFieldOrigin = pNewPoint;
 		}
 
 
 		template<unsigned int VDimensions>
-		inline const typename FieldRepresentationDescriptor<VDimensions>::SpacingType
+		inline typename FieldRepresentationDescriptor<VDimensions>::SpacingType
 		FieldRepresentationDescriptor<VDimensions>::
 		getSpacing() const
 		{
@@ -91,14 +91,14 @@ namespace map
 		FieldRepresentationDescriptor<VDimensions>::
 		setSpacing(const SpacingType& value)
 		{
-			SpacingType* pNewSpacing = new SpacingType(value);
+			auto* pNewSpacing = new SpacingType(value);
 			delete _pFieldSpacing;
 			_pFieldSpacing = pNewSpacing;
 		}
 
 
 		template<unsigned int VDimensions>
-		inline const typename FieldRepresentationDescriptor<VDimensions>::DirectionType
+		inline typename FieldRepresentationDescriptor<VDimensions>::DirectionType
 		FieldRepresentationDescriptor<VDimensions>::
 		getDirection() const
 		{
@@ -111,7 +111,7 @@ namespace map
 		FieldRepresentationDescriptor<VDimensions>::
 		setDirection(const DirectionType& value)
 		{
-			DirectionType* pNewDirection = new DirectionType(value);
+			auto* pNewDirection = new DirectionType(value);
 			delete _pFieldDirection;
 			_pFieldDirection = pNewDirection;
 		}
@@ -180,7 +180,7 @@ namespace map
 		}
 
 		template<unsigned int VDimensions>
-		inline const typename FieldRepresentationDescriptor<VDimensions>::VolumeType
+		inline typename FieldRepresentationDescriptor<VDimensions>::VolumeType
 		FieldRepresentationDescriptor<VDimensions>::
 		getRepresentedVolume() const
 		{
@@ -328,7 +328,7 @@ namespace map
 			SpacingType newSpacing;
 			DirectionType newDirection;
 
-			structuredData::Element::ConstSubElementIteratorType subPos = structuredData::findNextSubElement(
+			auto subPos = structuredData::findNextSubElement(
 			            pElement->getSubElementBegin(), pElement->getSubElementEnd(), "Size");
 
 			if (subPos == pElement->getSubElementEnd())
@@ -385,7 +385,7 @@ namespace map
 		typename  FieldRepresentationDescriptor<TImage::ImageDimension>::Pointer
 		createFieldRepresentation(const TImage& image)
 		{
-			typedef FieldRepresentationDescriptor<TImage::ImageDimension> FRDType;
+			using FRDType = FieldRepresentationDescriptor<TImage::ImageDimension>;
 
 			typename FRDType::Pointer spFRD = FRDType::New();
 

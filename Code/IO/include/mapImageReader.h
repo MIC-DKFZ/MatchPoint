@@ -77,8 +77,8 @@ namespace map
 		public:
 			typedef ::itk::Image<TInputPixel, iDimension>  InputImageType;
 			typedef ::itk::Image<TOutputPixel, iDimension> OutputImageType;
-			typedef TInputPixel RescaleValueType;
-			typedef std::vector<itk::MetaDataDictionary> MetaDataDictionaryArrayType;
+			using RescaleValueType = TInputPixel;
+			using MetaDataDictionaryArrayType = std::vector<itk::MetaDataDictionary>;
 
 			virtual const char* GetNameOfClass() const
 			{
@@ -115,7 +115,7 @@ namespace map
 
 			void load3D();
 
-			typedef std::vector< ::itk::MetaDataDictionary*> ITKMetaDataDictionaryArray;
+			using ITKMetaDataDictionaryArray = std::vector< ::itk::MetaDataDictionary *>;
 			void copyMetaDictionaryArray(const ITKMetaDataDictionaryArray* fromArray,
 										 MetaDataDictionaryArrayType& toArray);
 
@@ -153,26 +153,26 @@ namespace map
 			/** Function to access the member variable _rescaleImage. _rescaleImage indicates if a
 			* loaded image should be rescaled regarding its intensities.
 			* @return If the ImageReader converts images to iso-voxel.*/
-			const bool getRescaleImage() const;
+			bool getRescaleImage() const;
 
 			/** Function to access the member variable _rescaleImage. _rescaleImage indicates if a
 			* loaded image should be rescaled regarding its intensities. Changing the rescale option out dates the ImageReader.
 			* @param [in] rescaleImage Specifies if image should be converted to isovoxel.*/
-			void setRescaleImage(const bool rescaleImage);
+			void setRescaleImage(bool rescaleImage);
 
 			/** Function to access the member variable _upperSeriesLimit. _upperSeriesLimit represents
 			* the upper limit for the series file search.
 			* @return The upper limit of the series search.*/
-			const unsigned int getUpperSeriesLimit() const;
+			unsigned int getUpperSeriesLimit() const;
 
 			/** Function to access the member variable _upperSeriesLimit. _upperSeriesLimit represents
 			* the upper limit for the series file search. Changing the series limit out dates the ImageReader.
 			* @remark It is only relevant if series style is set to "Numeric".
 			* @param [in] upperLimit The upper limit of the header file.*/
-			void setUpperSeriesLimit(const unsigned int upperLimit);
+			void setUpperSeriesLimit(unsigned int upperLimit);
 
 			/** Function to access the member variable _seriesReadStyle (see member description for more information).*/
-			const typename ImageSeriesReadStyle::Type getSeriesReadStyle() const;
+			typename ImageSeriesReadStyle::Type getSeriesReadStyle() const;
 
 			/** Function to access the member variable _seriesReadStyle (see member description for more information).
 			* Changing the style out dates the ImageReader.*/
@@ -180,7 +180,7 @@ namespace map
 
 			/** Function loads the image if needed and returns the data.
 			* @return Pointer to loaded image.*/
-			OutputImageType*  GetOutput(void);
+			OutputImageType*  GetOutput();
 
 			/** Function returns the reference to the meta data dictionary(ies) of the latest file(s) loaded by this class.
 			 * Array may be empty if no MetaDictionary exists.*/
@@ -212,8 +212,8 @@ namespace map
 				  unsigned int upperNumericSeriesLimit = 100,
 				  typename ImageReader<TInputPixel, TOutputPixel, iDimension>::MetaDataDictionaryArrayType*
 				  pLoadedDictArray = NULL);
-	}
-}
+	}  // namespace io
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapImageReader.tpp"

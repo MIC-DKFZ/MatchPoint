@@ -117,8 +117,8 @@ namespace map
 		Registration<VMovingDimensions, VTargetDimensions, TRegistrationTopologyPolicy>::
 		Registration()
 		{
-			_spDirectMapping = NULL;
-			_spInverseMapping = NULL;
+			_spDirectMapping = nullptr;
+			_spInverseMapping = nullptr;
 		}
 
 
@@ -126,8 +126,7 @@ namespace map
 				 template <unsigned int, unsigned int> class TRegistrationTopologyPolicy >
 		Registration<VMovingDimensions, VTargetDimensions, TRegistrationTopologyPolicy>::
 		~Registration()
-		{
-		}
+		= default;
 
 		template < unsigned int VMovingDimensions, unsigned int VTargetDimensions,
 				 template <unsigned int, unsigned int> class TRegistrationTopologyPolicy >

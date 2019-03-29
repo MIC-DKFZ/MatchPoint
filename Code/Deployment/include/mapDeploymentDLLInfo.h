@@ -43,10 +43,10 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef DLLInfo  Self;
-			typedef ::itk::LightObject  Superclass;
-			typedef ::itk::SmartPointer<Self>  Pointer;
-			typedef ::itk::SmartPointer<const Self>  ConstPointer;
+			using Self = DLLInfo;
+			using Superclass = ::itk::LightObject;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			/** Run-time type information (and related methods). */
 			itkTypeMacro(DLLInfo, ::itk::LightObject);
@@ -71,9 +71,9 @@ namespace map
 		protected:
 			DLLInfo(const map::algorithm::UID* pUID,
 					const core::String& libraryFilePath,
-					const core::String& profileStr);
+					core::String  profileStr);
 
-			~DLLInfo();
+			~DLLInfo() override;
 
 			map::algorithm::UID::ConstPointer _spAlgorithmUID;
 			::map::core::String _libraryFilePath;
@@ -83,8 +83,8 @@ namespace map
 			::map::core::String _description;
 
 		private:
-			DLLInfo(const Self&); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			DLLInfo(const Self&) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 
 		};
 

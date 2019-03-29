@@ -54,21 +54,21 @@ namespace map
 			/*! Standard class typedefs. */
 			typedef DefaultKernelInverter<VInputDimensions, VOutputDimensions>				Self;
 			typedef RegistrationKernelInverterBase<VInputDimensions, VOutputDimensions>	Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(DefaultKernelInverter, RegistrationKernelInverterBase);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::KernelBaseType	KernelBaseType;
-			typedef typename Superclass::KernelBasePointer	KernelBasePointer;
-			typedef typename Superclass::InverseKernelBaseType	InverseKernelBaseType;
-			typedef typename Superclass::InverseKernelBasePointer	InverseKernelBasePointer;
-			typedef typename Superclass::FieldRepresentationType	FieldRepresentationType;
-			typedef typename Superclass::InverseFieldRepresentationType	InverseFieldRepresentationType;
-			typedef typename Superclass::RequestType	RequestType;
+			using KernelBaseType = typename Superclass::KernelBaseType;
+			using KernelBasePointer = typename Superclass::KernelBasePointer;
+			using InverseKernelBaseType = typename Superclass::InverseKernelBaseType;
+			using InverseKernelBasePointer = typename Superclass::InverseKernelBasePointer;
+			using FieldRepresentationType = typename Superclass::FieldRepresentationType;
+			using InverseFieldRepresentationType = typename Superclass::InverseFieldRepresentationType;
+			using RequestType = typename Superclass::RequestType;
 			typedef RegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
-			typedef typename Superclass::NullPointType NullPointType;
+			using NullPointType = typename Superclass::NullPointType;
 
 
 			/*! gets the number of iterations that has been set for the numeric inversion
@@ -126,7 +126,7 @@ namespace map
 				 * @remark This function might cause an exception/assertion if the responsible service provider needs
 				 * pInverseFieldRepresentation not to be NULL but it is.
 				 */
-			virtual InverseKernelBasePointer invertKernel(const KernelBaseType& kernel,
+			InverseKernelBasePointer invertKernel(const KernelBaseType& kernel,
 			        const FieldRepresentationType* pFieldRepresentation,
 			        const InverseFieldRepresentationType* pInverseFieldRepresentation, bool useNullPoint = false,
 			        NullPointType nullPoint = NullPointType(itk::NumericTraits< ::map::core::continuous::ScalarType>::NonpositiveMin()))

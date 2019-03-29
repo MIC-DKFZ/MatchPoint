@@ -57,25 +57,25 @@ namespace map
 			typedef SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>
 			Self;
 
-			typedef TConcreteMovingImagePyramide ConcreteMovingImagePyramideType;
-			typedef typename ConcreteMovingImagePyramideType::Pointer ConcreteMovingImagePyramidePointer;
+			using ConcreteMovingImagePyramideType = TConcreteMovingImagePyramide;
+			using ConcreteMovingImagePyramidePointer = typename ConcreteMovingImagePyramideType::Pointer;
 			typedef ::itk::MultiResolutionPyramidImageFilter<typename ConcreteMovingImagePyramideType::InputImageType, typename ConcreteMovingImagePyramideType::InputImageType>
 			MovingImagePyramideBaseType;
-			typedef TConcreteTargetImagePyramide ConcreteTargetImagePyramideType;
-			typedef typename ConcreteTargetImagePyramideType::Pointer ConcreteTargetImagePyramidePointer;
+			using ConcreteTargetImagePyramideType = TConcreteTargetImagePyramide;
+			using ConcreteTargetImagePyramidePointer = typename ConcreteTargetImagePyramideType::Pointer;
 			typedef ::itk::MultiResolutionPyramidImageFilter<typename ConcreteTargetImagePyramideType::InputImageType, typename ConcreteTargetImagePyramideType::InputImageType>
 			TargetImagePyramideBaseType;
 
-			typedef typename TargetImagePyramideBaseType::Pointer  TargetImagePyramideBasePointer;
-			typedef typename TargetImagePyramideBaseType::ConstPointer  TargetImagePyramidConstPointer;
-			typedef typename MovingImagePyramideBaseType::Pointer MovingImagePyramideBasePointer;
-			typedef typename MovingImagePyramideBaseType::ConstPointer MovingImagePyramidConstPointer;
+			using TargetImagePyramideBasePointer = typename TargetImagePyramideBaseType::Pointer;
+			using TargetImagePyramidConstPointer = typename TargetImagePyramideBaseType::ConstPointer;
+			using MovingImagePyramideBasePointer = typename MovingImagePyramideBaseType::Pointer;
+			using MovingImagePyramidConstPointer = typename MovingImagePyramideBaseType::ConstPointer;
 
 
-			typedef typename TConcreteMovingImagePyramide::InputImageType MovingImageType;
-			typedef typename TConcreteTargetImagePyramide::InputImageType TargetImageType;
+			using MovingImageType = typename TConcreteMovingImagePyramide::InputImageType;
+			using TargetImageType = typename TConcreteTargetImagePyramide::InputImageType;
 
-			typedef TInitializationPolicy InitializationPolicy;
+			using InitializationPolicy = TInitializationPolicy;
 
 		protected:
 			SealedImagePyramidesPolicy();
@@ -178,8 +178,8 @@ namespace map
 
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 
 #ifndef MatchPoint_MANUAL_TPP

@@ -31,7 +31,7 @@ namespace map
 		namespace discrete
 		{
 			//! Default internal pixel type used in MatchPoint
-			typedef float InternalPixelType;
+			using InternalPixelType = float;
 
 		} // end namespace discrete
 	} // end namespace core

@@ -149,7 +149,7 @@ namespace map
       {
       public:
         typedef ::itk::Image<TPixelType, IDim> ImageType;
-        typedef typename ::map::core::continuous::Elements<IDim>::InternalPointSetType PointSetType;
+        using PointSetType = typename ::map::core::continuous::Elements<IDim>::InternalPointSetType;
 
         /** Generates meta data dictionaries with the correct meta data (correlated with needed DICOM tags) to ensure
         * the correct dicom file generation for each slice of the passed image.
@@ -304,9 +304,9 @@ namespace map
             || appData._seriesWriteStyle == map::io::ImageSeriesReadStyle::GDCM))
           {
             typedef ::itk::Image < TPixelType, IDim - 1 > OutputImageType;
-            typedef ::itk::NumericSeriesFileNames OutputNamesGeneratorType;
+            using OutputNamesGeneratorType = ::itk::NumericSeriesFileNames;
             typedef ::itk::ImageSeriesWriter< ImageType, OutputImageType  > SeriesWriterType;
-            typedef ::itk::GDCMImageIO ImageIOType;
+            using ImageIOType = ::itk::GDCMImageIO;
             ImageIOType::Pointer spGDCMIO = ImageIOType::New();
 
             OutputNamesGeneratorType::Pointer outputNames = OutputNamesGeneratorType::New();
@@ -354,7 +354,7 @@ namespace map
           else
           {
             std::cout << "(" << appData._outputFileName << ")... ";
-            typedef ::itk::ImageFileWriter< ImageType  > ImageWriterType;
+            using ImageWriterType = ::itk::ImageFileWriter<ImageType>;
             typename ImageWriterType::Pointer spImageWriter = ImageWriterType::New();
 
             spImageWriter->SetInput(pImage);
@@ -369,7 +369,7 @@ namespace map
         static typename ::itk::InterpolateImageFunction< ImageType >::Pointer generateInterpolator(
           ImageMappingInterpolator::Type interpolatorType)
         {
-          typedef ::itk::InterpolateImageFunction< ImageType > BaseInterpolatorType;
+          using BaseInterpolatorType = ::itk::InterpolateImageFunction< ImageType >;
           typename BaseInterpolatorType::Pointer result;
 
           switch (interpolatorType)
@@ -414,22 +414,22 @@ namespace map
 
         static typename ImageType::Pointer doMapping(const ApplicationData& appData)
         {
-          typedef ::itk::ImageBase<IDim> TemplateImageType;
+          using TemplateImageType = ::itk::ImageBase<IDim>;
           typedef map::core::Registration<IDim, IDim> RegistrationType;
 
           typedef map::core::ImageMappingTask<RegistrationType, ImageType, ImageType> MapperType;
 
           typename MapperType::Pointer spMapper = MapperType::New();
 
-          ImageType* pCastedInput = dynamic_cast<ImageType*>(appData._input.GetPointer());
+          auto* pCastedInput = dynamic_cast<ImageType*>(appData._input.GetPointer());
           typename ImageType::Pointer spResult;
-          RegistrationType* pCastedReg = dynamic_cast<RegistrationType*>(appData._spReg.GetPointer());
+          auto* pCastedReg = dynamic_cast<RegistrationType*>(appData._spReg.GetPointer());
 
-          typename MapperType::ResultImageDescriptorType::Pointer spResultDesc = NULL;
+          typename MapperType::ResultImageDescriptorType::Pointer spResultDesc = nullptr;
 
           if (appData._spRefImage.IsNotNull())
           {
-            TemplateImageType* pCastedTemplate = dynamic_cast<TemplateImageType*>
+            auto* pCastedTemplate = dynamic_cast<TemplateImageType*>
               (appData._spRefImage.GetPointer());
 
             spResultDesc = map::core::createFieldRepresentation(*pCastedTemplate);
@@ -473,14 +473,14 @@ namespace map
 
         static typename PointSetType::Pointer doPointSetMapping(const ApplicationData& appData)
         {
-          typedef ::itk::ImageBase<IDim> TemplateImageType;
+          using TemplateImageType = ::itk::ImageBase<IDim>;
           typedef map::core::Registration<IDim, IDim> RegistrationType;
 
           typedef map::core::PointSetMappingTask<RegistrationType, PointSetType, PointSetType> MapperType;
 
           typename MapperType::Pointer spMapper = MapperType::New();
 
-          PointSetType* pCastedInput = dynamic_cast<PointSetType*>(appData._input.GetPointer());
+          auto* pCastedInput = dynamic_cast<PointSetType*>(appData._input.GetPointer());
           typename PointSetType::Pointer spResult;
           RegistrationType* pCastedReg = dynamic_cast<RegistrationType*>(appData._spReg.GetPointer());
 
@@ -536,9 +536,9 @@ namespace map
       };
 
 
-    }
-  }
-}
+    }  // namespace mapR
+  }  // namespace apps
+}  // namespace map
 
 
 #endif

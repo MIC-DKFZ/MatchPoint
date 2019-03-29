@@ -38,7 +38,7 @@ namespace iro
     class Result
     {
     public:
-      typedef TResultType ResultType;
+      using ResultType = TResultType;
 
       using OntologyRevisionTag	= ::iro::OntologyRevisionTag;
 
@@ -74,9 +74,9 @@ namespace iro
     class Result< std::shared_ptr<TResultType> >
     {
     public:
-      typedef typename std::shared_ptr<TResultType> ResultType;
-      typedef TResultType PlainResultType;
-      typedef Result< std::shared_ptr<TResultType> > Self;
+      using ResultType = typename std::shared_ptr<TResultType>;
+      using PlainResultType = TResultType;
+      using Self = Result<std::shared_ptr<TResultType> >;
 
       using OntologyRevisionTag	= ::iro::OntologyRevisionTag;
 

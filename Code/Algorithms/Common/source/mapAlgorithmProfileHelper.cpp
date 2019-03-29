@@ -36,7 +36,7 @@ namespace map
 			MAPAlgorithms_EXPORT structuredData::Element::Pointer parseProfileString(
 				const core::String& profileStr)
 			{
-				::map::structuredData::Element::Pointer result = NULL;
+				::map::structuredData::Element::Pointer result = nullptr;
 
 				try
 				{
@@ -60,14 +60,14 @@ namespace map
 				return result;
 			}
 
-			const structuredData::Element::Pointer extractCharacteristicsFromProfile(
+			structuredData::Element::Pointer extractCharacteristicsFromProfile(
 				const structuredData::Element* profileRoot)
 			{
 				structuredData::Element::Pointer result;
 
-				if (profileRoot)
+				if (profileRoot != nullptr)
 				{
-					::map::structuredData::Element::ConstSubElementIteratorType pos =
+					auto pos =
 						::map::structuredData::findNextSubElement(profileRoot->getSubElementBegin(),
 								profileRoot->getSubElementEnd(), tags::AlgorithmCharacteristics);
 
@@ -84,9 +84,9 @@ namespace map
 			{
 				ValueListType result;
 
-				if (node)
+				if (node != nullptr)
 				{
-					::map::structuredData::Element::ConstSubElementIteratorType pos =
+					auto pos =
 						::map::structuredData::findNextSubElement(node->getSubElementBegin(), node->getSubElementEnd(),
 								tag);
 
@@ -100,14 +100,14 @@ namespace map
 				return result;
 			}
 
-			MAPAlgorithms_EXPORT const ::map::core::String getDescription(const structuredData::Element*
+			MAPAlgorithms_EXPORT ::map::core::String getDescription(const structuredData::Element*
 					profileRoot)
 			{
-				::map::core::String result = "";
+				::map::core::String result;
 
-				if (profileRoot)
+				if (profileRoot != nullptr)
 				{
-					::map::structuredData::Element::ConstSubElementIteratorType descPos =
+					auto descPos =
 						::map::structuredData::findNextSubElement(profileRoot->getSubElementBegin(),
 								profileRoot->getSubElementEnd(), tags::AlgorithmDescription);
 
@@ -120,7 +120,7 @@ namespace map
 				return result;
 			}
 
-			MAPAlgorithms_EXPORT const ::map::core::String getDescription(const core::String& profileStr)
+			MAPAlgorithms_EXPORT ::map::core::String getDescription(const core::String& profileStr)
 			{
 				structuredData::Element::Pointer profile = parseProfileString(profileStr);
 				return getDescription(profile);
@@ -143,9 +143,9 @@ namespace map
 			{
 				bool result = false;
 
-				if (profileRoot)
+				if (profileRoot != nullptr)
 				{
-					::map::structuredData::Element::ConstSubElementIteratorType pos =
+					auto pos =
 						::map::structuredData::findNextSubElement(profileRoot->getSubElementBegin(),
 								profileRoot->getSubElementEnd(), tags::AlgorithmTerms);
 
@@ -222,7 +222,7 @@ namespace map
 				bool result = false;
 				structuredData::Element::Pointer chars = extractCharacteristicsFromProfile(profileRoot);
 
-				if (chars)
+				if (chars != nullptr)
 				{
 					::map::structuredData::Element::ConstSubElementIteratorType pos =
 						::map::structuredData::findNextSubElement(chars->getSubElementBegin(), chars->getSubElementEnd(),
@@ -263,7 +263,7 @@ namespace map
 				bool result = false;
 				structuredData::Element::Pointer chars = extractCharacteristicsFromProfile(profileRoot);
 
-				if (chars)
+				if (chars != nullptr)
 				{
 					::map::structuredData::Element::ConstSubElementIteratorType pos =
 						::map::structuredData::findNextSubElement(chars->getSubElementBegin(), chars->getSubElementEnd(),
@@ -393,9 +393,9 @@ namespace map
 			{
 				structuredData::Element::Pointer keywords;
 
-				if (profileRoot)
+				if (profileRoot != nullptr)
 				{
-					::map::structuredData::Element::ConstSubElementIteratorType pos =
+					auto pos =
 						::map::structuredData::findNextSubElement(profileRoot->getSubElementBegin(),
 								profileRoot->getSubElementEnd(), tags::AlgorithmKeywords);
 
@@ -420,7 +420,7 @@ namespace map
 				structuredData::Element::Pointer chars = extractCharacteristicsFromProfile(profileRoot);
 				bool result = false;
 
-				if (chars)
+				if (chars != nullptr)
 				{
 					::map::structuredData::Element::ConstSubElementIteratorType pos =
 						::map::structuredData::findNextSubElement(chars->getSubElementBegin(), chars->getSubElementEnd(),
@@ -437,6 +437,6 @@ namespace map
 				return isDeterministic(profile);
 			}
 
-		}
-	}
-}
+		}  // namespace profile
+	}  // namespace algorithm
+}  // namespace map

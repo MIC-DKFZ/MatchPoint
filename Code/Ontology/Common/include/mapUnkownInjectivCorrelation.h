@@ -34,19 +34,19 @@ namespace iro
   class MAPOntology_EXPORT UnkownInjectivCorrelation : public ISemanticCorrelationType
   {
   public:
-    typedef UnkownInjectivCorrelation                           Self;
-    typedef std::shared_ptr<UnkownInjectivCorrelation>        Pointer;
-    typedef std::shared_ptr<const UnkownInjectivCorrelation>  ConstPointer;
+    using Self = UnkownInjectivCorrelation;
+    using Pointer = std::shared_ptr<UnkownInjectivCorrelation>;
+    using ConstPointer = std::shared_ptr<const UnkownInjectivCorrelation>;
 
     /** Returns the identifier name of the correlation type.*/
-    virtual String getName() const;
+    String getName() const override;
 
-    virtual ~UnkownInjectivCorrelation();
+    ~UnkownInjectivCorrelation() override;
     UnkownInjectivCorrelation();
 
   private:
-    UnkownInjectivCorrelation(const UnkownInjectivCorrelation&); //not implemented by purpose
-    UnkownInjectivCorrelation& operator=(const UnkownInjectivCorrelation&); //not implemented by purpose
+    UnkownInjectivCorrelation(const UnkownInjectivCorrelation&) = delete; //not implemented by purpose
+    UnkownInjectivCorrelation& operator=(const UnkownInjectivCorrelation&) = delete; //not implemented by purpose
   };
 } // end namespace iro
 

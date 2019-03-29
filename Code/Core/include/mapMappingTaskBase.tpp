@@ -25,7 +25,7 @@
 #define __MAP_MAPPING_TASK_BASE_TPP
 
 #include "mapMappingTaskBase.h"
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -35,7 +35,7 @@ namespace map
 		template <class TRegistration>
 		bool
 		MappingTaskBase<TRegistration>::
-		execute(void) const
+		execute() const
 		{
 			assert(_spRegistration.IsNotNull());
 
@@ -104,7 +104,7 @@ namespace map
 		template <class TRegistration>
 		const typename MappingTaskBase<TRegistration>::RegistrationType*
 		MappingTaskBase<TRegistration>::
-		getRegistration(void) const
+		getRegistration() const
 		{
 			return _spRegistration;
 		}
@@ -112,7 +112,7 @@ namespace map
 		template <class TRegistration>
 		const ExceptionObject*
 		MappingTaskBase<TRegistration>::
-		getRegistrationException(void) const
+		getRegistrationException() const
 		{
 			return _pException;
 		}
@@ -120,16 +120,16 @@ namespace map
 		template <class TRegistration>
 		void
 		MappingTaskBase<TRegistration>::
-		clearException(void) const
+		clearException() const
 		{
 			delete _pException;
-			_pException = NULL;
+			_pException = nullptr;
 		};
 
 		template <class TRegistration>
 		void
 		MappingTaskBase<TRegistration>::
-		reset(void)
+		reset()
 		{
 			clearException();
 			this->clearInputs();
@@ -139,7 +139,7 @@ namespace map
 
 		template <class TRegistration>
 		MappingTaskBase<TRegistration>::
-		MappingTaskBase(): _isExceptionNeutral(true), _pException(NULL)
+		MappingTaskBase() 
 		{
 		}
 
@@ -174,7 +174,7 @@ namespace map
 		template <class TRegistration>
 		bool
 		MappingTaskBase<TRegistration>::
-		getIsExceptionNeutral(void) const
+		getIsExceptionNeutral() const
 		{
 			return _isExceptionNeutral;
 		};

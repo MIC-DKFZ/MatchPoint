@@ -27,16 +27,17 @@ namespace iro
     bool ISemanticCorrelationType::
       equals(const ISemanticCorrelationType* pType) const
     {
-      if (!pType) throw exceptions::InvalidArgument("Passed correlation type pointer is NULL.");
+      if (pType == nullptr) { throw exceptions::InvalidArgument("Passed correlation type pointer is NULL.");
+}
 
       return this->getName() == pType->getName();
     };
 
     ISemanticCorrelationType::
-      ~ISemanticCorrelationType() {};
+      ~ISemanticCorrelationType() = default;
 
     ISemanticCorrelationType::
-      ISemanticCorrelationType() {};
+      ISemanticCorrelationType() = default;
 
 } // end namespace iro
 

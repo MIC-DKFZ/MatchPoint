@@ -116,7 +116,7 @@ namespace map
 		Element::
 		addSubElement(Self* pNewElement)
 		{
-			if (!pNewElement)
+			if (pNewElement == nullptr)
 			{
 				mapDefaultExceptionMacro( << "Error. Cannot add new element. Passed element pointer is NULL.");
 			}
@@ -132,7 +132,7 @@ namespace map
 		Element::
 		insertSubElement(Self* pNewElement, SubElementIteratorType location)
 		{
-			if (!pNewElement)
+			if (pNewElement == nullptr)
 			{
 				mapDefaultExceptionMacro( << "Error. Cannot insert new element. Passed element pointer is NULL.");
 			}
@@ -153,7 +153,7 @@ namespace map
 								  location << "; vector size: " << _SubElements.size());
 			}
 
-			if (!pNewElement)
+			if (pNewElement == nullptr)
 			{
 				mapDefaultExceptionMacro( << "Error. Cannot insert new element. Passed element pointer is NULL.");
 			}
@@ -192,7 +192,7 @@ namespace map
 		removeAttribute(const core::String& name, bool recursively)
 		{
 			bool result = false;
-			AttributeMapType::iterator pos = _Attributes.find(name);
+			auto pos = _Attributes.find(name);
 
 			if (pos != _Attributes.end())
 			{
@@ -202,9 +202,9 @@ namespace map
 
 			if (recursively)
 			{
-				for (SubElementVectorType::iterator pos = _SubElements.begin(); pos != _SubElements.end(); ++pos)
+				for (auto & _SubElement : _SubElements)
 				{
-					bool subResult = (*pos)->removeAttribute(name, recursively);
+					bool subResult = _SubElement->removeAttribute(name, recursively);
 					result = result || subResult;
 				}
 			}
@@ -222,9 +222,9 @@ namespace map
 
 			if (recursively)
 			{
-				for (SubElementVectorType::iterator pos = _SubElements.begin(); pos != _SubElements.end(); ++pos)
+				for (auto & _SubElement : _SubElements)
 				{
-					bool subResult = (*pos)->setAttribute(name, value, recursively);
+					bool subResult = _SubElement->setAttribute(name, value, recursively);
 					result = result || subResult;
 				}
 			}
@@ -236,7 +236,7 @@ namespace map
 		Element::
 		getAttribute(const core::String& name) const
 		{
-			AttributeMapType::const_iterator pos = _Attributes.find(name);
+			auto pos = _Attributes.find(name);
 
 			if (pos == _Attributes.end())
 			{
@@ -262,9 +262,9 @@ namespace map
 		{
 			AttributeNameVectorType names;
 
-			for (AttributeMapType::const_iterator pos = _Attributes.begin(); pos != _Attributes.end(); ++pos)
+			for (const auto & _Attribute : _Attributes)
 			{
-				names.push_back(pos->first);
+				names.push_back(_Attribute.first);
 			}
 
 			return names;
@@ -319,8 +319,7 @@ namespace map
 
 		Element::
 		~Element()
-		{
-		};
+		= default;
 
 		Element::Pointer
 		Element::
@@ -343,16 +342,15 @@ namespace map
 			spNew->setValue(_Value);
 
 			//attributes
-			for (AttributeMapType::const_iterator pos = _Attributes.begin(); pos != _Attributes.end(); ++pos)
+			for (const auto & _Attribute : _Attributes)
 			{
-				spNew->setAttribute(pos->first, pos->second);
+				spNew->setAttribute(_Attribute.first, _Attribute.second);
 			}
 
 			//sub elements
-			for (SubElementVectorType::const_iterator pos = _SubElements.begin(); pos != _SubElements.end();
-				 ++pos)
+			for (const auto & _SubElement : _SubElements)
 			{
-				spNew->addSubElement((*pos)->clone());
+				spNew->addSubElement(_SubElement->clone());
 			}
 
 			return spNew;
@@ -369,9 +367,9 @@ namespace map
 
 			::itk::Indent indent2 = indent.GetNextIndent();
 
-			for (AttributeMapType::const_iterator pos = _Attributes.begin(); pos != _Attributes.end(); ++pos)
+			for (const auto & _Attribute : _Attributes)
 			{
-				os << indent2 << pos->first << " = '" << pos->second << "'" << std::endl;
+				os << indent2 << _Attribute.first << " = '" << _Attribute.second << "'" << std::endl;
 			}
 
 			os << indent << "Sub elements: (" << _SubElements.size() << ")" << std::endl;
@@ -401,8 +399,8 @@ namespace map
 						result = current;
 						break;
 					}
-					else
-					{
+					
+					
 						if ((*current)->attributeExists(attrName))
 						{
 							if ((*current)->getAttribute(attrName) == attrValue)
@@ -411,7 +409,7 @@ namespace map
 								break;
 							}
 						}
-					}
+					
 				}
 			}
 
@@ -435,8 +433,8 @@ namespace map
 						result = current;
 						break;
 					}
-					else
-					{
+					
+					
 						if ((*current)->attributeExists(attrName))
 						{
 							if ((*current)->getAttribute(attrName) == attrValue)
@@ -445,7 +443,7 @@ namespace map
 								break;
 							}
 						}
-					}
+					
 				}
 			}
 

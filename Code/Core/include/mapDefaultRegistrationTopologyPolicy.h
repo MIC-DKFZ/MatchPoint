@@ -47,29 +47,29 @@ namespace map
 			itkStaticConstMacro(DirectInputDimensions, unsigned int, VMovingDimensions);
 			itkStaticConstMacro(DirectOutputDimensions, unsigned int, VTargetDimensions);
 
-			typedef typename RegistrationTopologyType::DirectMappingVectorType	DirectMappingVectorType;
-			typedef typename RegistrationTopologyType::DirectFieldType					DirectFieldType;
-			typedef typename RegistrationTopologyType::DirectFieldPointer				DirectFieldPointer;
-			typedef typename RegistrationTopologyType::DirectFieldRegionType		DirectFieldRegionType;
+			using DirectMappingVectorType = typename RegistrationTopologyType::DirectMappingVectorType;
+			using DirectFieldType = typename RegistrationTopologyType::DirectFieldType;
+			using DirectFieldPointer = typename RegistrationTopologyType::DirectFieldPointer;
+			using DirectFieldRegionType = typename RegistrationTopologyType::DirectFieldRegionType;
 
 			//inverse mapping
 			itkStaticConstMacro(InverseInputDimensions, unsigned int, VTargetDimensions);
 			itkStaticConstMacro(InverseOutputDimensions, unsigned int, VMovingDimensions);
 
-			typedef typename RegistrationTopologyType::InverseMappingVectorType InverseMappingVectorType;
-			typedef typename RegistrationTopologyType::InverseFieldType					InverseFieldType;
-			typedef typename RegistrationTopologyType::InverseFieldPointer			InverseFieldPointer;
-			typedef typename RegistrationTopologyType::InverseFieldRegionType		InverseFieldRegionType;
+			using InverseMappingVectorType = typename RegistrationTopologyType::InverseMappingVectorType;
+			using InverseFieldType = typename RegistrationTopologyType::InverseFieldType;
+			using InverseFieldPointer = typename RegistrationTopologyType::InverseFieldPointer;
+			using InverseFieldRegionType = typename RegistrationTopologyType::InverseFieldRegionType;
 
 			typedef RegistrationKernelBase<DirectInputDimensions, DirectOutputDimensions> DirectMappingType;
 			typedef RegistrationKernelBase<InverseInputDimensions, InverseOutputDimensions> InverseMappingType;
 
       //general
-      typedef typename RegistrationTopologyType::MovingPointType			MovingPointType;
-      typedef typename RegistrationTopologyType::TargetPointType		  TargetPointType;
+      using MovingPointType = typename RegistrationTopologyType::MovingPointType;
+      using TargetPointType = typename RegistrationTopologyType::TargetPointType;
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #endif

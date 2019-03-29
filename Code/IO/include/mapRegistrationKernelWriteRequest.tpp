@@ -43,10 +43,10 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions>::
-		RegistrationKernelWriteRequest(const KernelBaseType& kernel, const core::String& path,
-									   const core::String& name, bool expandLazyKernels,
+		RegistrationKernelWriteRequest(const KernelBaseType& kernel, core::String  path,
+									   core::String  name, bool expandLazyKernels,
 									   const ComplementaryKernelBaseType* pComplementaryKernel):
-			_spKernel(&kernel), _path(path), _name(name), _expandLazyKernels(expandLazyKernels),
+			_spKernel(&kernel), _path(std::move(path)), _name(std::move(name)), _expandLazyKernels(expandLazyKernels),
 			_spComplementaryKernel(pComplementaryKernel)
 		{
 		};

@@ -39,36 +39,31 @@ namespace map
 		 * @sa mapGetDLLInterfaceVersion
 		 * @ingroup DeployHost
 		 */
-		typedef void (* MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER)(unsigned int& major,
-				unsigned int& minor);
+		using MAP_GET_DLL_INTERFACE_VERSION_FUNCTION_POINTER = void (*)(unsigned int &, unsigned int &);
 
 		/**
 		 * Function pointer for the mapGetRegistrationAlgorithmUID symbol in a deployment DLL.
 		 * @sa mapGetRegistrationAlgorithmUID
 		 * @ingroup DeployHost
 		 */
-		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER)(map::algorithm::UID::Pointer&
-				spUID);
+		using MAP_GET_REGISTRATION_ALGORITHM_UID_FUNCTION_POINTER = void (*)(map::algorithm::UID::Pointer &);
 
 		/**
 		 * Function pointer for the mapGetRegistrationAlgorithmUID symbol in a deployment DLL.
 		 * @sa mapGetRegistrationAlgorithmUID
 		 * @ingroup DeployHost
 		 */
-		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER)(
-			const map::core::String& profile);
+		using MAP_GET_REGISTRATION_ALGORITHM_PROFILE_FUNCTION_POINTER = void (*)(const map::core::String &);
 
 		/**
 			 * Function pointer for the mapGetRegistrationAlgorithmInstance symbol in a deployment DLL.
 			 * @sa mapGetRegistrationAlgorithmInstance
 			 * @ingroup DeployHost
 			 */
-		typedef void (* MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER)(
-			map::algorithm::RegistrationAlgorithmBase::Pointer& spAlgorithmBase,
-			map::deployment::SyncObject* pSyncObject);
+		using MAP_GET_REGISTRATION_ALGORITHM_INSTANCE_FUNCTION_POINTER = void (*)(map::algorithm::RegistrationAlgorithmBase::Pointer &, map::deployment::SyncObject *);
 
-		typedef map::algorithm::RegistrationAlgorithmBase RegistrationAlgorithmBase;
-		typedef RegistrationAlgorithmBase::Pointer RegistrationAlgorithmBasePointer;
+		using RegistrationAlgorithmBase = map::algorithm::RegistrationAlgorithmBase;
+		using RegistrationAlgorithmBasePointer = RegistrationAlgorithmBase::Pointer;
 
 		/*! Method tries to open the passed file as dll, checks for the interface version and
 		 * compiles all information needed for a representing DLL information instance.
@@ -154,8 +149,8 @@ namespace map
     */
     MAPDeployment_EXPORT map::core::String getDeploymentDLLMDRAPrefix();
 
-	} //end of namespace deployment;
+	}  // namespace deployment
 
-} //end of namespace map;
+}  // namespace map
 
 #endif

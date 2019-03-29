@@ -58,12 +58,12 @@ namespace map
         typedef PointSetRegistrationAlgorithmInterfaceV2<TMovingPointSet, TTargetPointSet> Self;
         typedef PointSetRegistrationAlgorithmInterface<TMovingPointSet, TTargetPointSet> Superclass;
 
-        typedef typename Superclass::MovingPointSetType MovingPointSetType;
-        typedef typename Superclass::TargetPointSetType TargetPointSetType;
+        using MovingPointSetType = typename Superclass::MovingPointSetType;
+        using TargetPointSetType = typename Superclass::TargetPointSetType;
 
-        typedef typename Superclass::MovingPointSetConstPointer MovingPointSetConstPointer;
-        typedef typename Superclass::TargetPointSetConstPointer TargetPointSetConstPointer;
-        typedef unsigned int SlotIndexType;
+        using MovingPointSetConstPointer = typename Superclass::MovingPointSetConstPointer;
+        using TargetPointSetConstPointer = typename Superclass::TargetPointSetConstPointer;
+        using SlotIndexType = unsigned int;
 
         itkTypeMacroNoParent(PointSetRegistrationAlgorithmInterfaceV2);
 
@@ -159,32 +159,32 @@ namespace map
         */
         virtual unsigned long getNthMovingPointSetMTime(SlotIndexType index) const = 0;
 
-        virtual MovingPointSetConstPointer getMovingPointSet() const override
+        MovingPointSetConstPointer getMovingPointSet() const override
         {
           return getNthMovingPointSet(0);
         };
 
-        virtual TargetPointSetConstPointer getTargetPointSet() const override
+        TargetPointSetConstPointer getTargetPointSet() const override
         {
           return getNthTargetPointSet(0);
         }
 
-        virtual void setMovingPointSet(const MovingPointSetType* pMovingPointSet) override
+        void setMovingPointSet(const MovingPointSetType* pMovingPointSet) override
         {
           setNthMovingPointSet(0, pMovingPointSet);
         };
 
-        virtual void setTargetPointSet(const TargetPointSetType* pTargetPointSet) override
+        void setTargetPointSet(const TargetPointSetType* pTargetPointSet) override
         {
           setNthTargetPointSet(0, pTargetPointSet);
         };
 
-        virtual unsigned long getTargetPointSetMTime() const override
+        unsigned long getTargetPointSetMTime() const override
         {
           return getNthTargetPointSetMTime(0);
         };
 
-        virtual unsigned long getMovingPointSetMTime() const override
+        unsigned long getMovingPointSetMTime() const override
         {
           return getNthMovingPointSetMTime(0);
         };
@@ -192,7 +192,7 @@ namespace map
 			protected:
 				/*! @brief virtual destructor
 				*/
-				virtual ~PointSetRegistrationAlgorithmInterfaceV2() {};
+				~PointSetRegistrationAlgorithmInterfaceV2() override {};
 
 				PointSetRegistrationAlgorithmInterfaceV2() {};
 
@@ -211,8 +211,8 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

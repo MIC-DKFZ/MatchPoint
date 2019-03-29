@@ -29,9 +29,9 @@ namespace map
 	{
 		ExceptionObject::BaseExceptionType*
 		ExceptionObject::
-		clone() const throw()
+		clone() const noexcept
 		{
-			BaseExceptionType* pResult = 0;
+			BaseExceptionType* pResult = nullptr;
 
 			try
 			{
@@ -48,8 +48,7 @@ namespace map
 
 
 		ExceptionObject::ExceptionObject()
-		{
-		}
+		= default;
 
 		ExceptionObject::ExceptionObject(const char* file, unsigned int lineNumber) : Superclass(file,
 					lineNumber)
@@ -69,9 +68,8 @@ namespace map
 
 		}
 
-		ExceptionObject::~ExceptionObject() throw()
-		{
-		}
+		ExceptionObject::~ExceptionObject() noexcept
+		= default;
 
 		const char* ExceptionObject::GetNameOfClass() const
 		{

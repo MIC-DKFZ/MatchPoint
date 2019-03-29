@@ -16,7 +16,7 @@
 
 #include "mapSimpleDemoInstancer.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 namespace iro
 {
@@ -180,7 +180,7 @@ namespace iro
       spPM4 = generateModel("PM 4");
 
       //correlations
-      typedef std::list<::iro::scenario::SimpleInformationEntity::ConstPointer> IEListType;
+      using IEListType = std::list<::iro::scenario::SimpleInformationEntity::ConstPointer>;
 
       IEListType ieList1;
       ieList1.push_back(spIE1);

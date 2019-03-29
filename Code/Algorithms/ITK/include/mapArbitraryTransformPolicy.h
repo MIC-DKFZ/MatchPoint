@@ -59,8 +59,8 @@ namespace map
 				Superclass;
                 itkTypeMacroNoParent(ArbitraryTransformPolicy);
 
-				typedef typename Superclass::TransformType TransformType;
-				typedef TScalar TransformScalarType;
+				using TransformType = typename Superclass::TransformType;
+				using TransformScalarType = TScalar;
 
 				/*! sets the transfrom model
 				@eguarantee strong
@@ -128,9 +128,9 @@ namespace map
 
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapArbitraryTransformPolicy.tpp"

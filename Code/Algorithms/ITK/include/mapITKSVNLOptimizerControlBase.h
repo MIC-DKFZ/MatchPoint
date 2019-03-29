@@ -49,16 +49,16 @@ namespace map
 			class ITKSVNLOptimizerControlBase : public ITKSVNLOptimizerControlInterface
 			{
 			public:
-				typedef ITKSVNLOptimizerControlBase<TConcreteOptimizer> Self;
-				typedef ITKSVNLOptimizerControlInterface    Superclass;
-				typedef ::itk::SmartPointer<Self>         Pointer;
-				typedef ::itk::SmartPointer<const Self>   ConstPointer;
+				using Self = ITKSVNLOptimizerControlBase<TConcreteOptimizer>;
+				using Superclass = ITKSVNLOptimizerControlInterface;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKSVNLOptimizerControlBase, ITKSVNLOptimizerControlInterface);
 
-				typedef TConcreteOptimizer ConcreteOptimizerType;
-				typedef typename ConcreteOptimizerType::Pointer ConcreteOptimizerPointer;
-				typedef ITKSVNLOptimizerControlInterface BaseInterfaceType;
+				using ConcreteOptimizerType = TConcreteOptimizer;
+				using ConcreteOptimizerPointer = typename ConcreteOptimizerType::Pointer;
+				using BaseInterfaceType = ITKSVNLOptimizerControlInterface;
 
 				/*! setter for the optimizer
 				@eguarantee no fail
@@ -66,22 +66,22 @@ namespace map
 				*/
 				virtual void setOptimizer(ConcreteOptimizerType* pOptimizer);
 
-				virtual OptimizerBaseType* getOptimizer();
-				virtual const OptimizerBaseType* getOptimizer() const;
+				OptimizerBaseType* getOptimizer() override;
+				const OptimizerBaseType* getOptimizer() const override;
 
-				virtual SVNLOptimizerBaseType* getSVNLOptimizer();
-				virtual const SVNLOptimizerBaseType* getSVNLOptimizer() const;
+				SVNLOptimizerBaseType* getSVNLOptimizer() override;
+				const SVNLOptimizerBaseType* getSVNLOptimizer() const override;
 
 				virtual ConcreteOptimizerType* getConcreteOptimizer();
 				virtual const ConcreteOptimizerType* getConcreteOptimizer() const;
 
 				/*! The modification time (MT) of an optimizer controler is the the maximum of his MT
 				 * and the MT of the controlled optimizer.  */
-				virtual unsigned long GetMTime() const;
+				unsigned long GetMTime() const override;
 
-				virtual bool hasCurrentPosition() const;
+				bool hasCurrentPosition() const override;
 
-				virtual bool hasScales() const;
+				bool hasScales() const override;
 
 				/*! clones the optimizer control and the controlled optimizer.
 				 * This implementation generates an instance of ConcreteOptimizerType and uses
@@ -95,7 +95,7 @@ namespace map
 				 * @eguarantee strong
 				 * @remark Implement the function for special optimizer control classes.
 				 * @return Smartpointer to the cloned optimizer control.*/
-				virtual ITKOptimizerControlInterface::Pointer clone() const;
+				ITKOptimizerControlInterface::Pointer clone() const override;
 
 			protected:
 
@@ -108,11 +108,11 @@ namespace map
 				/*! Method is called by clone() to clone the concrete control type derivated from this class. */
 				virtual Pointer doCloneControl() const = 0;
 
-				virtual OptimizerPositionType doGetCurrentPosition() const;
+				OptimizerPositionType doGetCurrentPosition() const override;
 
-				virtual OptimizerScalesType doGetScales() const;
+				OptimizerScalesType doGetScales() const override;
 
-				virtual ~ITKSVNLOptimizerControlBase();
+				~ITKSVNLOptimizerControlBase() override;
 				ITKSVNLOptimizerControlBase();
 
 				ConcreteOptimizerPointer _spOptimizer;
@@ -122,9 +122,9 @@ namespace map
 				ITKSVNLOptimizerControlBase(const Self& source);
 				void operator=(const Self&);  //purposely not implemented
 			};
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapITKSVNLOptimizerControlBase.tpp"

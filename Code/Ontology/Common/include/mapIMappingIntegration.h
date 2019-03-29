@@ -48,15 +48,15 @@ namespace iro
     class IMappingIntegration
     {
     public:
-      typedef typename TTITraits::Type                  TransformationInfoType;
-      typedef typename TTITraits::ConstPointer          ConstTransformationInfoPointer;
-      typedef typename TTITraits::InferencePointer      TransInfoInferencePointer;
+      using TransformationInfoType = typename TTITraits::Type;
+      using ConstTransformationInfoPointer = typename TTITraits::ConstPointer;
+      using TransInfoInferencePointer = typename TTITraits::InferencePointer;
 
       using InformationSpaceTraitsType = typename TTITraits::InformationSpaceTraitsType;
       using InformationEntityTraitsType = typename TTITraits::InformationEntityTraitsType;
       using ProblemStatementTraitsType = typename TTITraits::ProblemStatementTraitsType;
 
-      typedef TTDReturnType  TransformationDeleteReturnType;
+      using TransformationDeleteReturnType = TTDReturnType;
 
       /*! Defines and stores the copy of the passed transformation information
       * after checking all relevant integration rules.\n
@@ -108,8 +108,8 @@ namespace iro
       TransformationDeleteReturnType deleteTransformation(TransInfoInferencePointer transformation);
 
     protected:
-      virtual ~IMappingIntegration() {};
-      IMappingIntegration() {};
+      virtual ~IMappingIntegration() = default;
+      IMappingIntegration() = default;
 
 			/*! virtual abstract part of the NVI idiom. See public member for more information.
       *@see defineTransformation*/

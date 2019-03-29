@@ -52,9 +52,9 @@ namespace map
 			/*! Standard class typedefs. */
 			typedef services::GenericStaticLoadPolicyBase< RegistrationKernelInverterBase<VInputDimensions, VOutputDimensions> >
 			Superclass;
-			typedef typename Superclass::ProviderBaseType      ProviderBaseType;
-			typedef typename Superclass::ProviderBasePointer   ProviderBasePointer;
-			typedef typename Superclass::LoadInterfaceType     LoadInterfaceType;
+			using ProviderBaseType = typename Superclass::ProviderBaseType;
+			using ProviderBasePointer = typename Superclass::ProviderBasePointer;
+			using LoadInterfaceType = typename Superclass::LoadInterfaceType;
 
 			virtual void doLoading();
 

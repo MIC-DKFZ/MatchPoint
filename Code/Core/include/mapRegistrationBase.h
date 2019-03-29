@@ -51,10 +51,10 @@ namespace map
 		class MAPCore_EXPORT RegistrationBase: public itk::Object
 		{
 		public:
-			typedef RegistrationBase Self;
-			typedef itk::Object Superclass;
-			typedef itk::SmartPointer<Self> Pointer;
-			typedef itk::SmartPointer<const Self> ConstPointer;
+			using Self = RegistrationBase;
+			using Superclass = itk::Object;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(RegistrationBase, itk::Object);
 
@@ -71,8 +71,8 @@ namespace map
 
 			/*! typedefs used for the TagMap
 			*/
-			typedef String TagType;
-			typedef String ValueType;
+			using TagType = String;
+			using ValueType = String;
 			typedef std::map<TagType, ValueType> TagMapType;
 
 			/*!
@@ -116,7 +116,7 @@ namespace map
 
 		protected:
 			RegistrationBase();
-			virtual ~RegistrationBase();
+			~RegistrationBase() override;
 
 			TagMapType _tags;
 
@@ -135,22 +135,22 @@ namespace map
 			virtual RegistrationBase::TagMapType& getTagValues();
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 		private:
 			//No copy constructor allowed
-			RegistrationBase(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			RegistrationBase(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 
 		};
 
-	}
+	}  // namespace core
 
 	namespace tags
 	{
 		const char* const AlgorithmUID = "AlgorithmUID";
 		const char* const RegistrationUID = "RegistrationUID";
 	}
-}
+}  // namespace map
 
 #endif

@@ -44,15 +44,15 @@ namespace map
 		class MAPCore_EXPORT XMLFileWriter: public ::itk::LightObject
 		{
 		public:
-			typedef XMLFileWriter Self;
-			typedef ::itk::LightObject Superclass;
-			typedef ::itk::SmartPointer<Self> Pointer;
-			typedef ::itk::SmartPointer<const Self> ConstPointer;
+			using Self = XMLFileWriter;
+			using Superclass = ::itk::LightObject;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			itkTypeMacro(XMLFileWriter, ::itk::LightObject);
 			itkNewMacro(Self);
 
-			typedef Element::Pointer ElementPointer;
+			using ElementPointer = Element::Pointer;
 
 			void setXSLTFile(const core::String& file);
 			::map::core::String getXSLTFile() const;
@@ -80,12 +80,12 @@ namespace map
 			::map::core::String _EncodingType;
 
 			XMLFileWriter();
-			~XMLFileWriter();
+			~XMLFileWriter() override;
 
 		private:
 			//No copy constructor allowed
-			XMLFileWriter(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			XMLFileWriter(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 	} //end of namespace structuredData

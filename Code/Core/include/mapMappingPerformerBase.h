@@ -41,21 +41,21 @@ namespace map
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef MappingPerformerBase<TPerformerRequest>  Self;
-			typedef services::ServiceProvider< TPerformerRequest >	 Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Self = MappingPerformerBase<TPerformerRequest>;
+			using Superclass = services::ServiceProvider<TPerformerRequest>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(MappingPerformerBase, ServiceProvider);
 
-			typedef typename Superclass::RequestType        RequestType;
+			using RequestType = typename Superclass::RequestType;
 
-			typedef typename RequestType::RegistrationType  RegistrationType;
-			typedef typename RegistrationType::ConstPointer	RegistrationConstPointer;
-			typedef typename RequestType::InputDataType			InputDataType;
-			typedef typename InputDataType::ConstPointer		InputDataConstPointer;
-			typedef typename RequestType::ResultDataType		ResultDataType;
-			typedef typename ResultDataType::Pointer	      ResultDataPointer;
+			using RegistrationType = typename RequestType::RegistrationType;
+			using RegistrationConstPointer = typename RegistrationType::ConstPointer;
+			using InputDataType = typename RequestType::InputDataType;
+			using InputDataConstPointer = typename InputDataType::ConstPointer;
+			using ResultDataType = typename RequestType::ResultDataType;
+			using ResultDataPointer = typename ResultDataType::Pointer;
 
 			/*! Registers the input data and returns the result data.
 			 * @eguarantee strong
@@ -66,12 +66,12 @@ namespace map
 
 		protected:
 
-			MappingPerformerBase() {};
-			virtual ~MappingPerformerBase() {};
+			MappingPerformerBase() = default;
+			~MappingPerformerBase() override = default;
 
 		private:
-			MappingPerformerBase(const Self&);  //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			MappingPerformerBase(const Self&) = delete;  //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 	} // end namespace core

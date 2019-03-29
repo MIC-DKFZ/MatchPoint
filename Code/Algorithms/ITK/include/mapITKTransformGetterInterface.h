@@ -70,8 +70,8 @@ namespace map
 
 			};
 
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

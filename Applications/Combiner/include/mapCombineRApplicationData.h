@@ -39,7 +39,7 @@ namespace map
 			struct ApplicationData
 			{
 				/** Loaded Registrations.*/
-				typedef std::vector< ::map::core::RegistrationBase::Pointer> RegistrationListType;
+				using RegistrationListType = std::vector< ::map::core::RegistrationBase::Pointer>;
         RegistrationListType _spRegList;
 				std::vector< ::map::core::String>  _regFileList;
         std::vector<bool> _inversionList;
@@ -60,7 +60,7 @@ namespace map
 			/** Parse the application argument passed when starting the application.**/
 			unsigned int ParseArguments(int argc, char** argv, ApplicationData& appData);
 
-		}
-	}
-}
+		}  // namespace combineR
+	}  // namespace apps
+}  // namespace map
 #endif

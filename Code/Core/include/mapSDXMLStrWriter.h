@@ -44,10 +44,10 @@ namespace map
 		class MAPCore_EXPORT XMLStrWriter: public ::itk::LightObject
 		{
 		public:
-			typedef XMLStrWriter Self;
-			typedef ::itk::LightObject Superclass;
-			typedef ::itk::SmartPointer<Self> Pointer;
-			typedef ::itk::SmartPointer<const Self> ConstPointer;
+			using Self = XMLStrWriter;
+			using Superclass = ::itk::LightObject;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			itkTypeMacro(XMLStrWriter, ::itk::LightObject);
 			itkNewMacro(Self);
@@ -63,19 +63,19 @@ namespace map
 			::map::core::String write(const Element* pElement) const;
 
 		protected:
-			typedef unsigned long ElementLevelType;
+			using ElementLevelType = unsigned long;
 
 			virtual core::String writeElement(const Element* pElement, const ElementLevelType& level) const;
 			virtual core::String writeAttributes(const Element* pElement, const ElementLevelType& level) const;
 			virtual core::String writeSubElements(const Element* pElement, const ElementLevelType& level) const;
 
 			XMLStrWriter();
-			~XMLStrWriter();
+			~XMLStrWriter() override;
 
 		private:
 			//No copy constructor allowed
-			XMLStrWriter(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			XMLStrWriter(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 		/** @class XMLIntendedStrWriter
@@ -87,26 +87,26 @@ namespace map
 		class MAPCore_EXPORT XMLIntendedStrWriter: public XMLStrWriter
 		{
 		public:
-			typedef XMLIntendedStrWriter Self;
-			typedef XMLStrWriter Superclass;
-			typedef ::itk::SmartPointer<Self> Pointer;
-			typedef ::itk::SmartPointer<const Self> ConstPointer;
+			using Self = XMLIntendedStrWriter;
+			using Superclass = XMLStrWriter;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			itkTypeMacro(XMLIntendedStrWriter, XMLStrWriter);
 			itkNewMacro(Self);
 
 		protected:
-			typedef Superclass::ElementLevelType ElementLevelType;
+			using ElementLevelType = Superclass::ElementLevelType;
 
-			virtual core::String writeElement(const Element* pElement, const ElementLevelType& level) const;
+			core::String writeElement(const Element* pElement, const ElementLevelType& level) const override;
 
 			XMLIntendedStrWriter();
-			~XMLIntendedStrWriter();
+			~XMLIntendedStrWriter() override;
 
 		private:
 			//No copy constructor allowed
-			XMLIntendedStrWriter(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			XMLIntendedStrWriter(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 		/**

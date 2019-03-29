@@ -52,13 +52,13 @@ namespace map
 				typename TConcreteInterpolator::CoordRepType >
 			{
 			public:
-				typedef FixedInterpolatorPolicy<TConcreteInterpolator>     Self;
-				typedef SealedInterpolatorPolicy<TConcreteInterpolator>    Superclass;
+				using Self = FixedInterpolatorPolicy<TConcreteInterpolator>;
+				using Superclass = SealedInterpolatorPolicy<TConcreteInterpolator>;
 
-				typedef typename Superclass::ConcreteInterpolatorType    ConcreteInterpolatorType;
-				typedef typename Superclass::ConcreteInterpolatorPointer ConcreteInterpolatorPointer;
-				typedef typename Superclass::InterpolatorType            InterpolatorType;
-				typedef typename Superclass::CoordRepType                CoordRepType;
+				using ConcreteInterpolatorType = typename Superclass::ConcreteInterpolatorType;
+				using ConcreteInterpolatorPointer = typename Superclass::ConcreteInterpolatorPointer;
+				using InterpolatorType = typename Superclass::InterpolatorType;
+				using CoordRepType = typename Superclass::CoordRepType;
 
 				using Superclass::getConcreteInterpolator;
 
@@ -79,9 +79,9 @@ namespace map
 
 
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifdef MAP_SEAL_ALGORITHMS
 #define SealedFixedInterpolatorPolicyMacro ::map::algorithm::itk::SealedInterpolatorPolicy

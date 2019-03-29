@@ -35,9 +35,9 @@ namespace iro
     {
     public:
 
-      typedef TRegistrationGraphType GraphType;
-      typedef typename GraphType::edge_descriptor EdgeDescriptorType;
-      typedef TProblemComplianceInterface ProblemComplianceInterface;
+      using GraphType = TRegistrationGraphType;
+      using EdgeDescriptorType = typename GraphType::edge_descriptor;
+      using ProblemComplianceInterface = TProblemComplianceInterface;
 
       bool isValid(EdgeDescriptorType edge, const GraphType& graph, DataRepresentationSupport::Type dataRep, const ProblemComplianceInterface* pProblemCompliance, bool& currentCTrail, bool& currentDTrail) const;
     };

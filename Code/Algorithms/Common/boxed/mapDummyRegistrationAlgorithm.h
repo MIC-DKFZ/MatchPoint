@@ -61,17 +61,17 @@ namespace map
       typedef DummyRegistrationAlgorithm<VDimension, TIdentificationPolicy> Self;
       typedef RegistrationAlgorithm<VDimension, VDimension>	Superclass;
 
-      typedef ::itk::SmartPointer<Self>                                     Pointer;
-      typedef ::itk::SmartPointer<const Self>                               ConstPointer;
+      using Pointer = ::itk::SmartPointer<Self>;
+      using ConstPointer = ::itk::SmartPointer<const Self>;
       itkTypeMacro(DummyRegistrationAlgorithm, RegistrationAlgorithm);
       mapNewAlgorithmMacro(Self);
 
-      typedef TIdentificationPolicy IdentificationPolicyType;
-      typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
-      typedef typename Superclass::UIDPointer UIDPointer;
-      typedef typename Superclass::AlgorithmType AlgorithmType;
-      typedef typename Superclass::RegistrationType RegistrationType;
-      typedef typename Superclass::RegistrationPointer RegistrationPointer;
+      using IdentificationPolicyType = TIdentificationPolicy;
+      using FieldRepRequirement = typename Superclass::FieldRepRequirement;
+      using UIDPointer = typename Superclass::UIDPointer;
+      using AlgorithmType = typename Superclass::AlgorithmType;
+      using RegistrationType = typename Superclass::RegistrationType;
+      using RegistrationPointer = typename Superclass::RegistrationPointer;
 
       mapDefineAlgorithmIdentificationByPolicyMacro;
 
@@ -79,53 +79,53 @@ namespace map
         @eguarantee strong
         @return The algorithm type
        */
-      virtual AlgorithmType getAlgorithmType() const;
+      AlgorithmType getAlgorithmType() const override;
 
-      virtual typename FieldRepRequirement::Type isMovingRepresentationRequired() const;
+      typename FieldRepRequirement::Type isMovingRepresentationRequired() const override;
 
-      virtual typename FieldRepRequirement::Type isTargetRepresentationRequired() const;
+      typename FieldRepRequirement::Type isTargetRepresentationRequired() const override;
 
-      virtual bool isReusable() const;
+      bool isReusable() const override;
 
     protected:
       DummyRegistrationAlgorithm();
-      virtual ~DummyRegistrationAlgorithm();
+      ~DummyRegistrationAlgorithm() override;
 
-      virtual void configureAlgorithm();
+      void configureAlgorithm() override;
 
       /*! @brief starts the computation of the registration
         @eguarantee strong
         @return Indicates if the registration was successfully determined (e.g. could be
         false if an iterative algorithm was stopped prematurely by the user).
        */
-      virtual bool doDetermineRegistration();
+      bool doDetermineRegistration() override;
 
       /*!
        * Returns the final registration
         @eguarantee strong
        */
-      virtual RegistrationPointer doGetRegistration() const;
+      RegistrationPointer doGetRegistration() const override;
 
       /*! Returns if the registration should be computed. The registration is outdated if doGetRegistration returns null
        * or the modification times of at least one policy is newer then the modification time of the registration.
         @eguarantee strong
         @return true if the registration should be (re)computed. False if the registration is uptodate.
        */
-      virtual bool registrationIsOutdated() const;
+      bool registrationIsOutdated() const override;
 
       /*! Methods invoked by derived classes.  */
-      virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
+      void PrintSelf(std::ostream& os, ::itk::Indent indent) const override;
 
     private:
 
       RegistrationPointer _spFinalizedRegistration;
 
-      DummyRegistrationAlgorithm(const Self& source);
-      void operator=(const Self&);  //purposely not implemented
+      DummyRegistrationAlgorithm(const Self& source) = delete;
+      void operator=(const Self&) = delete;  //purposely not implemented
     };
 
-  }
-}
+  }  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapDummyRegistrationAlgorithm.tpp"

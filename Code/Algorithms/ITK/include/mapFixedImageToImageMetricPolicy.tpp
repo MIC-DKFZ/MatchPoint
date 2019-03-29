@@ -59,7 +59,7 @@ namespace map
 				return Superclass::getConcreteMetricControl();
 			};
 
-		}
+		}  // namespace itk
 	} // end namespace algorithm
 } // end namespace map
 

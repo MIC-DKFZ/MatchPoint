@@ -38,12 +38,12 @@ namespace iro
     class MAPOntologySimple_EXPORT SimpleInformationEntity
     {
     public:
-      typedef SimpleInformationEntity Self;
-      typedef ::iro::String                     UIDType;
-      typedef DataRepresentation::Type          DataRepresentationType;
+      using Self = SimpleInformationEntity;
+      using UIDType = ::iro::String;
+      using DataRepresentationType = DataRepresentation::Type;
 
-      typedef std::shared_ptr< Self >         Pointer;
-      typedef std::shared_ptr< const Self >   ConstPointer;
+      using Pointer = std::shared_ptr<Self>;
+      using ConstPointer = std::shared_ptr<const Self>;
 
        /*! returns the UID of the statement.*/
       const UIDType& getUID() const;
@@ -65,11 +65,11 @@ namespace iro
 
     protected:
       UIDType _uid;
-      DataRepresentationType _dataRep;
+      DataRepresentationType _dataRep{DataRepresentation::Discrete};
 
     private:
-      SimpleInformationEntity(const Self&); //not implemented by purpose
-      Self& operator=(const Self&); //not implemented by purpose
+      SimpleInformationEntity(const Self&) = delete; //not implemented by purpose
+      Self& operator=(const Self&) = delete; //not implemented by purpose
     };
 
     /*! @struct SimpleEntityIdentificationPolicy

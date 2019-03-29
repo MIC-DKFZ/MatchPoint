@@ -51,21 +51,21 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef SmartMetaProperty<TValue>  Self;
-			typedef MetaPropertyBase  Superclass;
-			typedef ::itk::SmartPointer<Self>  Pointer;
-			typedef ::itk::SmartPointer<const Self>  ConstPointer;
+			using Self = SmartMetaProperty<TValue>;
+			using Superclass = MetaPropertyBase;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
-			typedef TValue ValueType;
-			typedef ::itk::SmartPointer<ValueType>  ValueSmartPointerType;
-			typedef TValue* ValuePointerType;
+			using ValueType = TValue;
+			using ValueSmartPointerType = ::itk::SmartPointer<ValueType>;
+			using ValuePointerType = TValue *;
 
-			typedef MetaPropertyAccessInterface< ValuePointerType > AccessInterfaceType;
-			typedef typename AccessInterfaceType::ValueSetType ValueSetType;
-			typedef typename AccessInterfaceType::ValueGetType ValueGetType;
+			using AccessInterfaceType = MetaPropertyAccessInterface<ValuePointerType>;
+			using ValueSetType = typename AccessInterfaceType::ValueSetType;
+			using ValueGetType = typename AccessInterfaceType::ValueGetType;
 
-			typedef MetaPropertyLightPointerAccessInterface::ConstLightPointer ConstLightPointer;
-			typedef MetaPropertyLightPointerAccessInterface::LightPointer LightPointer;
+			using ConstLightPointer = MetaPropertyLightPointerAccessInterface::ConstLightPointer;
+			using LightPointer = MetaPropertyLightPointerAccessInterface::LightPointer;
 
 			/** Run-time type information (and related methods). */
 			itkTypeMacro(SmartMetaProperty, MetaPropertyBase);
@@ -83,56 +83,56 @@ namespace map
 			* @return A pointer to the MetaProperty clone.
 			* @eguarantee strong
 			*/
-			virtual ::itk::LightObject::Pointer CreateAnother(void) const;
+			::itk::LightObject::Pointer CreateAnother() const override;
 
 			/**
 			* @brief Returns the unique type name of the value type that stores the property.
 			* @return A pointer to a const char array containing the unique type name.
 			* @eguarantee strong
 			*/
-			virtual const char* getMetaPropertyTypeName() const;
+			const char* getMetaPropertyTypeName() const override;
 
 			/**
 			* @brief Returns the type_id of the value type that stores the property.
 			* @eguarantee strong
 			* @return A constant reference to a std::type_info object
 			*/
-			virtual const std::type_info& getMetaPropertyTypeInfo(void) const;
+			const std::type_info& getMetaPropertyTypeInfo() const override;
 
 			/**
 			* @brief Returns the property value
 			* @return Property value.
 			* @eguarantee strong
 			*/
-			virtual ValueGetType getValue() const;
+			ValueGetType getValue() const override;
 
 			/**
 			* @brief Sets the property to the passed value
 			* @param newValue The new value of the property.
 			* @eguarantee strong
 			*/
-			virtual void setValue(ValueSetType newValue);
+			void setValue(ValueSetType newValue) override;
 
 			/**
 			* @brief Returns the property Value as LightObject pointer
 			* @return indicates if it is possible to convert
 			* @eguarantee strong
 			*/
-			virtual bool getUntypedValue(ConstLightPointer&) const;
+			bool getUntypedValue(ConstLightPointer& /*pValue*/) const override;
 			/**
 			* @brief Returns the property Value as LightObject pointer
 			* @return indicates if it is possible to convert
 			* @eguarantee strong
 			*/
-			virtual bool getUntypedValue(LightPointer&) const;
+			bool getUntypedValue(LightPointer& /*pValue*/) const override;
 
 		protected:
 
 			/** @reimplementation
 			Reimplementation of the itk::LightObject::InternalClone*/
-			virtual ::itk::LightObject::Pointer	InternalClone()	const;
+			::itk::LightObject::Pointer	InternalClone()	const override;
 
-			virtual ~SmartMetaProperty();
+			~SmartMetaProperty() override;
 			SmartMetaProperty(ValueSetType initValue);
 
 			/**
@@ -140,19 +140,19 @@ namespace map
 			* @eguarantee strong
 			* @param os An output stream
 			*/
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 		private:
 
 			/*! Property value.*/
 			ValueSmartPointerType _spValue;
 
-			SmartMetaProperty(const Self&); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			SmartMetaProperty(const Self&) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 # include "mapSmartMetaProperty.tpp"

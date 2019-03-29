@@ -92,7 +92,8 @@ namespace iro
     PathOptionCollection<TPathOption>::
     addOption(ConstOptionPointer option)
   {
-    if (!option) throw exceptions::InvalidArgument("Cannot add path option. Option pointer is null");
+    if (!option) { throw exceptions::InvalidArgument("Cannot add path option. Option pointer is null");
+}
 
     if (this->getMovingEntity() && this->getMovingEntity()!=option->getMovingEntity())
     { 
@@ -134,7 +135,8 @@ namespace iro
     PathOptionCollection<TPathOption>::
     checkForFailureReason() const
   {
-    if (_options.empty()) throw exceptions::InvalidArgument("No option is set. Cannot ascertain failure risks.");
+    if (_options.empty()) { throw exceptions::InvalidArgument("No option is set. Cannot ascertain failure risks.");
+}
 
     if (!_cacheIsUpToDate)
     {
@@ -142,7 +144,7 @@ namespace iro
 
       OptionCollectionType newCache;
 
-      for ( ConstOptionIterator pos = _options.begin(); pos!=_options.end(); ++pos)
+      for ( auto pos = _options.begin(); pos!=_options.end(); ++pos)
       {
         MappingErrorType currentValue = (*pos)->checkForFailureReason();
         if (currentValue<result)
@@ -181,8 +183,7 @@ namespace iro
   template <typename TPathOption>
   PathOptionCollection<TPathOption>::
     ~PathOptionCollection()
-  {
-  };
+  = default;
 
   template <typename TPathOption>
   PathOptionCollection<TPathOption>::

@@ -35,19 +35,19 @@ namespace iro
   class MAPOntology_EXPORT BijectivCorrelation : public InjectivCorrelation
   {
   public:
-    typedef BijectivCorrelation                           Self;
-    typedef std::shared_ptr<BijectivCorrelation>        Pointer;
-    typedef std::shared_ptr<const BijectivCorrelation>  ConstPointer;
+    using Self = BijectivCorrelation;
+    using Pointer = std::shared_ptr<BijectivCorrelation>;
+    using ConstPointer = std::shared_ptr<const BijectivCorrelation>;
 
     /** Returns the identifier name of the correlation type.*/
-    virtual String getName() const;
+    String getName() const override;
 
-    virtual ~BijectivCorrelation();
+    ~BijectivCorrelation() override;
     BijectivCorrelation();
 
   private:
-    BijectivCorrelation(const BijectivCorrelation&); //not implemented by purpose
-    BijectivCorrelation& operator=(const BijectivCorrelation&); //not implemented by purpose
+    BijectivCorrelation(const BijectivCorrelation&) = delete; //not implemented by purpose
+    BijectivCorrelation& operator=(const BijectivCorrelation&) = delete; //not implemented by purpose
   };
 
 } // end namespace iro

@@ -35,7 +35,7 @@ namespace map
 		MetaPropertyAccessor<TValue>::
 		unwrapPropertyValue(const MetaPropertyBase* pProperty, ValueType& value)
 		{
-			const InterfaceType* pAccessInterfaces = dynamic_cast<const InterfaceType*>(pProperty);
+			const auto* pAccessInterfaces = dynamic_cast<const InterfaceType*>(pProperty);
 			bool result = false;
 
 			if (pAccessInterfaces)
@@ -126,7 +126,7 @@ namespace map
 		unwrapPropertyValue(const MetaPropertyBase* pProperty, SmartPointerType& spValue)
 		{
 			bool result = false;
-			const InterfaceType* pAccessInterfaces = dynamic_cast<const InterfaceType*>(pProperty);
+			const auto* pAccessInterfaces = dynamic_cast<const InterfaceType*>(pProperty);
 
 			if (pAccessInterfaces)
 			{
@@ -206,8 +206,8 @@ namespace map
 			return result;
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 
 #endif

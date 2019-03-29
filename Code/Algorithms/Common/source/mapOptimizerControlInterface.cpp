@@ -115,13 +115,11 @@ namespace map
 
 		OptimizerControlInterface::
 		OptimizerControlInterface()
-		{
-		};
+		= default;
 
 		OptimizerControlInterface::
 		~OptimizerControlInterface()
-		{
-		};
+		= default;
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map

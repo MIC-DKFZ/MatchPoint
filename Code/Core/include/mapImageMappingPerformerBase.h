@@ -48,26 +48,26 @@ namespace map
 
 			/*! Standard class typedefs. */
 			typedef ImageMappingPerformerBase<TRegistration, TInputData, TResultData>  Self;
-			typedef MappingPerformerBase< RequestType >       Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = MappingPerformerBase<RequestType>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(ImageMappingPerformerBase, MappingPerformerBase);
 
-			typedef typename Superclass::RegistrationType   RegistrationType;
-			typedef typename Superclass::InputDataType      InputDataType;
-			typedef typename Superclass::InputDataConstPointer   InputDataConstPointer;
-			typedef typename Superclass::ResultDataType     ResultDataType;
-			typedef typename Superclass::ResultDataPointer  ResultDataPointer;
+			using RegistrationType = typename Superclass::RegistrationType;
+			using InputDataType = typename Superclass::InputDataType;
+			using InputDataConstPointer = typename Superclass::InputDataConstPointer;
+			using ResultDataType = typename Superclass::ResultDataType;
+			using ResultDataPointer = typename Superclass::ResultDataPointer;
 
-			typedef typename RequestType::ResultImageDescriptorType ResultImageDescriptorType;
+			using ResultImageDescriptorType = typename RequestType::ResultImageDescriptorType;
 
 			/*! Registers the input data and returns the result data.
 			 * @eguarantee strong
 			 * @param [in] request Referenz to the request that contains all needed information to perform the image registration
 			 * @return Smart pointer to the result image.
 			 */
-			virtual ResultDataPointer performMapping(const RequestType& request) const = 0;
+			ResultDataPointer performMapping(const RequestType& request) const override = 0;
 
 #ifdef ITK_USE_CONCEPT_CHECKING
 			/** Begin concept checking */
@@ -81,11 +81,11 @@ namespace map
 		protected:
 
 			ImageMappingPerformerBase();
-			virtual ~ImageMappingPerformerBase();
+			~ImageMappingPerformerBase() override;
 
 		private:
-			ImageMappingPerformerBase(const Self&);  //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			ImageMappingPerformerBase(const Self&) = delete;  //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 	} // end namespace core

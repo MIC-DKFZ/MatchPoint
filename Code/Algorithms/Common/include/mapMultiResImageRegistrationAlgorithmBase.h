@@ -60,23 +60,23 @@ namespace map
 			public TPyramidesPolicy
 		{
 		public:
-			typedef TMovingImage MovingImageType;
-			typedef TTargetImage TargetImageType;
-			typedef TPyramidesPolicy PyramidesPolicyType;
+			using MovingImageType = TMovingImage;
+			using TargetImageType = TTargetImage;
+			using PyramidesPolicyType = TPyramidesPolicy;
 
 			typedef MultiResImageRegistrationAlgorithmBase<MovingImageType, TargetImageType, TPyramidesPolicy >
 			Self;
-			typedef MultiResRegistrationAlgorithmBase Superclass;
+			using Superclass = MultiResRegistrationAlgorithmBase;
 
 			/** Type of pyramid schedule type */
-			typedef typename Superclass::ScheduleType ScheduleType;
+			using ScheduleType = typename Superclass::ScheduleType;
 
-			typedef typename PyramidesPolicyType::TargetImagePyramideBaseType TargetImagePyramideBaseType;
-			typedef typename PyramidesPolicyType::TargetImagePyramideBasePointer TargetImagePyramideBasePointer;
-			typedef typename PyramidesPolicyType::MovingImagePyramideBaseType MovingImagePyramideBaseType;
-			typedef typename PyramidesPolicyType::MovingImagePyramideBasePointer MovingImagePyramideBasePointer;
+			using TargetImagePyramideBaseType = typename PyramidesPolicyType::TargetImagePyramideBaseType;
+			using TargetImagePyramideBasePointer = typename PyramidesPolicyType::TargetImagePyramideBasePointer;
+			using MovingImagePyramideBaseType = typename PyramidesPolicyType::MovingImagePyramideBaseType;
+			using MovingImagePyramideBasePointer = typename PyramidesPolicyType::MovingImagePyramideBasePointer;
 
-			typedef typename Superclass::DimensionCountType DimensionCountType;
+			using DimensionCountType = typename Superclass::DimensionCountType;
 
 #ifdef ITK_USE_CONCEPT_CHECKING
 			/** Begin concept checking */
@@ -91,19 +91,19 @@ namespace map
 			 information space.
 			  @eguarantee strong
 			 */
-			DimensionCountType getMovingResolutionDimensions() const;
+			DimensionCountType getMovingResolutionDimensions() const override;
 
 			/*! @brief Returns the number of dimensions for the target
 			 information space.
 			  @eguarantee strong
 			 */
-			DimensionCountType getTargetResolutionDimensions() const;
+			DimensionCountType getTargetResolutionDimensions() const override;
 
 
 		protected:
 			/*! @brief virtual destructor
 			*/
-			virtual ~MultiResImageRegistrationAlgorithmBase();
+			~MultiResImageRegistrationAlgorithmBase() override;
 
 			MultiResImageRegistrationAlgorithmBase();
 
@@ -138,8 +138,8 @@ namespace map
 			void operator=(const Self&);  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapMultiResImageRegistrationAlgorithmBase.tpp"

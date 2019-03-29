@@ -51,12 +51,12 @@ namespace map
 				typedef InterimRegistrationResultAccessInterface<VMovingDimensions, VTargetDimensions> Self;
 
 				typedef core::Registration<VMovingDimensions, VTargetDimensions> InterimRegistrationType;
-				typedef typename InterimRegistrationType::Pointer          InterimRegistrationPointer;
+				using InterimRegistrationPointer = typename InterimRegistrationType::Pointer;
 
-				typedef core::FieldRepresentationDescriptor<VMovingDimensions> MovingRepresentationDescriptorType;
-				typedef core::FieldRepresentationDescriptor<VTargetDimensions> TargetRepresentationDescriptorType;
+				using MovingRepresentationDescriptorType = core::FieldRepresentationDescriptor<VMovingDimensions>;
+				using TargetRepresentationDescriptorType = core::FieldRepresentationDescriptor<VTargetDimensions>;
 
-				typedef OptimizerControlInterface::OptimizerMeasureType OptimizerMeasureType;
+				using OptimizerMeasureType = OptimizerControlInterface::OptimizerMeasureType;
 
 				/*! @brief gets the registration result that has been computed in the last iteration.
 				This interim registration may have other representation descriptors, passed as function
@@ -99,8 +99,8 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

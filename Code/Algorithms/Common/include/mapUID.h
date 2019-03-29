@@ -61,18 +61,18 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef UID  Self;
-			typedef ::itk::LightObject  Superclass;
-			typedef ::itk::SmartPointer<Self>  Pointer;
-			typedef ::itk::SmartPointer<const Self>  ConstPointer;
+			using Self = UID;
+			using Superclass = ::itk::LightObject;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			/** Run-time type information (and related methods). */
 			itkTypeMacro(UID, LightObject);
 
-			typedef core::String NamespaceType;
-			typedef core::String NameType;
-			typedef core::String VersionType;
-			typedef core::String BuildTagType;
+			using NamespaceType = core::String;
+			using NameType = core::String;
+			using VersionType = core::String;
+			using BuildTagType = core::String;
 
 			/**
 			* @brief Creates a MetaProperty instance, initializes it and returns it via smartpointer.
@@ -119,7 +119,7 @@ namespace map
 			* @eguarantee strong
 			* @return A constant string representing the whole UID.
 			*/
-			const core::String toStr() const;
+			core::String toStr() const;
 
 		protected:
 			NamespaceType _namespace;
@@ -132,14 +132,14 @@ namespace map
 			* @eguarantee strong
 			* @param os An output stream
 			*/
-			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, ::itk::Indent indent) const override;
 
-			~UID();
-			UID(const NamespaceType& ns, const NameType& name, const VersionType& version,
-				const BuildTagType& buildTag);
+			~UID() override;
+			UID(NamespaceType  ns, NameType  name, VersionType  version,
+				BuildTagType  buildTag);
 		private:
-			UID(const Self&); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			UID(const Self&) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 		/** Helper function that allows to compare uids directly or with wild cards,
@@ -173,7 +173,7 @@ namespace map
 											  bool wcName = false, bool wcVersion = false, bool wcBuild = false);
 
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

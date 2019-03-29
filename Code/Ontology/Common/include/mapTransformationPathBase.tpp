@@ -60,14 +60,12 @@ namespace iro
   template <typename TTransformationInfoTraits, typename TInformationSpaceTraits, typename TProblemStatementTraits>
   TransformationPathBase<TTransformationInfoTraits, TInformationSpaceTraits, TProblemStatementTraits>::
     ~TransformationPathBase()
-  {
-  };
+  = default;
 
   template <typename TTransformationInfoTraits, typename TInformationSpaceTraits, typename TProblemStatementTraits>
   TransformationPathBase<TTransformationInfoTraits, TInformationSpaceTraits, TProblemStatementTraits>::
     TransformationPathBase()
-  {
-  };
+  = default;
 
 } // end namespace iro
 

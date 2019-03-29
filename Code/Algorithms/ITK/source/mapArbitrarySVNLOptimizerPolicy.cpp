@@ -66,7 +66,7 @@ namespace map
 					{
 						::map::events::UnregisterAlgorithmComponentEvent unRegEvent(_spOptimizerControl.GetPointer(),
 								"Unregister current optimizer");
-						this->_spOnChange->Execute((::itk::Object*)NULL, unRegEvent);
+						this->_spOnChange->Execute((::itk::Object*)nullptr, unRegEvent);
 					}
 
 					_mTime.setWatchedObject(pOptimizer);
@@ -76,20 +76,19 @@ namespace map
 					{
 						::map::events::RegisterAlgorithmComponentEvent regEvent(_spOptimizerControl.GetPointer(),
 								"Register new optimizer");
-						this->_spOnChange->Execute((::itk::Object*)NULL, regEvent);
+						this->_spOnChange->Execute((::itk::Object*)nullptr, regEvent);
 					}
 				}
 			};
 
 			ArbitrarySVNLOptimizerPolicy::
-			ArbitrarySVNLOptimizerPolicy() : _automaticOptimizationDirection(true)
+			ArbitrarySVNLOptimizerPolicy()  
 			{
 			};
 
 			ArbitrarySVNLOptimizerPolicy::
 			~ArbitrarySVNLOptimizerPolicy()
-			{
-			};
+			= default;
 
 			ArbitrarySVNLOptimizerPolicy::ITKOptimizerControlType*
 			ArbitrarySVNLOptimizerPolicy::
@@ -150,6 +149,6 @@ namespace map
 					_spOptimizerControl->setMinimize(minimizeToOptimize);
 				}
 			};
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map

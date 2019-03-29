@@ -36,7 +36,7 @@ namespace map
 		{};
 
 		ThreadEventObject::
-		~ThreadEventObject() {};
+		~ThreadEventObject() = default;
 
 		ThreadEventObject::ThreadIDType
 		ThreadEventObject::
@@ -59,7 +59,7 @@ namespace map
 			const Self* pE = dynamic_cast<const Self*>(e);
 			bool result = false;
 
-			if (pE)
+			if (pE != nullptr)
 			{
 				result = (this->_threadID == anyThreadID) || (pE->getThreadID() == this->_threadID);
 			}
@@ -89,5 +89,5 @@ namespace map
 		};
 
 
-	}
-}
+	}  // namespace core
+}  // namespace map

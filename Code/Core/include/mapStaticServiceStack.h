@@ -59,18 +59,18 @@ namespace map
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef TConcreteServiceStack	 ConcreteServiceStackType;
-				typedef typename ConcreteServiceStackType::Pointer                 ConcreteServiceStackPointer;
-				typedef typename ConcreteServiceStackType::ProviderBaseType        ProviderBaseType;
-				typedef typename ProviderBaseType::Pointer										     ProviderBasePointer;
-				typedef typename ProviderBaseType::RequestType										 RequestType;
+				using ConcreteServiceStackType = TConcreteServiceStack;
+				using ConcreteServiceStackPointer = typename ConcreteServiceStackType::Pointer;
+				using ProviderBaseType = typename ConcreteServiceStackType::ProviderBaseType;
+				using ProviderBasePointer = typename ProviderBaseType::Pointer;
+				using RequestType = typename ProviderBaseType::RequestType;
 
 				typedef StaticServiceStack<ProviderBaseType, TStaticLoadStaticPolicy, TThreadingStaticPolicy>  Self;
 
-				typedef TStaticLoadStaticPolicy<ConcreteServiceStackType>          StaticLoadStaticPolicyType;
-				typedef typename ConcreteServiceStackType::StaticLoadPolicyType    StaticLoadPolicyType;
-				typedef TThreadingStaticPolicy                                     ThreadingStaticPolicyType;
-				typedef typename ConcreteServiceStackType::ThreadingPolicyType     ThreadingPolicyType;
+				using StaticLoadStaticPolicyType = TStaticLoadStaticPolicy<ConcreteServiceStackType>;
+				using StaticLoadPolicyType = typename ConcreteServiceStackType::StaticLoadPolicyType;
+				using ThreadingStaticPolicyType = TThreadingStaticPolicy;
+				using ThreadingPolicyType = typename ConcreteServiceStackType::ThreadingPolicyType;
 
 
 				/*! Returns a pointer to the provider that might can handle the request.

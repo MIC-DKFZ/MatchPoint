@@ -57,7 +57,7 @@ namespace map
     const char* const UseNullVector = "UseNullVector";
 
 
-	}
-}
+	}  // namespace tags
+}  // namespace map
 
 #endif

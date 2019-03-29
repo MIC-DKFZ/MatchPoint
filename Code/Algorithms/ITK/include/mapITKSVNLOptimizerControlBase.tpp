@@ -170,8 +170,7 @@ namespace map
 			template<class TConcreteOptimizer>
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::
 			~ITKSVNLOptimizerControlBase()
-			{
-			}
+			= default;
 
 			template<class TConcreteOptimizer>
 			ITKSVNLOptimizerControlBase<TConcreteOptimizer>::

@@ -49,14 +49,14 @@ namespace map
 			class MAPAlgorithmsITK_EXPORT ITKMetricControlInterface : public ::itk::Object
 			{
 			public:
-				typedef ITKMetricControlInterface Self;
-				typedef ::itk::Object Superclass;
-				typedef ::itk::SmartPointer<Self>         Pointer;
-				typedef ::itk::SmartPointer<const Self>   ConstPointer;
+				using Self = ITKMetricControlInterface;
+				using Superclass = ::itk::Object;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKMetricControlInterface, itk::Object);
 
-				typedef ::itk::CostFunction MetricBaseType;
+				using MetricBaseType = ::itk::CostFunction;
 
 				/*! Should an optimizer minimize the metric to optimize it?
 				@eguarantee no fail
@@ -74,17 +74,17 @@ namespace map
 			protected:
 
 				ITKMetricControlInterface();
-				virtual ~ITKMetricControlInterface();
+				~ITKMetricControlInterface() override;
 
 			private:
 				//No copy constructor allowed
-				ITKMetricControlInterface(const Self& source);
-				void operator=(const Self&);  //purposely not implemented
+				ITKMetricControlInterface(const Self& source) = delete;
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

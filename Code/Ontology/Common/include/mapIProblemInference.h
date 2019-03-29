@@ -48,22 +48,22 @@ namespace iro
 		class IProblemInference
 		{
 		public:
-      typedef typename TPMTraits::Type                 ProblemModelType;
-      typedef typename TPMTraits::ConstPointer         ConstProblemModelPointer;
-      typedef typename TPMTraits::InferencePointer     ProblemModelInferencePointer;
+      using ProblemModelType = typename TPMTraits::Type;
+      using ConstProblemModelPointer = typename TPMTraits::ConstPointer;
+      using ProblemModelInferencePointer = typename TPMTraits::InferencePointer;
 
-      typedef typename std::vector<ConstProblemModelPointer>        ConstProblemModelVectorType;
+      using ConstProblemModelVectorType = typename std::vector<ConstProblemModelPointer>;
 
       using ProblemStatementTraitsType = typename TPMTraits::ProblemStatementTraitsType;
 
-      typedef typename ProblemStatementTraitsType::Type             ProblemStatementType;
-      typedef typename ProblemStatementTraitsType::ConstPointer     ConstProblemStatementPointer;
-      typedef typename ProblemStatementTraitsType::InferencePointer ProblemStatementInferencePointer;
+      using ProblemStatementType = typename ProblemStatementTraitsType::Type;
+      using ConstProblemStatementPointer = typename ProblemStatementTraitsType::ConstPointer;
+      using ProblemStatementInferencePointer = typename ProblemStatementTraitsType::InferencePointer;
 
-      typedef typename std::vector<ConstProblemStatementPointer>                ConstProblemStatementVectorType;
+      using ConstProblemStatementVectorType = typename std::vector<ConstProblemStatementPointer>;
       
 
-      typedef IProblemStatementAssociated<ProblemStatementTraitsType>  ProblemAssociatedInterface;
+      using ProblemAssociatedInterface = IProblemStatementAssociated<ProblemStatementTraitsType>;
 
       /*! Queries for all ProblemModels that are associated with the given instance
       * (more precise with its associated problem statement) and returns result set.
@@ -144,8 +144,8 @@ namespace iro
       *@see actualize*/
 			virtual Result<ConstProblemModelPointer> doActualize(ProblemModelInferencePointer pm) const = 0;
 
-      virtual ~IProblemInference() {};
-			IProblemInference() {};
+      virtual ~IProblemInference() = default;
+			IProblemInference() = default;
 
 		private:
 			IProblemInference(const IProblemInference&); //not implemented by purpose

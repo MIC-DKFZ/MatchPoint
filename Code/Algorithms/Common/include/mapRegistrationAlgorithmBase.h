@@ -63,10 +63,10 @@ namespace map
 			public facet::AlgorithmIdentificationInterface
 		{
 		public:
-			typedef RegistrationAlgorithmBase Self;
-			typedef ::itk::Object               Superclass;
-			typedef ::itk::SmartPointer<Self>        Pointer;
-			typedef ::itk::SmartPointer<const Self>  ConstPointer;
+			using Self = RegistrationAlgorithmBase;
+			using Superclass = ::itk::Object;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 			itkTypeMacro(RegistrationAlgorithmBase, ::itk::Object);
 
 			/*! @brief There are two algorithm types, analytic and iterative ones, which
@@ -186,32 +186,32 @@ namespace map
 			void doneFirstConfiguration();
 
 			RegistrationAlgorithmBase();
-			virtual ~RegistrationAlgorithmBase();
+			~RegistrationAlgorithmBase() override;
 
 			/*! Methods invoked by ::itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, ::itk::Indent indent) const override;
 
 			/*! mutex used to secure all state changes.
 			 */
 			::itk::SimpleFastMutexLock _stateLock;
 
-			typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock > StateLockHolderType;
+			using StateLockHolderType = ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock>;
 
 		private:
 			/*! the current state of the algorithm (initialized, pausing, ...)
 			 */
-			AlgorithmState::Type _currentState;
+			AlgorithmState::Type _currentState{AlgorithmState::Pending};
 
 			/*! This member is used to indicate if a algorithm instance is configured the first time.
 			 * it is set by mapNewAlgorithmMacro()*/
-			bool _firstConfiguration;
+			bool _firstConfiguration{true};
 
 			//No copy constructor allowed
-			RegistrationAlgorithmBase(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			RegistrationAlgorithmBase(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

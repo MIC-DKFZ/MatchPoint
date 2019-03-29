@@ -60,20 +60,19 @@ namespace map
                 typedef GenericFieldGeneratingCombinationFunctor < VInputDimensions, VInterimDimensions, VOutputDimensions >
                     Self;
                 typedef TransformGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
-                typedef itk::SmartPointer<Self>        Pointer;
-                typedef itk::SmartPointer<const Self>  ConstPointer;
+                using Pointer = itk::SmartPointer<Self>;
+                using ConstPointer = itk::SmartPointer<const Self>;
                 typedef CombinationFunctorInterface < VInputDimensions, VInterimDimensions, VOutputDimensions >
                     CombinationInterface;
 
-                typedef typename Superclass::InFieldRepresentationType            InFieldRepresentationType;
-                typedef typename Superclass::InFieldRepresentationConstPointer    InFieldRepresentationConstPointer;
-                typedef typename Superclass::OutFieldRepresentationType           OutFieldRepresentationType;
-                typedef typename Superclass::OutFieldRepresentationConstPointer
-                    OutFieldRepresentationConstPointer;
-                typedef typename Superclass::TransformType                      TransformType;
-                typedef typename Superclass::TransformPointer                   TransformPointer;
-                typedef typename CombinationInterface::SourceKernel1BaseType SourceKernel1BaseType;
-                typedef typename CombinationInterface::SourceKernel2BaseType SourceKernel2BaseType;
+                using InFieldRepresentationType = typename Superclass::InFieldRepresentationType;
+                using InFieldRepresentationConstPointer = typename Superclass::InFieldRepresentationConstPointer;
+                using OutFieldRepresentationType = typename Superclass::OutFieldRepresentationType;
+                using OutFieldRepresentationConstPointer = typename Superclass::OutFieldRepresentationConstPointer;
+                using TransformType = typename Superclass::TransformType;
+                using TransformPointer = typename Superclass::TransformPointer;
+                using SourceKernel1BaseType = typename CombinationInterface::SourceKernel1BaseType;
+                using SourceKernel2BaseType = typename CombinationInterface::SourceKernel2BaseType;
 
                 itkTypeMacro(GenericFieldGeneratingCombinationFunctor, TransformGenerationFunctor);
 
@@ -81,7 +80,7 @@ namespace map
                  * @eguarantee should be strong
                  * @return Smart pointer to the generated field.
                  */
-                virtual TransformPointer generateTransform() const override;
+                TransformPointer generateTransform() const override;
 
                 /*! Returns a const pointer to the first source kernel base (source field kernel)
                 * that will be used in order to generate the field.
@@ -89,7 +88,7 @@ namespace map
                 * @return Pointer to the source field kernel.
                 * @post Return value is guaranteed not to be NULL.
                 */
-                virtual const SourceKernel1BaseType* get1stSourceKernelBase(void) const override;
+                const SourceKernel1BaseType* get1stSourceKernelBase() const override;
 
                 /*! Returns a const pointer to the second source kernel base (source model kernel)
                 * that will be used in order to generate the field.
@@ -97,7 +96,7 @@ namespace map
                 * @return Pointer to the source field kernel.
                 * @post Return value is guaranteed not to be NULL.
                 */
-                virtual const SourceKernel2BaseType* get2ndSourceKernelBase(void) const override;
+                const SourceKernel2BaseType* get2ndSourceKernelBase() const override;
 
                 /*! Static methods that creates the functor.
                  * Thus it is a specialized version of the itkNewMacro()
@@ -117,7 +116,7 @@ namespace map
                 /*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
                  * @eguarantee strong
                  * @return Smart pointer to the new functor as itk::LightObject*/
-                virtual ::itk::LightObject::Pointer CreateAnother(void) const;
+                virtual ::itk::LightObject::Pointer CreateAnother() const;
 
             protected:
                 typedef typename RegistrationTopology < VInputDimensions,

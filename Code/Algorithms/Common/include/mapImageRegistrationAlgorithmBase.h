@@ -50,11 +50,11 @@ namespace map
 		public:
 			typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage> Self;
 
-			typedef TMovingImage MovingImageType;
-			typedef TTargetImage TargetImageType;
+			using MovingImageType = TMovingImage;
+			using TargetImageType = TTargetImage;
 
-			typedef typename MovingImageType::ConstPointer MovingImageConstPointer;
-			typedef typename TargetImageType::ConstPointer TargetImageConstPointer;
+			using MovingImageConstPointer = typename MovingImageType::ConstPointer;
+			using TargetImageConstPointer = typename TargetImageType::ConstPointer;
 
 			/*! @brief gets a const pointer to the moving image
 			@eguarantee strong
@@ -110,8 +110,8 @@ namespace map
 			void operator=(const Self&);  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapImageRegistrationAlgorithmBase.tpp"

@@ -48,20 +48,20 @@ namespace map
 		{
 		protected:
 			/*! Standard class typedefs. */
-			typedef services::GenericStaticLoadPolicyBase<TProviderBase> Superclass;
-			typedef typename Superclass::ProviderBaseType      ProviderBaseType;
-			typedef typename Superclass::ProviderBasePointer   ProviderBasePointer;
-			typedef typename Superclass::LoadInterfaceType     LoadInterfaceType;
+			using Superclass = services::GenericStaticLoadPolicyBase<TProviderBase>;
+			using ProviderBaseType = typename Superclass::ProviderBaseType;
+			using ProviderBasePointer = typename Superclass::ProviderBasePointer;
+			using LoadInterfaceType = typename Superclass::LoadInterfaceType;
 
-			virtual void doLoading();
+			void doLoading() override;
 
 			ImageMappingPerformerLoadPolicy();
 			~ImageMappingPerformerLoadPolicy();
 
 		private:
 			ImageMappingPerformerLoadPolicy(const
-											ImageMappingPerformerLoadPolicy&);  //purposely not implemented
-			void operator=(const ImageMappingPerformerLoadPolicy&);  //purposely not implemented
+											ImageMappingPerformerLoadPolicy&) = delete;  //purposely not implemented
+			void operator=(const ImageMappingPerformerLoadPolicy&) = delete;  //purposely not implemented
 		};
 
 	} // end namespace core

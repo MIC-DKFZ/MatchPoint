@@ -25,7 +25,7 @@
 #include "mapObserverSentinel.h"
 #include "mapExceptionObjectMacros.h"
 
-#include <assert.h>
+#include <cassert>
 
 
 namespace map
@@ -46,7 +46,7 @@ namespace map
 
 		::itk::LightObject::Pointer
 		ObserverSentinel::
-		CreateAnother(void) const
+		CreateAnother() const
 		{
 			mapDefaultExceptionMacro( << "CreateAnother not implemented for ObserverSentinel");
 		}
@@ -73,5 +73,5 @@ namespace map
 			_spObject->RemoveObserver(_tag);
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map

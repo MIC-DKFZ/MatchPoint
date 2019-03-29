@@ -43,7 +43,7 @@ namespace map
 		class MAPCore_EXPORT SyncObject
 		{
 		public:
-			typedef core::String SyncPropertyTagType;
+			using SyncPropertyTagType = core::String;
 			typedef std::map<SyncPropertyTagType, core::MetaPropertyBase::Pointer> SyncPropertyMapType;
 
 			SyncPropertyMapType _map;
@@ -53,7 +53,7 @@ namespace map
 			{
 				bool result = false;
 
-				SyncPropertyMapType::const_iterator finding = _map.find(tag);
+				auto finding = _map.find(tag);
 
 				if (finding != _map.end())
 				{

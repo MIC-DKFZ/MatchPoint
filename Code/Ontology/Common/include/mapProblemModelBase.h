@@ -53,23 +53,23 @@ namespace iro
     public:
       typedef ProblemModelBase<TProblemStatementTraits, TUIDPolicy>   Self;
 
-      typedef iro::String                       NameType;
-      typedef typename TUIDPolicy::UIDType      UIDType;
+      using NameType = iro::String;
+      using UIDType = typename TUIDPolicy::UIDType;
 
-      typedef std::shared_ptr< Self >         Pointer;
-      typedef std::shared_ptr< const Self >   ConstPointer;
+      using Pointer = std::shared_ptr<Self>;
+      using ConstPointer = std::shared_ptr<const Self>;
 
       using ProblemStatementTraitsType = TProblemStatementTraits;
-      typedef typename ProblemStatementTraitsType::Type           ProblemStatementType;
-      typedef typename ProblemStatementType::ConstPointer      ProblemStatementConstPointer;
-      typedef std::vector<ProblemStatementConstPointer> StatementVectorType;
+      using ProblemStatementType = typename ProblemStatementTraitsType::Type;
+      using ProblemStatementConstPointer = typename ProblemStatementType::ConstPointer;
+      using StatementVectorType = std::vector<ProblemStatementConstPointer>;
 
-      typedef typename StatementVectorType::iterator		                  ProblemIterator;
-      typedef typename StatementVectorType::const_iterator               ConstProblemIterator;
+      using ProblemIterator = typename StatementVectorType::iterator;
+      using ConstProblemIterator = typename StatementVectorType::const_iterator;
 
-      typedef typename StatementVectorType::size_type                    SizeType;
+      using SizeType = typename StatementVectorType::size_type;
 
-      typedef typename ProblemStatementType::UIDType                  ProblemStatementUIDType;
+      using ProblemStatementUIDType = typename ProblemStatementType::UIDType;
 
       /*! returns the UID of the statement.*/
       const UIDType& getUID() const;
@@ -110,12 +110,12 @@ namespace iro
       */
       Pointer clone() const;
 
-      ~ProblemModelBase();
+      ~ProblemModelBase() override;
       ProblemModelBase();
 
     protected:
 
-      virtual bool doCheckComplianceOfStatement(const ProblemStatementType* pProblem) const;
+      bool doCheckComplianceOfStatement(const ProblemStatementType* pProblem) const override;
 
       StatementVectorType _associatedStatements;
 

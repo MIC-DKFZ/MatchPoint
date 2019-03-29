@@ -40,8 +40,8 @@ namespace map
 		class MAPAlgorithms_EXPORT AlgorithmException : public core::ExceptionObject
 		{
 		public:
-			typedef core::ExceptionObject Superclass;
-			typedef core::ExceptionObject BaseExceptionType;
+			using Superclass = core::ExceptionObject;
+			using BaseExceptionType = core::ExceptionObject;
 
 			/*! Default constructor.  Needed to ensure the exception object can be
 			 * copied. */
@@ -58,9 +58,9 @@ namespace map
 							   const std::string& loc);
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
-			virtual ~AlgorithmException() throw();
+			~AlgorithmException() noexcept override;
 
-			virtual const char* GetNameOfClass() const;
+			const char* GetNameOfClass() const override;
 
 			/*! Clones the exception object and returns a pointer to a copy of the exception object.
 			 * The cloned object is created on the heap and should function caller has to take care about
@@ -71,7 +71,7 @@ namespace map
 			 * and every task is processed (or failed through an exception).
 			 * @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			 * @eguarantee no throw*/
-			virtual BaseExceptionType* clone() const throw();
+			BaseExceptionType* clone() const noexcept override;
 		};
 
 	} // end namespace algorithm

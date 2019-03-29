@@ -31,25 +31,26 @@ namespace iro
 		class IProblemComplianceDefinition
 		{
 		public:
-      typedef TProblemStatement  ProblemStatementType;
+      using ProblemStatementType = TProblemStatement;
 
 			/** Checks if the passed problem statement is compliant.
        * @pre pProblem must point to a valid instance.
        * @exception ::iro::exceptions::InvalidArgument: pProblem is not valid*/
 			bool checkComplianceOfStatement(const ProblemStatementType* pProblem) const
       {
-        if (!pProblem) throw ::iro::exceptions::InvalidArgument("Cannot check compliance. Invalid proplem statement pointer");
+        if (!pProblem) { throw ::iro::exceptions::InvalidArgument("Cannot check compliance. Invalid proplem statement pointer");
+}
         return doCheckComplianceOfStatement(pProblem);
       };
 
 		protected:
 			virtual bool doCheckComplianceOfStatement(const ProblemStatementType* pProblem) const = 0;
 
-      virtual ~IProblemComplianceDefinition() {};
-      IProblemComplianceDefinition() {};
+      virtual ~IProblemComplianceDefinition() = default;
+      IProblemComplianceDefinition() = default;
 		private:
-			IProblemComplianceDefinition(const IProblemComplianceDefinition&); //not implemented by purpose
-			IProblemComplianceDefinition& operator=(const IProblemComplianceDefinition&); //not implemented by purpose
+			IProblemComplianceDefinition(const IProblemComplianceDefinition&) = delete; //not implemented by purpose
+			IProblemComplianceDefinition& operator=(const IProblemComplianceDefinition&) = delete; //not implemented by purpose
 		};
 } // end namespace iro
 

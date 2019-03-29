@@ -36,4 +36,4 @@ namespace map
 		};
 
 	}
-}
+}  // namespace map

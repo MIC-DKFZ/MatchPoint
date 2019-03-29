@@ -37,12 +37,12 @@ namespace map
 		class MAPCore_EXPORT MissingProviderException : public ServiceException
 		{
 		public:
-			typedef MissingProviderException Self;
-			typedef ServiceException Superclass;
+			using Self = MissingProviderException;
+			using Superclass = ServiceException;
 
 			/*! Default constructor.  Needed to ensure the exception object can be
 			 * copied. */
-			MissingProviderException() : Superclass() {}
+			MissingProviderException()  = default;
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
 			MissingProviderException(const char* file, unsigned int lineNumber) : Superclass(file,
@@ -57,9 +57,9 @@ namespace map
 									 const std::string& loc) : Superclass(file, lineNumber, desc, loc) {}
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
-			virtual ~MissingProviderException() throw() {}
+			~MissingProviderException() noexcept override = default;
 
-			virtual const char* GetNameOfClass() const
+			const char* GetNameOfClass() const override
 			{
 				return "map::MissingProviderException";
 			}
@@ -73,7 +73,7 @@ namespace map
 			 * and every task is processed (or failed through an exception).
 			 * @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			 * @eguarantee no throw*/
-			virtual BaseExceptionType* clone() const throw();
+			BaseExceptionType* clone() const noexcept override;
 		};
 
 	} // end namespace core

@@ -50,7 +50,7 @@ namespace map
 			class MAPAlgorithms_EXPORT StoppableAlgorithmInterface
 			{
 			public:
-				typedef StoppableAlgorithmInterface Self;
+				using Self = StoppableAlgorithmInterface;
 
 				/*! @brief stops the algorithm if it is stoppable.
 				@remark A successful return of this function does not guarantee that the algorithm has already stopped. It only
@@ -79,12 +79,12 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				StoppableAlgorithmInterface(const Self& source); //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				StoppableAlgorithmInterface(const Self& source) = delete; //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

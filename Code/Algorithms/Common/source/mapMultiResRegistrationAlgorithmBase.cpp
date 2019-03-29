@@ -32,13 +32,11 @@ namespace map
 
 		MultiResRegistrationAlgorithmBase::
 		MultiResRegistrationAlgorithmBase()
-		{
-		};
+		= default;
 
 		MultiResRegistrationAlgorithmBase::
 		~MultiResRegistrationAlgorithmBase()
-		{
-		};
+		= default;
 
 		void
 		MultiResRegistrationAlgorithmBase::
@@ -142,7 +140,7 @@ namespace map
 			//or want to modify the new schedules before they are set
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 

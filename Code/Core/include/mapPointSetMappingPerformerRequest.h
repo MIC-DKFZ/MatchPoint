@@ -48,18 +48,18 @@ namespace map
 		public:
 			typedef MappingPerformerRequestBase<TRegistration, TInputData, TResultData> Superclass;
 
-			typedef typename Superclass::ResultDataType ResultDataType;
-			typedef typename Superclass::RegistrationType RegistrationType;
-			typedef typename Superclass::InputDataType InputDataType;
-			typedef typename ResultDataType::PixelType ErrorPointValueType;
+			using ResultDataType = typename Superclass::ResultDataType;
+			using RegistrationType = typename Superclass::RegistrationType;
+			using InputDataType = typename Superclass::InputDataType;
+			using ErrorPointValueType = typename ResultDataType::PixelType;
 
 			PointSetMappingPerformerRequest(const RegistrationType* pRegistration,
 											const InputDataType* pInputData, bool throwOnMappingError, const ErrorPointValueType& errorValue);
 			virtual ~PointSetMappingPerformerRequest();
 
-			PointSetMappingPerformerRequest(const PointSetMappingPerformerRequest&);
+			PointSetMappingPerformerRequest(const PointSetMappingPerformerRequest& /*other*/);
 
-			void operator=(const PointSetMappingPerformerRequest&);
+			void operator=(const PointSetMappingPerformerRequest& /*other*/);
 
 			bool _throwOnMappingError;
 			ErrorPointValueType _errorValue;

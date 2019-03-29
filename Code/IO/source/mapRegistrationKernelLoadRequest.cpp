@@ -21,7 +21,7 @@
 */
 
 #include "mapRegistrationKernelLoadRequest.h"
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -41,8 +41,7 @@ namespace map
 
 		RegistrationKernelLoadRequest::
 		~RegistrationKernelLoadRequest()
-		{
-		};
+		= default;
 
 		RegistrationKernelLoadRequest::
 		RegistrationKernelLoadRequest(const RegistrationKernelLoadRequest& request): _spKernelDescriptor(

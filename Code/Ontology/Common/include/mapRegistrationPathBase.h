@@ -43,26 +43,26 @@ namespace iro
     public:
       typedef RegistrationPathBase<TRegistrationInfoTraits, TTransformationPathTraits> Self;
       typedef ISConnectorPathBase<TRegistrationInfoTraits, typename TTransformationPathTraits::InformationSpaceTraitsType, typename TTransformationPathTraits::ProblemStatementTraitsType> Superclass;
-      typedef ::std::shared_ptr<Self> Pointer;
-      typedef ::std::shared_ptr<const Self> ConstPointer;
+      using Pointer = ::std::shared_ptr<Self>;
+      using ConstPointer = ::std::shared_ptr<const Self>;
 
-      typedef typename Superclass::ConstISPointer  ConstISPointer;
+      using ConstISPointer = typename Superclass::ConstISPointer;
 
-      typedef typename Superclass::ConstISPointer  ProblemComplianceInterface;
+      using ProblemComplianceInterface = typename Superclass::ConstISPointer;
 
-      typedef typename Superclass::ProblemStatementType   ProblemStatementType;
-      typedef typename Superclass::ProblemPointer         ProblemPointer;
-      typedef typename Superclass::ConstProblemPointer    ConstProblemPointer;
+      using ProblemStatementType = typename Superclass::ProblemStatementType;
+      using ProblemPointer = typename Superclass::ProblemPointer;
+      using ConstProblemPointer = typename Superclass::ConstProblemPointer;
 
-      typedef typename Superclass::ConstPathElementPointer  ConstPathElementPointer;
+      using ConstPathElementPointer = typename Superclass::ConstPathElementPointer;
 
-      typedef typename Superclass::PathElementIterator      PathElementIterator;
-      typedef typename Superclass::ConstPathElementIterator ConstPathElementIterator;
-      typedef typename Superclass::PathSizeType             PathSizeType;
+      using PathElementIterator = typename Superclass::PathElementIterator;
+      using ConstPathElementIterator = typename Superclass::ConstPathElementIterator;
+      using PathSizeType = typename Superclass::PathSizeType;
 
-      typedef typename TTransformationPathTraits::ConstPointer ConstTransformationPathPointer;
-      typedef typename TTransformationPathTraits::Pointer      TransformationPathPointer;
-      typedef typename TTransformationPathTraits::Type         TransformationPathType;
+      using ConstTransformationPathPointer = typename TTransformationPathTraits::ConstPointer;
+      using TransformationPathPointer = typename TTransformationPathTraits::Pointer;
+      using TransformationPathType = typename TTransformationPathTraits::Type;
 
       /*! Returns the transformation path formed by the continuous transformations stored in each path element.
        * @remark If not every element of the path has a continuous transformation the transformation path cannot
@@ -75,7 +75,7 @@ namespace iro
        * is no valid pathway.*/
       ConstTransformationPathPointer getDiscreteTransformationPath() const;
 
-			virtual ~RegistrationPathBase();
+			~RegistrationPathBase() override;
 			RegistrationPathBase();
 
     private:

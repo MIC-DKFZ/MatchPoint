@@ -44,16 +44,16 @@ namespace map
 			::map::core::services::ServiceProvider< RegistrationKernelLoadRequest >
 		{
 		public:
-			typedef RegistrationKernelLoadRequest RequestType;
+			using RequestType = RegistrationKernelLoadRequest;
 
 			/*! Standard class typedefs. */
-			typedef RegistrationKernelLoaderBase   Self;
-			typedef core::services::ServiceProvider<RequestType>	 Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Self = RegistrationKernelLoaderBase;
+			using Superclass = core::services::ServiceProvider<RequestType>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
-			typedef itk::Object                    GenericKernelType;
-			typedef itk::Object::Pointer           GenericKernelPointer;
+			using GenericKernelType = itk::Object;
+			using GenericKernelPointer = itk::Object::Pointer;
 
 			itkTypeMacro(RegistrationKernelLoaderBase, ServiceProvider);
 
@@ -92,14 +92,14 @@ namespace map
 		protected:
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 			RegistrationKernelLoaderBase();
-			virtual ~RegistrationKernelLoaderBase();
+			~RegistrationKernelLoaderBase() override;
 
 		private:
-			RegistrationKernelLoaderBase(const Self&);  //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			RegistrationKernelLoaderBase(const Self&) = delete;  //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 	} // end namespace io

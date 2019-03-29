@@ -92,8 +92,10 @@ namespace iro
     PathOption<TPathTraits, TPathCheckPolicy>::
     checkForFailureReason() const
   {
-    if (!_path) throw exceptions::InvalidArgument("No path is set. Cannot ascertain failure risks.");
-    if (!_movingEntity) throw exceptions::InvalidArgument("No moving entity is set. Cannot ascertain failure risks.");
+    if (!_path) { throw exceptions::InvalidArgument("No path is set. Cannot ascertain failure risks.");
+}
+    if (!_movingEntity) { throw exceptions::InvalidArgument("No moving entity is set. Cannot ascertain failure risks.");
+}
     return TPathCheckPolicy::checkForFailureReason(_path,_movingEntity);
   };
 
@@ -125,14 +127,12 @@ namespace iro
   template <typename TPathTraits, typename TPathCheckPolicy>
   PathOption<TPathTraits, TPathCheckPolicy>::
     ~PathOption()
-  {
-  };
+  = default;
 
   template <typename TPathTraits, typename TPathCheckPolicy>
   PathOption<TPathTraits, TPathCheckPolicy>::
     PathOption()
-  {
-  };
+  = default;
 
 } // end namespace iro
 

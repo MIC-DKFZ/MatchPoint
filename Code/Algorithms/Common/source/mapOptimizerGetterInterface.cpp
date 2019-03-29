@@ -33,15 +33,11 @@ namespace map
 		{
 
 			OptimizerGetterInterface::OptimizerGetterInterface()
-			{
-
-			};
+			= default;
 
 			OptimizerGetterInterface::~OptimizerGetterInterface()
-			{
+			= default;
 
-			};
-
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map

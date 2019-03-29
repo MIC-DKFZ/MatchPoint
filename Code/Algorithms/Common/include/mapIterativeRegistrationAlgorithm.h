@@ -57,16 +57,14 @@ namespace map
 			typedef facet::InterimRegistrationResultAccessInterface<VMovingDimensions, VTargetDimensions>
 			InterimInterfaceType;
 
-			typedef typename InterimInterfaceType::InterimRegistrationType InterimRegistrationType;
-			typedef typename InterimRegistrationType::Pointer          InterimRegistrationPointer;
+			using InterimRegistrationType = typename InterimInterfaceType::InterimRegistrationType;
+			using InterimRegistrationPointer = typename InterimRegistrationType::Pointer;
 
-			typedef typename InterimInterfaceType::MovingRepresentationDescriptorType
-			MovingRepresentationDescriptorType;
-			typedef typename InterimInterfaceType::TargetRepresentationDescriptorType
-			TargetRepresentationDescriptorType;
+			using MovingRepresentationDescriptorType = typename InterimInterfaceType::MovingRepresentationDescriptorType;
+			using TargetRepresentationDescriptorType = typename InterimInterfaceType::TargetRepresentationDescriptorType;
 
-			typedef typename InterimInterfaceType::OptimizerMeasureType OptimizerMeasureType;
-			typedef typename RegistrationAlgorithmBase::AlgorithmType AlgorithmType;
+			using OptimizerMeasureType = typename InterimInterfaceType::OptimizerMeasureType;
+			using AlgorithmType = typename RegistrationAlgorithmBase::AlgorithmType;
 
 			/*! @brief gets the registration result that has been computed in the last iteration.
 			This interim registration may have other representation descriptors, passed as function
@@ -94,7 +92,7 @@ namespace map
 
 			virtual AlgorithmType getAlgorithmType() const;
 
-			virtual bool stopAlgorithm();
+			bool stopAlgorithm() override;
 
 		protected:
 
@@ -160,7 +158,7 @@ namespace map
 			virtual bool doStopAlgorithm() = 0;
 
 			IterativeRegistrationAlgorithm();
-			virtual ~IterativeRegistrationAlgorithm();
+			~IterativeRegistrationAlgorithm() override;
 
 			/*! Description of the reason/condition that lead to the last stopping of the algorithm.
 			 * it is used by this class to fill the comment of the StopAlgorithmEvent. Derived classes
@@ -177,9 +175,9 @@ namespace map
 
 		};
 
-	}
+	}  // namespace algorithm
 
-}
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapIterativeRegistrationAlgorithm.tpp"

@@ -61,14 +61,12 @@ namespace map
 
 			ITKSVNLOptimizerControlInterface::
 			ITKSVNLOptimizerControlInterface()
-			{
-			};
+			= default;
 
 			ITKSVNLOptimizerControlInterface::
 			~ITKSVNLOptimizerControlInterface()
-			{
-			};
+			= default;
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map

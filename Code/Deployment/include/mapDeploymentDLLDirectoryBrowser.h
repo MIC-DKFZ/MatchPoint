@@ -55,18 +55,18 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef DLLDirectoryBrowser  Self;
-			typedef itk::Object  Superclass;
-			typedef ::itk::SmartPointer<Self>  Pointer;
-			typedef ::itk::SmartPointer<const Self>  ConstPointer;
+			using Self = DLLDirectoryBrowser;
+			using Superclass = itk::Object;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			/** Run-time type information (and related methods). */
 			itkTypeMacro(DLLDirectoryBrowser, itk::Object);
 
 			itkFactorylessNewMacro(Self);
 
-			typedef std::vector<DLLInfo::Pointer> DLLInfoListType;
-			typedef std::vector< ::map::core::String> PathListType;
+			using DLLInfoListType = std::vector<DLLInfo::Pointer>;
+			using PathListType = std::vector< ::map::core::String>;
 
 			/** Sets the base that is used to collapse relative search paths when added as search locations.
 			* @eguarantee strong
@@ -122,7 +122,7 @@ namespace map
 
 			DLLDirectoryBrowser();
 
-			~DLLDirectoryBrowser();
+			~DLLDirectoryBrowser() override;
 
 			DLLInfoListType _dllInfoList;
 			PathListType _pathList;
@@ -131,12 +131,12 @@ namespace map
 			::map::core::String _basePath;
 
 		private:
-			DLLDirectoryBrowser(const Self&); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			DLLDirectoryBrowser(const Self&) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 
 		};
 
-		typedef DLLDirectoryBrowser::DLLInfoListType DLLInfoListType;
+		using DLLInfoListType = DLLDirectoryBrowser::DLLInfoListType;
 
 		/*! Helper method if you just need quick information about deployment DLLs in an specific directory.
 		 * The method uses a DLLDirectoryBrowser on the specified directory and passes back the result

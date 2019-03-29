@@ -129,7 +129,7 @@ namespace map
 				//default implementation does nothing;
 			};
 
-		}
+		}  // namespace itk
 	} // end namespace algorithm
 } // end namespace map
 

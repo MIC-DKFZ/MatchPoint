@@ -68,15 +68,15 @@ namespace map
 		public:
 			/*! Standard class typedefs. */
 			typedef RegistrationCombinator<TPreRegistration, TRegistration, TLoadPolicy>  Self;
-			typedef itk::Object                    Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = itk::Object;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(RegistrationCombinator, itk::Object);
 			itkNewMacro(Self);
 
-			typedef TPreRegistration PreRegistrationType;
-			typedef TRegistration    RegistrationType;
+			using PreRegistrationType = TPreRegistration;
+			using RegistrationType = TRegistration;
 
 			itkStaticConstMacro(MovingDimensions, unsigned int, PreRegistrationType::MovingDimensions);
 			itkStaticConstMacro(InterimDimensions, unsigned int, PreRegistrationType::TargetDimensions);
@@ -91,17 +91,15 @@ namespace map
 
 			typedef Registration < itkGetStaticConstMacro(MovingDimensions),
 					itkGetStaticConstMacro(TargetDimensions) >  CombinedRegistrationType;
-			typedef typename CombinedRegistrationType::Pointer						  CombinedRegistrationPointer;
+			using CombinedRegistrationPointer = typename CombinedRegistrationType::Pointer;
 
 			typedef typename RegistrationTopology < itkGetStaticConstMacro(MovingDimensions),
 					itkGetStaticConstMacro(TargetDimensions) >::DirectMappingVectorType DirectMappingVectorType;
 			typedef typename RegistrationTopology < itkGetStaticConstMacro(MovingDimensions),
 					itkGetStaticConstMacro(TargetDimensions) >::InverseMappingVectorType InverseMappingVectorType;
 
-			typedef typename CombinedRegistrationType::DirectFieldRepresentationType
-			CombinedDirectFieldRepresentationType;
-			typedef typename CombinedRegistrationType::InverseFieldRepresentationType
-			CombinedInverseFieldRepresentationType;
+			using CombinedDirectFieldRepresentationType = typename CombinedRegistrationType::DirectFieldRepresentationType;
+			using CombinedInverseFieldRepresentationType = typename CombinedRegistrationType::InverseFieldRepresentationType;
 
 
 			struct InitialisationStyle
@@ -114,7 +112,7 @@ namespace map
 					CompleteRegistration = 3,
 				};
 			};
-			typedef typename InitialisationStyle::Type InitialisationStyleType;
+			using InitialisationStyleType = typename InitialisationStyle::Type;
 
 #ifdef ITK_USE_CONCEPT_CHECKING
 			/** Begin concept checking */
@@ -129,10 +127,8 @@ namespace map
 			typedef services::ServiceStack<InverseKernelCombinatorBaseType, TLoadPolicy<InverseKernelCombinatorBaseType> >
 			ConcreteInverseCombinatorStackType;
 		public:
-			typedef services::StaticServiceStack<ConcreteDirectCombinatorStackType>
-			DirectKernelCombinatorStackType;
-			typedef services::StaticServiceStack<ConcreteInverseCombinatorStackType>
-			InverseKernelCombinatorStackType;
+			using DirectKernelCombinatorStackType = services::StaticServiceStack<ConcreteDirectCombinatorStackType>;
+			using InverseKernelCombinatorStackType = services::StaticServiceStack<ConcreteInverseCombinatorStackType>;
 
 			/*! Generates a combined registration using the both passed registrations.
 			 * @eguarantee strong
@@ -180,7 +176,7 @@ namespace map
 
 		protected:
 			RegistrationCombinator();
-			virtual ~RegistrationCombinator();
+			~RegistrationCombinator() override;
 
 			DirectMappingVectorType _directPaddingVector;
 			InverseMappingVectorType _inversePaddingVector;
@@ -191,17 +187,17 @@ namespace map
 			 * If _useDirectPadding value is false, the vector of the pre registration kernel will be used.
 			 * By default _useDirectPadding is false.
 			 */
-			bool _useDirectPadding;
+			bool _useDirectPadding{false};
 			/*! Indicicates how the recombinator and its functor should handle points that cannot be mapped through both kernels in inverse direction
 			 * (e.g. a point that is mapped by the first kernel outside of the supported region of the second registration
 			 * kernel). If the _useInversePadding is true, _inversePaddingVector will be used as padding value in each of the mentioned cases.
 			 * If _useInversePadding value is false, the vector of the pre registration kernel will be used.
 			 * By default _useInversePadding is false.
 			 */
-			bool _useInversePadding;
+			bool _useInversePadding{false};
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 		private:
 			RegistrationCombinator(const Self&);  //purposely not implemented

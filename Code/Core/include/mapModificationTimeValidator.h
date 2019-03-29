@@ -54,9 +54,9 @@ namespace map
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef ModificationTimeValidator  Self;
-			typedef ::itk::Object	  WatchedObjectType;
-			typedef unsigned long   MTimeType;
+			using Self = ModificationTimeValidator;
+			using WatchedObjectType = ::itk::Object;
+			using MTimeType = unsigned long;
 
 			/*! Constructor.
 			* @eguarantee strong */

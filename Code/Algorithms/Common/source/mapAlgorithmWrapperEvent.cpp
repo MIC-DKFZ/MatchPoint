@@ -31,7 +31,7 @@ namespace map
 
 		AlgorithmWrapperEvent::
 		AlgorithmWrapperEvent(const ::itk::EventObject& wrappedEvent, ::itk::Object* wrappedCaller,
-							  const std::string& comment) : Superclass(NULL, comment)
+							  const std::string& comment) : Superclass(nullptr, comment)
 		{
 			_pWrappedCaller = wrappedCaller;
 			_pWrappedEvent = wrappedEvent.MakeObject();
@@ -62,7 +62,7 @@ namespace map
 			bool result = false;
 			const Self* pEvent = dynamic_cast<const Self*>(e);
 
-			if (pEvent)
+			if (pEvent != nullptr)
 			{
 				result = _pWrappedEvent->CheckEvent(&(pEvent->getWrappedEvent()));
 			}
@@ -78,7 +78,7 @@ namespace map
 		};
 
 		AlgorithmWrapperEvent::
-		AlgorithmWrapperEvent(const Self& s) : Superclass(NULL, s.getComment()),
+		AlgorithmWrapperEvent(const Self& s) : Superclass(nullptr, s.getComment()),
 			_pWrappedCaller(s._pWrappedCaller), _pWrappedEvent(s._pWrappedEvent->MakeObject())
 		{
 		};
@@ -106,5 +106,5 @@ namespace map
 			os << "wrapped event: " << *_pWrappedEvent << std::endl;
 		};
 
-	}
-}
+	}  // namespace events
+}  // namespace map

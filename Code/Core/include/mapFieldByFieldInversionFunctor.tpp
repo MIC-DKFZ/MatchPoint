@@ -56,7 +56,7 @@ namespace map
                     FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
                     InFieldRepresentationType;
                 typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> FieldTransformType;
-                typedef typename FieldTransformType::Pointer FieldTransformPointer;
+                using FieldTransformPointer = typename FieldTransformType::Pointer;
 
                 static inline FieldTransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
                     const InFieldRepresentationType* pInFieldRepresentation,
@@ -81,7 +81,7 @@ namespace map
                     InFieldRepresentationType;
 
                 typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimensions, VDimensions> FieldTransformType;
-                typedef typename FieldTransformType::Pointer FieldTransformPointer;
+                using FieldTransformPointer = typename FieldTransformType::Pointer;
 
                 static inline FieldTransformPointer generate(const SourceFieldKernelType* pSourceFieldKernel,
                     const InFieldRepresentationType* pInFieldRepresentation,
@@ -144,7 +144,7 @@ namespace map
             const typename
                 FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::SourceFieldKernelType*
                 FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-                getSourceFieldKernel(void) const
+                getSourceFieldKernel() const
             {
                 return _spSourceFieldKernel;
             }
@@ -165,7 +165,7 @@ namespace map
             template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
             typename ::itk::LightObject::Pointer
                 FieldByFieldInversionFunctor<VInputDimensions, VOutputDimensions>::
-                CreateAnother(void) const
+                CreateAnother() const
             {
                 ::itk::LightObject::Pointer smartPtr;
                 Pointer spNew = Self::New(_spSourceFieldKernel, Superclass::_spInFieldRepresentation).GetPointer();

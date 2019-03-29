@@ -52,36 +52,35 @@ namespace map
 			itkStaticConstMacro(DirectInputDimension, unsigned int, VMovingDimensions);
 			itkStaticConstMacro(DirectOutputDimension, unsigned int, VTargetDimensions);
 
-			typedef typename continuous::Elements< DirectOutputDimension >::VectorType DirectMappingVectorType;
+			using DirectMappingVectorType = typename continuous::Elements<DirectOutputDimension>::VectorType;
 			typedef itk::Image< DirectMappingVectorType, DirectInputDimension> DirectFieldType;
-			typedef typename DirectFieldType::Pointer DirectFieldPointer;
-			typedef typename DirectFieldType::RegionType DirectFieldRegionType;
+			using DirectFieldPointer = typename DirectFieldType::Pointer;
+			using DirectFieldRegionType = typename DirectFieldType::RegionType;
       typedef ::itk::Transform<continuous::ScalarType, DirectInputDimension, DirectOutputDimension>	DirectTransformType;
 
 			//inverse mapping
 			itkStaticConstMacro(InverseInputDimension, unsigned int, VTargetDimensions);
 			itkStaticConstMacro(InverseOutputDimension, unsigned int, VMovingDimensions);
 
-			typedef typename continuous::Elements< InverseOutputDimension >::VectorType
-			InverseMappingVectorType;
+			using InverseMappingVectorType = typename continuous::Elements<InverseOutputDimension>::VectorType;
 			typedef itk::Image< InverseMappingVectorType, InverseInputDimension > InverseFieldType;
-			typedef typename InverseFieldType::Pointer InverseFieldPointer;
-			typedef typename InverseFieldType::RegionType InverseFieldRegionType;
+			using InverseFieldPointer = typename InverseFieldType::Pointer;
+			using InverseFieldRegionType = typename InverseFieldType::RegionType;
       typedef ::itk::Transform<continuous::ScalarType, InverseInputDimension, InverseOutputDimension>	InverseTransformType;
 
       //general
-      typedef typename continuous::Elements<VMovingDimensions>::PointType			MovingPointType;
-      typedef typename continuous::Elements<VTargetDimensions>::PointType		  TargetPointType;
+      using MovingPointType = typename continuous::Elements<VMovingDimensions>::PointType;
+      using TargetPointType = typename continuous::Elements<VTargetDimensions>::PointType;
 
 		private:
 			typedef RegistrationTopology<VMovingDimensions, VTargetDimensions> Self;
 
 			//purposely not implemented
-			RegistrationTopology();
+			RegistrationTopology() = delete;
 			//purposely not implemented
-			RegistrationTopology(const Self& source);
+			RegistrationTopology(const Self& source) = delete;
 			//purposely not implemented
-			virtual Self& operator = (const Self& source) = 0;
+			virtual Self& operator = (const Self& source) = delete;
 		};
 
 	} // end namespace core

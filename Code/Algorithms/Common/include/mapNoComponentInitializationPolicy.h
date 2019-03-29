@@ -56,8 +56,8 @@ namespace map
 				static void initialize(...) {};
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

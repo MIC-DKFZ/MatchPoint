@@ -46,38 +46,38 @@ namespace iro
     class MAPOntologySimple_EXPORT SimpleTransformationInfo : public IInformationSpaceConnector< SimpleInformationSpaceTraits >, public IProblemStatementAssociated< SimpleProblemStatementTraits >
     {
     public:
-      typedef SimpleTransformationInfo Self;
-      typedef ::std::shared_ptr<Self> Pointer;
-      typedef ::std::shared_ptr<const Self> ConstPointer;
+      using Self = SimpleTransformationInfo;
+      using Pointer = ::std::shared_ptr<Self>;
+      using ConstPointer = ::std::shared_ptr<const Self>;
 
-      typedef IInformationSpaceConnector< SimpleInformationSpaceTraits >	ConnectorInterface;
-      typedef ConnectorInterface::ConstISPointer  ConstISPointer;
+      using ConnectorInterface = IInformationSpaceConnector<SimpleInformationSpaceTraits>;
+      using ConstISPointer = ConnectorInterface::ConstISPointer;
 
-      typedef IProblemStatementAssociated< SimpleProblemStatementTraits >	ProblemAssociatedInterface;
-      typedef ProblemAssociatedInterface::ProblemComplianceInterface  ProblemComplianceInterface;
-      typedef ProblemAssociatedInterface::ConstProblemPointer         ConstProblemPointer;
+      using ProblemAssociatedInterface = IProblemStatementAssociated<SimpleProblemStatementTraits>;
+      using ProblemComplianceInterface = ProblemAssociatedInterface::ProblemComplianceInterface;
+      using ConstProblemPointer = ProblemAssociatedInterface::ConstProblemPointer;
 
-      typedef DataRepresentation::Type          DataRepresentationType;
-      typedef FOVScope::Type                    FOVScopeType;
-      typedef ::iro::String                     UIDType;
+      using DataRepresentationType = DataRepresentation::Type;
+      using FOVScopeType = FOVScope::Type;
+      using UIDType = ::iro::String;
 
       typedef AlgorithmExecutionInfo< SimpleInformationSpaceTraits, SimpleInformationEntityTraits > ExecutionInfoType;
 
       /*! Implementation of abstract member. See documentation in interface.
       * @see IInformationSpaceConnector*/
-      virtual ConstISPointer getMovingIS() const override;
+      ConstISPointer getMovingIS() const override;
       /*! Sets the moving information space */
       void setMovingIS(ConstISPointer movingIS);
 
       /*! Implementation of abstract member. See documentation in interface.
       * @see IInformationSpaceConnector*/
-      virtual ConstISPointer getTargetIS() const override;
+      ConstISPointer getTargetIS() const override;
       /*! Sets the target information space */
       void setTargetIS(ConstISPointer targetIS);
 
       /** Returns the const pointer to the associated problem statement.
       * Pointer may be null, if no statement is defined.*/
-      virtual ConstProblemPointer getAssociatedProblemStatement() const override;
+      ConstProblemPointer getAssociatedProblemStatement() const override;
       /*! Sets the associated problem statement */
       void setAssociatedProblemStatement(ConstProblemPointer problem);
 
@@ -90,7 +90,7 @@ namespace iro
       FOVScopeType getFOVScope() const;
       void setFOVScope(FOVScopeType scope);
 
-      virtual ~SimpleTransformationInfo();
+      ~SimpleTransformationInfo() override;
       SimpleTransformationInfo();
 
       ExecutionInfoType::ConstPointer getAlgorithmExecutionInfo() const;
@@ -106,15 +106,15 @@ namespace iro
       /*! Implementation of abstract member. This implementation checks the associated
       * problem statement for compliance. See also documentation in interface.
       * @see IProblemComplianceChecker*/
-      virtual bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const override;
+      bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const override;
 
       ConstISPointer _movingIS;
       ConstISPointer _targetIS;
       ConstProblemPointer _associatedProblem;
 
-      DataRepresentationType _dataRepresentation;
+      DataRepresentationType _dataRepresentation{::iro::DataRepresentation::Discrete};
 
-      FOVScopeType _scope;
+      FOVScopeType _scope{::iro::FOVScope::Local};
 
       UIDType _uid;
 

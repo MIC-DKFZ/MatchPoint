@@ -57,7 +57,7 @@ namespace map
 													<< fileName);
 				}
 
-				for (ConfigurationType::const_iterator stagePos = config.begin(); stagePos != config.end();
+				for (auto stagePos = config.begin(); stagePos != config.end();
 					 ++stagePos)
 				{
 					if (stagePos == config.begin())
@@ -69,14 +69,14 @@ namespace map
 						file << "[STAGE]" << std::endl;
 					}
 
-					for (ParameterStageType::const_iterator pos = stagePos->begin(); pos != stagePos->end(); ++pos)
+					for (const auto & pos : *stagePos)
 					{
-						file << pos->first << "=";
+						file << pos.first << "=";
 
-						for (ParameterValuesType::const_iterator posValues = pos->second.begin();
-							 posValues != pos->second.end(); ++posValues)
+						for (auto posValues = pos.second.begin();
+							 posValues != pos.second.end(); ++posValues)
 						{
-							if (posValues != pos->second.begin())
+							if (posValues != pos.second.begin())
 							{
 								file << " ";
 							}
@@ -105,7 +105,7 @@ namespace map
 					mapDefaultExceptionStaticMacro( << "ERROR: could not open " << fileName	<< " for reading.");
 				}
 
-				::map::core::String line = "";
+				::map::core::String line;
 
 				while (parameterFile.good())
 				{
@@ -120,7 +120,7 @@ namespace map
 						}
 						else
 						{
-							std::vector<itksys::String> valueTemp = itksys::SystemTools::SplitString(line.c_str(), '=');
+							std::vector<itksys::String> valueTemp = itksys::SystemTools::SplitString(line, '=');
 
 							if (valueTemp.size() > 1)
 							{
@@ -136,9 +136,9 @@ namespace map
 								valueTemp = itksys::SystemTools::SplitString(valueTemp[1].c_str(), ' ');
 								ParameterValuesType values;
 
-								for (std::vector<itksys::String>::iterator pos = valueTemp.begin(); pos != valueTemp.end(); ++pos)
+								for (auto & pos : valueTemp)
 								{
-									values.push_back(*pos);
+									values.push_back(pos);
 								}
 
 								stage.insert(std::make_pair(name, values));
@@ -155,12 +155,10 @@ namespace map
 			};
 
 			ParamGenerator::ParamGenerator()
-			{
-			}
+			= default;
 
 			ParamGenerator::~ParamGenerator()
-			{
-			}
+			= default;
 
 			ParamGenerator::
 			operator ParameterValuesType()
@@ -168,6 +166,6 @@ namespace map
 				return this->_values;
 			}
 
-		}
-	}
-}
+		}  // namespace plastimatch
+	}  // namespace algorithm
+}  // namespace map

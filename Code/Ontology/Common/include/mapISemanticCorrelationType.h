@@ -35,9 +35,9 @@ namespace iro
   class MAPOntology_EXPORT ISemanticCorrelationType
   {
   public:
-    typedef ISemanticCorrelationType                           Self;
-    typedef std::shared_ptr<ISemanticCorrelationType>        Pointer;
-    typedef std::shared_ptr<const ISemanticCorrelationType>  ConstPointer;
+    using Self = ISemanticCorrelationType;
+    using Pointer = std::shared_ptr<ISemanticCorrelationType>;
+    using ConstPointer = std::shared_ptr<const ISemanticCorrelationType>;
 
     /** Checks if the type of this and pType are equal by comparing there names.*/
     bool equals(const ISemanticCorrelationType* pType) const;
@@ -49,8 +49,8 @@ namespace iro
     virtual ~ISemanticCorrelationType();
     ISemanticCorrelationType();
   private:
-    ISemanticCorrelationType(const ISemanticCorrelationType&); //not implemented by purpose
-    ISemanticCorrelationType& operator=(const ISemanticCorrelationType&); //not implemented by purpose
+    ISemanticCorrelationType(const ISemanticCorrelationType&) = delete; //not implemented by purpose
+    ISemanticCorrelationType& operator=(const ISemanticCorrelationType&) = delete; //not implemented by purpose
   };
 } // end namespace iro
 

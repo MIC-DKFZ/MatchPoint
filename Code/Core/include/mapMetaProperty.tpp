@@ -44,7 +44,7 @@ namespace map
 		template<typename TValue>
 		::itk::LightObject::Pointer
 		MetaProperty<TValue>::
-		CreateAnother(void) const
+		CreateAnother() const
 		{
 			::itk::LightObject::Pointer smartPtr;
 			smartPtr = Self::New(this->_value).GetPointer();
@@ -72,7 +72,7 @@ namespace map
 		template<typename TValue>
 		const std::type_info&
 		MetaProperty<TValue>::
-		getMetaPropertyTypeInfo(void) const
+		getMetaPropertyTypeInfo() const
 		{
 			return typeid(ValueType);
 		};
@@ -105,8 +105,7 @@ namespace map
 		template<typename TValue>
 		MetaProperty<TValue>::
 		~MetaProperty()
-		{
-		};
+		= default;
 
 		template<typename TValue>
 		MetaProperty<TValue>::
@@ -115,7 +114,7 @@ namespace map
 			_value = initValue;
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #endif

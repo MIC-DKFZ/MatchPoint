@@ -48,16 +48,16 @@ namespace map
 			class MAPAlgorithmsITK_EXPORT ITKMVNLOptimizerControlInterface : public ITKOptimizerControlInterface
 			{
 			public:
-				typedef ITKMVNLOptimizerControlInterface Self;
-				typedef ITKOptimizerControlInterface Superclass;
-				typedef ::itk::SmartPointer<Self>         Pointer;
-				typedef ::itk::SmartPointer<const Self>   ConstPointer;
+				using Self = ITKMVNLOptimizerControlInterface;
+				using Superclass = ITKOptimizerControlInterface;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKMVNLOptimizerControlInterface, ITKOptimizerControlInterface);
 
-				typedef ::itk::MultipleValuedNonLinearOptimizer MVNLOptimizerBaseType;
-				typedef MVNLOptimizerBaseType::MeasureType    MVNLMeasureType;
-				typedef OptimizerControlInterface::OptimizerMeasureType OptimizerMeasureType;
+				using MVNLOptimizerBaseType = ::itk::MultipleValuedNonLinearOptimizer;
+				using MVNLMeasureType = MVNLOptimizerBaseType::MeasureType;
+				using OptimizerMeasureType = OptimizerControlInterface::OptimizerMeasureType;
 
 				virtual MVNLOptimizerBaseType* getMVNLOptimizer() = 0;
 				virtual const MVNLOptimizerBaseType* getMVNLOptimizer() const = 0;
@@ -70,7 +70,7 @@ namespace map
 
 			protected:
 				ITKMVNLOptimizerControlInterface();
-				virtual ~ITKMVNLOptimizerControlInterface();
+				~ITKMVNLOptimizerControlInterface() override;
 
 				/*! return the cost of the current iteration step.
 				Will be called by getCurrentMeasure() if hasCurrentValue() returns true.
@@ -85,16 +85,16 @@ namespace map
 				@eguarantee strong
 				@return returns the optimizers current value/cost
 				*/
-				virtual OptimizerMeasureType doGetCurrentValue() const;
+				OptimizerMeasureType doGetCurrentValue() const override;
 
 			private:
 				//No copy constructor allowed
-				ITKMVNLOptimizerControlInterface(const Self& source);
-				void operator=(const Self&);  //purposely not implemented
+				ITKMVNLOptimizerControlInterface(const Self& source) = delete;
+				void operator=(const Self&) = delete;  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

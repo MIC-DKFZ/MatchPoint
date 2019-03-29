@@ -51,10 +51,10 @@ namespace itk
 		{
 		public:
 			/** Standard class typedefs. */
-			typedef NULLVectorAwareLinearInterpolateImageFunction                  Self;
+			using Self = NULLVectorAwareLinearInterpolateImageFunction<TInputImage, TCoordRep>;
 			typedef VectorLinearInterpolateImageFunction<TInputImage, TCoordRep> Superclass;
-			typedef SmartPointer<Self>                                    Pointer;
-			typedef SmartPointer<const Self>                              ConstPointer;
+			using Pointer = SmartPointer<Self>;
+			using ConstPointer = SmartPointer<const Self>;
 
 			/** Method for creation through the object factory. */
 			itkNewMacro(Self);
@@ -64,19 +64,19 @@ namespace itk
 						 VectorLinearInterpolateImageFunction);
 
 			/** InputImageType typedef support. */
-			typedef typename Superclass::InputImageType InputImageType;
-			typedef typename Superclass::PixelType      PixelType;
-			typedef typename Superclass::ValueType      ValueType;
-			typedef typename Superclass::RealType       RealType;
+			using InputImageType = typename Superclass::InputImageType;
+			using PixelType = typename Superclass::PixelType;
+			using ValueType = typename Superclass::ValueType;
+			using RealType = typename Superclass::RealType;
 
 			/** Index typedef support. */
-			typedef typename Superclass::IndexType       IndexType;
+			using IndexType = typename Superclass::IndexType;
 
 			/** ContinuousIndex typedef support. */
-			typedef typename Superclass::ContinuousIndexType ContinuousIndexType;
+			using ContinuousIndexType = typename Superclass::ContinuousIndexType;
 
 			/** Output type is Vector<double,Dimension> */
-			typedef typename Superclass::OutputType OutputType;
+			using OutputType = typename Superclass::OutputType;
 
 			/** Evaluate the function at a ContinuousIndex position
 			*

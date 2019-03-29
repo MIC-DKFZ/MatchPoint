@@ -26,7 +26,7 @@
 #include "mapExceptionObjectMacros.h"
 #include "itkIndent.h"
 
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -39,9 +39,9 @@ namespace map
 		{
 			::map::core::OStringStream sRet;
 
-			for (::map::core::String::const_iterator iter = sSrc.begin(); iter != sSrc.end(); iter++)
+			for (std::_String_const_iterator<std::_String_val<std::_Simple_types<char> > >::value_type iter : sSrc)
 			{
-				unsigned char c = (unsigned char) * iter;
+				auto c = static_cast<unsigned char>(iter);
 
 				switch (c)
 				{
@@ -68,7 +68,7 @@ namespace map
 					default:
 						if (c < 32 || c > 127)
 						{
-							sRet << "&#" << (unsigned int)c << ";";
+							sRet << "&#" << static_cast<unsigned int>(c) << ";";
 						}
 						else
 						{
@@ -85,7 +85,7 @@ namespace map
 		XMLStrWriter::
 		write(const Element* pElement) const
 		{
-			if (!pElement)
+			if (pElement == nullptr)
 			{
 				mapDefaultExceptionMacro( <<
 										  "Error. Cannot convert structured element to string. Passed element pointer is NULL.");
@@ -173,7 +173,7 @@ namespace map
 
 			ElementLevelType sublevel = level + 1;
 
-			for (Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
+			for (auto pos = pElement->getSubElementBegin();
 				 pos != pElement->getSubElementEnd(); ++pos)
 			{
 				stream << writeElement(*pos, sublevel);
@@ -185,13 +185,11 @@ namespace map
 
 		XMLStrWriter::
 		XMLStrWriter()
-		{
-		};
+		= default;
 
 		XMLStrWriter::
 		~XMLStrWriter()
-		{
-		};
+		= default;
 
 
 
@@ -241,13 +239,11 @@ namespace map
 
 		XMLIntendedStrWriter::
 		XMLIntendedStrWriter()
-		{
-		};
+		= default;
 
 		XMLIntendedStrWriter::
 		~XMLIntendedStrWriter()
-		{
-		};
+		= default;
 
 
 

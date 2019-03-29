@@ -103,12 +103,12 @@ namespace map
 
 
 		KernelLoaderLoadPolicy::
-		KernelLoaderLoadPolicy() { }
+		KernelLoaderLoadPolicy() = default;
 
 
 
 		KernelLoaderLoadPolicy::
-		~KernelLoaderLoadPolicy() { }
+		~KernelLoaderLoadPolicy() = default;
 
 
 	} // end namespace io

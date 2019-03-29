@@ -34,19 +34,20 @@ namespace iro
   class IPathMetric
   {
   public:
-    typedef IPathMetric<TPathElementTraits> Self;
-    typedef std::shared_ptr<Self>         Pointer;
-    typedef std::shared_ptr<const Self>    ConstPointer;
+    using Self = IPathMetric<TPathElementTraits>;
+    using Pointer = std::shared_ptr<Self>;
+    using ConstPointer = std::shared_ptr<const Self>;
 
-    typedef typename TPathElementTraits::Type   PathElementType;
-    typedef double                              MeasureType;
+    using PathElementType = typename TPathElementTraits::Type;
+    using MeasureType = double;
 
     /** evaluates the passe Element and returns the measure.
      * @pre pElement must not be NULL
      * @exception exceptions::InvalidArgument: precondition is violated.*/
     MeasureType evaluatePathElement(const PathElementType* pElement) const
     {
-      if (!pElement) throw exceptions::InvalidArgument("Passed path element pointer is NULL. Cannot evaluate Element");
+      if (!pElement) { throw exceptions::InvalidArgument("Passed path element pointer is NULL. Cannot evaluate Element");
+}
       return doEvaluatePathElement(pElement);
     };
 

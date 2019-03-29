@@ -17,6 +17,8 @@
 
 
 #include "mapSimpleOntology.h"
+
+#include <memory>
 #include "mapSimpleOntologyCore.h"
 #include "mapISCacheKey.h"
 
@@ -28,14 +30,12 @@ namespace iro
 
     SimpleOntology::
       ~SimpleOntology()
-    {
-
-    };
+    = default;
 
     SimpleOntology::
       SimpleOntology()
     {
-      _spCore = std::shared_ptr<OntologyCoreType>(new OntologyCoreType);
+      _spCore = std::make_shared<OntologyCoreType>();
     };
 
     void 
@@ -44,7 +44,7 @@ namespace iro
     {
       OntologyRevisionTag revision = _spCore->_revision;
 
-      _spCore = std::shared_ptr<OntologyCoreType>(new OntologyCoreType);
+      _spCore = std::make_shared<OntologyCoreType>();
       _spCore->_revision = ++revision;
     };
 
@@ -143,13 +143,13 @@ namespace iro
       if (!entities.empty())
       {
 
-        ConstInfEntityVectorType::const_iterator firstPos = entities.begin();
+        auto firstPos = entities.begin();
         OntologyCoreType::EntityISMapType::const_iterator posLook1 = _spCore->_entity2ISMap.find((*firstPos)->getUID());
 
         if (posLook1 != _spCore->_entity2ISMap.end())
         { // first element exists in an kown IS
 
-          ConstInfEntityVectorType::const_iterator pos = entities.begin()+1;
+          auto pos = entities.begin()+1;
 
           while( pos !=  entities.end())
           {
@@ -159,7 +159,8 @@ namespace iro
             { // second element exists in an kown IS
               result = posLook2->second == posLook1->second;
 
-              if (!result) break; //at least one element doesn't match, we can stop
+              if (!result) { break; //at least one element doesn't match, we can stop
+}
             }
 
             ++pos;
@@ -484,7 +485,7 @@ namespace iro
       { //update entity
         pos->second->setDataRepresentation(pEntity->getDataRepresentation());
         result =  pos->second;
-        //TODO check: ist eigentlich nicht n�tig, da hier nur werte ge�ndert
+        // TODO(floca): check: ist eigentlich nicht n�tig, da hier nur werte ge�ndert
         //werden und referenzen g�ltig bleiben. Des Weiteren wird bei der correlation
         //ja validateForCommit aufgerufen um sicher zustellen, dass wenn sie abgespeichert oder
         //ge�ndert wird, alles auf diese referenz umgebogen wird.
@@ -651,7 +652,8 @@ namespace iro
           _spCore->updateEntity2CorrelationMap(spNew);
           _spCore->notifyChange();
         }
-        else throw exceptions::UndefinedElement("Cannot define semantic correlation, related entities are not defined in the ontology.");
+        else { throw exceptions::UndefinedElement("Cannot define semantic correlation, related entities are not defined in the ontology.");
+}
       }
 
       return Result<SimpleOntology::ConstCorrelationPointer>(result, _spCore->_revision);
@@ -677,7 +679,8 @@ namespace iro
         result = spNew;
         _spCore->notifyChange();
       }
-      else throw exceptions::UndefinedElement("Cannot store semantic correlation, related entities are not defined in the ontology.");
+      else { throw exceptions::UndefinedElement("Cannot store semantic correlation, related entities are not defined in the ontology.");
+}
 
 
       return Result<SimpleOntology::ConstCorrelationPointer>(result, _spCore->_revision);
@@ -696,7 +699,7 @@ namespace iro
       bool change = false;
 
       //remove from lookup
-      OntologyCoreType::EntityCorrelationMapType::iterator pos = _spCore->_entity2CorrelationMap.begin();
+      auto pos = _spCore->_entity2CorrelationMap.begin();
 
       while( pos !=  _spCore->_entity2CorrelationMap.end())
       {
@@ -712,7 +715,7 @@ namespace iro
       }
 
       //remove corr
-      if (_spCore->_correlationMap.erase(corr->getUID()))
+      if (_spCore->_correlationMap.erase(corr->getUID()) != 0u)
       {
         change = true;
       };
@@ -764,12 +767,12 @@ namespace iro
 
       SearchCacheType cache;
 
-      for (ConstInfEntityVectorType::const_iterator pos = movingEntities.begin(); pos != movingEntities.end(); ++pos)
+      for (const auto & movingEntitie : movingEntities)
       {
-        ConstInfSpacePointer spMIS = getContainingIS(*pos);
+        ConstInfSpacePointer spMIS = getContainingIS(movingEntitie);
 
-        core::ISCacheKey<SimpleInformationSpaceTraits> key(spMIS->getUID(), convertToSupport((*pos)->getDataRepresentation()));
-        SearchCacheType::iterator cachePos = cache.find(key);
+        core::ISCacheKey<SimpleInformationSpaceTraits> key(spMIS->getUID(), convertToSupport(movingEntitie->getDataRepresentation()));
+        auto cachePos = cache.find(key);
 
         if (cachePos == cache.end())
         { //results are missing so generate them;
@@ -777,12 +780,12 @@ namespace iro
           OntologyCoreType::RegistrationGraphType::vertex_descriptor targetV = _spCore->getVertex(pFixedIS);
 
           OntologyCoreType::SimpleSearchMapType searchResult;
-          core::simplePathSearch(searchResult, _spCore->_graph, targetV, movingV, convertToSupport((*pos)->getDataRepresentation()),pProblemCompliance , OntologyCoreType::EdgeValidatorType());
+          core::simplePathSearch(searchResult, _spCore->_graph, targetV, movingV, convertToSupport(movingEntitie->getDataRepresentation()),pProblemCompliance , OntologyCoreType::EdgeValidatorType());
           //store results;
           cachePos = cache.insert(::std::make_pair(key,searchResult)).first;
         }
 
-        ConstRegPathOptColPointer spCollection = _spCore->generateRegCollection(cachePos->second, *pos);
+        ConstRegPathOptColPointer spCollection = _spCore->generateRegCollection(cachePos->second, movingEntitie);
         result.push_back(spCollection);
       }
 
@@ -820,12 +823,12 @@ namespace iro
 
       SearchCacheType cache;
 
-      for (ConstInfEntityVectorType::const_iterator pos = movingEntities.begin(); pos != movingEntities.end(); ++pos)
+      for (const auto & movingEntitie : movingEntities)
       {
-        ConstInfSpacePointer spMIS = getContainingIS(*pos);
+        ConstInfSpacePointer spMIS = getContainingIS(movingEntitie);
 
-        core::ISCacheKey<SimpleInformationSpaceTraits> key(spMIS->getUID(), convertToSupport((*pos)->getDataRepresentation()));
-        SearchCacheType::iterator cachePos = cache.find(key);
+        core::ISCacheKey<SimpleInformationSpaceTraits> key(spMIS->getUID(), convertToSupport(movingEntitie->getDataRepresentation()));
+        auto cachePos = cache.find(key);
 
         if (cachePos == cache.end())
         { //results are missing so generate them;
@@ -833,12 +836,12 @@ namespace iro
           OntologyCoreType::RegistrationGraphType::vertex_descriptor targetV = _spCore->getVertex(pFixedIS);
 
           OntologyCoreType::SimpleSearchMapType searchResult;
-          core::simplePathSearch(searchResult, _spCore->_graph, targetV, movingV, convertToSupport((*pos)->getDataRepresentation()), pProblemCompliance, OntologyCoreType::EdgeValidatorType());
+          core::simplePathSearch(searchResult, _spCore->_graph, targetV, movingV, convertToSupport(movingEntitie->getDataRepresentation()), pProblemCompliance, OntologyCoreType::EdgeValidatorType());
           //store results;
           cachePos = cache.insert(::std::make_pair(key,searchResult)).first;
         }
 
-        ConstTransPathOptColPointer spCollection = _spCore->generateTransCollection(cachePos->second, *pos);
+        ConstTransPathOptColPointer spCollection = _spCore->generateTransCollection(cachePos->second, movingEntitie);
         result.push_back(spCollection);
       }
 
@@ -887,9 +890,12 @@ namespace iro
 
       OntologyCoreType::spliteEntitiesByData(movingEntities, continuousEntities, discreteEntities);
 
-      OntologyCoreType::WeightMapType cWeights, dWeights;
-      OntologyCoreType::PredecessorMapType cPredecessors, dPredecessors;
-      OntologyCoreType::EdgeMapType cEdges, dEdges;
+      OntologyCoreType::WeightMapType cWeights;
+      OntologyCoreType::WeightMapType dWeights;
+      OntologyCoreType::PredecessorMapType cPredecessors;
+      OntologyCoreType::PredecessorMapType dPredecessors;
+      OntologyCoreType::EdgeMapType cEdges;
+      OntologyCoreType::EdgeMapType dEdges;
 
       if (!continuousEntities.empty())
       {
@@ -906,27 +912,27 @@ namespace iro
       }
 
       //go throug all entities and get there options
-      for (ConstInfEntityVectorType::const_iterator pos = movingEntities.begin(); pos!= movingEntities.end(); ++pos)
+      for (const auto & movingEntitie : movingEntities)
       {
         RegPathOptCollectionType::Pointer spOptCol(new RegPathOptCollectionType);
-        spOptCol->setMovingEntity(*pos);
+        spOptCol->setMovingEntity(movingEntitie);
 
         RegistrationPathType::Pointer spPath;
 
-        if ((*pos)->getDataRepresentation()==DataRepresentation::Continuous)
+        if (movingEntitie->getDataRepresentation()==DataRepresentation::Continuous)
         {
-          spPath = _spCore->generateRegPath(getContainingIS(*pos), pFixedIS, cWeights, cPredecessors, cEdges);
+          spPath = _spCore->generateRegPath(getContainingIS(movingEntitie), pFixedIS, cWeights, cPredecessors, cEdges);
         }
         else
         {
-          spPath = _spCore->generateRegPath(getContainingIS(*pos), pFixedIS, dWeights, dPredecessors, dEdges);
+          spPath = _spCore->generateRegPath(getContainingIS(movingEntitie), pFixedIS, dWeights, dPredecessors, dEdges);
         }
 
         if (spPath)
         { //there is a path -> so generate an option and add it
           RegPathOptionType::Pointer spOption(new RegPathOptionType);
           spOption->setPath(spPath);
-          spOption->setMovingEntity(*pos);
+          spOption->setMovingEntity(movingEntitie);
           spOptCol->addOption(spOption);
         }
 
@@ -985,9 +991,12 @@ namespace iro
 
       OntologyCoreType::spliteEntitiesByData(movingEntities, continuousEntities, discreteEntities);
 
-      OntologyCoreType::WeightMapType cWeights, dWeights;
-      OntologyCoreType::PredecessorMapType cPredecessors, dPredecessors;
-      OntologyCoreType::EdgeMapType cEdges, dEdges;
+      OntologyCoreType::WeightMapType cWeights;
+      OntologyCoreType::WeightMapType dWeights;
+      OntologyCoreType::PredecessorMapType cPredecessors;
+      OntologyCoreType::PredecessorMapType dPredecessors;
+      OntologyCoreType::EdgeMapType cEdges;
+      OntologyCoreType::EdgeMapType dEdges;
 
       if (!continuousEntities.empty())
       {
@@ -1004,27 +1013,27 @@ namespace iro
       }
 
       //go throug all entities and get there options
-      for (ConstInfEntityVectorType::const_iterator pos = movingEntities.begin(); pos!= movingEntities.end(); ++pos)
+      for (const auto & movingEntitie : movingEntities)
       {
         TransPathOptCollectionType::Pointer spOptCol(new TransPathOptCollectionType);
-        spOptCol->setMovingEntity(*pos);
+        spOptCol->setMovingEntity(movingEntitie);
 
         TransformationPathType::Pointer spPath;
 
-        if ((*pos)->getDataRepresentation()==DataRepresentation::Continuous)
+        if (movingEntitie->getDataRepresentation()==DataRepresentation::Continuous)
         {
-          spPath = _spCore->generateTransPath(getContainingIS(*pos), pFixedIS, DataRepresentation::Continuous, cWeights, cPredecessors, cEdges);
+          spPath = _spCore->generateTransPath(getContainingIS(movingEntitie), pFixedIS, DataRepresentation::Continuous, cWeights, cPredecessors, cEdges);
         }
         else
         {
-          spPath = _spCore->generateTransPath(getContainingIS(*pos), pFixedIS, DataRepresentation::Discrete, dWeights, dPredecessors, dEdges);
+          spPath = _spCore->generateTransPath(getContainingIS(movingEntitie), pFixedIS, DataRepresentation::Discrete, dWeights, dPredecessors, dEdges);
         }
 
         if (spPath)
         { //there is a path -> so generate an option and add it
           TransPathOptionType::Pointer spOption(new TransPathOptionType);
           spOption->setPath(spPath);
-          spOption->setMovingEntity(*pos);
+          spOption->setMovingEntity(movingEntitie);
           spOptCol->addOption(spOption);
         }
 
@@ -1067,7 +1076,7 @@ namespace iro
       movingIEs.push_back(pMovingEntity);
       ConstTransPathOptColVectorType cols = getTransformationPaths(movingIEs, pFixedIS, pProblemCompliance);
 
-      assert(cols.size()>0);
+      assert(!cols.empty());
 
       return Result<MappingErrorType>(cols[0]->checkForFailureReason(), _spCore->_revision);
     };
@@ -1129,7 +1138,7 @@ namespace iro
 
       RegistrationPathType::Pointer result(new RegistrationPathType());
 
-      for (TransformationPathType::ConstPathElementIterator pos = pPath->getBegin(); pos != pPath->getEnd(); ++pos)
+      for (auto pos = pPath->getBegin(); pos != pPath->getEnd(); ++pos)
       {
         OntologyCoreType::RegistrationGraphType::edge_descriptor edge = _spCore->getAssociatedEdge(*pos);
 
@@ -1189,7 +1198,8 @@ namespace iro
         _spCore->storeTransformationInfo(spNew);     
         result = spNew;
       }
-      else throw exceptions::UndefinedElement("Cannot define transformation info, associated information spaces or statement are not defined in the ontology.");
+      else { throw exceptions::UndefinedElement("Cannot define transformation info, associated information spaces or statement are not defined in the ontology.");
+}
 
       return Result<SimpleOntology::ConstTransformationInfoPointer>(result, _spCore->_revision);
     };
@@ -1212,7 +1222,8 @@ namespace iro
         _spCore->storeTransformationInfo(spNew);     
         result = spNew;
       }
-      else throw exceptions::UndefinedElement("Cannot store transformation info, associated information spaces or statement are not defined in the ontology.");
+      else { throw exceptions::UndefinedElement("Cannot store transformation info, associated information spaces or statement are not defined in the ontology.");
+}
 
       return Result<SimpleOntology::ConstTransformationInfoPointer>(result, _spCore->_revision);
     };
@@ -1442,7 +1453,8 @@ namespace iro
           _spCore->updateStatement2ModelMap(spNew);
           _spCore->notifyChange();
         }
-        else throw exceptions::UndefinedElement("Cannot define problem model, associated statements are not defined in the ontology.");
+        else { throw exceptions::UndefinedElement("Cannot define problem model, associated statements are not defined in the ontology.");
+}
       }
 
       return Result<SimpleOntology::ConstProblemModelPointer>(result, _spCore->_revision);
@@ -1468,7 +1480,8 @@ namespace iro
         result = spNew;
         _spCore->notifyChange();
       }
-      else throw exceptions::UndefinedElement("Cannot store problem model, associated statements are not defined in the ontology.");
+      else { throw exceptions::UndefinedElement("Cannot store problem model, associated statements are not defined in the ontology.");
+}
 
       return Result<SimpleOntology::ConstProblemModelPointer>(result, _spCore->_revision);
     };
@@ -1486,7 +1499,7 @@ namespace iro
       bool change = false;
 
       //remove from lookup
-      OntologyCoreType::StatementModelMapType::iterator pos = _spCore->_stat2ModelMap.begin();
+      auto pos = _spCore->_stat2ModelMap.begin();
 
       while( pos !=  _spCore->_stat2ModelMap.end())
       {
@@ -1502,7 +1515,7 @@ namespace iro
       }
 
       //remove model
-      if (_spCore->_modelMap.erase(pModel->getUID()))
+      if (_spCore->_modelMap.erase(pModel->getUID()) != 0u)
       {
         change = true;
       };

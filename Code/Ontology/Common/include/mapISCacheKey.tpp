@@ -47,8 +47,10 @@ namespace iro
         ISCacheKey<TISTraits>::
         operator < (const Self& source) const
       {
-        if (_uid<source._uid) return true;
-        if (this->_dataRep < source._dataRep) return true;
+        if (_uid<source._uid) { return true;
+}
+        if (this->_dataRep < source._dataRep) { return true;
+}
         return false;
       };
 

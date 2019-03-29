@@ -27,7 +27,7 @@
 #include "mapGenericStaticLoadPolicyBase.h"
 #include "mapConfigure.h"
 
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -46,7 +46,7 @@ namespace map
 			GenericStaticLoadPolicyBase<TProviderBase>::
 			loadStaticProviders()
 			{
-				assert(_pLoadInterface != NULL);
+				assert(_pLoadInterface != nullptr);
 				doLoading();
 			};
 
@@ -66,14 +66,12 @@ namespace map
 			template <class TProviderBase>
 			GenericStaticLoadPolicyBase<TProviderBase>::
 			GenericStaticLoadPolicyBase()
-			{
-			};
+			= default;
 
 			template <class TProviderBase>
 			GenericStaticLoadPolicyBase<TProviderBase>::
 			~GenericStaticLoadPolicyBase()
-			{
-			};
+			= default;
 
 		} // end namespace services
 	} // end namespace core

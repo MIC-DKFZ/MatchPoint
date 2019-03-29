@@ -37,7 +37,7 @@ namespace map
 			const typename
 			TransformGenerationFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType*
 			TransformGenerationFunctor<VInputDimensions, VOutputDimensions>::
-			getInFieldRepresentation(void) const
+			getInFieldRepresentation() const
 			{
 				return _spInFieldRepresentation;
 			};

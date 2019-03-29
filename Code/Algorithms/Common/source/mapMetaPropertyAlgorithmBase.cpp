@@ -35,9 +35,9 @@ namespace map
 		{
 			MetaPropertyVectorType infos = getPropertyInfos();
 
-			MetaPropertyVectorType::iterator pos = infos.begin();
+			auto pos = infos.begin();
 
-			MetaPropertyInfo::Pointer spResult = NULL;
+			MetaPropertyInfo::Pointer spResult = nullptr;
 
 			for (pos = infos.begin(); pos != infos.end(); ++pos)
 			{
@@ -66,7 +66,7 @@ namespace map
 		MetaPropertyAlgorithmBase::
 		getProperty(const MetaPropertyNameType& name) const
 		{
-			MetaPropertyPointer spResult = NULL;
+			MetaPropertyPointer spResult = nullptr;
 
 			MetaPropertyInfo::Pointer spInfo = getPropertyInfo(name);
 
@@ -75,7 +75,7 @@ namespace map
 				if (spInfo->isReadable())
 				{
 					//check cache
-					MetaPropertyCacheType::const_iterator pos = _metaPropertyCache.find(name);
+					auto pos = _metaPropertyCache.find(name);
 
 					if (pos != _metaPropertyCache.end())
 					{
@@ -99,9 +99,9 @@ namespace map
 		MetaPropertyAlgorithmBase::
 		getProperty(const MetaPropertyInfo* pInfo) const
 		{
-			MetaPropertyPointer spResult = NULL;
+			MetaPropertyPointer spResult = nullptr;
 
-			if (!pInfo)
+			if (pInfo == nullptr)
 			{
 				mapDefaultExceptionStaticMacro( << "Error while getting property. Passed property info is NULL.");
 			}
@@ -127,7 +127,7 @@ namespace map
 		{
 			bool result = false;
 
-			if (!pProperty)
+			if (pProperty == nullptr)
 			{
 				mapDefaultExceptionStaticMacro( <<
 												"Error while setting property. Passed property pointer is NULL. Property name: " << name);
@@ -161,12 +161,12 @@ namespace map
 		{
 			bool result = false;
 
-			if (!pInfo)
+			if (pInfo == nullptr)
 			{
 				mapDefaultExceptionStaticMacro( << "Error while setting property. Passed property info is NULL.");
 			}
 
-			if (!pProperty)
+			if (pProperty == nullptr)
 			{
 				mapDefaultExceptionStaticMacro( <<
 												"Error while setting property. Passed property pointer is NULL. Property name: " <<
@@ -188,7 +188,7 @@ namespace map
 		MetaPropertyAlgorithmBase::
 		configureAlgorithmByMetaProperties()
 		{
-			for (MetaPropertyCacheType::iterator pos = _metaPropertyCache.begin();
+			for (auto pos = _metaPropertyCache.begin();
 				 pos != _metaPropertyCache.end(); ++pos)
 			{
 				mapLogDebugObjMacro("Set property: " << pos->first);
@@ -215,17 +215,15 @@ namespace map
 
 		MetaPropertyAlgorithmBase::
 		MetaPropertyAlgorithmBase()
-		{
-		};
+		= default;
 
 		MetaPropertyAlgorithmBase::
 		~MetaPropertyAlgorithmBase()
-		{
-		};
+		= default;
 
 
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 

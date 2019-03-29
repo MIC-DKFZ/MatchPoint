@@ -83,7 +83,7 @@ namespace map
             const typename
                 GenericFieldGeneratingCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceKernel1BaseType*
                 GenericFieldGeneratingCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-                get1stSourceKernelBase(void) const
+                get1stSourceKernelBase() const
             {
                 return _spSourceKernel1;
             }
@@ -92,7 +92,7 @@ namespace map
             const typename
                 GenericFieldGeneratingCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::SourceKernel2BaseType*
                 GenericFieldGeneratingCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-                get2ndSourceKernelBase(void) const
+                get2ndSourceKernelBase() const
             {
                 return _spSourceKernel2;
             }
@@ -114,7 +114,7 @@ namespace map
             template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>
             ::itk::LightObject::Pointer
                 GenericFieldGeneratingCombinationFunctor<VInputDimensions, VInterimDimensions, VOutputDimensions>::
-                CreateAnother(void) const
+                CreateAnother() const
             {
                 ::itk::LightObject::Pointer smartPtr;
                 Pointer spNew = Self::New(_spSourceKernel1, _spSourceKernel2,

@@ -145,9 +145,9 @@ namespace map
           "Specifies name and location of the file that specifies the optional moving point set.");
 
         cmdParser.AddArgument("--parameters", itksys::CommandLineArguments::MULTI_ARGUMENT, &_parameterStrs,
-          "Allows to define meta properties that are passed to the algorithm. Each value defines a meta property and its value(s). The structure of the value string must be <PropertyName>=<Value>; e.g. -p \"myProp=10\". If you want to pass vector values (e.g. algorithm scales) seperate the value by space; e.g. -p \"Scales= 1 2 3 10\".");
+          R"(Allows to define meta properties that are passed to the algorithm. Each value defines a meta property and its value(s). The structure of the value string must be <PropertyName>=<Value>; e.g. -p "myProp=10". If you want to pass vector values (e.g. algorithm scales) seperate the value by space; e.g. -p "Scales= 1 2 3 10".)");
         cmdParser.AddArgument("-p", itksys::CommandLineArguments::MULTI_ARGUMENT, &_parameterStrs,
-          "Allows to define meta properties that are passed to the algorithm. Each value defines a meta property and its value(s). The structure of the value string must be <PropertyName>=<Value>; e.g. -p \"myProp=10\". If you want to pass vector values (e.g. algorithm scales) seperate the value by space; e.g. -p \"Scales= 1 2 3 10\".");
+          R"(Allows to define meta properties that are passed to the algorithm. Each value defines a meta property and its value(s). The structure of the value string must be <PropertyName>=<Value>; e.g. -p "myProp=10". If you want to pass vector values (e.g. algorithm scales) seperate the value by space; e.g. -p "Scales= 1 2 3 10".)");
 
 				cmdParser.AddArgument("-v", itksys::CommandLineArguments::NO_ARGUMENT, &_showVersion,
 				                      "Shows the version of the program.");
@@ -181,7 +181,7 @@ namespace map
         cmdParser.AddArgument("-l", itksys::CommandLineArguments::SPACE_ARGUMENT, &_logFileName,
             "Specifies name and location of the log file. Default (flag not set) is that no log file is written.");
 
-        if (!cmdParser.Parse())
+        if (cmdParser.Parse() == 0)
 				{
 					std::cerr << "Wrong command line option or insufficient number of arguments." << std::endl;
 					std::cerr << "The last correct argument was: " << argv[cmdParser.GetLastArgument()] << std::endl <<
@@ -202,7 +202,7 @@ namespace map
 					std::cout << " Example:" << std::endl << std::endl;
 					std::cout << " matchR moving.dcm target.dcm myFancyAlgorithm.dll" << std::endl << std::endl;
 					std::cout <<
-					          " This will match \"moving.dcm\" onto \"target.dcm\" by using the algorithm \"myFancyAlgorithm.dcm\". The output will be in the directory of the input. The output file name will be \"moving_to_taget.reg\"."
+					          R"( This will match "moving.dcm" onto "target.dcm" by using the algorithm "myFancyAlgorithm.dcm". The output will be in the directory of the input. The output file name will be "moving_to_taget.reg".)"
 					          << std::endl;
 					return 1;
 				}
@@ -247,6 +247,6 @@ namespace map
 				return 0;
 			};
 
-		}
-	}
-}
+		}  // namespace matchR
+	}  // namespace apps
+}  // namespace map

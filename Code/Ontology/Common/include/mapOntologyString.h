@@ -25,9 +25,9 @@
 
 namespace iro
 {
-		typedef std::string String;
+		using String = std::string;
 
-		typedef std::ostringstream OStringStream;
+		using OStringStream = std::ostringstream;
 
 } // end namespace regOnt
 

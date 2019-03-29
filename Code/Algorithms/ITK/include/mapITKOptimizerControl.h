@@ -51,8 +51,8 @@ namespace map
 			*/
 			template<class TConcreteOptimizer>
 			class ITKOptimizerControl;
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

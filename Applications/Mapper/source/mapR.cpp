@@ -32,7 +32,7 @@ mapR has to add the registration helper manually.*/
 
 map::apps::mapR::ApplicationData appData;
 
-void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
+void onMAPEvent(::itk::Object* /*unused*/, const itk::EventObject& event, void* /*unused*/)
 {
   std::cout << " > > > ";
   event.Print(std::cout);
@@ -120,10 +120,10 @@ int main(int argc, char** argv)
               appData._interpolatorTypeStr << std::endl;
     return 3;
   }
-  else
-  {
+  
+  
     std::cout << appData._interpolatorType << "(" << appData._interpolatorTypeStr << ")" << std::endl;
-  }
+  
 
   if (!(appData._refFileName.empty()))
   {

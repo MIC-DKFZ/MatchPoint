@@ -55,14 +55,12 @@ namespace map
 		template <class TProviderBase>
 		ImageMappingPerformerLoadPolicy<TProviderBase>::
 		ImageMappingPerformerLoadPolicy()
-		{
-		}
+		= default;
 
 		template <class TProviderBase>
 		ImageMappingPerformerLoadPolicy<TProviderBase>::
 		~ImageMappingPerformerLoadPolicy()
-		{
-		}
+		= default;
 
 
 	} // end namespace core

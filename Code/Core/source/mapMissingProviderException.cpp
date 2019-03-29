@@ -29,9 +29,9 @@ namespace map
 	{
 		MissingProviderException::BaseExceptionType*
 		MissingProviderException::
-		clone() const throw()
+		clone() const noexcept
 		{
-			BaseExceptionType* pResult = 0;
+			BaseExceptionType* pResult = nullptr;
 
 			try
 			{

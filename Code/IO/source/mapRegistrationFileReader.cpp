@@ -51,7 +51,7 @@ namespace map
 			//don't need the root, but the first sub element.
 			spFileData = spFileData->getSubElement(0);
 
-			structuredData::Element::SubElementIteratorType directKernelPos =
+			auto directKernelPos =
 				structuredData::findNextSubElement(spFileData->getSubElementBegin(), spFileData->getSubElementEnd(),
 												   tags::Kernel, tags::KernelID, tags::direct);
 
@@ -60,7 +60,7 @@ namespace map
 				mapDefaultExceptionMacro( << "Illegal registration file. No direct kernel entry found");
 			}
 
-			structuredData::Element::SubElementIteratorType inverseKernelPos =
+			auto inverseKernelPos =
 				structuredData::findNextSubElement(spFileData->getSubElementBegin(), spFileData->getSubElementEnd(),
 												   tags::Kernel, tags::KernelID, tags::inverse);
 
@@ -75,7 +75,7 @@ namespace map
 			KernelLoaderBaseType* pDirectLoader = LoaderStackType::getProvider(directRequest);
 			KernelLoaderBaseType::GenericKernelPointer spDirectKernel;
 
-			if (!pDirectLoader)
+			if (pDirectLoader == nullptr)
 			{
 				mapLogDebugMacro( <<
 								  "No responsible loader available for given direct request. Try to load inverse request first and retry with additional complementary kernel.");
@@ -90,7 +90,7 @@ namespace map
 			KernelLoaderBaseType* pInverseLoader = LoaderStackType::getProvider(inverseRequest);
 			KernelLoaderBaseType::GenericKernelPointer spInverseKernel;
 
-			if (!pInverseLoader)
+			if (pInverseLoader == nullptr)
 			{
 				mapExceptionMacro(::map::core::MissingProviderException,
 								  << "No responsible loader available for given inverse request. Request:" << inverseRequest);
@@ -107,7 +107,7 @@ namespace map
 													   (spInverseKernel.GetPointer());
 				pDirectLoader = LoaderStackType::getProvider(directRequest);
 
-				if (!pDirectLoader)
+				if (pDirectLoader == nullptr)
 				{
 					mapExceptionMacro(::map::core::MissingProviderException,
 									  << "No responsible loader available for given direct request. Request:" << directRequest);
@@ -124,7 +124,7 @@ namespace map
 			//read registration tags
 			::map::core::RegistrationBaseManipulator manip(spRegistration);
 			::map::core::RegistrationBaseManipulator::TagMapType tagMap;
-			structuredData::Element::SubElementIteratorType pos = structuredData::findNextSubElement(
+			auto pos = structuredData::findNextSubElement(
 						spFileData->getSubElementBegin(), spFileData->getSubElementEnd(), tags::RegistrationTag);
 
 			while (pos != spFileData->getSubElementEnd())
@@ -172,12 +172,12 @@ namespace map
 		}
 
 		RegistrationFileReader::
-		RegistrationFileReader(): _preferLazyLoading(true)
+		RegistrationFileReader() 
 		{}
 
 		RegistrationFileReader::
 		~RegistrationFileReader()
-		{}
+		= default;
 
 
 

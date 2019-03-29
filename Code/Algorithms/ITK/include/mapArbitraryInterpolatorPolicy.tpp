@@ -130,8 +130,8 @@ namespace map
 				//default implementation does nothing;
 			}
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

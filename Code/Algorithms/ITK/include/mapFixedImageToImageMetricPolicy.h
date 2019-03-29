@@ -52,13 +52,13 @@ namespace map
 				typename TConcreteMetric::FixedImageType >
 			{
 			public:
-				typedef FixedImageToImageMetricPolicy<TConcreteMetric>     Self;
-				typedef SealedImageToImageMetricPolicy<TConcreteMetric>    Superclass;
+				using Self = FixedImageToImageMetricPolicy<TConcreteMetric>;
+				using Superclass = SealedImageToImageMetricPolicy<TConcreteMetric>;
 
-				typedef typename Superclass::ConcreteMetricType             ConcreteMetricType;
-				typedef typename Superclass::ConcreteMetricControlType      ConcreteMetricControlType;
-				typedef typename Superclass::ConcreteMetricControlPointer   ConcreteMetricControlPointer;
-				typedef typename Superclass::MetricControlType              MetricControlType;
+				using ConcreteMetricType = typename Superclass::ConcreteMetricType;
+				using ConcreteMetricControlType = typename Superclass::ConcreteMetricControlType;
+				using ConcreteMetricControlPointer = typename Superclass::ConcreteMetricControlPointer;
+				using MetricControlType = typename Superclass::MetricControlType;
 
 				/*! gets the metric controll
 				@eguarantee strong
@@ -82,9 +82,9 @@ namespace map
 
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifdef MAP_SEAL_ALGORITHMS
 #define SealedFixedImageToImageMetricPolicyMacro ::map::algorithm::itk::SealedImageToImageMetricPolicy

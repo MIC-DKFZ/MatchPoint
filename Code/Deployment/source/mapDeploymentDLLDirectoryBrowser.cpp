@@ -36,14 +36,14 @@ namespace map
 	namespace deployment
 	{
 		//implemented in mapDeploymentDLLAccess.cpp
-		extern bool checkNameIsSharedLibrary(const char* name);
+		
 
 		void
 		DLLDirectoryBrowser::
 		addDLLSearchLocation(const core::String& location)
 		{
 			::map::core::String fullPath = core::FileDispatch::ensureCorrectOSPathSeparator(
-										itksys::SystemTools::CollapseFullPath(location.c_str(), _basePath.c_str()));
+										itksys::SystemTools::CollapseFullPath(location, _basePath.c_str()));
 
 			_pathList.push_back(fullPath);
 		};
@@ -131,33 +131,33 @@ namespace map
 		{
 			PathListType result;
 
-			for (PathListType::const_iterator pos = _pathList.begin(); pos != _pathList.end(); ++pos)
+			for (const auto & pos : _pathList)
 			{
 
-				if (itksys::SystemTools::FileExists(pos->c_str()))
+				if (itksys::SystemTools::FileExists(pos.c_str()))
 				{
 					//directory or file exists
-					if (itksys::SystemTools::FileExists(pos->c_str(), true))
+					if (itksys::SystemTools::FileExists(pos.c_str(), true))
 					{
 						//its directly defined file, so only check if it is a shared library; naming convention is irrelevant.
-						if (checkNameIsSharedLibrary(pos->c_str()))
+						if (checkNameIsSharedLibrary(pos.c_str()))
 						{
-							result.push_back(*pos);
+							result.push_back(pos);
 						}
 					}
 					else
 					{
 						//its a directory
-						PathListType subresult = this->getCandidatesInPath(*pos);
+						PathListType subresult = this->getCandidatesInPath(pos);
 						result.insert(result.end(), subresult.begin(), subresult.end());
 					}
 				}
 				else
 				{
 					::map::core::OStringStream stream;
-					stream << "Specified dll search location does not exist. Location: " << *pos;
+					stream << "Specified dll search location does not exist. Location: " << pos;
 					mapLogWarningMacro( << stream.str());
-					this->InvokeEvent(map::events::InvalidDLLEvent(NULL, stream.str()));
+					this->InvokeEvent(map::events::InvalidDLLEvent(nullptr, stream.str()));
 				}
 			}
 
@@ -185,12 +185,12 @@ namespace map
 				catch (const map::core::ExceptionObject& e)
 				{
 					::map::core::String sComment = e.GetDescription();
-					this->InvokeEvent(map::events::InvalidDLLEvent(NULL, sComment));
+					this->InvokeEvent(map::events::InvalidDLLEvent(nullptr, sComment));
 				}
 				catch (...)
 				{
 					::map::core::String sComment = "Unkown error while try to peek DLL. File path: " + libraryFilePath;
-					this->InvokeEvent(map::events::InvalidDLLEvent(NULL, sComment));
+					this->InvokeEvent(map::events::InvalidDLLEvent(nullptr, sComment));
 				}
 			}
 
@@ -232,8 +232,7 @@ namespace map
 
 		DLLDirectoryBrowser::
 		~DLLDirectoryBrowser()
-		{
-		};
+		= default;
 
 		DLLInfoListType peekDeploymentDLLDirectory(const char* directoryPath)
 		{
@@ -251,18 +250,18 @@ namespace map
 		DLLInfoListType selectDLLInfosByUID(const DLLInfoListType& infoList, const algorithm::UID* uid,
 											bool wcNamespace, bool wcName, bool wcVersion, bool wcBuild)
 		{
-			if (!uid)
+			if (uid == nullptr)
 			{
 				mapDefaultExceptionStaticMacro( << "Cannot select dll info list. Passed uid object is NULL.");
 			}
 
 			DLLInfoListType result;
 
-			for (DLLInfoListType::const_iterator pos = infoList.begin(); pos != infoList.end(); ++pos)
+			for (const auto & pos : infoList)
 			{
-				if (compareUIDs(*uid, (*pos)->getAlgorithmUID(), wcNamespace, wcName, wcVersion, wcBuild))
+				if (compareUIDs(*uid, pos->getAlgorithmUID(), wcNamespace, wcName, wcVersion, wcBuild))
 				{
-					result.push_back(*pos);
+					result.push_back(pos);
 				}
 			}
 

@@ -31,10 +31,10 @@ namespace iro
     template <typename TPathTraits>
     struct SimpleRegPathCheckPolicy
 		{
-      typedef typename TPathTraits::Type PathType;
-      typedef typename TPathTraits::InformationEntityTraitsType::Type EntityType;
-      typedef typename TPathTraits::ConstPointer ConstPathPointer;
-      typedef typename TPathTraits::InformationEntityTraitsType::ConstPointer ConstEntityPointer;
+      using PathType = typename TPathTraits::Type;
+      using EntityType = typename TPathTraits::InformationEntityTraitsType::Type;
+      using ConstPathPointer = typename TPathTraits::ConstPointer;
+      using ConstEntityPointer = typename TPathTraits::InformationEntityTraitsType::ConstPointer;
 
       static bool checkPathSupportOfEntity(ConstPathPointer path, ConstEntityPointer entity);
       static MappingError::Type checkForFailureReason(ConstPathPointer path, ConstEntityPointer entity);

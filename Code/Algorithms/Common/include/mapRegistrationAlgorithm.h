@@ -53,9 +53,9 @@ namespace map
 		{
 		public:
 			typedef RegistrationAlgorithm<VMovingDimensions, VTargetDimensions> Self;
-			typedef RegistrationAlgorithmBase      Superclass;
-			typedef ::itk::SmartPointer<Self>        Pointer;
-			typedef ::itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = RegistrationAlgorithmBase;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 			itkTypeMacro(RegistrationAlgorithm, RegistrationAlgorithmBase);
 
 			/** Dimension of the algorithm */
@@ -64,24 +64,23 @@ namespace map
 
 			typedef facet::RegistrationAlgorithmInterface<VMovingDimensions, VTargetDimensions>
 			RegistrationAlgorithmInterfaceType;
-			typedef typename RegistrationAlgorithmInterfaceType::RegistrationType          RegistrationType;
-			typedef typename RegistrationAlgorithmInterfaceType::RegistrationPointer       RegistrationPointer;
-			typedef typename RegistrationAlgorithmInterfaceType::ConstRegistrationPointer
-			ConstRegistrationPointer;
+			using RegistrationType = typename RegistrationAlgorithmInterfaceType::RegistrationType;
+			using RegistrationPointer = typename RegistrationAlgorithmInterfaceType::RegistrationPointer;
+			using ConstRegistrationPointer = typename RegistrationAlgorithmInterfaceType::ConstRegistrationPointer;
 
 			/*! @brief Gets the number of moving dimensions for this registration algorithm
 			  @eguarantee strong
 			  @return The number of moving dimensions
 			  @sa getTargetDimensions()
 			 */
-			unsigned int getMovingDimensions() const;
+			unsigned int getMovingDimensions() const override;
 
 			/*! @brief Gets the number of target dimensions for this registration algorithm
 			  @eguarantee strong
 			  @return The number of target dimensions
 			  @sa getMovingDimensions()
 			 */
-			unsigned int getTargetDimensions() const;
+			unsigned int getTargetDimensions() const override;
 
 			/*! Checks if the registration is uptodate. If not the registration becomes (re)computed
 			 * the valid registration will be returned.
@@ -90,16 +89,16 @@ namespace map
 			  computed (determineRegistration returned false).
 			  @retval an ITK smart pointer on a specific RegistrationType object
 			 */
-			RegistrationPointer getRegistration();
+			RegistrationPointer getRegistration() override;
 
-			typedef core::FieldRepresentationDescriptor<VMovingDimensions> MovingRepresentationDescriptorType;
-			typedef core::FieldRepresentationDescriptor<VTargetDimensions> TargetRepresentationDescriptorType;
+			using MovingRepresentationDescriptorType = core::FieldRepresentationDescriptor<VMovingDimensions>;
+			using TargetRepresentationDescriptorType = core::FieldRepresentationDescriptor<VTargetDimensions>;
 
-			const MovingRepresentationDescriptorType* getMovingRepresentation() const;
-			void setMovingRepresentation(const MovingRepresentationDescriptorType* pDescriptor);
+			const MovingRepresentationDescriptorType* getMovingRepresentation() const override;
+			void setMovingRepresentation(const MovingRepresentationDescriptorType* pDescriptor) override;
 
-			const TargetRepresentationDescriptorType* getTargetRepresentation() const;
-			void setTargetRepresentation(const TargetRepresentationDescriptorType* pDescriptor);
+			const TargetRepresentationDescriptorType* getTargetRepresentation() const override;
+			void setTargetRepresentation(const TargetRepresentationDescriptorType* pDescriptor) override;
 
 		protected:
 
@@ -158,16 +157,16 @@ namespace map
 			mutable ::itk::SimpleFastMutexLock _determinationLock;
 
 			RegistrationAlgorithm();
-			virtual ~RegistrationAlgorithm();
+			~RegistrationAlgorithm() override;
 
 		private:
-			RegistrationAlgorithm(const Self& source);  //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			RegistrationAlgorithm(const Self& source) = delete;  //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapRegistrationAlgorithm.tpp"

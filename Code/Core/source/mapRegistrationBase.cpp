@@ -42,8 +42,7 @@ namespace map
 
 		RegistrationBase::
 		~RegistrationBase()
-		{
-		}
+		= default;
 
 		void
 		RegistrationBase::
@@ -145,5 +144,5 @@ namespace map
 			}
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map

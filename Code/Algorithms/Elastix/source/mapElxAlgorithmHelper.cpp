@@ -49,11 +49,11 @@ namespace map
 													<< filePath);
 				}
 
-				for (ParameterMapType::const_iterator pos = parameterMap.begin(); pos != parameterMap.end(); ++pos)
+				for (const auto & pos : parameterMap)
 				{
-					file << "(" << pos->first;
+					file << "(" << pos.first;
 
-					for (ParameterValuesType::const_iterator valPos = pos->second.begin(); valPos != pos->second.end();
+					for (auto valPos = pos.second.begin(); valPos != pos.second.end();
 						 ++valPos)
 					{
 						file << " " << *valPos;
@@ -75,12 +75,10 @@ namespace map
       };
 
 			ParamGenerator::ParamGenerator()
-			{
-			}
+			= default;
 
 			ParamGenerator::~ParamGenerator()
-			{
-			}
+			= default;
 
 			ParamGenerator&
 			ParamGenerator::
@@ -96,6 +94,6 @@ namespace map
 				return this->_values;
 			}
 
-		}
-	}
-}
+		}  // namespace elastix
+	}  // namespace algorithm
+}  // namespace map

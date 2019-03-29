@@ -29,10 +29,10 @@ namespace iro
     };
 
     UnkownBijectivCorrelation::
-      ~UnkownBijectivCorrelation() {};
+      ~UnkownBijectivCorrelation() = default;
 
     UnkownBijectivCorrelation::
-      UnkownBijectivCorrelation() {};
+      UnkownBijectivCorrelation() = default;
 
 } // end namespace iro
 

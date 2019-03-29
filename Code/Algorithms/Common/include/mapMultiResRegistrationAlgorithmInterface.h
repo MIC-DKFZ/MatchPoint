@@ -49,12 +49,12 @@ namespace map
 			class MultiResRegistrationAlgorithmInterface
 			{
 			public:
-				typedef MultiResRegistrationAlgorithmInterface Self;
+				using Self = MultiResRegistrationAlgorithmInterface;
 
-				typedef unsigned int DimensionCountType;
-				typedef unsigned int ScalingType;
-				typedef unsigned int ResolutionLevelCountType;
-				typedef ::itk::Array2D<ScalingType> ScheduleType;
+				using DimensionCountType = unsigned int;
+				using ScalingType = unsigned int;
+				using ResolutionLevelCountType = unsigned int;
+				using ScheduleType = ::itk::Array2D<ScalingType>;
 
 				/*! @brief Returns the number of dimensions for the moving
 				information space. Must be implemented by the algorithm
@@ -96,17 +96,17 @@ namespace map
 				virtual ResolutionLevelCountType getCurrentLevel() const = 0;
 
 			protected:
-				MultiResRegistrationAlgorithmInterface() {};
-				virtual ~MultiResRegistrationAlgorithmInterface() {};
+				MultiResRegistrationAlgorithmInterface() = default;
+				virtual ~MultiResRegistrationAlgorithmInterface() = default;
 
 			private:
 				//No copy constructor allowed
-				MultiResRegistrationAlgorithmInterface(const Self& source); //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				MultiResRegistrationAlgorithmInterface(const Self& source) = delete; //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

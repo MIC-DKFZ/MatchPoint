@@ -124,7 +124,7 @@ namespace itk
      */
     template <typename TScalar, unsigned int InDimensions, unsigned int OutDimensions>
     bool GenericVectorFieldTransform<TScalar, InDimensions, OutDimensions>
-        ::GetInverse(Self *itkNotUsed(inverse)) const
+        ::GetInverse(Self *itkNotUsed(inverse) /*unused*/) const
     {
         return false;
     }
@@ -203,7 +203,7 @@ namespace itk
         ::UpdateTransformParameters(const DerivativeType & update, ScalarType factor)
     {
         // This simply adds the values.
-        // TODO: This should be multi-threaded probably, via image add filter.
+        // TODO(floca): This should be multi-threaded probably, via image add filter.
         Superclass::UpdateTransformParameters(update, factor);
     }
 

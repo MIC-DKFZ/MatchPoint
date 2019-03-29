@@ -51,26 +51,26 @@ namespace map
 		class MAPCore_EXPORT Element: public ::itk::LightObject
 		{
 		public:
-			typedef Element Self;
-			typedef ::itk::LightObject Superclass;
-			typedef ::itk::SmartPointer<Self> Pointer;
-			typedef ::itk::SmartPointer<const Self> ConstPointer;
+			using Self = Element;
+			using Superclass = ::itk::LightObject;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			itkTypeMacro(Element, ::itk::LightObject);
 			itkNewMacro(Self);
 
-			typedef core::String TagType;
-			typedef core::String ValueType;
+			using TagType = core::String;
+			using ValueType = core::String;
 
 		protected:
-			typedef std::vector<Pointer> SubElementVectorType;
+			using SubElementVectorType = std::vector<Pointer>;
 			typedef std::map< ::map::core::String, core::String> AttributeMapType;
 
 		public:
-			typedef std::vector< ::map::core::String> AttributeNameVectorType;
-			typedef SubElementVectorType::iterator SubElementIteratorType;
-			typedef SubElementVectorType::const_iterator ConstSubElementIteratorType;
-			typedef SubElementVectorType::size_type SubElementIndexType;
+			using AttributeNameVectorType = std::vector< ::map::core::String>;
+			using SubElementIteratorType = SubElementVectorType::iterator;
+			using ConstSubElementIteratorType = SubElementVectorType::const_iterator;
+			using SubElementIndexType = SubElementVectorType::size_type;
 
 			//Sub elements
 			//////////////////////////////////////////////////////////////////
@@ -194,9 +194,9 @@ namespace map
 
 		protected:
 			Element();
-			~Element();
+			~Element() override;
 
-			virtual void  PrintSelf(std::ostream& os, ::itk::Indent indent) const;
+			void  PrintSelf(std::ostream& os, ::itk::Indent indent) const override;
 
 			TagType _Tag;
 			ValueType _Value;
@@ -205,8 +205,8 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			Element(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			Element(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os, const Element& element);

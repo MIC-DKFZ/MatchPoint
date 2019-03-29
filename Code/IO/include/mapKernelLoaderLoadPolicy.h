@@ -58,19 +58,19 @@ namespace map
 		{
 		protected:
 			/*! Standard class typedefs. */
-			typedef core::services::GenericStaticLoadPolicyBase <RegistrationKernelLoaderBase> Superclass;
-			typedef Superclass::ProviderBaseType      ProviderBaseType;
-			typedef Superclass::ProviderBasePointer   ProviderBasePointer;
-			typedef Superclass::LoadInterfaceType     LoadInterfaceType;
+			using Superclass = core::services::GenericStaticLoadPolicyBase<RegistrationKernelLoaderBase>;
+			using ProviderBaseType = Superclass::ProviderBaseType;
+			using ProviderBasePointer = Superclass::ProviderBasePointer;
+			using LoadInterfaceType = Superclass::LoadInterfaceType;
 
-			virtual void doLoading();
+			void doLoading() override;
 
 			KernelLoaderLoadPolicy();
 			~KernelLoaderLoadPolicy();
 
 		private:
-			KernelLoaderLoadPolicy(const KernelLoaderLoadPolicy&);  //purposely not implemented
-			void operator=(const KernelLoaderLoadPolicy&);  //purposely not implemented
+			KernelLoaderLoadPolicy(const KernelLoaderLoadPolicy&) = delete;  //purposely not implemented
+			void operator=(const KernelLoaderLoadPolicy&) = delete;  //purposely not implemented
 		};
 
 	} // end namespace io

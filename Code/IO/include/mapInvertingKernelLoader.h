@@ -48,19 +48,19 @@ namespace map
             /*! Standard class typedefs. */
             typedef InvertingKernelLoader<VInputDimensions, VOutputDimensions>				Self;
             typedef FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>   Superclass;
-            typedef itk::SmartPointer<Self>        Pointer;
-            typedef itk::SmartPointer<const Self>  ConstPointer;
+            using Pointer = itk::SmartPointer<Self>;
+            using ConstPointer = itk::SmartPointer<const Self>;
 
             itkTypeMacro(InvertingKernelLoader, FieldKernelLoaderBase);
             itkNewMacro(Self);
 
             typedef  core::InvertingRegistrationKernel < VInputDimensions, VOutputDimensions >
                 KernelBaseType;
-            typedef typename KernelBaseType::Pointer	KernelBasePointer;
-            typedef typename Superclass::RequestType	RequestType;
+            using KernelBasePointer = typename KernelBaseType::Pointer;
+            using RequestType = typename Superclass::RequestType;
 
-            typedef typename Superclass::GenericKernelType       GenericKernelType;
-            typedef typename Superclass::GenericKernelPointer    GenericKernelPointer;
+            using GenericKernelType = typename Superclass::GenericKernelType;
+            using GenericKernelPointer = typename Superclass::GenericKernelPointer;
 
             /*! Uses the passed request data to check if the provider is able to provide the service for
              * this request. Thus if the kernel is an expanded field kernel

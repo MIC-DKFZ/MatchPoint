@@ -50,8 +50,8 @@ namespace map
     public:
       typedef ::itk::Transform<TScalarType, VInDimensions, VOutDimensions> TransformType;
 
-      typedef typename continuous::Elements<VOutDimensions>::PointType            OutputPointType;
-      typedef typename continuous::Elements<VOutDimensions>::VectorType           OutputVectorType;
+      using OutputPointType = typename continuous::Elements<VOutDimensions>::PointType;
+      using OutputVectorType = typename continuous::Elements<VOutDimensions>::VectorType;
 
       typedef itk::Matrix<TScalarType, VOutDimensions, VInDimensions> MatrixType;
 
@@ -118,8 +118,8 @@ namespace map
     public:
       typedef ::itk::Transform<TScalarType, VDimensions, VDimensions> TransformType;
 
-      typedef typename continuous::Elements<VDimensions>::PointType            OutputPointType;
-      typedef typename continuous::Elements<VDimensions>::VectorType           OutputVectorType;
+      using OutputPointType = typename continuous::Elements<VDimensions>::PointType;
+      using OutputVectorType = typename continuous::Elements<VDimensions>::VectorType;
 
       typedef itk::Matrix<TScalarType, VDimensions, VDimensions> MatrixType;
 

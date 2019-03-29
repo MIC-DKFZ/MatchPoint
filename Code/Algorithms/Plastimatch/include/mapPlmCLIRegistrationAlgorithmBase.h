@@ -386,11 +386,11 @@ namespace map
 
         virtual MovingPointSetConstPointer doGetNthMovingPointSet(SlotIndexType index) const override;
 
-        virtual TargetPointSetConstPointer doGetNthTargetPointSet(SlotIndexType index) const override;;
+        virtual TargetPointSetConstPointer doGetNthTargetPointSet(SlotIndexType index) const override;
 
-        virtual void doSetNthMovingPointSet(SlotIndexType index, const MovingPointSetType* pMovingPointSet) override;;
+        virtual void doSetNthMovingPointSet(SlotIndexType index, const MovingPointSetType* pMovingPointSet) override;
 
-        virtual void doSetNthTargetPointSet(SlotIndexType index, const TargetPointSetType* pTargetPointSet) override;;
+        virtual void doSetNthTargetPointSet(SlotIndexType index, const TargetPointSetType* pTargetPointSet) override;
 
         ::map::core::ModificationTimeValidator _targetPSMTime;
         ::map::core::ModificationTimeValidator _movingPSMTime;

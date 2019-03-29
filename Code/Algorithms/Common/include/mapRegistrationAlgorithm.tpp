@@ -147,13 +147,13 @@ namespace map
 		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
 		RegistrationAlgorithm()
 		{
-			_spMovingRepresentation = NULL;
-			_spTargetRepresentation = NULL;
+			_spMovingRepresentation = nullptr;
+			_spTargetRepresentation = nullptr;
 		};
 
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
-		~RegistrationAlgorithm() {};
+		~RegistrationAlgorithm() = default;
 
 		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
 		void

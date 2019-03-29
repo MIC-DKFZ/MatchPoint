@@ -33,8 +33,7 @@ namespace iro
     template <typename TOATraits>
     SimpleOntologyCore<TOATraits>::
       ~SimpleOntologyCore()
-    {
-    };
+    = default;
 
     template <typename TOATraits>
     SimpleOntologyCore<TOATraits>::
@@ -56,9 +55,9 @@ namespace iro
       SimpleOntologyCore<TOATraits>::
       getCorrelations(ConstCorrelationMapType& corrs, const EntityUIDSetType& sourceEntities, const EntityUIDSetType& targetEntities) const
     {
-      for (typename EntityUIDSetType::const_iterator sourcePos = sourceEntities.begin(); sourcePos!= sourceEntities.end(); ++sourcePos)
+      for (auto sourcePos = sourceEntities.begin(); sourcePos!= sourceEntities.end(); ++sourcePos)
       {
-        for (typename EntityUIDSetType::const_iterator targetPos = targetEntities.begin(); targetPos!= targetEntities.end(); ++targetPos)
+        for (auto targetPos = targetEntities.begin(); targetPos!= targetEntities.end(); ++targetPos)
         {
           getCorrelations(corrs, *sourcePos,*targetPos);
         }
@@ -77,15 +76,15 @@ namespace iro
       PairType targetFindings = _entity2CorrelationMap.equal_range(targetEntity);
 
       //got through all source entity correlations
-      for (typename EntityCorrelationMapType::const_iterator sourcePos = sourceFindings.first; sourcePos!= sourceFindings.second; ++sourcePos)
+      for (auto sourcePos = sourceFindings.first; sourcePos!= sourceFindings.second; ++sourcePos)
       {
 
-        for (typename EntityCorrelationMapType::const_iterator targetPos = targetFindings.first; targetPos!= targetFindings.second; ++targetPos)
+        for (auto targetPos = targetFindings.first; targetPos!= targetFindings.second; ++targetPos)
         {
           if (sourcePos->second == targetPos->second)
           { //source and target are related to the same correlation
             //get Correlation
-            typename CorrelationMapType::const_iterator posCorr = _correlationMap.find(sourcePos->second);
+            auto posCorr = _correlationMap.find(sourcePos->second);
 
             if (posCorr !=  _correlationMap.end())
             {
@@ -107,9 +106,9 @@ namespace iro
       PairType sourceFindings = _entity2CorrelationMap.equal_range(entity);
 
       //got through all source entity correlations
-      for (typename EntityCorrelationMapType::const_iterator sourcePos = sourceFindings.first; sourcePos!= sourceFindings.second; ++sourcePos)
+      for (auto sourcePos = sourceFindings.first; sourcePos!= sourceFindings.second; ++sourcePos)
       {
-        typename CorrelationMapType::const_iterator posCorr = _correlationMap.find(sourcePos->second);
+        auto posCorr = _correlationMap.find(sourcePos->second);
 
         if (posCorr !=  _correlationMap.end())
         {
@@ -123,7 +122,7 @@ namespace iro
       SimpleOntologyCore<TOATraits>::
       storeTransformationInfo(TransformationInfoPointer trans)
     {
-      typename TransformationMapType::iterator trPos = _transformationMap.find(trans->getUID());
+      auto trPos = _transformationMap.find(trans->getUID());
 
       if (trPos!=_transformationMap.end())
       { //existing transformation -> check if edges must be refined or even deleted
@@ -323,7 +322,8 @@ namespace iro
 
       result = addResult.first;
 
-      if (!(addResult.second)) throw exceptions::InvalidArgument("Unable to add an edge.");
+      if (!(addResult.second)) { throw exceptions::InvalidArgument("Unable to add an edge.");
+}
 
       return result;
     };
@@ -487,9 +487,11 @@ namespace iro
         if (pMetric)
         {
           double weightD = fatalPenaltyCost;
-          if (_graph[*pos].direct) weightD = pMetric->evaluatePathElement(_graph[*pos].direct.get());
+          if (_graph[*pos].direct) { weightD = pMetric->evaluatePathElement(_graph[*pos].direct.get());
+}
           double weightI = fatalPenaltyCost;
-          if (_graph[*pos].direct) weightI = pMetric->evaluatePathElement(_graph[*pos].inverse.get());
+          if (_graph[*pos].direct) { weightI = pMetric->evaluatePathElement(_graph[*pos].inverse.get());
+}
 
           if (requiredDataSupport == DataRepresentationSupport::Discrete)
           {
@@ -564,7 +566,7 @@ namespace iro
 
       while (!reachedTarget)
       {
-        typename PredecessorMapType::const_iterator posV = predecessors.find(currentV);
+        auto posV = predecessors.find(currentV);
         assert(posV!=predecessors.end());
         if (posV->second == currentV)
         {
@@ -579,9 +581,9 @@ namespace iro
         }
         else
         {
-          typename EdgeMapType::const_iterator posEdge = edges.find(currentV);
+          auto posEdge = edges.find(currentV);
           assert(posEdge!=edges.end());
-          typename WeightMapType::const_iterator posWeigth = weights.find(posEdge->second);
+          auto posWeigth = weights.find(posEdge->second);
 
           if (posWeigth->second<fatalPenaltyCost)
           { //it is a legal path
@@ -597,7 +599,8 @@ namespace iro
         }
       }
 
-      if (reachedTarget) result = temp;
+      if (reachedTarget) { result = temp;
+}
 
       return result;
     };
@@ -615,7 +618,7 @@ namespace iro
       typename RegistrationGraphType::vertex_descriptor targetV = getVertex(targetIS);
       while (!reachedTarget)
       {
-        typename PredecessorMapType::const_iterator posV = predecessors.find(currentV);
+        auto posV = predecessors.find(currentV);
         assert(posV!=predecessors.end());
         if (posV->second == currentV)
         {
@@ -630,10 +633,10 @@ namespace iro
         }
         else
         {
-          typename EdgeMapType::const_iterator posEdge = edges.find(currentV);
+          auto posEdge = edges.find(currentV);
           assert(posEdge!=edges.end());
 
-          typename WeightMapType::const_iterator posWeigth = weights.find(posEdge->second);
+          auto posWeigth = weights.find(posEdge->second);
 
           if (posWeigth->second<fatalPenaltyCost)
           { //it is a legal path
@@ -667,7 +670,8 @@ namespace iro
           currentV = posV->second;
         }
       }
-      if (reachedTarget) result = temp;
+      if (reachedTarget) { result = temp;
+}
 
       return result;
     };
@@ -684,14 +688,14 @@ namespace iro
         result->setMovingEntity(ie);
       }
 
-      for (typename SimpleSearchMapType::const_iterator pos = searchResult.begin(); pos != searchResult.end(); ++pos)
+      for (auto pos = searchResult.begin(); pos != searchResult.end(); ++pos)
       {
         typename RegPathOptColType::OptionType::Pointer spOption (new typename RegPathOptColType::OptionType);
         spOption->setMovingEntity(ie);
         RegistrationPathPointer spPath(new RegistrationPathType);
 
         //must iterate reverse because of inverse graph layout
-        for (typename SimpleSearchMapType::value_type::const_reverse_iterator posPath = pos->rbegin(); posPath!=pos->rend(); ++posPath)
+        for (auto posPath = pos->rbegin(); posPath!=pos->rend(); ++posPath)
         {
           RegistrationInfoPointer spInfo(new RegistrationInfoType);
           spInfo->setTransformations(_graph[*posPath].direct,_graph[*posPath].inverse);
@@ -717,13 +721,13 @@ namespace iro
         result->setMovingEntity(ie);
       }
 
-      for (typename SimpleSearchMapType::const_iterator pos = searchResult.begin(); pos != searchResult.end(); ++pos)
+      for (auto pos = searchResult.begin(); pos != searchResult.end(); ++pos)
       {
         TransformationPathPointer spCPath(new TransformationPathType);
         TransformationPathPointer spDPath(new TransformationPathType);
 
         //must iterate reverse because of inverse graph layout
-        for (typename SimpleSearchMapType::value_type::const_reverse_iterator posPath = pos->rbegin(); posPath!=pos->rend(); ++posPath)
+        for (auto posPath = pos->rbegin(); posPath!=pos->rend(); ++posPath)
         {
           if (requiredDataSupport != DataRepresentationSupport::Discrete)
           {
@@ -772,7 +776,7 @@ namespace iro
         { //don't check self reference, only other information spaces.
           while (!reachedTarget)
           {
-            typename PredecessorMapType::const_iterator posV = predecessors.find(currentV);
+            auto posV = predecessors.find(currentV);
             assert(posV!=predecessors.end());
             if (posV->second == currentV)
             {
@@ -787,9 +791,9 @@ namespace iro
             }
             else
             {
-              typename EdgeMapType::const_iterator posEdge = edges.find(currentV);
+              auto posEdge = edges.find(currentV);
               assert(posEdge!=edges.end());
-              typename WeightMapType::const_iterator posWeigth = weights.find(posEdge->second);
+              auto posWeigth = weights.find(posEdge->second);
 
               if (posWeigth->second>=fatalPenaltyCost)
               { //even the shortest path is not valid -> breake generation.
@@ -799,7 +803,8 @@ namespace iro
             }
           }
         }
-        if (reachedTarget) result.push_back(_graph[*pos].infSpace);
+        if (reachedTarget) { result.push_back(_graph[*pos].infSpace);
+}
       }
 
       return result;
@@ -813,7 +818,7 @@ namespace iro
       typedef std::pair<typename EntityCorrelationMapType::iterator,typename EntityCorrelationMapType::iterator> PairType;
 
       //1st remove all old look ups for this correlation
-      typename EntityCorrelationMapType::iterator pos = _entity2CorrelationMap.begin();
+      auto pos = _entity2CorrelationMap.begin();
 
       while (pos!=  _entity2CorrelationMap.end())
       {
@@ -828,7 +833,7 @@ namespace iro
       }
 
       //2nd add current relations
-      for (typename CorrelationType::ConstEntityIterator relatedPos = corr->getCorrelatedEntitiesBegin(); relatedPos!=corr->getCorrelatedEntitiesEnd(); ++relatedPos)
+      for (auto relatedPos = corr->getCorrelatedEntitiesBegin(); relatedPos!=corr->getCorrelatedEntitiesEnd(); ++relatedPos)
       {
         _entity2CorrelationMap.insert(std::make_pair((*relatedPos)->getUID(),corr->getUID()));
       }
@@ -844,13 +849,13 @@ namespace iro
       PairType sourceFindings = _entity2CorrelationMap.equal_range(entity);
 
       //got through all source entity correlations
-      for (typename EntityCorrelationMapType::iterator pos = sourceFindings.first; pos!= sourceFindings.second; ++pos)
+      for (auto pos = sourceFindings.first; pos!= sourceFindings.second; ++pos)
       {
-        typename CorrelationMapType::iterator posCorr = _correlationMap.find(pos->second);
+        auto posCorr = _correlationMap.find(pos->second);
 
         if (posCorr !=  _correlationMap.end())
         {
-          typename CorrelationType::EntityIterator relatedPos = posCorr->second->getCorrelatedEntitiesBegin();
+          auto relatedPos = posCorr->second->getCorrelatedEntitiesBegin();
 
           while(relatedPos!=posCorr->second->getCorrelatedEntitiesEnd())
           {
@@ -904,7 +909,7 @@ namespace iro
     {
       bool result = true;
 
-      for(typename CorrelationType::EntityIterator relatedPos = corr->getCorrelatedEntitiesBegin(); relatedPos!=corr->getCorrelatedEntitiesEnd(); ++relatedPos)
+      for(auto relatedPos = corr->getCorrelatedEntitiesBegin(); relatedPos!=corr->getCorrelatedEntitiesEnd(); ++relatedPos)
       {
         typename EntityMapType::const_iterator entityPos = _entityMap.find((*relatedPos)->getUID());
         if (entityPos==_entityMap.end())
@@ -927,9 +932,9 @@ namespace iro
       ConstEntityMapType result;
 
       //got through all correlations
-      for (typename ConstCorrelationMapType::const_iterator pos = correlations.begin(); pos!= correlations.end(); ++pos)
+      for (auto pos = correlations.begin(); pos!= correlations.end(); ++pos)
       { //go through there entities
-        for (typename CorrelationType::ConstEntityIterator relatedPos = pos->second->getCorrelatedEntitiesBegin(); relatedPos!=pos->second->getCorrelatedEntitiesEnd(); ++relatedPos)
+        for (auto relatedPos = pos->second->getCorrelatedEntitiesBegin(); relatedPos!=pos->second->getCorrelatedEntitiesEnd(); ++relatedPos)
         {
           if ((entities.find((*relatedPos)->getUID())!=entities.end()) != excludeEntities)
           { // the entity exists in the passed list and but its include mode or it is not in the list and it is exclude mode
@@ -951,9 +956,9 @@ namespace iro
       PairType sourceFindings = _stat2ModelMap.equal_range(ps);
 
       //got through all source entity correlations
-      for (typename StatementModelMapType::const_iterator sourcePos = sourceFindings.first; sourcePos!= sourceFindings.second; ++sourcePos)
+      for (auto sourcePos = sourceFindings.first; sourcePos!= sourceFindings.second; ++sourcePos)
       {
-        typename ModelMapType::const_iterator posModel = _modelMap.find(sourcePos->second);
+        auto posModel = _modelMap.find(sourcePos->second);
 
         if (posModel !=  _modelMap.end())
         {
@@ -970,7 +975,7 @@ namespace iro
       typedef std::pair<typename StatementModelMapType::iterator, typename StatementModelMapType::iterator> PairType;
 
       //1st remove all old look ups for this correlation
-      typename StatementModelMapType::iterator pos = _stat2ModelMap.begin();
+      auto pos = _stat2ModelMap.begin();
 
       while (pos!=  _stat2ModelMap.end())
       {
@@ -985,7 +990,7 @@ namespace iro
       }
 
       //2nd add current relations
-      for (typename ProblemModelType::ConstProblemIterator relatedPos = pModell->getStatementBegin(); relatedPos!=pModell->getStatementEnd(); ++relatedPos)
+      for (auto relatedPos = pModell->getStatementBegin(); relatedPos!=pModell->getStatementEnd(); ++relatedPos)
       {
         _stat2ModelMap.insert(std::make_pair((*relatedPos)->getUID(),pModell->getUID()));
       }
@@ -1001,13 +1006,13 @@ namespace iro
       PairType sourceFindings = _stat2ModelMap.equal_range(stat);
 
       //got through all source entity correlations
-      for (typename StatementModelMapType::iterator pos = sourceFindings.first; pos!= sourceFindings.second; ++pos)
+      for (auto pos = sourceFindings.first; pos!= sourceFindings.second; ++pos)
       {
-        typename ModelMapType::iterator posModel = _modelMap.find(pos->second);
+        auto posModel = _modelMap.find(pos->second);
 
         if (posModel !=  _modelMap.end())
         {
-          typename ProblemModelType::ProblemIterator relatedPos = posModel->second->getStatementBegin();
+          auto relatedPos = posModel->second->getStatementBegin();
 
           while(relatedPos!=posModel->second->getStatementEnd())
           {
@@ -1060,7 +1065,7 @@ namespace iro
     {
       bool result = true;
 
-      for(typename ProblemModelType::ProblemIterator relatedPos = model->getStatementBegin(); relatedPos!=model->getStatementEnd(); ++relatedPos)
+      for(auto relatedPos = model->getStatementBegin(); relatedPos!=model->getStatementEnd(); ++relatedPos)
       {
         typename StatementMapType::const_iterator statPos = _statementMap.find((*relatedPos)->getUID());
         if (statPos==_statementMap.end())
@@ -1082,7 +1087,7 @@ namespace iro
       continuousEntities.clear();
       discreteEntities.clear();
 
-      for (typename ConstInfEntityVectorType::const_iterator pos = movingEntities.begin(); pos != movingEntities.end(); ++pos)
+      for (auto pos = movingEntities.begin(); pos != movingEntities.end(); ++pos)
       {
         if ((*pos)->getDataRepresentation()==DataRepresentation::Continuous)
         {
@@ -1112,7 +1117,7 @@ namespace iro
           InfEntityPointer spDummy(new InfEntityType());
           spDummy->setDataRepresentation(DataRepresentation::Continuous);
 
-          for (typename RegPathOptColType::ConstOptionIterator pos = col->getBegin(); pos != col->getEnd(); ++pos)
+          for (auto pos = col->getBegin(); pos != col->getEnd(); ++pos)
           {
             MappingError::Type temp = PolicyType::checkForFailureReason((*pos)->getPath(),spDummy);
             if (temp>cResult)
@@ -1127,7 +1132,7 @@ namespace iro
           InfEntityPointer spDummy(new InfEntityType());
           spDummy->setDataRepresentation(DataRepresentation::Discrete);
 
-          for (typename RegPathOptColType::ConstOptionIterator pos = col->getBegin(); pos != col->getEnd(); ++pos)
+          for (auto pos = col->getBegin(); pos != col->getEnd(); ++pos)
           {
             MappingError::Type temp = PolicyType::checkForFailureReason((*pos)->getPath(),spDummy);
             if (temp>dResult)

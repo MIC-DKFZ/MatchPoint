@@ -51,24 +51,24 @@ namespace map
 		class MAPCore_EXPORT LogbookImplementation : public itk::LightObject
 		{
 		public:
-			typedef LogbookImplementation  Self;
-			typedef itk::LightObject  Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Self = LogbookImplementation;
+			using Superclass = itk::LightObject;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(LogbookImplementation, itk::LightObject);
 			itkNewMacro(Self);
 
-			typedef itk::LoggerThreadWrapper<XMLLogger>			LoggerType;
-			typedef LoggerType::Pointer						LoggerPointer;
-			typedef LoggerType::OutputType				OutputType;
-			typedef OutputType::Pointer				    OutputPointer;
-			typedef LoggerType::PriorityLevelType	PriorityLevelType;;
+      using LoggerType = itk::LoggerThreadWrapper<XMLLogger>;
+			using LoggerPointer = LoggerType::Pointer;
+			using OutputType = LoggerType::OutputType;
+			using OutputPointer = OutputType::Pointer;
+			using PriorityLevelType = LoggerType::PriorityLevelType;
 
 			/*! Returns a reference to the normal logger.
 			 @eguarantee no fail
 			 */
-			LoggerType& getLogger(void);
+			LoggerType& getLogger();
 
 			/*! Initializing the default output by opening a stream to the specified file.
 			 * If additional outputs exist (e.g. by cloning) they will also be setup.
@@ -84,7 +84,7 @@ namespace map
 
 			/*! clones the logbook implementation.
 			* @return Smart pointer to the cloned implementation.*/
-			Pointer clone(void) const;
+			Pointer clone() const;
 
 			/*! clones the logbook implementation and sets a new default out put.
 			 * @param [in] defaultOutputFileName Name of the new default output file, that should be opened.
@@ -101,25 +101,25 @@ namespace map
 
 			LoggerPointer _spLogger;
 
-			typedef std::set< OutputPointer >   OutputContainerType;
+			using OutputContainerType = std::set<OutputPointer>;
 			OutputContainerType _additionalOutputs;
 
-			typedef itk::StdStreamLogOutput	    DefaultOutputType;
-			typedef DefaultOutputType::Pointer  DefaultOutputPointer;
+			using DefaultOutputType = itk::StdStreamLogOutput;
+			using DefaultOutputPointer = DefaultOutputType::Pointer;
 			DefaultOutputPointer _spDefaultOutput;
 
-      typedef itk::SmartPointer<SharedFileStreamBase> StreamPointer;
+      using StreamPointer = itk::SmartPointer<SharedFileStreamBase>;
 
 			StreamPointer _spDefaultStream;
 
 			LogbookImplementation();
 
-			virtual ~LogbookImplementation();
+			~LogbookImplementation() override;
 
 		private:
 
-			LogbookImplementation(const LogbookImplementation&);  //purposely not implemented
-			void operator=(const LogbookImplementation&);  //purposely not implemented
+			LogbookImplementation(const LogbookImplementation&) = delete;  //purposely not implemented
+			void operator=(const LogbookImplementation&) = delete;  //purposely not implemented
 		};
 
 	} // end namespace core

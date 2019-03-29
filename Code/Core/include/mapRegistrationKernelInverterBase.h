@@ -43,22 +43,22 @@ namespace map
 		{
 		public:
 			typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions>	KernelBaseType;
-			typedef typename KernelBaseType::Pointer														KernelBasePointer;
+			using KernelBasePointer = typename KernelBaseType::Pointer;
 			typedef RegistrationKernelBase<VOutputDimensions, VInputDimensions>	InverseKernelBaseType;
-			typedef typename InverseKernelBaseType::Pointer											InverseKernelBasePointer;
+			using InverseKernelBasePointer = typename InverseKernelBaseType::Pointer;
 
-			typedef FieldRepresentationDescriptor<VInputDimensions>							FieldRepresentationType;
-			typedef FieldRepresentationDescriptor<VOutputDimensions>						InverseFieldRepresentationType;
+			using FieldRepresentationType = FieldRepresentationDescriptor<VInputDimensions>;
+			using InverseFieldRepresentationType = FieldRepresentationDescriptor<VOutputDimensions>;
 
-			typedef KernelBaseType RequestType;
+			using RequestType = KernelBaseType;
 
-			typedef typename InverseKernelBaseType::OutputPointType NullPointType;
+			using NullPointType = typename InverseKernelBaseType::OutputPointType;
 
 			/*! Standard class typedefs. */
 			typedef RegistrationKernelInverterBase<VInputDimensions, VOutputDimensions>  Self;
-			typedef services::ServiceProvider<RequestType>	 Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = services::ServiceProvider<RequestType>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(RegistrationKernelInverterBase, ServiceProvider);
 

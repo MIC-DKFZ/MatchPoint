@@ -29,9 +29,9 @@ namespace map
 	{
 		RepresentationException::BaseExceptionType*
 		RepresentationException::
-		clone() const throw()
+		clone() const noexcept
 		{
-			BaseExceptionType* pResult = 0;
+			BaseExceptionType* pResult = nullptr;
 
 			try
 			{

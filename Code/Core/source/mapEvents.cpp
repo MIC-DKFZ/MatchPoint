@@ -23,6 +23,8 @@
 
 #include "mapEvents.h"
 
+#include <utility>
+
 namespace map
 {
 	namespace core
@@ -30,11 +32,11 @@ namespace map
 
 
 		EventObject::
-		EventObject(void* pData, const std::string& comment): _pData(pData), _comment(comment)
+		EventObject(void* pData, std::string  comment): _pData(pData), _comment(std::move(comment))
 		{};
 
 		EventObject::
-		~EventObject() {};
+		~EventObject() = default;
 
 		void*
 		EventObject::
@@ -61,7 +63,7 @@ namespace map
 		EventObject::
 		CheckEvent(const ::itk::EventObject* e) const
 		{
-			return dynamic_cast<const Self*>(e);
+			return dynamic_cast<const Self*>(e) != nullptr;
 		}
 
 		::itk::EventObject*
@@ -88,5 +90,5 @@ namespace map
 		};
 
 
-	}
-}
+	}  // namespace core
+}  // namespace map

@@ -35,10 +35,10 @@ namespace map
 
 		RegistrationKernelLoaderBase::
 		RegistrationKernelLoaderBase()
-		{};
+		= default;
 
 		RegistrationKernelLoaderBase::
-		~RegistrationKernelLoaderBase() {};
+		~RegistrationKernelLoaderBase() = default;
 
 
 	} // end namespace io

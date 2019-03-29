@@ -30,9 +30,9 @@ namespace map
 
 		AlgorithmException::BaseExceptionType*
 		AlgorithmException::
-		clone() const throw()
+		clone() const noexcept
 		{
-			BaseExceptionType* pResult = 0;
+			BaseExceptionType* pResult = nullptr;
 
 			try
 			{
@@ -49,7 +49,7 @@ namespace map
 
 
 		AlgorithmException::
-		AlgorithmException() : Superclass()
+		AlgorithmException()  
 		{};
 
 		AlgorithmException::
@@ -66,8 +66,8 @@ namespace map
 		{};
 
 		AlgorithmException::
-		~AlgorithmException() throw()
-		{};
+		~AlgorithmException() noexcept
+		= default;
 
 		const char*
 		AlgorithmException::

@@ -25,8 +25,9 @@ namespace iro
   * representation support type.*/
   DataRepresentationSupport::Type convertToSupport(DataRepresentation::Type data)
   {
-    if (data == DataRepresentation::Continuous) return DataRepresentationSupport::Continuous;
-    else  return DataRepresentationSupport::Discrete;
+    if (data == DataRepresentation::Continuous) { return DataRepresentationSupport::Continuous;
+    }  { return DataRepresentationSupport::Discrete;
+}
   };
 
 } // end namespace iro

@@ -73,15 +73,15 @@ namespace map
 			public:
 				/*! Standard class typedefs. */
 				typedef ServiceStack<TProviderBase, TStaticLoadPolicy, TThreadingPolicy>  Self;
-				typedef itk::Object                    Superclass;
-				typedef itk::SmartPointer<Self>        Pointer;
-				typedef itk::SmartPointer<const Self>  ConstPointer;
+				using Superclass = itk::Object;
+				using Pointer = itk::SmartPointer<Self>;
+				using ConstPointer = itk::SmartPointer<const Self>;
 
-				typedef TStaticLoadPolicy                       StaticLoadPolicyType;
-				typedef TThreadingPolicy                        ThreadingPolicyType;
-				typedef TProviderBase                           ProviderBaseType;
-				typedef typename ProviderBaseType::Pointer      ProviderBasePointer;
-				typedef typename ProviderBaseType::RequestType  RequestType;
+				using StaticLoadPolicyType = TStaticLoadPolicy;
+				using ThreadingPolicyType = TThreadingPolicy;
+				using ProviderBaseType = TProviderBase;
+				using ProviderBasePointer = typename ProviderBaseType::Pointer;
+				using RequestType = typename ProviderBaseType::RequestType;
 
 				itkTypeMacro(ServiceProvider, itk::Object);
 
@@ -95,7 +95,7 @@ namespace map
 				/*! Creates a stack via New and returns it as a LightObject smart pointer.
 				 * @eguarantee strong
 				 * @return Smart pointer to the new stack as LightObject*/
-				virtual ::itk::LightObject::Pointer CreateAnother(void) const;
+				::itk::LightObject::Pointer CreateAnother() const override;
 
 				/*! Returns a pointer to the provider that might can handle the request.
 				 * @eguarantee strong
@@ -170,9 +170,9 @@ namespace map
 
 			protected:
 				ServiceStack();
-				virtual ~ServiceStack();
+				~ServiceStack() override;
 
-				typedef std::vector<ProviderBaseType*> ProviderVectorType;
+				using ProviderVectorType = std::vector<ProviderBaseType *>;
 
 				ProviderVectorType _providers;
 
@@ -180,7 +180,7 @@ namespace map
 				 * This methods just adds the given provider to providers and registers the use of the object.
 				 * @remark This impolementation uses unregisterProviderByPointerInternal() under the assumption that this method is only invoked by
 				 * loadStaticProviders() of the policy and this method itself is only invoked by this->rehash() which does the mutex locking*/
-				virtual bool addProviderByPolicy(ProviderBaseType* pProvider);
+				bool addProviderByPolicy(ProviderBaseType* pProvider) override;
 
 				/*! Registers a given provider in the stack. The new provider will be topmost and therefore
 				 * will be favored over providers registered earlier. The stack will behave like a smartpointer
@@ -201,7 +201,7 @@ namespace map
 				 * This methods just removes the given provider from the provider list, if present, and lowers the reference count of the object.
 				 * @remark This impolementation uses unregisterProviderByPointerInternal() under the assumption that this method is only invoked by
 				 * loadStaticProviders() of the policy and this method itself is only invoked by this->rehash() which does the mutex locking*/
-				virtual bool removeProviderByPolicy(ProviderBaseType* pProvider);
+				bool removeProviderByPolicy(ProviderBaseType* pProvider) override;
 
 				/*! Removes the provider (identified only by the pointer address) from the stack.
 				* This method is not secured via the mutex is used by unregisterProviderByPointer() and removeProviderByPolicy()
@@ -215,7 +215,7 @@ namespace map
 				bool unregisterProviderByPointerInternal(ProviderBaseType* pProvider);
 
 				/*! Methods invoked by itk::LightObject::Print().  */
-				virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+				void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 			private:
 				ServiceStack(const Self&);  //purposely not implemented

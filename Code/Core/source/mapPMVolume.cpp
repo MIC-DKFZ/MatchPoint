@@ -22,8 +22,9 @@
 
 
 #include "mapPMVolume.h"
-#include <assert.h>
+#include <cassert>
 #include <algorithm>
+#include <utility>
 
 namespace map
 {
@@ -41,13 +42,11 @@ namespace map
 
 			PMVolume::
 			PMVolume()
-			{
-			};
+			= default;
 
 			PMVolume::
 			~PMVolume()
-			{
-			};
+			= default;
 
 			PMVolume::
 			PMVolume(const Self& volume)
@@ -63,7 +62,7 @@ namespace map
 			};
 
 			PMVolume::
-			PMVolume(const SizeType& size): _size(size)
+			PMVolume(SizeType  size): _size(std::move(size))
 			{
 				_origin.resize(_size.size(), 0.0);
 			};

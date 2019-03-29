@@ -43,11 +43,11 @@ namespace map
 		{
 		public:
 			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions> KernelBaseType;
-			typedef typename KernelBaseType::ConstPointer KernelBaseConstPointer;
+			using KernelBaseConstPointer = typename KernelBaseType::ConstPointer;
 
 			typedef core::RegistrationKernelBase<VOutputDimensions, VInputDimensions>
 			ComplementaryKernelBaseType;
-			typedef typename ComplementaryKernelBaseType::ConstPointer ComplementaryKernelConstPointer;
+			using ComplementaryKernelConstPointer = typename ComplementaryKernelBaseType::ConstPointer;
 
 			/*! Kernel that should be stored with this request*/
 			KernelBaseConstPointer _spKernel;
@@ -73,13 +73,13 @@ namespace map
 			RegistrationKernelWriteRequest(const KernelBaseType* pKernel, const core::String& path,
 										   const core::String& name, bool expandLazyKernels,
 										   const ComplementaryKernelBaseType* pComplementaryKernel = NULL);
-			RegistrationKernelWriteRequest(const KernelBaseType& kernel, const core::String& path,
-										   const core::String& name, bool expandLazyKernels,
+			RegistrationKernelWriteRequest(const KernelBaseType& kernel, core::String  path,
+										   core::String  name, bool expandLazyKernels,
 										   const ComplementaryKernelBaseType* pComplementaryKernel = NULL);
 			~RegistrationKernelWriteRequest();
 
-			RegistrationKernelWriteRequest(const RegistrationKernelWriteRequest&);
-			void operator=(const RegistrationKernelWriteRequest&);
+			RegistrationKernelWriteRequest(const RegistrationKernelWriteRequest& /*req*/);
+			void operator=(const RegistrationKernelWriteRequest& /*req*/);
 		};
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>

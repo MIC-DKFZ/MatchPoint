@@ -46,12 +46,12 @@ namespace map
 		class DeploymentDLLHelper
 		{
 		public:
-			typedef DeploymentDLLHelper<TAlgorithmType> Self;
+			using Self = DeploymentDLLHelper<TAlgorithmType>;
 
-			typedef TAlgorithmType                            AlgorithmType;
-			typedef typename AlgorithmType::Pointer           AlgorithmPointer;
-			typedef map::algorithm::RegistrationAlgorithmBase AlgorithmBaseType;
-			typedef typename AlgorithmBaseType::Pointer       AlgorithmBasePointer;
+			using AlgorithmType = TAlgorithmType;
+			using AlgorithmPointer = typename AlgorithmType::Pointer;
+			using AlgorithmBaseType = map::algorithm::RegistrationAlgorithmBase;
+			using AlgorithmBasePointer = typename AlgorithmBaseType::Pointer;
 
 			/*! Returns a smart pointer to the UID of the algorithm
 			 */
@@ -75,8 +75,8 @@ namespace map
 
 		};
 
-	}
-}
+	}  // namespace deployment
+}  // namespace map
 
 #ifdef _WIN32
 #define MAP_DEPLOYMENT_ALG_EXPORT extern "C" __declspec(dllexport)

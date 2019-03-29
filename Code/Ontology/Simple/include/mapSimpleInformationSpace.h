@@ -37,11 +37,11 @@ namespace iro
     class MAPOntologySimple_EXPORT SimpleInformationSpace
     {
     public:
-      typedef SimpleInformationSpace Self;
-      typedef ::iro::String        UIDType;
+      using Self = SimpleInformationSpace;
+      using UIDType = ::iro::String;
 
-      typedef std::shared_ptr< Self >         Pointer;
-      typedef std::shared_ptr< const Self >   ConstPointer;
+      using Pointer = std::shared_ptr<Self>;
+      using ConstPointer = std::shared_ptr<const Self>;
 
        /*! returns the UID of the statement.*/
       const UIDType& getUID() const;
@@ -62,8 +62,8 @@ namespace iro
       UIDType _uid;
 
     private:
-      SimpleInformationSpace(const Self&); //not implemented by purpose
-      Self& operator=(const Self&); //not implemented by purpose
+      SimpleInformationSpace(const Self&) = delete; //not implemented by purpose
+      Self& operator=(const Self&) = delete; //not implemented by purpose
     };
 
     using SimpleInformationSpaceTraits = InformationSpaceTraits<::iro::scenario::SimpleInformationSpace>;

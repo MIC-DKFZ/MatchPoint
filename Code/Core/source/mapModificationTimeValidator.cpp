@@ -30,18 +30,17 @@ namespace map
 
 		ModificationTimeValidator::ModificationTimeValidator(const WatchedObjectType* obj)
 		{
-			_spObj = NULL;
+			_spObj = nullptr;
 			setWatchedObject(obj);
 		}
 
 		ModificationTimeValidator::ModificationTimeValidator()
 		{
-			_spObj = NULL;
+			_spObj = nullptr;
 		}
 
 		ModificationTimeValidator::~ModificationTimeValidator()
-		{
-		}
+		= default;
 
 		void ModificationTimeValidator::setWatchedObject(const WatchedObjectType* obj)
 		{
@@ -49,7 +48,7 @@ namespace map
 			{
 				_spObj = obj;
 
-				if (obj)
+				if (obj != nullptr)
 				{
 					_objTimeStamp = obj->GetMTime();
 				}

@@ -54,20 +54,20 @@ namespace map
                 /*! Standard class typedefs. */
                 typedef FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>  Self;
                 typedef TransformGenerationFunctor<VInputDimensions, VOutputDimensions>  Superclass;
-                typedef itk::SmartPointer<Self>        Pointer;
-                typedef itk::SmartPointer<const Self>  ConstPointer;
+                using Pointer = itk::SmartPointer<Self>;
+                using ConstPointer = itk::SmartPointer<const Self>;
 
                 itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
                 itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);
 
-                typedef typename Superclass::InFieldRepresentationType          InFieldRepresentationType;
-                typedef typename Superclass::InFieldRepresentationConstPointer  InFieldRepresentationConstPointer;
-                typedef typename Superclass::OutFieldRepresentationType         OutFieldRepresentationType;
-                typedef typename Superclass::OutFieldRepresentationConstPointer OutFieldRepresentationConstPointer;
+                using InFieldRepresentationType = typename Superclass::InFieldRepresentationType;
+                using InFieldRepresentationConstPointer = typename Superclass::InFieldRepresentationConstPointer;
+                using OutFieldRepresentationType = typename Superclass::OutFieldRepresentationType;
+                using OutFieldRepresentationConstPointer = typename Superclass::OutFieldRepresentationConstPointer;
                 typedef typename RegistrationTopology < VInputDimensions,
                     VOutputDimensions >::DirectFieldType                          FieldType;
-                typedef typename Superclass::TransformType                      TransformType;
-                typedef typename Superclass::TransformPointer                   TransformPointer;
+                using TransformType = typename Superclass::TransformType;
+                using TransformPointer = typename Superclass::TransformPointer;
 
                 itkTypeMacro(FieldByFileLoadFunctor, TransformGenerationFunctor);
 
@@ -75,13 +75,13 @@ namespace map
                 * @eguarantee should be strong
                 * @return Smart pointer to the generated field.
                 */
-                virtual TransformPointer generateTransform() const override;
+                TransformPointer generateTransform() const override;
 
                 /*! Returns the file path from where the field will be/was loaded.
                  * @eguarantee no fail
                  * @return reference to the specified path.
                  */
-                const String& getFieldFilePath(void) const;
+                const String& getFieldFilePath() const;
 
                 /*! Static methods that creates the functor.
                  * Thus it is a specialized version of the itkNewMacro()
@@ -96,7 +96,7 @@ namespace map
                 /*! Creates a functor via New and returns it as a itk::LightObject smart pointer.
                  * @eguarantee strong
                  * @return Smart pointer to the new functor as itk::LightObject*/
-                virtual ::itk::LightObject::Pointer CreateAnother(void) const;
+                virtual ::itk::LightObject::Pointer CreateAnother() const;
 
             protected:
                 /*! Protected constructor used by New.

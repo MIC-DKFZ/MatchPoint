@@ -48,19 +48,19 @@ namespace map
 			typedef PointSetMappingPerformerRequest<TRegistration, TInputData, TResultData> RequestType;
 			/*! Standard class typedefs. */
 			typedef PointSetByModelPerformer<TRegistration, TInputData, TResultData>  Self;
-			typedef MappingPerformerBase<RequestType>	 Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = MappingPerformerBase<RequestType>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(PointSetByModelPerformer, MappingPerformerBase);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::RegistrationType		    RegistrationType;
+			using RegistrationType = typename Superclass::RegistrationType;
 
-			typedef typename Superclass::InputDataType			    InputDataType;
-			typedef typename Superclass::InputDataConstPointer	InputDataConstPointer;
-			typedef typename Superclass::ResultDataType			    ResultDataType;
-			typedef typename Superclass::ResultDataPointer	    ResultDataPointer;
+			using InputDataType = typename Superclass::InputDataType;
+			using InputDataConstPointer = typename Superclass::InputDataConstPointer;
+			using ResultDataType = typename Superclass::ResultDataType;
+			using ResultDataPointer = typename Superclass::ResultDataPointer;
 
 			/*! Registers the input data and returns the result data.
 			 * @eguarantee strong
@@ -100,7 +100,7 @@ namespace map
 #endif
 
 		protected:
-			typedef typename RegistrationType::DirectMappingType DirectKernelBaseType;
+			using DirectKernelBaseType = typename RegistrationType::DirectMappingType;
 			typedef RegistrationKernel<DirectKernelBaseType::InputDimensions, DirectKernelBaseType::OutputDimensions>
 			ModelKernelType;
 

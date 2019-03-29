@@ -30,8 +30,8 @@ namespace iro
   class IProblemStatementAssociated : public IProblemComplianceChecker<TProblemStatementTraits>
   {
   public:
-    typedef typename TProblemStatementTraits::ConstPointer   ConstProblemPointer;
-    typedef IProblemStatementAssociated<TProblemStatementTraits> Self;
+    using ConstProblemPointer = typename TProblemStatementTraits::ConstPointer;
+    using Self = IProblemStatementAssociated<TProblemStatementTraits>;
 
     /** Returns the const pointer to the associated problem statement.
     * Pointer may be null, if no statement is defined.*/
@@ -46,7 +46,8 @@ namespace iro
     * @exception: ::iro::exceptions::InvalidArgument: pAssociate is not valid*/
     bool hasSameProblemStatement( const Self* pAssociate, bool nullEquals = true) const
     {
-      if (!pAssociate) throw ::iro::exceptions::InvalidArgument("Error. Cannot equality of problem statements. pAssociate is a NULL pointer.");
+      if (!pAssociate) { throw ::iro::exceptions::InvalidArgument("Error. Cannot equality of problem statements. pAssociate is a NULL pointer.");
+}
 
       bool result = false;
 
@@ -68,11 +69,11 @@ namespace iro
     };
 
   protected:
-    virtual ~IProblemStatementAssociated() {};
-    IProblemStatementAssociated() {};
+    ~IProblemStatementAssociated() override = default;
+    IProblemStatementAssociated() = default;
   private:
-    IProblemStatementAssociated(const Self&); //not implemented by purpose
-    IProblemStatementAssociated& operator=(const Self&); //not implemented by purpose
+    IProblemStatementAssociated(const Self&) = delete; //not implemented by purpose
+    IProblemStatementAssociated& operator=(const Self&) = delete; //not implemented by purpose
   };
 
 

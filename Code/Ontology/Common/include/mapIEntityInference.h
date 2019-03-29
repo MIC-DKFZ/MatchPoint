@@ -49,21 +49,21 @@ namespace iro
 		class IEntityInference
 		{
 		public:
-      typedef typename TIETraits::Type                   InfEntityType;
-      typedef typename TISTraits::Type                    InfSpaceType;
-      typedef typename TSCTraits::Type                 CorrelationType;
-      typedef typename TIETraits::ConstPointer           ConstInfEntityPointer;
-      typedef typename TISTraits::ConstPointer            ConstInfSpacePointer;
-      typedef typename TSCTraits::ConstPointer         ConstCorrelationPointer;
-      typedef typename TIETraits::InferencePointer       InfEntityInferencePointer;
-      typedef typename TISTraits::InferencePointer        InfSpaceInferencePointer;
-      typedef typename TSCTraits::InferencePointer     CorrelationInferencePointer;
+      using InfEntityType = typename TIETraits::Type;
+      using InfSpaceType = typename TISTraits::Type;
+      using CorrelationType = typename TSCTraits::Type;
+      using ConstInfEntityPointer = typename TIETraits::ConstPointer;
+      using ConstInfSpacePointer = typename TISTraits::ConstPointer;
+      using ConstCorrelationPointer = typename TSCTraits::ConstPointer;
+      using InfEntityInferencePointer = typename TIETraits::InferencePointer;
+      using InfSpaceInferencePointer = typename TISTraits::InferencePointer;
+      using CorrelationInferencePointer = typename TSCTraits::InferencePointer;
 
-      typedef typename std::vector<ConstInfEntityPointer>   ConstInfEntityVectorType;
-      typedef typename std::vector<ConstInfSpacePointer>   ConstInfSpaceVectorType;
-      typedef typename std::vector<ConstCorrelationPointer>   ConstCorrelationVectorType;
+      using ConstInfEntityVectorType = typename std::vector<ConstInfEntityPointer>;
+      using ConstInfSpaceVectorType = typename std::vector<ConstInfSpacePointer>;
+      using ConstCorrelationVectorType = typename std::vector<ConstCorrelationPointer>;
 
-      typedef DataRepresentation::Type DataRepresentationType;
+      using DataRepresentationType = DataRepresentation::Type;
 
       /*! Returns the information space of the passed entity.
       *@param [in] pEntity Const pointer to the entity whose information space should be detected.
@@ -339,8 +339,8 @@ namespace iro
 			virtual Result<ConstCorrelationPointer> doActualize(CorrelationInferencePointer corr) const = 0;
 
 
-      virtual ~IEntityInference() {};
-			IEntityInference() {};
+      virtual ~IEntityInference() = default;
+			IEntityInference() = default;
 
 		private:
 			IEntityInference(const IEntityInference&); //not implemented by purpose

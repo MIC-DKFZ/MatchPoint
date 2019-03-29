@@ -51,10 +51,10 @@ template <typename TPixelType, unsigned int IDimension>
 void handleImageCast(const ::map::io::GenericImageReader::GenericOutputImageType* inputImage, ::map::io::GenericImageReader::GenericOutputImageType::Pointer& castedImage)
 {
   typedef ::itk::Image<TPixelType, IDimension> InputImageType;
-  typedef typename ::map::core::discrete::Elements<IDimension>::InternalImageType CastedImageType;
+  using CastedImageType = typename ::map::core::discrete::Elements<IDimension>::InternalImageType;
   typedef ::itk::CastImageFilter<InputImageType, CastedImageType> FilterType;
 
-  const InputImageType* input = dynamic_cast<const InputImageType*>(inputImage);
+  const auto* input = dynamic_cast<const InputImageType*>(inputImage);
 
   typename FilterType::Pointer caster = FilterType::New();
 
@@ -143,11 +143,11 @@ void handleGenericImageCast(map::io::GenericImageReader::LoadedComponentType loa
 void
 ::map::apps::matchR::loadAlgorithm(::map::apps::matchR::ApplicationData& appData)
 {
-  map::deployment::RegistrationAlgorithmBasePointer spAlgorithmBase = NULL;
+  map::deployment::RegistrationAlgorithmBasePointer spAlgorithmBase = nullptr;
 
   std::cout << std::endl << "Load registration algorithm..." << std::endl;
 
-  map::deployment::DLLHandle::Pointer spHandle = NULL;
+  map::deployment::DLLHandle::Pointer spHandle = nullptr;
 
   spHandle = map::deployment::openDeploymentDLL(appData._algorithmFileName);
 
@@ -317,12 +317,12 @@ loadGenericPointSet(const ::map::core::String& filename, unsigned int dim)
   {
     if (dim == 2)
     {
-      typedef ::map::core::continuous::Elements<2>::InternalPointSetType PointSetType;
+      using PointSetType = ::map::core::continuous::Elements<2>::InternalPointSetType;
       result = ::map::utilities::loadLandMarksFromFile<PointSetType>(filename).GetPointer();
     }
     else
     {
-      typedef ::map::core::continuous::Elements<2>::InternalPointSetType PointSetType;
+      using PointSetType = ::map::core::continuous::Elements<2>::InternalPointSetType;
       result = ::map::utilities::loadLandMarksFromFile<PointSetType>(filename).GetPointer();
     }
   }
@@ -379,9 +379,9 @@ void handleMaskConvert(const ::map::io::GenericImageReader::GenericOutputImageTy
   typedef ::itk::Image<TPixelType, IDimension> InputImageType;
   typedef ::itk::Image<typename ::itk::ImageMaskSpatialObject<IDimension>::PixelType, IDimension> MaskImageType;
   typedef ::itk::CastImageFilter<InputImageType, MaskImageType> FilterType;
-  typedef ::itk::ImageMaskSpatialObject<IDimension> SpatialType;
+  using SpatialType = ::itk::ImageMaskSpatialObject<IDimension>;
 
-  const InputImageType* input = dynamic_cast<const InputImageType*>(inputImage);
+  const auto* input = dynamic_cast<const InputImageType*>(inputImage);
 
   typename FilterType::Pointer caster = FilterType::New();
 
@@ -639,19 +639,19 @@ map::apps::matchR::wrapMetaProperty(const ::map::algorithm::MetaPropertyInfo* pI
 {
   map::core::MetaPropertyBase::Pointer metaProp;
 
-  if (!pInfo)
+  if (pInfo == nullptr)
   {
     return metaProp;
   }
 
-  if (pInfo->getTypeInfo() == typeid(int)) metaProp = checkCastAndSetProp<int>(valueStr);
-  else if (pInfo->getTypeInfo() == typeid(unsigned int)) metaProp = checkCastAndSetProp<unsigned int>(valueStr);
-  else if (pInfo->getTypeInfo() == typeid(long)) metaProp = checkCastAndSetProp<long>(valueStr);
-  else if (pInfo->getTypeInfo() == typeid(unsigned long)) metaProp = checkCastAndSetProp<unsigned long>(valueStr);
-  else if (pInfo->getTypeInfo() == typeid(float)) metaProp = checkCastAndSetProp<float>(valueStr);
-  else if (pInfo->getTypeInfo() == typeid(double)) metaProp = checkCastAndSetProp<double>(valueStr);
-  else if (pInfo->getTypeInfo() == typeid(::itk::Array<double>)) metaProp = checkCastAndSetProp< ::itk::Array<double> >(valueStr);
-  else if (pInfo->getTypeInfo() == typeid(::map::core::String))
+  if (pInfo->getTypeInfo() == typeid(int)) { metaProp = checkCastAndSetProp<int>(valueStr);
+  } else if (pInfo->getTypeInfo() == typeid(unsigned int)) { metaProp = checkCastAndSetProp<unsigned int>(valueStr);
+  } else if (pInfo->getTypeInfo() == typeid(long)) { metaProp = checkCastAndSetProp<long>(valueStr);
+  } else if (pInfo->getTypeInfo() == typeid(unsigned long)) { metaProp = checkCastAndSetProp<unsigned long>(valueStr);
+  } else if (pInfo->getTypeInfo() == typeid(float)) { metaProp = checkCastAndSetProp<float>(valueStr);
+  } else if (pInfo->getTypeInfo() == typeid(double)) { metaProp = checkCastAndSetProp<double>(valueStr);
+  } else if (pInfo->getTypeInfo() == typeid(::itk::Array<double>)) { metaProp = checkCastAndSetProp< ::itk::Array<double> >(valueStr);
+  } else if (pInfo->getTypeInfo() == typeid(::map::core::String))
   {
     metaProp = map::core::MetaProperty<map::core::String>::New(valueStr).GetPointer();
   }

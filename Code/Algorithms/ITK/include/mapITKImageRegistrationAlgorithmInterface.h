@@ -62,13 +62,13 @@ namespace map
 				typedef ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, TTransformScalar, TInterpolatorCoordRep>
 				Self;
 
-				typedef ITKSVNLOptimizerControlInterface OptimizerBaseType;
+				using OptimizerBaseType = ITKSVNLOptimizerControlInterface;
 				typedef ITKImageToImageMetricControlInterface<TMovingImage, TTargetImage> MetricBaseType;
 				typedef ::itk::Transform<TTransformScalar, TMovingImage::ImageDimension, TTargetImage::ImageDimension> TransformBaseType;
 				typedef ::itk::InterpolateImageFunction<TMovingImage, TInterpolatorCoordRep> InterpolatorBaseType;
 
-				typedef facet::ITKSVNLOptimizerSetterInterface OptimizerSetterInterfaceType;
-				typedef facet::ITKSVNLOptimizerGetterInterface OptimizerGetterInterfaceType;
+				using OptimizerSetterInterfaceType = facet::ITKSVNLOptimizerSetterInterface;
+				using OptimizerGetterInterfaceType = facet::ITKSVNLOptimizerGetterInterface;
 				typedef facet::ITKTransformSetterInterface<TTransformScalar, TMovingImage::ImageDimension, TTargetImage::ImageDimension>
 				TransformSetterInterfaceType;
 				typedef facet::ITKTransformGetterInterface<TTransformScalar, TMovingImage::ImageDimension, TTargetImage::ImageDimension>
@@ -93,9 +93,9 @@ namespace map
 
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapITKImageRegistrationAlgorithmInterface.tpp"

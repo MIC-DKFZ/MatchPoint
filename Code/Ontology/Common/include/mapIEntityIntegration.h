@@ -50,19 +50,19 @@ namespace iro
     class IEntityIntegration
     {
     public:
-      typedef typename TIETraits::Type                 InfEntityType;
-      typedef typename TISTraits::Type                 InfSpaceType;
-      typedef typename TSCTraits::Type                 CorrelationType;
-      typedef typename TIETraits::ConstPointer         ConstInfEntityPointer;
-      typedef typename TISTraits::ConstPointer         ConstInfSpacePointer;
-      typedef typename TSCTraits::ConstPointer         ConstCorrelationPointer;
-      typedef typename TIETraits::InferencePointer     InfEntityInferencePointer;
-      typedef typename TISTraits::InferencePointer     InfSpaceInferencePointer;
-      typedef typename TSCTraits::InferencePointer     CorrelationInferencePointer;
+      using InfEntityType = typename TIETraits::Type;
+      using InfSpaceType = typename TISTraits::Type;
+      using CorrelationType = typename TSCTraits::Type;
+      using ConstInfEntityPointer = typename TIETraits::ConstPointer;
+      using ConstInfSpacePointer = typename TISTraits::ConstPointer;
+      using ConstCorrelationPointer = typename TSCTraits::ConstPointer;
+      using InfEntityInferencePointer = typename TIETraits::InferencePointer;
+      using InfSpaceInferencePointer = typename TISTraits::InferencePointer;
+      using CorrelationInferencePointer = typename TSCTraits::InferencePointer;
 
-      typedef TEDReturnType  EntityDeleteReturnType;
-      typedef TISDReturnType ISDeleteReturnType;
-      typedef TCDReturnType  CorrelationDeleteReturnType;
+      using EntityDeleteReturnType = TEDReturnType;
+      using ISDeleteReturnType = TISDReturnType;
+      using CorrelationDeleteReturnType = TCDReturnType;
 
       /*! Defines and stores the copy of the passed entity and associates it with the passed information space
       * after checking all relevant integration rules.\n
@@ -211,8 +211,8 @@ namespace iro
       CorrelationDeleteReturnType deleteSemanticCorrelation(CorrelationInferencePointer corr);
 
     protected:
-      virtual ~IEntityIntegration() {};
-      IEntityIntegration() {};
+      virtual ~IEntityIntegration() = default;
+      IEntityIntegration() = default;
 
 			/*! virtual abstract part of the NVI idiom. See public member for more information.
       *@see defineEntity*/

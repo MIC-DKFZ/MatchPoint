@@ -100,13 +100,13 @@ namespace map
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		KernelWriterLoadPolicy<VInputDimensions, VOutputDimensions>::
-		KernelWriterLoadPolicy() { }
+		KernelWriterLoadPolicy() = default;
 
 
 
 		template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
 		KernelWriterLoadPolicy<VInputDimensions, VOutputDimensions>::
-		~KernelWriterLoadPolicy() { }
+		~KernelWriterLoadPolicy() = default;
 
 
 	} // end namespace io

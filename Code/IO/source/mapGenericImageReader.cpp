@@ -36,13 +36,13 @@ namespace map
 		GenericImageReader::
 		load()
 		{
-			_spImage = NULL;
+			_spImage = nullptr;
 
 			::map::core::String probeFileName = this->_fileName;
 
 			if (this->_seriesReadStyle == ImageSeriesReadStyle::Numeric)
 			{
-				typedef ::itk::NumericSeriesFileNames NamesType;
+				using NamesType = ::itk::NumericSeriesFileNames;
 
 				NamesType::Pointer names = NamesType::New();
 
@@ -57,7 +57,7 @@ namespace map
 				::itk::ImageIOFactory::CreateImageIO(probeFileName.c_str(),
 						::itk::ImageIOFactory::ReadMode);
 
-			if (!imageIO)
+			if (imageIO == nullptr)
 			{
 				mapDefaultExceptionMacro( <<
 										  "No ImageIO found for given file. Please check if the file exists and has a supported format. File:"
@@ -301,7 +301,7 @@ namespace map
 		}
 
 
-		const unsigned int
+		unsigned int
 		GenericImageReader::
 		getUpperSeriesLimit() const
 		{
@@ -321,7 +321,7 @@ namespace map
 		};
 
 
-		const ImageSeriesReadStyle::Type
+		ImageSeriesReadStyle::Type
 		GenericImageReader::
 		getSeriesReadStyle() const
 		{
@@ -371,8 +371,7 @@ namespace map
 
 		GenericImageReader::
 		~GenericImageReader()
-		{
-		};
+		= default;
 
 		const GenericImageReader::MetaDataDictionaryArrayType&
 		GenericImageReader::
@@ -381,5 +380,5 @@ namespace map
 			return _dictionaryArray;
 		};
 
-	}
-}
+	}  // namespace io
+}  // namespace map

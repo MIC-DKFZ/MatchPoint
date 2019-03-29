@@ -52,9 +52,9 @@ namespace map
 			class MAPAlgorithms_EXPORT IterativeAlgorithmInterface
 			{
 			public:
-				typedef IterativeAlgorithmInterface Self;
+				using Self = IterativeAlgorithmInterface;
 
-				typedef unsigned long IterationCountType;
+				using IterationCountType = unsigned long;
 
 				/*! has the optimizer an iteration count?
 				@eguarantee no fail
@@ -83,17 +83,17 @@ namespace map
 				virtual IterationCountType getMaxIterations() const = 0;
 
 			protected:
-				IterativeAlgorithmInterface() {};
-				virtual ~IterativeAlgorithmInterface() {};
+				IterativeAlgorithmInterface() = default;
+				virtual ~IterativeAlgorithmInterface() = default;
 
 			private:
 				//No copy constructor allowed
-				IterativeAlgorithmInterface(const Self& source); //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				IterativeAlgorithmInterface(const Self& source) = delete; //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

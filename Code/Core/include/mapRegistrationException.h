@@ -39,12 +39,12 @@ namespace map
 		class MAPCore_EXPORT RegistrationException : public ExceptionObject
 		{
 		public:
-			typedef ExceptionObject Superclass;
-			typedef ExceptionObject BaseExceptionType;
+			using Superclass = ExceptionObject;
+			using BaseExceptionType = ExceptionObject;
 
 			/*! Default constructor.  Needed to ensure the exception object can be
 			 * copied. */
-			RegistrationException() : Superclass() {}
+			RegistrationException()  = default;
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
 			RegistrationException(const char* file, unsigned int lineNumber) : Superclass(file, lineNumber) {}
@@ -58,9 +58,9 @@ namespace map
 								  const std::string& loc) : Superclass(file, lineNumber, desc, loc) {}
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
-			virtual ~RegistrationException() throw() {}
+			~RegistrationException() noexcept override = default;
 
-			virtual const char* GetNameOfClass() const
+			const char* GetNameOfClass() const override
 			{
 				return "map::RegistrationException";
 			}
@@ -74,7 +74,7 @@ namespace map
 			 * and every task is processed (or failed through an exception).
 			 * @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			 * @eguarantee no throw*/
-			virtual BaseExceptionType* clone() const throw();
+			BaseExceptionType* clone() const noexcept override;
 		};
 
 	} // end namespace core

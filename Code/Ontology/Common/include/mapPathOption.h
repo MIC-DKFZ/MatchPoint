@@ -41,17 +41,17 @@ namespace iro
 		{
     public:
       typedef PathOption<TPathTraits, TPathCheckPolicy> Self;
-      typedef IProblemComplianceChecker<typename TPathTraits::ProblemStatementTraitsType> Superclass;
-      typedef ::std::shared_ptr<Self> Pointer;
-      typedef ::std::shared_ptr<const Self> ConstPointer;
+      using Superclass = IProblemComplianceChecker<typename TPathTraits::ProblemStatementTraitsType>;
+      using Pointer = ::std::shared_ptr<Self>;
+      using ConstPointer = ::std::shared_ptr<const Self>;
 
-      typedef TPathTraits        PathTraitsType;
-      typedef TPathCheckPolicy   PathCheckPolicy;
+      using PathTraitsType = TPathTraits;
+      using PathCheckPolicy = TPathCheckPolicy;
 
-      typedef typename PathTraitsType::InformationEntityTraitsType::ConstPointer  ConstIEPointer;
-      typedef typename PathTraitsType::InformationSpaceTraitsType::ConstPointer   ConstISPointer;
-      typedef typename PathTraitsType::ConstPointer                           ConstPathPointer;
-      typedef MappingError::Type                                     MappingErrorType;
+      using ConstIEPointer = typename PathTraitsType::InformationEntityTraitsType::ConstPointer;
+      using ConstISPointer = typename PathTraitsType::InformationSpaceTraitsType::ConstPointer;
+      using ConstPathPointer = typename PathTraitsType::ConstPointer;
+      using MappingErrorType = MappingError::Type;
 
       using ProblemComplianceInterface = typename Superclass::ProblemComplianceInterface;
 
@@ -86,14 +86,14 @@ namespace iro
       * @exception InvalidArgument: precondition is violated*/
       bool hasFullMappingGuarantee() const;
       
-      virtual ~PathOption();
+      ~PathOption() override;
 			PathOption();
 
     protected:
       /*! Implementation of abstract member. This implementation checks the associated
       * problem statement of all elements for compliance. See also documentation in interface.
       * @see IProblemComplianceChecker*/
-			virtual bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const;
+			bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const override;
 
       ConstIEPointer _movingEntity;
       ConstPathPointer _path;

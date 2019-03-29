@@ -50,8 +50,8 @@ namespace map
 			*/
 			template<class TConcreteMetric>
 			class ITKMetricControl;
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

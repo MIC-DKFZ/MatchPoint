@@ -127,9 +127,9 @@ namespace map
 
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapArbitraryImageToImageMetricPolicy.tpp"

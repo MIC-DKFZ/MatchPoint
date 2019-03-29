@@ -55,7 +55,7 @@ namespace iro
       { //normal search
         colorMap[currentIS] = SearchColor::Gray;
 
-        typedef typename TGraph::out_edge_iterator EdgeIterator;
+        using EdgeIterator = typename TGraph::out_edge_iterator;
         std::pair<EdgeIterator, EdgeIterator> edgeRange = ::boost::out_edges(currentIS, graph);
 
         for (EdgeIterator pos = edgeRange.first; pos != edgeRange.second; ++pos)

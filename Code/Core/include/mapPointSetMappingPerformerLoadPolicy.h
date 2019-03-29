@@ -49,10 +49,10 @@ namespace map
 		{
 		protected:
 			/*! Standard class typedefs. */
-			typedef services::GenericStaticLoadPolicyBase<TProviderBase> Superclass;
-			typedef typename Superclass::ProviderBaseType      ProviderBaseType;
-			typedef typename Superclass::ProviderBasePointer   ProviderBasePointer;
-			typedef typename Superclass::LoadInterfaceType     LoadInterfaceType;
+			using Superclass = services::GenericStaticLoadPolicyBase<TProviderBase>;
+			using ProviderBaseType = typename Superclass::ProviderBaseType;
+			using ProviderBasePointer = typename Superclass::ProviderBasePointer;
+			using LoadInterfaceType = typename Superclass::LoadInterfaceType;
 
 			virtual void doLoading();
 

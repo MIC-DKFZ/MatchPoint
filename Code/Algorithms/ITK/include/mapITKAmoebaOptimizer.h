@@ -128,7 +128,7 @@ namespace map
 				virtual IterationCountType doGetCurrentIteration() const
 				{
 					return 0; /*optimizer cannot return*/
-				};;
+				};
 
 				virtual IterationCountType doGetMaxIterations() const
 				{

@@ -43,10 +43,10 @@ namespace map
         class RegistrationKernelBase : public DimensionlessRegistrationKernelBase
         {
         public:
-            typedef RegistrationKernelBase Self;
-            typedef DimensionlessRegistrationKernelBase Superclass;
-            typedef itk::SmartPointer<Self> Pointer;
-            typedef itk::SmartPointer<const Self> ConstPointer;
+            using Self = RegistrationKernelBase<VInputDimensions, VOutputDimensions>;
+            using Superclass = DimensionlessRegistrationKernelBase;
+            using Pointer = itk::SmartPointer<Self>;
+            using ConstPointer = itk::SmartPointer<const Self>;
 
             itkTypeMacro(RegistrationKernelBase, DimensionlessRegistrationKernelBase);
             itkCloneMacro(Self);
@@ -54,17 +54,17 @@ namespace map
             itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
             itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);
 
-            typedef typename continuous::Elements<VInputDimensions>::PointType InputPointType;
-            typedef typename continuous::Elements<VOutputDimensions>::PointType OutputPointType;
+            using InputPointType = typename continuous::Elements<VInputDimensions>::PointType;
+            using OutputPointType = typename continuous::Elements<VOutputDimensions>::PointType;
             typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType
                 MappingVectorType;
 
             typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectTransformType TransformType;
-            typedef typename TransformType::OutputVectorType OutputVectorType;
+            using OutputVectorType = typename TransformType::OutputVectorType;
 
-            typedef FieldRepresentationDescriptor<VInputDimensions>       RepresentationDescriptorType;
-            typedef typename RepresentationDescriptorType::Pointer        RepresentationDescriptorPointer;
-            typedef typename RepresentationDescriptorType::ConstPointer   RepresentationDescriptorConstPointer;
+            using RepresentationDescriptorType = FieldRepresentationDescriptor<VInputDimensions>;
+            using RepresentationDescriptorPointer = typename RepresentationDescriptorType::Pointer;
+            using RepresentationDescriptorConstPointer = typename RepresentationDescriptorType::ConstPointer;
 
             /*! maps a point as long as it is within the field representation of the kernel by calling doMapPoint()
               @param inPoint Point that should be mapped.
@@ -84,7 +84,7 @@ namespace map
               @retval true if the data representation is limited
               @retval false if the data representation is not limited
               */
-            bool hasLimitedRepresentation() const;
+            bool hasLimitedRepresentation() const override;
 
             /*! @brief gets the largest possible representation descriptor. The descriptor defines
              * the space the kernel guarantees to map.
@@ -98,12 +98,12 @@ namespace map
             /*! @brief forces kernel to precompute, even if it is a LazyFieldKernel
               @eguarantee strong
               */
-            virtual void precomputeKernel() const = 0;
+            void precomputeKernel() const override = 0;
 
             /*! @brief Gets the number of input dimensions
             @eguarantee no fail
             */
-            virtual unsigned int getInputDimensions() const
+            unsigned int getInputDimensions() const override
             {
                 return InputDimensions;
             };
@@ -111,7 +111,7 @@ namespace map
             /*! @brief Gets the number of output dimensions
             @eguarantee no fail
             */
-            virtual unsigned int getOutputDimensions() const
+            unsigned int getOutputDimensions() const override
             {
                 return OutputDimensions;
             };
@@ -119,7 +119,7 @@ namespace map
         protected:
 
             /*! Methods invoked by itk::LightObject::Print().  */
-            virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+            void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
             /*! Maps the point from input to output space. Is used by mapPoint()
               @eguarantee strong
@@ -127,7 +127,7 @@ namespace map
             virtual bool doMapPoint(const InputPointType& inPoint, OutputPointType& outPoint) const = 0;
 
             RegistrationKernelBase();
-            virtual ~RegistrationKernelBase();
+            ~RegistrationKernelBase() override;
 
         private:
             //No copy constructor allowed
@@ -144,8 +144,8 @@ namespace map
             return os;
         }
 
-    }
-}
+    }  // namespace core
+}  // namespace map
 
 
 #ifndef MatchPoint_MANUAL_TPP

@@ -55,10 +55,10 @@ namespace itk
 		{
 		public:
 			/** Standard class typedefs. */
-			typedef IterativeInverseTransformToDisplacementFieldSource  Self;
-			typedef itk::ImageSource<TOutputImage>   Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Self = IterativeInverseTransformToDisplacementFieldSource<TOutputImage, TTransformScalarType>;
+			using Superclass = itk::ImageSource<TOutputImage>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			/** Method for creation through the object factory. */
 			itkNewMacro(Self);
@@ -67,32 +67,32 @@ namespace itk
 			itkTypeMacro(IterativeInverseTransformToDisplacementFieldSource, ImageSource);
 
 			/** Some typedefs. */
-			typedef TOutputImage OutputImageType;
-			typedef typename OutputImageType::Pointer        OutputImagePointer;
-			typedef typename OutputImageType::PixelType      OutputImagePixelType;
-			typedef typename OutputImageType::PointType      OutputImagePointType;
-			typedef typename OutputImageType::IndexType      OutputImageIndexType;
-			typedef typename OutputImagePixelType::ValueType OutputImageValueType;
-			typedef typename OutputImageType::RegionType     OutputImageRegionType;
-			typedef typename OutputImageType::SpacingType    OutputImageSpacingType;
-			typedef typename OutputImageType::SizeType       OutputImageSizeType;
-			typedef typename OutputImageType::DirectionType  OutputImageDirectionType;
+			using OutputImageType = TOutputImage;
+			using OutputImagePointer = typename OutputImageType::Pointer;
+			using OutputImagePixelType = typename OutputImageType::PixelType;
+			using OutputImagePointType = typename OutputImageType::PointType;
+			using OutputImageIndexType = typename OutputImageType::IndexType;
+			using OutputImageValueType = typename OutputImagePixelType::ValueType;
+			using OutputImageRegionType = typename OutputImageType::RegionType;
+			using OutputImageSpacingType = typename OutputImageType::SpacingType;
+			using OutputImageSizeType = typename OutputImageType::SizeType;
+			using OutputImageDirectionType = typename OutputImageType::DirectionType;
 
 			typedef itk::Transform < TTransformScalarType,
 					OutputImageType::ImageDimension,
 					OutputImageType::ImageDimension > TransformType;
-			typedef typename TransformType::Pointer        TransformPointer;
-			typedef typename TransformType::ConstPointer   TransformConstPointer;
+			using TransformPointer = typename TransformType::Pointer;
+			using TransformConstPointer = typename TransformType::ConstPointer;
 
-			typedef itk::TimeProbe TimeType;
+			using TimeType = itk::TimeProbe;
 
-			typedef itk::ImageRegionIterator<OutputImageType> OutputIterator;
+			using OutputIterator = itk::ImageRegionIterator<OutputImageType>;
 
 			typedef itk::WarpVectorImageFilter<TOutputImage, TOutputImage, TOutputImage> VectorWarperType;
 
 			typedef itk::VectorLinearInterpolateImageFunction<TOutputImage, double> FieldInterpolatorType;
-			typedef typename FieldInterpolatorType::Pointer     FieldInterpolatorPointer;
-			typedef typename FieldInterpolatorType::OutputType  FieldInterpolatorOutputType;
+			using FieldInterpolatorPointer = typename FieldInterpolatorType::Pointer;
+			using FieldInterpolatorOutputType = typename FieldInterpolatorType::OutputType;
 
 			itkSetMacro(NumberOfIterations, unsigned int);
 			itkGetMacro(NumberOfIterations, unsigned int);
@@ -109,7 +109,7 @@ namespace itk
 			}
 
 			virtual void SetTransform(const TransformType* transform);
-			virtual const TransformType* GetTransform(void) const;
+			virtual const TransformType* GetTransform() const;
 
 			/** Specify the size of the output image. */
 			virtual void SetSize(const OutputImageSizeType& size);

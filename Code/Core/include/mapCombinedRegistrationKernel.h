@@ -48,32 +48,31 @@ namespace map
             typedef CombinedRegistrationKernel < VInputDimensions, VInterimDimensions, VOutputDimensions >
                 Self;
             typedef LazyRegistrationKernel<VInputDimensions, VOutputDimensions>	Superclass;
-            typedef itk::SmartPointer<Self> Pointer;
-            typedef itk::SmartPointer<const Self> ConstPointer;
+            using Pointer = itk::SmartPointer<Self>;
+            using ConstPointer = itk::SmartPointer<const Self>;
 
             itkTypeMacro(CombinedRegistrationKernel, LazyRegistrationKernel);
             itkNewMacro(Self);
 
-            typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;
-            typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
-            typedef typename Superclass::RepresentationDescriptorConstPointer
-                RepresentationDescriptorConstPointer;
-            typedef typename Superclass::TransformGenerationFunctorType TransformGenerationFunctorType;
-            typedef typename Superclass::InputPointType  InputPointType;
-            typedef typename Superclass::OutputPointType OutputPointType;
+            using RepresentationDescriptorType = typename Superclass::RepresentationDescriptorType;
+            using RepresentationDescriptorPointer = typename Superclass::RepresentationDescriptorPointer;
+            using RepresentationDescriptorConstPointer = typename Superclass::RepresentationDescriptorConstPointer;
+            using TransformGenerationFunctorType = typename Superclass::TransformGenerationFunctorType;
+            using InputPointType = typename Superclass::InputPointType;
+            using OutputPointType = typename Superclass::OutputPointType;
 
             /*! sets the field's functor
             @eguarantee no fail
             @param functor Pointer to the functor that is responsible for generating the field
             @pre functor must point to a valid instance.
             */
-            virtual void setTransformFunctor(const TransformGenerationFunctorType* functor) override;
+            void setTransformFunctor(const TransformGenerationFunctorType* functor) override;
 
         protected:
             typedef functors::CombinationFunctorInterface < VInputDimensions, VInterimDimensions, VOutputDimensions >
                 CombinationFunctorInterfaceType;
-            typedef typename CombinationFunctorInterfaceType::SourceKernel1BaseType SourceKernel1BaseType;
-            typedef typename CombinationFunctorInterfaceType::SourceKernel2BaseType SourceKernel2BaseType;
+            using SourceKernel1BaseType = typename CombinationFunctorInterfaceType::SourceKernel1BaseType;
+            using SourceKernel2BaseType = typename CombinationFunctorInterfaceType::SourceKernel2BaseType;
 
             const CombinationFunctorInterfaceType* _pCombinationInterface;
 
@@ -100,8 +99,8 @@ namespace map
 
         };
 
-    }
-}
+    }  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapCombinedRegistrationKernel.tpp"

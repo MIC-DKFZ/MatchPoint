@@ -36,10 +36,10 @@ namespace map
 		};
 
 		DimensionlessRegistrationKernelBase::DimensionlessRegistrationKernelBase()
-		{};
+		= default;
 
 		DimensionlessRegistrationKernelBase::~DimensionlessRegistrationKernelBase()
-		{};
+		= default;
 
 		std::ostream& operator<< (std::ostream& os,
 								  const DimensionlessRegistrationKernelBase& p)
@@ -48,5 +48,5 @@ namespace map
 			return os;
 		}
 
-	}
-}
+	}  // namespace core
+}  // namespace map

@@ -97,14 +97,12 @@ namespace iro
   template <typename TRegistrationInfoTraits, typename TTransformationPathTraits>
   RegistrationPathBase<TRegistrationInfoTraits, TTransformationPathTraits>::
     ~RegistrationPathBase()
-  {
-  };
+  = default;
 
   template <typename TRegistrationInfoTraits, typename TTransformationPathTraits>
   RegistrationPathBase<TRegistrationInfoTraits, TTransformationPathTraits>::
     RegistrationPathBase()
-  {
-  };
+  = default;
 
 } // end namespace iro
 

@@ -182,14 +182,12 @@ namespace iro
   template <typename TInformationSpaceTraits, typename TProblemStatementTraits, typename TTransformationInfoTraits>
   RegistrationInfo<TInformationSpaceTraits, TProblemStatementTraits, TTransformationInfoTraits>::
     ~RegistrationInfo()
-  {
-  };
+  = default;
 
   template <typename TInformationSpaceTraits, typename TProblemStatementTraits, typename TTransformationInfoTraits>
   RegistrationInfo<TInformationSpaceTraits, TProblemStatementTraits, TTransformationInfoTraits>::
     RegistrationInfo()
-  {
-  };
+  = default;
 
 } // end namespace iro
 

@@ -53,29 +53,29 @@ namespace map
 		public:
 			/*! Standard class typedefs. */
 			typedef InverseRegistrationKernelGenerator<VInputDimensions, VOutputDimensions>  Self;
-			typedef itk::Object                    Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = itk::Object;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(InverseRegistrationKernelGenerator, itk::Object);
 			itkNewMacro(Self);
 
 			typedef RegistrationKernelInverterBase<VInputDimensions, VOutputDimensions> InverterBaseType;
-			typedef typename InverterBaseType::KernelBaseType										KernelBaseType;
-			typedef typename KernelBaseType::Pointer														KernelBasePointer;
-			typedef typename InverterBaseType::InverseKernelBaseType						InverseKernelBaseType;
-			typedef typename InverseKernelBaseType::Pointer											InverseKernelBasePointer;
+			using KernelBaseType = typename InverterBaseType::KernelBaseType;
+			using KernelBasePointer = typename KernelBaseType::Pointer;
+			using InverseKernelBaseType = typename InverterBaseType::InverseKernelBaseType;
+			using InverseKernelBasePointer = typename InverseKernelBaseType::Pointer;
 
-			typedef typename InverterBaseType::FieldRepresentationType					FieldRepresentationType;
-			typedef typename InverterBaseType::InverseFieldRepresentationType   InverseFieldRepresentationType;
+			using FieldRepresentationType = typename InverterBaseType::FieldRepresentationType;
+			using InverseFieldRepresentationType = typename InverterBaseType::InverseFieldRepresentationType;
 
-      typedef typename InverseKernelBaseType::OutputPointType NullPointType;
+      using NullPointType = typename InverseKernelBaseType::OutputPointType;
 
 		protected:
 			typedef services::ServiceStack<InverterBaseType, KernelInverterLoadPolicy<VInputDimensions, VOutputDimensions> >
 			ConcreteInverterStackType;
 		public:
-			typedef services::StaticServiceStack<ConcreteInverterStackType>			 InverterStackType;
+			using InverterStackType = services::StaticServiceStack<ConcreteInverterStackType>;
 
 			/*! Generates an inverse kernel by requesting a responsible service provider from InverterStackType.
 				 * Returns a smart pointer to an inverted version of the kernel.
@@ -126,7 +126,7 @@ namespace map
 
 
 			InverseRegistrationKernelGenerator();
-			virtual ~InverseRegistrationKernelGenerator();
+			~InverseRegistrationKernelGenerator() override;
 
       NullPointType _nullPoint;
       bool _useNullPoint;

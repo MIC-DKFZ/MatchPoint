@@ -45,30 +45,30 @@ namespace map
 			class MAPAlgorithmsITK_EXPORT ITKSVMetricControlInterface : public ITKMetricControlInterface
 			{
 			public:
-				typedef ITKSVMetricControlInterface Self;
-				typedef ITKMetricControlInterface Superclass;
-				typedef ::itk::SmartPointer<Self>         Pointer;
-				typedef ::itk::SmartPointer<const Self>   ConstPointer;
+				using Self = ITKSVMetricControlInterface;
+				using Superclass = ITKMetricControlInterface;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKSVMetricControlInterface, ITKMetricControlInterface);
 
-				typedef ::itk::SingleValuedCostFunction SVMetricBaseType;
+				using SVMetricBaseType = ::itk::SingleValuedCostFunction;
 
 				virtual SVMetricBaseType* getSVMetric() = 0;
 				virtual const SVMetricBaseType* getSVMetric() const = 0;
 
 			protected:
 				ITKSVMetricControlInterface();
-				virtual ~ITKSVMetricControlInterface();
+				~ITKSVMetricControlInterface() override;
 
 			private:
 				//No copy constructor allowed
-				ITKSVMetricControlInterface(const Self& source);
-				void operator=(const Self&);  //purposely not implemented
+				ITKSVMetricControlInterface(const Self& source) = delete;
+				void operator=(const Self&) = delete;  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

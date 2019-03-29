@@ -50,10 +50,10 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef MetaPropertyBase  Self;
-			typedef ::itk::LightObject  Superclass;
-			typedef ::itk::SmartPointer<Self>  Pointer;
-			typedef ::itk::SmartPointer<const Self>  ConstPointer;
+			using Self = MetaPropertyBase;
+			using Superclass = ::itk::LightObject;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 
 			/** Run-time type information (and related methods). */
@@ -73,10 +73,10 @@ namespace map
 			 * @eguarantee strong
 			 * @return A constant reference to a std::type_info object
 			 */
-			virtual const std::type_info& getMetaPropertyTypeInfo(void) const = 0;
+			virtual const std::type_info& getMetaPropertyTypeInfo() const = 0;
 
 		protected:
-			virtual ~MetaPropertyBase();
+			~MetaPropertyBase() override;
 			MetaPropertyBase();
 
 			/**
@@ -84,13 +84,13 @@ namespace map
 			 * @eguarantee strong
 			 * @param os An output stream
 			 */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 		private:
-			MetaPropertyBase(const Self&); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			MetaPropertyBase(const Self&) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #endif

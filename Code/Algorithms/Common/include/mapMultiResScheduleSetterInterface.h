@@ -45,9 +45,9 @@ namespace map
 			class MultiResScheduleSetterInterface
 			{
 			public:
-				typedef MultiResScheduleSetterInterface Self;
+				using Self = MultiResScheduleSetterInterface;
 
-				typedef MultiResRegistrationAlgorithmInterface::ScheduleType ScheduleType;
+				using ScheduleType = MultiResRegistrationAlgorithmInterface::ScheduleType;
 
 				/*! @brief sets the moving and the target schedule as copies of the
 				passed schedule.
@@ -72,17 +72,17 @@ namespace map
 										 const ScheduleType& targetSchedule) = 0;
 
 			protected:
-				MultiResScheduleSetterInterface() {};
-				virtual ~MultiResScheduleSetterInterface() {};
+				MultiResScheduleSetterInterface() = default;
+				virtual ~MultiResScheduleSetterInterface() = default;
 
 			private:
 				//No copy constructor allowed
-				MultiResScheduleSetterInterface(const Self& source); //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				MultiResScheduleSetterInterface(const Self& source) = delete; //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

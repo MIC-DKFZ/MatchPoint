@@ -44,9 +44,9 @@ namespace map
 			class MAPAlgorithmsITK_EXPORT ITKSVNLOptimizerSetterInterface
 			{
 			public:
-				typedef ITKSVNLOptimizerSetterInterface Self;
+				using Self = ITKSVNLOptimizerSetterInterface;
 
-				typedef algorithm::itk::ITKSVNLOptimizerControlInterface ITKOptimizerControlType;
+				using ITKOptimizerControlType = algorithm::itk::ITKSVNLOptimizerControlInterface;
 
 				/*! sets the optimizer
 				  @eguarantee strong
@@ -55,18 +55,18 @@ namespace map
 				virtual void setITKOptimizerControl(ITKOptimizerControlType* pOptimizer) = 0;
 
 			protected:
-				ITKSVNLOptimizerSetterInterface() {};
-				virtual ~ITKSVNLOptimizerSetterInterface() {};
+				ITKSVNLOptimizerSetterInterface() = default;
+				virtual ~ITKSVNLOptimizerSetterInterface() = default;
 
 			private:
 				//No copy constructor allowed
-				ITKSVNLOptimizerSetterInterface(const Self& source);
-				void operator=(const Self&);  //purposely not implemented
+				ITKSVNLOptimizerSetterInterface(const Self& source) = delete;
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 
 #endif

@@ -105,7 +105,7 @@ namespace map
 			return _movingMaskMTime.getMTime();
 		};
 
-	} // end namespace algorithms
+	}  // namespace algorithm
 } // end namespace map
 
 #endif

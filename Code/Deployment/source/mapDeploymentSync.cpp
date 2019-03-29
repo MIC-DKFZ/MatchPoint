@@ -51,14 +51,14 @@ namespace map
 		};
 
 		static CleanUpSyncHelper CleanUpSyncHelperGlobal;
-		SyncObject* Synchronizer::_SyncObject = NULL;
-		SyncObject* Synchronizer::_SyncedObject = NULL;
+		SyncObject* Synchronizer::_SyncObject = nullptr;
+		SyncObject* Synchronizer::_SyncedObject = nullptr;
 
 		void
 		Synchronizer::
 		synchronizeDeployment(SyncObject* pSync)
 		{
-			if (pSync)
+			if (pSync != nullptr)
 			{
 				_SyncedObject = pSync;
 				::map::core::Logbook::setSynchronization(*pSync);
@@ -69,11 +69,11 @@ namespace map
 		Synchronizer::
 		getSyncObject()
 		{
-			::std::auto_ptr<deployment::SyncObject> pNewSync(new SyncObject());
+			::std::unique_ptr<deployment::SyncObject> pNewSync(new SyncObject());
 
 			::map::core::Logbook::getSynchronization(*pNewSync);
 
-			if (!_SyncObject)
+			if (_SyncObject == nullptr)
 			{
 				delete _SyncObject;
 			}

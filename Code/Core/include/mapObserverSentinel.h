@@ -43,19 +43,19 @@ namespace map
 		class MAPCore_EXPORT ObserverSentinel : public ::itk::Object
 		{
 		public:
-			typedef ObserverSentinel Self;
-			typedef ::itk::Object Superclass;
-			typedef ::itk::SmartPointer<Self>         Pointer;
-			typedef ::itk::SmartPointer<const Self>   ConstPointer;
+			using Self = ObserverSentinel;
+			using Superclass = ::itk::Object;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			itkTypeMacro(ObserverSentinel, ::itk::Object);
 
 			static Pointer New(::itk::Object* pObserverOwner, const ::itk::EventObject& event,
 							   itk::Command* pCmd);
 
-			virtual ::itk::LightObject::Pointer CreateAnother(void) const;
+			::itk::LightObject::Pointer CreateAnother() const override;
 
-			typedef unsigned long ObserverTagType;
+			using ObserverTagType = unsigned long;
 
 			ObserverTagType getObserverTage() const;
 
@@ -63,18 +63,18 @@ namespace map
 			/*! @pre pObserverOwner and pCmd must not be NULL.*/
 			ObserverSentinel(::itk::Object* pObserverOwner, const ::itk::EventObject& event,
 							 itk::Command* pCmd);
-			virtual ~ObserverSentinel();
+			~ObserverSentinel() override;
 
 		private:
 			ObserverTagType _tag;
 			::itk::Object::Pointer _spObject;
 
 			//No copy constructor allowed
-			ObserverSentinel(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			ObserverSentinel(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #endif

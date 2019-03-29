@@ -126,7 +126,7 @@ namespace map
 		 */
 		mapAlgorithmEventMacro(UnregisterAlgorithmComponentEvent, AlgorithmEvent);
 
-	}
-}
+	}  // namespace events
+}  // namespace map
 
 #endif

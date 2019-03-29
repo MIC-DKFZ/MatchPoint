@@ -54,12 +54,12 @@ namespace map
 			class MAPAlgorithms_EXPORT MetaPropertyAlgorithmInterface
 			{
 			public:
-				typedef MetaPropertyAlgorithmInterface Self;
+				using Self = MetaPropertyAlgorithmInterface;
 
-				typedef std::vector<MetaPropertyInfo::Pointer> MetaPropertyVectorType;
-				typedef core::MetaPropertyBase MetaPropertyType;
-				typedef MetaPropertyType::Pointer MetaPropertyPointer;
-				typedef core::String MetaPropertyNameType;
+				using MetaPropertyVectorType = std::vector<MetaPropertyInfo::Pointer>;
+				using MetaPropertyType = core::MetaPropertyBase;
+				using MetaPropertyPointer = MetaPropertyType::Pointer;
+				using MetaPropertyNameType = core::String;
 
 				/*! Returns the MetaPropertyInfo for the property identified by the passed name
 				@eguarantee strong
@@ -127,17 +127,17 @@ namespace map
 				virtual bool setProperty(const MetaPropertyInfo* pInfo, const MetaPropertyType* pProperty) = 0;
 
 			protected:
-				MetaPropertyAlgorithmInterface() {};
-				virtual ~MetaPropertyAlgorithmInterface() {};
+				MetaPropertyAlgorithmInterface() = default;
+				virtual ~MetaPropertyAlgorithmInterface() = default;
 
 			private:
 				//No copy constructor allowed
-				MetaPropertyAlgorithmInterface(const Self& source); //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				MetaPropertyAlgorithmInterface(const Self& source) = delete; //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

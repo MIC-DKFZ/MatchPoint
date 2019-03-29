@@ -63,9 +63,9 @@ namespace map
 		public facet::MultiResRegistrationAlgorithmSetterInterface
 		{
 		public:
-			typedef TMovingImage MovingImageType;
-			typedef TTargetImage TargetImageType;
-			typedef TPyramidesPolicy PyramidesPolicyType;
+			using MovingImageType = TMovingImage;
+			using TargetImageType = TTargetImage;
+			using PyramidesPolicyType = TPyramidesPolicy;
 
 			typedef ModifiableMultiResImageRegistrationAlgorithmBase<MovingImageType, TargetImageType, TPyramidesPolicy >
 			Self;
@@ -73,13 +73,13 @@ namespace map
 			Superclass;
 
 			/** Type of pyramid schedule type */
-			typedef typename Superclass::ResolutionLevelCountType ResolutionLevelCountType;
-			typedef typename Superclass::ScheduleType ScheduleType;
+			using ResolutionLevelCountType = typename Superclass::ResolutionLevelCountType;
+			using ScheduleType = typename Superclass::ScheduleType;
 
-			typedef typename PyramidesPolicyType::TargetImagePyramideBaseType TargetImagePyramideBaseType;
-			typedef typename PyramidesPolicyType::TargetImagePyramideBasePointer TargetImagePyramideBasePointer;
-			typedef typename PyramidesPolicyType::MovingImagePyramideBaseType MovingImagePyramideBaseType;
-			typedef typename PyramidesPolicyType::MovingImagePyramideBasePointer MovingImagePyramideBasePointer;
+			using TargetImagePyramideBaseType = typename PyramidesPolicyType::TargetImagePyramideBaseType;
+			using TargetImagePyramideBasePointer = typename PyramidesPolicyType::TargetImagePyramideBasePointer;
+			using MovingImagePyramideBaseType = typename PyramidesPolicyType::MovingImagePyramideBaseType;
+			using MovingImagePyramideBasePointer = typename PyramidesPolicyType::MovingImagePyramideBasePointer;
 
 			/*! @brief sets the moving and the target schedule as copies of the
 			passed schedule. Before the new schedule is set onScheduleChange will
@@ -115,7 +115,7 @@ namespace map
 		protected:
 			/*! @brief virtual destructor
 			*/
-			virtual ~ModifiableMultiResImageRegistrationAlgorithmBase();
+			~ModifiableMultiResImageRegistrationAlgorithmBase() override;
 
 			ModifiableMultiResImageRegistrationAlgorithmBase();
 
@@ -125,8 +125,8 @@ namespace map
 			void operator=(const Self&);  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapModifiableMultiResImageRegistrationAlgorithmBase.tpp"

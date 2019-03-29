@@ -51,21 +51,21 @@ namespace map
         class MAPIO_EXPORT GenericImageReader : public ::itk::Object
         {
         public:
-            typedef GenericImageReader Self;
-            typedef ::itk::Object Superclass;
-            typedef ::itk::SmartPointer<Self>        Pointer;
-            typedef ::itk::SmartPointer<const Self>  ConstPointer;
+            using Self = GenericImageReader;
+            using Superclass = ::itk::Object;
+            using Pointer = ::itk::SmartPointer<Self>;
+            using ConstPointer = ::itk::SmartPointer<const Self>;
 
             itkTypeMacro(GenericImageReader, ::itk::Object);
             itkNewMacro(Self);
 
-            typedef ::itk::DataObject GenericOutputImageType;
+            using GenericOutputImageType = ::itk::DataObject;
 
-            typedef ::itk::ImageIOBase::IOPixelType LoadedPixelType;
+            using LoadedPixelType = ::itk::ImageIOBase::IOPixelType;
 
-            typedef ::itk::ImageIOBase::IOComponentType LoadedComponentType;
+            using LoadedComponentType = ::itk::ImageIOBase::IOComponentType;
 
-            typedef std::vector<itk::MetaDataDictionary> MetaDataDictionaryArrayType;
+            using MetaDataDictionaryArrayType = std::vector<itk::MetaDataDictionary>;
 
         private:
             /** Loaded Image.*/
@@ -119,16 +119,16 @@ namespace map
             /** Function to access the member variable _upperSeriesLimit. _upperSeriesLimit represents
             * the upper limit for the series file search.
             * @return The upper limit of the series search.*/
-            const unsigned int getUpperSeriesLimit() const;
+            unsigned int getUpperSeriesLimit() const;
 
             /** Function to access the member variable _upperSeriesLimit. _upperSeriesLimit represents
             * the upper limit for the series file search. Changing the series limit out dates the ImageReader.
             * @remark It is only relevant if series style is set to "Numeric".
             * @param [in] upperLimit The upper limit of the header file.*/
-            void setUpperSeriesLimit(const unsigned int upperLimit);
+            void setUpperSeriesLimit(unsigned int upperLimit);
 
             /** Function to access the member variable _seriesReadStyle (see member description for more information).*/
-            const ImageSeriesReadStyle::Type getSeriesReadStyle() const;
+            ImageSeriesReadStyle::Type getSeriesReadStyle() const;
 
             /** Function to access the member variable _seriesReadStyle (see member description for more information).
             * Changing the style out dates the ImageReader.*/
@@ -151,10 +151,10 @@ namespace map
         protected:
             GenericImageReader();
 
-            virtual ~GenericImageReader();
+            ~GenericImageReader() override;
         };
 
-    }
-}
+    }  // namespace io
+}  // namespace map
 
 #endif

@@ -41,12 +41,12 @@ namespace map
 		class MaskBoundingBoxHelper
 		{
 		public:
-			typedef MaskBoundingBoxHelper<VDimension> Self;
+			using Self = MaskBoundingBoxHelper<VDimension>;
 
-			typedef ::itk::SpatialObject<VDimension> MaskBaseType;
-			typedef ::itk::ImageBase<VDimension> ImageBaseType;
-			typedef typename ImageBaseType::RegionType ImageRegionType;
-			typedef typename ImageBaseType::PointType PointType;
+			using MaskBaseType = ::itk::SpatialObject<VDimension>;
+			using ImageBaseType = ::itk::ImageBase<VDimension>;
+			using ImageRegionType = typename ImageBaseType::RegionType;
+			using PointType = typename ImageBaseType::PointType;
 
 		public:
 
@@ -134,7 +134,7 @@ namespace map
 			MaskBoundingBoxHelper(const Self& source);
 			void operator=(const Self&);  //purposely not implemented
 		};
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

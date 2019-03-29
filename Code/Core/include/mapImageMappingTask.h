@@ -55,24 +55,24 @@ namespace map
 		public:
 			/*! Standard class typedefs. */
 			typedef ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >  Self;
-			typedef MappingTaskBase<TRegistration>        Superclass;
-			typedef itk::SmartPointer<Self>                    Pointer;
-			typedef itk::SmartPointer<const Self>              ConstPointer;
+			using Superclass = MappingTaskBase<TRegistration>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
-			typedef typename MappingTaskBase<TRegistration>::RegistrationType  RegistrationType;
-			typedef TInputImage                                                     InputImageType;
-			typedef typename InputImageType::ConstPointer                           InputImageConstPointer;
-			typedef TResultImage                                                    ResultImageType;
-			typedef typename ResultImageType::Pointer	                              ResultImagePointer;
+			using RegistrationType = typename MappingTaskBase<TRegistration>::RegistrationType;
+			using InputImageType = TInputImage;
+			using InputImageConstPointer = typename InputImageType::ConstPointer;
+			using ResultImageType = TResultImage;
+			using ResultImagePointer = typename ResultImageType::Pointer;
 
 			typedef ImageMappingPerformerBase<RegistrationType, InputImageType, ResultImageType>
 			TaskPerformerBaseType;
-			typedef typename TaskPerformerBaseType::RequestType                     PerformerRequestType;
+			using PerformerRequestType = typename TaskPerformerBaseType::RequestType;
 
-			typedef typename PerformerRequestType::ErrorValueType                   ErrorValueType;
-			typedef typename PerformerRequestType::PaddingValueType                 PaddingValueType;
-			typedef typename PerformerRequestType::ResultImageDescriptorType        ResultImageDescriptorType;
-			typedef typename PerformerRequestType::InterpolateBaseType              InterpolateBaseType;
+			using ErrorValueType = typename PerformerRequestType::ErrorValueType;
+			using PaddingValueType = typename PerformerRequestType::PaddingValueType;
+			using ResultImageDescriptorType = typename PerformerRequestType::ResultImageDescriptorType;
+			using InterpolateBaseType = typename PerformerRequestType::InterpolateBaseType;
 
 			itkTypeMacro(ImageMappingTask, MappingTaskBase);
 			itkNewMacro(Self);
@@ -87,13 +87,13 @@ namespace map
 #endif
 
 		protected:
-			typedef TLoadPolicy<TaskPerformerBaseType> LoadPolicyType;
+			using LoadPolicyType = TLoadPolicy<TaskPerformerBaseType>;
 
 			typedef services::ServiceStack<TaskPerformerBaseType, LoadPolicyType >
 			ConcreteTaskPerformerStackType;
 
 		public:
-			typedef services::StaticServiceStack<ConcreteTaskPerformerStackType> TaskPerformerStackType;
+			using TaskPerformerStackType = services::StaticServiceStack<ConcreteTaskPerformerStackType>;
 
 			/*! Sets _spInputImage to inputPoints and sets _spResultImage to null.
 			 * @param [in] inputPoints The pointer to the input image*/
@@ -104,13 +104,13 @@ namespace map
 			 * register the input data.
 			 * @post _spResultImage is set.
 			 * @pre _spInputImage and _spRegistration are not null.*/
-			ResultImagePointer getResultImage(void);
+			ResultImagePointer getResultImage();
 
 			/*! Sets the result image descriptor.
 			 * @param [in] pDescriptor Pointer to the descriptor. If set to NULL the task will generate one
 			 * by using the input image as template.*/
 			void setResultImageDescriptor(const ResultImageDescriptorType* pDescriptor);
-			const ResultImageDescriptorType* getResultImageDescriptor(void) const;
+			const ResultImageDescriptorType* getResultImageDescriptor() const;
 
 			void setThrowOnMappingError(bool throwOnError);
 			bool getThrowOnMappingError() const;
@@ -129,7 +129,7 @@ namespace map
 
 		protected:
 			ImageMappingTask();
-			virtual ~ImageMappingTask();
+			~ImageMappingTask() override;
 
 			/*! Smart pointer to the input image*/
 			InputImageConstPointer  _spInputImage;
@@ -140,11 +140,11 @@ namespace map
 
 			typedef itk::LinearInterpolateImageFunction<InputImageType, continuous::ScalarType>
 			DefaultInterpolatorType;
-			typedef typename PerformerRequestType::InterpolateBasePointer InterpolateBasePointer;
+			using InterpolateBasePointer = typename PerformerRequestType::InterpolateBasePointer;
 			/*! Smart pointer to the interpolator instance that should be used to generate the result image*/
 			InterpolateBasePointer _spInterpolator;
 
-			typedef typename ResultImageDescriptorType::ConstPointer ResultImageDescriptorConstPointer;
+			using ResultImageDescriptorConstPointer = typename ResultImageDescriptorType::ConstPointer;
 			/*! Smart pointer to the result image descriptor. If it points to NULL when the task is executed
 			 * a descriptor will be created by using the input image as template.*/
 			ResultImageDescriptorConstPointer _spResultDescriptor;
@@ -172,22 +172,22 @@ namespace map
 			 * @pre _inputPoints must have been set.
 			 * @post _resultPoints are set.
 			 */
-			virtual void doExecution(void) const;
+			void doExecution() const override;
 
 			/*! Sets _spResultImage to NULL.
 			 * @eguarantee strong
 			 * @post _resultPoints is NULL.
 			 */
-			virtual void clearResults(void) const;
+			void clearResults() const override;
 
 			/*! clears all input datas of the task used to execute().
 			 * Must be defined for any concrete data performer.
 			 * @eguarantee strong
 			 */
-			virtual void clearInputs(void);
+			void clearInputs() override;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 		private:
 			ImageMappingTask(const Self&);  //purposely not implemented

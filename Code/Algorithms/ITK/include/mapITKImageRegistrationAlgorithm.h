@@ -86,24 +86,24 @@ namespace map
 				typedef ITKImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage, typename TTransformPolicy::TransformScalarType, typename TInterpolatorPolicy::CoordRepType>
 				ITKRegistrationType;
 
-				typedef ::itk::SmartPointer<Self>                                     Pointer;
-				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 				itkTypeMacro(ITKImageRegistrationAlgorithm, IterativeRegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
-				typedef typename Superclass::UIDType UIDType;
-				typedef typename Superclass::UIDPointer UIDPointer;
+				using UIDType = typename Superclass::UIDType;
+				using UIDPointer = typename Superclass::UIDPointer;
 
-				typedef TInterpolatorPolicy   InterpolatorPolicyType;
-				typedef TMetricPolicy         MetricPolicyType;
-				typedef TOptimizerPolicy      OptimizerPolicyType;
-				typedef TTransformPolicy      TransformPolicyType;
-				typedef TIdentificationPolicy IdentificationPolicyType;
+				using InterpolatorPolicyType = TInterpolatorPolicy;
+				using MetricPolicyType = TMetricPolicy;
+				using OptimizerPolicyType = TOptimizerPolicy;
+				using TransformPolicyType = TTransformPolicy;
+				using IdentificationPolicyType = TIdentificationPolicy;
 
-				typedef typename ITKRegistrationType::OptimizerBaseType OptimizerBaseType;
-				typedef typename ITKRegistrationType::MetricBaseType MetricBaseType;
-				typedef typename ITKRegistrationType::TransformBaseType TransformBaseType;
-				typedef typename ITKRegistrationType::InterpolatorBaseType InterpolatorBaseType;
+				using OptimizerBaseType = typename ITKRegistrationType::OptimizerBaseType;
+				using MetricBaseType = typename ITKRegistrationType::MetricBaseType;
+				using TransformBaseType = typename ITKRegistrationType::TransformBaseType;
+				using InterpolatorBaseType = typename ITKRegistrationType::InterpolatorBaseType;
 
 				typedef typename
 				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType
@@ -111,24 +111,22 @@ namespace map
 				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
 				ImageRegistrationAlgorithmBaseType;
 
-				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageType TargetImageType;
-				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageType MovingImageType;
-				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer
-				MovingImageConstPointer;
-				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
-				TargetImageConstPointer;
+				using TargetImageType = typename ImageRegistrationAlgorithmBaseType::TargetImageType;
+				using MovingImageType = typename ImageRegistrationAlgorithmBaseType::MovingImageType;
+				using MovingImageConstPointer = typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer;
+				using TargetImageConstPointer = typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer;
 
-				typedef typename Superclass::MovingRepresentationDescriptorType MovingRepresentationDescriptorType;
-				typedef typename Superclass::TargetRepresentationDescriptorType TargetRepresentationDescriptorType;
+				using MovingRepresentationDescriptorType = typename Superclass::MovingRepresentationDescriptorType;
+				using TargetRepresentationDescriptorType = typename Superclass::TargetRepresentationDescriptorType;
 
-				typedef typename Superclass::RegistrationPointer RegistrationPointer;
-				typedef typename Superclass::RegistrationType RegistrationType;
-				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
-				typedef typename Superclass::IterationCountType IterationCountType;
+				using RegistrationPointer = typename Superclass::RegistrationPointer;
+				using RegistrationType = typename Superclass::RegistrationType;
+				using FieldRepRequirement = typename Superclass::FieldRepRequirement;
+				using IterationCountType = typename Superclass::IterationCountType;
 
-				typedef typename MetaPropertyAlgorithmBase::MetaPropertyPointer MetaPropertyPointer;
-				typedef typename MetaPropertyAlgorithmBase::MetaPropertyNameType MetaPropertyNameType;
-				typedef typename MetaPropertyAlgorithmBase::MetaPropertyVectorType MetaPropertyVectorType;
+				using MetaPropertyPointer = typename MetaPropertyAlgorithmBase::MetaPropertyPointer;
+				using MetaPropertyNameType = typename MetaPropertyAlgorithmBase::MetaPropertyNameType;
+				using MetaPropertyVectorType = typename MetaPropertyAlgorithmBase::MetaPropertyVectorType;
 
 				// IterativeRegistrationAlgorithm
 				/*! @eguarantee strong*/
@@ -166,11 +164,11 @@ namespace map
 
 			protected:
 				ITKImageRegistrationAlgorithm();
-				virtual ~ITKImageRegistrationAlgorithm();
+				~ITKImageRegistrationAlgorithm() override;
 
-				typedef TInternalRegistrationMethod InternalRegistrationMethodType;
-				typedef typename Superclass::InterimRegistrationType InterimRegistrationType;
-				typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
+				using InternalRegistrationMethodType = TInternalRegistrationMethod;
+				using InterimRegistrationType = typename Superclass::InterimRegistrationType;
+				using InterimRegistrationPointer = typename Superclass::InterimRegistrationPointer;
 
 				/*! @overwrite
 				 * This default implementation does nothing.*/
@@ -179,13 +177,13 @@ namespace map
 				// MetaPropertyAlgorithmBase
 
 				/*! @reimplemented*/
-				virtual void compileInfos(MetaPropertyVectorType& infos) const;
+				void compileInfos(MetaPropertyVectorType& infos) const override;
 
 				/*! @reimplemented*/
-				virtual MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const;
+				MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const override;
 
 				/*! @reimplemented*/
-				virtual void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty);
+				void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty) override;
 
 				// IterativeRegistrationAlgorithmInterface
 
@@ -300,7 +298,7 @@ namespace map
 				*/
 				virtual void finalizeAlgorithm();
 
-				typedef typename TransformPolicyType::TransformType::ParametersType	TransformParametersType;
+				using TransformParametersType = typename TransformPolicyType::TransformType::ParametersType;
 
 				/*! Gets the member variable _currentTransformParameters secured via _currentIterationLock.
 				@return Copy of the current transform parameters.
@@ -427,9 +425,9 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapITKImageRegistrationAlgorithm.tpp"

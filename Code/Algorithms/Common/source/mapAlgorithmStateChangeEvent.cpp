@@ -35,7 +35,7 @@ namespace map
 
 		AlgorithmStateChangeEvent::
 		~AlgorithmStateChangeEvent()
-		{};
+		= default;
 
 		const char*
 		AlgorithmStateChangeEvent::
@@ -62,7 +62,7 @@ namespace map
 		AlgorithmStateChangeEvent::
 		CheckEvent(const ::itk::EventObject* e) const
 		{
-			return dynamic_cast<const Self*>(e);
+			return dynamic_cast<const Self*>(e) != nullptr;
 		};
 
 		::itk::EventObject*
@@ -73,10 +73,9 @@ namespace map
 		};
 
 		AlgorithmStateChangeEvent::
-		AlgorithmStateChangeEvent(const Self& s) : Superclass(s),  _oldState(s._oldState),
-			_newState(s._newState)
-		{
-		};
+		AlgorithmStateChangeEvent(const Self& s) 
+			
+		= default;
 
 		void
 		AlgorithmStateChangeEvent::
@@ -87,5 +86,5 @@ namespace map
 			os << "New state: " << _newState << std::endl;
 		};
 
-	}
-}
+	}  // namespace events
+}  // namespace map

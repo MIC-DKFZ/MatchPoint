@@ -41,7 +41,7 @@ namespace map
 		StreamingInterface::
 		streamFromStructuredData(const Element* pElement)
 		{
-			if (!pElement)
+			if (pElement == nullptr)
 			{
 				mapDefaultExceptionStaticMacro( <<
 												"Error. Cannot stream from StructuredData element. Passed element pointer is NULL.");
@@ -51,10 +51,10 @@ namespace map
 		};
 
 		StreamingInterface::
-		StreamingInterface() {};
+		StreamingInterface() = default;
 
 		StreamingInterface::
-		~StreamingInterface() {};
+		~StreamingInterface() = default;
 
 	} //end of namespace structuredData
 

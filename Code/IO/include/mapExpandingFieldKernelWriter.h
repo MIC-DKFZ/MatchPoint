@@ -49,15 +49,15 @@ namespace map
 			/*! Standard class typedefs. */
 			typedef ExpandingFieldKernelWriter<VInputDimensions, VOutputDimensions>				Self;
 			typedef RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions>	Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(ExpandingFieldKernelWriter, RegistrationKernelWriterBase);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::KernelBaseType	KernelBaseType;
-			typedef typename Superclass::KernelBasePointer	KernelBasePointer;
-			typedef typename Superclass::RequestType	RequestType;
+			using KernelBaseType = typename Superclass::KernelBaseType;
+			using KernelBasePointer = typename Superclass::KernelBasePointer;
+			using RequestType = typename Superclass::RequestType;
 			typedef core::RegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
@@ -66,11 +66,11 @@ namespace map
 			 * @return Indicates if the provider offers the right solution.
 			 * @retval true Provider can handle the request.
 			 * @retval false Provider is not able to handle the request.*/
-			virtual bool canHandleRequest(const RequestType& request) const;
+			bool canHandleRequest(const RequestType& request) const override;
 
 			/*! Returns an ID of the provider as string. Calls getStaticProviderName().
 			 * @return Service provider ID.*/
-			virtual core::String getProviderName() const;
+			core::String getProviderName() const override;
 
 			/*! Returns an ID of the provider as string.
 			 * @return Service provider ID.*/
@@ -80,7 +80,7 @@ namespace map
 			 * @return Service provider ID.
 			 * @remark It is a return by value, becaus it might be possible that the description is generated on line
 			 * when calling this method.*/
-			virtual core::String getDescription() const;
+			core::String getDescription() const override;
 
 			/*! Generates the inverse kernel.
 				 * Returns a structured element containing the matrix.
@@ -88,12 +88,12 @@ namespace map
 			* @param [in] request Referenz to the request that contains the kernel and all relevant information for the storing process.
 			* @return Smart pointer to structured date element containing the stored information.
 				 */
-			virtual structuredData::Element::Pointer storeKernel(const RequestType& request) const;
+			structuredData::Element::Pointer storeKernel(const RequestType& request) const override;
 
 		protected:
 
 			ExpandingFieldKernelWriter();
-			virtual ~ExpandingFieldKernelWriter() {};
+			~ExpandingFieldKernelWriter() override {};
 
 		private:
 			ExpandingFieldKernelWriter(const Self&);  //purposely not implemented

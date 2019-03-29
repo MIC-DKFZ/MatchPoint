@@ -48,13 +48,13 @@ namespace map
 		class MAPAlgorithms_EXPORT OptimizerControlInterface
 		{
 		public:
-			typedef OptimizerControlInterface Self;
+			using Self = OptimizerControlInterface;
 
-			typedef unsigned long IterationCountType;
+			using IterationCountType = unsigned long;
 
-			typedef ::std::vector<double> OptimizerMeasureType;
-			typedef ::itk::Array<double> OptimizerPositionType;
-			typedef ::itk::Array<double> OptimizerScalesType;
+			using OptimizerMeasureType = ::std::vector<double>;
+			using OptimizerPositionType = ::itk::Array<double>;
+			using OptimizerScalesType = ::itk::Array<double>;
 
 			/*! is this optimizer stoppable?
 			@eguarantee no fail
@@ -215,11 +215,11 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			OptimizerControlInterface(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			OptimizerControlInterface(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

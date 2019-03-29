@@ -31,7 +31,7 @@ namespace iro
     * @brief Simple definition for problem statements.
     * @ingroup Simple
     */
-    typedef ProblemStatementBase<BoostUIDPolicy> SimpleProblemStatement;
+    using SimpleProblemStatement = ProblemStatementBase<BoostUIDPolicy>;
 
     using SimpleProblemStatementTraits = ProblemStatementTraits<SimpleProblemStatement>;
 

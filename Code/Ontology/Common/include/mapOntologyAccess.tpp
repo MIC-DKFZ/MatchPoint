@@ -30,8 +30,7 @@ namespace iro
     template <typename TOATraits>
     OntologyAccess<TOATraits>::
     ~OntologyAccess()
-    {
-    };
+    = default;
 
     template <typename TOATraits>
     OntologyAccess<TOATraits>::

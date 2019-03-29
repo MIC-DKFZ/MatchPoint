@@ -56,11 +56,11 @@ namespace map
 			 * \pre pKernelDescriptor must not be NULL*/
 			RegistrationKernelLoadRequest(const structuredData::Element* pKernelDescriptor,
 										  bool preferLazyLoading, const core::DimensionlessRegistrationKernelBase* pComplementaryKernel =
-											  NULL);
+											  nullptr);
 			~RegistrationKernelLoadRequest();
 
-			RegistrationKernelLoadRequest(const RegistrationKernelLoadRequest&);
-			void operator=(const RegistrationKernelLoadRequest&);
+			RegistrationKernelLoadRequest(const RegistrationKernelLoadRequest& /*request*/);
+			void operator=(const RegistrationKernelLoadRequest& /*request*/);
 		};
 
 		std::ostream& operator<<(std::ostream& os, const RegistrationKernelLoadRequest& request);

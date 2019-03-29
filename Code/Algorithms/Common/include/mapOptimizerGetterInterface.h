@@ -41,9 +41,9 @@ namespace map
 			class MAPAlgorithms_EXPORT OptimizerGetterInterface
 			{
 			public:
-				typedef OptimizerGetterInterface Self;
+				using Self = OptimizerGetterInterface;
 
-				typedef OptimizerControlInterface OptimizerControlType;
+				using OptimizerControlType = OptimizerControlInterface;
 
 				/*! @brief gets the optimizer control
 				@eguarantee no fail
@@ -62,13 +62,13 @@ namespace map
 
 			private:
 				//No copy constructor allowed
-				OptimizerGetterInterface(const Self& source);
-				void operator=(const Self&);  //purposely not implemented
+				OptimizerGetterInterface(const Self& source) = delete;
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 
 #endif

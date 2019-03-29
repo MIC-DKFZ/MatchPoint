@@ -25,7 +25,7 @@
 #define __MAP_MAPPING_PERFORMER_REQUEST_BASE_TPP
 
 #include "mapMappingPerformerRequestBase.h"
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -52,7 +52,7 @@ namespace map
 		template <class TRegistration, class TInputData, class TResultData>
 		MappingPerformerRequestBase<TRegistration, TInputData, TResultData>::
 		~MappingPerformerRequestBase()
-		{}
+		= default;
 
 
 	} // end namespace core

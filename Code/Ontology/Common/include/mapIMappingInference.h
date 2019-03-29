@@ -53,53 +53,53 @@ namespace iro
     class IMappingInference
     {
     public:
-      typedef typename TRPTraits::InformationEntityTraitsType   InformationEntityTraitsType;
-      typedef typename TRPTraits::InformationSpaceTraitsType    InformationSpaceTraitsType;
-      typedef typename TRPTraits::ProblemStatementTraitsType    ProblemStatementTraitsType;
-      typedef typename TRPTraits::RegistrationInfoTraitsType    RegistrationInfoTraitsType;
-      typedef typename TRPTraits::TransformationInfoTraitsType  TransformationInfoTraitsType;
-      typedef typename TRPTraits::TransformationPathTraitsType  TransformationPathTraitsType;
+      using InformationEntityTraitsType = typename TRPTraits::InformationEntityTraitsType;
+      using InformationSpaceTraitsType = typename TRPTraits::InformationSpaceTraitsType;
+      using ProblemStatementTraitsType = typename TRPTraits::ProblemStatementTraitsType;
+      using RegistrationInfoTraitsType = typename TRPTraits::RegistrationInfoTraitsType;
+      using TransformationInfoTraitsType = typename TRPTraits::TransformationInfoTraitsType;
+      using TransformationPathTraitsType = typename TRPTraits::TransformationPathTraitsType;
 
-      typedef typename InformationEntityTraitsType::Type                  InfEntityType;
-      typedef typename InformationSpaceTraitsType::Type                   InfSpaceType;
-      typedef typename ProblemStatementTraitsType::Type                   ProblemStatementType;
-      typedef IProblemComplianceDefinition<ProblemStatementType>          ProblemComplianceInterface;
-      typedef typename InformationEntityTraitsType::InferencePointer      InfEntityInferencePointer;
-      typedef typename InformationSpaceTraitsType::InferencePointer       InfSpaceInferencePointer;
+      using InfEntityType = typename InformationEntityTraitsType::Type;
+      using InfSpaceType = typename InformationSpaceTraitsType::Type;
+      using ProblemStatementType = typename ProblemStatementTraitsType::Type;
+      using ProblemComplianceInterface = IProblemComplianceDefinition<ProblemStatementType>;
+      using InfEntityInferencePointer = typename InformationEntityTraitsType::InferencePointer;
+      using InfSpaceInferencePointer = typename InformationSpaceTraitsType::InferencePointer;
 
-      typedef typename InfEntityType::ConstPointer           ConstInfEntityPointer;  
-      typedef typename InfSpaceType::ConstPointer            ConstInfSpacePointer;  
-      typedef typename std::vector<ConstInfEntityPointer>    ConstInfEntityVectorType;
-      typedef typename std::vector<ConstInfSpacePointer>     ConstInfSpaceVectorType;
+      using ConstInfEntityPointer = typename InfEntityType::ConstPointer;  
+      using ConstInfSpacePointer = typename InfSpaceType::ConstPointer;  
+      using ConstInfEntityVectorType = typename std::vector<ConstInfEntityPointer>;
+      using ConstInfSpaceVectorType = typename std::vector<ConstInfSpacePointer>;
 
-      typedef typename RegistrationInfoTraitsType::Type                                RegistrationInfoType;
-      typedef typename RegistrationInfoType::Pointer                                   RegistrationInfoPointer;
-      typedef typename RegistrationInfoType::ConstPointer                              ConstRegistrationInfoPointer;
-      typedef typename RegistrationInfoTraitsType::InferencePointer                    RegistrationInfoInferencePointer;
+      using RegistrationInfoType = typename RegistrationInfoTraitsType::Type;
+      using RegistrationInfoPointer = typename RegistrationInfoType::Pointer;
+      using ConstRegistrationInfoPointer = typename RegistrationInfoType::ConstPointer;
+      using RegistrationInfoInferencePointer = typename RegistrationInfoTraitsType::InferencePointer;
 
-      typedef typename TransformationInfoTraitsType::Type                              TransformationInfoType;
-      typedef typename TransformationInfoType::Pointer                                 TransformationInfoPointer;
-      typedef typename TransformationInfoType::ConstPointer                            ConstTransformationInfoPointer;
-      typedef typename TransformationInfoTraitsType::InferencePointer                    TransformationInfoInferencePointer;
+      using TransformationInfoType = typename TransformationInfoTraitsType::Type;
+      using TransformationInfoPointer = typename TransformationInfoType::Pointer;
+      using ConstTransformationInfoPointer = typename TransformationInfoType::ConstPointer;
+      using TransformationInfoInferencePointer = typename TransformationInfoTraitsType::InferencePointer;
 
-      typedef IPathMetric<RegistrationInfoTraitsType>                         RegPathMetricInterface;
-      typedef IPathMetric<TransformationInfoTraitsType>                       TransPathMetricInterface;
+      using RegPathMetricInterface = IPathMetric<RegistrationInfoTraitsType>;
+      using TransPathMetricInterface = IPathMetric<TransformationInfoTraitsType>;
 
-      typedef typename TRPTraits::Type                    RegistrationPathType;
-      typedef typename TRPTraits::ConstPointer            ConstRegistrationPathPointer;
+      using RegistrationPathType = typename TRPTraits::Type;
+      using ConstRegistrationPathPointer = typename TRPTraits::ConstPointer;
 
-      typedef typename TransformationPathTraitsType::Type                  TransformationPathType;
-      typedef typename TransformationPathTraitsType::ConstPointer          ConstTransformationPathPointer;
+      using TransformationPathType = typename TransformationPathTraitsType::Type;
+      using ConstTransformationPathPointer = typename TransformationPathTraitsType::ConstPointer;
 
-      typedef typename TRPOCTraits::Type                RegPathOptCollectionType;
-      typedef typename TRPOCTraits::ConstPointer        ConstRegPathOptColPointer;
-      typedef std::vector<ConstRegPathOptColPointer>    ConstRegPathOptColVectorType;
+      using RegPathOptCollectionType = typename TRPOCTraits::Type;
+      using ConstRegPathOptColPointer = typename TRPOCTraits::ConstPointer;
+      using ConstRegPathOptColVectorType = std::vector<ConstRegPathOptColPointer>;
 
-      typedef typename TTPOCTraits::Type                TransPathOptCollectionType;
-      typedef typename TTPOCTraits::ConstPointer        ConstTransPathOptColPointer;
-      typedef std::vector<ConstTransPathOptColPointer>  ConstTransPathOptColVectorType;
+      using TransPathOptCollectionType = typename TTPOCTraits::Type;
+      using ConstTransPathOptColPointer = typename TTPOCTraits::ConstPointer;
+      using ConstTransPathOptColVectorType = std::vector<ConstTransPathOptColPointer>;
 
-      typedef MappingError::Type    MappingErrorType;
+      using MappingErrorType = MappingError::Type;
       
       /*! Queries for all registration paths that are (potentially) able to map between the passed
       * moving and fixed information space.
@@ -472,8 +472,8 @@ namespace iro
 			Result<ConstTransformationInfoPointer> actualize(TransformationInfoInferencePointer pTI) const;
 
     protected:
-      virtual ~IMappingInference() {};
-      IMappingInference() {};
+      virtual ~IMappingInference() = default;
+      IMappingInference() = default;
 
 			/*! virtual abstract part of the NVI idiom. See public member for more information.
       *@see getRegistrationPaths*/
@@ -542,7 +542,7 @@ namespace iro
       * @exception ::iro::exceptions::UndefinedElement : at least one entity is not defined in the ontology.*/
       ConstInfEntityVectorType actualizeVector(const ConstInfEntityVectorType& oldV) const;
 
-      typedef TIEInference EntityInferenceInterface;
+      using EntityInferenceInterface = TIEInference;
       
       /*!Sets the pointer to the interface that should be used to actualze inference elements
        * (e.g. entities or information spaces)*/

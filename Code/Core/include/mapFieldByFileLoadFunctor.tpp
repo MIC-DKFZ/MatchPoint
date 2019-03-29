@@ -51,7 +51,7 @@ namespace map
             {
             public:
                 typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> TransformType;
-                typedef typename TransformType::Pointer TransformPointer;
+                using TransformPointer = typename TransformType::Pointer;
                 typedef typename
                     FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::InFieldRepresentationType
                     InFieldRepresentationType;
@@ -71,7 +71,7 @@ namespace map
             public:
                 typedef typename FieldByFileLoadFunctor<VDimensions, VDimensions>::FieldType FieldType;
                 typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimensions, VDimensions> TransformType;
-                typedef typename TransformType::Pointer TransformPointer;
+                using TransformPointer = typename TransformType::Pointer;
                 typedef typename FieldByFileLoadFunctor<VDimensions, VDimensions>::InFieldRepresentationType
                     InFieldRepresentationType;
 
@@ -147,7 +147,7 @@ namespace map
             template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
             const String&
                 FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::
-                getFieldFilePath(void) const
+                getFieldFilePath() const
             {
                 return _filePath;
             }
@@ -166,7 +166,7 @@ namespace map
             template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
             typename ::itk::LightObject::Pointer
                 FieldByFileLoadFunctor<VInputDimensions, VOutputDimensions>::
-                CreateAnother(void) const
+                CreateAnother() const
             {
                 ::itk::LightObject::Pointer smartPtr;
                 smartPtr = Self::New(_filePath, Superclass::_spInFieldRepresentation).GetPointer();

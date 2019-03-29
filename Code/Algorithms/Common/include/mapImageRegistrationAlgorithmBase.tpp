@@ -104,7 +104,7 @@ namespace map
 		};
 
 
-	} // end namespace algorithms
+	}  // namespace algorithm
 } // end namespace map
 
 #endif

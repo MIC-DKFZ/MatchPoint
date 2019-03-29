@@ -32,19 +32,19 @@ namespace iro
   class MAPOntology_EXPORT UnkownBijectivCorrelation : public UnkownInjectivCorrelation
   {
   public:
-    typedef UnkownBijectivCorrelation                           Self;
-    typedef std::shared_ptr<UnkownBijectivCorrelation>        Pointer;
-    typedef std::shared_ptr<const UnkownBijectivCorrelation>  ConstPointer;
+    using Self = UnkownBijectivCorrelation;
+    using Pointer = std::shared_ptr<UnkownBijectivCorrelation>;
+    using ConstPointer = std::shared_ptr<const UnkownBijectivCorrelation>;
 
     /** Returns the identifier name of the correlation type.*/
-    virtual String getName() const;
+    String getName() const override;
 
-    virtual ~UnkownBijectivCorrelation();
+    ~UnkownBijectivCorrelation() override;
     UnkownBijectivCorrelation();
 
   private:
-    UnkownBijectivCorrelation(const UnkownBijectivCorrelation&); //not implemented by purpose
-    UnkownBijectivCorrelation& operator=(const UnkownBijectivCorrelation&); //not implemented by purpose
+    UnkownBijectivCorrelation(const UnkownBijectivCorrelation&) = delete; //not implemented by purpose
+    UnkownBijectivCorrelation& operator=(const UnkownBijectivCorrelation&) = delete; //not implemented by purpose
   };
 } // end namespace iro
 

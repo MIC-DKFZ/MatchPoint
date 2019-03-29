@@ -49,25 +49,23 @@ namespace map
 			public TRegistrationTopologyPolicy<VMovingDimensions, VTargetDimensions>
 		{
 		public:
-			typedef Registration Self;
-			typedef RegistrationBase Superclass;
-			typedef itk::SmartPointer<Self> Pointer;
-			typedef itk::SmartPointer<const Self> ConstPointer;
+			using Self = Registration<VMovingDimensions, VTargetDimensions, TRegistrationTopologyPolicy>;
+			using Superclass = RegistrationBase;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			typedef TRegistrationTopologyPolicy<VMovingDimensions, VTargetDimensions> TopologyPolicyType;
 
-			typedef typename TopologyPolicyType::DirectMappingType    DirectMappingType;
-			typedef typename TopologyPolicyType::InverseMappingType   InverseMappingType;
+			using DirectMappingType = typename TopologyPolicyType::DirectMappingType;
+			using InverseMappingType = typename TopologyPolicyType::InverseMappingType;
 
-			typedef typename TopologyPolicyType::MovingPointType			MovingPointType;
-			typedef typename TopologyPolicyType::TargetPointType		  TargetPointType;
+			using MovingPointType = typename TopologyPolicyType::MovingPointType;
+			using TargetPointType = typename TopologyPolicyType::TargetPointType;
 
-			typedef typename DirectMappingType::RepresentationDescriptorType  DirectFieldRepresentationType;
-			typedef typename InverseMappingType::RepresentationDescriptorType InverseFieldRepresentationType;
-			typedef typename DirectFieldRepresentationType::ConstPointer
-			DirectFieldRepresentationConstPointer;
-			typedef typename InverseFieldRepresentationType::ConstPointer
-			InverseFieldRepresentationConstPointer;
+			using DirectFieldRepresentationType = typename DirectMappingType::RepresentationDescriptorType;
+			using InverseFieldRepresentationType = typename InverseMappingType::RepresentationDescriptorType;
+			using DirectFieldRepresentationConstPointer = typename DirectFieldRepresentationType::ConstPointer;
+			using InverseFieldRepresentationConstPointer = typename InverseFieldRepresentationType::ConstPointer;
 
 			itkStaticConstMacro(MovingDimensions, unsigned int, VMovingDimensions);
 			itkStaticConstMacro(TargetDimensions, unsigned int, VTargetDimensions);
@@ -146,13 +144,13 @@ namespace map
 			@eguarantee no fail
 			@return a SmartPointer to the ModelDescriptor
 			*/
-			virtual unsigned int getMovingDimensions() const;
+			unsigned int getMovingDimensions() const override;
 
 			/*! @brief Gets the number of target dimensions
 			@eguarantee no fail
 			@return a SmartPointer to the ModelDescriptor
 			*/
-			virtual unsigned int getTargetDimensions() const;
+			unsigned int getTargetDimensions() const override;
 
 			/*!
 			@eguarantee no fail
@@ -160,7 +158,7 @@ namespace map
 			@retval true if target representation is limited
 			@retval false if target representation is not limited
 			*/
-			virtual bool hasLimitedTargetRepresentation() const;
+			bool hasLimitedTargetRepresentation() const override;
 
 			/*!
 			@eguarantee no fail
@@ -168,13 +166,13 @@ namespace map
 			@retval true if moving representation is limited
 			@retval false if moving representation is not limited
 			*/
-			virtual bool hasLimitedMovingRepresentation() const;
+			bool hasLimitedMovingRepresentation() const override;
 
 			friend class RegistrationManipulator<Self>;
 
 		protected:
 			Registration();
-			~Registration();
+			~Registration() override;
 
 			typename DirectMappingType::Pointer _spDirectMapping;
 			typename InverseMappingType::Pointer _spInverseMapping;
@@ -199,8 +197,8 @@ namespace map
 			return os;
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapRegistration.tpp"

@@ -31,13 +31,11 @@ namespace map
 
 		IterativeAlgorithmBase::
 		IterativeAlgorithmBase()
-		{
-		};
+		= default;
 
 		IterativeAlgorithmBase::
 		~IterativeAlgorithmBase()
-		{
-		};
+		= default;
 
 		IterativeAlgorithmBase::IterationCountType
 		IterativeAlgorithmBase::
@@ -67,7 +65,7 @@ namespace map
 			return result;
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 

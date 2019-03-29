@@ -45,9 +45,9 @@ namespace map
 			class MultiResRegistrationAlgorithmSetterInterface
 			{
 			public:
-				typedef MultiResRegistrationAlgorithmSetterInterface Self;
+				using Self = MultiResRegistrationAlgorithmSetterInterface;
 
-				typedef MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType ResolutionLevelCountType;
+				using ResolutionLevelCountType = MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType;
 
 				/*! resets the both schedules to the passed level count.
 				The sub sampling rate of a level is 2^(levels - n). n is the
@@ -58,17 +58,17 @@ namespace map
 				virtual void setResolutionLevels(ResolutionLevelCountType levels) = 0;
 
 			protected:
-				MultiResRegistrationAlgorithmSetterInterface() {};
-				virtual ~MultiResRegistrationAlgorithmSetterInterface() {};
+				MultiResRegistrationAlgorithmSetterInterface() = default;
+				virtual ~MultiResRegistrationAlgorithmSetterInterface() = default;
 
 			private:
 				//No copy constructor allowed
-				MultiResRegistrationAlgorithmSetterInterface(const Self& source); //purposely not implemented
-				void operator=(const Self&);  //purposely not implemented
+				MultiResRegistrationAlgorithmSetterInterface(const Self& source) = delete; //purposely not implemented
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

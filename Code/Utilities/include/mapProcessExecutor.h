@@ -55,7 +55,7 @@ namespace map
 		* @ingroup Events
 		*/
 		mapEventMacro(ExternalProcessStdErrEvent, ExternalProcessOutputEvent, MAPUtilities_EXPORT);
-	}
+	}  // namespace events
 
 	namespace utilities
 	{
@@ -68,10 +68,10 @@ namespace map
 		class MAPUtilities_EXPORT ProcessExecutor : public itk::Object
 		{
 		public:
-			typedef ProcessExecutor Self;
-			typedef ::itk::Object  Superclass;
-			typedef ::itk::SmartPointer<Self>                                     Pointer;
-			typedef ::itk::SmartPointer<const Self>                               ConstPointer;
+			using Self = ProcessExecutor;
+			using Superclass = ::itk::Object;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			itkTypeMacro(ProcessExecutor, ::itk::Object);
 			itkFactorylessNewMacro(Self);
@@ -79,7 +79,7 @@ namespace map
 			mapSetMacro(SharedOutputPipes, bool);
 			mapGetConstMacro(SharedOutputPipes, bool);
 
-			typedef std::vector< ::map::core::String> ArgumentListType;
+			using ArgumentListType = std::vector< ::map::core::String>;
 
 			bool execute(const core::String& executionPath, const core::String& executableName,
 						 ArgumentListType argumentList);
@@ -94,7 +94,7 @@ namespace map
 
 		protected:
 			ProcessExecutor();
-			virtual ~ProcessExecutor();
+			~ProcessExecutor() override;
 
 			int _exitValue;
 
@@ -103,10 +103,10 @@ namespace map
 			 * @remark The events will only be invoked if the pipes are NOT(!) shared.*/
 			bool _SharedOutputPipes;
 		private:
-			ProcessExecutor(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			ProcessExecutor(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace utilities
+}  // namespace map
 #endif

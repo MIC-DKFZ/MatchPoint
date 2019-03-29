@@ -22,6 +22,8 @@
 
 
 #include "mapDeploymentDLLInfo.h"
+
+#include <utility>
 #include "mapExceptionObject.h"
 
 namespace map
@@ -53,10 +55,10 @@ namespace map
 		DLLInfo::
 		DLLInfo(const map::algorithm::UID* pUID,
 				const core::String& libraryFilePath,
-				const core::String& profileStr): _spAlgorithmUID(pUID), _libraryFilePath(libraryFilePath),
-			_profileStr(profileStr)
+				core::String  profileStr): _spAlgorithmUID(pUID), _libraryFilePath(libraryFilePath),
+			_profileStr(std::move(profileStr))
 		{
-			if (!pUID)
+			if (pUID == nullptr)
 			{
 				mapDefaultExceptionStaticMacro( <<
 												"Cannot create DLLInfo instance. Passed UID pointer is NULL. Library: " << libraryFilePath);
@@ -65,8 +67,7 @@ namespace map
 
 		DLLInfo::
 		~DLLInfo()
-		{
-		};
+		= default;
 
 		DLLInfo::Pointer
 		DLLInfo::
@@ -74,7 +75,7 @@ namespace map
 			const core::String& libraryFile,
 			const core::String& profileStr)
 		{
-			if (!pUID)
+			if (pUID == nullptr)
 			{
 				mapDefaultExceptionStaticMacro( <<
 												"Cannot create DLLInfo instance. Passed UID pointer is NULL. Library: " << libraryFile);

@@ -58,7 +58,7 @@ namespace map
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		typename ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::ResultImagePointer
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		getResultImage(void)
+		getResultImage()
 		{
 			if (_spResultImage.IsNull())
 			{
@@ -88,7 +88,7 @@ namespace map
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::ResultImageDescriptorType*
 
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		getResultImageDescriptor(void) const
+		getResultImageDescriptor() const
 		{
 			return _spResultDescriptor;
 		}
@@ -110,7 +110,7 @@ namespace map
 		const typename
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::InterpolateBaseType*
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		getImageInterpolator(void) const
+		getImageInterpolator() const
 		{
 			return _spInterpolator;
 		}
@@ -205,22 +205,21 @@ namespace map
 			_paddingValue = itk::NumericTraits<PaddingValueType>::Zero;
 			_throwOnMappingError = true;
 			_throwOnPaddingError = false;
-			_spResultImage = NULL;
-			_spInputImage = NULL;
-			_spResultDescriptor = NULL;
+			_spResultImage = nullptr;
+			_spInputImage = nullptr;
+			_spResultDescriptor = nullptr;
 			_spInterpolator = DefaultInterpolatorType::New();
 		}
 
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
 		~ImageMappingTask()
-		{
-		}
+		= default;
 
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		void
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		doExecution(void) const
+		doExecution() const
 		{
 			if (_spInputImage.IsNull())
 			{
@@ -261,7 +260,7 @@ namespace map
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		void
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		clearResults(void) const
+		clearResults() const
 		{
 			_spResultImage = NULL;
 		}
@@ -269,7 +268,7 @@ namespace map
 		template <class TRegistration, class TInputImage, class TResultImage, template <class> class TLoadPolicy>
 		void
 		ImageMappingTask<TRegistration, TInputImage, TResultImage, TLoadPolicy >::
-		clearInputs(void)
+		clearInputs()
 		{
 			_spInputImage = NULL;
 		}

@@ -45,7 +45,7 @@ namespace map
 		/** Indicates the location of the data source.
 		 e.g.: the file path...*/
 		const char* const SDInternalSourceURI = "sdInternal:SourceURI";
-	}
-}
+	}  // namespace tags
+}  // namespace map
 
 #endif

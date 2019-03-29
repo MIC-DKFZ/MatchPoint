@@ -30,7 +30,7 @@ namespace iro
     */
     struct MAPOntologySimple_EXPORT BoostUIDPolicy
     {
-      typedef boost::uuids::uuid  UIDType;
+      using UIDType = boost::uuids::uuid;
 
       static UIDType generateUID();
     };

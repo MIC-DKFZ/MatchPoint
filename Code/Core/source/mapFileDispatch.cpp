@@ -118,7 +118,7 @@ namespace map
 			ret = path;
 			ret = ensureCorrectOSPathSeparator(ret);
 
-			if (ret.size())
+			if (!ret.empty() != 0u)
 			{
 				if (ret[ret.size() - 1] != sep)
 				{
@@ -166,5 +166,5 @@ namespace map
 		}
 
 
-	}
-}
+	}  // namespace core
+}  // namespace map

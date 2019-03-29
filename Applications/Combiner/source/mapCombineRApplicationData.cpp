@@ -63,7 +63,7 @@ namespace map
 
       bool containsHelpTag(int argc, char** argv)
       {
-        while(argc)
+        while(argc != 0)
         {
           map::core::String value = argv[0];
 
@@ -80,7 +80,7 @@ namespace map
 
       bool containsVersionTag(int argc, char** argv)
       {
-        while(argc)
+        while(argc != 0)
         {
           map::core::String value = argv[0];
 
@@ -123,7 +123,7 @@ namespace map
           std::cout << "    --version: Show version information" << std::endl<< std::endl;
           std::cout << " Example:" << std::endl << std::endl;
           std::cout << " combineR ouput.mapr input1.mapr input2.mapr - input3.mapr" << std::endl << std::endl;
-          std::cout << " This will combine \"input1.mapr\", \"input2.mapr\" and the inverted \"input3.mapr\". The output file name will be \"output.mapr\"."
+          std::cout << R"( This will combine "input1.mapr", "input2.mapr" and the inverted "input3.mapr". The output file name will be "output.mapr".)"
             << std::endl;
           return 1;
         }
@@ -136,7 +136,7 @@ namespace map
         --argc; //skip executable argument;
         ++argv;
 
-        if (!argc)
+        if (argc == 0)
         {
           std::cerr << "Wrong command line: insufficient number of arguments." << std::endl;
           std::cerr << "Use one of the following flags for more information:" << std::endl;
@@ -149,7 +149,7 @@ namespace map
         ++argv;
         bool invertReg = false;
 
-        while(argc)
+        while(argc != 0)
         {
           map::core::String value = argv[0];
 
@@ -178,6 +178,6 @@ namespace map
         return 0;
       };
 
-    }
-  }
-}
+    }  // namespace combineR
+  }  // namespace apps
+}  // namespace map

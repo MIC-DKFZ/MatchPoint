@@ -50,11 +50,11 @@ namespace map
 			public:
 				typedef PointSetRegistrationAlgorithmInterface<TMovingPointSet, TTargetPointSet> Self;
 
-				typedef TMovingPointSet MovingPointSetType;
-				typedef TTargetPointSet TargetPointSetType;
+				using MovingPointSetType = TMovingPointSet;
+				using TargetPointSetType = TTargetPointSet;
 
-				typedef typename MovingPointSetType::ConstPointer MovingPointSetConstPointer;
-				typedef typename TargetPointSetType::ConstPointer TargetPointSetConstPointer;
+				using MovingPointSetConstPointer = typename MovingPointSetType::ConstPointer;
+				using TargetPointSetConstPointer = typename TargetPointSetType::ConstPointer;
 
 				/*! @brief gets a const pointer to the moving point set
 				@eguarantee strong
@@ -102,8 +102,8 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

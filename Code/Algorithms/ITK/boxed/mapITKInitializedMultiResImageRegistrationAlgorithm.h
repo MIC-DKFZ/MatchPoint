@@ -59,19 +59,19 @@ namespace map
 						TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy,
 						TPyramidesPolicy >  Superclass;
 
-				typedef ::itk::SmartPointer<Self>                                     Pointer;
-				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKInitializedMultiResImageRegistrationAlgorithm,
 							 ITKMultiResImageRegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
-				typedef ::itk::Array<double> ParametersType;
+				using ParametersType = ::itk::Array<double>;
 
-				typedef typename Superclass::MetaPropertyType MetaPropertyType;
-				typedef typename Superclass::MetaPropertyPointer MetaPropertyPointer;
-				typedef typename Superclass::MetaPropertyNameType MetaPropertyNameType;
-				typedef typename Superclass::MetaPropertyVectorType MetaPropertyVectorType;
+				using MetaPropertyType = typename Superclass::MetaPropertyType;
+				using MetaPropertyPointer = typename Superclass::MetaPropertyPointer;
+				using MetaPropertyNameType = typename Superclass::MetaPropertyNameType;
+				using MetaPropertyVectorType = typename Superclass::MetaPropertyVectorType;
 
 			protected:
 				ITKInitializedMultiResImageRegistrationAlgorithm();
@@ -103,9 +103,9 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace boxed
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapITKInitializedMultiResImageRegistrationAlgorithm.tpp"

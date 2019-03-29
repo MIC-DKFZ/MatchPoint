@@ -52,13 +52,13 @@ namespace map
 			class SealedInterpolatorPolicy
 			{
 			public:
-				typedef SealedInterpolatorPolicy<TConcreteInterpolator>      Self;
+				using Self = SealedInterpolatorPolicy<TConcreteInterpolator>;
 
-				typedef TConcreteInterpolator ConcreteInterpolatorType;
-				typedef typename ConcreteInterpolatorType::Pointer ConcreteInterpolatorPointer;
+				using ConcreteInterpolatorType = TConcreteInterpolator;
+				using ConcreteInterpolatorPointer = typename ConcreteInterpolatorType::Pointer;
 				typedef ::itk::InterpolateImageFunction<typename ConcreteInterpolatorType::InputImageType, typename ConcreteInterpolatorType::CoordRepType>
 				InterpolatorType;
-				typedef typename ConcreteInterpolatorType::CoordRepType CoordRepType;
+				using CoordRepType = typename ConcreteInterpolatorType::CoordRepType;
 
 			protected:
 				SealedInterpolatorPolicy();
@@ -128,9 +128,9 @@ namespace map
 
 
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 
 #ifndef MatchPoint_MANUAL_TPP

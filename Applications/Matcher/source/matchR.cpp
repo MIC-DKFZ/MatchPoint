@@ -32,7 +32,7 @@ matchR has to add the registration helper manually.*/
 
 map::apps::matchR::ApplicationData appData;
 
-void onMAPEvent(::itk::Object*, const itk::EventObject& event, void*)
+void onMAPEvent(::itk::Object* /*unused*/, const itk::EventObject& event, void* /*unused*/)
 {
   std::cout << " > > > ";
   event.Print(std::cout);

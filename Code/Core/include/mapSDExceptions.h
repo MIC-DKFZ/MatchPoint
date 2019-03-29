@@ -43,8 +43,8 @@ namespace map
 		class MAPCore_EXPORT MissingIdentifierException : public ExceptionObject
 		{
 		public:
-			typedef MissingIdentifierException Self;
-			typedef ExceptionObject Superclass;
+			using Self = MissingIdentifierException;
+			using Superclass = ExceptionObject;
 
 			/*! Default constructor.  Needed to ensure the exception object can be
 			* copied. */
@@ -58,9 +58,9 @@ namespace map
 									   const String& loc);
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
-			virtual ~MissingIdentifierException() throw();
+			~MissingIdentifierException() noexcept override;
 
-			virtual const char* GetNameOfClass() const
+			const char* GetNameOfClass() const override
 			{
 				return "map::MissingIdentifierException";
 			}
@@ -74,7 +74,7 @@ namespace map
 			* and every task is processed (or failed through an exception).
 			* @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			* @eguarantee no throw*/
-			virtual BaseExceptionType* clone() const throw();
+			BaseExceptionType* clone() const noexcept override;
 		};
 
 		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os,
@@ -90,8 +90,8 @@ namespace map
 		class MAPCore_EXPORT OutOfRangeException : public ExceptionObject
 		{
 		public:
-			typedef OutOfRangeException Self;
-			typedef ExceptionObject Superclass;
+			using Self = OutOfRangeException;
+			using Superclass = ExceptionObject;
 
 			/*! Default constructor.  Needed to ensure the exception object can be
 			* copied. */
@@ -105,9 +105,9 @@ namespace map
 								const String& loc);
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
-			virtual ~OutOfRangeException() throw();
+			~OutOfRangeException() noexcept override;
 
-			virtual const char* GetNameOfClass() const
+			const char* GetNameOfClass() const override
 			{
 				return "map::OutOfRangeException";
 			}
@@ -121,7 +121,7 @@ namespace map
 			* and every task is processed (or failed through an exception).
 			* @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			* @eguarantee no throw*/
-			virtual BaseExceptionType* clone() const throw();
+			BaseExceptionType* clone() const noexcept override;
 		};
 
 		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os, const OutOfRangeException& exception);
@@ -136,8 +136,8 @@ namespace map
 		class MAPCore_EXPORT SDStreamingException : public ExceptionObject
 		{
 		public:
-			typedef SDStreamingException Self;
-			typedef ExceptionObject Superclass;
+			using Self = SDStreamingException;
+			using Superclass = ExceptionObject;
 
 			/*! Default constructor.  Needed to ensure the exception object can be
 			* copied. */
@@ -151,9 +151,9 @@ namespace map
 								 const String& loc);
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
-			virtual ~SDStreamingException() throw();
+			~SDStreamingException() noexcept override;
 
-			virtual const char* GetNameOfClass() const
+			const char* GetNameOfClass() const override
 			{
 				return "map::SDStreamingException";
 			}
@@ -167,7 +167,7 @@ namespace map
 			* and every task is processed (or failed through an exception).
 			* @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			* @eguarantee no throw*/
-			virtual BaseExceptionType* clone() const throw();
+			BaseExceptionType* clone() const noexcept override;
 		};
 
 		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os, const SDStreamingException& exception);

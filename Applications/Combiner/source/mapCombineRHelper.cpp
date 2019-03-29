@@ -53,12 +53,15 @@ map::core::RegistrationBase::Pointer
 {
   map::core::RegistrationBase::Pointer result;
 
-  if (reg)
+  if (reg != nullptr)
   {
     result = doInversion<2,2>(reg);
-    if (result.IsNull()) result = doInversion<3,3>(reg);
-    if (result.IsNull()) result = doInversion<2,3>(reg);
-    if (result.IsNull()) result = doInversion<3,2>(reg);
+    if (result.IsNull()) { result = doInversion<3,3>(reg);
+}
+    if (result.IsNull()) { result = doInversion<2,3>(reg);
+}
+    if (result.IsNull()) { result = doInversion<3,2>(reg);
+}
   }
 
   return result;
@@ -101,13 +104,20 @@ map::core::RegistrationBase::Pointer
   }
 
   result = doCombination<2,2,2>(reg1,reg2);
-  if (result.IsNull()) result = doCombination<3,3,3>(reg1,reg2);
-  if (result.IsNull()) result = doCombination<2,3,2>(reg1,reg2);
-  if (result.IsNull()) result = doCombination<2,2,3>(reg1,reg2);
-  if (result.IsNull()) result = doCombination<3,2,2>(reg1,reg2);
-  if (result.IsNull()) result = doCombination<2,3,3>(reg1,reg2);
-  if (result.IsNull()) result = doCombination<3,3,2>(reg1,reg2);
-  if (result.IsNull()) result = doCombination<3,2,3>(reg1,reg2);
+  if (result.IsNull()) { result = doCombination<3,3,3>(reg1,reg2);
+}
+  if (result.IsNull()) { result = doCombination<2,3,2>(reg1,reg2);
+}
+  if (result.IsNull()) { result = doCombination<2,2,3>(reg1,reg2);
+}
+  if (result.IsNull()) { result = doCombination<3,2,2>(reg1,reg2);
+}
+  if (result.IsNull()) { result = doCombination<2,3,3>(reg1,reg2);
+}
+  if (result.IsNull()) { result = doCombination<3,3,2>(reg1,reg2);
+}
+  if (result.IsNull()) { result = doCombination<3,2,3>(reg1,reg2);
+}
 
   return result;
 };
@@ -134,15 +144,18 @@ bool
 
 bool map::apps::combineR::writeRegistration(map::core::RegistrationBase* reg, const map::core::String& fileName)
 {
-  if(!reg)
+  if(reg == nullptr)
   {
     mapDefaultExceptionStaticMacro(<<"Cannot write registration. Passed pointer is invalid");
   }
 
   bool result = doWriting<2,2>(reg,fileName);
-  if (!result) result = doWriting<3,3>(reg,fileName);
-  if (!result) result = doWriting<2,3>(reg,fileName);
-  if (!result) result = doWriting<3,2>(reg,fileName);
+  if (!result) { result = doWriting<3,3>(reg,fileName);
+}
+  if (!result) { result = doWriting<2,3>(reg,fileName);
+}
+  if (!result) { result = doWriting<3,2>(reg,fileName);
+}
 
   return result;
 };

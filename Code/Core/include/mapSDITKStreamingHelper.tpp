@@ -80,7 +80,7 @@ namespace map
 
 			TMatrix matrix;
 
-			for (structuredData::Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
+			for (auto pos = pElement->getSubElementBegin();
 				 pos != pElement->getSubElementEnd(); ++pos)
 			{
 				if ((*pos)->getTag() != tags::Value)
@@ -140,7 +140,7 @@ namespace map
 
 			TITKFixedArray fixedArray;
 
-			for (structuredData::Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
+			for (auto pos = pElement->getSubElementBegin();
 				 pos != pElement->getSubElementEnd(); ++pos)
 			{
 				unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));

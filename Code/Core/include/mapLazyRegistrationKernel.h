@@ -46,43 +46,42 @@ namespace map
         public:
             typedef LazyRegistrationKernel<VInputDimensions, VOutputDimensions>	Self;
             typedef RegistrationKernel<VInputDimensions, VOutputDimensions> Superclass;
-            typedef itk::SmartPointer<Self> Pointer;
-            typedef itk::SmartPointer<const Self> ConstPointer;
+            using Pointer = itk::SmartPointer<Self>;
+            using ConstPointer = itk::SmartPointer<const Self>;
 
             itkNewMacro(Self);
             itkTypeMacro(LazyRegistrationKernel, RegistrationKernel);
 
-            typedef typename Superclass::TransformType TransformType;
-            typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;
-            typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
-            typedef typename Superclass::RepresentationDescriptorConstPointer
-                RepresentationDescriptorConstPointer;
-            typedef typename Superclass::InputPointType  InputPointType;
-            typedef typename Superclass::OutputPointType OutputPointType;
-            typedef typename Superclass::MappingVectorType MappingVectorType;
+            using TransformType = typename Superclass::TransformType;
+            using RepresentationDescriptorType = typename Superclass::RepresentationDescriptorType;
+            using RepresentationDescriptorPointer = typename Superclass::RepresentationDescriptorPointer;
+            using RepresentationDescriptorConstPointer = typename Superclass::RepresentationDescriptorConstPointer;
+            using InputPointType = typename Superclass::InputPointType;
+            using OutputPointType = typename Superclass::OutputPointType;
+            using MappingVectorType = typename Superclass::MappingVectorType;
 
 
             typedef functors::TransformGenerationFunctor < VInputDimensions, VOutputDimensions >
                 TransformGenerationFunctorType;
-            typedef typename TransformGenerationFunctorType::ConstPointer TransformGenerationFunctorConstPointer;
+            using TransformGenerationFunctorConstPointer = typename TransformGenerationFunctorType::ConstPointer;
 
             /*! sets the field's functor
             @eguarantee no fail
             @param functor Pointer to the functor that is responsible for generating the field
             @pre functor must point to a valid instance.
             */
-            virtual void setTransformFunctor(const TransformGenerationFunctorType* functor) override;
+            void setTransformFunctor(const TransformGenerationFunctorType* functor) override;
 
             /*! gets the field's functor
             @eguarantee no fail
             @return Pointer to the field functor that is used to generate the field on demand.
             */
-            virtual const TransformGenerationFunctorType*  getTransformFunctor() const override;
+            const TransformGenerationFunctorType*  getTransformFunctor() const override;
 
             /*! Returns if the transform was already created (true) or if the generation still is pending / wasn't necessary (false).
             @eguarantee strong
             */
-            virtual bool transformExists() const override;
+            bool transformExists() const override;
 
             /*! @brief gets the largest possible representation descriptor. The descriptor defines
              * the space the kernel guarantees to map.
@@ -91,23 +90,23 @@ namespace map
              * has no mapping limitations and covers the total input space.
              * @eguarantee strong
              */
-            virtual RepresentationDescriptorConstPointer getLargestPossibleRepresentation() const override;
+            RepresentationDescriptorConstPointer getLargestPossibleRepresentation() const override;
 
             /*! Returns pointer to the transform model used by the kernel
             @eguarantee strong
             @return const pointer to the internal tranform model
             */
-            virtual const TransformType* getTransformModel() const override;
+            const TransformType* getTransformModel() const override;
 
-            virtual const OutputPointType getNullPoint() const override;
+            const OutputPointType getNullPoint() const override;
 
-            virtual bool usesNullPoint() const override;
+            bool usesNullPoint() const override;
 
         protected:
             LazyRegistrationKernel();
             virtual ~LazyRegistrationKernel();
 
-            typedef typename TransformType::Pointer TransformPointer;
+            using TransformPointer = typename TransformType::Pointer;
             //is mutable because it is a cache for the functor result, thus it may be changed by checkAndPrepareTransform()
             mutable TransformPointer _spTransform;
 
@@ -127,7 +126,7 @@ namespace map
             virtual ::itk::LightObject::Pointer	InternalClone()	const;
 
         private:
-            typedef ::itk::SimpleFastMutexLock MutexType;
+            using MutexType = ::itk::SimpleFastMutexLock;
             /*!Mutex to make the checks of the policy thread safe*/
             mutable MutexType _checkMutex;
             /*!Mutex to make the generation of the fields thread safe and to avoid paralel
@@ -140,8 +139,8 @@ namespace map
 
         };
 
-    }
-}
+    }  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapLazyRegistrationKernel.tpp"

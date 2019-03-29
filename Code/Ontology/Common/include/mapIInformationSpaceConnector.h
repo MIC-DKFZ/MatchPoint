@@ -29,7 +29,7 @@ namespace iro
   class IInformationSpaceConnector
   {
   public:
-    typedef typename TInformationSpaceTraits::ConstPointer   ConstISPointer;
+    using ConstISPointer = typename TInformationSpaceTraits::ConstPointer;
 
     /** Returns the pointer to the associated moving information space. If the connector has no IS defined the return
     * can be a NULL pointer.*/
@@ -41,11 +41,11 @@ namespace iro
 
   protected:
 
-    virtual ~IInformationSpaceConnector() {};
-    IInformationSpaceConnector() {};
+    virtual ~IInformationSpaceConnector() = default;
+    IInformationSpaceConnector() = default;
   private:
-    IInformationSpaceConnector(const IInformationSpaceConnector&); //not implemented by purpose
-    IInformationSpaceConnector& operator=(const IInformationSpaceConnector&); //not implemented by purpose
+    IInformationSpaceConnector(const IInformationSpaceConnector&) = delete; //not implemented by purpose
+    IInformationSpaceConnector& operator=(const IInformationSpaceConnector&) = delete; //not implemented by purpose
   };
 } // end namespace iro
 

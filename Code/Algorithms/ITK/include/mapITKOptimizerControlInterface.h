@@ -50,14 +50,14 @@ namespace map
 				public OptimizerControlInterface
 			{
 			public:
-				typedef ITKOptimizerControlInterface Self;
-				typedef ::itk::Object Superclass;
-				typedef ::itk::SmartPointer<Self>         Pointer;
-				typedef ::itk::SmartPointer<const Self>   ConstPointer;
+				using Self = ITKOptimizerControlInterface;
+				using Superclass = ::itk::Object;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKOptimizerControlInterface, itk::Object);
 
-				typedef ::itk::Optimizer OptimizerBaseType;
+				using OptimizerBaseType = ::itk::Optimizer;
 
 				virtual OptimizerBaseType* getOptimizer() = 0;
 				virtual const OptimizerBaseType* getOptimizer() const = 0;
@@ -73,20 +73,20 @@ namespace map
 				 * @return Smartpointer to the cloned optimizer control.*/
 				virtual Pointer clone() const = 0;
 
-				virtual const core::String getStopConditionDescription() const;
+        const core::String getStopConditionDescription() const override;
 
 			protected:
 				ITKOptimizerControlInterface();
-				virtual ~ITKOptimizerControlInterface();
+				~ITKOptimizerControlInterface() override;
 
 			private:
 				//No copy constructor allowed
-				ITKOptimizerControlInterface(const Self& source);
-				void operator=(const Self&);  //purposely not implemented
+				ITKOptimizerControlInterface(const Self& source) = delete;
+				void operator=(const Self&) = delete;  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

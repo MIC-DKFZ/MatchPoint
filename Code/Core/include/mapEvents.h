@@ -43,30 +43,30 @@ namespace map
 		class MAPCore_EXPORT EventObject : public itk::AnyEvent
 		{
 		public:
-			typedef EventObject Self;
-			typedef itk::AnyEvent Superclass;
-			EventObject(void* pData = NULL, const std::string& comment = "");
+			using Self = EventObject;
+			using Superclass = itk::AnyEvent;
+			EventObject(void* pData = nullptr, std::string  comment = "");
 
-			virtual ~EventObject();
+			~EventObject() override;
 
 			void* getData() const;
 
 			const std::string& getComment() const;
 
-			virtual const char* GetEventName() const;
+			const char* GetEventName() const override;
 
-			virtual bool CheckEvent(const ::itk::EventObject* e) const;
+			bool CheckEvent(const ::itk::EventObject* e) const override;
 
-			virtual ::itk::EventObject* MakeObject() const;
+			::itk::EventObject* MakeObject() const override;
 
 			EventObject(const Self& s);
 
-			virtual void Print(std::ostream& os) const;
+			void Print(std::ostream& os) const override;
 
 		private:
 			void* _pData;
 			std::string _comment;
-			void operator=(const Self&);
+			void operator=(const Self&) = delete;
 		};
 
 		/*! @def mapEventMacro
@@ -89,7 +89,7 @@ namespace map
 	private: \
 		void operator=(const Self&); \
 	}
-	}
+	}  // namespace core
 
 	namespace events
 	{
@@ -97,7 +97,7 @@ namespace map
 		 * @brief General event that can be used if you want to observe any event defined by MatchPoint.
 		 * @ingroup Events
 		 */
-		typedef core::EventObject AnyMatchPointEvent;
+		using AnyMatchPointEvent = core::EventObject;
 
 		/*!@class ServiceEvent
 		 * @brief General/base event concering a service strukture (e.g. ServiceStacks) or its processing.
@@ -128,7 +128,7 @@ namespace map
 		 * @ingroup Events
 		 */
 		mapEventMacro(TaskBatchEvent, AnyMatchPointEvent, MAPCore_EXPORT);
-	}
-}
+	}  // namespace events
+}  // namespace map
 
 #endif

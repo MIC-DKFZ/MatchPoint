@@ -30,10 +30,10 @@ namespace map
 	{
 
 		SyncObject::SyncObject()
-		{};
+		= default;
 
 		SyncObject::~SyncObject()
-		{};
+		= default;
 
 	} // end namespace deployment
 } // end namespace map

@@ -36,30 +36,30 @@ namespace iro
     class PathOptionCollection
 		{
     public:
-      typedef PathOptionCollection<TPathOption> Self;
-      typedef ::std::shared_ptr<Self> Pointer;
-      typedef ::std::shared_ptr<const Self> ConstPointer;
+      using Self = PathOptionCollection<TPathOption>;
+      using Pointer = ::std::shared_ptr<Self>;
+      using ConstPointer = ::std::shared_ptr<const Self>;
 
-      typedef typename TPathOption::PathTraitsType        PathTraitsType;
+      using PathTraitsType = typename TPathOption::PathTraitsType;
 
-      typedef typename PathTraitsType::InformationEntityTraitsType::ConstPointer  ConstIEPointer;
-      typedef typename PathTraitsType::InformationSpaceTraitsType::ConstPointer   ConstISPointer;
-      typedef typename PathTraitsType::ConstPointer                           ConstPathPointer;
-      typedef MappingError::Type                                  MappingErrorType;
+      using ConstIEPointer = typename PathTraitsType::InformationEntityTraitsType::ConstPointer;
+      using ConstISPointer = typename PathTraitsType::InformationSpaceTraitsType::ConstPointer;
+      using ConstPathPointer = typename PathTraitsType::ConstPointer;
+      using MappingErrorType = MappingError::Type;
 
-      typedef TPathOption                         OptionType;
-      typedef typename TPathOption::ConstPointer  ConstOptionPointer;
+      using OptionType = TPathOption;
+      using ConstOptionPointer = typename TPathOption::ConstPointer;
 
     protected:
-      typedef std::list<ConstOptionPointer> OptionCollectionType;
+      using OptionCollectionType = std::list<ConstOptionPointer>;
     
     public:
 
-      typedef typename OptionCollectionType::iterator        OptionIterator;
-      typedef typename OptionCollectionType::const_iterator  ConstOptionIterator;
-      typedef typename OptionCollectionType::size_type       SizeType;
+      using OptionIterator = typename OptionCollectionType::iterator;
+      using ConstOptionIterator = typename OptionCollectionType::const_iterator;
+      using SizeType = typename OptionCollectionType::size_type;
  
-      typedef std::list<ConstOptionPointer> FullMappingOptionCollectionType;
+      using FullMappingOptionCollectionType = std::list<ConstOptionPointer>;
 
       /*! Returns the entity this path option collection was compiled for.
        * It  may return NULL if no option was added and moving entity was

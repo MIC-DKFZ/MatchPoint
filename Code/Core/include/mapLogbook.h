@@ -55,8 +55,8 @@ namespace map
 		class MAPCore_EXPORT Logbook
 		{
 		public:
-			typedef itk::LoggerBase::OutputType				  OutputType;
-			typedef itk::LoggerBase::PriorityLevelType	PriorityLevelType;;
+			using OutputType = itk::LoggerBase::OutputType;
+			using PriorityLevelType = itk::LoggerBase::PriorityLevelType;
 
 			/*! Passes the content to normal and error logger.
 			 * @eguarantee strong*/
@@ -132,17 +132,17 @@ namespace map
 			static void attachITKOutputWindow();
 
 			/*!@eguarantee strong*/
-			static PriorityLevelType getLogbookMode(void);
+			static PriorityLevelType getLogbookMode();
 
 			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to itk::LoggerBase::DEBUG.
 			    Thus everything will be logged.*/
-			static void setLogbookToDebugMode(void);
+			static void setLogbookToDebugMode();
 			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to itk::LoggerBase::INFO.
 			    Thus everything will be logged except of debug infos.*/
-			static void setLogbookToInfoMode(void);
+			static void setLogbookToInfoMode();
 			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to itk::LoggerBase::CRITICAL.
 			    Thus only criticals, errors and fatals will be logged.*/
-			static void setLogbookToCriticalMode(void);
+			static void setLogbookToCriticalMode();
 
 			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to the passed level.
 			 * @remark The logbook must not be in deprecated sync mode. The mode can only be changed
@@ -153,7 +153,7 @@ namespace map
 			/*! Returns true if there is an valid pointer to a logbook implementation. Returns false if the
 			 * logbook wasn't used yet and isn't initialized.
 			 * @eguarantee no fail*/
-			static bool isInitialized(void);
+			static bool isInitialized();
 
 			/** This function is called to add all information to pSyncObject
 			 * that are needed to performe a synchronisation of an other instance*/
@@ -166,7 +166,7 @@ namespace map
 
 		protected:
 			/*! Creates the implementation singelton if it doesn't exist.*/
-			static void initializeLogger(void);
+			static void initializeLogger();
 
 			/*!changes the own logbook implmentation with the passed one.
 			 * The exchange is secured by the mutex.
@@ -175,7 +175,7 @@ namespace map
 			 * @param [in,out] pImpl Pointer to the new implementation.*/
 			static void swapImplementations(LogbookImplementation* pImpl);
 
-			typedef itk::SmartPointer<LogbookImplementation> LogImplPointer;
+			using LogImplPointer = itk::SmartPointer<LogbookImplementation>;
 			static LogImplPointer _spLoggerImpl;
 
 			static itk::SimpleFastMutexLock _testMutex;
@@ -190,12 +190,12 @@ namespace map
 			static String _defaultFilename;
 
 		private:
-			Logbook(); //purposely not implemented
+			Logbook() = delete; //purposely not implemented
 
-			virtual ~Logbook(); //purposely not implemented
+			virtual ~Logbook() = delete; //purposely not implemented
 
-			Logbook(const Logbook&);  //purposely not implemented
-			void operator=(const Logbook&);  //purposely not implemented
+			Logbook(const Logbook&) = delete;  //purposely not implemented
+			void operator=(const Logbook&) = delete;  //purposely not implemented
 		};
 
 	} // end namespace core

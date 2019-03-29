@@ -76,38 +76,33 @@ namespace map
 				typedef ModifiableMultiResImageRegistrationAlgorithmBase<TMovingImage, TTargetImage, TPyramidesPolicy>
 				MultiResRegistrationAlgorithmType;
 
-				typedef ::itk::SmartPointer<Self>                                     Pointer;
-				typedef ::itk::SmartPointer<const Self>                               ConstPointer;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 				itkTypeMacro(ITKMultiResImageRegistrationAlgorithm, ITKImageRegistrationAlgorithm);
 				mapNewAlgorithmMacro(Self);
 
-				typedef typename Superclass::UIDType UIDType;
-				typedef typename Superclass::UIDPointer UIDPointer;
+				using UIDType = typename Superclass::UIDType;
+				using UIDPointer = typename Superclass::UIDPointer;
 
-				typedef TMovingImage          MovingImageType;
-				typedef TTargetImage          TargetImageType;
-				typedef TInterpolatorPolicy   InterpolatorPolicyType;
-				typedef TMetricPolicy         MetricPolicyType;
-				typedef TOptimizerPolicy      OptimizerPolicyType;
-				typedef TTransformPolicy      TransformPolicyType;
-				typedef TIdentificationPolicy IdentificationPolicyType;
-				typedef TPyramidesPolicy      PyramidesPolicyType;
+				using MovingImageType = TMovingImage;
+				using TargetImageType = TTargetImage;
+				using InterpolatorPolicyType = TInterpolatorPolicy;
+				using MetricPolicyType = TMetricPolicy;
+				using OptimizerPolicyType = TOptimizerPolicy;
+				using TransformPolicyType = TTransformPolicy;
+				using IdentificationPolicyType = TIdentificationPolicy;
+				using PyramidesPolicyType = TPyramidesPolicy;
 
-				typedef typename ITKRegistrationType::OptimizerBaseType OptimizerBaseType;
-				typedef typename ITKRegistrationType::MetricBaseType MetricBaseType;
-				typedef typename ITKRegistrationType::TransformBaseType TransformBaseType;
-				typedef typename ITKRegistrationType::InterpolatorBaseType InterpolatorBaseType;
-				typedef typename MultiResRegistrationAlgorithmType::ScheduleType ScheduleType;
-				typedef typename MultiResRegistrationAlgorithmType::ResolutionLevelCountType
-				ResolutionLevelCountType;
-				typedef typename MultiResRegistrationAlgorithmType::TargetImagePyramideBaseType
-				TargetImagePyramideBaseType;
-				typedef typename MultiResRegistrationAlgorithmType::MovingImagePyramideBaseType
-				MovingImagePyramideBaseType;
-				typedef typename MultiResRegistrationAlgorithmType::TargetImagePyramideBasePointer
-				TargetImagePyramideBasePointer;
-				typedef typename MultiResRegistrationAlgorithmType::MovingImagePyramideBasePointer
-				MovingImagePyramideBasePointer;
+				using OptimizerBaseType = typename ITKRegistrationType::OptimizerBaseType;
+				using MetricBaseType = typename ITKRegistrationType::MetricBaseType;
+				using TransformBaseType = typename ITKRegistrationType::TransformBaseType;
+				using InterpolatorBaseType = typename ITKRegistrationType::InterpolatorBaseType;
+				using ScheduleType = typename MultiResRegistrationAlgorithmType::ScheduleType;
+				using ResolutionLevelCountType = typename MultiResRegistrationAlgorithmType::ResolutionLevelCountType;
+				using TargetImagePyramideBaseType = typename MultiResRegistrationAlgorithmType::TargetImagePyramideBaseType;
+				using MovingImagePyramideBaseType = typename MultiResRegistrationAlgorithmType::MovingImagePyramideBaseType;
+				using TargetImagePyramideBasePointer = typename MultiResRegistrationAlgorithmType::TargetImagePyramideBasePointer;
+				using MovingImagePyramideBasePointer = typename MultiResRegistrationAlgorithmType::MovingImagePyramideBasePointer;
 
 				typedef typename
 				IterativeRegistrationAlgorithm<TMovingImage::ImageDimension, TTargetImage::ImageDimension>::OptimizerMeasureType
@@ -115,17 +110,15 @@ namespace map
 				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
 				ImageRegistrationAlgorithmBaseType;
 
-				typedef typename Superclass::MovingRepresentationDescriptorType MovingRepresentationDescriptorType;
-				typedef typename Superclass::TargetRepresentationDescriptorType TargetRepresentationDescriptorType;
-				typedef typename Superclass::RegistrationPointer RegistrationPointer;
-				typedef typename Superclass::RegistrationType RegistrationType;
-				typedef typename Superclass::IterationCountType IterationCountType;
-				typedef typename Superclass::FieldRepRequirement FieldRepRequirement;
+				using MovingRepresentationDescriptorType = typename Superclass::MovingRepresentationDescriptorType;
+				using TargetRepresentationDescriptorType = typename Superclass::TargetRepresentationDescriptorType;
+				using RegistrationPointer = typename Superclass::RegistrationPointer;
+				using RegistrationType = typename Superclass::RegistrationType;
+				using IterationCountType = typename Superclass::IterationCountType;
+				using FieldRepRequirement = typename Superclass::FieldRepRequirement;
 
-				typedef typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer
-				MovingImageConstPointer;
-				typedef typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer
-				TargetImageConstPointer;
+				using MovingImageConstPointer = typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer;
+				using TargetImageConstPointer = typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer;
 
 				/*! Indicates if the current processed level can be deduced
 				@eguarantee no fail
@@ -136,9 +129,9 @@ namespace map
 				ITKMultiResImageRegistrationAlgorithm();
 				virtual ~ITKMultiResImageRegistrationAlgorithm();
 
-				typedef typename Superclass::InternalRegistrationMethodType InternalRegistrationMethodType;
-				typedef typename Superclass::InterimRegistrationType InterimRegistrationType;
-				typedef typename Superclass::InterimRegistrationPointer InterimRegistrationPointer;
+				using InternalRegistrationMethodType = typename Superclass::InternalRegistrationMethodType;
+				using InterimRegistrationType = typename Superclass::InterimRegistrationType;
+				using InterimRegistrationPointer = typename Superclass::InterimRegistrationPointer;
 
 				/*! Returns if the registration should be computed. The registration is outdated if doGetRegistration returns null
 				* or the modification times of at least one policy is newer then the modification time of the registration.
@@ -195,7 +188,7 @@ namespace map
 				*/
 				virtual void prepFinalizePreparation();
 
-				typedef typename TransformPolicyType::TransformType::ParametersType	TransformParametersType;
+				using TransformParametersType = typename TransformPolicyType::TransformType::ParametersType;
 
 				/*! return the current resolution level number.
 				Will be called by getCurrentLevel() if hasLevelCount() returns true.
@@ -247,9 +240,9 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapITKMultiResImageRegistrationAlgorithm.tpp"

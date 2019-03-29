@@ -51,11 +51,11 @@ namespace map
 			public:
 				typedef ImageRegistrationAlgorithmInterface<TMovingImage, TTargetImage> Self;
 
-				typedef TMovingImage MovingImageType;
-				typedef TTargetImage TargetImageType;
+				using MovingImageType = TMovingImage;
+				using TargetImageType = TTargetImage;
 
-				typedef typename MovingImageType::ConstPointer MovingImageConstPointer;
-				typedef typename TargetImageType::ConstPointer TargetImageConstPointer;
+				using MovingImageConstPointer = typename MovingImageType::ConstPointer;
+				using TargetImageConstPointer = typename TargetImageType::ConstPointer;
 
 				/*! @brief gets a const pointer to the moving image
 				@eguarantee strong
@@ -93,8 +93,8 @@ namespace map
 				ImageRegistrationAlgorithmInterface(const Self& source);
 				void operator=(const Self&);  //purposely not implemented
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

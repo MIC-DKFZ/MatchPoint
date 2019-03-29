@@ -66,7 +66,7 @@ namespace map
 			String _fileName;
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #endif

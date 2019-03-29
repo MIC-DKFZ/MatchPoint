@@ -36,8 +36,8 @@ namespace map
 	{
 		namespace convert
 		{
-			MAPCore_EXPORT String toStr(const double& value, const int precision = 10);
-			MAPCore_EXPORT String toStr(const float& value, const int precision = 10);
+			MAPCore_EXPORT String toStr(const double& value, int precision = 10);
+			MAPCore_EXPORT String toStr(const float& value, int precision = 10);
 			MAPCore_EXPORT String toStr(const bool& value);
 			MAPCore_EXPORT String toStr(const int& value);
 			MAPCore_EXPORT String toStr(const unsigned int& value);
@@ -47,7 +47,7 @@ namespace map
 			/** This function only passes the sting through. Nothing will be changed.
 			* It is needed by some template classes to handle the strings like every other
 			* simple type*/
-			MAPCore_EXPORT String toStr(const String& value);
+			MAPCore_EXPORT String toStr(const String& str);
 
 			/**Helper function for types that should be converted and do not need special
 			* conversion handling or are unkown when writing the code e.g. std::size_type*/
@@ -126,7 +126,7 @@ namespace map
 			 * will be returned.*/
 			MAPCore_EXPORT String fileContentToStr(const String& filePath);
 
-		}
-	}
+		}  // namespace convert
+	}  // namespace core
 } //end of namespace map
 #endif

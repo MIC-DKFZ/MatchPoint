@@ -20,7 +20,7 @@
 #ifndef __MAP_I_MAPPING_INFERENCE_TPP
 #define __MAP_I_MAPPING_INFERENCE_TPP
 
-#include <assert.h>
+#include <cassert>
 #include "mapIMappingInference.h"
 
 namespace iro
@@ -473,7 +473,7 @@ namespace iro
 
       ConstInfEntityVectorType newEntities;
 
-      for (typename ConstInfEntityVectorType::const_iterator pos = oldV.begin(); pos!=oldV.end(); ++pos)
+      for (auto pos = oldV.begin(); pos!=oldV.end(); ++pos)
       {
         if (!(*pos))
         {

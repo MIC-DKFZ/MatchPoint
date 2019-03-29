@@ -119,7 +119,7 @@ namespace map
 				_mTime.Modified();
 			};
 
-		}
+		}  // namespace itk
 	} // end namespace algorithm
 } // end namespace map
 

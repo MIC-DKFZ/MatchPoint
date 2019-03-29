@@ -38,12 +38,12 @@ namespace map
 		template <class TPointSet>
 		typename TPointSet::Pointer loadLandMarksFromFile(const core::String& lmFileName)
 		{
-			typedef TPointSet LandmarksType;
+			using LandmarksType = TPointSet;
 
 			std::ifstream pointsFile;
 			pointsFile.open(lmFileName.c_str());
 
-			typename LandmarksType::Pointer spLMs = NULL;
+			typename LandmarksType::Pointer spLMs = nullptr;
 
 			if (pointsFile.fail())
 			{

@@ -32,8 +32,8 @@ namespace map
 		namespace facet
 		{
 
-			StoppableAlgorithmInterface::StoppableAlgorithmInterface() {};
-			StoppableAlgorithmInterface::~StoppableAlgorithmInterface() {};
+			StoppableAlgorithmInterface::StoppableAlgorithmInterface() = default;
+			StoppableAlgorithmInterface::~StoppableAlgorithmInterface() = default;
 		}
 	}
-}
+}  // namespace map

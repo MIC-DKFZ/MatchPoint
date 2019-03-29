@@ -45,7 +45,7 @@ namespace map
 			  If the file already exists it is overwritten. The parameter map is stored
 				in the elastix format: (<ParameterName> <Value1> [<Value2> [...]]).*/
 			MAPAlgorithmsElastix_EXPORT void saveParameterMapToFile(const ParameterMapType& parameterMap,
-					const map::core::String& fileName);
+					const map::core::String& filePath);
 
       /**! Helper function that loads a given parameter file and returns a parameter map.*/
       MAPAlgorithmsElastix_EXPORT ParameterMapType readParameterMapFromFile(const map::core::String& fileName);
@@ -70,8 +70,8 @@ namespace map
 			protected:
 				ParameterValuesType _values;
 			};
-		}
-	}
-}
+		}  // namespace elastix
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

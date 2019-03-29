@@ -26,7 +26,7 @@
 
 #include "itkFastMutexLock.h"
 
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -44,10 +44,10 @@ namespace map
       class SharedFileStreamBase : public itk::LightObject
       {
       public:
-          typedef SharedFileStreamBase  Self;
-          typedef itk::LightObject  Superclass;
-          typedef itk::SmartPointer<Self>        Pointer;
-          typedef itk::SmartPointer<const Self>  ConstPointer;
+          using Self = SharedFileStreamBase;
+          using Superclass = itk::LightObject;
+          using Pointer = itk::SmartPointer<Self>;
+          using ConstPointer = itk::SmartPointer<const Self>;
 
           itkTypeMacro(SharedFileStreamBase, itk::LightObject);
 
@@ -57,15 +57,15 @@ namespace map
 
       protected:
           SharedFileStreamBase()
-          {};
+          = default;
 
-          virtual ~SharedFileStreamBase()
-          {};
+          ~SharedFileStreamBase() override
+          = default;
 
       private:
 
-          SharedFileStreamBase(const SharedFileStreamBase&);  //purposely not implemented
-          void operator=(const SharedFileStreamBase&);  //purposely not implemented
+          SharedFileStreamBase(const SharedFileStreamBase&) = delete;  //purposely not implemented
+          void operator=(const SharedFileStreamBase&) = delete;  //purposely not implemented
       };
 
 
@@ -80,10 +80,10 @@ namespace map
       class SharedNULLStream : public SharedFileStreamBase
     {
     public:
-        typedef SharedNULLStream  Self;
-        typedef itk::LightObject  Superclass;
-        typedef itk::SmartPointer<Self>        Pointer;
-        typedef itk::SmartPointer<const Self>  ConstPointer;
+        using Self = SharedNULLStream;
+        using Superclass = itk::LightObject;
+        using Pointer = itk::SmartPointer<Self>;
+        using ConstPointer = itk::SmartPointer<const Self>;
 
         itkTypeMacro(SharedNULLStream, itk::LightObject);
         itkNewMacro(Self);
@@ -103,7 +103,7 @@ namespace map
         class NullBuffer : public std::streambuf
         {
         public:
-            int overflow(int c) { return c; }
+            int overflow(int c) override { return c; }
         };
 
         NullBuffer _buffer;
@@ -113,13 +113,13 @@ namespace map
         {
         };
 
-        virtual ~SharedNULLStream()
-        {};
+        ~SharedNULLStream() override
+        = default;
 
     private:
 
-        SharedNULLStream(const SharedNULLStream&);  //purposely not implemented
-        void operator=(const SharedNULLStream&);  //purposely not implemented
+        SharedNULLStream(const SharedNULLStream&) = delete;  //purposely not implemented
+        void operator=(const SharedNULLStream&) = delete;  //purposely not implemented
     };
 
 
@@ -134,10 +134,10 @@ namespace map
       class SharedDefaultLogFileStream : public SharedFileStreamBase
 		{
 		public:
-			typedef SharedDefaultLogFileStream  Self;
-      typedef SharedFileStreamBase  Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Self = SharedDefaultLogFileStream;
+      using Superclass = SharedFileStreamBase;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
       itkTypeMacro(SharedDefaultLogFileStream, SharedFileStreamBase);
 			itkNewMacro(Self);
@@ -166,15 +166,15 @@ namespace map
 			std::ofstream _stream;
 
 			SharedDefaultLogFileStream()
-			{};
+			= default;
 
-			virtual ~SharedDefaultLogFileStream()
-			{};
+			~SharedDefaultLogFileStream() override
+			= default;
 
 		private:
 
-			SharedDefaultLogFileStream(const SharedDefaultLogFileStream&);  //purposely not implemented
-			void operator=(const SharedDefaultLogFileStream&);  //purposely not implemented
+			SharedDefaultLogFileStream(const SharedDefaultLogFileStream&) = delete;  //purposely not implemented
+			void operator=(const SharedDefaultLogFileStream&) = delete;  //purposely not implemented
 		};
 
 
@@ -185,7 +185,7 @@ namespace map
 
 		LogbookImplementation::LoggerType&
 		LogbookImplementation::
-		getLogger(void)
+		getLogger()
 		{
 			return *(_spLogger.GetPointer());
 		};
@@ -233,7 +233,7 @@ namespace map
 			std::pair<OutputContainerType::iterator, bool> result;
 			result = _additionalOutputs.insert(pOutput);
 
-			if (result.second == true)
+			if (result.second)
 			{
 				//this output isn't already in the set,
 				//so it was added and shall also be added to the logger.
@@ -243,7 +243,7 @@ namespace map
 
 		LogbookImplementation::Pointer
 		LogbookImplementation::
-		clone(void) const
+		clone() const
 		{
 			Pointer spNewImpl = LogbookImplementation::New();
 			spNewImpl->_additionalOutputs = this->_additionalOutputs;
@@ -278,17 +278,16 @@ namespace map
 		LogbookImplementation::
 		initializeAdditionalOutputs()
 		{
-			for (OutputContainerType::iterator pos = _additionalOutputs.begin();
-				 pos != _additionalOutputs.end(); ++pos)
+			for (const auto & _additionalOutput : _additionalOutputs)
 			{
-				_spLogger->AddLogOutput(*pos);
+				_spLogger->AddLogOutput(_additionalOutput);
 			}
 		};
 
 		LogbookImplementation::
 		LogbookImplementation()
 		{
-			_spItkOutputWindow = NULL;
+			_spItkOutputWindow = nullptr;
 			_currentPriorityLevel = itk::LoggerBase::INFO;
 			_spLogger = LoggerType::New();
 			_spDefaultOutput = DefaultOutputType::New();
@@ -300,8 +299,8 @@ namespace map
 		{
 			//ensure that the logger is deleted before the default output (because logger flushes on destruction)
 			//if the logger isn't used by other parts of the program.
-			_spLogger = 0;
-			_spDefaultOutput = 0;
+			_spLogger = nullptr;
+			_spDefaultOutput = nullptr;
 		};
 
 

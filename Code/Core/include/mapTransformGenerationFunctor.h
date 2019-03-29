@@ -60,20 +60,20 @@ namespace map
             public:
                 /*! Standard class typedefs. */
                 typedef TransformGenerationFunctor<VInputDimensions, VOutputDimensions>  Self;
-                typedef itk::Object                    Superclass;
-                typedef itk::SmartPointer<Self>        Pointer;
-                typedef itk::SmartPointer<const Self>  ConstPointer;
+                using Superclass = itk::Object;
+                using Pointer = itk::SmartPointer<Self>;
+                using ConstPointer = itk::SmartPointer<const Self>;
 
                 itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
                 itkStaticConstMacro(OutputDimensions, unsigned int, VOutputDimensions);
 
-                typedef FieldRepresentationDescriptor<VInputDimensions>        InFieldRepresentationType;
-                typedef typename InFieldRepresentationType::ConstPointer       InFieldRepresentationConstPointer;
-                typedef FieldRepresentationDescriptor<VOutputDimensions>       OutFieldRepresentationType;
-                typedef typename OutFieldRepresentationType::ConstPointer      OutFieldRepresentationConstPointer;
+                using InFieldRepresentationType = FieldRepresentationDescriptor<VInputDimensions>;
+                using InFieldRepresentationConstPointer = typename InFieldRepresentationType::ConstPointer;
+                using OutFieldRepresentationType = FieldRepresentationDescriptor<VOutputDimensions>;
+                using OutFieldRepresentationConstPointer = typename OutFieldRepresentationType::ConstPointer;
                 typedef typename RegistrationTopology < VInputDimensions,
                     VOutputDimensions >::DirectTransformType TransformType;
-                typedef typename TransformType::Pointer TransformPointer;
+                using TransformPointer = typename TransformType::Pointer;
 
                 typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::TargetPointType
                     NullPointType;
@@ -92,7 +92,7 @@ namespace map
                  * representation is declared.
                  * @retval NULL There is no explicit field representation descriptor for the input space.
                  */
-                const InFieldRepresentationType* getInFieldRepresentation(void) const;
+                const InFieldRepresentationType* getInFieldRepresentation() const;
 
                 mapSetVarMacro(NullPoint, NullPointType, _nullPoint);
                 mapGetConstVarMacro(NullPoint, NullPointType, _nullPoint);
@@ -101,7 +101,7 @@ namespace map
 
             protected:
                 TransformGenerationFunctor(const InFieldRepresentationType* pInFieldRepresentation);
-                virtual ~TransformGenerationFunctor();
+                ~TransformGenerationFunctor() override;
 
                 InFieldRepresentationConstPointer _spInFieldRepresentation;
 
@@ -110,7 +110,7 @@ namespace map
 
 
                 /*! Methods invoked by itk::LightObject::Print().  */
-                virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+                void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
             private:
                 TransformGenerationFunctor(const Self&);  //purposely not implemented

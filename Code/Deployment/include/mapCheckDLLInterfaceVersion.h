@@ -41,7 +41,7 @@ namespace map
 		 * @ingroup Deployment
 		 */
 		MAPDeployment_EXPORT bool checkDLLInterfaceVersion(unsigned int& major, unsigned int& minor);
-	}
-}
+	}  // namespace deployment
+}  // namespace map
 
 #endif

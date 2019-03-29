@@ -41,7 +41,7 @@ namespace map
 		class MAPCore_EXPORT StreamingInterface
 		{
 		public:
-			typedef Element::Pointer ElementPointer;
+			using ElementPointer = Element::Pointer;
 
 			ElementPointer streamToStructuredData() const;
 
@@ -58,8 +58,8 @@ namespace map
 
 		private:
 			//No copy constructor allowed
-			StreamingInterface(const StreamingInterface& source);
-			void operator=(const StreamingInterface&);  //purposely not implemented
+			StreamingInterface(const StreamingInterface& source) = delete;
+			void operator=(const StreamingInterface&) = delete;  //purposely not implemented
 		};
 
 

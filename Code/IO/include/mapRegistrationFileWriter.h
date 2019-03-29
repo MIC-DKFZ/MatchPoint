@@ -57,15 +57,15 @@ namespace map
 		public:
 			/*! Standard class typedefs. */
 			typedef RegistrationFileWriter<VMovingDimensions, VTargetDimensions>  Self;
-			typedef itk::Object                    Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = itk::Object;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(RegistrationFileWriter, itk::Object);
 			itkNewMacro(Self);
 
 			typedef core::Registration<VMovingDimensions, VTargetDimensions>  RegistrationType;
-			typedef typename RegistrationType::Pointer                 RegistrationPointer;
+			using RegistrationPointer = typename RegistrationType::Pointer;
 
 			itkStaticConstMacro(MovingDimensions, unsigned int, VMovingDimensions);
 			itkStaticConstMacro(TargetDimensions, unsigned int, VTargetDimensions);
@@ -81,10 +81,8 @@ namespace map
 			typedef core::services::ServiceStack<InverseKernelWriterBaseType, KernelWriterLoadPolicy<VTargetDimensions, VMovingDimensions> >
 			ConcreteInverseKernelWriterStackType;
 		public:
-			typedef core::services::StaticServiceStack<ConcreteDirectKernelWriterStackType>
-			DirectKernelWriterStackType;
-			typedef core::services::StaticServiceStack<ConcreteInverseKernelWriterStackType>
-			InverseKernelWriterStackType;
+			using DirectKernelWriterStackType = core::services::StaticServiceStack<ConcreteDirectKernelWriterStackType>;
+			using InverseKernelWriterStackType = core::services::StaticServiceStack<ConcreteInverseKernelWriterStackType>;
 
 			/*! Stores the passed registration in the specified path.
 			 * @eguarantee strong
@@ -101,14 +99,14 @@ namespace map
 
 		protected:
 			RegistrationFileWriter();
-			virtual ~RegistrationFileWriter();
+			~RegistrationFileWriter() override;
 
 			/*! Determines if lazy kernels that have not been processed should be stored with there generation functors (false)
 			 * or should be generated and stored with the actual kernel data (true). Default is true.*/
-			bool _expandLazyKernels;
+			bool _expandLazyKernels{true};
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 		private:
 			RegistrationFileWriter(const Self&);  //purposely not implemented

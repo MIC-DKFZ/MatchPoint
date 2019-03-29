@@ -34,8 +34,8 @@ namespace iro
     template <typename TISTraits>
     struct ISCacheKey
     {
-      typedef typename TISTraits::UIDType UIDType;
-      typedef ISCacheKey<TISTraits> Self;
+      using UIDType = typename TISTraits::UIDType;
+      using Self = ISCacheKey<TISTraits>;
 
       UIDType _uid;
       DataRepresentationSupport::Type _dataRep;

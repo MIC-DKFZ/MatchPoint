@@ -29,10 +29,10 @@ namespace iro
     };
 
     BijectivCorrelation::
-      ~BijectivCorrelation() {};
+      ~BijectivCorrelation() = default;
 
     BijectivCorrelation::
-      BijectivCorrelation() {};
+      BijectivCorrelation() = default;
 
 } // end namespace iro
 

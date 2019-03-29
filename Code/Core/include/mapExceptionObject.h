@@ -43,8 +43,8 @@ namespace map
 		class MAPCore_EXPORT ExceptionObject : public itk::ExceptionObject
 		{
 		public:
-			typedef itk::ExceptionObject Superclass;
-			typedef ExceptionObject BaseExceptionType;
+			using Superclass = itk::ExceptionObject;
+			using BaseExceptionType = ExceptionObject;
 
 			/*! Default constructor.  Needed to ensure the exception object can be
 			 * copied. */
@@ -61,9 +61,9 @@ namespace map
 							const std::string& loc);
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
-			virtual ~ExceptionObject() throw();
+			~ExceptionObject() noexcept override;
 
-			virtual const char* GetNameOfClass() const;
+			const char* GetNameOfClass() const override;
 
 			/*! Clones the exception object and returns a pointer to a copy of the exception object.
 			  * The cloned object is created on the heap and should function caller has to take care about
@@ -74,7 +74,7 @@ namespace map
 			  * and every task is processed (or failed through an exception).
 			  * @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			  * @eguarantee no throw*/
-			virtual BaseExceptionType* clone() const throw();
+			virtual BaseExceptionType* clone() const noexcept;
 		};
 
 		MAPCore_EXPORT std::ostream& operator<<(std::ostream& os, const ExceptionObject& e);

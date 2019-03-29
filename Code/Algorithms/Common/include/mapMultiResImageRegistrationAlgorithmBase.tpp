@@ -103,7 +103,7 @@ namespace map
 			onTargetImagePyramideChange(eventObject);
 		}
 
-	} // end namespace algorithms
+	}  // namespace algorithm
 } // end namespace map
 
 #endif

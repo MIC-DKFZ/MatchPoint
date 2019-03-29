@@ -44,10 +44,10 @@ namespace map
 		{
 		public:
 			typedef RegistrationKernelBase<VInputDimensions, VInterimDimensions> Kernel1BaseType;
-			typedef typename Kernel1BaseType::ConstPointer Kernel1BaseConstPointer;
+			using Kernel1BaseConstPointer = typename Kernel1BaseType::ConstPointer;
 
 			typedef RegistrationKernelBase<VInterimDimensions, VOutputDimensions> Kernel2BaseType;
-			typedef typename Kernel2BaseType::ConstPointer Kernel2BaseConstPointer;
+			using Kernel2BaseConstPointer = typename Kernel2BaseType::ConstPointer;
 
 			Kernel1BaseConstPointer _spKernel1;
 			Kernel2BaseConstPointer _spKernel2;
@@ -58,8 +58,8 @@ namespace map
 			RegistrationCombinationRequest(const Kernel1BaseType& kernel1, const Kernel2BaseType& kernel2);
 			~RegistrationCombinationRequest();
 
-			RegistrationCombinationRequest(const RegistrationCombinationRequest&);
-			void operator=(const RegistrationCombinationRequest&);
+			RegistrationCombinationRequest(const RegistrationCombinationRequest& /*req*/);
+			void operator=(const RegistrationCombinationRequest& /*req*/);
 		};
 
 		template <unsigned int VInputDimensions, unsigned int VInterimDimensions, unsigned int VOutputDimensions>

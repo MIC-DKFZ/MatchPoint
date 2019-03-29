@@ -58,14 +58,14 @@ namespace map
 			{
 			public:
 				/** Standard class typedefs. */
-				typedef VolumeSize<VDimensions>  Self;
+				using Self = VolumeSize<VDimensions>;
 
 				/** Compatible Size and value typedef */
-				typedef   VolumeSize<VDimensions>  SizeType;
-				typedef   ScalarType              SizeValueType;
+				using SizeType = VolumeSize<VDimensions>;
+				using SizeValueType = ScalarType;
 
 				/** Get the dimension of the size object. */
-				static unsigned int getVolumeSizeDimension(void)
+				static unsigned int getVolumeSizeDimension()
 				{
 					return VDimensions;
 				}
@@ -101,7 +101,7 @@ namespace map
 				/** Access an element of the size. Elements are numbered
 				* 0, ..., VDimension-1. This version can only be an rvalue.
 				* No bounds checking is performed. */
-				const SizeValueType operator[](unsigned int dim) const;
+				SizeValueType operator[](unsigned int dim) const;
 
 				/** Get the value array of VolumeSize. This provides a read only reference to the size.
 				* @sa SetSize */

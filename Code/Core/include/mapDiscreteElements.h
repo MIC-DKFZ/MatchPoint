@@ -41,13 +41,13 @@ namespace map
 			{
 			public:
 				typedef itk::Image<InternalPixelType, VDimensions> InternalImageType;
-				typedef typename InternalImageType::RegionType ImageRegionType;
+				using ImageRegionType = typename InternalImageType::RegionType;
 				typedef itk::Image< typename ::map::core::continuous::Elements<VDimensions>::VectorType, VDimensions>
 				VectorFieldType;
-				typedef itk::Size<VDimensions> SizeType;
+				using SizeType = itk::Size<VDimensions>;
 			};
 
-		} // end namespace continuous
+		}  // namespace discrete
 	} // end namespace core
 } // end namespace map
 

@@ -45,7 +45,7 @@ namespace map
             {
             public:
                 typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VInputDimensions, VOutputDimensions> TransformType;
-                typedef typename TransformType::Pointer TransformPointer;
+                using TransformPointer = typename TransformType::Pointer;
                 typedef typename FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::SourceTransformModelType
                     SourceTransformModelType;
                 typedef typename
@@ -68,7 +68,7 @@ namespace map
             public:
                 typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::FieldType FieldType;
                 typedef typename ::itk::GenericVectorFieldTransform< ::map::core::continuous::ScalarType, VDimensions, VDimensions> TransformType;
-                typedef typename TransformType::Pointer TransformPointer;
+                using TransformPointer = typename TransformType::Pointer;
                 typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::SourceTransformModelType
                     SourceTransformModelType;
                 typedef typename FieldByModelInversionFunctor<VDimensions, VDimensions>::InFieldRepresentationType
@@ -138,7 +138,7 @@ namespace map
             const typename
                 FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::SourceTransformModelType*
                 FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::
-                getSourceTransformModel(void) const
+                getSourceTransformModel() const
             {
                 return _spTransformModel;
             }
@@ -159,7 +159,7 @@ namespace map
             template <unsigned int VInputDimensions, unsigned int VOutputDimensions>
             typename ::itk::LightObject::Pointer
                 FieldByModelInversionFunctor<VInputDimensions, VOutputDimensions>::
-                CreateAnother(void) const
+                CreateAnother() const
             {
                 ::itk::LightObject::Pointer smartPtr;
                 Pointer spNew = Self::New(_spTransformModel, Superclass::_spInFieldRepresentation).GetPointer();

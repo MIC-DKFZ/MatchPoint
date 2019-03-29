@@ -34,7 +34,7 @@ map::apps::mapR::LoadingLogic::LoadingLogic(ApplicationData& appData): _appData(
 template <unsigned int VDimension>
 map::core::RegistrationBase::Pointer GenerateDummyReg()
 {
-  typedef map::algorithm::DummyRegistrationAlgorithm<VDimension>	DummyRegType;
+  using DummyRegType = map::algorithm::DummyRegistrationAlgorithm<VDimension>;
   typename DummyRegType::Pointer regAlg = DummyRegType::New();
 
   map::core::RegistrationBase::Pointer dummyReg = regAlg->getRegistration().GetPointer();
@@ -104,7 +104,7 @@ loadGenericPointSet(const ::map::core::String& filename, unsigned int& loadedDim
   {
     try
     {
-      typedef ::map::core::continuous::Elements<2>::InternalPointSetType PointSetType;
+      using PointSetType = ::map::core::continuous::Elements<2>::InternalPointSetType;
       result = ::map::utilities::loadLandMarksFromFile<PointSetType>(filename).GetPointer();
       loadedDimensions = 2;
     }
@@ -114,7 +114,7 @@ loadGenericPointSet(const ::map::core::String& filename, unsigned int& loadedDim
     }
     try
     {
-      typedef ::map::core::continuous::Elements<3>::InternalPointSetType PointSetType;
+      using PointSetType = ::map::core::continuous::Elements<3>::InternalPointSetType;
       result = ::map::utilities::loadLandMarksFromFile<PointSetType>(filename).GetPointer();
       loadedDimensions = 3;
     }

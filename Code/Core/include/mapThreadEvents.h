@@ -38,37 +38,37 @@ namespace map
 		class MAPCore_EXPORT ThreadEventObject : public EventObject
 		{
 		public:
-			typedef ThreadEventObject Self;
-			typedef EventObject Superclass;
-			typedef int ThreadIDType;
+			using Self = ThreadEventObject;
+			using Superclass = EventObject;
+			using ThreadIDType = int;
 
 			static const ThreadIDType anyThreadID;
 
-			ThreadEventObject(ThreadIDType threadID, void* pData = NULL, const std::string& comment = "");
+			ThreadEventObject(ThreadIDType threadID, void* pData = nullptr, const std::string& comment = "");
 
-			virtual ~ThreadEventObject();
+			~ThreadEventObject() override;
 
 			ThreadIDType getThreadID() const;
 
-			virtual const char* GetEventName() const;
+			const char* GetEventName() const override;
 
 			/*! In addition to the normal event check the thread IDs will also be compared.
 			 * If the IDs are equal or one of the IDs equals anyThreadID the return of the check will be
 			 * true*/
-			virtual bool CheckEvent(const ::itk::EventObject* e) const;
+			bool CheckEvent(const ::itk::EventObject* e) const override;
 
-			virtual ::itk::EventObject* MakeObject() const;
+			::itk::EventObject* MakeObject() const override;
 
 			ThreadEventObject(const Self& s);
 
-			virtual void Print(std::ostream& os) const;
+			void Print(std::ostream& os) const override;
 
 		private:
 			/*! The ID of the thread that called the event or, if this object is part of an observer,
 			 * the ID that should trigger the observer. In the later case use anyThreadID (value: -1)
 			 * to allow the CheckEvent() method to trigger without regarding the ID.*/
 			ThreadIDType _threadID;
-			void operator=(const Self&);
+			void operator=(const Self&) = delete;
 		};
 
 		/*! @def mapThreadEventMacro
@@ -97,7 +97,7 @@ namespace map
 		void operator=(const Self&); \
 	}
 
-	}
+	}  // namespace core
 
 	namespace events
 	{
@@ -105,7 +105,7 @@ namespace map
 		 * @brief General event that can be used if you want to observe any thread event defined by MatchPoint.
 		 * @ingroup Events
 		 */
-		typedef core::ThreadEventObject AnyMatchPointThreadEvent;
+		using AnyMatchPointThreadEvent = core::ThreadEventObject;
 
 		/*!@class TaskBatchThreadEvent
 		 * @brief General/base event concering task batch threads.
@@ -136,7 +136,7 @@ namespace map
 		 * @ingroup Events
 		 */
 		mapThreadEventMacro(ThreadTerminatingErrorEvent, AnyMatchPointThreadEvent);
-	}
-}
+	}  // namespace events
+}  // namespace map
 
 #endif

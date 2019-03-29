@@ -46,24 +46,24 @@ namespace iro
     public:
       typedef TransformationPathBase< TTransformationInfoTraits, TInformationSpaceTraits, TProblemStatementTraits > Self;
       typedef ISConnectorPathBase< TTransformationInfoTraits, TInformationSpaceTraits, TProblemStatementTraits > Superclass;
-      typedef ::std::shared_ptr<Self> Pointer;
-      typedef ::std::shared_ptr<const Self> ConstPointer;
+      using Pointer = ::std::shared_ptr<Self>;
+      using ConstPointer = ::std::shared_ptr<const Self>;
 
-      typedef typename Superclass::ConstISPointer  ConstISPointer;
+      using ConstISPointer = typename Superclass::ConstISPointer;
 
-      typedef typename Superclass::ConstISPointer  ProblemComplianceInterface;
+      using ProblemComplianceInterface = typename Superclass::ConstISPointer;
 
-      typedef typename Superclass::ProblemStatementType   ProblemStatementType;
-      typedef typename Superclass::ProblemPointer         ProblemPointer;
-      typedef typename Superclass::ConstProblemPointer    ConstProblemPointer;
+      using ProblemStatementType = typename Superclass::ProblemStatementType;
+      using ProblemPointer = typename Superclass::ProblemPointer;
+      using ConstProblemPointer = typename Superclass::ConstProblemPointer;
 
-      typedef typename Superclass::ConstPathElementPointer  ConstPathElementPointer;
+      using ConstPathElementPointer = typename Superclass::ConstPathElementPointer;
 
-      typedef typename Superclass::PathElementIterator      PathElementIterator;
-      typedef typename Superclass::ConstPathElementIterator ConstPathElementIterator;
-      typedef typename Superclass::PathSizeType             PathSizeType;
+      using PathElementIterator = typename Superclass::PathElementIterator;
+      using ConstPathElementIterator = typename Superclass::ConstPathElementIterator;
+      using PathSizeType = typename Superclass::PathSizeType;
 
-			virtual ~TransformationPathBase();
+			~TransformationPathBase() override;
 			TransformationPathBase();
     protected:
       /*! In addition to the base implementation it also checks if the elment has the same data support.
@@ -72,17 +72,17 @@ namespace iro
        * @param [in] newElement The new element that should be inserted.
        * @return Iterator that points to the position of the inserted element in the path.
        * @exception ::iro::exceptions::InvalidDataRepresentation: the precondition is violated*/
-      virtual PathElementIterator doInsertElement(PathElementIterator pos, ConstPathElementPointer newElement);
+      PathElementIterator doInsertElement(PathElementIterator pos, ConstPathElementPointer newElement) override;
 
       /*! Adds the passed newElement at the end of the path.
        * @pre The moving IS of the new element must equal the target IS of the preceeding element (if the path is not empty)
        * @param [in] newElement The new element that should be inserted.
        * @exception ::iro::exceptions::InvalidDataRepresentation: the preconditions is violated*/
-      virtual void doAppend(ConstPathElementPointer newElement);
+      void doAppend(ConstPathElementPointer newElement) override;
 
     private:
-			TransformationPathBase(const Self&); //not implemented by purpose
-			Self& operator=(const Self&); //not implemented by purpose
+			TransformationPathBase(const Self&) = delete; //not implemented by purpose
+			Self& operator=(const Self&) = delete; //not implemented by purpose
 		};
 } // end namespace iro
 

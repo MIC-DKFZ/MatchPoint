@@ -39,20 +39,20 @@ namespace iro
     {
     MappingError::Type result = MappingError::NoFailure;
 
-    for (typename PathType::ConstPathElementIterator pos = path->getBegin(); pos!=path->getEnd(); ++pos)
+    for (auto pos = path->getBegin(); pos!=path->getEnd(); ++pos)
     {
       if ((*pos)->getSupportedDataRepresentation()!=entity->getDataRepresentation())
       {
         result = MappingError::NoDataSupport;
         break;
       }
-      else
-      {
+      
+      
         if ((*pos)->getFOVScope()!=FOVScope::Global)
         {
           result = MappingError::NoMappingGuarantee;
         }
-      }
+      
     }
 
     return result;

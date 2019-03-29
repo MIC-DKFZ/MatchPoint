@@ -21,7 +21,7 @@
 */
 
 #include "mapFastMutexLockSentinel.h"
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -33,20 +33,20 @@ namespace map
 			FastMutexLockSentinel::
 			initializeSentinel(MutexType* pMutex)
 			{
-				assert(_pMutex == NULL); //must not be used before!
+				assert(_pMutex == nullptr); //must not be used before!
 
 				_pMutex = pMutex;
 				_pMutex->Lock();
 			}
 
 			FastMutexLockSentinel::
-			FastMutexLockSentinel() : _pMutex(NULL)
+			FastMutexLockSentinel()  
 			{};
 
 			FastMutexLockSentinel::
 			~FastMutexLockSentinel()
 			{
-				if (_pMutex)
+				if (_pMutex != nullptr)
 				{
 					_pMutex->Unlock();
 				}

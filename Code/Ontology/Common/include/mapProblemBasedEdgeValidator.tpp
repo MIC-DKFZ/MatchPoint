@@ -27,8 +27,10 @@ namespace iro
       isValid(EdgeDescriptorType edge, const GraphType& graph, DataRepresentationSupport::Type dataRep,
       const ProblemComplianceInterface* pProblemCompliance, bool& currentCTrail, bool& currentDTrail) const
     {
-      if (currentCTrail) currentCTrail = graph[edge].direct != nullptr;
-      if (currentDTrail) currentDTrail = graph[edge].inverse != nullptr;
+      if (currentCTrail) { currentCTrail = graph[edge].direct != nullptr;
+}
+      if (currentDTrail) { currentDTrail = graph[edge].inverse != nullptr;
+}
 
       if (!currentCTrail && (dataRep == DataRepresentationSupport::All || dataRep == DataRepresentationSupport::Continuous))
       { //direct transform is not set but needed

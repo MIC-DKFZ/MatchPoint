@@ -41,14 +41,13 @@ namespace map
 		};
 
 		RegistrationAlgorithmBase::
-		RegistrationAlgorithmBase() : _currentState(AlgorithmState::Pending), _firstConfiguration(true)
+		RegistrationAlgorithmBase()  
 		{
 		};
 
 		RegistrationAlgorithmBase::
 		~RegistrationAlgorithmBase()
-		{
-		};
+		= default;
 
 		bool
 		RegistrationAlgorithmBase::
@@ -102,5 +101,5 @@ namespace map
 			//default implementation does nothing
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map

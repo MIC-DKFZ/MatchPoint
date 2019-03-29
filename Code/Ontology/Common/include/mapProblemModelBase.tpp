@@ -66,8 +66,7 @@ namespace iro
     template <typename TProblemStatementTraits, typename TUIDPolicy>
     ProblemModelBase<TProblemStatementTraits, TUIDPolicy>::
       ~ProblemModelBase()
-    {
-    };
+    = default;
 
     template <typename TProblemStatementTraits, typename TUIDPolicy>
     typename ProblemModelBase<TProblemStatementTraits, TUIDPolicy>::ProblemIterator
@@ -203,7 +202,7 @@ namespace iro
     {
       bool result = false;
 
-      ConstProblemIterator pos = _associatedStatements.begin();
+      auto pos = _associatedStatements.begin();
 
       while (!result && pos!=_associatedStatements.end())
       { //we haven't reached the end of the path and till now all elements were compliant -> check the next element

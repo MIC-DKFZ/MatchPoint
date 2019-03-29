@@ -61,11 +61,11 @@ namespace map
 		public:
 			typedef MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension> Self;
 
-			typedef ::itk::SpatialObject<VMovingDimension> MovingMaskBaseType;
-			typedef ::itk::SpatialObject<VTargetDimension> TargetMaskBaseType;
+			using MovingMaskBaseType = ::itk::SpatialObject<VMovingDimension>;
+			using TargetMaskBaseType = ::itk::SpatialObject<VTargetDimension>;
 
-			typedef typename MovingMaskBaseType::ConstPointer MovingMaskBaseConstPointer;
-			typedef typename TargetMaskBaseType::ConstPointer TargetMaskBaseConstPointer;
+			using MovingMaskBaseConstPointer = typename MovingMaskBaseType::ConstPointer;
+			using TargetMaskBaseConstPointer = typename TargetMaskBaseType::ConstPointer;
 
 			/*! @brief gets a const pointer to the moving mask
 			@eguarantee strong
@@ -122,8 +122,8 @@ namespace map
 			void operator=(const Self&);  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapMaskedRegistrationAlgorithmBase.tpp"

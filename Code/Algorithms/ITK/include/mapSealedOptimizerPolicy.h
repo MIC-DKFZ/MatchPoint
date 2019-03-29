@@ -53,14 +53,14 @@ namespace map
 			class SealedOptimizerPolicy
 			{
 			public:
-				typedef SealedOptimizerPolicy<TConcreteOptimizer>      Self;
+				using Self = SealedOptimizerPolicy<TConcreteOptimizer>;
 
-				typedef TConcreteOptimizer ConcreteOptimizerType;
-				typedef typename ConcreteOptimizerType::Pointer ConcreteOptimizerPointer;
-				typedef ::itk::Optimizer OptimizerType;
-				typedef ITKOptimizerControl<TConcreteOptimizer> ConcreteOptimizerControlType;
-				typedef typename ConcreteOptimizerControlType::Pointer ConcreteOptimizerControlPointer;
-				typedef typename ConcreteOptimizerControlType::BaseInterfaceType InternalOptimizerControlType;
+				using ConcreteOptimizerType = TConcreteOptimizer;
+				using ConcreteOptimizerPointer = typename ConcreteOptimizerType::Pointer;
+				using OptimizerType = ::itk::Optimizer;
+				using ConcreteOptimizerControlType = ITKOptimizerControl<TConcreteOptimizer>;
+				using ConcreteOptimizerControlPointer = typename ConcreteOptimizerControlType::Pointer;
+				using InternalOptimizerControlType = typename ConcreteOptimizerControlType::BaseInterfaceType;
 
 			protected:
 				SealedOptimizerPolicy();
@@ -139,9 +139,9 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapSealedOptimizerPolicy.tpp"

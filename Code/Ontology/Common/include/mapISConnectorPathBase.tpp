@@ -61,7 +61,7 @@ namespace iro
   {
     bool result = true;
 
-    ConstPathElementIterator pos = _pathElements.begin();
+    auto pos = _pathElements.begin();
 
     while (result && pos!=_pathElements.end())
     { //we haven't reched the end of the path and till now all elements were compliant -> check the next element
@@ -191,14 +191,12 @@ namespace iro
   template <typename TPathElementTraits, typename TInformationSpaceTraits, typename TProblemStatementTraits>
   ISConnectorPathBase<TPathElementTraits, TInformationSpaceTraits, TProblemStatementTraits>::
     ~ISConnectorPathBase()
-  {
-  };
+  = default;
 
   template <typename TPathElementTraits, typename TInformationSpaceTraits, typename TProblemStatementTraits>
   ISConnectorPathBase<TPathElementTraits, TInformationSpaceTraits, TProblemStatementTraits>::
     ISConnectorPathBase()
-  {
-  };
+  = default;
 
 } // end namespace iro
 

@@ -48,19 +48,19 @@ namespace map
 		{
 		protected:
 			/*! Standard class typedefs. */
-			typedef services::GenericStaticLoadPolicyBase<TProviderBase> Superclass;
-			typedef typename Superclass::ProviderBaseType      ProviderBaseType;
-			typedef typename Superclass::ProviderBasePointer   ProviderBasePointer;
-			typedef typename Superclass::LoadInterfaceType     LoadInterfaceType;
+			using Superclass = services::GenericStaticLoadPolicyBase<TProviderBase>;
+			using ProviderBaseType = typename Superclass::ProviderBaseType;
+			using ProviderBasePointer = typename Superclass::ProviderBasePointer;
+			using LoadInterfaceType = typename Superclass::LoadInterfaceType;
 
-			virtual void doLoading();
+			void doLoading() override;
 
 			KernelCombinatorLoadPolicy();
 			~KernelCombinatorLoadPolicy();
 
 		private:
-			KernelCombinatorLoadPolicy(const KernelCombinatorLoadPolicy&);  //purposely not implemented
-			void operator=(const KernelCombinatorLoadPolicy&);  //purposely not implemented
+			KernelCombinatorLoadPolicy(const KernelCombinatorLoadPolicy&) = delete;  //purposely not implemented
+			void operator=(const KernelCombinatorLoadPolicy&) = delete;  //purposely not implemented
 		};
 
 	} // end namespace core

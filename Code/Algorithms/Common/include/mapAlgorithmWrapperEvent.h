@@ -38,26 +38,26 @@ namespace map
 		class MAPAlgorithms_EXPORT AlgorithmWrapperEvent : public AlgorithmEvent
 		{
 		public:
-			typedef AlgorithmWrapperEvent Self;
-			typedef AlgorithmEvent Superclass;
+			using Self = AlgorithmWrapperEvent;
+			using Superclass = AlgorithmEvent;
 
-			AlgorithmWrapperEvent(const ::itk::EventObject& wrappedEvent, ::itk::Object* wrappedCaller = NULL,
+			AlgorithmWrapperEvent(const ::itk::EventObject& wrappedEvent, ::itk::Object* wrappedCaller = nullptr,
 								  const std::string& comment = "");
 
-			virtual ~AlgorithmWrapperEvent();
+			~AlgorithmWrapperEvent() override;
 
-			virtual const char* GetEventName() const;
+			const char* GetEventName() const override;
 
-			virtual bool CheckEvent(const ::itk::EventObject* e) const;
+			bool CheckEvent(const ::itk::EventObject* e) const override;
 
-			virtual ::itk::EventObject* MakeObject() const;
+			::itk::EventObject* MakeObject() const override;
 
 			AlgorithmWrapperEvent(const Self& s);
 
 			::itk::EventObject& getWrappedEvent() const;
 			::itk::Object* getWrappedCaller() const;
 
-			virtual void Print(std::ostream& os) const;
+			void Print(std::ostream& os) const override;
 
 		private:
 			::itk::Object* _pWrappedCaller;
@@ -65,9 +65,9 @@ namespace map
 
 			std::string _cachedEventName;
 
-			void operator=(const Self&);
+			void operator=(const Self&) = delete;
 		};
-	}
-}
+	}  // namespace events
+}  // namespace map
 
 #endif

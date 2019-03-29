@@ -47,9 +47,9 @@ namespace map
 			{
 			public:
 				typedef ITKImageToImageMetricControlInterface<TMovingImage, TTargetImage> Self;
-				typedef ITKSVMetricControlInterface Superclass;
-				typedef ::itk::SmartPointer<Self>         Pointer;
-				typedef ::itk::SmartPointer<const Self>   ConstPointer;
+				using Superclass = ITKSVMetricControlInterface;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKImageToImageMetricControlInterface, ITKSVMetricControlInterface);
 
@@ -60,7 +60,7 @@ namespace map
 
 			protected:
 				ITKImageToImageMetricControlInterface() {};
-				virtual ~ITKImageToImageMetricControlInterface() {};
+				~ITKImageToImageMetricControlInterface() override {};
 
 			private:
 				//No copy constructor allowed
@@ -68,8 +68,8 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

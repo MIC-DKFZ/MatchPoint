@@ -34,14 +34,12 @@ namespace map
 
 			ITKMVMetricControlInterface::
 			ITKMVMetricControlInterface()
-			{
-			};
+			= default;
 
 			ITKMVMetricControlInterface::
 			~ITKMVMetricControlInterface()
-			{
-			};
+			= default;
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map

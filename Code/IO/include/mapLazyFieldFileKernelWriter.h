@@ -48,15 +48,15 @@ namespace map
 			/*! Standard class typedefs. */
 			typedef LazyFieldFileKernelWriter<VInputDimensions, VOutputDimensions>				Self;
 			typedef RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions>	Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(LazyFieldFileKernelWriter, RegistrationKernelWriterBase);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::KernelBaseType	KernelBaseType;
-			typedef typename Superclass::KernelBasePointer	KernelBasePointer;
-			typedef typename Superclass::RequestType	RequestType;
+			using KernelBaseType = typename Superclass::KernelBaseType;
+			using KernelBasePointer = typename Superclass::KernelBasePointer;
+			using RequestType = typename Superclass::RequestType;
 			typedef core::LazyRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for

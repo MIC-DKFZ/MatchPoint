@@ -53,13 +53,13 @@ namespace map
 				TConcreteITKTransform::OutputSpaceDimension >
 			{
 			public:
-				typedef FixedTransformPolicy<TConcreteITKTransform>     Self;
-				typedef SealedTransformPolicy<TConcreteITKTransform>    Superclass;
+				using Self = FixedTransformPolicy<TConcreteITKTransform>;
+				using Superclass = SealedTransformPolicy<TConcreteITKTransform>;
 
-				typedef typename Superclass::ConcreteTransformType     ConcreteTransformType;
-				typedef typename Superclass::ConcreteTransformPointer  ConcreteTransformPointer;
-				typedef typename Superclass::TransformType             TransformType;
-				typedef typename Superclass::TransformScalarType       TransformScalarType;
+				using ConcreteTransformType = typename Superclass::ConcreteTransformType;
+				using ConcreteTransformPointer = typename Superclass::ConcreteTransformPointer;
+				using TransformType = typename Superclass::TransformType;
+				using TransformScalarType = typename Superclass::TransformScalarType;
 
 				/*! gets the transformation
 				  @eguarantee strong
@@ -84,9 +84,9 @@ namespace map
 			};
 
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifdef MAP_SEAL_ALGORITHMS
 #define SealedFixedTransformPolicyMacro ::map::algorithm::itk::SealedTransformPolicy

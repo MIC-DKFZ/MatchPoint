@@ -50,16 +50,16 @@ namespace map
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef MappingTaskBase<TRegistration>  Self;
-			typedef itk::Object                    Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Self = MappingTaskBase<TRegistration>;
+			using Superclass = itk::Object;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(MappingTaskBase, itk::Object);
 
-			typedef TRegistration														RegistrationType;
-			typedef typename RegistrationType::Pointer			RegistrationPointer;
-			typedef typename RegistrationType::ConstPointer	RegistrationConstPointer;
+			using RegistrationType = TRegistration;
+			using RegistrationPointer = typename RegistrationType::Pointer;
+			using RegistrationConstPointer = typename RegistrationType::ConstPointer;
 
 			itkStaticConstMacro(MovingDimensions, unsigned int, RegistrationType::MovingDimensions);
 			itkStaticConstMacro(TargetDimensions, unsigned int, RegistrationType::TargetDimensions);
@@ -72,65 +72,65 @@ namespace map
 				 * for more information (getRegistrationException).
 				 * @pre Registration must have been set.
 				 */
-			bool execute(void) const;
+			bool execute() const;
 
 			/*! Sets the pointer to the registration that should be used. Calls clearResults().
 				 */
 			void setRegistration(const RegistrationType* pRegistration);
-			const RegistrationType* getRegistration(void) const;
+			const RegistrationType* getRegistration() const;
 
 			/*! Returns the pointer to the exception, if any has occured while registering the data.
 			 * @result Pointer to the exception.
 			 * @retval NULL No exception has occured yet.*/
-			const ExceptionObject* getRegistrationException(void) const;
+			const ExceptionObject* getRegistrationException() const;
 
 			void setIsExceptionNeutral(bool neutral);
-			bool getIsExceptionNeutral(void) const;
+			bool getIsExceptionNeutral() const;
 
 			/*! Clears the results, inputs and any stored exception.
 			 * @remark Registration pointer will not be changed.*/
-			void reset(void);
+			void reset();
 
 		protected:
 			/*! Performs the registration of the given data and sets/replaces the results.
 				 * Must be defined for any concrete data performer.
 				 * @eguarantee strong
 				 */
-			virtual void doExecution(void) const = 0;
+			virtual void doExecution() const = 0;
 
 			/*! clears all result values of the task computed by former execute() calls.
 			 * Must be defined for any concrete data performer.
 			 * @eguarantee strong
 			 */
-			virtual void clearResults(void) const = 0;
+			virtual void clearResults() const = 0;
 
 			/*! clears all input datas of the task used to execute().
 			 * Must be defined for any concrete data performer.
 			 * @eguarantee strong
 			 */
-			virtual void clearInputs(void) = 0;
+			virtual void clearInputs() = 0;
 
 			/*! Sets the pointer to the exception object to NULL after deleting the old instance, if one is referenced.
 					 * @eguarantee strong
 					 */
-			void clearException(void) const;
+			void clearException() const;
 
 			RegistrationConstPointer _spRegistration;
 
 			MappingTaskBase();
-			virtual ~MappingTaskBase();
+			~MappingTaskBase() override;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 		private:
 			/*! Indicates if the task should act exception-neutral (thus passing all exceptions
 			 * directly through to the task user) or just catch the exception, store a copy of the exception
 			 * for later examinations and return false as the result of excute().*/
-			bool _isExceptionNeutral;
+			bool _isExceptionNeutral{true};
 
 			/*! Pointer to the cloned excpetion if any exception occurred.*/
-			mutable ExceptionObject* _pException;
+			mutable ExceptionObject* _pException{nullptr};
 
 			MappingTaskBase(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented

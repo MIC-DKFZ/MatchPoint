@@ -31,10 +31,10 @@ namespace map
 {
 	namespace core
 	{
-		typedef std::string String;
+		using String = std::string;
 
-		typedef std::ostringstream OStringStream;
-		typedef std::istringstream IStringStream;
+		using OStringStream = std::ostringstream;
+		using IStringStream = std::istringstream;
 
 	} // end namespace core
 } // end namespace map

@@ -43,7 +43,7 @@ namespace map
 			{
 			protected:
 				/*! Standard class typedefs. */
-				typedef TConcreteServiceStack ConcreteServiceStackType;
+				using ConcreteServiceStackType = TConcreteServiceStack;
 
 				/*! Will be called after registering the concrete stack to allow the policy to do final operations on
 				 * the concrete stack.
@@ -64,7 +64,7 @@ namespace map
 				~DefaultSLStaticPolicy();
 
 			private:
-				typedef DefaultSLStaticPolicy<TConcreteServiceStack> Self;
+				using Self = DefaultSLStaticPolicy<TConcreteServiceStack>;
 				DefaultSLStaticPolicy(const Self&);  //purposely not implemented
 				void operator=(const Self&);  //purposely not implemented
 			};

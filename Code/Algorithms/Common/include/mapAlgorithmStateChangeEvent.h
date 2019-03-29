@@ -38,35 +38,35 @@ namespace map
 		class MAPAlgorithms_EXPORT AlgorithmStateChangeEvent : public AlgorithmEvent
 		{
 		public:
-			typedef AlgorithmStateChangeEvent Self;
-			typedef AlgorithmEvent Superclass;
-			typedef algorithm::RegistrationAlgorithmBase::AlgorithmState::Type AlgorithmStateType;
+			using Self = AlgorithmStateChangeEvent;
+			using Superclass = AlgorithmEvent;
+			using AlgorithmStateType = algorithm::RegistrationAlgorithmBase::AlgorithmState::Type;
 
 			AlgorithmStateChangeEvent(const AlgorithmStateType& oldState =
 										  algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending,
 									  const AlgorithmStateType& newState = algorithm::RegistrationAlgorithmBase::AlgorithmState::Pending);
 
-			virtual ~AlgorithmStateChangeEvent();
+			~AlgorithmStateChangeEvent() override;
 
-			virtual const char* GetEventName() const;
+			const char* GetEventName() const override;
 
-			virtual bool CheckEvent(const ::itk::EventObject* e) const;
+			bool CheckEvent(const ::itk::EventObject* e) const override;
 
-			virtual ::itk::EventObject* MakeObject() const;
+			::itk::EventObject* MakeObject() const override;
 
 			AlgorithmStateChangeEvent(const Self& s);
 
 			AlgorithmStateType getOldState() const;
 			AlgorithmStateType getNewState() const;
 
-			virtual void Print(std::ostream& os) const;
+			void Print(std::ostream& os) const override;
 
 		private:
 			AlgorithmStateType _oldState;
 			AlgorithmStateType _newState;
-			void operator=(const Self&);
+			void operator=(const Self&) = delete;
 		};
-	}
-}
+	}  // namespace events
+}  // namespace map
 
 #endif

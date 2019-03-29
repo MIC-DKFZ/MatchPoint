@@ -44,15 +44,15 @@ namespace map
 		public:
 			/*! Standard class typedefs. */
 			typedef FieldKernelLoaderBase<VInputDimensions, VOutputDimensions>				Self;
-			typedef RegistrationKernelLoaderBase   Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = RegistrationKernelLoaderBase;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(FieldKernelLoaderBase, RegistrationKernelLoaderBase);
 
 			typedef  core::RegistrationKernel<VInputDimensions, VOutputDimensions>	KernelBaseType;
-			typedef typename KernelBaseType::Pointer	KernelBasePointer;
-			typedef typename Superclass::RequestType	RequestType;
+			using KernelBasePointer = typename KernelBaseType::Pointer;
+			using RequestType = typename Superclass::RequestType;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request. This implementation only checks for correct dimensionality. The rest must be
@@ -60,7 +60,7 @@ namespace map
 			 * @return Indicates if the provider offers the right solution.
 			 * @retval true Provider can handle the request.
 			 * @retval false Provider is not able to handle the request.*/
-			virtual bool canHandleRequest(const RequestType& request) const;
+			bool canHandleRequest(const RequestType& request) const override;
 
 			/*! Adds a given generic kernel to the passed registration as inverse kernel.
 				 * @eguarantee strong
@@ -69,8 +69,8 @@ namespace map
 			* @pre pKernel must be valid and of correct dimensionality or NULL.
 			* @pre pRegistration must be valid and of correct dimensionality.
 				 */
-			virtual void addAsInverseKernel(GenericKernelType* pKernel,
-											::map::core::RegistrationBase::Pointer& spRegistration) const;
+			void addAsInverseKernel(GenericKernelType* pKernel,
+											::map::core::RegistrationBase::Pointer& spRegistration) const override;
 
 			/*! Adds a given generic kernel to the passed registration as direct kernel.
 				 * @eguarantee strong
@@ -79,8 +79,8 @@ namespace map
 				 * @pre pKernel must be valid and of correct dimensionality or NULL.
 			* @pre pRegistration must be valid and of correct dimensionality.
 				 */
-			virtual void addAsDirectKernel(GenericKernelType* pKernel,
-										   core::RegistrationBase::Pointer& spRegistration) const;
+			void addAsDirectKernel(GenericKernelType* pKernel,
+										   core::RegistrationBase::Pointer& spRegistration) const override;
 
 		protected:
 
@@ -95,7 +95,7 @@ namespace map
       bool hasNullPoint(const RequestType& request, typename KernelBaseType::OutputPointType& nullPoint) const;
 			
 			FieldKernelLoaderBase();
-			virtual ~FieldKernelLoaderBase() {};
+			~FieldKernelLoaderBase() override {};
 
 		private:
 			FieldKernelLoaderBase(const Self&);  //purposely not implemented

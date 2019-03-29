@@ -50,11 +50,11 @@ namespace iro
     class SimpleOntologyCore
     {
     public:
-      typedef SimpleOntologyCore Self;
+      using Self = SimpleOntologyCore<TOATraits>;
 
-      typedef ::boost::interprocess::interprocess_upgradable_mutex  MutexType;
-      typedef ::boost::interprocess::sharable_lock<MutexType>       SharableLockType;
-      typedef ::boost::interprocess::scoped_lock<MutexType>         LockType;
+      using MutexType = ::boost::interprocess::interprocess_upgradable_mutex;
+      using SharableLockType = ::boost::interprocess::sharable_lock<MutexType>;
+      using LockType = ::boost::interprocess::scoped_lock<MutexType>;
 
       using InfEntityType = typename TOATraits::InformationEntityTraitsType::Type;
       using InfEntityUIDType = typename TOATraits::InformationEntityTraitsType::UIDType;
@@ -79,20 +79,20 @@ namespace iro
       using TransformationInfoPointer = typename TOATraits::TransformationInfoTraitsType::Pointer;
       using ConstTransformationInfoPointer = typename TOATraits::TransformationInfoTraitsType::ConstPointer;
       using TransformationInfoUIDType = typename TOATraits::TransformationInfoTraitsType::UIDType;
-      typedef typename TOATraits::RegistrationInfoTraitsType::Type                     RegistrationInfoType;
-      typedef typename TOATraits::RegistrationInfoTraitsType::Pointer                  RegistrationInfoPointer;
-      typedef IProblemComplianceDefinition<ProblemStatementType>          ProblemComplianceInterface;
-      typedef IPathMetric<typename TOATraits::RegistrationInfoTraitsType >             RegPathMetricInterface;
-      typedef IPathMetric<typename TOATraits::TransformationInfoTraitsType >           TransPathMetricInterface;
-      typedef typename TOATraits::TransformationPathTraitsType::Type                   TransformationPathType;
-      typedef typename TOATraits::TransformationPathTraitsType::Pointer                TransformationPathPointer;
-      typedef typename TOATraits::RegistrationPathTraitsType::Type                     RegistrationPathType;
+      using RegistrationInfoType = typename TOATraits::RegistrationInfoTraitsType::Type;
+      using RegistrationInfoPointer = typename TOATraits::RegistrationInfoTraitsType::Pointer;
+      using ProblemComplianceInterface = IProblemComplianceDefinition<ProblemStatementType>;
+      using RegPathMetricInterface = IPathMetric<typename TOATraits::RegistrationInfoTraitsType>;
+      using TransPathMetricInterface = IPathMetric<typename TOATraits::TransformationInfoTraitsType>;
+      using TransformationPathType = typename TOATraits::TransformationPathTraitsType::Type;
+      using TransformationPathPointer = typename TOATraits::TransformationPathTraitsType::Pointer;
+      using RegistrationPathType = typename TOATraits::RegistrationPathTraitsType::Type;
       using RegistrationPathPointer = typename TOATraits::RegistrationPathTraitsType::Pointer;
-      typedef typename TOATraits::RegPathOptionCollectionTraitsType::Type              RegPathOptColType;
-      typedef typename TOATraits::RegPathOptionCollectionTraitsType::Pointer           RegPathOptColPointer;
-      typedef typename TOATraits::RegPathOptionCollectionTraitsType::ConstPointer      ConstRegPathOptColPointer;
-      typedef typename TOATraits::TransPathOptionCollectionTraitsType::Type            TransPathOptColType;
-      typedef typename TOATraits::TransPathOptionCollectionTraitsType::Pointer         TransPathOptColPointer;
+      using RegPathOptColType = typename TOATraits::RegPathOptionCollectionTraitsType::Type;
+      using RegPathOptColPointer = typename TOATraits::RegPathOptionCollectionTraitsType::Pointer;
+      using ConstRegPathOptColPointer = typename TOATraits::RegPathOptionCollectionTraitsType::ConstPointer;
+      using TransPathOptColType = typename TOATraits::TransPathOptionCollectionTraitsType::Type;
+      using TransPathOptColPointer = typename TOATraits::TransPathOptionCollectionTraitsType::Pointer;
 
       //Basic entity maps
       typedef std::map<InfEntityUIDType, InfEntityPointer> EntityMapType;
@@ -112,13 +112,13 @@ namespace iro
       //utility maps/collections
       typedef std::map<CorrelationUIDType, ConstCorrelationPointer> ConstCorrelationMapType;
       typedef std::map<ProblemModelUIDType, ConstProblemModelPointer> ConstModelMapType;
-      typedef std::set<InfEntityUIDType> EntityUIDSetType;
+      using EntityUIDSetType = std::set<InfEntityUIDType>;
       typedef std::map<typename RegistrationGraphType::edge_descriptor, double> WeightMapType;
       typedef std::map<typename RegistrationGraphType::vertex_descriptor, typename RegistrationGraphType::vertex_descriptor> PredecessorMapType;
       typedef std::map<typename RegistrationGraphType::vertex_descriptor, typename RegistrationGraphType::edge_descriptor> EdgeMapType;
-      typedef std::vector<ConstInfEntityPointer> ConstInfEntityVectorType;
-      typedef ::std::vector< ::std::vector< typename RegistrationGraphType::edge_descriptor> > SimpleSearchMapType;
-      typedef std::vector<ConstInfSpacePointer> ConstInfSpaceEntityVectorType;
+      using ConstInfEntityVectorType = std::vector<ConstInfEntityPointer>;
+      using SimpleSearchMapType = ::std::vector< ::std::vector<typename RegistrationGraphType::edge_descriptor> >;
+      using ConstInfSpaceEntityVectorType = std::vector<ConstInfSpacePointer>;
 
       using EdgeValidatorType = ProblemBasedEdgeValidator<RegistrationGraphType, IProblemComplianceDefinition<ProblemStatementType> >;
 
@@ -172,7 +172,7 @@ namespace iro
       typename RegistrationGraphType::edge_descriptor addEdge(ConstInfSpacePointer movingIS, ConstInfSpacePointer targetIS);
       /** inserts the transformation into the edge. If there is already an transformation it will be removed from the
        * edge and ontology.*/
-      void updateEdge(typename RegistrationGraphType::edge_descriptor, TransformationInfoPointer trans);
+      void updateEdge(typename RegistrationGraphType::edge_descriptor /*edge*/, TransformationInfoPointer trans);
 
       typename RegistrationGraphType::vertex_descriptor getVertex(ConstInfSpacePointer is) const;
       void addVertex(ConstInfSpacePointer is);
@@ -230,7 +230,7 @@ namespace iro
       template <typename TMap, typename TList>  
       static void extracValuesFromMap( const  TMap & m, TList & v )
       { 
-          for( typename TMap::const_iterator it = m.begin(); it != m.end(); ++it )
+          for( auto it = m.begin(); it != m.end(); ++it )
           { 
               v.push_back( it->second ); 
           } 
@@ -240,7 +240,7 @@ namespace iro
       static void extractUIDs( const  TVector & v, TUIDVector & uids )
       { 
         uids.clear();
-          for( typename TVector::const_iterator it = v.begin(); it != v.end(); ++it )
+          for( auto it = v.begin(); it != v.end(); ++it )
           { 
               uids.insert( (*it)->getUID() ); 
           } 

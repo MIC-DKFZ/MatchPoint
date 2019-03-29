@@ -63,15 +63,12 @@ namespace map
 		template<unsigned int VDimension, class TIdentificationPolicy>
 		DummyRegistrationAlgorithm<VDimension, TIdentificationPolicy>::
 		DummyRegistrationAlgorithm()
-		{
-
-		};
+		= default;
 
 		template<unsigned int VDimension, class TIdentificationPolicy>
 		DummyRegistrationAlgorithm<VDimension, TIdentificationPolicy>::
 		~DummyRegistrationAlgorithm()
-		{
-		};
+		= default;
 
 		template<unsigned int VDimension, class TIdentificationPolicy>
 		bool
@@ -101,7 +98,7 @@ namespace map
 		DummyRegistrationAlgorithm<VDimension, TIdentificationPolicy>::
 		doDetermineRegistration()
 		{
-			RegistrationPointer spResult = NULL;
+			RegistrationPointer spResult = nullptr;
 
 			typedef ::itk::AffineTransform< ::map::core::continuous::ScalarType, VDimension>  TransformModelType;
 

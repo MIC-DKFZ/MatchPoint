@@ -32,7 +32,7 @@ namespace map
 		{
 
 			//! Default scalar type used in MatchPoint
-			typedef double ScalarType;
+			using ScalarType = double;
 
 		} // end namespace continuous
 	} // end namespace core

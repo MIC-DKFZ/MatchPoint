@@ -113,12 +113,12 @@ namespace iro
       using MappingInferenceInterface::actualize;
 
     protected:
-      virtual ~OntologyAccess();
+      ~OntologyAccess() override;
       OntologyAccess();
 
     private:
-      OntologyAccess(const OntologyAccess&); //not implemented by purpose
-      OntologyAccess& operator=(const OntologyAccess&); //not implemented by purpose
+      OntologyAccess(const OntologyAccess&) = delete; //not implemented by purpose
+      OntologyAccess& operator=(const OntologyAccess&) = delete; //not implemented by purpose
     };
   } // end namespace core
 } // end namespace iro

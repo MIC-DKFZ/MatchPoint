@@ -74,7 +74,7 @@ namespace map
 		 */
 		mapDeploymentEventMacro(ValidDLLEvent, DeploymentEvent);
 
-	}
-}
+	}  // namespace events
+}  // namespace map
 
 #endif

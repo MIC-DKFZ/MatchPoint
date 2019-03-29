@@ -39,12 +39,12 @@ namespace map
 		class MAPCore_EXPORT ServiceException : public ExceptionObject
 		{
 		public:
-			typedef ServiceException Self;
-			typedef ExceptionObject Superclass;
+			using Self = ServiceException;
+			using Superclass = ExceptionObject;
 
 			/*! Default constructor.  Needed to ensure the exception object can be
 			 * copied. */
-			ServiceException() : Superclass() {}
+			ServiceException()  = default;
 
 			/*! Constructor. Needed to ensure the exception object can be copied. */
 			ServiceException(const char* file, unsigned int lineNumber) : Superclass(file, lineNumber) {}
@@ -57,9 +57,9 @@ namespace map
 							 const std::string& loc) : Superclass(file, lineNumber, desc, loc) {}
 
 			/*! Virtual destructor needed for subclasses. Has to have empty throw(). */
-			virtual ~ServiceException() throw() {}
+			~ServiceException() noexcept override = default;
 
-			virtual const char* GetNameOfClass() const
+			const char* GetNameOfClass() const override
 			{
 				return "map::ServiceException";
 			}
@@ -73,7 +73,7 @@ namespace map
 			 * and every task is processed (or failed through an exception).
 			 * @return Pointer to the cloned exception. If the cloning fails for any reason the return is NULL.
 			 * @eguarantee no throw*/
-			virtual BaseExceptionType* clone() const throw();
+			BaseExceptionType* clone() const noexcept override;
 		};
 
 	} // end namespace core

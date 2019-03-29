@@ -48,5 +48,5 @@ namespace map
 			//Nothing to do here
 		}
 
-	}
-}
+	}  // namespace core
+}  // namespace map

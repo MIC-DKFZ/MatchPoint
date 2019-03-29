@@ -56,20 +56,20 @@ namespace map
 			{
 			public:
 				/*! Standard class typedefs. */
-				typedef PMVolume  Self;
+				using Self = PMVolume;
 
 				/*! Dimension of the volume available at run time. */
 				unsigned int getVolumeDimension()  const;
 
 				/*! Point typedef support.*/
-				typedef ScalarType									 PointValueType;
-				typedef std::vector<PointValueType>  PointType;
-				typedef PointValueType							 OriginValueType;
-				typedef PointType										 OriginType;
+				using PointValueType = ScalarType;
+				using PointType = std::vector<PointValueType>;
+				using OriginValueType = PointValueType;
+				using OriginType = PointType;
 
 				/*! Size typedef support. A size is used to define volume bounds. */
-				typedef ScalarType SizeValueType;
-				typedef std::vector<SizeValueType>   SizeType;
+				using SizeValueType = ScalarType;
+				using SizeType = std::vector<SizeValueType>;
 
 				/*! Constructor. PMVolume is a lightweight object that is not reference
 				* counted, so the constructor is public.
@@ -99,7 +99,7 @@ namespace map
 				* is lightweight object that is not reference counted so this constructor
 				* is public.
 				* @eguarantee strong */
-				PMVolume(const SizeType& size);
+				PMVolume(SizeType  size);
 
 				/*! operator=. PMVolume is a lightweight object that is not reference
 				* counted, so operator= is public.

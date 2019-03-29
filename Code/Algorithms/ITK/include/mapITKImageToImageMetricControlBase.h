@@ -50,22 +50,22 @@ namespace map
 				ITKImageToImageMetricControlInterface<typename TConcreteMetric::MovingImageType, typename TConcreteMetric::FixedImageType>
 			{
 			public:
-				typedef ITKImageToImageMetricControlBase<TConcreteMetric> Self;
+				using Self = ITKImageToImageMetricControlBase<TConcreteMetric>;
 				typedef ITKImageToImageMetricControlInterface<typename TConcreteMetric::MovingImageType, typename TConcreteMetric::FixedImageType>
 				Superclass;
-				typedef typename TConcreteMetric::MovingImageType MovingImageType;
-				typedef typename TConcreteMetric::FixedImageType TargetImageType;
+				using MovingImageType = typename TConcreteMetric::MovingImageType;
+				using TargetImageType = typename TConcreteMetric::FixedImageType;
 
-				typedef ::itk::SmartPointer<Self>         Pointer;
-				typedef ::itk::SmartPointer<const Self>   ConstPointer;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKImageToImageMetricControlBase, ITKImageToImageMetricControlInterface);
 
-				typedef TConcreteMetric ConcreteMetricType;
-				typedef typename ConcreteMetricType::Pointer ConcreteMetricPointer;
-				typedef typename Superclass::MetricBaseType MetricBaseType;
-				typedef typename Superclass::SVMetricBaseType SVMetricBaseType;
-				typedef typename Superclass::ImageToImageMetricBaseType ImageToImageMetricBaseType;
+				using ConcreteMetricType = TConcreteMetric;
+				using ConcreteMetricPointer = typename ConcreteMetricType::Pointer;
+				using MetricBaseType = typename Superclass::MetricBaseType;
+				using SVMetricBaseType = typename Superclass::SVMetricBaseType;
+				using ImageToImageMetricBaseType = typename Superclass::ImageToImageMetricBaseType;
 
 				/*! setter for the optimizer
 				@eguarantee no fail
@@ -100,9 +100,9 @@ namespace map
 				ITKImageToImageMetricControlBase(const Self& source);
 				void operator=(const Self&);  //purposely not implemented
 			};
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapITKImageToImageMetricControlBase.tpp"

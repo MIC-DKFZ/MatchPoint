@@ -52,11 +52,11 @@ namespace map
 
 			FastLockedThreadingPolicy::
 			FastLockedThreadingPolicy()
-			{};
+			= default;
 
 			FastLockedThreadingPolicy::
 			~FastLockedThreadingPolicy()
-			{};
+			= default;
 
 		} // end namespace services
 	} // end namespace core

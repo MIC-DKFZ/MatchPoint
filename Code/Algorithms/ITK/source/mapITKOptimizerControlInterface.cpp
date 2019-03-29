@@ -31,7 +31,7 @@ namespace map
 		namespace itk
 		{
 
-			const core::String
+      const core::String
 			ITKOptimizerControlInterface::
 			getStopConditionDescription() const
 			{
@@ -41,14 +41,12 @@ namespace map
 
 			ITKOptimizerControlInterface::
 			ITKOptimizerControlInterface()
-			{
-			};
+			= default;
 
 			ITKOptimizerControlInterface::
 			~ITKOptimizerControlInterface()
-			{
-			};
+			= default;
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map

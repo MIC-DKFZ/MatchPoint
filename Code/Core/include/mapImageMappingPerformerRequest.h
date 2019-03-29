@@ -49,15 +49,15 @@ namespace map
 		{
 		public:
 			typedef MappingPerformerRequestBase<TRegistration, TInputData, TResultData> Superclass;
-			typedef typename Superclass::ResultDataType   ResultDataType;
-			typedef typename Superclass::RegistrationType RegistrationType;
-			typedef typename Superclass::InputDataType    InputDataType;
-			typedef typename ResultDataType::PixelType    ErrorValueType;
-			typedef typename ResultDataType::PixelType    PaddingValueType;
-			typedef FieldRepresentationDescriptor<ResultDataType::ImageDimension> ResultImageDescriptorType;
+			using ResultDataType = typename Superclass::ResultDataType;
+			using RegistrationType = typename Superclass::RegistrationType;
+			using InputDataType = typename Superclass::InputDataType;
+			using ErrorValueType = typename ResultDataType::PixelType;
+			using PaddingValueType = typename ResultDataType::PixelType;
+			using ResultImageDescriptorType = FieldRepresentationDescriptor<ResultDataType::ImageDimension>;
 
 			typedef itk::InterpolateImageFunction<TInputData, continuous::ScalarType> InterpolateBaseType;
-			typedef typename InterpolateBaseType::Pointer InterpolateBasePointer;
+			using InterpolateBasePointer = typename InterpolateBaseType::Pointer;
 
 			ImageMappingPerformerRequest(const RegistrationType* pRegistration,
 										 const InputDataType* pInputData, const ResultImageDescriptorType* pResultDescriptor,
@@ -65,10 +65,10 @@ namespace map
 										 bool throwOnMappingError, const ErrorValueType& errorValue,
 										 bool throwOnOutOfInputAreaError, PaddingValueType paddingValue);
 
-			virtual ~ImageMappingPerformerRequest();
+			~ImageMappingPerformerRequest() override;
 
-			ImageMappingPerformerRequest(const ImageMappingPerformerRequest&);
-			void operator=(const ImageMappingPerformerRequest&);
+			ImageMappingPerformerRequest(const ImageMappingPerformerRequest& /*other*/);
+			void operator=(const ImageMappingPerformerRequest& /*other*/);
 
 			typename ResultImageDescriptorType::ConstPointer _spResultDescriptor;
 

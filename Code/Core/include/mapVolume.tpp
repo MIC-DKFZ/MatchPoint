@@ -25,7 +25,7 @@
 #define __MAP_VOLUME_TPP
 
 #include "mapVolume.h"
-#include <assert.h>
+#include <cassert>
 
 namespace map
 {
@@ -345,7 +345,7 @@ namespace map
 			{
 				os << "Dimension: " << volume.getVolumeDimension() << std::endl;
 				os << "Origin: " << volume.getOrigin() << std::endl;
-				os << "Size: " << volume.getSize() << std::endl;;
+				os << "Size: " << volume.getSize() << std::endl;
 				return os;
 			}
 

@@ -40,7 +40,7 @@ namespace iro
   {
     MappingError::Type result = MappingError::NoFailure;
 
-    for (typename PathType::ConstPathElementIterator pos = path->getBegin(); pos!=path->getEnd(); ++pos)
+    for (auto pos = path->getBegin(); pos!=path->getEnd(); ++pos)
     {
       typename TPathTraits::TransformationInfoTraitsType::ConstPointer relevantInfo = (*pos)->getContinuousTransformation();
       if (entity->getDataRepresentation()==DataRepresentation::Discrete)
@@ -53,13 +53,13 @@ namespace iro
         result = MappingError::NoDataSupport;
         break;
       }
-      else
-      {
+      
+      
         if (relevantInfo->getFOVScope()!=FOVScope::Global)
         {
           result = MappingError::NoMappingGuarantee;
         }
-      }
+      
     }
 
     return result;

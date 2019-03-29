@@ -48,7 +48,7 @@ namespace map
 		class MAPAlgorithms_EXPORT IterativeAlgorithmBase : public facet::IterativeAlgorithmInterface
 		{
 		public:
-			typedef IterativeAlgorithmBase Self;
+			using Self = IterativeAlgorithmBase;
 
 			/*! @brief gets the number of the algorithm's current iteration
 			  @eguarantee strong
@@ -56,17 +56,17 @@ namespace map
 			  @retval an IterationCountType specifying the current iteration
 			  @sa IterationCountType
 			 */
-			IterationCountType getCurrentIteration() const;
+			IterationCountType getCurrentIteration() const override;
 
 			/*! @brief gets the maximum number of the algorithm's iterations
 			  @eguarantee strong
 			  @return returns the algorithm's maximum iterations count. If the optimizer has no iteration count (hasMaxIterationCount()==false), return is always 0.
 			 */
-			IterationCountType getMaxIterations() const;
+			IterationCountType getMaxIterations() const override;
 
 		protected:
 			IterativeAlgorithmBase();
-			virtual ~IterativeAlgorithmBase();
+			~IterativeAlgorithmBase() override;
 
 			/*! return the current number of iterations.
 			Will be called by getCurrentIteration() if hasIterationCount() returns true.
@@ -85,11 +85,11 @@ namespace map
 		private:
 
 			//No copy constructor allowed
-			IterativeAlgorithmBase(const Self& source); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			IterativeAlgorithmBase(const Self& source) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

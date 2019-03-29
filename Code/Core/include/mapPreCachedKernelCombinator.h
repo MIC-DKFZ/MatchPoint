@@ -51,29 +51,29 @@ namespace map
 			typedef PreCachedKernelCombinator< VInputDimensions, VInterimDimensions, VOutputDimensions >  Self;
 			typedef RegistrationKernelCombinatorBase< VInputDimensions, VInterimDimensions, VOutputDimensions >
 			Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
-			typedef typename Superclass::Kernel1BaseType								Kernel1BaseType;
-			typedef typename Superclass::Kernel1BasePointer							Kernel1BasePointer;
-			typedef typename Superclass::Kernel2BaseType								Kernel2BaseType;
-			typedef typename Superclass::Kernel2BasePointer							Kernel2BasePointer;
+			using Kernel1BaseType = typename Superclass::Kernel1BaseType;
+			using Kernel1BasePointer = typename Superclass::Kernel1BasePointer;
+			using Kernel2BaseType = typename Superclass::Kernel2BaseType;
+			using Kernel2BasePointer = typename Superclass::Kernel2BasePointer;
 
-			typedef typename Superclass::CombinedKernelBaseType					CombinedKernelBaseType;
-			typedef typename Superclass::CombinedKernelBasePointer			CombinedKernelBasePointer;
+			using CombinedKernelBaseType = typename Superclass::CombinedKernelBaseType;
+			using CombinedKernelBasePointer = typename Superclass::CombinedKernelBasePointer;
 
-			typedef typename Superclass::RequestType										RequestType;
+			using RequestType = typename Superclass::RequestType;
 
-			typedef typename Superclass::InputFieldRepresentationType		InputFieldRepresentationType;
-			typedef typename Superclass::InterimFieldRepresentationType	InterimFieldRepresentationType;
+			using InputFieldRepresentationType = typename Superclass::InputFieldRepresentationType;
+			using InterimFieldRepresentationType = typename Superclass::InterimFieldRepresentationType;
 
-			typedef typename Superclass::PaddingVectorType							PaddingVectorType;
+			using PaddingVectorType = typename Superclass::PaddingVectorType;
 
 			typedef PreCachedRegistrationKernel<VInputDimensions, VInterimDimensions> Kernel1Type;
-			typedef typename Kernel1Type::Pointer                        Kernel1Pointer;
+			using Kernel1Pointer = typename Kernel1Type::Pointer;
 
 			typedef PreCachedRegistrationKernel<VInterimDimensions, VOutputDimensions>  Kernel2Type;
-			typedef typename Kernel2Type::Pointer                        Kernel2Pointer;
+			using Kernel2Pointer = typename Kernel2Type::Pointer;
 
 			itkTypeMacro(PreCachedKernelCombinator, RegistrationKernelCombinatorBase);
 			itkNewMacro(Self);
@@ -93,21 +93,21 @@ namespace map
 				 * representation of the second kernel.
 				 * @pre in its current implementation matrix combination is only possible when input, interim and output dimension are equal.
 				 */
-			virtual CombinedKernelBasePointer combineKernels(const RequestType& request,
+			CombinedKernelBasePointer combineKernels(const RequestType& request,
 					const InputFieldRepresentationType* pInputFieldRepresentation,
 					bool usePadding = false,
-					const PaddingVectorType& paddingVector = PaddingVectorType(0.0)) const;
+					const PaddingVectorType& paddingVector = PaddingVectorType(0.0)) const override;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
 			 * this request.
 			 * @return Indicates if the provider offers the right solution.
 			 * @retval true Provider can handle the request.
 			 * @retval false Provider is not able to handle the request.*/
-			virtual bool canHandleRequest(const RequestType& request) const;
+			bool canHandleRequest(const RequestType& request) const override;
 
 			/*! Returns an ID of the provider as string. Calls getStaticProviderName().
 			 * @return Service provider ID.*/
-			virtual String getProviderName() const;
+			String getProviderName() const override;
 
 			/*! Returns an ID of the provider as string.
 			 * @return Service provider ID.*/
@@ -117,11 +117,11 @@ namespace map
 			 * @return Service provider ID.
 			 * @remark It is a return by value, becaus it might be possible that the description is generated on line
 			 * when calling this method.*/
-			virtual String getDescription() const;
+			String getDescription() const override;
 
 		protected:
 			PreCachedKernelCombinator() {};
-			virtual ~PreCachedKernelCombinator() {};
+			~PreCachedKernelCombinator() override {};
 
 			/* Member tries to combine the given kernels as matrices and generate a new matrix
 			 * based combined kernel. This will only be successfull if both support matrix

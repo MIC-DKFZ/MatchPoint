@@ -139,7 +139,7 @@ int main(int argc, char** argv)
   {
     invListPos = appData._inversionList.begin();
 
-    for (map::apps::combineR::ApplicationData::RegistrationListType::iterator regPos = appData._spRegList.begin(); regPos != appData._spRegList.end(); ++regPos, ++invListPos)
+    for (auto regPos = appData._spRegList.begin(); regPos != appData._spRegList.end(); ++regPos, ++invListPos)
     {
       if (*invListPos)
       {
@@ -182,7 +182,7 @@ int main(int argc, char** argv)
 
   try
   {
-     for (map::apps::combineR::ApplicationData::RegistrationListType::iterator regPos = appData._spRegList.begin()+1; regPos != appData._spRegList.end(); ++regPos)
+     for (auto regPos = appData._spRegList.begin()+1; regPos != appData._spRegList.end(); ++regPos)
     {
         std::cout << std::endl << "combine registration #"<< regPos - appData._spRegList.begin() + 1 << "... ";
 
@@ -227,10 +227,10 @@ int main(int argc, char** argv)
       std::cerr << "Error!!! Unable to write combined registration." << std::endl;
       return 7;
     }
-    else
-    {
+    
+    
       std::cout << "done." << std::endl;
-    }
+    
 
   }
   catch (::itk::ExceptionObject& e)

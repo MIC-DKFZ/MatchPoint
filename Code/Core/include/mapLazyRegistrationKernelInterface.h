@@ -49,7 +49,7 @@ namespace map
 
 			typedef functors::TransformGenerationFunctor<VInputDimensions, VOutputDimensions>
 			TransformGenerationFunctorType;
-			typedef typename TransformGenerationFunctorType::ConstPointer TransformGenerationFunctorConstPointer;
+			using TransformGenerationFunctorConstPointer = typename TransformGenerationFunctorType::ConstPointer;
 
 			/*! sets the field's functor
 			  @eguarantee no fail
@@ -75,7 +75,7 @@ namespace map
 
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #endif

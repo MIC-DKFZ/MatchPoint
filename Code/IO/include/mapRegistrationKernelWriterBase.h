@@ -47,11 +47,11 @@ namespace map
 		{
 		public:
 			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>			KernelBaseType;
-			typedef typename KernelBaseType::Pointer																KernelBasePointer;
+			using KernelBasePointer = typename KernelBaseType::Pointer;
 
 			typedef RegistrationKernelWriteRequest<VInputDimensions, VOutputDimensions> RequestType;
 
-			typedef core::FieldRepresentationDescriptor<VInputDimensions>							InputFieldRepresentationType;
+			using InputFieldRepresentationType = core::FieldRepresentationDescriptor<VInputDimensions>;
 
 
 			itkStaticConstMacro(InputDimensions, unsigned int, VInputDimensions);
@@ -59,9 +59,9 @@ namespace map
 
 			/*! Standard class typedefs. */
 			typedef RegistrationKernelWriterBase<VInputDimensions, VOutputDimensions>  Self;
-			typedef core::services::ServiceProvider<RequestType>	 Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = core::services::ServiceProvider<RequestType>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(RegistrationKernelWriterBase, ServiceProvider);
 
@@ -79,10 +79,10 @@ namespace map
 		protected:
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 			RegistrationKernelWriterBase();
-			virtual ~RegistrationKernelWriterBase();
+			~RegistrationKernelWriterBase() override;
 
 		private:
 			RegistrationKernelWriterBase(const Self&);  //purposely not implemented

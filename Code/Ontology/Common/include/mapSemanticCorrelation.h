@@ -39,24 +39,24 @@ namespace iro
 		{
     public:
       typedef SemanticCorrelation<TInformationEntityTraits, TUIDPolicy> Self;
-      typedef ::std::shared_ptr<Self> Pointer;
-      typedef ::std::shared_ptr<const Self> ConstPointer;
+      using Pointer = ::std::shared_ptr<Self>;
+      using ConstPointer = ::std::shared_ptr<const Self>;
 
-      typedef typename TInformationEntityTraits::ConstPointer  ConstIEPointer;
-      typedef typename TInformationEntityTraits::Type          IEType;
-      typedef typename TInformationEntityTraits::UIDType       IEUIDType;
-      typedef ISemanticCorrelationType::ConstPointer           ConstTypePointer;
+      using ConstIEPointer = typename TInformationEntityTraits::ConstPointer;
+      using IEType = typename TInformationEntityTraits::Type;
+      using IEUIDType = typename TInformationEntityTraits::UIDType;
+      using ConstTypePointer = ISemanticCorrelationType::ConstPointer;
 
-      typedef typename TUIDPolicy::UIDType                             UIDType;
+      using UIDType = typename TUIDPolicy::UIDType;
       
     protected:
-      typedef std::list<ConstIEPointer> EntityListType;
+      using EntityListType = std::list<ConstIEPointer>;
     
     public:
 
-      typedef typename EntityListType::iterator        EntityIterator;
-      typedef typename EntityListType::const_iterator  ConstEntityIterator;
-      typedef typename EntityListType::size_type       SizeType;
+      using EntityIterator = typename EntityListType::iterator;
+      using ConstEntityIterator = typename EntityListType::const_iterator;
+      using SizeType = typename EntityListType::size_type;
  
       EntityIterator getCorrelatedEntitiesBegin();
       ConstEntityIterator getCorrelatedEntitiesBegin() const;

@@ -37,7 +37,7 @@ namespace map
 		template <class TPointSet>
 		bool saveLandMarksToFile(const core::String& lmFileName, const TPointSet* pointSet)
 		{
-      typedef TPointSet LandmarksType;
+      using LandmarksType = TPointSet;
 
 			std::ofstream pointsFile;
 			pointsFile.open(lmFileName.c_str());

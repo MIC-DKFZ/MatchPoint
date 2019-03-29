@@ -33,7 +33,7 @@ namespace map
 		////////////////////////////////////////////////////////////////////////
 
 		MissingIdentifierException::
-		MissingIdentifierException() : Superclass()
+		MissingIdentifierException()  
 		{};
 
 		MissingIdentifierException::
@@ -47,16 +47,16 @@ namespace map
 		{};
 
 		MissingIdentifierException::
-		~MissingIdentifierException() throw()
-		{};
+		~MissingIdentifierException() noexcept
+		= default;
 
 
 
 		MissingIdentifierException::BaseExceptionType*
 		MissingIdentifierException::
-		clone() const throw()
+		clone() const noexcept
 		{
-			BaseExceptionType* pResult = 0;
+			BaseExceptionType* pResult = nullptr;
 
 			try
 			{
@@ -82,7 +82,7 @@ namespace map
 		////////////////////////////////////////////////////////////////////////
 
 		OutOfRangeException::
-		OutOfRangeException() : Superclass()
+		OutOfRangeException()  
 		{};
 
 		OutOfRangeException::
@@ -95,16 +95,16 @@ namespace map
 		{};
 
 		OutOfRangeException::
-		~OutOfRangeException() throw()
-		{};
+		~OutOfRangeException() noexcept
+		= default;
 
 
 
 		OutOfRangeException::BaseExceptionType*
 		OutOfRangeException::
-		clone() const throw()
+		clone() const noexcept
 		{
-			BaseExceptionType* pResult = 0;
+			BaseExceptionType* pResult = nullptr;
 
 			try
 			{
@@ -130,7 +130,7 @@ namespace map
 		////////////////////////////////////////////////////////////////////////
 
 		SDStreamingException::
-		SDStreamingException() : Superclass()
+		SDStreamingException()  
 		{};
 
 		SDStreamingException::
@@ -143,16 +143,16 @@ namespace map
 		{};
 
 		SDStreamingException::
-		~SDStreamingException() throw()
-		{};
+		~SDStreamingException() noexcept
+		= default;
 
 
 
 		SDStreamingException::BaseExceptionType*
 		SDStreamingException::
-		clone() const throw()
+		clone() const noexcept
 		{
-			BaseExceptionType* pResult = 0;
+			BaseExceptionType* pResult = nullptr;
 
 			try
 			{

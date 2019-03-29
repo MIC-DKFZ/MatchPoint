@@ -47,18 +47,18 @@ namespace map
 		{
 		public:
 			typedef RegistrationKernelBase<VInputDimensions, VInterimDimensions>			Kernel1BaseType;
-			typedef typename Kernel1BaseType::Pointer																Kernel1BasePointer;
+			using Kernel1BasePointer = typename Kernel1BaseType::Pointer;
 			typedef RegistrationKernelBase<VInterimDimensions, VOutputDimensions>		Kernel2BaseType;
-			typedef typename Kernel2BaseType::Pointer																Kernel2BasePointer;
+			using Kernel2BasePointer = typename Kernel2BaseType::Pointer;
 
 			typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions>			CombinedKernelBaseType;
-			typedef typename CombinedKernelBaseType::Pointer												CombinedKernelBasePointer;
+			using CombinedKernelBasePointer = typename CombinedKernelBaseType::Pointer;
 
 			typedef RegistrationCombinationRequest<VInputDimensions, VInterimDimensions, VOutputDimensions>
 			RequestType;
 
-			typedef FieldRepresentationDescriptor<VInputDimensions>							InputFieldRepresentationType;
-			typedef FieldRepresentationDescriptor<VInterimDimensions>						InterimFieldRepresentationType;
+			using InputFieldRepresentationType = FieldRepresentationDescriptor<VInputDimensions>;
+			using InterimFieldRepresentationType = FieldRepresentationDescriptor<VInterimDimensions>;
 
 			typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectMappingVectorType
 			PaddingVectorType;
@@ -70,9 +70,9 @@ namespace map
 			/*! Standard class typedefs. */
 			typedef RegistrationKernelCombinatorBase<VInputDimensions, VInterimDimensions, VOutputDimensions>
 			Self;
-			typedef services::ServiceProvider<RequestType>	 Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = services::ServiceProvider<RequestType>;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(RegistrationKernelCombinatorBase, ServiceProvider);
 
@@ -99,10 +99,10 @@ namespace map
 		protected:
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 			RegistrationKernelCombinatorBase();
-			virtual ~RegistrationKernelCombinatorBase();
+			~RegistrationKernelCombinatorBase() override;
 
 		private:
 			RegistrationKernelCombinatorBase(const Self&);  //purposely not implemented

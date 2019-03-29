@@ -63,17 +63,17 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef DLLHandle  Self;
-			typedef DLLInfo  Superclass;
-			typedef ::itk::SmartPointer<Self>  Pointer;
-			typedef ::itk::SmartPointer<const Self>  ConstPointer;
+			using Self = DLLHandle;
+			using Superclass = DLLInfo;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			// Ugly stuff for library handles
 			// They are different on several different OS's
 #if defined(__hpux)
 			typedef shl_t LibraryHandleType;
 #elif defined(_WIN32) && !defined(__CYGWIN__)
-			typedef HMODULE LibraryHandleType;
+			using LibraryHandleType = HMODULE;
 #elif defined(__APPLE__)
 #if MAC_OS_X_VERSION_MAX_ALLOWED < 1030
 			typedef NSModule LibraryHandleType;
@@ -110,13 +110,13 @@ namespace map
 					  const core::String& libraryFile,
 					  const core::String& profileStr);
 
-			~DLLHandle();
+			~DLLHandle() override;
 
 			LibraryHandleType _libraryHandle;
 
 		private:
-			DLLHandle(const Self&); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			DLLHandle(const Self&) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 
 		};
 

@@ -61,7 +61,7 @@ namespace map
 			{
 			};
 
-		}
+		}  // namespace itk
 	} // end namespace algorithm
 } // end namespace map
 

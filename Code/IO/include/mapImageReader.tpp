@@ -64,7 +64,7 @@ namespace map
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		load2D()
 		{
-			typedef ::itk::ImageFileReader< InputImageType  > ImageReaderType;
+			using ImageReaderType = ::itk::ImageFileReader<InputImageType>;
 			typedef ::itk::RescaleIntensityImageFilter< InputImageType, InputImageType > RescaleFilterType;
 			typedef ::itk::CastImageFilter< InputImageType, OutputImageType > CastFilterType;
 
@@ -75,7 +75,7 @@ namespace map
 			rescaleFilter->SetOutputMinimum(static_cast<TInputPixel>(_rescaleMin));
 			rescaleFilter->SetOutputMaximum(static_cast<TInputPixel>(_rescaleMax));
 
-			imageReader->SetFileName(_fileName.c_str());
+			imageReader->SetFileName(_fileName);
 			rescaleFilter->SetInput(imageReader->GetOutput());
 
 			if (_rescaleImage)
@@ -113,8 +113,8 @@ namespace map
 		{
 			toArray.clear();
 
-			ITKMetaDataDictionaryArray::const_iterator itr = fromArray->begin();
-			ITKMetaDataDictionaryArray::const_iterator end = fromArray->end();
+			auto itr = fromArray->begin();
+			auto end = fromArray->end();
 
 			while (itr != end)
 			{
@@ -129,8 +129,8 @@ namespace map
 		prepareNumericSource() const
 		{
 			//mumeric series image reader
-			typedef ::itk::ImageSeriesReader< InputImageType  > SeriesReaderType;
-			typedef ::itk::NumericSeriesFileNames NamesType;
+			using SeriesReaderType = ::itk::ImageSeriesReader<InputImageType>;
+			using NamesType = ::itk::NumericSeriesFileNames;
 
 			typename SeriesReaderType::Pointer  seriesReader  = SeriesReaderType::New();
 			NamesType::Pointer names = NamesType::New();
@@ -141,7 +141,7 @@ namespace map
 
 			seriesReader->SetFileNames(names->GetFileNames());
 
-			if (seriesReader->GetFileNames().size() == 0)
+			if (seriesReader->GetFileNames().empty())
 			{
 				mapDefaultExceptionMacro( <<
 										  "Image reader is not correctly configured. Preparing a series reading of a numeric source no(!) files were found. Pattern: "
@@ -173,7 +173,7 @@ namespace map
 			::map::core::String  dir = dispatch.getPath();
 			::map::core::String  strippedFileName = dispatch.getFullName();
 
-			typedef itk::GDCMSeriesFileNames NamesGeneratorType;
+			using NamesGeneratorType = itk::GDCMSeriesFileNames;
 			NamesGeneratorType::Pointer nameGenerator = NamesGeneratorType::New();
 			nameGenerator->SetInputDirectory(dir);
 			nameGenerator->SetUseSeriesDetails(true);
@@ -192,7 +192,7 @@ namespace map
 				mapLogDebugStaticMacro( << "Checking found DICOM series");
 
 				//check the found series for the filename to pick the right series correlated to the passed filename
-				while (seriesUIDs.size() > 0)
+				while (!seriesUIDs.empty())
 				{
 					fileNames = nameGenerator->GetFileNames(seriesUIDs.back());
 					mapLogDebugStaticMacro( << "Checking series: " << seriesUIDs.back() << " (file count: " <<
@@ -213,12 +213,12 @@ namespace map
 				}
 			}
 
-			typedef ::itk::ImageSeriesReader< InputImageType  > SeriesReaderType;
+			using SeriesReaderType = ::itk::ImageSeriesReader<InputImageType>;
 			typename SeriesReaderType::Pointer  seriesReader  = SeriesReaderType::New();
 
 			seriesReader->SetFileNames(fileNames);
 
-			if (seriesReader->GetFileNames().size() == 0)
+			if (seriesReader->GetFileNames().empty())
 			{
 				mapDefaultExceptionMacro( <<
 										  "Image reader is not correctly configured. Preparing a series reading of a DICOM source no(!) dicom files were found. search location: "
@@ -236,9 +236,9 @@ namespace map
 		prepareNormalSource() const
 		{
 			//Normal image reader (no series read style)
-			typedef ::itk::ImageFileReader< InputImageType  > ImageReaderType;
+			using ImageReaderType = ::itk::ImageFileReader<InputImageType>;
 			typename ImageReaderType::Pointer  imageReader  = ImageReaderType::New();
-			imageReader->SetFileName(_fileName.c_str());
+			imageReader->SetFileName(_fileName);
 
 			typename itk::ImageSource<typename ImageReader<TInputPixel, TOutputPixel, iDimension>::InputImageType>::Pointer
 			genericReader = imageReader.GetPointer();
@@ -281,7 +281,7 @@ namespace map
 			}
 			else if (_seriesReadStyle == ImageSeriesReadStyle::Default)
 			{
-				bool isDir = itksys::SystemTools::FileIsDirectory(_fileName.c_str());
+				bool isDir = itksys::SystemTools::FileIsDirectory(_fileName);
 
 				if (isDir || sTemp == ".dcm" || sTemp == ".ima")
 				{
@@ -312,10 +312,10 @@ namespace map
 
 			_spImage = imageCaster->GetOutput();
 
-			typedef ::itk::ImageFileReader< InputImageType  > ImageReaderType;
-			typedef ::itk::ImageSeriesReader< InputImageType  > ImageSeriesReaderType;
-			ImageReaderType* pFileReader = dynamic_cast<ImageReaderType*>(spReader.GetPointer());
-			ImageSeriesReaderType* pSeriesReader = dynamic_cast<ImageSeriesReaderType*>(spReader.GetPointer());
+			using ImageReaderType = ::itk::ImageFileReader<InputImageType>;
+			using ImageSeriesReaderType = ::itk::ImageSeriesReader<InputImageType>;
+			auto* pFileReader = dynamic_cast<ImageReaderType*>(spReader.GetPointer());
+			auto* pSeriesReader = dynamic_cast<ImageSeriesReaderType*>(spReader.GetPointer());
 
 			if (pFileReader)
 			{
@@ -396,7 +396,7 @@ namespace map
 		};
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
-		const bool
+		bool
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		getRescaleImage() const
 		{
@@ -416,7 +416,7 @@ namespace map
 		};
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
-		const unsigned int
+		unsigned int
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		getUpperSeriesLimit() const
 		{
@@ -436,7 +436,7 @@ namespace map
 		};
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
-		const ImageSeriesReadStyle::Type
+		ImageSeriesReadStyle::Type
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		getSeriesReadStyle() const
 		{
@@ -458,7 +458,7 @@ namespace map
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
 		typename ImageReader<TInputPixel, TOutputPixel, iDimension>::OutputImageType*
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
-		GetOutput(void)
+		GetOutput()
 		{
 			if (!_upToDate)
 			{
@@ -497,8 +497,7 @@ namespace map
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
 		ImageReader<TInputPixel, TOutputPixel, iDimension>::
 		~ImageReader()
-		{
-		};
+		= default;
 
 
 		template <typename TInputPixel, typename TOutputPixel, unsigned int iDimension>
@@ -533,6 +532,6 @@ namespace map
 		};
 
 
-	}
-}
+	}  // namespace io
+}  // namespace map
 #endif

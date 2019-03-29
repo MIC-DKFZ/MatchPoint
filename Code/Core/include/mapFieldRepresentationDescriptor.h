@@ -55,30 +55,30 @@ namespace map
 			public structuredData::StreamingInterface
 		{
 		public:
-			typedef FieldRepresentationDescriptor<VDimensions> Self;
-			typedef itk::LightObject Superclass;
-			typedef itk::SmartPointer<Self> Pointer;
-			typedef itk::SmartPointer<const Self> ConstPointer;
+			using Self = FieldRepresentationDescriptor<VDimensions>;
+			using Superclass = itk::LightObject;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(FieldRepresentationDescriptor, itk::LightObject);
 			itkNewMacro(Self);
 
-			typedef typename discrete::Elements<VDimensions>::ImageRegionType  ImageRegionType;
-			typedef typename continuous::Volume<VDimensions>                   VolumeType;
+			using ImageRegionType = typename discrete::Elements<VDimensions>::ImageRegionType;
+			using VolumeType = typename continuous::Volume<VDimensions>;
 
 			/** Spacing typedef support.  Spacing holds the size of a pixel. The
 			 * spacing is the geometric distance between descriptor samples.
 			 * @remark ITK only supports positive spacing value: negative values may cause
 			 * undesirable results.  */
-			typedef typename continuous::Elements<VDimensions>::SpacingType    SpacingType;
+			using SpacingType = typename continuous::Elements<VDimensions>::SpacingType;
 			/** Origin typedef support.  The origin is the geometric coordinates
 			 * of the index (0,0). */
-			typedef typename continuous::Elements<VDimensions>::PointType      PointType;
+			using PointType = typename continuous::Elements<VDimensions>::PointType;
 			/** Size typedef support. A size is used to define the bounds
 			 * of the field representation.
 			 * @remark In contrast to the itk::ImageRegion this size is the continuous
 			 * size (therefor size of the image and not the number of voxels). */
-			typedef typename continuous::Elements<VDimensions>::VolumeSizeType SizeType;
+			using SizeType = typename continuous::Elements<VDimensions>::VolumeSizeType;
 
 			/** Direction typedef support.  The Direction is a matrix of
 			 * direction cosines that specify the direction between samples.
@@ -89,7 +89,7 @@ namespace map
 			@eguarantee strong
 			@return a const SizeType value
 			*/
-			inline const SizeType getSize() const;
+			inline SizeType getSize() const;
 
 
 			/*! sets the field size
@@ -103,7 +103,7 @@ namespace map
 			@eguarantee strong
 			@return a const PointType value
 			*/
-			inline const PointType getOrigin() const;
+			inline PointType getOrigin() const;
 
 			/*! sets the field origin
 			@eguarantee strong
@@ -116,7 +116,7 @@ namespace map
 			@eguarantee strong
 			@return a const SpacingType value
 			*/
-			inline const SpacingType getSpacing() const;
+			inline SpacingType getSpacing() const;
 
 			/*! sets the field spacing
 			@eguarantee strong
@@ -128,7 +128,7 @@ namespace map
 			@eguarantee strong
 			@return a const DirectionType value
 			*/
-			inline const DirectionType getDirection() const;
+			inline DirectionType getDirection() const;
 
 			/*! sets the field direction
 			* The direction cosines are vectors that point from one pixel to the next.
@@ -179,13 +179,13 @@ namespace map
 			@eguarantee strong
 			@return a Volume containing the represented volume
 			*/
-			inline const VolumeType getRepresentedVolume() const;
+			inline VolumeType getRepresentedVolume() const;
 
 			bool operator == (const Self& frd) const;
 
 		protected:
 			FieldRepresentationDescriptor();
-			virtual ~FieldRepresentationDescriptor();
+			~FieldRepresentationDescriptor() override;
 
 			/*! Helper method that computes a matrix (direction and spacing)
 			  that can be used to convert points to index. It is equal to the
@@ -194,12 +194,12 @@ namespace map
 			*/
 			DirectionType computePhysicalPointToIndexMatrix() const;
 
-			virtual structuredData::StreamingInterface::ElementPointer streamToSDInternal() const;
+			structuredData::StreamingInterface::ElementPointer streamToSDInternal() const override;
 
-			virtual void streamFromSDInternal(const structuredData::Element* pElement);
+			void streamFromSDInternal(const structuredData::Element* pElement) override;
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 			//using PIMPL idiom to realize strong exception guarantee
 			SizeType* _pFieldSize;
@@ -281,8 +281,8 @@ namespace map
 								  const typename FieldRepresentationDescriptor<TVolume::VolumeDimension>::DirectionType& direction);
 
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapFieldRepresentationDescriptor.tpp"

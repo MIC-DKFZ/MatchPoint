@@ -172,7 +172,7 @@ namespace itk
   template <typename ScalarType, unsigned int NDimensions>
   const typename MatrixOffsetBasedTranslationTransform<ScalarType, NDimensions>::ParametersType
   & MatrixOffsetBasedTranslationTransform<ScalarType, NDimensions>
-  ::GetFixedParameters(void) const
+  ::GetFixedParameters() const
   {
     this->m_FixedParameters.SetSize(0);
     return this->m_FixedParameters;
@@ -194,7 +194,7 @@ namespace itk
   template <typename ScalarType, unsigned int NDimensions>
   void
   MatrixOffsetBasedTranslationTransform<ScalarType, NDimensions>
-  ::ComputeJacobianWithRespectToPosition(const InputPointType&,
+  ::ComputeJacobianWithRespectToPosition(const InputPointType& /*unused*/,
                                          JacobianType& jac) const
   {
     // the Jacobian is constant for this transform, and it has already been
@@ -203,6 +203,6 @@ namespace itk
   }
 
 
-} // namespace
+}  // namespace itk
 
 #endif

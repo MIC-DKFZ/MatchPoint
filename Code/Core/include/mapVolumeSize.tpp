@@ -23,7 +23,7 @@
 #ifndef __MAP_VOLUME_SIZE_TPP
 #define __MAP_VOLUME_SIZE_TPP
 
-#include <assert.h>
+#include <cassert>
 
 #include "mapVolumeSize.tpp"
 #include "mapConvert.h"
@@ -161,7 +161,7 @@ namespace map
 			}
 
 			template<unsigned int VDimensions>
-			const typename VolumeSize<VDimensions>::SizeValueType
+			typename VolumeSize<VDimensions>::SizeValueType
 			VolumeSize<VDimensions>::
 			operator[](unsigned int dim) const
 			{
@@ -254,7 +254,7 @@ namespace map
 			VolumeSize<VDimensions>::
 			streamFromStructuredData(const structuredData::Element* pElement)
 			{
-				if (!pElement)
+				if (pElement == nullptr)
 				{
 					mapDefaultExceptionStaticMacro( <<
 					                                "Error: convert structured data into VolumeSize. Reason: passed structured element point to NULL.");
@@ -270,7 +270,7 @@ namespace map
 
 				Self vs;
 
-				for (structuredData::Element::ConstSubElementIteratorType pos = pElement->getSubElementBegin();
+				for (auto pos = pElement->getSubElementBegin();
 				     pos != pElement->getSubElementEnd(); ++pos)
 				{
 					unsigned int rowID = core::convert::toUInt((*pos)->getAttribute(tags::Row));

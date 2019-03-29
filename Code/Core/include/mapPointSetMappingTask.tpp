@@ -58,7 +58,7 @@ namespace map
 		template <class TRegistration, class TInputPointSet, class TResultPointSet, template <class> class TLoadPolicy>
 		typename PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::ResultPointSetPointer
 		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::
-		getResultPointSet(void)
+		getResultPointSet()
 		{
 			if (_spResultPoints.IsNull())
 			{
@@ -89,7 +89,7 @@ namespace map
 		template <class TRegistration, class TInputPointSet, class TResultPointSet, template <class> class TLoadPolicy>
 		void
 		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::
-		doExecution(void) const
+		doExecution() const
 		{
 			if (_spInputPoints.IsNull())
 			{
@@ -117,7 +117,7 @@ namespace map
 		template <class TRegistration, class TInputPointSet, class TResultPointSet, template <class> class TLoadPolicy>
 		void
 		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::
-		clearResults(void) const
+		clearResults() const
 		{
 			_spResultPoints = NULL;
 		}
@@ -125,7 +125,7 @@ namespace map
 		template <class TRegistration, class TInputPointSet, class TResultPointSet, template <class> class TLoadPolicy>
 		void
 		PointSetMappingTask<TRegistration, TInputPointSet, TResultPointSet, TLoadPolicy>::
-		clearInputs(void)
+		clearInputs()
 		{
 			_spInputPoints = NULL;
 		}

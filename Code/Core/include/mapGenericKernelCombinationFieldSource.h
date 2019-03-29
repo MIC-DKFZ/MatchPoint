@@ -46,19 +46,19 @@ namespace map
         public:
             typedef typename ::map::core::RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectFieldType OutputImageType;
 
-            typedef GenericKernelCombinationFieldSource   Self;
-            typedef ::itk::GenerateImageSource< OutputImageType > Superclass;
-            typedef ::itk::SmartPointer< Self >                Pointer;
-            typedef ::itk::SmartPointer< const Self>           ConstPointer;
+            using Self = GenericKernelCombinationFieldSource<VInputDimensions, VInterimDimensions, VOutputDimensions, TScalarType>;
+            using Superclass = ::itk::GenerateImageSource<OutputImageType>;
+            using Pointer = ::itk::SmartPointer<Self>;
+            using ConstPointer = ::itk::SmartPointer<const Self>;
 
             /** Output image typedefs */
-            typedef typename OutputImageType::PixelType     PixelType;
-            typedef typename OutputImageType::RegionType    RegionType;
-            typedef typename OutputImageType::SpacingType   SpacingType;
-            typedef typename OutputImageType::PointType     PointType;
-            typedef typename OutputImageType::DirectionType DirectionType;
+            using PixelType = typename OutputImageType::PixelType;
+            using RegionType = typename OutputImageType::RegionType;
+            using SpacingType = typename OutputImageType::SpacingType;
+            using PointType = typename OutputImageType::PointType;
+            using DirectionType = typename OutputImageType::DirectionType;
 
-            typedef typename RegionType::SizeType SizeType;
+            using SizeType = typename RegionType::SizeType;
 
             typedef RegistrationKernelBase<VInputDimensions, VInterimDimensions> SourceKernel1BaseType;
             typedef RegistrationKernelBase<VInterimDimensions, VOutputDimensions> SourceKernel2BaseType;
@@ -105,8 +105,8 @@ namespace map
             void operator=(const GenericKernelCombinationFieldSource &);  //purposely not implemented
         };
 
-    }
-}
+    }  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapGenericKernelCombinationFieldSource.tpp"

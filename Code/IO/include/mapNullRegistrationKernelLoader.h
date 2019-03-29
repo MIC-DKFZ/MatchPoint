@@ -44,16 +44,16 @@ namespace map
 		public:
 			/*! Standard class typedefs. */
 			typedef NullRegistrationKernelLoader<VInputDimensions, VOutputDimensions>				Self;
-			typedef RegistrationKernelLoaderBase   Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Superclass = RegistrationKernelLoaderBase;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(NullRegistrationKernelLoader, RegistrationKernelLoaderBase);
 			itkNewMacro(Self);
 
 			typedef core::RegistrationKernelBase<VInputDimensions, VOutputDimensions>	KernelBaseType;
-			typedef typename KernelBaseType::Pointer	KernelBasePointer;
-			typedef typename Superclass::RequestType	RequestType;
+			using KernelBasePointer = typename KernelBaseType::Pointer;
+			using RequestType = typename Superclass::RequestType;
 			typedef  core::NullRegistrationKernel<VInputDimensions, VOutputDimensions> KernelType;
 
 			/*! Uses the passed request data to check if the provider is able to provide the service for
@@ -61,11 +61,11 @@ namespace map
 			 * @return Indicates if the provider offers the right solution.
 			 * @retval true Provider can handle the request.
 			 * @retval false Provider is not able to handle the request.*/
-			virtual bool canHandleRequest(const RequestType& request) const;
+			bool canHandleRequest(const RequestType& request) const override;
 
 			/*! Returns an ID of the provider as string. Calls getStaticProviderName().
 			 * @return Service provider ID.*/
-			virtual  core::String getProviderName() const;
+			 core::String getProviderName() const override;
 
 			/*! Returns an ID of the provider as string.
 			 * @return Service provider ID.*/
@@ -75,7 +75,7 @@ namespace map
 			 * @return Service provider ID.
 			 * @remark It is a return by value, becaus it might be possible that the description is generated on line
 			 * when calling this method.*/
-			virtual  core::String getDescription() const;
+			 core::String getDescription() const override;
 
 			/*! Loads kernel.
 				 * Returns a smart pointer to the loaded kernel specified by the request.
@@ -85,7 +85,7 @@ namespace map
 				 * @return Smart pointer to the loaded kernel.
 				 * @pre request must be valid.
 				 */
-			virtual GenericKernelPointer loadKernel(const RequestType& request) const;
+			GenericKernelPointer loadKernel(const RequestType& request) const override;
 
 			/*! Adds a given generic kernel to the passed registration as inverse kernel.
 				 * @eguarantee strong
@@ -94,8 +94,8 @@ namespace map
 			* @pre pKernel must be valid and of correct dimensionality or NULL.
 			* @pre pRegistration must be valid and of correct dimensionality.
 				 */
-			virtual void addAsInverseKernel(GenericKernelType* pKernel,
-											::map::core::RegistrationBase::Pointer& spRegistration) const;
+			void addAsInverseKernel(GenericKernelType* pKernel,
+											::map::core::RegistrationBase::Pointer& spRegistration) const override;
 
 			/*! Adds a given generic kernel to the passed registration as direct kernel.
 				 * @eguarantee strong
@@ -104,13 +104,13 @@ namespace map
 				 * @pre pKernel must be valid and of correct dimensionality or NULL.
 			* @pre pRegistration must be valid and of correct dimensionality.
 				 */
-			virtual void addAsDirectKernel(GenericKernelType* pKernel,
-										   core::RegistrationBase::Pointer& spRegistration) const;
+			void addAsDirectKernel(GenericKernelType* pKernel,
+										   core::RegistrationBase::Pointer& spRegistration) const override;
 
 		protected:
 
 			NullRegistrationKernelLoader();
-			virtual ~NullRegistrationKernelLoader() {};
+			~NullRegistrationKernelLoader() override {};
 
 		private:
 			NullRegistrationKernelLoader(const Self&);  //purposely not implemented

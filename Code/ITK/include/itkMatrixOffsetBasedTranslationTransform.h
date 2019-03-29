@@ -50,13 +50,13 @@ namespace itk
   {
   public:
     /** Standard typedefs   */
-    typedef MatrixOffsetBasedTranslationTransform Self;
+    using Self = MatrixOffsetBasedTranslationTransform<TScalar, NDimensions>;
     typedef MatrixOffsetTransformBase< TScalar,
             NDimensions,
             NDimensions >  Superclass;
 
-    typedef SmartPointer< Self >       Pointer;
-    typedef SmartPointer< const Self > ConstPointer;
+    using Pointer = SmartPointer<Self>;
+    using ConstPointer = SmartPointer<const Self>;
 
     /** Run-time type information (and related methods).   */
     itkTypeMacro(MatrixOffsetBasedTranslationTransform, MatrixOffsetTransformBase);
@@ -71,27 +71,27 @@ namespace itk
     itkStaticConstMacro(ParametersDimension, unsigned int, NDimensions);
 
     /** Parameters Type   */
-    typedef typename Superclass::ParametersType            ParametersType;
-    typedef typename Superclass::JacobianType              JacobianType;
-    typedef typename Superclass::ScalarType                ScalarType;
-    typedef typename Superclass::InputPointType            InputPointType;
-    typedef typename Superclass::OutputPointType           OutputPointType;
-    typedef typename Superclass::InputVectorType           InputVectorType;
-    typedef typename Superclass::OutputVectorType          OutputVectorType;
-    typedef typename Superclass::InputVnlVectorType        InputVnlVectorType;
-    typedef typename Superclass::OutputVnlVectorType       OutputVnlVectorType;
-    typedef typename Superclass::InputCovariantVectorType  InputCovariantVectorType;
-    typedef typename Superclass::OutputCovariantVectorType OutputCovariantVectorType;
-    typedef typename Superclass::MatrixType                MatrixType;
-    typedef typename Superclass::InverseMatrixType         InverseMatrixType;
-    typedef typename Superclass::CenterType                CenterType;
-    typedef typename Superclass::OffsetType                OffsetType;
-    typedef typename Superclass::TranslationType           TranslationType;
+    using ParametersType = typename Superclass::ParametersType;
+    using JacobianType = typename Superclass::JacobianType;
+    using ScalarType = typename Superclass::ScalarType;
+    using InputPointType = typename Superclass::InputPointType;
+    using OutputPointType = typename Superclass::OutputPointType;
+    using InputVectorType = typename Superclass::InputVectorType;
+    using OutputVectorType = typename Superclass::OutputVectorType;
+    using InputVnlVectorType = typename Superclass::InputVnlVectorType;
+    using OutputVnlVectorType = typename Superclass::OutputVnlVectorType;
+    using InputCovariantVectorType = typename Superclass::InputCovariantVectorType;
+    using OutputCovariantVectorType = typename Superclass::OutputCovariantVectorType;
+    using MatrixType = typename Superclass::MatrixType;
+    using InverseMatrixType = typename Superclass::InverseMatrixType;
+    using CenterType = typename Superclass::CenterType;
+    using OffsetType = typename Superclass::OffsetType;
+    using TranslationType = typename Superclass::TranslationType;
 
     /** Base inverse transform type. This type should not be changed to the
      * concrete inverse transform type or inheritance would be lost.*/
-    typedef typename Superclass::InverseTransformBaseType InverseTransformBaseType;
-    typedef typename InverseTransformBaseType::Pointer    InverseTransformBasePointer;
+    using InverseTransformBaseType = typename Superclass::InverseTransformBaseType;
+    using InverseTransformBasePointer = typename InverseTransformBaseType::Pointer;
 
     /** Compose affine transformation with a translation
      *
@@ -138,12 +138,12 @@ namespace itk
     /** Set the fixed parameters and update internal
     * transformation. This transform has no fixed paramaters
     */
-    virtual void SetFixedParameters(const ParametersType&)
+    virtual void SetFixedParameters(const ParametersType& /*unused*/)
     {
     }
 
     /** Get the fixed parameters */
-    virtual const ParametersType& GetFixedParameters(void) const;
+    virtual const ParametersType& GetFixedParameters() const;
 
     /** Get the Jacobian matrix. */
     virtual void ComputeJacobianWithRespectToParameters(const InputPointType& point,

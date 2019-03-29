@@ -45,8 +45,8 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef const itk::LightObject*  ConstLightPointer;
-			typedef itk::LightObject*        LightPointer;
+			using ConstLightPointer = const itk::LightObject *;
+			using LightPointer = itk::LightObject *;
 
 			/**
 			* @brief Returns the property Value as untyped pointer
@@ -64,15 +64,15 @@ namespace map
 		protected:
 
 			virtual ~MetaPropertyLightPointerAccessInterface()
-			{};
+			= default;
 
 			MetaPropertyLightPointerAccessInterface()
-			{};
+			= default;
 
 		private:
 			MetaPropertyLightPointerAccessInterface(const
-													MetaPropertyLightPointerAccessInterface&);  //purposely not implemented
-			void operator=(const MetaPropertyLightPointerAccessInterface&);  //purposely not implemented
+													MetaPropertyLightPointerAccessInterface&) = delete;  //purposely not implemented
+			void operator=(const MetaPropertyLightPointerAccessInterface&) = delete;  //purposely not implemented
 		};
 
 
@@ -94,9 +94,9 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef TValueType        ValueType;
-			typedef const ValueType&  ValueSetType;
-			typedef const ValueType&  ValueGetType;
+			using ValueType = TValueType;
+			using ValueSetType = const ValueType &;
+			using ValueGetType = const ValueType &;
 
 			/**
 			* @brief Returns the property value
@@ -115,15 +115,15 @@ namespace map
 		protected:
 
 			virtual ~MetaPropertyAccessInterface()
-			{};
+			= default;
 
 			MetaPropertyAccessInterface()
-			{};
+			= default;
 
 		private:
 			MetaPropertyAccessInterface(const MetaPropertyAccessInterface<TValueType>
-										&); //purposely not implemented
-			void operator=(const MetaPropertyAccessInterface<TValueType>&);  //purposely not implemented
+										&) = delete; //purposely not implemented
+			void operator=(const MetaPropertyAccessInterface<TValueType>&) = delete;  //purposely not implemented
 		};
 
 		/* Template specialication of the MetaPropertyAccessInterface for pointer types
@@ -133,9 +133,9 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef TValueType*        ValueType;
-			typedef ValueType          ValueSetType;
-			typedef ValueType          ValueGetType;
+			using ValueType = TValueType *;
+			using ValueSetType = ValueType;
+			using ValueGetType = ValueType;
 
 			/**
 			* @brief Returns the property value
@@ -154,19 +154,19 @@ namespace map
 		protected:
 
 			virtual ~MetaPropertyAccessInterface()
-			{};
+			= default;
 
 			MetaPropertyAccessInterface()
-			{};
+			= default;
 
 		private:
 			MetaPropertyAccessInterface(const MetaPropertyAccessInterface<TValueType*>
-										&);   //purposely not implemented
-			void operator=(const MetaPropertyAccessInterface<TValueType*>&);   //purposely not implemented
+										&) = delete;   //purposely not implemented
+			void operator=(const MetaPropertyAccessInterface<TValueType*>&) = delete;   //purposely not implemented
 		};
 
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #endif

@@ -41,10 +41,10 @@ namespace map
         public:
 
             typedef RegistrationKernelBase<VInputDimensions, VOutputDimensions> KernelType;
-            typedef typename KernelType::TransformType TransformType;
+            using TransformType = typename KernelType::TransformType;
             typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectFieldType FieldType;
-            typedef typename FieldType::ConstPointer FieldConstPointer;
-            typedef typename FieldType::Pointer FieldPointer;
+            using FieldConstPointer = typename FieldType::ConstPointer;
+            using FieldPointer = typename FieldType::Pointer;
 
             /*! Convinient function that tries to get the internals of the kernel as vector field.
              * The function checks if the passed kernel has a transform that containes a vector field.
@@ -72,8 +72,8 @@ namespace map
             static bool decomposeTransform(TransformType* pTransform, FieldPointer& field);
         };
 
-    }
-}
+    }  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 # include "mapFieldDecomposer.tpp"

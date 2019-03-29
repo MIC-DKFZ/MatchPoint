@@ -44,14 +44,14 @@ namespace map
 		class MappingPerformerRequestBase
 		{
 		public:
-			typedef TRegistration RegistrationType;
-			typedef typename RegistrationType::ConstPointer RegistrationConstPointer;
+			using RegistrationType = TRegistration;
+			using RegistrationConstPointer = typename RegistrationType::ConstPointer;
 
-			typedef TInputData InputDataType;
-			typedef typename InputDataType::ConstPointer InputDataConstPointer;
+			using InputDataType = TInputData;
+			using InputDataConstPointer = typename InputDataType::ConstPointer;
 
-			typedef TResultData ResultDataType;
-			typedef typename ResultDataType::ConstPointer ResultDataConstPointer;
+			using ResultDataType = TResultData;
+			using ResultDataConstPointer = typename ResultDataType::ConstPointer;
 
 			itkStaticConstMacro(MovingDimensions, unsigned int, RegistrationType::MovingDimensions);
 			itkStaticConstMacro(TargetDimensions, unsigned int, RegistrationType::TargetDimensions);

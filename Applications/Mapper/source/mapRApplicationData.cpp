@@ -176,7 +176,7 @@ namespace map
             "Specifies name and location of the log file. Default (flag not set) is that no log file is written.");
 
 
-        if (!cmdParser.Parse())
+        if (cmdParser.Parse() == 0)
 				{
 					std::cerr << "Wrong command line option or insufficient number of arguments." << std::endl;
 					std::cerr << "The last correct argument was: " << argv[cmdParser.GetLastArgument()] << std::endl <<
@@ -199,7 +199,7 @@ namespace map
 					std::cout << " Example:" << std::endl << std::endl;
 					std::cout << " mapR input.dcm reg.mapr -t target.dcm" << std::endl << std::endl;
 					std::cout <<
-					          " This will map \"input.png\" by using \"reg.mapr\". The field of view of the output image is defined by \"target.dcm\". The output will be in the directory of the input. The output file name will be \"input_reg.dcm\"."
+					          R"( This will map "input.png" by using "reg.mapr". The field of view of the output image is defined by "target.dcm". The output will be in the directory of the input. The output file name will be "input_reg.dcm".)"
 					          << std::endl;
 					return 1;
 				}
@@ -295,6 +295,6 @@ namespace map
 				return 0;
 			};
 
-		}
-	}
-}
+		}  // namespace mapR
+	}  // namespace apps
+}  // namespace map

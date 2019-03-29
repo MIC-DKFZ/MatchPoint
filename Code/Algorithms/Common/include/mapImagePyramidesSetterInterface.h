@@ -45,21 +45,21 @@ namespace map
 			public:
 				typedef ImagePyramidesSetterInterface<TMovingImage, TTargetImage> Self;
 
-				typedef TMovingImage MovingImageType;
-				typedef TTargetImage TargetImageType;
+				using MovingImageType = TMovingImage;
+				using TargetImageType = TTargetImage;
 
 				/** Type of the Fixed image multiresolution pyramid. */
 				typedef ::itk::MultiResolutionPyramidImageFilter < TargetImageType,
 						TargetImageType >
 						TargetImagePyramideBaseType;
-				typedef typename TargetImagePyramideBaseType::Pointer  TargetImagePyramideBasePointer;
-				typedef typename TargetImagePyramideBaseType::ConstPointer  TargetImagePyramidConstPointer;
+				using TargetImagePyramideBasePointer = typename TargetImagePyramideBaseType::Pointer;
+				using TargetImagePyramidConstPointer = typename TargetImagePyramideBaseType::ConstPointer;
 
 				/** Type of the moving image multiresolution pyramid. */
 				typedef ::itk::MultiResolutionPyramidImageFilter< MovingImageType, MovingImageType >
 				MovingImagePyramideBaseType;
-				typedef typename MovingImagePyramideBaseType::Pointer MovingImagePyramideBasePointer;
-				typedef typename MovingImagePyramideBaseType::ConstPointer MovingImagePyramidConstPointer;
+				using MovingImagePyramideBasePointer = typename MovingImagePyramideBaseType::Pointer;
+				using MovingImagePyramidConstPointer = typename MovingImagePyramideBaseType::ConstPointer;
 
 				/*! @brief sets the moving image pyramide
 				@eguarantee strong
@@ -83,8 +83,8 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 
 			};
-		}
-	}
-}
+		}  // namespace facet
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

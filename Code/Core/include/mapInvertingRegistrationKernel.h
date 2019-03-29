@@ -44,21 +44,20 @@ namespace map
 			Self;
       typedef LazyRegistrationKernel<VInputDimensions, VOutputDimensions>
 			Superclass;
-			typedef itk::SmartPointer<Self> Pointer;
-			typedef itk::SmartPointer<const Self> ConstPointer;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(InvertingRegistrationKernel, ConcreteFieldBasedRegistrationKernel);
 			itkNewMacro(Self);
 
-			typedef typename Superclass::RepresentationDescriptorType RepresentationDescriptorType;
-			typedef typename Superclass::RepresentationDescriptorPointer RepresentationDescriptorPointer;
-			typedef typename Superclass::RepresentationDescriptorConstPointer
-			RepresentationDescriptorConstPointer;
-			typedef typename Superclass::InputPointType  InputPointType;
-			typedef typename Superclass::OutputPointType OutputPointType;
+			using RepresentationDescriptorType = typename Superclass::RepresentationDescriptorType;
+			using RepresentationDescriptorPointer = typename Superclass::RepresentationDescriptorPointer;
+			using RepresentationDescriptorConstPointer = typename Superclass::RepresentationDescriptorConstPointer;
+			using InputPointType = typename Superclass::InputPointType;
+			using OutputPointType = typename Superclass::OutputPointType;
 
 			typedef RegistrationKernelBase<VOutputDimensions, VInputDimensions> SourceKernelType;
-			typedef typename SourceKernelType::ConstPointer SourceKernelConstPointer;
+			using SourceKernelConstPointer = typename SourceKernelType::ConstPointer;
 
 			mapSetConstObjectMacro(SourceKernel, SourceKernelType);
 			mapGetConstObjectMacro(SourceKernel, SourceKernelType);
@@ -82,8 +81,8 @@ namespace map
 
 		};
 
-	}
-}
+	}  // namespace core
+}  // namespace map
 
 #ifndef MatchPoint_MANUAL_TPP
 #include "mapInvertingRegistrationKernel.tpp"

@@ -27,7 +27,7 @@
 #include <map>
 #include <vector>
 #include <deque>
-#include <assert.h>
+#include <cassert>
 
 #include "mapSDXMLStrReader.h"
 #include "mapSDExceptions.h"
@@ -94,9 +94,9 @@ namespace map
 			typedef std::pair< ::map::core::String, core::String> AttributeType;
 			typedef std::map< ::map::core::String, core::String> AttributesType;
 			//uses vector for saving, to avoid automatic sort feature of stl::map
-			typedef std::vector<AttributeType> AttributesSaveListType;
+			using AttributesSaveListType = std::vector<AttributeType>;
 
-			typedef Element::Pointer ElementPointer;
+			using ElementPointer = Element::Pointer;
 
 			/** Function to load a structure from a xml string. The function creates
 			* an expat parser, manages the callbacks, calls Reset() and ResetRequirements().
@@ -104,7 +104,7 @@ namespace map
 			* overridden. When the loading is finished, it will be checked, if the requirements
 			* are meet, the expat resources will be freed.
 			* @param [in] rsData Reference to the whole data of the xml element (with start and end tag and attributes)*/
-			ElementPointer LoadFromString(const core::String& rsData);
+			ElementPointer LoadFromString(const core::String& rsRawData);
 
 			/** Resets the object to default/initial state*/
 			void Reset();
@@ -158,7 +158,7 @@ namespace map
 
 			ElementPointer m_spRootElement;
 
-			typedef std::deque<ElementPointer> ElementStackType;
+			using ElementStackType = std::deque<ElementPointer>;
 
 			/**Stack of all structured data element that are open right now. Therefor had
 			* an start tag but no stop tag yet. An element is added to the stack when its
@@ -211,7 +211,7 @@ namespace map
 		{
 			Reset();
 
-			m_Parser = XML_ParserCreate(0);
+			m_Parser = XML_ParserCreate(nullptr);
 			XML_SetElementHandler(m_Parser, &CB_Static_StartElement, &CB_Static_EndElement);
 			XML_SetCharacterDataHandler(m_Parser, &CB_Static_CharacterDataHandler);
 			XML_SetUserData(m_Parser, this);
@@ -220,7 +220,7 @@ namespace map
 			m_spRootElement = Element::createElement("ROOT", "");
 			m_stack.push_back(m_spRootElement);
 
-			bool result = XML_Parse(m_Parser, m_pLoadData->c_str(), m_pLoadData->size(), true);
+			bool result = XML_Parse(m_Parser, m_pLoadData->c_str(), m_pLoadData->size(), 1);
 
 			if (!result)
 			{
@@ -298,7 +298,7 @@ namespace map
 		XMLStrReaderImpl::
 		XMLStrReaderImpl()
 		{
-			m_Parser = NULL;
+			m_Parser = nullptr;
 			Reset();
 		};
 
@@ -312,9 +312,9 @@ namespace map
 		XMLStrReaderImpl::
 		AttributesLoadProcessing(Element* pElement, const AttributesType& attributes)
 		{
-			for (AttributesType::const_iterator pos = attributes.begin(); pos != attributes.end(); ++pos)
+			for (const auto & attribute : attributes)
 			{
-				pElement->setAttribute(pos->first, pos->second);
+				pElement->setAttribute(attribute.first, attribute.second);
 			}
 		};
 
@@ -323,14 +323,14 @@ namespace map
 		Reset()
 		{
 			m_stack.clear();
-			m_spRootElement = NULL;
-			m_pLoadData = NULL;
+			m_spRootElement = nullptr;
+			m_pLoadData = nullptr;
 			m_currentElementText.clear();
 
-			if (m_Parser)
+			if (m_Parser != nullptr)
 			{
 				XML_ParserFree(m_Parser);
-				m_Parser = NULL;
+				m_Parser = nullptr;
 			}
 		};
 
@@ -342,7 +342,7 @@ namespace map
 
 			const char** pActAttr = pAttributes;
 
-			while (*pActAttr)
+			while (*pActAttr != nullptr)
 			{
 				::map::core::String sKey = *pActAttr;
 				pActAttr++;
@@ -368,7 +368,7 @@ namespace map
 
 			spResult = implementation.LoadFromString(data);
 
-			if (spResult)
+			if (spResult != nullptr)
 			{
 				spResult->setAttribute(tags::SDInternalSourceReader, tags::SDInternalSourceReader_string, true);
 				spResult->setAttribute(tags::SDInternalSourceFormat, tags::SDInternalSourceFormat_xml, true);
@@ -402,14 +402,12 @@ namespace map
 
 		XMLStrReader::
 		XMLStrReader()
-		{
-		};
+		= default;
 
 		XMLStrReader::
 		~XMLStrReader()
-		{
-		};
+		= default;
 
 	} //end of namespace structuredData
 
-} //end of namespace free
+}  // namespace map

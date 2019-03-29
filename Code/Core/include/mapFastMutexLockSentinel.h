@@ -45,7 +45,7 @@ namespace map
 			class MAPCore_EXPORT FastMutexLockSentinel
 			{
 			public:
-				typedef itk::SimpleFastMutexLock  MutexType;
+				using MutexType = itk::SimpleFastMutexLock;
 
 				void initializeSentinel(MutexType* pMutex);
 
@@ -55,10 +55,10 @@ namespace map
 
 			private:
 				/*! This policy uses this mutex to lock critical code by the policy user.*/
-				MutexType* _pMutex;
+				MutexType* _pMutex{nullptr};
 
-				FastMutexLockSentinel(const FastMutexLockSentinel&);  //purposely not implemented
-				void operator=(const FastMutexLockSentinel&);  //purposely not implemented
+				FastMutexLockSentinel(const FastMutexLockSentinel&) = delete;  //purposely not implemented
+				void operator=(const FastMutexLockSentinel&) = delete;  //purposely not implemented
 			};
 
 		} // end namespace services

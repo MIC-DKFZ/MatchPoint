@@ -85,43 +85,43 @@ namespace map
 				typedef ::map::core::Registration<IDim, IDim> RegistrationType;
         typedef ::map::algorithm::RegistrationAlgorithm<IDim, IDim> AlgorithmType;
 
-        void onMapAlgorithmEvent(::itk::Object*, const itk::EventObject& event)
+        void onMapAlgorithmEvent(::itk::Object* /*unused*/, const itk::EventObject& event)
         {
-          const map::events::AlgorithmEvent* pAlgEvent = dynamic_cast<const map::events::AlgorithmEvent*>
+          const auto* pAlgEvent = dynamic_cast<const map::events::AlgorithmEvent*>
             (&event);
-          const map::events::AlgorithmIterationEvent* pIterationEvent =
+          const auto* pIterationEvent =
             dynamic_cast<const map::events::AlgorithmIterationEvent*>(&event);
-          const map::events::AlgorithmWrapperEvent* pWrapEvent =
+          const auto* pWrapEvent =
             dynamic_cast<const map::events::AlgorithmWrapperEvent*>(&event);
-          const map::events::AlgorithmResolutionLevelEvent* pLevelEvent =
+          const auto* pLevelEvent =
             dynamic_cast<const map::events::AlgorithmResolutionLevelEvent*>(&event);
 
-          const map::events::InitializingAlgorithmEvent* pInitEvent =
+          const auto* pInitEvent =
             dynamic_cast<const map::events::InitializingAlgorithmEvent*>(&event);
-          const map::events::StartingAlgorithmEvent* pStartEvent =
+          const auto* pStartEvent =
             dynamic_cast<const map::events::StartingAlgorithmEvent*>(&event);
-          const map::events::StoppingAlgorithmEvent* pStoppingEvent =
+          const auto* pStoppingEvent =
             dynamic_cast<const map::events::StoppingAlgorithmEvent*>(&event);
-          const map::events::StoppedAlgorithmEvent* pStoppedEvent =
+          const auto* pStoppedEvent =
             dynamic_cast<const map::events::StoppedAlgorithmEvent*>(&event);
-          const map::events::FinalizingAlgorithmEvent* pFinalizingEvent =
+          const auto* pFinalizingEvent =
             dynamic_cast<const map::events::FinalizingAlgorithmEvent*>(&event);
-          const map::events::FinalizedAlgorithmEvent* pFinalizedEvent =
+          const auto* pFinalizedEvent =
             dynamic_cast<const map::events::FinalizedAlgorithmEvent*>(&event);
 
-          if (pInitEvent)
+          if (pInitEvent != nullptr)
           {
             std::cout << "Initializing algorithm ..." << std::endl;
           }
-          else if (pStartEvent)
+          else if (pStartEvent != nullptr)
           {
             std::cout << "Starting algorithm ..." << std::endl;
           }
-          else if (pStoppingEvent)
+          else if (pStoppingEvent != nullptr)
           {
             std::cout << "Stopping algorithm ..." << std::endl;
           }
-          else if (pStoppedEvent)
+          else if (pStoppedEvent != nullptr)
           {
             std::cout << "Stopped algorithm ..." << std::endl;
 
@@ -130,27 +130,27 @@ namespace map
               std::cout << "Stopping condition: " << pStoppedEvent->getComment() << std::endl;
             }
           }
-          else if (pFinalizingEvent)
+          else if (pFinalizingEvent != nullptr)
           {
             std::cout << "Finalizing algorithm and results ..." << std::endl;
           }
-          else if (pFinalizedEvent)
+          else if (pFinalizedEvent != nullptr)
           {
             std::cout << "Finalized algorithm ..." << std::endl;
           }
-          else if (pIterationEvent)
+          else if (pIterationEvent != nullptr)
           {
             if (_appData->_detailedOutput)
             {
-              typedef map::algorithm::facet::IterativeAlgorithmInterface IIterativeAlgorithm;
+              using IIterativeAlgorithm = map::algorithm::facet::IterativeAlgorithmInterface;
 
-              const IIterativeAlgorithm* pIterative = dynamic_cast<const IIterativeAlgorithm*>
+              const auto* pIterative = dynamic_cast<const IIterativeAlgorithm*>
                 (this->_appData->_algorithm.GetPointer());
 
               IIterativeAlgorithm::IterationCountType count = 0;
 
               std::cout << "[";
-              if (pIterative && pIterative->hasIterationCount())
+              if ((pIterative != nullptr) && pIterative->hasIterationCount())
               {
                 std::cout << pIterative->getCurrentIteration();
               }
@@ -161,19 +161,19 @@ namespace map
               std::cout << ".";
             }
           }
-          else if (pLevelEvent)
+          else if (pLevelEvent != nullptr)
           {
             if (_appData->_detailedOutput)
             {
-              typedef map::algorithm::facet::MultiResRegistrationAlgorithmInterface IMultiResAlgorithm;
-              const IMultiResAlgorithm* pResAlg = dynamic_cast<const IMultiResAlgorithm*>
+              using IMultiResAlgorithm = map::algorithm::facet::MultiResRegistrationAlgorithmInterface;
+              const auto* pResAlg = dynamic_cast<const IMultiResAlgorithm*>
                 (this->_appData->_algorithm.GetPointer());
 
               map::algorithm::facet::MultiResRegistrationAlgorithmInterface::ResolutionLevelCountType count = 0;
 
               std::cout << std::endl << "**************************************" << std::endl;
               std::cout << "New resolution level";
-              if (pResAlg && pResAlg->hasLevelCount())
+              if ((pResAlg != nullptr) && pResAlg->hasLevelCount())
               {
                 std::cout << " [# " << pResAlg->getCurrentLevel() + 1 << "]";
               }
@@ -184,7 +184,7 @@ namespace map
               std::cout << std::endl;
             }
           }
-          else if (pAlgEvent && !pWrapEvent)
+          else if ((pAlgEvent != nullptr) && (pWrapEvent == nullptr))
           {
             std::cout << pAlgEvent->getComment() << std::endl;
           }
@@ -212,21 +212,21 @@ namespace map
 
 				typename RegistrationType::Pointer doRegistration()
 				{
-					typedef typename ::map::core::discrete::Elements<IDim>::InternalImageType ImageType;
-          typedef typename ::map::core::continuous::Elements<IDim>::InternalPointSetType PointSetType;
-          typedef typename ::itk::SpatialObject<IDim> MaskType;
+					using ImageType = typename ::map::core::discrete::Elements<IDim>::InternalImageType;
+          using PointSetType = typename ::map::core::continuous::Elements<IDim>::InternalPointSetType;
+          using MaskType = typename ::itk::SpatialObject<IDim>;
 
           //Now cast to the right interface (ImageRegistrationAlgorithmBase)
           //to set the images
           typedef map::algorithm::facet::ImageRegistrationAlgorithmInterface<ImageType, ImageType>
             ImageRegistrationAlgorithmInterfaceType;
-          ImageRegistrationAlgorithmInterfaceType* pImageInterface =
+          auto* pImageInterface =
             dynamic_cast<ImageRegistrationAlgorithmInterfaceType*>(this->_appData->_algorithm.GetPointer());
 
           if (pImageInterface)
           {
-            const ImageType* moving = dynamic_cast<const ImageType*>(this->_appData->_spMovingImage.GetPointer());
-            const ImageType* target = dynamic_cast<const ImageType*>(this->_appData->_spTargetImage.GetPointer());
+            const auto* moving = dynamic_cast<const ImageType*>(this->_appData->_spMovingImage.GetPointer());
+            const auto* target = dynamic_cast<const ImageType*>(this->_appData->_spTargetImage.GetPointer());
             pImageInterface->setMovingImage(moving);
             pImageInterface->setTargetImage(target);
           }
@@ -239,19 +239,19 @@ namespace map
           //to set the images
           typedef map::algorithm::facet::PointSetRegistrationAlgorithmInterfaceV2<PointSetType, PointSetType>
             PointSetRegistrationAlgorithmInterfaceType;
-          PointSetRegistrationAlgorithmInterfaceType* pPSInterface =
+          auto* pPSInterface =
             dynamic_cast<PointSetRegistrationAlgorithmInterfaceType*>(this->_appData->_algorithm.GetPointer());
 
           if (pPSInterface)
           {
-            const PointSetType* moving = dynamic_cast<const PointSetType*>(this->_appData->_genericMovingPointSet.GetPointer());
-            const PointSetType* target = dynamic_cast<const PointSetType*>(this->_appData->_genericTargetPointSet.GetPointer());
+            const auto* moving = dynamic_cast<const PointSetType*>(this->_appData->_genericMovingPointSet.GetPointer());
+            const auto* target = dynamic_cast<const PointSetType*>(this->_appData->_genericTargetPointSet.GetPointer());
 
             if (pPSInterface->getMovingPointSetCount()>0)
             {
-              if (moving)
+              if (moving) {
                 pPSInterface->setMovingPointSet(moving);
-              else
+              } else
               {
                 if (pPSInterface->getMovingPointSetCount(true) > 0)
                 {
@@ -262,9 +262,9 @@ namespace map
 
             if (pPSInterface->getTargetPointSetCount()>0)
             {
-              if (target)
+              if (target) {
                 pPSInterface->setTargetPointSet(target);
-              else
+              } else
               {
                 if (pPSInterface->getTargetPointSetCount(true) > 0)
                 {
@@ -282,13 +282,13 @@ namespace map
           //to set the masks
           typedef map::algorithm::facet::MaskedRegistrationAlgorithmInterface<IDim, IDim>
             MaskedRegistrationAlgorithmInterfaceType;
-          MaskedRegistrationAlgorithmInterfaceType* pMInterface =
+          auto* pMInterface =
             dynamic_cast<MaskedRegistrationAlgorithmInterfaceType*>(this->_appData->_algorithm.GetPointer());
 
           if (pMInterface)
           {
-            const MaskType* moving = dynamic_cast<const MaskType*>(this->_appData->_genericMovingMask.GetPointer());
-            const MaskType* target = dynamic_cast<const MaskType*>(this->_appData->_genericTargetMask.GetPointer());
+            const auto* moving = dynamic_cast<const MaskType*>(this->_appData->_genericMovingMask.GetPointer());
+            const auto* target = dynamic_cast<const MaskType*>(this->_appData->_genericTargetMask.GetPointer());
 
             pMInterface->setMovingMask(moving);
             pMInterface->setTargetMask(target);
@@ -306,10 +306,10 @@ namespace map
           unsigned long observerID = this->_appData->_algorithm->AddObserver(map::events::AlgorithmEvent(), command);
 
           //Set meta properties
-          ::map::algorithm::facet::MetaPropertyAlgorithmInterface* pMetaInterface =
+          auto* pMetaInterface =
             dynamic_cast< ::map::algorithm::facet::MetaPropertyAlgorithmInterface*>(this->_appData->_algorithm.GetPointer());
 
-          if (pMetaInterface)
+          if (pMetaInterface != nullptr)
           {
             for (auto paramItr : this->_appData->_parameterMap)
             {
@@ -333,7 +333,7 @@ namespace map
 
           //Cast algorithm, start the registration and get the result
           typename RegistrationType::Pointer result;
-          AlgorithmType* castedAlgorithm = dynamic_cast<AlgorithmType*>(this->_appData->_algorithm.GetPointer());
+          auto* castedAlgorithm = dynamic_cast<AlgorithmType*>(this->_appData->_algorithm.GetPointer());
           if (castedAlgorithm)
           {
             result = castedAlgorithm->getRegistration();
@@ -362,9 +362,9 @@ namespace map
 			};
 
 
-		}
-	}
-}
+		}  // namespace matchR
+	}  // namespace apps
+}  // namespace map
 
 
 #endif

@@ -103,8 +103,8 @@ namespace map
             }
         }
 
-    }
-}
+    }  // namespace core
+}  // namespace map
 
 
 #endif 

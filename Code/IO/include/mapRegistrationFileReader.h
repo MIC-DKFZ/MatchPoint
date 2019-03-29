@@ -52,24 +52,24 @@ namespace map
 		{
 		public:
 			/*! Standard class typedefs. */
-			typedef RegistrationFileReader         Self;
-			typedef itk::Object                    Superclass;
-			typedef itk::SmartPointer<Self>        Pointer;
-			typedef itk::SmartPointer<const Self>  ConstPointer;
+			using Self = RegistrationFileReader;
+			using Superclass = itk::Object;
+			using Pointer = itk::SmartPointer<Self>;
+			using ConstPointer = itk::SmartPointer<const Self>;
 
 			itkTypeMacro(RegistrationFileReader, itk::Object);
 			itkNewMacro(Self);
 
-			typedef RegistrationKernelLoaderBase KernelLoaderBaseType;
+			using KernelLoaderBaseType = RegistrationKernelLoaderBase;
 
-			typedef  core::RegistrationBase                    LoadedRegistrationType;
-			typedef  core::RegistrationBase::Pointer	LoadedRegistrationPointer;
+			using LoadedRegistrationType = core::RegistrationBase;
+			using LoadedRegistrationPointer = core::RegistrationBase::Pointer;
 
 		protected:
 			typedef core::services::ServiceStack<KernelLoaderBaseType, KernelLoaderLoadPolicy >
 			ConcreteLoaderStackType;
 		public:
-			typedef core::services::StaticServiceStack<ConcreteLoaderStackType>			 LoaderStackType;
+			using LoaderStackType = core::services::StaticServiceStack<ConcreteLoaderStackType>;
 
 			/*! Reads the registration from the file and returns the object.
 			 * The method throws expceptions if the there is a registration kernel stored with no suitable kernel reader.
@@ -88,22 +88,22 @@ namespace map
 
 		protected:
 			RegistrationFileReader();
-			virtual ~RegistrationFileReader();
+			~RegistrationFileReader() override;
 
 			/*! Indicicates if the KernelLoader should prefer lazzy loading when loading a kernel takes a lot resources.
 			 * (e.g. loading a field kernel with a large vector field: preferring lazy loading would only keep the reference to the
 			 * file. The field wouldn't be loaded until realy needed to save memory. If lazy loading isn't preferred it is directly
 			 * loaded, thus it can be directly used, but maybe unnecessarily occupies memory space.
 			 */
-			bool _preferLazyLoading;
+			bool _preferLazyLoading{true};
 
 			/*! Methods invoked by itk::LightObject::Print().  */
-			virtual void PrintSelf(std::ostream& os, itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, itk::Indent indent) const override;
 
 		private:
 
-			RegistrationFileReader(const Self&);  //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			RegistrationFileReader(const Self&) = delete;  //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 	} // end namespace io
 } // end namespace map

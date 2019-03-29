@@ -37,37 +37,37 @@ namespace iro
 		{
     public:
       typedef ISConnectorPathBase<TPathElementTraits, TInformationSpaceTraits, TProblemStatementTraits> Self;
-      typedef ::std::shared_ptr<Self> Pointer;
-      typedef ::std::shared_ptr<const Self> ConstPointer;
+      using Pointer = ::std::shared_ptr<Self>;
+      using ConstPointer = ::std::shared_ptr<const Self>;
 
-      typedef IInformationSpaceConnector<TInformationSpaceTraits>	ConnectorInterface;
-      typedef typename ConnectorInterface::ConstISPointer  ConstISPointer;
+      using ConnectorInterface = IInformationSpaceConnector<TInformationSpaceTraits>;
+      using ConstISPointer = typename ConnectorInterface::ConstISPointer;
 
-      typedef IProblemComplianceChecker<TProblemStatementTraits>	ComplianceCheckerInterface;
-      typedef typename ComplianceCheckerInterface::ProblemComplianceInterface  ProblemComplianceInterface;
+      using ComplianceCheckerInterface = IProblemComplianceChecker<TProblemStatementTraits>;
+      using ProblemComplianceInterface = typename ComplianceCheckerInterface::ProblemComplianceInterface;
 
-      typedef typename TProblemStatementTraits::Type          ProblemStatementType;
-			typedef typename TProblemStatementTraits::Pointer		    ProblemPointer;
-			typedef typename TProblemStatementTraits::ConstPointer  ConstProblemPointer;
+      using ProblemStatementType = typename TProblemStatementTraits::Type;
+			using ProblemPointer = typename TProblemStatementTraits::Pointer;
+			using ConstProblemPointer = typename TProblemStatementTraits::ConstPointer;
 
-      typedef typename TPathElementTraits::Type		       PathElementType;
-			typedef typename TPathElementTraits::ConstPointer  ConstPathElementPointer;
+      using PathElementType = typename TPathElementTraits::Type;
+			using ConstPathElementPointer = typename TPathElementTraits::ConstPointer;
 
     protected:
-      typedef typename std::list<ConstPathElementPointer> PathElementListType;
+      using PathElementListType = typename std::list<ConstPathElementPointer>;
 
     public:
-      typedef typename PathElementListType::iterator       PathElementIterator;
-      typedef typename PathElementListType::const_iterator ConstPathElementIterator;
-      typedef typename PathElementListType::size_type      PathSizeType;
+      using PathElementIterator = typename PathElementListType::iterator;
+      using ConstPathElementIterator = typename PathElementListType::const_iterator;
+      using PathSizeType = typename PathElementListType::size_type;
 
       /*! Implementation of abstract member. See documentation in interface.
       * @see IInformationSpaceConnector*/
-      virtual ConstISPointer getMovingIS() const;
+      ConstISPointer getMovingIS() const override;
 
       /*! Implementation of abstract member. See documentation in interface.
       * @see IInformationSpaceConnector*/
-      virtual ConstISPointer getTargetIS() const;
+      ConstISPointer getTargetIS() const override;
 
       /*! Returns the iterator to the begin of th path.*/
       PathElementIterator getBegin();
@@ -110,7 +110,7 @@ namespace iro
       /*! Removes all elements of the path*/
       void resetElements();
 
-			virtual ~ISConnectorPathBase();
+			~ISConnectorPathBase() override;
 			ISConnectorPathBase();
 
     protected:
@@ -131,7 +131,7 @@ namespace iro
       /*! Implementation of abstract member. This implementation checks the associated
       * problem statement of all elements for compliance. See also documentation in interface.
       * @see IProblemComplianceChecker*/
-			virtual bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const;
+			bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const override;
 
       PathElementListType _pathElements;
 

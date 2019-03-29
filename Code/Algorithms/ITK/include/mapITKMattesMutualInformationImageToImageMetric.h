@@ -51,8 +51,8 @@ namespace map
 				Self;
 				typedef ITKImageToImageMetricControlBase< ::itk::MattesMutualInformationImageToImageMetric<TTargetImage, TMovingImage> >
 				Superclass;
-				typedef ::itk::SmartPointer<Self>         Pointer;
-				typedef ::itk::SmartPointer<const Self>   ConstPointer;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKMetricControl, ITKImageToImageMetricControlBase);
 				itkNewMacro(Self);
@@ -80,8 +80,8 @@ namespace map
 				void operator=(const Self&);  //purposely not implemented
 			};
 
-		}
-	}
-}
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

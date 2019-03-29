@@ -51,10 +51,10 @@ namespace map
 		{
 		public:
 			/** Smart pointer typedef support. */
-			typedef MetaPropertyInfo  Self;
-			typedef ::itk::LightObject  Superclass;
-			typedef ::itk::SmartPointer<Self>  Pointer;
-			typedef ::itk::SmartPointer<const Self>  ConstPointer;
+			using Self = MetaPropertyInfo;
+			using Superclass = ::itk::LightObject;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			/** Run-time type information (and related methods). */
 			itkTypeMacro(MetaPropertyInfo, LightObject);
@@ -76,7 +76,7 @@ namespace map
 			* @return A pointer to the MetaProperty clone.
 			* @eguarantee strong
 			*/
-			virtual ::itk::LightObject::Pointer CreateAnother(void) const;
+			::itk::LightObject::Pointer CreateAnother() const override;
 
 			/**
 			* @brief Returns the unique type name of the value type that stores the associated property.
@@ -128,17 +128,17 @@ namespace map
 			* @eguarantee strong
 			* @param os An output stream
 			*/
-			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
+			void PrintSelf(std::ostream& os, ::itk::Indent indent) const override;
 
-			~MetaPropertyInfo();
-			MetaPropertyInfo(const core::String& name, const std::type_info& type_info, bool isReadable = true,
+			~MetaPropertyInfo() override;
+			MetaPropertyInfo(core::String  name, const std::type_info& type_info, bool isReadable = true,
 							 bool isWritable = false);
 		private:
-			MetaPropertyInfo(const Self&); //purposely not implemented
-			void operator=(const Self&);  //purposely not implemented
+			MetaPropertyInfo(const Self&) = delete; //purposely not implemented
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
-	}
-}
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

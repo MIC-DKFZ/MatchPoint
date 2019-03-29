@@ -89,12 +89,11 @@ namespace iro
     template <typename TResultType>
       Result<TResultType>::
       ~Result()
-    {
-    };
+    = default;
 
     template <typename TResultType>
       Result<TResultType>::
-        Result(ResultType resultValue, const OntologyRevisionTag& tag) : _result(resultValue), _revision(tag)
+        Result(ResultType resultValue, const OntologyRevisionTag& tag) : _result(std::move(resultValue)), _revision(tag)
       {};
 
     template <typename TResultType>
@@ -186,12 +185,11 @@ namespace iro
     template <typename TResultType>
       Result< std::shared_ptr<TResultType> >::
       ~Result()
-    {
-    };
+    = default;
 
     template <typename TResultType>
       Result< std::shared_ptr<TResultType> >::
-        Result(ResultType resultValue, const OntologyRevisionTag& tag) : _result(resultValue), _revision(tag)
+        Result(ResultType resultValue, const OntologyRevisionTag& tag) : _result(std::move(resultValue)), _revision(tag)
       {};
 
     template <typename TResultType>

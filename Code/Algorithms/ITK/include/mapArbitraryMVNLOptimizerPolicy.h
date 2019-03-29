@@ -59,24 +59,24 @@ namespace map
         public facet::OptimizerGetterInterface
       {
       public:
-        typedef ArbitraryMVNLOptimizerPolicy      Self;
-        typedef facet::ITKMVNLOptimizerSetterInterface   Superclass;
+        using Self = ArbitraryMVNLOptimizerPolicy;
+        using Superclass = facet::ITKMVNLOptimizerSetterInterface;
         itkTypeMacroNoParent(ArbitraryMVNLOptimizerPolicy);
 
-        typedef  facet::OptimizerGetterInterface::OptimizerControlType  OptimizerControlType;
-        typedef Superclass::ITKOptimizerControlType  ITKOptimizerControlType;
+        using OptimizerControlType = facet::OptimizerGetterInterface::OptimizerControlType;
+        using ITKOptimizerControlType = Superclass::ITKOptimizerControlType;
 
         /*! gets an optimizer control object
         @eguarantee strong
         @return a pointer to an ITKMVNLOptimizerControlInterface object
         */
-        OptimizerControlType* getOptimizerControl();
-        const OptimizerControlType* getOptimizerControl() const;
+        OptimizerControlType* getOptimizerControl() override;
+        const OptimizerControlType* getOptimizerControl() const override;
 
-        ITKOptimizerControlType* getITKOptimizerControl();
-        const ITKOptimizerControlType* getITKOptimizerControl() const;
+        ITKOptimizerControlType* getITKOptimizerControl() override;
+        const ITKOptimizerControlType* getITKOptimizerControl() const override;
 
-        virtual void setITKOptimizerControl(ITKOptimizerControlType* pOptimizer);
+        void setITKOptimizerControl(ITKOptimizerControlType* pOptimizer) override;
 
         void setAutomaticOptimizationDirection(bool automatic);
         bool getAutomaticOptimizationDirection() const;
@@ -90,7 +90,7 @@ namespace map
 
       protected:
         ArbitraryMVNLOptimizerPolicy();
-        virtual ~ArbitraryMVNLOptimizerPolicy();
+        ~ArbitraryMVNLOptimizerPolicy() override;
 
         /*! This is a command slot that can be used by any class derivering from this policy
         * to get informed if the component instances is changed. \n
@@ -131,15 +131,15 @@ namespace map
         /*! Controlles if the policy sets the optimization automaticaly or
         * if its up to the user to specifiy the direction. Automatic direction
         * detaction will be performed by prepareOptimizerAfterAssembly().*/
-        bool _automaticOptimizationDirection;
+        bool _automaticOptimizationDirection{true};
 
         //No copy constructor allowed
-        ArbitraryMVNLOptimizerPolicy(const Self& source);
-        void operator=(const Self&);  //purposely not implemented
+        ArbitraryMVNLOptimizerPolicy(const Self& source) = delete;
+        void operator=(const Self&) = delete;  //purposely not implemented
       };
 
-    }
-  }
-}
+    }  // namespace itk
+  }  // namespace algorithm
+}  // namespace map
 
 #endif

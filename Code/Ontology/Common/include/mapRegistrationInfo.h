@@ -42,31 +42,31 @@ namespace iro
 		{
     public:
       typedef RegistrationInfo<TInformationSpaceTraits, TProblemStatementTraits, TTransformationInfoTraits> Self;
-      typedef ::std::shared_ptr<Self> Pointer;
-      typedef ::std::shared_ptr<const Self> ConstPointer;
+      using Pointer = ::std::shared_ptr<Self>;
+      using ConstPointer = ::std::shared_ptr<const Self>;
 
-      typedef IInformationSpaceConnector<TInformationSpaceTraits>	ConnectorInterface;
-      typedef typename ConnectorInterface::ConstISPointer  ConstISPointer;
+      using ConnectorInterface = IInformationSpaceConnector<TInformationSpaceTraits>;
+      using ConstISPointer = typename ConnectorInterface::ConstISPointer;
 
-      typedef IProblemStatementAssociated<TProblemStatementTraits>	ProblemAssociatedInterface;
-      typedef typename ProblemAssociatedInterface::ProblemComplianceInterface  ProblemComplianceInterface;
-      typedef typename ProblemAssociatedInterface::ConstProblemPointer              ConstProblemPointer;
+      using ProblemAssociatedInterface = IProblemStatementAssociated<TProblemStatementTraits>;
+      using ProblemComplianceInterface = typename ProblemAssociatedInterface::ProblemComplianceInterface;
+      using ConstProblemPointer = typename ProblemAssociatedInterface::ConstProblemPointer;
 
-      typedef typename TTransformationInfoTraits::ConstPointer ConstTransformationInfoPointer;
-      typedef typename TTransformationInfoTraits::Pointer      TransformationInfoPointer;
-      typedef typename TTransformationInfoTraits::Type         TransformationInfoType;
-
-      /*! Implementation of abstract member. See documentation in interface.
-      * @see IInformationSpaceConnector*/
-      virtual ConstISPointer getMovingIS() const;
+      using ConstTransformationInfoPointer = typename TTransformationInfoTraits::ConstPointer;
+      using TransformationInfoPointer = typename TTransformationInfoTraits::Pointer;
+      using TransformationInfoType = typename TTransformationInfoTraits::Type;
 
       /*! Implementation of abstract member. See documentation in interface.
       * @see IInformationSpaceConnector*/
-      virtual ConstISPointer getTargetIS() const;
+      ConstISPointer getMovingIS() const override;
+
+      /*! Implementation of abstract member. See documentation in interface.
+      * @see IInformationSpaceConnector*/
+      ConstISPointer getTargetIS() const override;
 
       /** Returns the const pointer to the associated problem statement.
       * Pointer may be null, if no statement is defined.*/
-      virtual ConstProblemPointer getAssociatedProblemStatement() const;
+      ConstProblemPointer getAssociatedProblemStatement() const override;
 
       /*! Returns the transformation for continuous data types.
        * If no transformation is defined for the data type, NULL will be returned.*/
@@ -93,14 +93,14 @@ namespace iro
       */
       Pointer clone() const;
 
-			virtual ~RegistrationInfo();
+			~RegistrationInfo() override;
 			RegistrationInfo();
 
     protected:
       /*! Implementation of abstract member. This implementation checks the associated
       * problem statement for compliance. See also documentation in interface.
       * @see IProblemComplianceChecker*/
-			virtual bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const;
+			bool doCheckProblemCompliance(const ProblemComplianceInterface* pProblemCompliance) const override;
 
       ConstTransformationInfoPointer _continuous;
       ConstTransformationInfoPointer _discrete;

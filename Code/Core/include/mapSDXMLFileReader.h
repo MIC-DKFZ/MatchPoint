@@ -44,15 +44,15 @@ namespace map
 		class MAPCore_EXPORT XMLFileReader: public ::itk::LightObject
 		{
 		public:
-			typedef XMLFileReader Self;
-			typedef ::itk::LightObject Superclass;
-			typedef ::itk::SmartPointer<Self> Pointer;
-			typedef ::itk::SmartPointer<const Self> ConstPointer;
+			using Self = XMLFileReader;
+			using Superclass = ::itk::LightObject;
+			using Pointer = ::itk::SmartPointer<Self>;
+			using ConstPointer = ::itk::SmartPointer<const Self>;
 
 			itkTypeMacro(XMLFileReader, ::itk::LightObject);
 			itkNewMacro(Self);
 
-			typedef Element::Pointer ElementPointer;
+			using ElementPointer = Element::Pointer;
 
 			/**Reads the content of a file. The content will be handled as XML and parsed
 			 * to generate the according structured data elements.
@@ -79,12 +79,12 @@ namespace map
 			ElementPointer _spRoot;
 
 			XMLFileReader();
-			~XMLFileReader();
+			~XMLFileReader() override;
 
 		private:
 			//No copy constructor allowed
-			XMLFileReader(const Self& source);
-			void operator=(const Self&);  //purposely not implemented
+			XMLFileReader(const Self& source) = delete;
+			void operator=(const Self&) = delete;  //purposely not implemented
 		};
 
 

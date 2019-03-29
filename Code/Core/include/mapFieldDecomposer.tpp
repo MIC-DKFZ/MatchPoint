@@ -42,8 +42,8 @@ namespace map
 
             typedef typename FieldDecomposer<VInputDimensions, VOutputDimensions>::TransformType TransformType;
             typedef typename RegistrationTopology<VInputDimensions, VOutputDimensions>::DirectFieldType FieldType;
-            typedef typename FieldType::ConstPointer FieldConstPointer;
-            typedef typename FieldType::Pointer FieldPointer;
+            using FieldConstPointer = typename FieldType::ConstPointer;
+            using FieldPointer = typename FieldType::Pointer;
 
             static bool decomposeTransform(const TransformType* pTransform, FieldConstPointer& field)
             {
@@ -85,8 +85,8 @@ namespace map
         public:
             typedef typename FieldDecomposer<VDimensions, VDimensions>::TransformType TransformType;
             typedef typename RegistrationTopology<VDimensions, VDimensions>::DirectFieldType FieldType;
-            typedef typename FieldType::ConstPointer FieldConstPointer;
-            typedef typename FieldType::Pointer FieldPointer;
+            using FieldConstPointer = typename FieldType::ConstPointer;
+            using FieldPointer = typename FieldType::Pointer;
 
             static bool decomposeTransform(const TransformType* pTransform, FieldConstPointer& field)
             {
@@ -190,7 +190,7 @@ namespace map
             return result;
         };
 
-    }
-}
+    }  // namespace core
+}  // namespace map
 
 #endif

@@ -74,12 +74,12 @@ namespace map
 		template <class TProviderBase>
 		KernelCombinatorLoadPolicy<TProviderBase>::
 		KernelCombinatorLoadPolicy()
-		{ }
+		= default;
 
 		template <class TProviderBase>
 		KernelCombinatorLoadPolicy<TProviderBase>::
 		~KernelCombinatorLoadPolicy()
-		{ }
+		= default;
 
 
 	} // end namespace core

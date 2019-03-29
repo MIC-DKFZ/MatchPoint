@@ -37,6 +37,6 @@ namespace map
       bool writeRegistration(map::core::RegistrationBase* reg, const map::core::String& fileName);
     }
   }
-}
+}  // namespace map
 
 #endif

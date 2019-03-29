@@ -22,7 +22,7 @@
 
 namespace iro
 {
-    typedef unsigned long	OntologyRevisionTag;
+    using OntologyRevisionTag = unsigned long;
 } // end namespace iro
 
 #endif

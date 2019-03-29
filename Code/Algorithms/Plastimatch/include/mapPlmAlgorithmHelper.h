@@ -40,11 +40,11 @@ namespace map
 		namespace plastimatch
 		{
 
-			typedef core::String ParameterValueType;
-			typedef core::String ParameterNameType;
-			typedef std::vector<ParameterValueType> ParameterValuesType;
+			using ParameterValueType = core::String;
+			using ParameterNameType = core::String;
+			using ParameterValuesType = std::vector<ParameterValueType>;
 			typedef std::map<ParameterNameType, ParameterValuesType> ParameterStageType;
-			typedef std::vector<ParameterStageType> ConfigurationType;
+			using ConfigurationType = std::vector<ParameterStageType>;
 
 			/**! Helper function that stores the passed configuration to the given file path.
 			  If the file already exists it is overwritten. The configuration is stored
@@ -78,8 +78,8 @@ namespace map
 			protected:
 				ParameterValuesType _values;
 			};
-		}
-	}
-}
+		}  // namespace plastimatch
+	}  // namespace algorithm
+}  // namespace map
 
 #endif

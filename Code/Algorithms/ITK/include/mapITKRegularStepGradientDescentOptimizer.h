@@ -47,102 +47,102 @@ namespace map
 				ITKSVNLOptimizerControlBase< ::itk::RegularStepGradientDescentOptimizer>
 			{
 			public:
-				typedef ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer> Self;
-				typedef ITKSVNLOptimizerControlBase< ::itk::RegularStepGradientDescentOptimizer> Superclass;
-				typedef ::itk::SmartPointer<Self>         Pointer;
-				typedef ::itk::SmartPointer<const Self>   ConstPointer;
+				using Self = ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer>;
+				using Superclass = ITKSVNLOptimizerControlBase< ::itk::RegularStepGradientDescentOptimizer>;
+				using Pointer = ::itk::SmartPointer<Self>;
+				using ConstPointer = ::itk::SmartPointer<const Self>;
 
 				itkTypeMacro(ITKOptimizerControl, ITKSVNLOptimizerControlBase);
 				itkNewMacro(Self);
 
-				typedef Superclass::ConcreteOptimizerType ConcreteOptimizerType;
-				typedef ConcreteOptimizerType::Pointer ConcreteOptimizerPointer;
+				using ConcreteOptimizerType = Superclass::ConcreteOptimizerType;
+				using ConcreteOptimizerPointer = ConcreteOptimizerType::Pointer;
 
 			protected:
-				virtual ~ITKOptimizerControl() {};
-				ITKOptimizerControl() {};
+				~ITKOptimizerControl() override = default;
+				ITKOptimizerControl() = default;
 
 			private:
 				//No copy constructor allowed
-				ITKOptimizerControl(const Self& source);
-				void operator=(const Self&);  //purposely not implemented
+				ITKOptimizerControl(const Self& source) = delete;
+				void operator=(const Self&) = delete;  //purposely not implemented
 
 			public:
-				virtual bool isStoppable() const
+				bool isStoppable() const override
 				{
 					return true;
 				};
 
-				virtual bool hasIterationCount() const
+				bool hasIterationCount() const override
 				{
 					return true;
 				};
 
-				virtual bool hasMaxIterationCount() const
+				bool hasMaxIterationCount() const override
 				{
 					return true;
 				};
 
-				virtual bool hasCurrentValue() const
+				bool hasCurrentValue() const override
 				{
 					return true;
 				};
 
-				virtual bool canMinimize() const
+				bool canMinimize() const override
 				{
 					return true;
 				};
 
-				virtual bool canMaximize() const
+				bool canMaximize() const override
 				{
 					return true;
 				};
 
-				virtual bool getMinimize() const
+				bool getMinimize() const override
 				{
 					return _spOptimizer->GetMinimize();
 				};
 
-				virtual bool getMaximize() const
+				bool getMaximize() const override
 				{
 					return _spOptimizer->GetMaximize();
 				};
 
-				virtual void setMinimize(bool minimize)
+				void setMinimize(bool minimize) override
 				{
 					_spOptimizer->SetMinimize(minimize);
 				};
 
-				virtual void setMaximize(bool maximize)
+				void setMaximize(bool maximize) override
 				{
 					_spOptimizer->SetMaximize(maximize);
 				};
 
 			protected:
 
-				virtual bool doStop()
+				bool doStop() override
 				{
 					_spOptimizer->StopOptimization();
 					return true;
 				};
 
-				virtual IterationCountType doGetCurrentIteration() const
+				IterationCountType doGetCurrentIteration() const override
 				{
 					return _spOptimizer->GetCurrentIteration();
 				};
 
-				virtual IterationCountType doGetMaxIterations() const
+				IterationCountType doGetMaxIterations() const override
 				{
 					return _spOptimizer->GetNumberOfIterations();
 				};
 
-				virtual SVNLMeasureType doGetCurrentMeasure() const
+				SVNLMeasureType doGetCurrentMeasure() const override
 				{
 					return _spOptimizer->GetValue();
 				};
 
-				virtual void copyProperties(const ConcreteOptimizerType* source,
-											ConcreteOptimizerType* destination) const
+				void copyProperties(const ConcreteOptimizerType* source,
+											ConcreteOptimizerType* destination) const override
 				{
 					Superclass::copyProperties(source, destination);
 
@@ -154,7 +154,7 @@ namespace map
 					destination->SetGradientMagnitudeTolerance(source->GetGradientMagnitudeTolerance());
 				};
 
-				virtual Superclass::Pointer doCloneControl() const
+				Superclass::Pointer doCloneControl() const override
 				{
 					Pointer spClone = Self::New();
 					Superclass::Pointer spResult = spClone.GetPointer();
@@ -162,10 +162,9 @@ namespace map
 				};
 			};
 
-			typedef ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer>
-			RegularStepGradientDescentOptimizerControl;
-		}
-	}
-}
+			using RegularStepGradientDescentOptimizerControl = ITKOptimizerControl< ::itk::RegularStepGradientDescentOptimizer>;
+		}  // namespace itk
+	}  // namespace algorithm
+}  // namespace map
 
 #endif
