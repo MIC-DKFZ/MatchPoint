@@ -27,7 +27,7 @@ namespace iro
   namespace exceptions
   {
 
-    MAPOntology_EXPORT using InvalidArgument = ::std::invalid_argument;
+    using InvalidArgument = ::std::invalid_argument;
       
     /** @class InvalidIS
     * Exception class that is thrown when an problem correlated with
