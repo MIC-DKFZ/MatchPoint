@@ -39,7 +39,7 @@ namespace map
 		{
 			::map::core::OStringStream sRet;
 
-			for (std::_String_const_iterator<std::_String_val<std::_Simple_types<char> > >::value_type iter : sSrc)
+			for (const auto iter : sSrc)
 			{
 				auto c = static_cast<unsigned char>(iter);
 
