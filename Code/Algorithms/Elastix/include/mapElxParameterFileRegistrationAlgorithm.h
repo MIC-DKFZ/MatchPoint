@@ -73,7 +73,8 @@ namespace map
 
 				mapGetMetaMacro(ParameterFilePath, core::String);
 				mapSetMetaMacro(ParameterFilePath, core::String);
-
+        mapGetMetaMacro(ParameterFilePath2ndStage, core::String);
+        mapSetMetaMacro(ParameterFilePath2ndStage, core::String);
 			protected:
 				ParameterFileRegistrationAlgorithm();
 				virtual ~ParameterFileRegistrationAlgorithm();
@@ -97,6 +98,8 @@ namespace map
 				virtual void prepParameterMaps();
 
 				core::String _parameterFilePath;
+        /* path to an optional second registration stage. If not set, it will not be used.**/
+        core::String _parameterFilePath2;
 
 			private:
 

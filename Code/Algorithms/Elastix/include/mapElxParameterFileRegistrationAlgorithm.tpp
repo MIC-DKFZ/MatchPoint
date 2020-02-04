@@ -24,8 +24,6 @@
 #ifndef __MAP_ELX_PARAMETERFILE_REGISTRATION_ALGORITHM_TPP
 #define __MAP_ELX_PARAMETERFILE_REGISTRATION_ALGORITHM_TPP
 
-//Elastix
-
 namespace map
 {
 	namespace algorithm
@@ -54,6 +52,7 @@ namespace map
 				{
 					Superclass::configureAlgorithm();
 					_parameterFilePath = "";
+          _parameterFilePath2 = "";
 				}
 			};
 
@@ -66,6 +65,8 @@ namespace map
 #ifndef MAP_SEAL_ALGORITHMS
 				infos.push_back(map::algorithm::MetaPropertyInfo::New("ParameterFilePath",
 								typeid(map::core::String), true, true));
+        infos.push_back(map::algorithm::MetaPropertyInfo::New("ParameterFilePath_2",
+          typeid(map::core::String), true, true));
 #endif
 			};
 
@@ -80,7 +81,11 @@ namespace map
 				{
 					spResult = map::core::MetaProperty<map::core::String>::New(this->_parameterFilePath);
 				}
-				else
+        else if (name == "ParameterFilePath_2")
+        {
+          spResult = map::core::MetaProperty<map::core::String>::New(this->_parameterFilePath2);
+        }
+        else
 				{
 					spResult = Superclass::doGetProperty(name);
 				}
@@ -99,7 +104,13 @@ namespace map
 					map::core::unwrapMetaProperty(pProperty, path);
 					this->_parameterFilePath = path;
 				}
-				else
+        if (name == "ParameterFilePath_2")
+        {
+          core::String path;
+          map::core::unwrapMetaProperty(pProperty, path);
+          this->_parameterFilePath2 = path;
+        }
+        else
 				{
 					Superclass::doSetProperty(name, pProperty);
 				}
@@ -110,9 +121,19 @@ namespace map
 			ParameterFileRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			prepParameterMaps()
 			{
-				ParameterMapType map = readParameterMapFromFile(this->_parameterFilePath);
 				this->_parameterMaps.clear();
-				this->_parameterMaps.push_back(map);
+
+        if (!this->_parameterFilePath.empty())
+        {
+          ParameterMapType map = readParameterMapFromFile(this->_parameterFilePath);
+          this->_parameterMaps.push_back(map);
+        }
+
+        if (!this->_parameterFilePath2.empty())
+        {
+          ParameterMapType map = readParameterMapFromFile(this->_parameterFilePath2);
+          this->_parameterMaps.push_back(map);
+        }
 			}
 
 		} // end namespace elastix
