@@ -378,13 +378,13 @@ namespace map
 
 				if (this->getCropInputImagesByMask())
 				{
-					if (this->getTargetMask().IsNotNull())
+					if (this->getInternalTargetMask().IsNotNull())
 					{
 						//we have a mask -> so construct the image region
 						typename TargetImageType::RegionType boundedRegion;
 
 						if (::map::algorithm::MaskBoundingBoxHelper<TargetImageType::ImageDimension>::computeBoundingImageRegion(
-						        this->getTargetMask(), this->getInternalTargetImage(), boundedRegion))
+						        this->getInternalTargetMask(), this->getInternalTargetImage(), boundedRegion))
 						{
 							if (boundedRegion.Crop(this->getInternalTargetImage()->GetLargestPossibleRegion()))
 							{
@@ -414,13 +414,13 @@ namespace map
 
 					this->InvokeEvent(::map::events::AlgorithmEvent(this, os.str()));
 
-					if (this->getMovingMask().IsNotNull())
+					if (this->getInternalMovingMask().IsNotNull())
 					{
 						//we have a mask -> so construct the image region
 						typename MovingImageType::RegionType boundedRegion;
 
 						if (::map::algorithm::MaskBoundingBoxHelper<MovingImageType::ImageDimension>::computeBoundingImageRegion(
-						        this->getMovingMask(), this->getInternalMovingImage(), boundedRegion))
+						        this->getInternalMovingMask(), this->getInternalMovingImage(), boundedRegion))
 						{
 							if (boundedRegion.Crop(this->getInternalMovingImage()->GetLargestPossibleRegion()))
 							{
@@ -466,16 +466,16 @@ namespace map
 				//Connect masks if present
 				this->InvokeEvent(::map::events::AlgorithmEvent(this, "Connect masks to registration metric."));
 
-				if (this->getMovingMask().IsNotNull())
+				if (this->getInternalMovingMask().IsNotNull())
 				{
 					//add moving mask
-					this->getMetricInternal()->getImageToImageMetric()->SetMovingImageMask(this->getMovingMask());
+					this->getMetricInternal()->getImageToImageMetric()->SetMovingImageMask(this->getInternalMovingMask());
 				}
 
-				if (this->getTargetMask().IsNotNull())
+				if (this->getInternalTargetMask().IsNotNull())
 				{
 					//add target mask
-					this->getMetricInternal()->getImageToImageMetric()->SetFixedImageMask(this->getTargetMask());
+					this->getMetricInternal()->getImageToImageMetric()->SetFixedImageMask(this->getInternalTargetMask());
 				}
 
 				this->_internalRegistrationMethod->SetFixedImageRegion(
@@ -1062,6 +1062,52 @@ namespace map
 			{
 				_spInternalTargetImage = image;
 			};
+
+      template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
+      typename ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::MovingMaskBaseConstPointer
+        ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
+        getInternalMovingMask() const
+      {
+        MovingMaskBaseConstPointer result = this->getMovingMask();
+
+        if (this->_spInternalMovingMask.IsNotNull())
+        {
+          result = _spInternalMovingMask;
+        }
+
+        return result;
+      }
+
+      template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
+      typename ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::TargetMaskBaseConstPointer
+        ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
+        getInternalTargetMask() const
+      {
+        TargetMaskBaseConstPointer result = this->getTargetMask();
+
+        if (this->_spInternalTargetMask.IsNotNull())
+        {
+          result = _spInternalTargetMask;
+        }
+
+        return result;
+      }
+
+      template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
+      void
+        ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
+        setInternalMovingMask(MovingMaskBaseType* mask)
+      {
+        _spInternalMovingMask = mask;
+      }
+
+      template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
+      void
+        ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
+        setInternalTargetMask(TargetMaskBaseType* mask)
+      {
+        _spInternalTargetMask = mask;
+      }
 
 		} // end namespace itk
 	} // end namespace algorithm

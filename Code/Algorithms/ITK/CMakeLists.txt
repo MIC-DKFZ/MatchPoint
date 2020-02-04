@@ -15,6 +15,7 @@ MAP_DEFINE_DEPLOYED_ALGORITHM(ITKTranslation3DMattesMIMultiRes PROFILE "deployed
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKAffine3DMattesMIMultiRes PROFILE "deployed/ITKAffine3DMattesMIMultiRes.profile" FILES "deployed/mapITKAffine3DMattesMIMultiRes.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigidHeadNeck PROFILE "deployed/ITKRigidHeadNeck.profile" FILES "deployed/mapITKRigidHeadNeck.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigidSlabbedHead PROFILE "deployed/ITKRigidSlabbedHead.profile" FILES "deployed/mapITKRigidSlabbedHead.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
+MAP_DEFINE_DEPLOYED_ALGORITHM(ITKRigid3DBoundingBox PROFILE "deployed/ITKRigid3DBoundingBox.profile" FILES "deployed/mapITKRigid3DBoundingBox.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)
 
 SET(_MAP_ITK_REVIEW_ACTIVE "OFF")
 MAP_CHECK_ITK_REVIEW_ACTIVE(_MAP_ITK_REVIEW_ACTIVE)

@@ -147,6 +147,7 @@ boxed/mapITKSymmetricForcesDemonsRegistrationAlgorithm.h
 boxed/mapITKLevelSetMotionMultiResRegistrationAlgorithm.h
 boxed/mapITKRigid3DMattesMIHeadNeckRegistrationAlgorithmTemplate.h
 boxed/mapITKRigid3DMattesMISlabbedHeadRegistrationAlgorithmTemplate.h
+boxed/mapITKRigid3DMattesMIBoundingBoxRegistrationAlgorithmTemplate.h
 )
 
 SET(TPP_FILES
@@ -195,6 +196,7 @@ boxed/mapITKSymmetricForcesDemonsRegistrationAlgorithm.tpp
 boxed/mapITKLevelSetMotionMultiResRegistrationAlgorithm.tpp
 boxed/mapITKRigid3DMattesMIHeadNeckRegistrationAlgorithmTemplate.tpp
 boxed/mapITKRigid3DMattesMISlabbedHeadRegistrationAlgorithmTemplate.tpp
+boxed/mapITKRigid3DMattesMIBoundingBoxRegistrationAlgorithmTemplate.tpp
 )
 
 SET(TEST_CPP_FILES

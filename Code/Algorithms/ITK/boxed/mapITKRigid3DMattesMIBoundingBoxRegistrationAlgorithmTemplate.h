@@ -21,8 +21,8 @@
 */
 
 
-#ifndef __MAP_ITK_RIGID_MMI_HEADNECK_REGISTRATION_ALGORITHM_H
-#define __MAP_ITK_RIGID_MMI_HEADNECK_REGISTRATION_ALGORITHM_H
+#ifndef __MAP_ITK_RIGID_MMI_BOUNDINGBOX_REGISTRATION_ALGORITHM_H
+#define __MAP_ITK_RIGID_MMI_BOUNDINGBOX_REGISTRATION_ALGORITHM_H
 
 #include "mapITKEuler3DMattesMIMultiResRegistrationAlgorithmTemplate.h"
 
@@ -32,7 +32,7 @@ namespace map
 	{
 		namespace boxed
 		{
-				/** \class MultiModalRigidHeadNeckRegistrationAlgorithm
+				/** \class ITKRigid3DMattesMIBoundingBoxRegistrationAlgorithm
 				* \ingroup Data_image MetaProperty Model_rigid Det_comp_iterative Det_stochastic Det_res_multi Dim_3D_3D Mod_multi PreInit_Geo
 				* Algorithm is used for special cases where a head image should be registered onto a head/neck image (target image). It skips the lower part of
 					* the target image if a preinitialization (via geometric center or centroid) is used, to establish a better initialization. By default initializes via geometric centers.
@@ -42,33 +42,48 @@ namespace map
         class TInterpolatorPolicy =
         SealedFixedInterpolatorPolicyMacro< ::itk::LinearInterpolateImageFunction<TImageType, map::core::continuous::ScalarType> >,
         class TPyramideInitializationPolicy = algorithm::itk::NoComponentInitializationPolicy>
-				class MultiModalRigidHeadNeckRegistrationAlgorithm :
+				class ITKRigid3DMattesMIBoundingBoxRegistrationAlgorithm :
 					public map::algorithm::boxed::ITKEuler3DMattesMIMultiResRegistrationAlgorithm<TImageType, TImageType, TIdentificationPolicy, TInterpolatorPolicy, TPyramideInitializationPolicy>
 				{
 				public:
-					typedef MultiModalRigidHeadNeckRegistrationAlgorithm Self;
+					typedef ITKRigid3DMattesMIBoundingBoxRegistrationAlgorithm Self;
 
-                    typedef ITKEuler3DMattesMIMultiResRegistrationAlgorithm<TImageType, TImageType, TIdentificationPolicy, TInterpolatorPolicy, TPyramideInitializationPolicy>
-					Superclass;
+          typedef ITKEuler3DMattesMIMultiResRegistrationAlgorithm<TImageType, TImageType, TIdentificationPolicy, TInterpolatorPolicy, TPyramideInitializationPolicy> Superclass;
 
-					typedef ::itk::SmartPointer<Self>                                     Pointer;
-					typedef ::itk::SmartPointer<const Self>                               ConstPointer;
+					typedef ::itk::SmartPointer<Self> Pointer;
+					typedef ::itk::SmartPointer<const Self> ConstPointer;
 
-					itkTypeMacro(MultiModalRigidHeadNeckRegistrationAlgorithm,
+					itkTypeMacro(ITKRigid3DMattesMIBoundingBoxRegistrationAlgorithm,
 								 ITKEuler3DMattesMIMultiResRegistrationAlgorithm);
 					mapNewAlgorithmMacro(Self);
 
+          mapSetMetaMacro(ActivateBoundingBox, bool);
+          mapSetMetaMacro(ActivateMargin, bool);
+          mapGetMetaMacro(ActivateBoundingBox, bool);
+          mapGetMetaMacro(ActivateMargin, bool);
+
 				protected:
-					MultiModalRigidHeadNeckRegistrationAlgorithm();
-					virtual ~MultiModalRigidHeadNeckRegistrationAlgorithm();
+					ITKRigid3DMattesMIBoundingBoxRegistrationAlgorithm();
+					virtual ~ITKRigid3DMattesMIBoundingBoxRegistrationAlgorithm();
 
           void configureAlgorithm() override;
 					void doInterLevelSetup() override;
-          void prepInitializeTransformation() override;
+          void prepPerpareInternalInputData() override;
+          void prepSetInternalInputData() override;
 
+          void compileInfos(MetaPropertyVectorType& infos) const override;
+          MetaPropertyPointer doGetProperty(const MetaPropertyNameType& name) const override;
+          void doSetProperty(const MetaPropertyNameType& name, const MetaPropertyType* pProperty) override;
+
+          bool _ActivateBoundingBox;
+          bool _ActivateMargin;
+
+          /**Margins that should be used to dilate masks/bounding boxes in mm (per side). E.G. 3 mm margin in 1st dimension will make the bounding box
+          bigger by 6 mm.*/
+          ::itk::FixedArray<double, 3> _margins;
 				private:
 
-					MultiModalRigidHeadNeckRegistrationAlgorithm(const Self& source);  //purposely not implemented
+					ITKRigid3DMattesMIBoundingBoxRegistrationAlgorithm(const Self& source);  //purposely not implemented
 					void operator=(const Self&); //purposely not implemented
 				};
 		}
@@ -76,7 +91,7 @@ namespace map
 }
 
 #ifndef MatchPoint_MANUAL_TPP
-#include "mapITKRigid3DMattesMIHeadNeckRegistrationAlgorithmTemplate.tpp"
+#include "mapITKRigid3DMattesMIBoundingBoxRegistrationAlgorithmTemplate.tpp"
 #endif
 
 

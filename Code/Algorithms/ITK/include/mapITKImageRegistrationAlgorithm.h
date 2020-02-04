@@ -110,11 +110,17 @@ namespace map
 				OptimizerMeasureType;
 				typedef ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>
 				ImageRegistrationAlgorithmBaseType;
+        using MaskRegistrationAlgorithmBaseType = MaskedRegistrationAlgorithmBase<TMovingImage::ImageDimension, TTargetImage::ImageDimension>;
 
 				using TargetImageType = typename ImageRegistrationAlgorithmBaseType::TargetImageType;
 				using MovingImageType = typename ImageRegistrationAlgorithmBaseType::MovingImageType;
 				using MovingImageConstPointer = typename ImageRegistrationAlgorithmBaseType::MovingImageConstPointer;
 				using TargetImageConstPointer = typename ImageRegistrationAlgorithmBaseType::TargetImageConstPointer;
+
+        using MovingMaskBaseType = typename MaskRegistrationAlgorithmBaseType::MovingMaskBaseType;
+        using TargetMaskBaseType = typename MaskRegistrationAlgorithmBaseType::TargetMaskBaseType;
+        using MovingMaskBaseConstPointer = typename MaskRegistrationAlgorithmBaseType::MovingMaskBaseConstPointer;
+        using TargetMaskBaseConstPointer = typename MaskRegistrationAlgorithmBaseType::TargetMaskBaseConstPointer;
 
 				using MovingRepresentationDescriptorType = typename Superclass::MovingRepresentationDescriptorType;
 				using TargetRepresentationDescriptorType = typename Superclass::TargetRepresentationDescriptorType;
@@ -368,6 +374,24 @@ namespace map
 				/*!Method sets _spInternalTargetImage to the passed image and therefore overrides the target which is internally used by the algorithm.*/
 				void setInternalTargetImage(TargetImageType* image);
 
+        /*! Method returns pointer to the moving mask used by the algorithm internally. This is used to allow the algorithm
+        * or its derived classes to modify the moving mask with out changing the public moving mask pointer.
+        * It returns _spMovingMask if setInternalMovingMask was never called (thus no special internal mask was defined).
+        * Otherwise it will return _spInternalMovingMask.*/
+        MovingMaskBaseConstPointer getInternalMovingMask() const;
+        /*! Method returns pointer to the target mask used by the algorithm internally. This is used to allow the algorithm
+        * or its derived classes to modify the target mask with out changing the public target mask pointer.
+        * It returns _spTargetMask if setInternalTargetMask was never called (thus no special internal mask was defined).
+        * Otherwise it will return _spInternalTargetMask.*/
+        TargetMaskBaseConstPointer getInternalTargetMask() const;
+
+        /*!Method sets _spInternalMovingMask to the passed mask and therefore overrides the target which is internally used by the algorithm.*/
+        void setInternalMovingMask(MovingMaskBaseType* mask);
+        /*!Method sets _spInternalTargetMask to the passed mask and therefore overrides the target which is internally used by the algorithm.*/
+        void setInternalTargetMask(TargetMaskBaseType* mask);
+
+        bool _CropInputImagesByMask;
+
 			private:
 				typename InternalRegistrationMethodType::Pointer _internalRegistrationMethod;
 
@@ -383,7 +407,13 @@ namespace map
 				* function to manipulate _spInternalTargetImage before it is used by prepareAlgorithm() to set the internal algorithm)*/
 				typename TargetImageType::Pointer _spInternalTargetImage;
 
-				bool _CropInputImagesByMask;
+        /*!Pointer to the moving mask used by the algorithm internally if it was changed by setInternalMovingMask().
+        * This is used to allow the algorithm or its derived classes to modify the moving mask with out changing the public moving mask pointer.*/
+        typename MovingMaskBaseType::Pointer _spInternalMovingMask;
+
+        /*!Pointer to the target mask used by the algorithm internally if it was changed by setInternaltargetMask().
+        * This is used to allow the algorithm or its derived classes to modify the target mask with out changing the public target mask pointer.*/
+        typename TargetMaskBaseType::Pointer _spInternalTargetMask;
 
 				mutable core::ObserverSentinel::Pointer _onIterationObserver;
 				mutable core::ObserverSentinel::Pointer _onGeneralOptimizerObserver;
