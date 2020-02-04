@@ -645,13 +645,23 @@ map::apps::matchR::wrapMetaProperty(const ::map::algorithm::MetaPropertyInfo* pI
   }
 
   if (pInfo->getTypeInfo() == typeid(int)) { metaProp = checkCastAndSetProp<int>(valueStr);
-  } else if (pInfo->getTypeInfo() == typeid(unsigned int)) { metaProp = checkCastAndSetProp<unsigned int>(valueStr);
-  } else if (pInfo->getTypeInfo() == typeid(long)) { metaProp = checkCastAndSetProp<long>(valueStr);
-  } else if (pInfo->getTypeInfo() == typeid(unsigned long)) { metaProp = checkCastAndSetProp<unsigned long>(valueStr);
-  } else if (pInfo->getTypeInfo() == typeid(float)) { metaProp = checkCastAndSetProp<float>(valueStr);
-  } else if (pInfo->getTypeInfo() == typeid(double)) { metaProp = checkCastAndSetProp<double>(valueStr);
-  } else if (pInfo->getTypeInfo() == typeid(::itk::Array<double>)) { metaProp = checkCastAndSetProp< ::itk::Array<double> >(valueStr);
-  } else if (pInfo->getTypeInfo() == typeid(::map::core::String))
+  }
+  else if (pInfo->getTypeInfo() == typeid(unsigned int)) { metaProp = checkCastAndSetProp<unsigned int>(valueStr);
+  }
+  else if (pInfo->getTypeInfo() == typeid(long)) { metaProp = checkCastAndSetProp<long>(valueStr);
+  }
+  else if (pInfo->getTypeInfo() == typeid(unsigned long)) { metaProp = checkCastAndSetProp<unsigned long>(valueStr);
+  }
+  else if (pInfo->getTypeInfo() == typeid(float)) { metaProp = checkCastAndSetProp<float>(valueStr);
+  }
+  else if (pInfo->getTypeInfo() == typeid(double)) { metaProp = checkCastAndSetProp<double>(valueStr);
+  }
+  else if (pInfo->getTypeInfo() == typeid(::itk::Array<double>)) { metaProp = checkCastAndSetProp< ::itk::Array<double> >(valueStr);
+  }
+  else if (pInfo->getTypeInfo() == typeid(bool)) {
+    metaProp = checkCastAndSetProp< bool >(valueStr);
+  }
+  else if (pInfo->getTypeInfo() == typeid(::map::core::String))
   {
     metaProp = map::core::MetaProperty<map::core::String>::New(valueStr).GetPointer();
   }
