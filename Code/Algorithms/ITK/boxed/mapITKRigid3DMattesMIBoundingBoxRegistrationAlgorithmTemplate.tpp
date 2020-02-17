@@ -64,7 +64,7 @@ namespace map
 				this->_margins.Fill(0.0);
 
 				//optimizer
-        ConcreteOptimizerType::ScalesType scales(6);
+        ScalesType scales(6);
         scales[0] = 10.0;
         scales[1] = 10.0;
         scales[2] = 10.0;
@@ -94,9 +94,9 @@ namespace map
 
 				if (this->getCurrentLevel() != 0)
 				{
-					getConcreteMetricControl()->getConcreteMetric()->SetUseAllPixels(false);
+					this->getConcreteMetricControl()->getConcreteMetric()->SetUseAllPixels(false);
 
-					OptimizerBaseType::SVNLOptimizerBaseType::ScalesType scales(6);
+					ScalesType scales(6);
 					scales[0] = 1.0;
 					scales[1] = 1.0;
 					scales[2] = 1.0;
@@ -104,12 +104,12 @@ namespace map
 					scales[4] = 1.0 / 1000;
 					scales[5] = 1.0 / 1000;
 
-					getConcreteOptimizerControl()->getConcreteOptimizer()->SetScales(scales);
+					this->getConcreteOptimizerControl()->getConcreteOptimizer()->SetScales(scales);
 
 					unsigned int nrOfSmpl = ::itk::Math::Round<unsigned int, double>
 											(this->getMovingImage()->GetLargestPossibleRegion().GetNumberOfPixels() * 0.15);
 
-					getConcreteMetricControl()->getConcreteMetric()->SetNumberOfSpatialSamples(nrOfSmpl);
+					this->getConcreteMetricControl()->getConcreteMetric()->SetNumberOfSpatialSamples(nrOfSmpl);
 				}
 			};
 
@@ -136,7 +136,7 @@ namespace map
             auto spacing = this->getInternalTargetImage()->GetSpacing();
 
             using StructuringElementType = ::itk::FlatStructuringElement<TargetImageType::ImageDimension>;
-            StructuringElementType::RadiusType radius;
+            typename StructuringElementType::RadiusType radius;
 
             for (unsigned int i = 0; i < spacing.Size(); ++i)
             {
@@ -149,7 +149,7 @@ namespace map
             //the background.
             using BinaryErodeImageFilterType = ::itk::BinaryErodeImageFilter<TargetImageMaskImageType, TargetImageMaskImageType, StructuringElementType>;
 
-            BinaryErodeImageFilterType::Pointer erodeFilter = BinaryErodeImageFilterType::New();
+            typename BinaryErodeImageFilterType::Pointer erodeFilter = BinaryErodeImageFilterType::New();
             erodeFilter->SetInput(targetImageMask->GetImage());
             erodeFilter->SetKernel(structuringElement);
             erodeFilter->SetErodeValue(0);
@@ -158,7 +158,7 @@ namespace map
 
             auto dilatedImage = erodeFilter->GetOutput();
             using TargetImageMaskSOType = ::itk::ImageMaskSpatialObject< TargetImageType::ImageDimension >;
-            TargetImageMaskSOType::Pointer newMask = TargetImageMaskSOType::New();
+            typename TargetImageMaskSOType::Pointer newMask = TargetImageMaskSOType::New();
             newMask->SetImage(dilatedImage);
             this->setInternalTargetMask(newMask);
             os << "Target mask: add margin with size (in mm): " << _margins << " (pixels: "<< radius<<")";
@@ -184,7 +184,7 @@ namespace map
             auto spacing = this->getInternalMovingImage()->GetSpacing();
 
             using StructuringElementType = ::itk::FlatStructuringElement<MovingImageType::ImageDimension>;
-            StructuringElementType::RadiusType radius;
+            typename StructuringElementType::RadiusType radius;
 
             for (unsigned int i = 0; i < spacing.Size(); ++i)
             {
@@ -197,7 +197,7 @@ namespace map
             //the background.
             using BinaryErodeImageFilterType = ::itk::BinaryErodeImageFilter<MovingImageMaskImageType, MovingImageMaskImageType, StructuringElementType>;
 
-            BinaryErodeImageFilterType::Pointer erodeFilter = BinaryErodeImageFilterType::New();
+            typename BinaryErodeImageFilterType::Pointer erodeFilter = BinaryErodeImageFilterType::New();
             erodeFilter->SetInput(movingImageMask->GetImage());
             erodeFilter->SetKernel(structuringElement);
             erodeFilter->SetErodeValue(0);
@@ -206,7 +206,7 @@ namespace map
 
             auto dilatedImage = erodeFilter->GetOutput();
             using MovingImageMaskSOType = ::itk::ImageMaskSpatialObject< MovingImageType::ImageDimension >;
-            MovingImageMaskSOType::Pointer newMask = MovingImageMaskSOType::New();
+            typename MovingImageMaskSOType::Pointer newMask = MovingImageMaskSOType::New();
             newMask->SetImage(dilatedImage);
             this->setInternalMovingMask(newMask);
             os << "Moving mask: add margin with size (in mm): " << _margins << " (pixels: " << radius << ")";
@@ -241,8 +241,8 @@ namespace map
           //the internal moving and target images have already cropped to the bpunding box. This we only
           //have to deactivate the use of the mask.
           this->InvokeEvent(events::AlgorithmEvent(this, "Deactivate masks -> use bounding box instead."));
-          MovingMaskBaseType::Pointer nullMMask;
-          TargetMaskBaseType::Pointer nullTMask;
+          typename MovingMaskBaseType::Pointer nullMMask;
+          typename TargetMaskBaseType::Pointer nullTMask;
 
           this->getMetricInternal()->getImageToImageMetric()->SetMovingImageMask(nullMMask);
           this->getMetricInternal()->getImageToImageMetric()->SetFixedImageMask(nullTMask);

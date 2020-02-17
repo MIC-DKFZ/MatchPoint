@@ -53,6 +53,19 @@ namespace map
 					typedef ::itk::SmartPointer<Self> Pointer;
 					typedef ::itk::SmartPointer<const Self> ConstPointer;
 
+					typedef typename Superclass::MetaPropertyType MetaPropertyType;
+					typedef typename Superclass::MetaPropertyPointer MetaPropertyPointer;
+					typedef typename Superclass::MetaPropertyNameType MetaPropertyNameType;
+					typedef typename Superclass::MetaPropertyVectorType MetaPropertyVectorType;
+					typedef typename Superclass::ConcreteOptimizerType::ScalesType ScalesType;
+
+					using MovingImageType = typename Superclass::MovingImageType;
+					using TargetImageType = typename Superclass::TargetImageType;
+
+					using MaskRegistrationAlgorithmBaseType = MaskedRegistrationAlgorithmBase<TImageType::ImageDimension, TImageType::ImageDimension>;
+					using MovingMaskBaseType = typename MaskRegistrationAlgorithmBaseType::MovingMaskBaseType;
+					using TargetMaskBaseType = typename MaskRegistrationAlgorithmBaseType::TargetMaskBaseType;
+
 					itkTypeMacro(ITKRigid3DMattesMIBoundingBoxRegistrationAlgorithm,
 								 ITKEuler3DMattesMIMultiResRegistrationAlgorithm);
 					mapNewAlgorithmMacro(Self);

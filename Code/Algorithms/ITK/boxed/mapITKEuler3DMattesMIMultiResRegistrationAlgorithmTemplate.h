@@ -91,6 +91,10 @@ namespace map
 				typedef typename Superclass::MetaPropertyPointer MetaPropertyPointer;
 				typedef typename Superclass::MetaPropertyNameType MetaPropertyNameType;
 				typedef typename Superclass::MetaPropertyVectorType MetaPropertyVectorType;
+				using ScalesType = typename Superclass::ConcreteOptimizerType::ScalesType;
+
+				using MovingImageType = TMovingImage;
+				using TargetImageType = TTargetImage;
 
 			protected:
 				ITKEuler3DMattesMIMultiResRegistrationAlgorithm();

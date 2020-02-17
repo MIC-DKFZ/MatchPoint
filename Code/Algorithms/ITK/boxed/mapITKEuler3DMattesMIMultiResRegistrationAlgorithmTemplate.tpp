@@ -76,7 +76,7 @@ namespace map
 
 				this->setResolutionLevels(3);
 
-				typename Superclass::ConcreteOptimizerType::ScalesType scales(6);
+				ScalesType scales(6);
 				scales[0] = 1.0;
 				scales[1] = 1.0;
 				scales[2] = 1.0;
