@@ -88,6 +88,7 @@ namespace map
             GenericKernelCombinationFieldSource() : m_UseNullPoint(false)
             {
               m_NullPoint.Fill(itk::NumericTraits<map::core::continuous::ScalarType>::NonpositiveMin());
+              this->DynamicMultiThreadingOff();
             };
             // virtual ~GenericKernelCombinationFieldSource() default implementation ok
 

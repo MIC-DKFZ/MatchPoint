@@ -194,7 +194,7 @@ namespace map
 		}
 
 		template <class TRegistration>
-		ITK_THREAD_RETURN_TYPE
+		::itk::ITK_THREAD_RETURN_TYPE
 		MappingTaskBatch<TRegistration>::
 		threadExecution(void* arg)
 		{

@@ -50,6 +50,7 @@ namespace itk
       m_FieldInterpolator = FieldInterpolatorType::New();
       m_MappingErrorValue = NumericTraits<PixelType>::Zero;
       m_ThrowExceptionOnMappingError = false;
+      this->DynamicMultiThreadingOff();
     }
 
     /**

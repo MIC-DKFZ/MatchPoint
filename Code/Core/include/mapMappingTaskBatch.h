@@ -28,7 +28,7 @@
 #include "mapMappingTaskBatchThread.h"
 
 #include "itkObject.h"
-#include "itkMultiThreader.h"
+#include "itkMultiThreaderBase.h"
 
 #include <vector>
 #include <deque>
@@ -159,7 +159,7 @@ namespace map
 			 * any further tasks and will wait for the threads to return and throw the exception afterwards.*/
 			const ExceptionObject* _pTerminatingException;
 
-			static ITK_THREAD_RETURN_TYPE threadExecution(void* arg);
+			static ::itk::ITK_THREAD_RETURN_TYPE threadExecution(void* arg);
 
 			void onNextTaskThreadEvent(::itk::Object* pCaller, const ::itk::EventObject& eventObject);
 			void onProcessedTaskThreadEvent(::itk::Object* pCaller, const ::itk::EventObject& eventObject);
