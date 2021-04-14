@@ -98,7 +98,7 @@ namespace map
 
 			ModelFunctorType::Pointer spFunc = ModelFunctorType::New(spModel, spInRep);
 
-			ModelFunctorType::TransformPointer spSourceFieldTransform = NULL;
+			ModelFunctorType::TransformPointer spSourceFieldTransform;
 			spSourceFieldTransform = spFunc->generateTransform();
 
 
@@ -138,7 +138,7 @@ namespace map
 				  spFieldInversionFunc->getNumberOfIterations());
 
 			// test generateField
-      FieldInversionFunctorType::TransformPointer spGeneratedFieldTransform = NULL;
+      FieldInversionFunctorType::TransformPointer spGeneratedFieldTransform;
       CHECK_NO_THROW(spGeneratedFieldTransform = spFieldInversionFunc->generateTransform());
       CHECK(spGeneratedFieldTransform.IsNotNull());
       FieldInversionFunctorType::FieldType::Pointer spGeneratedField = testing::unwrapTransformField(spGeneratedFieldTransform.GetPointer());

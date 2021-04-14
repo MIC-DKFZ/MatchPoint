@@ -157,7 +157,7 @@ namespace map
 			ITKLandmarkKernelRegistrationAlgorithm<TPointSet, TITKTransform, TIdentificationPolicy>::
 			finalizeAlgorithm()
 			{
-				RegistrationPointer spResult = NULL;
+				RegistrationPointer spResult;
 
 				if (!_spTransform)
 				{

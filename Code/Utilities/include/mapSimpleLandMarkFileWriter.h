@@ -42,7 +42,7 @@ namespace map
 			std::ofstream pointsFile;
 			pointsFile.open(lmFileName.c_str());
 
-			typename LandmarksType::Pointer spLMs = NULL;
+			typename LandmarksType::Pointer spLMs;
 
 			if (pointsFile.fail())
 			{

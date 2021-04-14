@@ -116,7 +116,7 @@ namespace map
 
 			//Test field generation, hence we've combined a field with its inverse transform model
 			//the resulting field must be an identity transform
-      SourceType::OutputImageType::Pointer spResult = NULL;
+      SourceType::OutputImageType::Pointer spResult;
 
 			CHECK_NO_THROW(spSource->Update());
       spResult = spSource->GetOutput();

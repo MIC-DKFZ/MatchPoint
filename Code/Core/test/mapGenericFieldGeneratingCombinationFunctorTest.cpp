@@ -115,7 +115,7 @@ namespace map
 
 			//Test field generation, hence we've combined a field with its inverse transform model
 			//the resulting field must be an identity transform
-			CombinatorFunctorType::TransformPointer spResult = NULL;
+			CombinatorFunctorType::TransformPointer spResult;
 			CHECK_NO_THROW(spResult = spTestFunctor->generateTransform());
 			CHECK(spResult.IsNotNull());
 
@@ -138,7 +138,7 @@ namespace map
 			//Test invalid mapping request: In field representation descriptor specifies unsupported region
 			CombinatorFunctorType::Pointer spIllegalTestFunctor = CombinatorFunctorType::New(spModelKernel, spFieldKernel, spIllegalInRep);
 
-			CombinatorFunctorType::TransformPointer spIllegalResultFieldTransform = NULL;
+			CombinatorFunctorType::TransformPointer spIllegalResultFieldTransform;
       spIllegalTestFunctor->setNullPointUsage(false);
       CHECK_THROW(spIllegalResultFieldTransform = spIllegalTestFunctor->generateTransform());
 

@@ -35,7 +35,7 @@ namespace map
 		NullRegistrationKernel<VInputDimensions, VOutputDimensions>::
 		getLargestPossibleRepresentation() const
 		{
-			RepresentationDescriptorConstPointer spRep = NULL;
+			RepresentationDescriptorConstPointer spRep;
 			return spRep;
 		};
 

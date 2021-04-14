@@ -218,7 +218,7 @@ int main(int argc, char* argv[])
 	* Load and prepare registration algorithm
 	***************************************************************/
 
-	map::deployment::RegistrationAlgorithmBasePointer spAlgorithmBase = NULL;
+	map::deployment::RegistrationAlgorithmBasePointer spAlgorithmBase;
 
 	try
 	{
@@ -229,7 +229,7 @@ int main(int argc, char* argv[])
 
 		std::cout << "DLL location: " << dllPath << std::endl;
 
-		map::deployment::DLLHandle::Pointer spHandle = NULL;
+		map::deployment::DLLHandle::Pointer spHandle;
 
 		spHandle = map::deployment::openDeploymentDLL(dllPath);
 

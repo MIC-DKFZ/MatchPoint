@@ -111,7 +111,7 @@ namespace map
 			CHECK(spFuncAnother->getNumberOfIterations() == spFunc->getNumberOfIterations());
 
 			// test generateField
-			FunctorType::TransformPointer spTransform = NULL;
+			FunctorType::TransformPointer spTransform;
             CHECK_NO_THROW(spTransform = spFunc->generateTransform());
             CHECK(spTransform.IsNotNull());
 

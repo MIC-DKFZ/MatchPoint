@@ -61,7 +61,7 @@ namespace map
                     "Error. Cannot get representation descriptor in PreCachedTransformPolicy. Transform is not set.");
             }
 
-            RepresentationDescriptorConstPointer spRepresentation = NULL;
+            RepresentationDescriptorConstPointer spRepresentation;
 
             typename ::map::core::FieldDecomposer<VInputDimensions, VOutputDimensions>::FieldConstPointer pField;
 
@@ -127,7 +127,7 @@ namespace map
 
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
         PreCachedRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            PreCachedRegistrationKernel() : _spTransform(NULL)
+            PreCachedRegistrationKernel()
         {
         };
 

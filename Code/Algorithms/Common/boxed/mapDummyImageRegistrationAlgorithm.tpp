@@ -101,7 +101,7 @@ namespace map
     DummyImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
     doDetermineRegistration()
     {
-      RegistrationPointer spResult = NULL;
+      RegistrationPointer spResult;
 
       typedef ::itk::AffineTransform< ::map::core::continuous::ScalarType, RegistrationType::MovingDimensions>
       TransformModelType;

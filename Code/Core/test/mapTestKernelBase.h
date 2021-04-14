@@ -46,7 +46,7 @@ namespace map
 
 			typename Superclass::RepresentationDescriptorConstPointer getLargestPossibleRepresentation() const
 			{
-				typename Superclass::RepresentationDescriptorConstPointer spTemp = NULL;
+				typename Superclass::RepresentationDescriptorConstPointer spTemp;
 				return spTemp;
 			}
 

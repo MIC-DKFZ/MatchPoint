@@ -79,7 +79,7 @@ namespace map
 
 			// test generateField
 
-      FunctorType::TransformPointer spFieldTransform = NULL;
+      FunctorType::TransformPointer spFieldTransform;
       CHECK_NO_THROW(spFieldTransform = spFunc->generateTransform());
       CHECK(spFieldTransform.IsNotNull());
       FunctorType::FieldType::Pointer spField = testing::unwrapTransformField(spFieldTransform.GetPointer());

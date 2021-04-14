@@ -155,7 +155,7 @@ namespace map
 			ITKClosedFormRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TITKTransform, TIdentificationPolicy>::
 			finalizeAlgorithm()
 			{
-				RegistrationPointer spResult = NULL;
+				RegistrationPointer spResult;
 
 				if (!_spTransform)
 				{

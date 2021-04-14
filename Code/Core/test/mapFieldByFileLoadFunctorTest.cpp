@@ -76,8 +76,8 @@ namespace map
 			CHECK(spFieldFuncAnother->getFieldFilePath() == spFieldFunc->getFieldFilePath());
 
 			// test generateTransform
-			FieldFunctorType::FieldType::Pointer spGeneratedField = NULL;
-      FieldFunctorType::TransformPointer spGeneratedFieldTransform = NULL;
+			FieldFunctorType::FieldType::Pointer spGeneratedField;
+      FieldFunctorType::TransformPointer spGeneratedFieldTransform;
       CHECK_NO_THROW(spGeneratedFieldTransform = spFieldFunc->generateTransform());
       ::map::core::FieldDecomposer<2, 2>::decomposeTransform(spGeneratedFieldTransform, spGeneratedField);
       CHECK(spGeneratedField.IsNotNull());

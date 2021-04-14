@@ -150,7 +150,7 @@ namespace map
 			determineInterimRegistration(const MovingRepresentationDescriptorType* pMovingRepresentation,
 										 const TargetRepresentationDescriptorType* pTargetRepresentation) const
 			{
-				InterimRegistrationPointer spResult = NULL;
+				InterimRegistrationPointer spResult;
 
 				if (this->_currentIterationCount > 0)
 				{
@@ -346,7 +346,7 @@ namespace map
 			ITKPDEDeformableRegistrationAlgorithmBase<TImageType, TIdentificationPolicy, TDisplacementField, TInternalRegistrationFilter>::
 			finalizeAlgorithm()
 			{
-				RegistrationPointer spResult = NULL;
+				RegistrationPointer spResult;
 
 				//now build the inverse kernel (main kernel of a image based registration algorithm)
 				typedef typename
