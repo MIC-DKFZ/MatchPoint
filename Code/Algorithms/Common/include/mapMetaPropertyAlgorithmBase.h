@@ -185,7 +185,7 @@ namespace map
 
 			void resetMetaPropertyCache();
 
-			unsigned long GetMTime() const;
+			::itk::ModifiedTimeType GetMTime() const;
 
 		private:
 			typedef std::map<MetaPropertyNameType, MetaPropertyPointer> MetaPropertyCacheType;

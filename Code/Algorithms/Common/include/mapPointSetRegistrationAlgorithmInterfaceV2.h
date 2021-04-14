@@ -153,11 +153,11 @@ namespace map
 
         /*! returns the modification time of the target point set.
         */
-        virtual unsigned long getNthTargetPointSetMTime(SlotIndexType index) const = 0;
+        virtual ::itk::ModifiedTimeType getNthTargetPointSetMTime(SlotIndexType index) const = 0;
 
         /*! returns the modification time of the moving point set.
         */
-        virtual unsigned long getNthMovingPointSetMTime(SlotIndexType index) const = 0;
+        virtual ::itk::ModifiedTimeType getNthMovingPointSetMTime(SlotIndexType index) const = 0;
 
         MovingPointSetConstPointer getMovingPointSet() const override
         {
@@ -179,12 +179,12 @@ namespace map
           setNthTargetPointSet(0, pTargetPointSet);
         };
 
-        unsigned long getTargetPointSetMTime() const override
+        ::itk::ModifiedTimeType getTargetPointSetMTime() const override
         {
           return getNthTargetPointSetMTime(0);
         };
 
-        unsigned long getMovingPointSetMTime() const override
+        ::itk::ModifiedTimeType getMovingPointSetMTime() const override
         {
           return getNthMovingPointSetMTime(0);
         };

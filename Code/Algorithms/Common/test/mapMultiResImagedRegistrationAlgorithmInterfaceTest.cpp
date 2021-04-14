@@ -99,8 +99,8 @@ namespace map
 			CHECK(NULL == testInterface.getMovingImagePyramide());
 			CHECK(NULL == testInterface.getTargetImagePyramide());
 
-			unsigned long mmt = testInterface.getMovingPyramideMTime();
-			unsigned long tmt = testInterface.getTargetPyramideMTime();
+			auto mmt = testInterface.getMovingPyramideMTime();
+			auto tmt = testInterface.getTargetPyramideMTime();
 
 			testInterface.setMovingImagePyramide(spPyramide1);
 

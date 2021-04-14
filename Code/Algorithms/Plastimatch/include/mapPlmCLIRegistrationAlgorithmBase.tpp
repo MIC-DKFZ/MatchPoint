@@ -50,7 +50,7 @@ namespace map
 
 
           template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
-          unsigned long
+          ::itk::ModifiedTimeType
             CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
             getNthTargetPointSetMTime(SlotIndexType index) const
           {
@@ -58,7 +58,7 @@ namespace map
           };
 
           template<class TMovingImage, class TTargetImage, class TMovingPointSet, class TTargetPointSet, class TIdentificationPolicy>
-          unsigned long
+          ::itk::ModifiedTimeType
             CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TMovingPointSet, TTargetPointSet, TIdentificationPolicy>::
             getNthMovingPointSetMTime(SlotIndexType index) const
           {

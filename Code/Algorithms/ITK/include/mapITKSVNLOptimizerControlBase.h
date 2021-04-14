@@ -77,7 +77,7 @@ namespace map
 
 				/*! The modification time (MT) of an optimizer controler is the the maximum of his MT
 				 * and the MT of the controlled optimizer.  */
-				unsigned long GetMTime() const override;
+				::itk::ModifiedTimeType GetMTime() const override;
 
 				bool hasCurrentPosition() const override;
 

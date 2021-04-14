@@ -93,11 +93,11 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			unsigned long
+			::itk::ModifiedTimeType
 			SealedPointSetToPointSetMetricPolicy<TConcreteMetric>::
 			GetMTime() const
 			{
-				unsigned long mt = _mTime.GetMTime();
+				auto mt = _mTime.GetMTime();
 
 				if (mt < _spMetric->GetMTime())
 				{

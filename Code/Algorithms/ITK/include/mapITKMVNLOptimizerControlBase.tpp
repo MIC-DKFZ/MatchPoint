@@ -47,11 +47,11 @@ namespace map
 			}
 
 			template<class TConcreteOptimizer>
-			unsigned long
+			::itk::ModifiedTimeType
 			ITKMVNLOptimizerControlBase<TConcreteOptimizer>::
 			GetMTime() const
 			{
-				unsigned long mt = Superclass::GetMTime();
+				auto mt = Superclass::GetMTime();
 
 				if (mt < _spOptimizer->GetMTime())
 				{

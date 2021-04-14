@@ -85,11 +85,11 @@ namespace map
 
 			/*! returns the modification time of the target point set.
 			*/
-			virtual unsigned long getTargetPointSetMTime() const;
+			virtual ::itk::ModifiedTimeType getTargetPointSetMTime() const;
 
 			/*! returns the modification time of the moving point set.
 			*/
-			virtual unsigned long getMovingPointSetMTime() const;
+			virtual ::itk::ModifiedTimeType getMovingPointSetMTime() const;
 
 		protected:
 			/*! @brief virtual destructor

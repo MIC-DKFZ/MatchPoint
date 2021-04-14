@@ -34,11 +34,11 @@ namespace map
 		{
 
 			template<class TMovingImage, class TTargetImage>
-			unsigned long
+			::itk::ModifiedTimeType
 			ArbitraryImageToImageMetricPolicy<TMovingImage, TTargetImage>::
 			GetMTime() const
 			{
-				unsigned long mt = _mTime.getMTime();
+				auto mt = _mTime.getMTime();
 
 				return mt;
 			};

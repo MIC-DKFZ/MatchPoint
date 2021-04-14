@@ -96,11 +96,11 @@ namespace map
 			};
 
 			template<class TConcreteInterpolator>
-			unsigned long
+			::itk::ModifiedTimeType
 			SealedInterpolatorPolicy<TConcreteInterpolator>::
 			GetMTime() const
 			{
-				unsigned long mt = _mTime.GetMTime();
+				auto mt = _mTime.GetMTime();
 
 				if (mt < _spInterpolator->GetMTime())
 				{

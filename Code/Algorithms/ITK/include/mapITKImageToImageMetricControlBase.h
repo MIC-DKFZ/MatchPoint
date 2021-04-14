@@ -87,7 +87,7 @@ namespace map
 
 				/*! The modification time (MT) of an metric controler is the the maximum of his MT
 				 * and the MT of the controlled metric.  */
-				virtual unsigned long GetMTime() const;
+				virtual ::itk::ModifiedTimeType GetMTime() const;
 
 			protected:
 				virtual ~ITKImageToImageMetricControlBase();

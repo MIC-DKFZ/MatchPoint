@@ -48,11 +48,11 @@ namespace map
 			}
 
 			template<class TConcreteMetric>
-			unsigned long
+			::itk::ModifiedTimeType
 			ITKImageToImageMetricControlBase<TConcreteMetric>::
 			GetMTime() const
 			{
-				unsigned long mt = Superclass::GetMTime();
+				auto mt = Superclass::GetMTime();
 
 				if (mt < _spMetric->GetMTime())
 				{

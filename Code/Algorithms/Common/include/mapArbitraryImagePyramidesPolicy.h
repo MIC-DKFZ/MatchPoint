@@ -152,10 +152,10 @@ namespace map
 			void preparePyramidesAfterAssembly();
 
 			/** Return this modified time of the target pyramide.  */
-			unsigned long getTargetPyramideMTime() const;
+			::itk::ModifiedTimeType getTargetPyramideMTime() const;
 
 			/** Return this modified time of the moving pyramide.  */
-			unsigned long getMovingPyramideMTime() const;
+			::itk::ModifiedTimeType getMovingPyramideMTime() const;
 
 		private:
 			::map::core::ModificationTimeValidator _movingPyramideMTime;

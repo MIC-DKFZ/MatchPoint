@@ -32,20 +32,20 @@ namespace map
 	{
 
 		template<class TMovingImage, class TTargetImage>
-		unsigned long
+		::itk::ModifiedTimeType
 		ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage>::
 		getTargetPyramideMTime() const
 		{
-			unsigned long mt = _targetPyramideMTime.getMTime();
+			auto mt = _targetPyramideMTime.getMTime();
 			return mt;
 		};
 
 		template<class TMovingImage, class TTargetImage>
-		unsigned long
+		::itk::ModifiedTimeType
 		ArbitraryImagePyramidesPolicy<TMovingImage, TTargetImage>::
 		getMovingPyramideMTime() const
 		{
-			unsigned long mt = _movingPyramideMTime.getMTime();
+			auto mt = _movingPyramideMTime.getMTime();
 			return mt;
 		};
 

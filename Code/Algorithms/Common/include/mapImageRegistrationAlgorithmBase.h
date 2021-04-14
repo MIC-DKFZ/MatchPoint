@@ -91,10 +91,10 @@ namespace map
 			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 			/** Return this modified time of the target image.  */
-			unsigned long getTargetImageMTime() const;
+			::itk::ModifiedTimeType getTargetImageMTime() const;
 
 			/** Return this modified time of the moving image.  */
-			unsigned long getMovingImageMTime() const;
+			::itk::ModifiedTimeType getMovingImageMTime() const;
 
 		private:
 

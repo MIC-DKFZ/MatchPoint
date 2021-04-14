@@ -107,11 +107,11 @@ namespace map
 			};
 
 			template<class TConcreteOptimizer>
-			unsigned long
+			::itk::ModifiedTimeType
 			SealedOptimizerPolicy<TConcreteOptimizer>::
 			GetMTime() const
 			{
-				unsigned long mt = _mTime.GetMTime();
+				auto mt = _mTime.GetMTime();
 
 				if (mt < _spOptimizerControl->GetMTime())
 				{

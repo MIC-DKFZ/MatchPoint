@@ -206,7 +206,7 @@ namespace map
 			_cacheMTime.Modified();
 		};
 
-		unsigned long
+		::itk::ModifiedTimeType
 		MetaPropertyAlgorithmBase::
 		GetMTime() const
 		{

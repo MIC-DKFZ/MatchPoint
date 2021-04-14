@@ -34,11 +34,11 @@ namespace map
 		{
 
 			template<class TScalar, unsigned int VInputDimensions, unsigned int VOutputDimensions>
-			unsigned long
+			::itk::ModifiedTimeType
 			ArbitraryTransformPolicy<TScalar, VInputDimensions, VOutputDimensions>::
 			GetMTime() const
 			{
-				unsigned long mt = _mTime.getMTime();
+				auto mt = _mTime.getMTime();
 				return mt;
 			};
 

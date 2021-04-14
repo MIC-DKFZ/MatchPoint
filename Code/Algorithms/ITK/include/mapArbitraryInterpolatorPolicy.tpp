@@ -34,11 +34,11 @@ namespace map
 		{
 
 			template<class TInputImage, class TCoordRep>
-			unsigned long
+			::itk::ModifiedTimeType
 			ArbitraryInterpolatorPolicy<TInputImage, TCoordRep>::
 			GetMTime() const
 			{
-				unsigned long mt = _mTime.getMTime();
+				auto mt = _mTime.getMTime();
 				return mt;
 			};
 

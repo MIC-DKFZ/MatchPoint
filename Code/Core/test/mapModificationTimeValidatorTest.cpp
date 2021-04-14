@@ -44,7 +44,7 @@ namespace map
 			itkTypeMacro(OffContextObject, ::itk::Object);
 			itkFactorylessNewMacro(Self);
 
-			virtual unsigned long GetMTime() const
+			virtual ::itk::ModifiedTimeType GetMTime() const
 			{
 				return _offContextMTime;
 			};
@@ -61,7 +61,7 @@ namespace map
 
 			~OffContextObject() {};
 
-			mutable unsigned long _offContextMTime;
+			mutable ::itk::ModifiedTimeType _offContextMTime;
 		};
 
 		int mapModificationTimeValidatorTest(int, char* [])
@@ -83,12 +83,12 @@ namespace map
 			CHECK_EQUAL(contextRefTS.GetMTime(), mtv2.getMTime());
 
 			::map::core::ModificationTimeValidator mtv3(spInContextObj);
-			unsigned long lastTS_MTV3 = mtv3.getMTime();
+			::itk::ModifiedTimeType lastTS_MTV3 = mtv3.getMTime();
 			CHECK(contextRefTS.GetMTime() < lastTS_MTV3);
 
 			//check setter (NULL before);
 			mtv.setWatchedObject(spInContextObj);
-			unsigned long lastTS_MTV = mtv.getMTime();
+			::itk::ModifiedTimeType lastTS_MTV = mtv.getMTime();
 			CHECK(contextRefTS.GetMTime() < lastTS_MTV);
 
 			////////////////////////////////////////

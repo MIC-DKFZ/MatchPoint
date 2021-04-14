@@ -66,8 +66,8 @@ namespace map
 			CHECK_EQUAL(true, testInterface.getMovingMask().IsNull());
 			CHECK_EQUAL(true, testInterface.getTargetMask().IsNull());
 
-			unsigned long mmt = testInterface.getMovingMaskMTime();
-			unsigned long tmt = testInterface.getTargetMaskMTime();
+			auto mmt = testInterface.getMovingMaskMTime();
+			auto tmt = testInterface.getTargetMaskMTime();
 
 			testInterface.setMovingMask(spMovingMask);
 

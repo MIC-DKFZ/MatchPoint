@@ -140,20 +140,20 @@ namespace map
 		};
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		unsigned long
+		::itk::ModifiedTimeType
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getTargetPyramideMTime() const
 		{
-			unsigned long mt = _targetPyramideMTime.getMTime();
+			auto mt = _targetPyramideMTime.getMTime();
 			return mt;
 		};
 
 		template<class TConcreteMovingImagePyramide, class TConcreteTargetImagePyramide, class TInitializationPolicy>
-		unsigned long
+		::itk::ModifiedTimeType
 		SealedImagePyramidesPolicy<TConcreteMovingImagePyramide, TConcreteTargetImagePyramide, TInitializationPolicy>::
 		getMovingPyramideMTime() const
 		{
-			unsigned long mt = _movingPyramideMTime.getMTime();
+			auto mt = _movingPyramideMTime.getMTime();
 			return mt;
 		};
 

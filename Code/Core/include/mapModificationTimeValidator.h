@@ -56,7 +56,7 @@ namespace map
 			/*! Standard class typedefs. */
 			using Self = ModificationTimeValidator;
 			using WatchedObjectType = ::itk::Object;
-			using MTimeType = unsigned long;
+			using MTimeType = ::itk::ModifiedTimeType;
 
 			/*! Constructor.
 			* @eguarantee strong */

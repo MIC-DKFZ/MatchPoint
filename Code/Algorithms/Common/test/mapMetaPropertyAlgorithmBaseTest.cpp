@@ -166,7 +166,7 @@ namespace map
 
 			//test overloaded version: string
 			testInterface._size = 0;
-			unsigned long refTime = testInterface.GetMTime();
+			auto refTime = testInterface.GetMTime();
 
 			CHECK(testInterface.setProperty("Size", spSize));
 			CHECK_EQUAL(1, testInterface.recorder.getRecordValueCount(TestInterfaceType::compileInfosID));

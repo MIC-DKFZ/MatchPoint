@@ -91,7 +91,7 @@ namespace map
         @eguarantee strong
         @return the modification time
         */
-        virtual unsigned long GetMTime() const;
+        virtual ::itk::ModifiedTimeType GetMTime() const;
 
       protected:
         ArbitrarySVNLOptimizerPolicy();

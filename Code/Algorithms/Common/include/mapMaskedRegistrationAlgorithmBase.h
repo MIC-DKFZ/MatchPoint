@@ -102,10 +102,10 @@ namespace map
 			virtual void PrintSelf(std::ostream& os, ::itk::Indent indent) const;
 
 			/** Return this modified time of the target mask.  */
-			unsigned long getTargetMaskMTime() const;
+			::itk::ModifiedTimeType getTargetMaskMTime() const;
 
 			/** Return this modified time of the moving mask.  */
-			unsigned long getMovingMaskMTime() const;
+			::itk::ModifiedTimeType getMovingMaskMTime() const;
 
 		private:
 

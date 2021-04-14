@@ -88,7 +88,7 @@ namespace map
 		}
 
 		template<class TMovingImage, class TTargetImage>
-		unsigned long
+		::itk::ModifiedTimeType
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
 		getTargetImageMTime() const
 		{
@@ -96,7 +96,7 @@ namespace map
 		};
 
 		template<class TMovingImage, class TTargetImage>
-		unsigned long
+		::itk::ModifiedTimeType
 		ImageRegistrationAlgorithmBase<TMovingImage, TTargetImage>::
 		getMovingImageMTime() const
 		{

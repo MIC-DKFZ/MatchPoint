@@ -69,7 +69,7 @@ namespace map
 				@eguarantee strong
 				@return the modification time
 				*/
-				virtual unsigned long GetMTime() const;
+				virtual ::itk::ModifiedTimeType GetMTime() const;
 
 				/*! This method can be used to indicate modification of the policy (calls _mTime.Modify()).
 				*/

@@ -154,11 +154,11 @@ namespace map
 
         /*! returns the modification time of the target image.
         */
-        virtual unsigned long getNthTargetImageMTime(SlotIndexType index) const = 0;
+        virtual ::itk::ModifiedTimeType getNthTargetImageMTime(SlotIndexType index) const = 0;
 
         /*! returns the modification time of the moving image.
         */
-        virtual unsigned long getNthMovingImageMTime(SlotIndexType index) const = 0;
+        virtual ::itk::ModifiedTimeType getNthMovingImageMTime(SlotIndexType index) const = 0;
 
         virtual MovingImageConstPointer getMovingImage() const override
         {
@@ -180,12 +180,12 @@ namespace map
           setNthTargetImage(0, pTargetImage);
         };
 
-        virtual unsigned long getTargetImageMTime() const override
+        virtual ::itk::ModifiedTimeType getTargetImageMTime() const override
         {
           return getNthTargetImageMTime(0);
         };
 
-        virtual unsigned long getMovingImageMTime() const override
+        virtual ::itk::ModifiedTimeType getMovingImageMTime() const override
         {
           return getNthMovingImageMTime(0);
         };

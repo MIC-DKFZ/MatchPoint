@@ -90,7 +90,7 @@ namespace map
 		}
 
 		template<unsigned int VMovingDimension, unsigned int VTargetDimension>
-		unsigned long
+		::itk::ModifiedTimeType
 		MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension>::
 		getTargetMaskMTime() const
 		{
@@ -98,7 +98,7 @@ namespace map
 		};
 
 		template<unsigned int VMovingDimension, unsigned int VTargetDimension>
-		unsigned long
+		::itk::ModifiedTimeType
 		MaskedRegistrationAlgorithmBase<VMovingDimension, VTargetDimension>::
 		getMovingMaskMTime() const
 		{

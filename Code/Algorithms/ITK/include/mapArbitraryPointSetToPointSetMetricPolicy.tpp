@@ -34,11 +34,11 @@ namespace map
 		{
 
 			template<class TMovingPointSet, class TTargetPointSet>
-			unsigned long
+			::itk::ModifiedTimeType
 			ArbitraryPointSetToPointSetMetricPolicy<TMovingPointSet, TTargetPointSet>::
 			GetMTime() const
 			{
-				unsigned long mt = _mTime.getMTime();
+				auto mt = _mTime.getMTime();
 				return mt;
 			};
 

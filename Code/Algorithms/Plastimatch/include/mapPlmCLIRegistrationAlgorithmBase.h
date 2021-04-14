@@ -175,9 +175,9 @@ namespace map
           return 1;
         };
 
-        virtual unsigned long getNthTargetPointSetMTime(SlotIndexType index) const override;
+        virtual ::itk::ModifiedTimeType getNthTargetPointSetMTime(SlotIndexType index) const override;
 
-        virtual unsigned long getNthMovingPointSetMTime(SlotIndexType index) const override;
+        virtual ::itk::ModifiedTimeType getNthMovingPointSetMTime(SlotIndexType index) const override;
 
 			protected:
 				CLIRegistrationAlgorithmBase();

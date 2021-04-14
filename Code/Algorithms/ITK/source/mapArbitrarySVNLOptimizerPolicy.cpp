@@ -33,11 +33,11 @@ namespace map
 		{
 
 
-			unsigned long
+			::itk::ModifiedTimeType
 			ArbitrarySVNLOptimizerPolicy::
 			GetMTime() const
 			{
-				unsigned long mt = _mTime.getMTime();
+				auto mt = _mTime.getMTime();
 				return mt;
 			};
 

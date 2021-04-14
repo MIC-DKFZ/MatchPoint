@@ -67,7 +67,7 @@ namespace map
 		}
 
 		template<class TMovingPointSet, class TTargetPointSet>
-		unsigned long
+		::itk::ModifiedTimeType
 		map::algorithm::PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>::getMovingPointSetMTime()
 		const
 		{
@@ -75,7 +75,7 @@ namespace map
 		}
 
 		template<class TMovingPointSet, class TTargetPointSet>
-		unsigned long
+		::itk::ModifiedTimeType
 		map::algorithm::PointSetRegistrationAlgorithmBase<TMovingPointSet, TTargetPointSet>::getTargetPointSetMTime()
 		const
 		{

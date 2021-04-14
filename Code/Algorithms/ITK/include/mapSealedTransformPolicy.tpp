@@ -93,11 +93,11 @@ namespace map
 			};
 
 			template<class TConcreteITKTransform>
-			unsigned long
+			::itk::ModifiedTimeType
 			SealedTransformPolicy<TConcreteITKTransform>::
 			GetMTime() const
 			{
-				unsigned long mt = _mTime.GetMTime();
+				auto mt = _mTime.GetMTime();
 
 				if (mt < _spTransformModel->GetMTime())
 				{

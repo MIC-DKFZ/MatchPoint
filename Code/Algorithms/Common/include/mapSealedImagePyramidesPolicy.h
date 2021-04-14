@@ -86,14 +86,14 @@ namespace map
 			@eguarantee strong
 			@return the modification time
 			*/
-			virtual unsigned long getMovingPyramideMTime() const;
+			virtual ::itk::ModifiedTimeType getMovingPyramideMTime() const;
 
 			/*! Returns the modification time of the policy (and its controlled component).
 			* In this case the modification time is a pass through of the internal component.
 			@eguarantee strong
 			@return the modification time
 			*/
-			virtual unsigned long getTargetPyramideMTime() const;
+			virtual ::itk::ModifiedTimeType getTargetPyramideMTime() const;
 
 			/*! This is a command slot that can be used by any class derivering from this policy
 			* to get informed if the moving pyramide instances is changed. \n
