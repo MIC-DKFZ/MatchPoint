@@ -264,9 +264,9 @@ namespace itk
             smallestError = 0;
             for(unsigned int j = 0; j < ImageDimension; j++ )
             {
-              smallestError += vcl_pow(backMappedPoint[j]-originalPoint[j],2);
+              smallestError += std::pow(backMappedPoint[j]-originalPoint[j],2);
             }
-            smallestError = vcl_sqrt(smallestError);
+            smallestError = std::sqrt(smallestError);
 
             // iteration loop
             for (unsigned int i=0; i<m_NumberOfIterations; i++)
@@ -287,9 +287,9 @@ namespace itk
                 tmp = 0;
                 for (unsigned int l=0; l<ImageDimension; l++)
                 {
-                  tmp += vcl_pow(backMappedPoint[l] - originalPoint[l], 2);
+                  tmp += std::pow(backMappedPoint[l] - originalPoint[l], 2);
                 }
-                tmp = vcl_sqrt(tmp);
+                tmp = std::sqrt(tmp);
                 if(tmp < smallestError)
                 {
                   smallestError = tmp;
@@ -306,9 +306,9 @@ namespace itk
                 tmp = 0;
                 for (unsigned int l=0; l<ImageDimension; l++)
                 {
-                  tmp += vcl_pow(backMappedPoint[l] - originalPoint[l], 2);
+                  tmp += std::pow(backMappedPoint[l] - originalPoint[l], 2);
                 }
-                tmp = vcl_sqrt(tmp);
+                tmp = std::sqrt(tmp);
                 if(tmp < smallestError)
                 {
                   smallestError = tmp;
