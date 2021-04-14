@@ -62,11 +62,10 @@ namespace map
 			@oaram [out] boundingRegion The computed bounding image region.
 			@return Indicates if boundingRegion has a valid value.
 			*/
-			static bool computeBoundingImageRegion(const MaskBaseType* mask, const ImageBaseType* refImage,
+			static bool computeBoundingImageRegion(MaskBaseType* mask, const ImageBaseType* refImage,
 												   ImageRegionType& boundingRegion)
 			{
 				ImageRegionType resultRegion;
-				bool result = false;
 
 				if (!mask)
 				{
@@ -78,48 +77,43 @@ namespace map
 					mapDefaultExceptionStaticMacro( << "Cannot compute bounding box. Reference image pointer is Null.");
 				}
 
-				if (mask->ComputeBoundingBox())
+				mask->Update();
+
+				const auto* spBBox = mask->GetMyBoundingBoxInWorldSpace();
+				const auto cornerPoints = spBBox->ComputeCorners();
+
+				typename ImageBaseType::IndexType minIndex;
+				minIndex.Fill(::itk::NumericTraits<typename ImageBaseType::IndexType::IndexValueType>::max());
+				typename ImageBaseType::IndexType maxIndex;
+				maxIndex.Fill(
+					::itk::NumericTraits<typename ImageBaseType::IndexType::IndexValueType>::NonpositiveMin());
+
+				for (const auto& cornerPoint : cornerPoints)
 				{
-					//there is really a bounding box
-					typename MaskBaseType::BoundingBoxType::Pointer spBBox = mask->GetBoundingBox();
-					const typename MaskBaseType::BoundingBoxType::PointsContainer* cornerPoints = spBBox->GetCorners();
+					typename ImageBaseType::IndexType index;
 
-					typename ImageBaseType::IndexType minIndex;
-					minIndex.Fill(::itk::NumericTraits<typename ImageBaseType::IndexType::IndexValueType>::max());
-					typename ImageBaseType::IndexType maxIndex;
-					maxIndex.Fill(
-						::itk::NumericTraits<typename ImageBaseType::IndexType::IndexValueType>::NonpositiveMin());
+					refImage->TransformPhysicalPointToIndex(cornerPoint, index);
 
-					for (typename MaskBaseType::BoundingBoxType::PointsContainer::ConstIterator pos =
-							 cornerPoints->Begin(); pos != cornerPoints->End(); ++pos)
+					for (unsigned int i = 0; i < ImageBaseType::GetImageDimension(); ++i)
 					{
-						typename ImageBaseType::IndexType index;
-						typename ImageBaseType::PointType point = pos.Value();
-
-						refImage->TransformPhysicalPointToIndex(point, index);
-
-						for (unsigned int i = 0; i < ImageBaseType::GetImageDimension(); ++i)
+						if (index[i] < minIndex[i])
 						{
-							if (index[i] < minIndex[i])
-							{
-								minIndex[i] = index[i];
-							};
+							minIndex[i] = index[i];
+						};
 
-							if (index[i] > maxIndex[i])
-							{
-								maxIndex[i] = index[i];
-							};
-						}
-
+						if (index[i] > maxIndex[i])
+						{
+							maxIndex[i] = index[i];
+						};
 					}
 
-					resultRegion.SetIndex(minIndex);
-					resultRegion.SetUpperIndex(maxIndex);
-					boundingRegion = resultRegion;
-					result = true;
 				}
 
-				return result;
+				resultRegion.SetIndex(minIndex);
+				resultRegion.SetUpperIndex(maxIndex);
+				boundingRegion = resultRegion;
+
+				return true;
 			};
 
 		protected:

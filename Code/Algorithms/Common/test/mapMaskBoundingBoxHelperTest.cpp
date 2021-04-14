@@ -63,7 +63,7 @@ namespace map
 			MaskType::SizeType maskSize;
 			maskSize[0] = 10;
 			maskSize[1] = 15;
-			mask->SetSize(maskSize);
+			mask->SetSizeInObjectSpace(maskSize);
 
 			ImageType::RegionType region;
 
