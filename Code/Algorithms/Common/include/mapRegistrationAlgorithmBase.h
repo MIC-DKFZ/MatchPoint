@@ -28,8 +28,7 @@
 
 #include "itkObject.h"
 
-#include "itkSimpleFastMutexLock.h"
-#include "itkMutexLockHolder.h"
+#include <mutex>
 
 #include "mapAlgorithmIdentificationInterface.h"
 #include "mapMacros.h"
@@ -193,9 +192,9 @@ namespace map
 
 			/*! mutex used to secure all state changes.
 			 */
-			::itk::SimpleFastMutexLock _stateLock;
+			::std::mutex _stateLock;
 
-			using StateLockHolderType = ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock>;
+			using StateLockHolderType = ::std::lock_guard<::std::mutex>;
 
 		private:
 			/*! the current state of the algorithm (initialized, pausing, ...)

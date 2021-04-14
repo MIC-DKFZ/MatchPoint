@@ -27,7 +27,7 @@
 #include "mapMappingTaskBase.h"
 
 #include "itkObject.h"
-#include "itkMutexLockHolder.h"
+#include <mutex>
 
 namespace map
 {
@@ -95,8 +95,8 @@ namespace map
 
 			/** Responsible for locking the processing, to ensure no change of values
 			* while thread is in Execution.*/
-			::itk::SimpleFastMutexLock _executionMutex;
-			typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock > MutexHolderType;
+			::std::mutex _executionMutex;
+			typedef ::std::lock_guard< ::std::mutex > MutexHolderType;
 
 			MappingTaskBatchThread(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented

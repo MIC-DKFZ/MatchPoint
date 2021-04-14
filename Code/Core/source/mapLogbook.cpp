@@ -26,7 +26,7 @@
 #include "mapSmartMetaProperty.h"
 #include "mapMetaProperty.h"
 
-#include "itkMutexLockHolder.h"
+#include <mutex>
 
 #include <cassert>
 
@@ -37,8 +37,8 @@ namespace map
 
         Logbook::LogImplPointer Logbook::_spLoggerImpl = nullptr;
 
-		itk::SimpleFastMutexLock Logbook::_testMutex;
-		itk::SimpleFastMutexLock Logbook::_initMutex;
+		std::mutex Logbook::_testMutex;
+		std::mutex Logbook::_initMutex;
 
 		Logbook::PriorityLevelType Logbook::_currentPriorityLevel = itk::LoggerBase::INFO;
 
@@ -121,8 +121,8 @@ namespace map
 
 			mapLogDebugStaticMacro( << "Attached itk ouput window to MatchPoint logbook");
 
-			itk::MutexLockHolder<itk::SimpleFastMutexLock> testHolder(_testMutex);
-			itk::MutexLockHolder<itk::SimpleFastMutexLock> initHolder(_initMutex);
+			std::lock_guard<std::mutex> testHolder(_testMutex);
+			std::lock_guard<std::mutex> initHolder(_initMutex);
 
 			if (_spLoggerImpl->_spItkOutputWindow.IsNull())
 			{
@@ -186,13 +186,13 @@ namespace map
 		Logbook::
 		initializeLogger()
 		{
-			itk::MutexLockHolder<itk::SimpleFastMutexLock> testHolder(_testMutex);
+			std::lock_guard<std::mutex> testHolder(_testMutex);
 
 			if (_spLoggerImpl.IsNull())
 			{
 				{
 					//mutex lock holder scope
-					itk::MutexLockHolder<itk::SimpleFastMutexLock> initHolder(_initMutex);
+					std::lock_guard<std::mutex> initHolder(_initMutex);
 					LogImplPointer spNewImpl = LogbookImplementation::New();
 					spNewImpl->initializeOutputs(_defaultFilename);
 
@@ -207,11 +207,11 @@ namespace map
 		{
 			assert(pImpl); //must not be null;
 
-			_testMutex.Lock();
-			_initMutex.Lock();
+			_testMutex.lock();
+			_initMutex.lock();
 			_spLoggerImpl = pImpl;
-			_initMutex.Unlock();
-			_testMutex.Unlock();
+			_initMutex.unlock();
+			_testMutex.unlock();
 		};
 
 		void

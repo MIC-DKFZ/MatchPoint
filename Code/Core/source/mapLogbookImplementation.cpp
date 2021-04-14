@@ -24,8 +24,7 @@
 #include "mapLogbookImplementation.h"
 #include "mapExceptionObject.h"
 
-#include "itkFastMutexLock.h"
-
+#include <mutex>
 #include <cassert>
 
 namespace map

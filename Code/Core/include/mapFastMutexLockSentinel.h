@@ -23,7 +23,7 @@
 #ifndef __MAP_FAST_MUTEX_LOCK_SENTINEL_H
 #define __MAP_FAST_MUTEX_LOCK_SENTINEL_H
 
-#include "itkSimpleFastMutexLock.h"
+#include <mutex>
 
 #include "mapMacros.h"
 #include "mapMAPCoreExports.h"
@@ -45,7 +45,7 @@ namespace map
 			class MAPCore_EXPORT FastMutexLockSentinel
 			{
 			public:
-				using MutexType = itk::SimpleFastMutexLock;
+				using MutexType = std::mutex;
 
 				void initializeSentinel(MutexType* pMutex);
 

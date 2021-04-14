@@ -326,7 +326,7 @@ namespace map
         typename RegistrationType::Pointer _spFinalizedRegistration;
 
         /*! The lock is used to manage the access to the member variable _currentIterationCount.*/
-        mutable ::itk::SimpleFastMutexLock _currentIterationLock;
+        mutable ::std::mutex _currentIterationLock;
 
         FSLRegistrationAlgorithm(const Self& source);
         void operator=(const Self&);  //purposely not implemented

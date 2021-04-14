@@ -26,7 +26,7 @@
 #ifndef __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_BASE_H
 #define __ITK_PDE_DEFORMABLE_REGISTRATION_ALGORITHM_BASE_H
 
-#include "itkSimpleFastMutexLock.h"
+#include <mutex>
 #include "itkPDEDeformableRegistrationFilter.h"
 #include "mapGenericVectorFieldTransform.h"
 
@@ -300,7 +300,7 @@ namespace map
                 IterationCountType _currentIterationCount;
 
                 /*! The lock is used to manage the access to the member variable _currentIterationCount.*/
-                mutable ::itk::SimpleFastMutexLock _currentIterationLock;
+                mutable ::std::mutex _currentIterationLock;
 
                 /*! Smartpointer to the finalized registration. Will be set by finalizeAlgorithm()*/
                 typename RegistrationType::Pointer _spFinalizedRegistration;

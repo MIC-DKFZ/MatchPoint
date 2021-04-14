@@ -26,7 +26,7 @@
 
 #include "itkLoggerBase.h"
 #include "itkLoggerOutput.h"
-#include "itkSimpleFastMutexLock.h"
+#include <mutex>
 
 #include "mapXMLLogger.h"
 #include "mapString.h"
@@ -178,8 +178,8 @@ namespace map
 			using LogImplPointer = itk::SmartPointer<LogbookImplementation>;
 			static LogImplPointer _spLoggerImpl;
 
-			static itk::SimpleFastMutexLock _testMutex;
-			static itk::SimpleFastMutexLock _initMutex;
+			static std::mutex _testMutex;
+			static std::mutex _initMutex;
 
 			/*! Indicates of the logbook is on its "own" or synced with an other host
 			 * logbook */

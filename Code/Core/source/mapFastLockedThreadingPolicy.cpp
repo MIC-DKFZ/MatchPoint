@@ -32,14 +32,14 @@ namespace map
 			FastLockedThreadingPolicy::
 			lock() const
 			{
-				_mutex.Lock();
+				_mutex.lock();
 			}
 
 			void
 			FastLockedThreadingPolicy::
 			unlock() const
 			{
-				_mutex.Unlock();
+				_mutex.unlock();
 			};
 
 			void

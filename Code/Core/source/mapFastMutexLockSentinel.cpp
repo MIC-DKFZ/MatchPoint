@@ -36,7 +36,7 @@ namespace map
 				assert(_pMutex == nullptr); //must not be used before!
 
 				_pMutex = pMutex;
-				_pMutex->Lock();
+				_pMutex->lock();
 			}
 
 			FastMutexLockSentinel::
@@ -48,7 +48,7 @@ namespace map
 			{
 				if (_pMutex != nullptr)
 				{
-					_pMutex->Unlock();
+					_pMutex->unlock();
 				}
 			};
 

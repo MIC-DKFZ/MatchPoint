@@ -42,14 +42,14 @@ namespace map
 			FastLockedThreadingStaticPolicy::
 			lock()
 			{
-				FastLockedThreadingStaticPolicy::_mutex.Lock();
+				FastLockedThreadingStaticPolicy::_mutex.lock();
 			};
 
 			void
 			FastLockedThreadingStaticPolicy::
 			unlock()
 			{
-				FastLockedThreadingStaticPolicy::_mutex.Unlock();
+				FastLockedThreadingStaticPolicy::_mutex.unlock();
 			};
 
 			FastLockedThreadingStaticPolicy::

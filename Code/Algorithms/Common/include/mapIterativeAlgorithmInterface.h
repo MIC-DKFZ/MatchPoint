@@ -26,8 +26,7 @@
 #ifndef __ITERATIVE_ALGORITHM_INTERFACE_H
 #define __ITERATIVE_ALGORITHM_INTERFACE_H
 
-#include "itkSimpleFastMutexLock.h"
-#include "itkMutexLockHolder.h"
+#include <mutex>
 
 #include "mapMacros.h"
 #include "mapMAPAlgorithmsExports.h"

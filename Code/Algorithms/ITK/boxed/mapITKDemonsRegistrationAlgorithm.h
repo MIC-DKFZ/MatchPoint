@@ -212,7 +212,7 @@ namespace map
 				IterationCountType _currentIterationCount;
 
 				/*! The lock is used to manage the access to the member variable _currentIterationCount.*/
-				mutable ::itk::SimpleFastMutexLock _currentIterationLock;
+				mutable ::std::mutex _currentIterationLock;
 
 				/*! This member function is called by the observer of the optimizer, when ever a IterationEvent is invoked.*/
 				void onIterationEvent(::itk::Object* caller, const ::itk::EventObject& eventObject);

@@ -23,7 +23,7 @@
 #ifndef __MAP_FAST_LOCKED_THREADING_POLICY_H
 #define __MAP_FAST_LOCKED_THREADING_POLICY_H
 
-#include "itkSimpleFastMutexLock.h"
+#include <mutex>
 
 #include "mapFastMutexLockSentinel.h"
 #include "mapMAPCoreExports.h"
@@ -42,7 +42,7 @@ namespace map
 			class MAPCore_EXPORT FastLockedThreadingPolicy
 			{
 			protected:
-				using MutexType = itk::SimpleFastMutexLock;
+				using MutexType = std::mutex;
 				using SentinelType = FastMutexLockSentinel;
 
 				/*! Initialize a sentinel and implicitly lock the mutex.

@@ -166,8 +166,8 @@ namespace map
 			void onFailedTaskThreadEvent(::itk::Object* pCaller, const ::itk::EventObject& eventObject);
 
 			/** Responsible for locking the processing of thread callbacks.*/
-			::itk::SimpleFastMutexLock _threadMutex;
-			typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock > MutexHolderType;
+			::std::mutex _threadMutex;
+			typedef ::std::lock_guard< ::std::mutex > MutexHolderType;
 
 			MappingTaskBatch(const Self&);  //purposely not implemented
 			void operator=(const Self&);  //purposely not implemented

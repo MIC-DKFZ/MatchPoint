@@ -36,7 +36,7 @@
 #include "mapArbitraryImagePyramidesPolicy.h"
 
 #include "itkMultiResolutionPDEDeformableRegistration.h"
-#include "itkSimpleFastMutexLock.h"
+#include <mutex>
 
 namespace map
 {
@@ -260,7 +260,7 @@ namespace map
 				unsigned long _numberOfIterations;
 
 				/*! The lock is used to manage the access to the member variable _currentLevelCount.*/
-				mutable ::itk::SimpleFastMutexLock _currentLevelLock;
+				mutable ::std::mutex _currentLevelLock;
 
 				mutable core::ObserverSentinel::Pointer _onLevelObserver;
 				mutable core::ObserverSentinel::Pointer _onGeneralTargePyramideObserver;

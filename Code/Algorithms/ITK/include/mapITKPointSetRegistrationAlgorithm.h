@@ -39,7 +39,7 @@
 #include "mapObserverSentinel.h"
 
 #include "itkPointSetToPointSetRegistrationMethod.h"
-#include "itkSimpleFastMutexLock.h"
+#include <mutex>
 
 /*! @namespace map The namespace map is used throughout the MatchPoint project to
 mark code as components of this project
@@ -276,7 +276,7 @@ namespace map
 				IterationCountType _currentIterationCount;
 
 				/*! The lock is used to manage the access to the member variable _currentIterationCount.*/
-				mutable ::itk::SimpleFastMutexLock _currentIterationLock;
+				mutable ::std::mutex _currentIterationLock;
 
 				mutable core::ObserverSentinel::Pointer _onIterationObserver;
 				mutable core::ObserverSentinel::Pointer _onGeneralOptimizerObserver;

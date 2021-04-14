@@ -25,7 +25,7 @@
 
 #include "mapRegistrationKernel.h"
 #include "mapLazyRegistrationKernelInterface.h"
-#include "itkSimpleFastMutexLock.h"
+#include <mutex>
 
 /*! @namespace map The namespace map::core is for the library of MatchPoint
  */
@@ -126,7 +126,7 @@ namespace map
             virtual ::itk::LightObject::Pointer	InternalClone()	const;
 
         private:
-            using MutexType = ::itk::SimpleFastMutexLock;
+            using MutexType = ::std::mutex;
             /*!Mutex to make the checks of the policy thread safe*/
             mutable MutexType _checkMutex;
             /*!Mutex to make the generation of the fields thread safe and to avoid paralel

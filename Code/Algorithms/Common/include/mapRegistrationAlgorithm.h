@@ -29,7 +29,7 @@
 #include "mapRegistrationAlgorithmBase.h"
 #include "mapRegistrationAlgorithmInterface.h"
 
-#include "itkSimpleFastMutexLock.h"
+#include <mutex>
 
 
 namespace map
@@ -154,7 +154,7 @@ namespace map
 			/*! The lock is used to manage the access to determination of a registration
 			 * and write acces to all members that are relevant for determination of a registration
 			 */
-			mutable ::itk::SimpleFastMutexLock _determinationLock;
+			mutable ::std::mutex _determinationLock;
 
 			RegistrationAlgorithm();
 			~RegistrationAlgorithm() override;
