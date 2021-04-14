@@ -55,7 +55,7 @@ namespace map
 
 			::itk::ImageIOBase::Pointer imageIO =
 				::itk::ImageIOFactory::CreateImageIO(probeFileName.c_str(),
-						::itk::ImageIOFactory::ReadMode);
+						::itk::IOFileModeEnum::ReadMode);
 
 			if (imageIO == nullptr)
 			{

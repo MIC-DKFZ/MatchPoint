@@ -37,7 +37,7 @@ namespace map
       map::structuredData::XMLStrReader::Pointer spReader = map::structuredData::XMLStrReader::New();
       map::structuredData::XMLStrWriter::Pointer spWriter = map::structuredData::XMLStrWriter::New();
 
-      map::structuredData::Element::Pointer spMain = NULL;
+      map::structuredData::Element::Pointer spMain;
 
       spMain = spReader->readXMLContent(dataStr1);
 

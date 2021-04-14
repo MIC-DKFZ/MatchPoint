@@ -38,7 +38,7 @@ namespace map
 
 			map::structuredData::XMLStrReader::Pointer spReader = map::structuredData::XMLStrReader::New();
 
-			map::structuredData::Element::Pointer spRoot = NULL;
+			map::structuredData::Element::Pointer spRoot;
 
 			CHECK_NO_THROW(spRoot = spReader->read(dataStr1));
 

@@ -44,7 +44,7 @@ namespace map
 
       map::structuredData::XMLFileReader::Pointer spReader = map::structuredData::XMLFileReader::New();
 
-      map::structuredData::Element::Pointer spRoot = NULL;
+      map::structuredData::Element::Pointer spRoot;
 
       CHECK(spReader->getXMLContent().IsNull());
 

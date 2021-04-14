@@ -59,7 +59,7 @@ namespace map
 
 
 			//Test open file regular DLL
-			deployment::DLLHandle::Pointer spHandle1 = NULL;
+			deployment::DLLHandle::Pointer spHandle1;
 
 			std::string validDLLPath = dllPath + "/" + itksys::DynamicLoader::LibPrefix() + "mapTestAlgorithm" + map::deployment::getDeploymentDLLExtension();
 
@@ -73,11 +73,11 @@ namespace map
 			CHECK_EQUAL("testprofile", spHandle1->getAlgorithmProfileStr());
 
 
-			map::algorithm::RegistrationAlgorithmBase::Pointer spInstance = NULL;
+			map::algorithm::RegistrationAlgorithmBase::Pointer spInstance;
 			CHECK_NO_THROW(spInstance = map::deployment::getRegistrationAlgorithm(spHandle1));
 			CHECK(spInstance.IsNotNull());
 
-			spInstance = NULL; //Enforce the destruction of the instance before the DLL is closed!
+			spInstance = nullptr; //Enforce the destruction of the instance before the DLL is closed!
 
 			CHECK_NO_THROW(map::deployment::closeDeploymentDLL(spHandle1));
 

@@ -63,14 +63,14 @@ namespace map
 			map::core::Logbook::fatal("Initialize Log for sync test. Waiting for dll entry...");
 
 			//Test open special test dll that should post a special log entryfile in the test log
-			deployment::DLLHandle::Pointer spHandle1 = NULL;
+			deployment::DLLHandle::Pointer spHandle1;
 
 			std::string validDLLPath = map::core::FileDispatch::createFullPath(dllPath,
 									   map::core::String(itksys::DynamicLoader::LibPrefix()) + "mapTestAlgorithmConfig" + map::deployment::getDeploymentDLLExtension());
 
 			spHandle1 = map::deployment::openDeploymentDLL(validDLLPath);
 
-			map::algorithm::RegistrationAlgorithmBase::Pointer spInstance = NULL;
+			map::algorithm::RegistrationAlgorithmBase::Pointer spInstance;
 			spInstance = map::deployment::getRegistrationAlgorithm(spHandle1);
 
 			//now test for the log entry;
