@@ -73,10 +73,10 @@ namespace map
 			this->_loadedComponentType = imageIO->GetComponentType();
 			this->_loadedPixelType = imageIO->GetPixelType();
 
-			if (this->_loadedPixelType == ::itk::ImageIOBase::RGB && imageIO->GetNumberOfComponents() == 1)
+			if (this->_loadedPixelType == ::itk::IOPixelEnum::RGB && imageIO->GetNumberOfComponents() == 1)
 			{
 				//if only one channel per pixel handle as scalar as long as RGB etc. is not supported
-				this->_loadedPixelType = ::itk::ImageIOBase::SCALAR;
+				this->_loadedPixelType = ::itk::IOPixelEnum::SCALAR;
 			}
 
 			this->_loadedComponentTypeStr = imageIO->GetComponentTypeAsString(this->_loadedComponentType);
@@ -99,7 +99,7 @@ namespace map
 
 			switch (_loadedPixelType)
 			{
-				case ::itk::ImageIOBase::SCALAR:
+				case ::itk::IOPixelEnum::SCALAR:
 				{
 					if (this->_loadedDimensions == 2)
 					{
@@ -135,70 +135,70 @@ namespace map
 			// Use the pixel type to instantiate the appropriate reader
 			switch (this->_loadedComponentType)
 			{
-				case ::itk::ImageIOBase::UCHAR:
+				case ::itk::IOComponentEnum::UCHAR:
 				{
 					this->_spImage = readImage<unsigned char, unsigned char, IDimension>(_fileName, _seriesReadStyle,
 									 false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
-				case ::itk::ImageIOBase::CHAR:
+				case ::itk::IOComponentEnum::CHAR:
 				{
 					this->_spImage = readImage<char, char, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
 									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
-				case ::itk::ImageIOBase::USHORT:
+				case ::itk::IOComponentEnum::USHORT:
 				{
 					this->_spImage = readImage<unsigned short, unsigned short, IDimension>(_fileName, _seriesReadStyle,
 									 false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
-				case ::itk::ImageIOBase::SHORT:
+				case ::itk::IOComponentEnum::SHORT:
 				{
 					this->_spImage = readImage<short, short, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
 									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
-				case ::itk::ImageIOBase::UINT:
+				case ::itk::IOComponentEnum::UINT:
 				{
 					this->_spImage = readImage<unsigned int, unsigned int, IDimension>(_fileName, _seriesReadStyle,
 									 false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
-				case ::itk::ImageIOBase::INT:
+				case ::itk::IOComponentEnum::INT:
 				{
 					this->_spImage = readImage<int, int, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
 									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
-				case ::itk::ImageIOBase::ULONG:
+				case ::itk::IOComponentEnum::ULONG:
 				{
 					this->_spImage = readImage<unsigned long, unsigned long, IDimension>(_fileName, _seriesReadStyle,
 									 false, 0, 0, _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
-				case ::itk::ImageIOBase::LONG:
+				case ::itk::IOComponentEnum::LONG:
 				{
 					this->_spImage = readImage<long, long, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
 									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
-				case ::itk::ImageIOBase::FLOAT:
+				case ::itk::IOComponentEnum::FLOAT:
 				{
 					this->_spImage = readImage<float, float, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
 									 _upperSeriesLimit, &_dictionaryArray);
 					break;
 				}
 
-				case ::itk::ImageIOBase::DOUBLE:
+				case ::itk::IOComponentEnum::DOUBLE:
 				{
 					this->_spImage = readImage<double, double, IDimension>(_fileName, _seriesReadStyle, false, 0, 0,
 									 _upperSeriesLimit, &_dictionaryArray);
@@ -224,52 +224,52 @@ namespace map
 		//  mapDefaultExceptionStaticMacro(<<"RGB support is yet not implemented.");
 		//  switch( this->_loadedComponentType )
 		//  {
-		//  case ::itk::ImageIOBase::UCHAR:
+		//  case ::itk::IOComponentEnum::UCHAR:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<unsigned char>, ::itk::RGBPixel<unsigned char>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
-		//  case ::itk::ImageIOBase::CHAR:
+		//  case ::itk::IOComponentEnum::CHAR:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<char>, ::itk::RGBPixel<char>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
-		//  case ::itk::ImageIOBase::USHORT:
+		//  case ::itk::IOComponentEnum::USHORT:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<unsigned short>, ::itk::RGBPixel<unsigned short>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
-		//  case ::itk::ImageIOBase::SHORT:
+		//  case ::itk::IOComponentEnum::SHORT:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<short>, ::itk::RGBPixel<short>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
-		//  case ::itk::ImageIOBase::UINT:
+		//  case ::itk::IOComponentEnum::UINT:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<unsigned int>, ::itk::RGBPixel<unsigned int>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
-		//  case ::itk::ImageIOBase::INT:
+		//  case ::itk::IOComponentEnum::INT:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<int>, ::itk::RGBPixel<int>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
-		//  case ::itk::ImageIOBase::ULONG:
+		//  case ::itk::IOComponentEnum::ULONG:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<unsigned long>, ::itk::RGBPixel<unsigned long>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
-		//  case ::itk::ImageIOBase::LONG:
+		//  case ::itk::IOComponentEnum::LONG:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<long>, ::itk::RGBPixel<long>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
-		//  case ::itk::ImageIOBase::FLOAT:
+		//  case ::itk::IOComponentEnum::FLOAT:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<float>, ::itk::RGBPixel<float>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;
 		//    }
-		//  case ::itk::ImageIOBase::DOUBLE:
+		//  case ::itk::IOComponentEnum::DOUBLE:
 		//    {
 		//      this->_spImage = readImageA< ::itk::RGBPixel<double>, ::itk::RGBPixel<double>, IDimension>(_fileName,_seriesReadStyle);
 		//      break;

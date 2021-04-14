@@ -74,17 +74,17 @@ void
 
     loadedImage = loader->getITKImage();
     loadedDimensions = 3;
-    loadedPixelType = ::itk::ImageIOBase::SCALAR;
+    loadedPixelType = ::itk::IOPixelEnum::SCALAR;
 
     if (loadedImage.IsNotNull())
     {
       if (loader->getPixelType() == "float")
       {
-        loadedComponentType = ::itk::ImageIOBase::FLOAT;
+        loadedComponentType = ::itk::IOComponentEnum::FLOAT;
       }
       else
       {
-        loadedComponentType = ::itk::ImageIOBase::SHORT;
+        loadedComponentType = ::itk::IOComponentEnum::SHORT;
       }
       std::cout << "done." << std::endl;
 
