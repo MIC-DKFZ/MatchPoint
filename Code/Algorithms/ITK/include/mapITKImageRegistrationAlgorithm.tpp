@@ -24,7 +24,7 @@
 #ifndef __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
 #define __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
 
-#include "itkMutexLockHolder.h"
+#include <mutex>
 #include "itkExtractImageFilter.h"
 
 #include "mapAlgorithmException.h"
@@ -198,7 +198,7 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			getCurrentTransformParameters() const
 			{
-				typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock> LockHolderType;
+				typedef std::lock_guard<std::mutex> LockHolderType;
 				LockHolderType holder(this->_currentIterationLock);
 
 				return this->_currentTransformParameters;
@@ -209,7 +209,7 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			setCurrentTransformParameters(const TransformParametersType& param)
 			{
-				typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock> LockHolderType;
+				typedef std::lock_guard<std::mutex> LockHolderType;
 				LockHolderType holder(this->_currentIterationLock);
 
 				this->_currentTransformParameters = param;
@@ -221,7 +221,7 @@ namespace map
 			determineInterimRegistration(const MovingRepresentationDescriptorType* pMovingRepresentation,
 			                             const TargetRepresentationDescriptorType* pTargetRepresentation) const
 			{
-				InterimRegistrationPointer spResult = NULL;
+				InterimRegistrationPointer spResult;
 
 				if (this->_currentIterationCount > 0)
 				{
@@ -624,7 +624,7 @@ namespace map
 			ITKImageRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy, TInterpolatorPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy, TInternalRegistrationMethod>::
 			finalizeAlgorithm()
 			{
-				RegistrationPointer spResult = NULL;
+				RegistrationPointer spResult;
 
 				//touch the sub component to ensure an actualzed modification time,
 				//this is needed because in case of arbitrary policies and dll deployment
@@ -728,7 +728,7 @@ namespace map
 				typename OptimizerBaseType::SVNLMeasureType currentValue =
 				    this->getOptimizerInternal()->getCurrentMeasure();
 
-				this->_currentIterationLock.Lock();
+				this->_currentIterationLock.lock();
 				++_currentIterationCount;
 				_currentTransformParameters = currentParams;
 
@@ -756,7 +756,7 @@ namespace map
 					os << "unkown";
 				}
 
-				this->_currentIterationLock.Unlock();
+				this->_currentIterationLock.unlock();
 
 				this->InvokeEvent(::map::events::AlgorithmIterationEvent(this, os.str()));
 			};

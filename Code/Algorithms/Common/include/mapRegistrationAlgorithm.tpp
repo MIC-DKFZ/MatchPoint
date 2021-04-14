@@ -28,7 +28,7 @@
 #include "mapAlgorithmEvents.h"
 #include "mapLogbookMacros.h"
 
-#include "itkMutexLockHolder.h"
+#include <mutex>
 
 namespace map
 {
@@ -59,7 +59,7 @@ namespace map
 		RegistrationAlgorithm<VMovingDimensions, VTargetDimensions>::
 		getRegistration()
 		{
-			this->_determinationLock.Lock();
+			this->_determinationLock.lock();
 
 			try
 			{
@@ -73,11 +73,11 @@ namespace map
 			}
 			catch (...)
 			{
-				this->_determinationLock.Unlock();
+				this->_determinationLock.unlock();
 				throw;
 			}
 
-			this->_determinationLock.Unlock();
+			this->_determinationLock.unlock();
 
 			return doGetRegistration();
 		};

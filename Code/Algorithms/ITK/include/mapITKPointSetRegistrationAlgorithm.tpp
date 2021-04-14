@@ -33,7 +33,7 @@
 #include "mapITKMVNLOptimizerControlInterface.h"
 #include "mapITKSVNLOptimizerControlInterface.h"
 
-#include "itkMutexLockHolder.h"
+#include <mutex>
 
 namespace map
 {
@@ -199,7 +199,7 @@ namespace map
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
 			getCurrentTransformParameters() const
 			{
-				typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock> LockHolderType;
+				typedef std::lock_guard<std::mutex> LockHolderType;
 				LockHolderType holder(this->_currentIterationLock);
 
 				return this->_currentTransformParameters;
@@ -210,7 +210,7 @@ namespace map
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
 			setCurrentTransformParameters(const TransformParametersType& param)
 			{
-				typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock> LockHolderType;
+				typedef std::lock_guard<std::mutex> LockHolderType;
 				LockHolderType holder(this->_currentIterationLock);
 
 				this->_currentTransformParameters = param;
@@ -222,7 +222,7 @@ namespace map
 			determineInterimRegistration(const MovingRepresentationDescriptorType* pMovingRepresentation,
 										 const TargetRepresentationDescriptorType* pTargetRepresentation) const
 			{
-				InterimRegistrationPointer spResult = NULL;
+				InterimRegistrationPointer spResult;
 
 				if (this->_currentIterationCount > 0)
 				{
@@ -424,7 +424,7 @@ namespace map
 			ITKPointSetRegistrationAlgorithm<TMovingPointSet, TTargetPointSet, TIdentificationPolicy, TMetricPolicy, TOptimizerPolicy, TTransformPolicy>::
 			finalizeAlgorithm()
 			{
-				RegistrationPointer spResult = NULL;
+				RegistrationPointer spResult;
 
 				//touch the sub component to ensure an actualzed modification time,
 				//this is needed because in case of arbitrary policies and dll deployment
@@ -553,7 +553,7 @@ namespace map
 				typename OptimizerBaseType::MVNLMeasureType currentValue =
 					this->getOptimizerInternal()->getCurrentMeasure();
 
-				this->_currentIterationLock.Lock();
+				this->_currentIterationLock.lock();
 				++_currentIterationCount;
 				_currentTransformParameters = currentParams;
 				os << "Iteration #" << _currentIterationCount << "; params: " << currentParams <<
@@ -568,7 +568,7 @@ namespace map
 					os << "unkown";
 				}
 
-				this->_currentIterationLock.Unlock();
+				this->_currentIterationLock.unlock();
 
 
 				this->InvokeEvent(::map::events::AlgorithmIterationEvent(this, os.str()));

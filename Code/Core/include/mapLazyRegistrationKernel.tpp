@@ -26,7 +26,7 @@
 #include "mapExceptionObjectMacros.h"
 #include "mapPointVectorCombinationPolicy.h"
 
-#include "itkMutexLockHolder.h"
+#include <mutex>
 
 namespace map
 {
@@ -44,7 +44,7 @@ namespace map
                 mapDefaultExceptionMacro(<< "Error. Cannot set functor. Functor points to NULL.");
             }
 
-            ::itk::MutexLockHolder<MutexType> mutexHolder(_generateMutex);
+            std::lock_guard<std::mutex> mutexHolder(_generateMutex);
             _spGenerationFunctor = functor;
         };
 
@@ -96,14 +96,14 @@ namespace map
             LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::
             checkAndPrepareTransform() const
         {
-            ::itk::MutexLockHolder<MutexType> mutexHolder(_checkMutex);
+            std::lock_guard<std::mutex> mutexHolder(_checkMutex);
 
             if (_spTransform.IsNull())
             {
                 //create field
                 mapLogInfoObjMacro(<< "Lazy field kernel needs to generate the field");
 
-                ::itk::MutexLockHolder<MutexType> mutexHolder(_generateMutex);
+                std::lock_guard<std::mutex> mutexHolder(_generateMutex);
 
                 assert(_spGenerationFunctor.IsNotNull());
                 _spTransform = _spGenerationFunctor->generateTransform();
@@ -115,7 +115,7 @@ namespace map
 
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions >
         LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::
-            LazyRegistrationKernel() : _spGenerationFunctor(NULL), _spTransform(NULL)
+            LazyRegistrationKernel()
         {
         };
 

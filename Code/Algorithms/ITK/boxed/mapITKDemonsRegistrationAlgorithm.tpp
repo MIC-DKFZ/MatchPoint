@@ -31,7 +31,7 @@
 
 #include "mapITKMVNLOptimizerControlInterface.h"
 #include "mapITKSVNLOptimizerControlInterface.h"
-#include "itkMutexLockHolder.h"
+#include <mutex>
 
 namespace map
 {
@@ -290,7 +290,7 @@ namespace map
 			ITKDemonsRegistrationAlgorithm<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			onIterationEvent(::itk::Object* caller, const ::itk::EventObject& eventObject)
 			{
-				typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock > LockHolderType;
+				typedef std::lock_guard<std::mutex> LockHolderType;
 				LockHolderType holder(this->_currentIterationLock);
 
 				//*@TODO seems to be extremly outdated. rework needed.
@@ -298,7 +298,7 @@ namespace map
 				//bool hasCurrentValue = this->getOptimizerInternal()->hasCurrentValue();
 				//OptimizerBaseType::SVNLMeasureType currentValue = this->getOptimizerInternal()->getCurrentMeasure();
 
-				//        this->_currentIterationLock.Lock();
+				//        this->_currentIterationLock.lock();
 				//        ++_currentIterationCount;
 				//        _currentTransformParameters = currentParams;
 
@@ -325,7 +325,7 @@ namespace map
 				//          os << "unkown";
 				//        }
 
-				//        this->_currentIterationLock.Unlock();
+				//        this->_currentIterationLock.unlock();
 
 				//        this->InvokeEvent(::map::events::AlgorithmIterationEvent(this,os.str()));
 			};
