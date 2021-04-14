@@ -225,7 +225,7 @@ void
   }
 
 
-  if (loadedPixelType != ::itk::ImageIOBase::SCALAR)
+  if (loadedPixelType != ::itk::IOPixelEnum::SCALAR)
   {
     mapDefaultExceptionStaticMacro(<<
       "Unsupported moving image. Only simple scalar images are supported in this version.");

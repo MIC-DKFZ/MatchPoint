@@ -62,61 +62,61 @@ namespace map
       {
         switch (appData._loadedComponentType)
         {
-        case ::itk::ImageIOBase::UCHAR:
+        case ::itk::IOComponentEnum::UCHAR:
         {
           TProcessingPolicy<unsigned char, IDimension>::processData(appData);
           break;
         }
 
-        case ::itk::ImageIOBase::CHAR:
+        case ::itk::IOComponentEnum::CHAR:
         {
           TProcessingPolicy<char, IDimension>::processData(appData);
           break;
         }
 
-        case ::itk::ImageIOBase::USHORT:
+        case ::itk::IOComponentEnum::USHORT:
         {
           TProcessingPolicy<unsigned short, IDimension>::processData(appData);
           break;
         }
 
-        case ::itk::ImageIOBase::SHORT:
+        case ::itk::IOComponentEnum::SHORT:
         {
           TProcessingPolicy<short, IDimension>::processData(appData);
           break;
         }
 
-        case ::itk::ImageIOBase::UINT:
+        case ::itk::IOComponentEnum::UINT:
         {
           TProcessingPolicy<unsigned int, IDimension>::processData(appData);
           break;
         }
 
-        case ::itk::ImageIOBase::INT:
+        case ::itk::IOComponentEnum::INT:
         {
           TProcessingPolicy<int, IDimension>::processData(appData);
           break;
         }
 
-        case ::itk::ImageIOBase::ULONG:
+        case ::itk::IOComponentEnum::ULONG:
         {
           TProcessingPolicy<unsigned long, IDimension>::processData(appData);
           break;
         }
 
-        case ::itk::ImageIOBase::LONG:
+        case ::itk::IOComponentEnum::LONG:
         {
           TProcessingPolicy<long, IDimension>::processData(appData);
           break;
         }
 
-        case ::itk::ImageIOBase::FLOAT:
+        case ::itk::IOComponentEnum::FLOAT:
         {
           TProcessingPolicy<float, IDimension>::processData(appData);
           break;
         }
 
-        case ::itk::ImageIOBase::DOUBLE:
+        case ::itk::IOComponentEnum::DOUBLE:
         {
           TProcessingPolicy<double, IDimension>::processData(appData);
           break;

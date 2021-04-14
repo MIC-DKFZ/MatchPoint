@@ -212,7 +212,7 @@ namespace map
                     filePath);
             }
 
-            itk::ImageIOBase::Pointer spImageIO = itk::ImageIOFactory::CreateImageIO(filePath.c_str(), itk::ImageIOFactory::ReadMode);
+            itk::ImageIOBase::Pointer spImageIO = itk::ImageIOFactory::CreateImageIO(filePath.c_str(), itk::IOFileModeEnum::ReadMode);
 
             if (spImageIO.IsNull())
             {

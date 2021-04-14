@@ -133,8 +133,8 @@ loadInput()
 {
   map::io::GenericImageReader::GenericOutputImageType::Pointer loadedImage;
   unsigned int loadedDimensions = 0;
-  map::io::GenericImageReader::LoadedPixelType loadedPixelType = ::itk::ImageIOBase::UNKNOWNPIXELTYPE;
-  map::io::GenericImageReader::LoadedComponentType loadedComponentType = ::itk::ImageIOBase::UNKNOWNCOMPONENTTYPE;
+  map::io::GenericImageReader::LoadedPixelType loadedPixelType = ::itk::IOPixelEnum::UNKNOWNPIXELTYPE;
+  map::io::GenericImageReader::LoadedComponentType loadedComponentType = ::itk::IOComponentEnum::UNKNOWNCOMPONENTTYPE;
   map::io::GenericImageReader::MetaDataDictionaryArrayType loadedMetaDataDictArray;
 
   map::io::GenericImageReader::Pointer spReader = map::io::GenericImageReader::New();
@@ -167,7 +167,7 @@ loadInput()
       std::cout << std::endl;
     }
 
-    if (loadedPixelType != ::itk::ImageIOBase::SCALAR)
+    if (loadedPixelType != ::itk::IOPixelEnum::SCALAR)
     {
       mapDefaultExceptionStaticMacro(<<
         "Unsupported input image. Only simple scalar images are supported in this version.");
