@@ -120,7 +120,7 @@ namespace map
 						}
 						else
 						{
-							std::vector<itksys::String> valueTemp = itksys::SystemTools::SplitString(line, '=');
+							std::vector<std::string> valueTemp = itksys::SystemTools::SplitString(line, '=');
 
 							if (valueTemp.size() > 1)
 							{
