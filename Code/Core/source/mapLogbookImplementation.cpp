@@ -287,7 +287,7 @@ namespace map
 		LogbookImplementation()
 		{
 			_spItkOutputWindow = nullptr;
-			_currentPriorityLevel = itk::LoggerBase::INFO;
+			_currentPriorityLevel = itk::LoggerBaseEnums::PriorityLevel::INFO;
 			_spLogger = LoggerType::New();
 			_spDefaultOutput = DefaultOutputType::New();
 			_spLogger->AddLogOutput(_spDefaultOutput);

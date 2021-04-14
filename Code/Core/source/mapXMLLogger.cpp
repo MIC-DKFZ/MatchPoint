@@ -39,7 +39,7 @@ namespace map
 
 		std::string
 		XMLLogger::
-		BuildFormattedEntry(PriorityLevelType level, std::string const& content)
+		BuildFormattedEntry(itk::LoggerBaseEnums::PriorityLevel level, std::string const& content)
 		{
 
 			std::string m_LevelString[] = { "MUSTFLUSH", "FATAL", "CRITICAL",
@@ -51,7 +51,7 @@ namespace map
 			s << "<logentry datetime='" << itksys::SystemTools::GetCurrentDateTime("%d/%m/%Y %H:%M:%S") << "'";
 			s.precision(30);
 			s << " timestamp='" << m_Clock->GetTimeInSeconds() << "'";
-			s << " priorityLevel='" << m_LevelString[level] << "' logger='" << this->GetName() << "'>" <<
+			s << " priorityLevel='" << m_LevelString[static_cast<size_t>(level)] << "' logger='" << this->GetName() << "'>" <<
 			  content << "</logentry>";
 
 			return s.str();

@@ -63,7 +63,7 @@ namespace map
 			using LoggerPointer = LoggerType::Pointer;
 			using OutputType = LoggerType::OutputType;
 			using OutputPointer = OutputType::Pointer;
-			using PriorityLevelType = LoggerType::PriorityLevelType;
+			using PriorityLevelType = itk::LoggerBaseEnums::PriorityLevel;
 
 			/*! Returns a reference to the normal logger.
 			 @eguarantee no fail

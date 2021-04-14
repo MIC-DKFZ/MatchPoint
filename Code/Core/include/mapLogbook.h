@@ -56,7 +56,7 @@ namespace map
 		{
 		public:
 			using OutputType = itk::LoggerBase::OutputType;
-			using PriorityLevelType = itk::LoggerBase::PriorityLevelType;
+			using PriorityLevelType = itk::LoggerBaseEnums::PriorityLevel;
 
 			/*! Passes the content to normal and error logger.
 			 * @eguarantee strong*/
@@ -65,52 +65,52 @@ namespace map
 			/*! Helper methods: Passes the content to normal and error logger with priority level "debug". */
 			static void debug(const String& message)
 			{
-				if (_currentPriorityLevel == itk::LoggerBase::DEBUG)
+				if (_currentPriorityLevel == itk::LoggerBaseEnums::PriorityLevel::DEBUG)
 				{
 					//only call the function and "risk" singelton checking and managing overhead
 					//if the message will be logged anyway.
-					write(itk::LoggerBase::DEBUG, message);
+					write(itk::LoggerBaseEnums::PriorityLevel::DEBUG, message);
 				}
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "info". */
 			static void info(const String& message)
 			{
-				if (_currentPriorityLevel != itk::LoggerBase::CRITICAL)
+				if (_currentPriorityLevel != itk::LoggerBaseEnums::PriorityLevel::CRITICAL)
 				{
 					//only call the function and "risk" singelton checking and managing overhead
 					//if the message will be logged anyway.
-					write(itk::LoggerBase::INFO, message);
+					write(itk::LoggerBaseEnums::PriorityLevel::INFO, message);
 				}
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "warning". */
 			static void warning(const String& message)
 			{
-				if (_currentPriorityLevel != itk::LoggerBase::CRITICAL)
+				if (_currentPriorityLevel != itk::LoggerBaseEnums::PriorityLevel::CRITICAL)
 				{
 					//only call the function and "risk" singelton checking and managing overhead
 					//if the message will be logged anyway.
-					write(itk::LoggerBase::WARNING, message);
+					write(itk::LoggerBaseEnums::PriorityLevel::WARNING, message);
 				}
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "critical". */
 			static void critical(const String& message)
 			{
-				write(itk::LoggerBase::CRITICAL, message);
+				write(itk::LoggerBaseEnums::PriorityLevel::CRITICAL, message);
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "critical". */
 			static void error(const String& message)
 			{
-				write(itk::LoggerBase::CRITICAL, message);
+				write(itk::LoggerBaseEnums::PriorityLevel::CRITICAL, message);
 			}
 
 			/*! Helper methods: Passes the content to normal and error logger with priority level "fatal". */
 			static void fatal(const String& message)
 			{
-				write(itk::LoggerBase::FATAL, message);
+				write(itk::LoggerBaseEnums::PriorityLevel::FATAL, message);
 			}
 
 			/*! Flushes both loggers. */
@@ -134,13 +134,13 @@ namespace map
 			/*!@eguarantee strong*/
 			static PriorityLevelType getLogbookMode();
 
-			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to itk::LoggerBase::DEBUG.
+			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to itk::LoggerBaseEnums::PriorityLevel::DEBUG.
 			    Thus everything will be logged.*/
 			static void setLogbookToDebugMode();
-			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to itk::LoggerBase::INFO.
+			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to itk::LoggerBaseEnums::PriorityLevel::INFO.
 			    Thus everything will be logged except of debug infos.*/
 			static void setLogbookToInfoMode();
-			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to itk::LoggerBase::CRITICAL.
+			/*! Calls sets _currentPriorityLevel and _spLogger PriorityLevel to itk::LoggerBaseEnums::PriorityLevel::CRITICAL.
 			    Thus only criticals, errors and fatals will be logged.*/
 			static void setLogbookToCriticalMode();
 

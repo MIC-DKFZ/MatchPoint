@@ -40,7 +40,7 @@ namespace map
 		std::mutex Logbook::_testMutex;
 		std::mutex Logbook::_initMutex;
 
-		Logbook::PriorityLevelType Logbook::_currentPriorityLevel = itk::LoggerBase::INFO;
+		Logbook::PriorityLevelType Logbook::_currentPriorityLevel = itk::LoggerBaseEnums::PriorityLevel::INFO;
 
 		bool Logbook::_syncedAsDedicated = false;
 
@@ -146,21 +146,21 @@ namespace map
 		Logbook::
 		setLogbookToDebugMode()
 		{
-			setLogbookMode(itk::LoggerBase::DEBUG);
+			setLogbookMode(itk::LoggerBaseEnums::PriorityLevel::DEBUG);
 		};
 
 		void
 		Logbook::
 		setLogbookToInfoMode()
 		{
-			setLogbookMode(itk::LoggerBase::INFO);
+			setLogbookMode(itk::LoggerBaseEnums::PriorityLevel::INFO);
 		};
 
 		void
 		Logbook::
 		setLogbookToCriticalMode()
 		{
-			setLogbookMode(itk::LoggerBase::CRITICAL);
+			setLogbookMode(itk::LoggerBaseEnums::PriorityLevel::CRITICAL);
 		};
 
 		void

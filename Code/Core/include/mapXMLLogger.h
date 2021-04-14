@@ -64,7 +64,7 @@ namespace map
 			itkNewMacro(Self);
 
 			/** Provides a xml formatted log entry */
-			std::string BuildFormattedEntry(PriorityLevelType level, std::string const& content) override;
+			std::string BuildFormattedEntry(itk::LoggerBaseEnums::PriorityLevel level, std::string const& content) override;
 
 		protected:
 
