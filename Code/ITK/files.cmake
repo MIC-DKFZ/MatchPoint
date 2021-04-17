@@ -7,6 +7,7 @@ include/mapEuclideanPairDistancePointMetric.h
 include/mapIterativeInverseTransformToDisplacementFieldSource.h
 include/mapNULLVectorAwareLinearInterpolateImageFunction.h
 include/itkMatrixOffsetBasedTranslationTransform.h
+include/itkImageTransformHelper.h
 )
 
 SET(TPP_FILES
