@@ -416,7 +416,7 @@ namespace map
 				bool hasCurrentValue = this->hasCurrentOptimizerValue();
 				OptimizerMeasureType currentValue = this->getCurrentOptimizerValue();
 
-				this->_currentIterationLock.Lock();
+				this->_currentIterationLock.lock();
 				++_currentIterationCount;
 
 				os << "Iteration #" << _currentIterationCount << "; metric value: ";
@@ -431,7 +431,7 @@ namespace map
 				}
 
 				os << "; RMS error change: " << this->_internalRegistrationMethod->GetRMSChange();
-				this->_currentIterationLock.Unlock();
+				this->_currentIterationLock.unlock();
 
 				this->InvokeEvent(::map::events::AlgorithmIterationEvent(this, os.str()));
 			};

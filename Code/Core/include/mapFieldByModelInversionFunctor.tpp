@@ -58,7 +58,7 @@ namespace map
                 {
                     mapExceptionStaticMacro(ExceptionObject,
                         << "Error unsymmetric field inversion not implemented yet.");
-                    return NULL;
+                    return nullptr;
                 }
             };
 

@@ -119,7 +119,7 @@ namespace map
 
 			populatePendingTasks();
 
-			itk::MultiThreader::Pointer smpThreader = itk::MultiThreader::New();
+			auto smpThreader = itk::PlatformMultiThreader::New();
 
 			ThreadCountType currentThreadCount = this->_maxThreadCount;
 
@@ -136,7 +136,10 @@ namespace map
 				}
 			}
 
-			smpThreader->SetNumberOfThreads(currentThreadCount);
+			smpThreader->SetMaximumNumberOfThreads(currentThreadCount);
+			smpThreader->SetNumberOfWorkUnits(currentThreadCount);
+
+			currentThreadCount = smpThreader->GetNumberOfWorkUnits(); //might be clamped.
 
 			try
 			{
@@ -165,7 +168,7 @@ namespace map
 										   spFailedTaskCommand);
 
 					_threads.push_back(smpThread);
-					smpThreader->SetMultipleMethod(index, Self::threadExecution, smpThread.GetPointer());
+					smpThreader->SetSingleMethod(Self::threadExecution, smpThread.GetPointer());
 				}
 			}
 			catch (...)
@@ -176,7 +179,7 @@ namespace map
 			try
 			{
 				//Start with the work
-				smpThreader->MultipleMethodExecute();
+				smpThreader->SingleMethodExecute();
 			}
 			catch (...)
 			{
@@ -198,12 +201,11 @@ namespace map
 		MappingTaskBatch<TRegistration>::
 		threadExecution(void* arg)
 		{
-			ThreadType* pThread;
-			int threadID;
+			auto workUnitInfo = static_cast<itk::MultiThreaderBase::WorkUnitInfo*>(arg);
 
-			threadID = ((itk::MultiThreader::ThreadInfoStruct*)(arg))->ThreadID;
+			auto threadID = static_cast<itk::MultiThreaderBase::WorkUnitInfo*>(arg)->WorkUnitID;
 
-			pThread = (ThreadType*)(((itk::MultiThreader::ThreadInfoStruct*)(arg))->UserData);
+			auto pThread = static_cast<ThreadType*>(workUnitInfo->UserData);
 
 			if (!pThread)
 			{
@@ -213,7 +215,7 @@ namespace map
 			pThread->setThreadID(threadID);
 			pThread->execute();
 
-			return ITK_THREAD_RETURN_VALUE;
+			return ITK_THREAD_RETURN_DEFAULT_VALUE;
 		};
 
 		template <class TRegistration>
@@ -250,7 +252,7 @@ namespace map
 			if (pThread)
 			{
 				MappingTaskBaseType* pTask = pThread->getCurrentTask();
-				std::remove(_assignedTasks.begin(), _assignedTasks.end(), pTask);
+				auto pos = std::remove(_assignedTasks.begin(), _assignedTasks.end(), pTask);
 				_processedTasks.push_back(pTask);
 				this->InvokeEvent(::map::events::ProcessedTaskThreadEvent(pThread->getThreadID(), pTask,
 								  "Task processed successfully"));
@@ -275,7 +277,7 @@ namespace map
 			if (pThread)
 			{
 				MappingTaskBaseType* pTask = pThread->getCurrentTask();
-				std::remove(_assignedTasks.begin(), _assignedTasks.end(), pTask);
+				auto pos = std::remove(_assignedTasks.begin(), _assignedTasks.end(), pTask);
 				_failedTasks.push_back(pTask);
 
 				if (pThread->hasUnhandledExceptionOccured())

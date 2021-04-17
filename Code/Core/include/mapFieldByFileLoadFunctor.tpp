@@ -61,7 +61,7 @@ namespace map
                 {
                     mapExceptionStaticMacro(ExceptionObject,
                         << "Error unsymmetric field inversion not implemented yet.");
-                    return NULL;
+                    return nullptr;
                 }
             };
 
@@ -82,7 +82,7 @@ namespace map
                     typedef ::itk::ImageFileReader< FieldType > FieldReaderType;
                     typename FieldReaderType::Pointer spFieldReader = FieldReaderType::New();
 
-                    typename FieldType::Pointer spField = NULL;
+                    typename FieldType::Pointer spField = nullptr;
 
                     try
                     {

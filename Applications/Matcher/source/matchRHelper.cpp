@@ -236,7 +236,7 @@ void
     mapDefaultExceptionStaticMacro(<<
       "Unsupported moving image. Only 2D and 3D images are supported in this version.");
   }
-  else if(loadedComponentType == 2)
+  else if(loadedDimensions == 2)
   {
     handleGenericImageCast<2>(loadedComponentType, loadedImage, loadedImage);
   }
@@ -295,7 +295,7 @@ void
         " Unsupported target image. target image dimensions does not match moving image.");
     }
 
-    if (loadedComponentType == 2)
+    if (loadedDimensions == 2)
     {
       handleGenericImageCast<2>(loadedComponentType, loadedImage, loadedImage);
     }

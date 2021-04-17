@@ -23,12 +23,12 @@
 #ifndef __FIELD_REPRESENTATION_DESCRIPTOR_TPP
 #define __FIELD_REPRESENTATION_DESCRIPTOR_TPP
 
-#include <itkImageTransformHelper.h>
-
 #include "mapFieldRepresentationDescriptor.h"
 #include "mapExceptionObject.h"
 #include "mapConvert.h"
 #include "mapSDITKStreamingHelper.h"
+
+#include <itkImageTransformHelper.h>
 
 namespace map
 {

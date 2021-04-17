@@ -28,7 +28,7 @@
 #include "mapMappingTaskBatchThread.h"
 
 #include "itkObject.h"
-#include "itkMultiThreader.h"
+#include "itkPlatformMultiThreader.h"
 
 #include <vector>
 #include <deque>

@@ -221,7 +221,7 @@ namespace itk
 
           // calculate the inverted field
           OutputImagePointType mappedPoint, newPoint;
-          OutputImagePointType point, originalPoint, backMappedPoint;
+          OutputImagePointType originalPoint, backMappedPoint;
           OutputImageIndexType index;
           OutputImagePixelType displacement, outputValue;
           double spacing = m_Spacing[0];

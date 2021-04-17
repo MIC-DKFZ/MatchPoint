@@ -231,10 +231,8 @@ namespace map
 					return;
 				}
 
-				typedef ::itk::MutexLockHolder< ::itk::SimpleFastMutexLock > LockHolderType;
-
-				this->_currentIterationLock.Lock();
-				this->_currentLevelLock.Lock();
+				this->_currentIterationLock.lock();
+				this->_currentLevelLock.lock();
 
 				::map::core::OStringStream os;
 
@@ -259,8 +257,8 @@ namespace map
 
 				os << "New Level #" << _currentLevelCount;
 
-				this->_currentIterationLock.Unlock();
-				this->_currentLevelLock.Unlock();
+				this->_currentIterationLock.unlock();
+				this->_currentLevelLock.unlock();
 
 				this->InvokeEvent(::map::events::AlgorithmResolutionLevelEvent(this, os.str()));
 				this->doInterLevelSetup();

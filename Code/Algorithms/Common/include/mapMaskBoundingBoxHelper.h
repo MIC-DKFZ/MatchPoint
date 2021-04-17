@@ -62,7 +62,7 @@ namespace map
 			@oaram [out] boundingRegion The computed bounding image region.
 			@return Indicates if boundingRegion has a valid value.
 			*/
-			static bool computeBoundingImageRegion(MaskBaseType* mask, const ImageBaseType* refImage,
+			static bool computeBoundingImageRegion(const MaskBaseType* mask, const ImageBaseType* refImage,
 												   ImageRegionType& boundingRegion)
 			{
 				ImageRegionType resultRegion;
@@ -77,9 +77,12 @@ namespace map
 					mapDefaultExceptionStaticMacro( << "Cannot compute bounding box. Reference image pointer is Null.");
 				}
 
-				mask->Update();
+				//We have to ensure that the bounding boxmask is up to date;
+				//as it is sometimes not the case :(
+				auto nonConstMask = const_cast<MaskBaseType*>(mask);
+				nonConstMask->Update();
+				const auto * spBBox = nonConstMask->GetMyBoundingBoxInWorldSpace();
 
-				const auto* spBBox = mask->GetMyBoundingBoxInWorldSpace();
 				const auto cornerPoints = spBBox->ComputeCorners();
 
 				typename ImageBaseType::IndexType minIndex;
