@@ -24,6 +24,8 @@
 #include <itksys/SystemTools.hxx>
 #include <itksys/RegularExpression.hxx>
 
+#include <string>
+
 namespace itk
 {
 
@@ -350,7 +352,6 @@ ParameterFileParser
 {
   splittedLine.clear();
   splittedLine.resize( 1 );
-  std::vector< itksys::String > splittedLine1;
 
   /** Count the number of quotes in the line. If it is an odd value, the
    * line contains an error; strings should start and end with a quote, so

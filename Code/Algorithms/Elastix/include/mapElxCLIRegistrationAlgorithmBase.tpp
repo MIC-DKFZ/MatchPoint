@@ -230,7 +230,7 @@ namespace map
 			determineInterimRegistration(const MovingRepresentationDescriptorType* pMovingRepresentation,
 										 const TargetRepresentationDescriptorType* pTargetRepresentation) const
 			{
-				InterimRegistrationPointer spResult = NULL;
+				InterimRegistrationPointer spResult = nullptr;
 				return spResult;
 			};
 
@@ -604,7 +604,7 @@ namespace map
 			CLIRegistrationAlgorithmBase<TMovingImage, TTargetImage, TIdentificationPolicy>::
 			finalizeAlgorithm()
 			{
-				RegistrationPointer spResult = NULL;
+				RegistrationPointer spResult = nullptr;
 
 				try
 				{
