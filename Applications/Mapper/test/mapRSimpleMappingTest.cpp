@@ -30,34 +30,34 @@
 
 namespace map
 {
-	namespace testing
-	{
+  namespace testing
+  {
 
-		//defined by mapDeploymentTests.cpp. It is tha path to the current running executable.
-		//It is needed to bypass the problem that when using MS Visual Studio the actual binary
-		//path depends of the compile mode (release/debug) and is not the CMake binary path.
-		extern const char* _callingAppPath;
+    //defined by mapDeploymentTests.cpp. It is tha path to the current running executable.
+    //It is needed to bypass the problem that when using MS Visual Studio the actual binary
+    //path depends of the compile mode (release/debug) and is not the CMake binary path.
+    extern const char* _callingAppPath;
 
-		int mapRSimpleMappingTest(int argc, char* argv[])
-		{
-			PREPARE_DEFAULT_TEST_REPORTING;
+    int mapRSimpleMappingTest(int argc, char* argv[])
+    {
+      PREPARE_DEFAULT_TEST_REPORTING;
 
-			std::string mapRPath = itksys::SystemTools::GetProgramPath(_callingAppPath);
+      std::string mapRPath = itksys::SystemTools::GetProgramPath(_callingAppPath);
 
-			std::string inputPath = "Input Data path not set.";
+      std::string inputPath = "Input Data path not set.";
       std::string regPath = "Reg data path not set.";
       std::string outputPath = "Output data path not set.";
       std::string refPath = "Reference data path not set.";
 
-			map::utilities::ProcessExecutor::Pointer spExec = map::utilities::ProcessExecutor::New();
+      map::utilities::ProcessExecutor::Pointer spExec = map::utilities::ProcessExecutor::New();
       spExec->setSharedOutputPipes(true);
 
-			map::utilities::ProcessExecutor::ArgumentListType args;
+      map::utilities::ProcessExecutor::ArgumentListType args;
 
       if (argc > 1)
-			{
-				inputPath = argv[1];
-			}
+      {
+        inputPath = argv[1];
+      }
 
       if (argc > 2)
       {
@@ -85,11 +85,11 @@ namespace map
         args.push_back(argv[index++]);
       }
 
-			//////////////////////////////////////////////////
-			// Test: behavior on simple mapping task.
+      //////////////////////////////////////////////////
+      // Test: behavior on simple mapping task.
 
-			CHECK(spExec->execute(mapRPath, "mapR", args));
-			CHECK_EQUAL(0, spExec->getExitValue());
+      CHECK(spExec->execute(mapRPath, "mapR", args));
+      CHECK_EQUAL(0, spExec->getExitValue());
 
       // Check result against reference
       typedef itk::Image<unsigned char, 3> TestImageType;
@@ -97,14 +97,16 @@ namespace map
       TestImageType::Pointer refImage = map::io::readImage<unsigned char, unsigned char, 3>(refPath);
       TestImageType::Pointer outputImage = map::io::readImage<unsigned char, unsigned char, 3>(outputPath);
 
-	    lit::ImageTester<TestImageType, TestImageType> tester;
-	    tester.setExpectedImage(refImage);
-	    tester.setActualImage(outputImage);
-	    tester.setCheckThreshold(0.0);
+      lit::ImageTester<TestImageType, TestImageType> tester;
+      tester.setExpectedImage(refImage);
+      tester.setActualImage(outputImage);
+      tester.setCheckThreshold(0.0);
+      tester.setSaveTestFiles(true);
+      tester.setTestFileName(outputPath);
 
-	    CHECK_TESTER(tester);
+      CHECK_TESTER(tester);
 
-			RETURN_AND_REPORT_TEST_SUCCESS;
-		}
-	} //namespace testing
+      RETURN_AND_REPORT_TEST_SUCCESS;
+    }
+  } //namespace testing
 } //namespace map
