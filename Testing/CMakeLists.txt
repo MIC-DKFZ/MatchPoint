@@ -32,7 +32,7 @@ ENDIF()
 #extract and build Litmus
 ExternalProject_Add(
 	Litmus
-	URL ${MatchPoint_SOURCE_DIR}/Testing/Litmus/Litmus_rev1298.tar.gz
+	URL ${MatchPoint_SOURCE_DIR}/Testing/Litmus/Litmus_matchpoint_v1.tar.gz
 	URL_HASH SHA1=20CCE03B65826049F49E39A7B66F0802D8D637F8
 	SOURCE_DIR ${LITMUS_SOURCE_DIR}
 	BINARY_DIR ${LITMUS_BUILD_DIR}
