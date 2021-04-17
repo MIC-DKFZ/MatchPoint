@@ -40,7 +40,7 @@ ADD_TEST(mapRegistrationCombinatorTest ${MODULE_TESTS} mapRegistrationCombinator
 ADD_TEST(mapPointSetMappingPerformerRequestTest ${MODULE_TESTS} mapPointSetMappingPerformerRequestTest)
 ADD_TEST(mapImageMappingPerformerRequestTest ${MODULE_TESTS} mapImageMappingPerformerRequestTest)
 ADD_TEST(mapPointSetByModelPerformerTest ${MODULE_TESTS} mapPointSetByModelPerformerTest)
-ADD_TEST(mapImageByModelPerformerTest ${MODULE_TESTS} mapImageByModelPerformerTest "${TEST_DATA_ROOT}/Core/mapTestImage.png" "${TEST_DATA_ROOT}/Core/mapTestImage_X15Y10.png" 0 "${TEMP}/mapImageByModelPerformerTest")
+ADD_TEST(mapImageByModelPerformerTest ${MODULE_TESTS} mapImageByModelPerformerTest "${TEST_DATA_ROOT}/Core/mapTestImage.png" "${TEST_DATA_ROOT}/Core/mapTestImage_X15Y10.png" 1e-11 "${TEMP}/mapImageByModelPerformerTest")
 ADD_TEST(mapMappingTaskBaseTest ${MODULE_TESTS} mapMappingTaskBaseTest)
 ADD_TEST(mapPointSetMappingTaskTest ${MODULE_TESTS} mapPointSetMappingTaskTest)
 ADD_TEST(mapImageMappingTaskTest ${MODULE_TESTS} mapImageMappingTaskTest)
