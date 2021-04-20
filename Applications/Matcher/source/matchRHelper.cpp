@@ -71,61 +71,61 @@ void handleGenericImageCast(map::io::GenericImageReader::LoadedComponentType loa
 {
   switch (loadedComponentType)
   {
-  case ::itk::ImageIOBase::UCHAR:
+  case ::itk::IOComponentEnum::UCHAR:
   {
     handleImageCast<unsigned char, IDimension>(inputImage, castedImage);
     break;
   }
 
-  case ::itk::ImageIOBase::CHAR:
+  case ::itk::IOComponentEnum::CHAR:
   {
     handleImageCast<char, IDimension>(inputImage, castedImage);
     break;
   }
 
-  case ::itk::ImageIOBase::USHORT:
+  case ::itk::IOComponentEnum::USHORT:
   {
     handleImageCast<unsigned short, IDimension>(inputImage, castedImage);
     break;
   }
 
-  case ::itk::ImageIOBase::SHORT:
+  case ::itk::IOComponentEnum::SHORT:
   {
     handleImageCast<short, IDimension>(inputImage, castedImage);
     break;
   }
 
-  case ::itk::ImageIOBase::UINT:
+  case ::itk::IOComponentEnum::UINT:
   {
     handleImageCast<unsigned int, IDimension>(inputImage, castedImage);
     break;
   }
 
-  case ::itk::ImageIOBase::INT:
+  case ::itk::IOComponentEnum::INT:
   {
     handleImageCast<int, IDimension>(inputImage, castedImage);
     break;
   }
 
-  case ::itk::ImageIOBase::ULONG:
+  case ::itk::IOComponentEnum::ULONG:
   {
     handleImageCast<unsigned long, IDimension>(inputImage, castedImage);
     break;
   }
 
-  case ::itk::ImageIOBase::LONG:
+  case ::itk::IOComponentEnum::LONG:
   {
     handleImageCast<long, IDimension>(inputImage, castedImage);
     break;
   }
 
-  case ::itk::ImageIOBase::FLOAT:
+  case ::itk::IOComponentEnum::FLOAT:
   {
     handleImageCast<float, IDimension>(inputImage, castedImage);
     break;
   }
 
-  case ::itk::ImageIOBase::DOUBLE:
+  case ::itk::IOComponentEnum::DOUBLE:
   {
     handleImageCast<double, IDimension>(inputImage, castedImage);
     break;
@@ -400,61 +400,61 @@ void handleGenericMaskConvert(map::io::GenericImageReader::LoadedComponentType l
 {
   switch (loadedComponentType)
   {
-  case ::itk::ImageIOBase::UCHAR:
+  case ::itk::IOComponentEnum::UCHAR:
   {
     handleMaskConvert<unsigned char, IDimension>(inputImage, mask);
     break;
   }
 
-  case ::itk::ImageIOBase::CHAR:
+  case ::itk::IOComponentEnum::CHAR:
   {
     handleMaskConvert<char, IDimension>(inputImage, mask);
     break;
   }
 
-  case ::itk::ImageIOBase::USHORT:
+  case ::itk::IOComponentEnum::USHORT:
   {
     handleMaskConvert<unsigned short, IDimension>(inputImage, mask);
     break;
   }
 
-  case ::itk::ImageIOBase::SHORT:
+  case ::itk::IOComponentEnum::SHORT:
   {
     handleMaskConvert<short, IDimension>(inputImage, mask);
     break;
   }
 
-  case ::itk::ImageIOBase::UINT:
+  case ::itk::IOComponentEnum::UINT:
   {
     handleMaskConvert<unsigned int, IDimension>(inputImage, mask);
     break;
   }
 
-  case ::itk::ImageIOBase::INT:
+  case ::itk::IOComponentEnum::INT:
   {
     handleMaskConvert<int, IDimension>(inputImage, mask);
     break;
   }
 
-  case ::itk::ImageIOBase::ULONG:
+  case ::itk::IOComponentEnum::ULONG:
   {
     handleMaskConvert<unsigned long, IDimension>(inputImage, mask);
     break;
   }
 
-  case ::itk::ImageIOBase::LONG:
+  case ::itk::IOComponentEnum::LONG:
   {
     handleMaskConvert<long, IDimension>(inputImage, mask);
     break;
   }
 
-  case ::itk::ImageIOBase::FLOAT:
+  case ::itk::IOComponentEnum::FLOAT:
   {
     handleMaskConvert<float, IDimension>(inputImage, mask);
     break;
   }
 
-  case ::itk::ImageIOBase::DOUBLE:
+  case ::itk::IOComponentEnum::DOUBLE:
   {
     handleMaskConvert<double, IDimension>(inputImage, mask);
     break;
