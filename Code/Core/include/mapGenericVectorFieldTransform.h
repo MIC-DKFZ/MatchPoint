@@ -120,7 +120,7 @@ public:
   using JacobianType = typename Superclass::JacobianType;
 
   /** Transform category type. */
-  using TransformCategoryType = typename Superclass::TransformCategoryType;
+  using TransformCategoryType = typename Superclass::TransformCategoryEnum;
 
   /** The number of parameters defininig this transform. */
   using NumberOfParametersType = typename Superclass::NumberOfParametersType;
@@ -386,7 +386,7 @@ public:
   /** This transform is not linear. */
   virtual TransformCategoryType GetTransformCategory() const
   {
-    return Self::DisplacementField;
+    return TransformCategoryType::DisplacementField;
   }
 
   virtual NumberOfParametersType GetNumberOfLocalParameters() const
