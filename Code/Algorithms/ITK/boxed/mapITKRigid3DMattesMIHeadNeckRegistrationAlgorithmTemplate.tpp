@@ -121,23 +121,56 @@ namespace map
 
                     typename InitializerType::Pointer spInitializer = InitializerType::New();
 
-                    typename ROIFilterType::Pointer spROIFilter = ROIFilterType::New();
-					spROIFilter->SetInput(this->getInternalTargetImage());
-                    typename ROIFilterType::RegionType region = this->getInternalTargetImage()->GetLargestPossibleRegion();
-                    typename ROIFilterType::RegionType::SizeValueType zSize = region.GetSize(2);
-					region.SetIndex(2, zSize / 3);
-					region.SetSize(2, 2 * zSize / 3);
-					spROIFilter->SetRegionOfInterest(region);
+
+					const auto movingRegion = this->getInternalMovingImage()->GetLargestPossibleRegion();
+					const auto targetRegion = this->getInternalTargetImage()->GetLargestPossibleRegion();
+					const auto movingZSize = movingRegion.GetSize(2);
+					const auto targetZSize = targetRegion.GetSize(2);
+
+					bool targetIsHeadNeck = targetZSize >= movingZSize;
+
+					typename ROIFilterType::RegionType usedRegion = targetRegion;
+					auto usedSize = targetZSize;
+
+					typename ROIFilterType::Pointer spROIFilter = ROIFilterType::New();
+					if (targetIsHeadNeck)
+					{
+						spROIFilter->SetInput(this->getInternalTargetImage());
+						this->InvokeEvent(events::AlgorithmEvent(this,
+							"Target image dedected as HeadNeck image."));
+					}
+					else
+					{
+						spROIFilter->SetInput(this->getInternalMovingImage());
+						usedRegion = movingRegion;
+						usedSize = movingZSize;
+						this->InvokeEvent(events::AlgorithmEvent(this,
+							"Moving image dedected as HeadNeck image."));
+					}
+
+					usedRegion.SetIndex(2, usedSize / 3);
+					usedRegion.SetSize(2, 2 * usedSize / 3);
+					spROIFilter->SetRegionOfInterest(usedRegion);
 
 					core::OStringStream stream;
-					stream << region;
+					stream << usedRegion;
+
 					this->InvokeEvent(events::AlgorithmEvent(this,
-										"Prepare target region of interest. region: " + stream.str()));
+										"Prepare region of interest for HeadNeck. region: " + stream.str()));
 
 					spROIFilter->Update();
 
-          spInitializer->SetMovingImage(this->getInternalMovingImage());
-					spInitializer->SetFixedImage(spROIFilter->GetOutput());
+					if (targetIsHeadNeck)
+					{
+						spInitializer->SetMovingImage(this->getInternalMovingImage());
+						spInitializer->SetFixedImage(spROIFilter->GetOutput());
+					}
+					else
+					{
+						spInitializer->SetMovingImage(spROIFilter->GetOutput());
+						spInitializer->SetFixedImage(this->getInternalTargetImage());
+					}
+
 					spInitializer->SetTransform(this->getConcreteTransformModel());
 
 					if (this->_useCenterOfGravity)

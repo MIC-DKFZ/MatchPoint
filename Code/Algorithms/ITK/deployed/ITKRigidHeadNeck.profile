@@ -1,8 +1,8 @@
 SET(ALGORITHM_PROFILE_UID_Namespace "de.dkfz.matchpoint.common")
 SET(ALGORITHM_PROFILE_UID_Name "Rigid3DMattesMIAlgorithm.3D.Head2HeadNeck")
-SET(ALGORITHM_PROFILE_UID_Version "1.0.2")
+SET(ALGORITHM_PROFILE_UID_Version "1.1.0")
 
-SET(ALGORITHM_PROFILE_Description "Algorithm is used for special cases where a head image should be registered onto a head/neck image (target image). It skips the lower part of the target image if a preinitialization (via geometric center or centroid) is used, to establish a better initialization. By default initializes via geometric centers.")
+SET(ALGORITHM_PROFILE_Description "Algorithm is used for special cases where a head image and a head neck image (assumed to be the larger image in z direction) should be registered. It skips the lower part of the head neck image if a preinitialization (via geometric center or centroid) is used, to establish a better initialization. By default initializes via geometric centers.")
 SET(ALGORITHM_PROFILE_Contact "Ralf Floca\; sbr@dkfz-heidelberg.de")
 
 SET(ALGORITHM_PROFILE_DataType "Image")
