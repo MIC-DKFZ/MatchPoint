@@ -77,7 +77,7 @@ namespace map
                 pInputFieldRepresentation);
 
             spFunctor->setNullPointUsage(usePadding);
-            spFunctor->setNullPoint(paddingVector);
+            spFunctor->setNullPoint(paddingVector.GetDataPointer());
 
             spCombinedKernel->setTransformFunctor(spFunctor.GetPointer());
 
