@@ -36,6 +36,7 @@ namespace map
 	{
 		namespace itk
 		{
+			using LightObject = ::itk::LightObject;
 
 			/*!
 			This class is the template specialization for the itk::MattesMutualInformationImageToImageMetric.

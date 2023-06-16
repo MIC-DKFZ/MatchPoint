@@ -104,7 +104,7 @@ namespace map
                 typedef typename MappingVectorType::Superclass VectorSuperclassType;
                 result.VectorSuperclassType::operator = (castedTrans->GetNullPoint());
             }
-            return result;
+            return result.GetDataPointer();
         };
 
         template<unsigned int VInputDimensions, unsigned int VOutputDimensions>
