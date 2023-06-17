@@ -38,6 +38,8 @@ namespace map
 	{
 		namespace itk
 		{
+			using LightObject = ::itk::LightObject;
+			template<class T> using ObjectFactory = ::itk::ObjectFactory<T>;
 
 			/*!
 			This class is the template specialization for the itk::LevenbergMarquardtOptimizer.
