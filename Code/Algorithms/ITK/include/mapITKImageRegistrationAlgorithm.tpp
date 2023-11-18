@@ -24,6 +24,7 @@
 #ifndef __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
 #define __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
 
+#include <format>
 #include <mutex>
 #include "itkExtractImageFilter.h"
 
@@ -158,6 +159,7 @@ namespace map
 				_spInternalMovingImage = NULL;
 				_spInternalTargetImage = NULL;
 				_CropInputImagesByMask = true;
+				_ComputeFinalMetricValue = false;
 
 				//now set the policy event slots
 				typedef ::itk::ReceptorMemberCommand<Self> AlgorithmCommandType;
@@ -686,6 +688,17 @@ namespace map
 					                  << spIKernel);
 				}
 
+				if (this->_ComputeFinalMetricValue)
+				{
+					auto metricController = this->getMetricInternal();
+					auto finalMetricValue = metricController->getSVMetric()->GetValue(lastTransformParameters);
+
+					::map::core::OStringStream os;
+					os << "Final transform parameters: " << lastTransformParameters;
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, os.str()));
+					this->InvokeEvent(::map::events::AlgorithmEvent(this, "Final metric value: " + map::core::convert::toStr(finalMetricValue)));
+				}
+
 				//ensure that settings changed to the registration determination process are reseted to default
 				this->configureAlgorithm();
 
@@ -980,7 +993,10 @@ namespace map
 				infos.push_back(::map::algorithm::MetaPropertyInfo::New("CropInputImagesByMasks", typeid(bool),
 				                true,
 				                true));
-				#endif
+				infos.push_back(::map::algorithm::MetaPropertyInfo::New("ComputeFinalMetricValue", typeid(bool),
+					true,
+					true));
+       #endif
 			};
 
 			template<class TMovingImage, class TTargetImage, class TIdentificationPolicy, class TInterpolatorPolicy, class TMetricPolicy, class TOptimizerPolicy, class TTransformPolicy, class TInternalRegistrationMethod>
@@ -994,7 +1010,10 @@ namespace map
 				{
 					spResult = ::map::core::MetaProperty<bool>::New(this->_CropInputImagesByMask);
 				}
-
+				else if (name == "ComputeFinalMetricValue")
+				{
+					spResult = ::map::core::MetaProperty<bool>::New(this->_ComputeFinalMetricValue);
+				}
 				return spResult;
 			};
 
@@ -1005,9 +1024,15 @@ namespace map
 			{
 				if (name == "CropInputImagesByMasks")
 				{
-					bool crop;
+					bool crop = this->_CropInputImagesByMask;
 					::map::core::unwrapMetaProperty(pProperty, crop);
 					this->_CropInputImagesByMask = crop;
+				}
+				else if (name == "ComputeFinalMetricValue")
+				{
+					bool compute = this->_ComputeFinalMetricValue;
+					::map::core::unwrapMetaProperty(pProperty, compute);
+					this->_ComputeFinalMetricValue = compute;
 				}
 				else
 				{

@@ -391,6 +391,7 @@ namespace map
         void setInternalTargetMask(TargetMaskBaseType* mask);
 
         bool _CropInputImagesByMask;
+				bool _ComputeFinalMetricValue;
 
 			private:
 				typename InternalRegistrationMethodType::Pointer _internalRegistrationMethod;
