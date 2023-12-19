@@ -5,6 +5,7 @@ SET(H_FILES
 include/mapArbitraryWarpImageFilter.h
 include/mapEuclideanPairDistancePointMetric.h
 include/mapIterativeInverseTransformToDisplacementFieldSource.h
+include/mapNormalizedTotalGradientImageToImageMetric.h
 include/mapNULLVectorAwareLinearInterpolateImageFunction.h
 include/itkMatrixOffsetBasedTranslationTransform.h
 include/itkImageTransformHelper.h
@@ -15,6 +16,7 @@ include/mapArbitraryWarpImageFilter.txx
 include/mapEuclideanPairDistancePointMetric.txx
 include/mapIterativeInverseTransformToDisplacementFieldSource.txx
 include/mapNULLVectorAwareLinearInterpolateImageFunction.tpp
+include/mapNormalizedTotalGradientImageToImageMetric.tpp
 include/itkMatrixOffsetBasedTranslationTransform.hxx
 )
 
