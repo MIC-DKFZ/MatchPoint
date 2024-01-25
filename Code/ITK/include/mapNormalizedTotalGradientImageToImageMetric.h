@@ -102,11 +102,19 @@ public:
       MeasureType& value,
       DerivativeType& derivative) const override;
 
+  /** Set/Get Delta value. This value is used as the differential in the
+ * computation of the metric derivative using the finite differences method. */
+  itkGetConstMacro(Delta, double);
+  itkSetMacro(Delta, double);
+
 protected:
   NormalizedTotalGradientImageToImageMetric();
   ~NormalizedTotalGradientImageToImageMetric() override = default;
   void
     PrintSelf(std::ostream& os, Indent indent) const override;
+
+private:
+  double m_Delta;
 
 };
 
