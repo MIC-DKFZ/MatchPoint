@@ -83,7 +83,7 @@ namespace map
 				using ProviderBasePointer = typename ProviderBaseType::Pointer;
 				using RequestType = typename ProviderBaseType::RequestType;
 
-				itkTypeMacro(ServiceProvider, itk::Object);
+				itkTypeMacro(ServiceStack, itk::Object);
 
 				/*! Static methods that creates a provider stack, registeres the stack to the load policy
 				 * and calls rehash for the first time to ensure that all the default providers are loaded.
