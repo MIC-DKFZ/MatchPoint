@@ -24,7 +24,6 @@
 #ifndef __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
 #define __MAP_ITK_IMAGE_REGISTRATION_ALGORITHM_TPP
 
-#include <format>
 #include <mutex>
 #include "itkExtractImageFilter.h"
 
