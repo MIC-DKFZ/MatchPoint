@@ -192,7 +192,7 @@ namespace map
 			Volume<VDimensions>::
 			isInside(const Self& volume) const
 			{
-				OriginType beginCorner = volume.GetIndex();
+				OriginType beginCorner = volume.getOrigin();
 
 				if (! this->isInside(beginCorner))
 				{
@@ -200,14 +200,14 @@ namespace map
 				}
 
 				OriginType endCorner;
-				SizeType  size = volume.GetSize();
+				SizeType  size = volume.getSize();
 
 				for (unsigned int i = 0; i < VDimensions; i++)
 				{
 					endCorner[i] = beginCorner[i] + size[i] - 1;
 				}
 
-				if (! this->IsInside(endCorner))
+				if (! this->isInside(endCorner))
 				{
 					return false;
 				}
@@ -229,15 +229,15 @@ namespace map
 				{
 					// Is left edge of current region to the right of the right edge
 					// of the region to crop with? (if so, we cannot crop)
-					if (_origin[i] >= region.GetIndex()[i]
-						+ static_cast<double>(region.GetSize()[i]))
+					if (_origin[i] >= region.getOrigin()[i]
+						+ static_cast<double>(region.getSize()[i]))
 					{
 						cropPossible = false;
 					}
 
 					// If right edge of the current region to the left of the left
 					// edge of the region to crop with? (if so, we cannot crop)
-					if (_origin[i] + static_cast<double>(_size[i]) <= region.GetIndex()[i])
+					if (_origin[i] + static_cast<double>(_size[i]) <= region.getOrigin()[i])
 					{
 						cropPossible = false;
 					}
@@ -253,10 +253,10 @@ namespace map
 				for (i = 0; i < VDimensions; i++)
 				{
 					// first check the start index
-					if (_origin[i] < region.GetIndex()[i])
+					if (_origin[i] < region.getOrigin()[i])
 					{
 						// how much do we need to adjust
-						crop = region.GetIndex()[i] - _origin[i];
+						crop = region.getOrigin()[i] - _origin[i];
 
 						// adjust the start index and the size of the current region
 						_origin[i] += crop;
@@ -265,11 +265,11 @@ namespace map
 
 					// now check the final size
 					if (_origin[i] + static_cast<double>(_size[i])
-						> region.GetIndex()[i] + static_cast<double>(region.GetSize()[i]))
+						> region.getOrigin()[i] + static_cast<double>(region.getSize()[i]))
 					{
 						// how much do we need to adjust
 						crop = _origin[i] + static_cast<double>(_size[i])
-							   - region.GetIndex()[i] - static_cast<double>(region.GetSize()[i]);
+							   - region.getOrigin()[i] - static_cast<double>(region.getSize()[i]);
 
 						// adjust the size
 						_size[i] -= static_cast<double>(crop);
