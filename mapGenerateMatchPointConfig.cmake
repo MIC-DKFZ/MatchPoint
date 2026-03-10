@@ -62,6 +62,9 @@ SET(MatchPoint_INCLUDE_DIRS_CONFIG
 # Link directories.
 SET(MatchPoint_LIBRARY_DIRS_CONFIG ${CMAKE_INSTALL_PREFIX}${MatchPoint_INSTALL_LIB_DIR})
 
+# Point to the install-tree exports instead of the build-tree targets file.
+SET(MatchPoint_TARGETS_FILE "\${CMAKE_CURRENT_LIST_DIR}/MatchPointExport.cmake")
+
 #-----------------------------------------------------------------------------
 # Configure MatchPointConfig.cmake for the install tree.
 CONFIGURE_FILE(${MatchPoint_SOURCE_DIR}/MatchPointConfig.cmake.in

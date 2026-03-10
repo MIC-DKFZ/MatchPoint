@@ -291,16 +291,23 @@ INCLUDE(${MAP_MODULES_CONF_DIR}/ITKConfig.cmake)
 INCLUDE(${MatchPoint_SOURCE_DIR}/mapGenerateMatchPointConfig.cmake)
 
 IF(NOT MatchPoint_INSTALL_NO_DEVELOPMENT)
-  INSTALL(FILES
-    ${MatchPoint_BINARY_DIR}/MatchPointConfig.cmake
-    ${MatchPoint_BINARY_DIR}/UseMatchPoint.cmake
+  INSTALL(
+    FILES ${MatchPoint_BINARY_DIR}/MatchPointConfig.cmake.install
+    DESTINATION ${MatchPoint_INSTALL_PACKAGE_DIR}
+    RENAME MatchPointConfig.cmake
+    COMPONENT Development
+  )
+  INSTALL(
+    FILES ${MatchPoint_BINARY_DIR}/UseMatchPoint.cmake
     DESTINATION ${MatchPoint_INSTALL_PACKAGE_DIR}
     COMPONENT Development
-    )
-
-   INSTALL(EXPORT MatchPointExport DESTINATION ${MatchPoint_INSTALL_PACKAGE_DIR} COMPONENT Development)
+  )
+  INSTALL(
+    EXPORT MatchPointExport
+    DESTINATION ${MatchPoint_INSTALL_PACKAGE_DIR}
+    COMPONENT Development
+  )
 ENDIF(NOT MatchPoint_INSTALL_NO_DEVELOPMENT)
-
 
 #-----------------------------------------------------------------------------
 # Installer
