@@ -43,15 +43,15 @@ CONFIGURE_FILE(${MatchPoint_SOURCE_DIR}/MatchPointConfig.cmake.in
 # Settings specific to the install tree.
 
 # The "use" file.
-SET(MatchPoint_USE_FILE ${CMAKE_INSTALL_PREFIX}${MatchPoint_INSTALL_PACKAGE_DIR}/UseMatchPoint.cmake)
+SET(MatchPoint_USE_FILE ${CMAKE_INSTALL_PREFIX}/${MatchPoint_INSTALL_PACKAGE_DIR}/UseMatchPoint.cmake)
 
 # The library dependencies file.
 SET(MatchPoint_LIBRARY_DEPENDS_FILE
-    ${CMAKE_INSTALL_PREFIX}${MatchPoint_INSTALL_PACKAGE_DIR}/MatchPointLibraryDepends.cmake)
+    ${CMAKE_INSTALL_PREFIX}/${MatchPoint_INSTALL_PACKAGE_DIR}/MatchPointLibraryDepends.cmake)
 
 # The build settings file.
 SET(MatchPoint_BUILD_SETTINGS_FILE
-    ${CMAKE_INSTALL_PREFIX}${MatchPoint_INSTALL_PACKAGE_DIR}/MatchPointBuildSettings.cmake)
+    ${CMAKE_INSTALL_PREFIX}/${MatchPoint_INSTALL_PACKAGE_DIR}/MatchPointBuildSettings.cmake)
 
 # Include directories.
 SET(MatchPoint_INCLUDE_DIRS_CONFIG
@@ -60,7 +60,7 @@ SET(MatchPoint_INCLUDE_DIRS_CONFIG
 )
 
 # Link directories.
-SET(MatchPoint_LIBRARY_DIRS_CONFIG ${CMAKE_INSTALL_PREFIX}${MatchPoint_INSTALL_LIB_DIR})
+SET(MatchPoint_LIBRARY_DIRS_CONFIG ${CMAKE_INSTALL_PREFIX}/${MatchPoint_INSTALL_LIB_DIR})
 
 # Point to the install-tree exports instead of the build-tree targets file.
 SET(MatchPoint_TARGETS_FILE "\${CMAKE_CURRENT_LIST_DIR}/MatchPointExport.cmake")
