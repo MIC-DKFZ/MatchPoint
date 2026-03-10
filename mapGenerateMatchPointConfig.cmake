@@ -55,8 +55,7 @@ SET(MatchPoint_BUILD_SETTINGS_FILE
 
 # Include directories.
 SET(MatchPoint_INCLUDE_DIRS_CONFIG
-  ${MatchPoint_INCLUDE_DIRS_INSTALL_TREE}
-  ${MatchPoint_INCLUDE_DIRS_SYSTEM}
+  ${CMAKE_INSTALL_PREFIX}/${MatchPoint_INSTALL_INCLUDE_DIR}
 )
 
 # Link directories.
