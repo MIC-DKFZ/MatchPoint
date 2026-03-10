@@ -51,6 +51,7 @@ include/mapImageReader.tpp
 include/mapImageWriter.tpp
 include/mapInvertingKernelWriter.tpp
 include/mapInvertingKernelLoader.tpp
+include/mapInvertingFieldKernelWriter.tpp
 )
 
 SET(TEST_CPP_FILES

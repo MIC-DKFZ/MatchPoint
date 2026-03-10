@@ -144,6 +144,7 @@ SET(H_FILES
     include/mapFieldByFileLoadFunctor.h
     include/mapGenericVectorFieldTransform.h	
 	include/mapGenericKernelCombinationFieldSource.h
+	include/mapRegistrationManipulationInterface.h
 )
 
 SET(TPP_FILES

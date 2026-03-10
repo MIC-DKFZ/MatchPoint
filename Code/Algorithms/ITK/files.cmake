@@ -125,6 +125,9 @@ include/mapITKSimilarity3DTransform.h
 include/mapITKVersorRigid3DTransform.h
 include/mapITKVersorTransform.h
 include/mapITKBSplineDeformableTransform.h
+include/mapITKMeanReciprocalSquareDifferenceImageToImageMetric.h
+include/mapITKOptimizerControl.h
+include/mapITKPointSetRegistrationAlgorithmInterface.h
 boxed/mapITKAffineMattesMIMultiResRegistrationAlgorithmTemplate.h
 boxed/mapITKDemonsRegistrationAlgorithm.h
 boxed/mapITKEuler3DICPRegistrationAlgorithmTemplate.h

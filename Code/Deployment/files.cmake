@@ -17,7 +17,8 @@ include/mapDeploymentDLLInfo.h
 include/mapDeploymentDLLHandle.h
 include/mapDeploymentDLLAccess.h
 include/mapDeploymentDLLDirectoryBrowser.h
-include/mapDeploymentSync.h  
+include/mapDeploymentSync.h
+include/mapDeploymentEvents.h
 )
 
 SET(TPP_FILES
