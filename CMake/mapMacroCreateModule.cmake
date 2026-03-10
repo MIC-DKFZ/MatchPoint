@@ -121,7 +121,7 @@ MACRO(MAP_CREATE_MODULE MODULE_NAME_IN)
         INSTALL(
           FILES
             ${H_FILES}
-            ${TXX_FILES}
+            ${TPP_FILES}
             ${MAP_MODULES_CONF_DIR}/map${MODULE_NAME}Exports.h
           DESTINATION ${MatchPoint_INSTALL_INCLUDE_DIR}
           COMPONENT Development

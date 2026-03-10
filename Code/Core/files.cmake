@@ -204,6 +204,7 @@ SET(TPP_FILES
     include/mapFieldByFileLoadFunctor.tpp  
     include/mapGenericVectorFieldTransform.tpp
 	include/mapGenericKernelCombinationFieldSource.tpp
+	include/mapSDITKStreamingHelper.tpp
 )
 
 SET( TEST_CPP_FILES
