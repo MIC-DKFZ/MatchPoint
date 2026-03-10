@@ -118,8 +118,14 @@ MACRO(MAP_CREATE_MODULE MODULE_NAME_IN)
       ENDIF()	  
 
       IF(NOT MatchPoint_INSTALL_NO_DEVELOPMENT)	  
-	    INSTALL(FILES ${H_FILES} ${TXX_FILES}
-		  DESTINATION ${MatchPoint_INSTALL_INCLUDE_DIR} COMPONENT Development)
+        INSTALL(
+          FILES
+            ${H_FILES}
+            ${TXX_FILES}
+            ${MAP_MODULES_CONF_DIR}/map${MODULE_NAME}Exports.h
+          DESTINATION ${MatchPoint_INSTALL_INCLUDE_DIR}
+          COMPONENT Development
+        )
       ENDIF(NOT MatchPoint_INSTALL_NO_DEVELOPMENT)	  
 	  
       ENDIF(MODULE_IS_ENABLED)
