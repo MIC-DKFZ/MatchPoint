@@ -32,6 +32,13 @@ if(CMAKE_VERSION VERSION_GREATER_EQUAL 4.0)
 	set(LITMUS_POLICY_ARGS "-DCMAKE_POLICY_VERSION_MINIMUM:STRING=3.5")
 endif()
 
+# Forward the compiler flags so Litmus builds against ITK the same way
+# MatchPoint itself does (notably /Zc:__cplusplus, see root CMakeLists.txt).
+set(LITMUS_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+if(MSVC)
+	string(APPEND LITMUS_CXX_FLAGS " /Zc:__cplusplus")
+endif()
+
 set(ENABLE_ITK "-DLIT_ENABLE_ITK_SUPPORT:BOOL=ON")
 set(ITK_DIRECTORY "-DITK_DIR:PATH=${ITK_DIR}")
 IF (MAP_USE_SYSTEM_HDF5)
@@ -49,10 +56,12 @@ ExternalProject_Add(
 	PREFIX ${LITMUS_CMAKE_DIR}
 	INSTALL_COMMAND ""
 	UPDATE_COMMAND "" # Don't update SVN on every build
+	PATCH_COMMAND ${CMAKE_COMMAND} -DLITMUS_SOURCE_DIR=<SOURCE_DIR> -P ${MatchPoint_SOURCE_DIR}/Testing/Litmus/LitmusCMake4Compatibility.cmake
 	CMAKE_ARGS
 		${LITMUS_POLICY_ARGS}
 		-DBUILD_TESTING:BOOL=OFF
 		-DCMAKE_CXX_STANDARD=${MAP_CXX_STANDARD}
+		"-DCMAKE_CXX_FLAGS:STRING=${LITMUS_CXX_FLAGS}"
 		-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
 		${ENABLE_ITK}
 		${ITK_DIRECTORY}

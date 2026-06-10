@@ -164,6 +164,13 @@ set(CMAKE_CXX_EXTENSIONS 0)
 set(CMAKE_CXX_STANDARD ${MAP_CXX_STANDARD})
 set(CMAKE_CXX_STANDARD_REQUIRED 1)
 
+if(MSVC)
+  # Without this MSVC reports __cplusplus as 199711L regardless of the
+  # selected standard, which trips ITK's standard-mismatch check in
+  # itkConfigure.h (#warning is a hard error C1021 for MSVC).
+  add_compile_options(/Zc:__cplusplus)
+endif()
+
 
 #-----------------------------------------------------------------------------
 # turn on concept checking
