@@ -37,7 +37,7 @@ ENDIF(MAP_BUILD_Ontology)
 #-----------------------------------------------------------------------------
 # Configure MatchPointConfig.cmake for the build tree.
 CONFIGURE_FILE(${MatchPoint_SOURCE_DIR}/MatchPointConfig.cmake.in
-               ${MatchPoint_BINARY_DIR}/MatchPointConfig.cmake @ONLY IMMEDIATE)
+               ${MatchPoint_BINARY_DIR}/MatchPointConfig.cmake @ONLY)
 
 #-----------------------------------------------------------------------------
 # Settings specific to the install tree.
@@ -67,4 +67,4 @@ SET(MatchPoint_TARGETS_FILE "\${CMAKE_CURRENT_LIST_DIR}/MatchPointExport.cmake")
 #-----------------------------------------------------------------------------
 # Configure MatchPointConfig.cmake for the install tree.
 CONFIGURE_FILE(${MatchPoint_SOURCE_DIR}/MatchPointConfig.cmake.in
-               ${MatchPoint_BINARY_DIR}/MatchPointConfig.cmake.install @ONLY IMMEDIATE)
+               ${MatchPoint_BINARY_DIR}/MatchPointConfig.cmake.install @ONLY)
