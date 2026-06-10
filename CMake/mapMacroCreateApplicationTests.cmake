@@ -18,9 +18,10 @@
 ##################################################################
 
 MACRO(MAP_CREATE_APPLICATION_TESTS APP_NAME_IN)
-  MACRO_PARSE_ARGUMENTS(APP
-                        "INCLUDE_DIRS;DEPENDS;PACKAGE_DEPENDS;ADDITIONAL_LIBS"
+  cmake_parse_arguments(APP
                         "HEADER_TESTS"
+                        ""
+                        "INCLUDE_DIRS;DEPENDS;PACKAGE_DEPENDS;ADDITIONAL_LIBS"
                         ${ARGN})
                         
   SET(APP_NAME "test${APP_NAME_IN}")
@@ -48,8 +49,7 @@ MACRO(MAP_CREATE_APPLICATION_TESTS APP_NAME_IN)
 	  SET(PACKAGE_DEPENDS "${APP_PACKAGE_DEPENDS}")
 	  MAP_USE_MODULE("${APP_DEPENDS}") 
 	
-	  # ok, now create the APP itself 
-	  INCLUDE_DIRECTORIES(. ${ALL_INCLUDE_DIRECTORIES})
+	  # ok, now create the APP itself
 	  INCLUDE(files.cmake)
 	  
       SET(APP_TESTS ${CXX_TEST_PATH}/${APP_NAME})
@@ -58,16 +58,15 @@ MACRO(MAP_CREATE_APPLICATION_TESTS APP_NAME_IN)
 	
 	  ORGANIZE_SOURCES(SOURCE ${TEST_CPP_FILES})
 
-       IF(ALL_LIBRARY_DIRS)
-         # LINK_DIRECTORIES applies only to targets which are added after the call to LINK_DIRECTORIES
-		 LINK_DIRECTORIES(${ALL_LIBRARY_DIRS})
-       ENDIF(ALL_LIBRARY_DIRS)
-     
 	   ADD_EXECUTABLE(${APP_NAME} ${TEST_CPP_FILES})
-	   	    
-       IF(ALL_LIBRARIES)
-         TARGET_LINK_LIBRARIES(${APP_NAME} ${ALL_LIBRARIES})
-       ENDIF(ALL_LIBRARIES)  
+
+       target_include_directories(${APP_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${MatchPoint_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES})
+       if(ALL_LIBRARY_DIRS)
+         target_link_directories(${APP_NAME} PRIVATE ${ALL_LIBRARY_DIRS})
+       endif()
+       if(ALL_LIBRARIES)
+         target_link_libraries(${APP_NAME} PRIVATE ${ALL_LIBRARIES})
+       endif()
 	   	    
     ENDIF(_MISSING_DEP)
   ENDIF(BUILD_TESTING)

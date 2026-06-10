@@ -18,9 +18,10 @@
 #
 ##################################################################
 MACRO(MAP_CREATE_APPLICATION APP_NAME_IN)
-  MACRO_PARSE_ARGUMENTS(APP
-                        "INCLUDE_DIRS;INTERNAL_INCLUDE_DIRS;DEPENDS;PROVIDES;PACKAGE_DEPENDS;EXPORT_DEFINE"
+  cmake_parse_arguments(APP
                         "FORCE_STATIC;HEADERS_ONLY"
+                        ""
+                        "INCLUDE_DIRS;INTERNAL_INCLUDE_DIRS;DEPENDS;PROVIDES;PACKAGE_DEPENDS;EXPORT_DEFINE"
                         ${ARGN})
                         
   SET(APP_NAME ${APP_NAME_IN})
@@ -56,7 +57,6 @@ MACRO(MAP_CREATE_APPLICATION APP_NAME_IN)
           SET(ALL_INCLUDE_DIRECTORIES ${ALL_INCLUDE_DIRECTORIES} ${CMAKE_CURRENT_SOURCE_DIR}/include)
         ENDIF()
 	
-		INCLUDE_DIRECTORIES(. ${ALL_INCLUDE_DIRECTORIES})
 		INCLUDE(files.cmake)
 	
 		ORGANIZE_SOURCES(SOURCE ${CPP_FILES}
@@ -65,13 +65,15 @@ MACRO(MAP_CREATE_APPLICATION APP_NAME_IN)
 			     DOC ${DOX_FILES}
 			     )
 
-		LINK_DIRECTORIES(${ALL_LIBRARY_DIRS})
-     
 	    SET(coverage_sources ${CPP_FILES} ${H_FILES} ${TXX_FILES})
-	    
+
 		ADD_EXECUTABLE(${APP_NAME} ${coverage_sources})
-	     
-        TARGET_LINK_LIBRARIES(${APP_NAME} ${ALL_LIBRARIES})	  
+
+		target_include_directories(${APP_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${MatchPoint_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES})
+		if(ALL_LIBRARY_DIRS)
+		  target_link_directories(${APP_NAME} PRIVATE ${ALL_LIBRARY_DIRS})
+		endif()
+		target_link_libraries(${APP_NAME} PRIVATE ${ALL_LIBRARIES})
       ENDIF(APP_IS_ENABLED)
 	  
     ENDIF(_MISSING_DEP)

@@ -1,7 +1,7 @@
 MESSAGE (STATUS "generating App: combineR - MatchPoint registration combination tool")
 
 IF(MSVC)
-     ADD_DEFINITIONS(/bigobj)
+     add_compile_options(/bigobj)
 ENDIF()
 
 MAP_CREATE_APPLICATION(combineR DEPENDS MAPCore MAPAlgorithmsITK MAPIO MAPUtilities)

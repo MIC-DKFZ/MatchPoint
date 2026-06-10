@@ -1,7 +1,7 @@
 MESSAGE (STATUS "generating App: mapR - MatchPoint generic image mapping tool")
 
 IF(MSVC)
-     ADD_DEFINITIONS(/bigobj)
+     add_compile_options(/bigobj)
 ENDIF()
 
 MAP_CREATE_APPLICATION(mapR DEPENDS MAPCore MAPIO MAPUtilities)

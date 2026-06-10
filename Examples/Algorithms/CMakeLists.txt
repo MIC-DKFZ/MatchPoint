@@ -6,10 +6,6 @@ IF(BUILD_TESTING)
 	SET(PACKAGE_DEPENDS "Litmus")
 	MAP_USE_MODULE(${DEPENDS})
 
-	INCLUDE_DIRECTORIES(. ${ALL_INCLUDE_DIRECTORIES})
-	LINK_DIRECTORIES(${ALL_LIBRARY_DIRS})
-
-
 	# Adding examples
 	ADD_EXECUTABLE(demoITKImageRegistration mapDemoITKImageRegistration.cpp mapDemoHelper.h mapDemoHelper.cpp)
 	ADD_EXECUTABLE(demoFixedITKImageRegistration mapDemoFixedITKImageRegistration.cpp mapDemoHelper.h mapDemoHelper.cpp)
@@ -19,6 +15,10 @@ IF(BUILD_TESTING)
 	ADD_EXECUTABLE(demoHelloWorldRegistration2 mapDemoHelloWorldRegistration2.cpp mapDemoHelloWorldRegistration1Helper.h mapDemoHelloWorldRegistration1Helper.cpp mapDemoRegistrationAlgorithmTemplate.h)
 	ADD_EXECUTABLE(demoHelloWorldRegistration3 mapDemoHelloWorldRegistration3.cpp mapDemoHelper.h mapDemoHelper.cpp mapDemoRegistrationAlgorithmTemplate.h)
 
+	foreach(_demo IN ITEMS demoITKImageRegistration demoFixedITKImageRegistration demoITKMultiResImageRegistration demoAutoSealedAlgorithm demoHelloWorldRegistration1 demoHelloWorldRegistration2 demoHelloWorldRegistration3)
+		target_include_directories(${_demo} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${MatchPoint_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES})
+		target_link_directories(${_demo} PRIVATE ${ALL_LIBRARY_DIRS})
+	endforeach()
 
 	TARGET_LINK_LIBRARIES(demoITKImageRegistration MAPCore MAPAlgorithms MAPAlgorithmsITK MAPIO LitmusCommon LitmusITK)
 	TARGET_LINK_LIBRARIES(demoFixedITKImageRegistration MAPCore MAPAlgorithms MAPAlgorithmsITK MAPIO LitmusCommon LitmusITK)

@@ -3,4 +3,5 @@ MAP_CREATE_MODULE_TESTS(MAPUtilities PACKAGE_DEPENDS Litmus HEADER_TESTS)
 
 IF (BUILD_TESTING)
   ADD_EXECUTABLE(mapTestProcessExecutorApp "test/mapTestProcessExecutorApp.cpp")
+  TARGET_LINK_LIBRARIES(mapTestProcessExecutorApp PRIVATE MAPCore)
 ENDIF (BUILD_TESTING)

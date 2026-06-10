@@ -1,7 +1,7 @@
 MESSAGE (STATUS "generating App: matchR - MatchPoint generic light weight image registration tool")
 
 IF(MSVC)
-     ADD_DEFINITIONS(/bigobj)
+     add_compile_options(/bigobj)
 ENDIF()
 
 MAP_CREATE_APPLICATION(matchR DEPENDS MAPCore MAPAlgorithms MAPDeployment MAPAlgorithmsITK MAPIO MAPUtilities)

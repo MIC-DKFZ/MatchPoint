@@ -24,7 +24,6 @@ SET(MatchPoint_DLL_INTERFACE_VERSION_STRING "${MatchPoint_DLL_INTERFACE_VERSION_
 # CMake Function(s) and Macro(s)
 #-----------------------------------------------------------------------------
 
-include(CMake/MacroParseArguments.cmake)
 include(CMake/mapMacroCreateModuleConf.cmake)
 include(CMake/mapMacroCreateModule.cmake)
 include(CMake/mapMacroCreateModuleTests.cmake)

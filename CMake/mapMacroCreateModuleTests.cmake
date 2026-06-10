@@ -46,9 +46,10 @@ SET(MAP_HEADER_TESTS_FOOTER
 "}\n")
 
 MACRO(MAP_CREATE_MODULE_TESTS MODULE_NAME_IN)
-  MACRO_PARSE_ARGUMENTS(MODULE
-                        "INCLUDE_DIRS;INTERNAL_INCLUDE_DIRS;DEPENDS;DEPENDS_INTERNAL;PROVIDES;PACKAGE_DEPENDS;ADDITIONAL_LIBS"
+  cmake_parse_arguments(MODULE
                         "HEADER_TESTS"
+                        ""
+                        "INCLUDE_DIRS;INTERNAL_INCLUDE_DIRS;DEPENDS;DEPENDS_INTERNAL;PROVIDES;PACKAGE_DEPENDS;ADDITIONAL_LIBS"
                         ${ARGN})
 
   SET(MODULE_NAME "test${MODULE_NAME_IN}")
@@ -84,7 +85,6 @@ MACRO(MAP_CREATE_MODULE_TESTS MODULE_NAME_IN)
 	  MAP_USE_MODULE("${MODULE_DEPENDS}")
 
 	  # ok, now create the module itself
-	  INCLUDE_DIRECTORIES(. ${ALL_INCLUDE_DIRECTORIES})
 	  INCLUDE(files.cmake)
 
       SET(MODULE_TESTS ${CXX_TEST_PATH}/${MODULE_NAME})
@@ -93,11 +93,6 @@ MACRO(MAP_CREATE_MODULE_TESTS MODULE_NAME_IN)
 
 	  ORGANIZE_SOURCES(SOURCE ${TEST_CPP_FILES})
 
-       IF(ALL_LIBRARY_DIRS)
-         # LINK_DIRECTORIES applies only to targets which are added after the call to LINK_DIRECTORIES
-		 LINK_DIRECTORIES(${ALL_LIBRARY_DIRS})
-       ENDIF(ALL_LIBRARY_DIRS)
-
        # Check if we have test source code
        LIST(LENGTH TEST_CPP_FILES TEST_CPP_COUNT)
        IF(NOT ${TEST_CPP_COUNT})
@@ -105,9 +100,13 @@ MACRO(MAP_CREATE_MODULE_TESTS MODULE_NAME_IN)
        ENDIF(NOT ${TEST_CPP_COUNT})
        ADD_EXECUTABLE(${MODULE_NAME} ${TEST_CPP_FILES})
 
-       IF(ALL_LIBRARIES)
-         TARGET_LINK_LIBRARIES(${MODULE_NAME} ${ALL_LIBRARIES})
-       ENDIF(ALL_LIBRARIES)
+       target_include_directories(${MODULE_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${MatchPoint_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES})
+       if(ALL_LIBRARY_DIRS)
+         target_link_directories(${MODULE_NAME} PRIVATE ${ALL_LIBRARY_DIRS})
+       endif()
+       if(ALL_LIBRARIES)
+         target_link_libraries(${MODULE_NAME} PRIVATE ${ALL_LIBRARIES})
+       endif()
 
 	   # Necessary so the build waits for Litmus to build
        ADD_DEPENDENCIES(${MODULE_NAME} Litmus)
@@ -125,9 +124,13 @@ MACRO(MAP_CREATE_MODULE_TESTS MODULE_NAME_IN)
 
          ADD_EXECUTABLE(${MODULE_NAME}Header ${HEADER_TEST_CPP})
 
-         IF(ALL_LIBRARIES)
-           TARGET_LINK_LIBRARIES(${MODULE_NAME}Header ${ALL_LIBRARIES})
-         ENDIF(ALL_LIBRARIES)
+         target_include_directories(${MODULE_NAME}Header PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${MatchPoint_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES})
+         if(ALL_LIBRARY_DIRS)
+           target_link_directories(${MODULE_NAME}Header PRIVATE ${ALL_LIBRARY_DIRS})
+         endif()
+         if(ALL_LIBRARIES)
+           target_link_libraries(${MODULE_NAME}Header PRIVATE ${ALL_LIBRARIES})
+         endif()
 
          ADD_TEST(${MODULE_NAME}Header ${CXX_TEST_PATH}/${MODULE_NAME}Header)
 

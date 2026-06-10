@@ -24,9 +24,10 @@
 #
 ##################################################################
 MACRO(MAP_CREATE_MODULE MODULE_NAME_IN)
-  MACRO_PARSE_ARGUMENTS(MODULE
-                        "INCLUDE_DIRS;INTERNAL_INCLUDE_DIRS;DEPENDS;PROVIDES;PACKAGE_DEPENDS;EXPORT_DEFINE"
+  cmake_parse_arguments(MODULE
                         "FORCE_STATIC;HEADERS_ONLY"
+                        ""
+                        "INCLUDE_DIRS;INTERNAL_INCLUDE_DIRS;DEPENDS;PROVIDES;PACKAGE_DEPENDS;EXPORT_DEFINE"
                         ${ARGN})
                         
   SET(MODULE_NAME ${MODULE_NAME_IN})
@@ -76,8 +77,7 @@ MACRO(MAP_CREATE_MODULE MODULE_NAME_IN)
 	  SET(ALL_LIBRARY_DIRS "")
 	  MAP_USE_MODULE("${MODULE_DEPENDS}") 
 	
-	  # ok, now create the module itself 
-	  INCLUDE_DIRECTORIES(. ${ALL_INCLUDE_DIRECTORIES})
+	  # ok, now create the module itself
 	  INCLUDE(files.cmake)
 	
 	  ORGANIZE_SOURCES(SOURCE ${CPP_FILES}
@@ -91,11 +91,6 @@ MACRO(MAP_CREATE_MODULE MODULE_NAME_IN)
 	  ENDIF(MODULE_FORCE_STATIC)
     
 	  IF(NOT MODULE_HEADERS_ONLY)
-        IF(ALL_LIBRARY_DIRS)
-		  # LINK_DIRECTORIES applies only to targets which are added after the call to LINK_DIRECTORIES
-		  LINK_DIRECTORIES(${ALL_LIBRARY_DIRS})
-        ENDIF(ALL_LIBRARY_DIRS)
-     
 	    SET(coverage_sources ${CPP_FILES} ${H_FILES} ${TPP_FILES})
 	    SET_PROPERTY(SOURCE ${coverage_sources} APPEND PROPERTY LABELS ${MODULE_SUBPROJECTS})
 
@@ -103,10 +98,25 @@ MACRO(MAP_CREATE_MODULE MODULE_NAME_IN)
 	    
         SET_TARGET_PROPERTIES(${MODULE_PROVIDES} PROPERTIES ${MAP_LIBRARY_PROPERTIES} OUTPUT_NAME ${MODULE_PROVIDES}-${MatchPoint_VERSION_MAJOR}.${MatchPoint_VERSION_MINOR} OUTPUT_NAME_DEBUG ${MODULE_PROVIDES}-D-${MatchPoint_VERSION_MAJOR}.${MatchPoint_VERSION_MINOR})		
         EXPORT(TARGETS ${MODULE_PROVIDES} APPEND FILE ${MatchPoint_TARGETS_FILE})
-  
-        IF(ALL_LIBRARIES)
-          TARGET_LINK_LIBRARIES(${MODULE_PROVIDES} ${ALL_LIBRARIES})
-        ENDIF(ALL_LIBRARIES)  
+
+        # The BUILD_INTERFACE wrapper keeps the usage requirements inside the
+        # MatchPoint build tree: in-tree dependents inherit include dirs and
+        # third-party link libraries transitively, while the exported target
+        # files (build tree and install tree) stay free of them. External
+        # consumers like MITK rely on the variable-based interface
+        # (MatchPoint_INCLUDE_DIRS etc.) and link the third-party libraries
+        # themselves.
+        set(_module_include_dirs ${CMAKE_CURRENT_SOURCE_DIR} ${MatchPoint_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES})
+        list(REMOVE_DUPLICATES _module_include_dirs)
+        target_include_directories(${MODULE_PROVIDES} PUBLIC "$<BUILD_INTERFACE:${_module_include_dirs}>")
+
+        if(ALL_LIBRARY_DIRS)
+          target_link_directories(${MODULE_PROVIDES} PRIVATE ${ALL_LIBRARY_DIRS})
+        endif()
+
+        if(ALL_LIBRARIES)
+          target_link_libraries(${MODULE_PROVIDES} PUBLIC "$<BUILD_INTERFACE:${ALL_LIBRARIES}>")
+        endif()
 
         IF(NOT MatchPoint_INSTALL_NO_DEVELOPMENT)	  
           INSTALL(TARGETS ${MODULE_PROVIDES} EXPORT MatchPointExport
