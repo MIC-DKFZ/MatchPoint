@@ -70,9 +70,9 @@ namespace map
 
 		};
 
-		//forward decleration
-		template<unsigned int VMovingDimensions, unsigned int VTargetDimensions>
-		class RegistrationManipulator;
+		//forward decleration (the manipulator is templated on the registration
+		//type, see mapRegistrationManipulator.h)
+		template <typename TRegistration> class RegistrationManipulator;
 
 		/*! @class RegistrationManipulationInterface
 		@brief Interface for the manipulation of a registration
@@ -83,7 +83,7 @@ namespace map
 		class RegistrationManipulationInterface: public RegistrationBaseManipulationInterface
 		{
 		public:
-			friend class RegistrationManipulator<VMovingDimensions, VTargetDimensions>;
+			template <typename TRegistration> friend class RegistrationManipulator;
 
 			typedef RegistrationManipulationInterface Self;
 
