@@ -3,7 +3,7 @@ MESSAGE (STATUS "processing MatchPoint testing code")
 # Testing branch
 PROJECT(MatchPointTesting)
 
-MAKE_DIRECTORY(${MatchPointTesting_BINARY_DIR}/Temporary)
+file(MAKE_DIRECTORY ${MatchPointTesting_BINARY_DIR}/Temporary)
 #ADD_SUBDIRECTORY (Applications)
 
 
@@ -21,6 +21,16 @@ set(LITMUS_SOURCE_DIR "${MatchPoint_BINARY_DIR}/external/Litmus-src" )
 set(LITMUS_BUILD_DIR "${MatchPoint_BINARY_DIR}/external/Litmus-build" )
 set(LITMUS_CMAKE_DIR "${MatchPoint_BINARY_DIR}/external/Litmus-cmake" )
 
+
+# The bundled Litmus declares cmake_minimum_required(VERSION 2.6.2);
+# CMake >= 4.0 refuses anything older than 3.5 unless the minimum policy
+# version is raised externally. CMAKE_POLICY_VERSION_MINIMUM is new in
+# CMake 4.0, so only pass it when the configuring CMake understands it
+# (otherwise CMake 3.x warns about the unused cache variable).
+set(LITMUS_POLICY_ARGS "")
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 4.0)
+	set(LITMUS_POLICY_ARGS "-DCMAKE_POLICY_VERSION_MINIMUM:STRING=3.5")
+endif()
 
 set(ENABLE_ITK "-DLIT_ENABLE_ITK_SUPPORT:BOOL=ON")
 set(ITK_DIRECTORY "-DITK_DIR:PATH=${ITK_DIR}")
@@ -40,6 +50,7 @@ ExternalProject_Add(
 	INSTALL_COMMAND ""
 	UPDATE_COMMAND "" # Don't update SVN on every build
 	CMAKE_ARGS
+		${LITMUS_POLICY_ARGS}
 		-DBUILD_TESTING:BOOL=OFF
 		-DCMAKE_CXX_STANDARD=${MAP_CXX_STANDARD}
 		-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
