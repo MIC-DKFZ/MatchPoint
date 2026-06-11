@@ -99,23 +99,26 @@ MACRO(MAP_CREATE_MODULE MODULE_NAME_IN)
         SET_TARGET_PROPERTIES(${MODULE_PROVIDES} PROPERTIES ${MAP_LIBRARY_PROPERTIES} OUTPUT_NAME ${MODULE_PROVIDES}-${MatchPoint_VERSION_MAJOR}.${MatchPoint_VERSION_MINOR} OUTPUT_NAME_DEBUG ${MODULE_PROVIDES}-D-${MatchPoint_VERSION_MAJOR}.${MatchPoint_VERSION_MINOR})		
         EXPORT(TARGETS ${MODULE_PROVIDES} APPEND FILE ${MatchPoint_TARGETS_FILE})
 
-        # The BUILD_INTERFACE wrapper keeps the usage requirements inside the
-        # MatchPoint build tree: in-tree dependents inherit include dirs and
-        # third-party link libraries transitively, while the exported target
-        # files (build tree and install tree) stay free of them. External
-        # consumers like MITK rely on the variable-based interface
-        # (MatchPoint_INCLUDE_DIRS etc.) and link the third-party libraries
-        # themselves.
+        # Include directories are machine-specific absolute paths (module source
+        # dirs, ITK include dirs), so they must stay out of the install-tree
+        # export; installed consumers get the installed header dir instead.
         set(_module_include_dirs ${CMAKE_CURRENT_SOURCE_DIR} ${MatchPoint_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES})
         list(REMOVE_DUPLICATES _module_include_dirs)
-        target_include_directories(${MODULE_PROVIDES} PUBLIC "$<BUILD_INTERFACE:${_module_include_dirs}>")
+        target_include_directories(${MODULE_PROVIDES} PUBLIC
+          "$<BUILD_INTERFACE:${_module_include_dirs}>"
+          "$<INSTALL_INTERFACE:${MatchPoint_INSTALL_INCLUDE_DIR}>")
 
         if(ALL_LIBRARY_DIRS)
           target_link_directories(${MODULE_PROVIDES} PRIVATE ${ALL_LIBRARY_DIRS})
         endif()
 
+        # The link libraries must stay in the exported link interface, third-party
+        # entries included: ITK libraries are listed by their imported-target names,
+        # which consumers resolve against their own find_package(ITK). MITK's MDRA
+        # targets rely on this transitivity for ITK include dirs and libraries --
+        # they link the bare MAP* names and add nothing of ITK themselves.
         if(ALL_LIBRARIES)
-          target_link_libraries(${MODULE_PROVIDES} PUBLIC "$<BUILD_INTERFACE:${ALL_LIBRARIES}>")
+          target_link_libraries(${MODULE_PROVIDES} PUBLIC ${ALL_LIBRARIES})
         endif()
 
         IF(NOT MatchPoint_INSTALL_NO_DEVELOPMENT)	  
