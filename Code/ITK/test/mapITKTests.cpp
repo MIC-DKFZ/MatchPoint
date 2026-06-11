@@ -28,6 +28,8 @@
 
 #include "litMultiTestsMain.h"
 
+#include <iostream>
+
 #include "itkMacro.h"
 
 namespace map

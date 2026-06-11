@@ -1,5 +1,8 @@
 MAP_CREATE_MODULE(MAPAlgorithmsITK DEPENDS MAPAlgorithms MAPITK MAPUtilities)
-MAP_CREATE_MODULE_TESTS(MAPAlgorithmsITK PACKAGE_DEPENDS Litmus HEADER_TESTS)
+# The header test compiles every header of this module; some boxed algorithm
+# templates include deployment headers (mapDeploymentDLLHelper.h), so the test
+# module needs MAPDeployment explicitly.
+MAP_CREATE_MODULE_TESTS(MAPAlgorithmsITK DEPENDS MAPDeployment PACKAGE_DEPENDS Litmus HEADER_TESTS)
 
 
 MAP_DEFINE_DEPLOYED_ALGORITHM(ITKEuler3DMattesMI PROFILE "deployed/ITKEuler3DMattesMI.profile" FILES "deployed/mapITKEuler3DMattesMI.cpp" MODULE_DEPENDS MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment)

@@ -23,12 +23,12 @@
 
 
 
-#ifndef __MAP_ITK_MATTES_MUTUAL_INFORMATION_IMAGE_TO_IMAGE_METRIC_CONTROL_H
-#define __MAP_ITK_MATTES_MUTUAL_INFORMATION_IMAGE_TO_IMAGE_METRIC_CONTROL_H
+#ifndef __MAP_ITK_MEAN_RECIPROCAL_SQUARE_DIFFERENCE_IMAGE_TO_IMAGE_METRIC_CONTROL_H
+#define __MAP_ITK_MEAN_RECIPROCAL_SQUARE_DIFFERENCE_IMAGE_TO_IMAGE_METRIC_CONTROL_H
 
 #include "mapITKMetricControl.h"
 #include "mapITKImageToImageMetricControlBase.h"
-#include "itkMattesMutualInformationImageToImageMetric.h"
+#include "itkMeanReciprocalSquareDifferenceImageToImageMetric.h"
 
 namespace map
 {
@@ -38,18 +38,18 @@ namespace map
 		{
 
 			/*!
-			This class is the template specialization for the itk::MattesMutualInformationImageToImageMetric.
+			This class is the template specialization for the itk::MeanReciprocalSquareDifferenceImageToImageMetric.
 			@ingroup ITK
 			@ingroup MetricControl
 			*/
 			template<class TMovingImage, class TTargetImage>
-			class ITKMetricControl< ::itk::MattesMutualInformationImageToImageMetric<TTargetImage, TMovingImage> >
-				: public ITKImageToImageMetricControlBase< ::itk::MattesMutualInformationImageToImageMetric<TTargetImage, TMovingImage> >
+			class ITKMetricControl< ::itk::MeanReciprocalSquareDifferenceImageToImageMetric<TTargetImage, TMovingImage> >
+				: public ITKImageToImageMetricControlBase< ::itk::MeanReciprocalSquareDifferenceImageToImageMetric<TTargetImage, TMovingImage> >
 			{
 			public:
-				typedef ITKMetricControl< ::itk::MattesMutualInformationImageToImageMetric<TTargetImage, TMovingImage> >
+				typedef ITKMetricControl< ::itk::MeanReciprocalSquareDifferenceImageToImageMetric<TTargetImage, TMovingImage> >
 				Self;
-				typedef ITKImageToImageMetricControlBase< ::itk::MattesMutualInformationImageToImageMetric<TTargetImage, TMovingImage> >
+				typedef ITKImageToImageMetricControlBase< ::itk::MeanReciprocalSquareDifferenceImageToImageMetric<TTargetImage, TMovingImage> >
 				Superclass;
 				typedef ::itk::SmartPointer<Self>         Pointer;
 				typedef ::itk::SmartPointer<const Self>   ConstPointer;
@@ -59,12 +59,12 @@ namespace map
 
 				virtual bool getMinimizeToOptimize() const
 				{
-					return true;
+					return false;
 				};
 
 				virtual bool getMaximizeToOptimize() const
 				{
-					return false;
+					return true;
 				};
 
 			protected:

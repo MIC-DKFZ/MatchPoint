@@ -3,10 +3,7 @@ MESSAGE (STATUS "processing MatchPoint deployment examples")
 SET(DEPENDS "MAPCore" "MAPIO" "MAPDeployment" "MAPAlgorithmsITK") 
 SET(DEPENDS_BEFORE "not initialized")
 SET(PACKAGE_DEPENDS "Litmus")
-MAP_USE_MODULE(${DEPENDS}) 
-	
-INCLUDE_DIRECTORIES(. ${ALL_INCLUDE_DIRECTORIES})
-LINK_DIRECTORIES(${ALL_LIBRARY_DIRS})
+MAP_USE_MODULE(${DEPENDS})
 
 ADD_EXECUTABLE(demoHelloWorldDeployment1 mapDemoHelloWorldDeployment1.cpp ../Algorithms/mapDemoHelloWorldRegistration1Helper.h ../Algorithms/mapDemoHelloWorldRegistration1Helper.cpp ../Algorithms/mapDemoRegistrationAlgorithmTemplate.h)
 
@@ -24,6 +21,11 @@ IF(MAP_LIBRARY_PROPERTIES)
   SET_TARGET_PROPERTIES(demoRegistrationAlgorithm2D PROPERTIES ${MAP_LIBRARY_PROPERTIES})
   SET_TARGET_PROPERTIES(demoPropertiedAlgorithm2D PROPERTIES ${MAP_LIBRARY_PROPERTIES})
 ENDIF(MAP_LIBRARY_PROPERTIES)
+
+foreach(_demo IN ITEMS demoHelloWorldDeployment1 demoHelloWorldDeployment2 demoDeploymentDLLDirectoryBrowser demoDeploymentPropertiedAlgorithm demoRegistrationAlgorithm2D demoPropertiedAlgorithm2D)
+	target_include_directories(${_demo} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${MatchPoint_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES})
+	target_link_directories(${_demo} PRIVATE ${ALL_LIBRARY_DIRS})
+endforeach()
 
 TARGET_LINK_LIBRARIES(demoHelloWorldDeployment1 MAPCore MAPAlgorithms MAPAlgorithmsITK MAPDeployment LitmusCommon LitmusITK ${ITK_LIBRARIES})
 TARGET_LINK_LIBRARIES(demoHelloWorldDeployment2 MAPCore MAPAlgorithms MAPDeployment LitmusCommon)

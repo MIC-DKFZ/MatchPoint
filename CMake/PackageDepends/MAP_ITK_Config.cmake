@@ -24,7 +24,7 @@ ENDIF(NOT WIN32 AND NOT ITK_BUILD_SHARED)
 LIST(APPEND ALL_INCLUDE_DIRECTORIES ${ITK_INCLUDE_DIRS})
 LIST(APPEND ALL_LIBRARIES ${ITK_LIBRARIES})
 
-LINK_DIRECTORIES(${ITK_LIBRARY_DIRS}) 
+LIST(APPEND ALL_LIBRARY_DIRS ${ITK_LIBRARY_DIRS})
 
 OPTION(MAP_USE_SYSTEM_GDCM "Activate checker to choose a GDCM installation that was linked with ITK. (This is needed e.g. when building against an ITK that is distributed with MITK. MITK uses its own GDCM and not the one distributed with ITK.)" OFF)     
 

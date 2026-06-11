@@ -4,7 +4,11 @@ MAP_CREATE_MODULE_TESTS(MAPAlgorithmsPlastimatch DEPENDS MAPAlgorithmsITK PACKAG
 IF (BUILD_TESTING)
 	ADD_EXECUTABLE(mapDummyPlastimatch "test/mapDummyPlastimatch.cpp")
 	SET_TARGET_PROPERTIES(mapDummyPlastimatch PROPERTIES OUTPUT_NAME "plastimatch")
-	TARGET_LINK_LIBRARIES(mapDummyPlastimatch MAPCore MAPAlgorithmsPlastimatch LitmusCommon)
+	# Reuses the dependency state (Litmus, MAPAlgorithmsITK, ...) accumulated
+	# by the preceding MAP_CREATE_MODULE_TESTS call.
+	TARGET_INCLUDE_DIRECTORIES(mapDummyPlastimatch PRIVATE ${ALL_INCLUDE_DIRECTORIES})
+	TARGET_LINK_DIRECTORIES(mapDummyPlastimatch PRIVATE ${ALL_LIBRARY_DIRS})
+	TARGET_LINK_LIBRARIES(mapDummyPlastimatch PRIVATE MAPCore MAPAlgorithmsPlastimatch LitmusCommon)
 ENDIF (BUILD_TESTING)
 
 MAP_DEFINE_DEPLOYED_ALGORITHM(PlmParameterFileCLI2DRegistration PROFILE "deployed/PlmParameterFileCLI2DRegistration.profile" FILES "deployed/mapPlmParameterFileCLI2DRegistration.cpp" MODULE_DEPENDS MAPAlgorithmsPlastimatch MAPDeployment)

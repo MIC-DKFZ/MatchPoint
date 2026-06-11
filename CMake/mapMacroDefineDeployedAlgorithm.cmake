@@ -16,9 +16,10 @@
 MACRO(MAP_DEFINE_DEPLOYED_ALGORITHM algName)
   IF(MAP_DEPLOY_INCLUDED_ALGORITHMS)
     MESSAGE (STATUS "generating deployed algorithm: " ${algName})
-    MACRO_PARSE_ARGUMENTS(ALG
-                        "FILES;INCLUDE_DIRS;DEPENDS;PACKAGE_DEPENDS;MODULE_DEPENDS;PROFILE;INSTALL_DIR;TARGETS_FILE"
+    cmake_parse_arguments(ALG
                         ""
+                        ""
+                        "FILES;INCLUDE_DIRS;DEPENDS;PACKAGE_DEPENDS;MODULE_DEPENDS;PROFILE;INSTALL_DIR;TARGETS_FILE"
                         ${ARGN})
   
     SET(targetName "dep_${algName}")
@@ -73,13 +74,13 @@ MACRO(MAP_DEFINE_DEPLOYED_ALGORITHM algName)
 		
         MESSAGE(STATUS "... algorithm UID: ${ALGORITHM_PROFILE_UID}")
 
-		INCLUDE_DIRECTORIES(. ${CURRENT_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES} ${ALG_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR})
-	
-		LINK_DIRECTORIES(${ALL_LIBRARY_DIRS})
-         
 		ADD_LIBRARY(${targetName} SHARED ${ALG_FILES} ${ALGORITHM_PROFILE_FILE})
 
-		TARGET_LINK_LIBRARIES(${targetName} ${ALL_LIBRARIES} ${ALG_DEPENDS})
+		target_include_directories(${targetName} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${MatchPoint_BINARY_DIR} ${ALL_INCLUDE_DIRECTORIES} ${ALG_INCLUDE_DIRS})
+		if(ALL_LIBRARY_DIRS)
+		  target_link_directories(${targetName} PRIVATE ${ALL_LIBRARY_DIRS})
+		endif()
+		target_link_libraries(${targetName} PRIVATE ${ALL_LIBRARIES} ${ALG_DEPENDS})
 
 		SET_TARGET_PROPERTIES(${targetName} PROPERTIES
 			OUTPUT_NAME "mdra-${MatchPoint_VERSION_MAJOR}-${MatchPoint_VERSION_MINOR}_${algName}"
