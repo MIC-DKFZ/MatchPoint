@@ -36,6 +36,8 @@
 #include "mapExpandingFieldKernelWriter.h"
 #include "mapLazyFieldFileKernelWriter.h"
 
+#include <fstream>
+
 namespace map
 {
 	namespace testing
@@ -64,9 +66,12 @@ namespace map
 			std::string testRegFile1 = testPath + "/savedReg1.mapr";
 			std::string testRegFile2 = testPath + "/savedReg2.mapr";
 			std::string testRegFile3 = testPath + "/savedReg3.mapr";
+			std::string testRegFile4 = testPath + "/savedReg4.mapr";
+			std::string testRegFile5 = testPath + "/savedReg5.mapr";
 			std::string refRegFile1 = refPath + "/registrationFileWriterReader_Ref1.mapr";
 			std::string refRegFile2 = refPath + "/registrationFileWriterReader_Ref2.mapr";
 			std::string refRegFile3 = refPath + "/registrationFileWriterReader_Ref3.mapr";
+			std::string refRegFileAdditionalTags = refPath + "/registrationFileWriter_AdditionalTags_Ref.mapr";
 
 			// create the generator
 			typedef io::RegistrationFileWriter<2, 2> WriterType;
@@ -172,6 +177,20 @@ namespace map
 			CHECK_THROW_EXPLICIT(spWriter->write(spInvalidInverseKernelRegistration, ""),
 								 core::MissingProviderException);
 
+			//additional tags are written next to the registration's own ones, without changing the registration
+			::map::core::RegistrationBase::TagMapType additionalTags;
+			additionalTags.insert(std::make_pair("MITK.Relations.1.ruleID", "MovingData"));
+			additionalTags.insert(std::make_pair("Alpha", "first"));
+			const ::map::core::RegistrationBase::TagMapType tagsBeforeWrite = spValidRegistration3->getTags();
+			CHECK_NO_THROW(spWriter->write(spValidRegistration3, testRegFile4, additionalTags));
+			CHECK(tagsBeforeWrite == spValidRegistration3->getTags());
+
+			//an additional tag must not replace a tag of the registration; nothing is written then
+			::map::core::RegistrationBase::TagMapType collidingTags;
+			collidingTags.insert(std::make_pair("Purpose", "Other"));
+			CHECK_THROW(spWriter->write(spValidRegistration3, testRegFile5, collidingTags));
+			CHECK(!std::ifstream(testRegFile5).good());
+
 			lit::TextFileTester tester;
 			tester.setExpectedFile(refRegFile1);
 			tester.setActualFile(testRegFile1);
@@ -181,6 +200,9 @@ namespace map
 			CHECK_TESTER(tester);
 			tester.setExpectedFile(refRegFile3);
 			tester.setActualFile(testRegFile3);
+			CHECK_TESTER(tester);
+			tester.setExpectedFile(refRegFileAdditionalTags);
+			tester.setActualFile(testRegFile4);
 			CHECK_TESTER(tester);
 
 			RETURN_AND_REPORT_TEST_SUCCESS;

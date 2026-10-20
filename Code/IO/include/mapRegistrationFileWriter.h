@@ -94,6 +94,22 @@ namespace map
 			 */
 			bool write(const RegistrationType* registration, const core::String& path) const;
 
+			/*! Stores the passed registration in the specified path, with additional tags.
+			 * The additional tags are written next to the registration's own tags, e.g. to store
+			 * information the host application keeps outside of the registration. The registration
+			 * itself is not changed.
+			 * @eguarantee strong
+			 * @param [in] registration Pointer to the registration.
+			 * @param [in] path Defines the file path were the registration should be stored. The write process
+			 * may generate more then one file in the specified directory depending on the kernels to store.
+			 * @param [in] additionalTags Tags written next to the registration's own tags.
+			 * @pre registration must point to a valid instance.
+			 * @pre No name of additionalTags is a tag name of the registration; otherwise an exception
+			 * is raised before anything is written.
+			 */
+			bool write(const RegistrationType* registration, const core::String& path,
+			           const core::RegistrationBase::TagMapType& additionalTags) const;
+
 			bool getExpandLazyKernels() const;
 			void setExpandLazyKernels(bool expandLazyKernels);
 

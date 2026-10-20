@@ -41,9 +41,29 @@ namespace map
 		RegistrationFileWriter<VMovingDimensions, VTargetDimensions>::
 		write(const RegistrationType* registration, const core::String& path) const
 		{
+			return write(registration, path, ::map::core::RegistrationBase::TagMapType());
+		}
+
+		template <unsigned int VMovingDimensions, unsigned int VTargetDimensions>
+		bool
+		RegistrationFileWriter<VMovingDimensions, VTargetDimensions>::
+		write(const RegistrationType* registration, const core::String& path,
+		      const core::RegistrationBase::TagMapType& additionalTags) const
+		{
 			if (!registration)
 			{
 				mapDefaultExceptionMacro( << "Cannot serialize registration. Passed registration object is NULL.");
+			}
+
+			::map::core::RegistrationBase::TagMapType tagMap = registration->getTags();
+
+			for (const auto& additionalTag : additionalTags)
+			{
+				if (!tagMap.insert(additionalTag).second)
+				{
+					mapDefaultExceptionMacro( << "Cannot serialize registration. Additional tag is a tag of the registration. Tag: "
+						<< additionalTag.first);
+				}
 			}
 
 			::map::core::String fileName = core::FileDispatch::getName(path);
@@ -84,8 +104,6 @@ namespace map
 			spRegElement->setTag(tags::Registration);
 
 			//add tags
-			::map::core::RegistrationBase::TagMapType tagMap = registration->getTags();
-
 			for (auto & pos : tagMap)
 			{
 				structuredData::Element::Pointer spTagElement = structuredData::Element::New();
