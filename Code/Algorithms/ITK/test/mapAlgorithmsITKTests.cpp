@@ -58,6 +58,7 @@ namespace map
       LIT_REGISTER_TEST(mapITKLandmarkKernelRegistrationAlgorithmTest);
       LIT_REGISTER_TEST(mapITKEuler3DMattesMIRegistrationAlgorithmTemplateTest);
       LIT_REGISTER_TEST(mapITKTransMattesMIMultiResRegistrationAlgorithmTest);
+      LIT_REGISTER_TEST(mapITKMultiResPDEDeformableRegistrationAlgorithmTest);
     }
 
   } //namespace testing

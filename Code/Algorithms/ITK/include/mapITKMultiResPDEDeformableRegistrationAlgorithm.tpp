@@ -58,6 +58,7 @@ namespace map
 				this->_spInternalMovingImage = NULL;
 				this->_spInternalTargetImage = NULL;
 				this->_multiResFilter = InternalMultiResRegFilterType::New();
+				this->_currentLevelCount = 0;
 			};
 
 			template < class TImageType, class TIdentificationPolicy, class TInternalRegistrationFilter, class TDisplacementField, class TPyramidesPolicy>

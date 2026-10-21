@@ -229,6 +229,7 @@ test/mapITKRigid3DClosedFormRegistrationAlgorithmTemplateTest.cpp
 test/mapITKLandmarkKernelRegistrationAlgorithmTest.cpp
 test/mapITKEuler3DMattesMIRegistrationAlgorithmTemplateTest.cpp
 test/mapITKTransMattesMIMultiResRegistrationAlgorithmTest.cpp
+test/mapITKMultiResPDEDeformableRegistrationAlgorithmTest.cpp
 )
 
 SET(_MAP_ITK_REVIEW_ACTIVE "OFF")
