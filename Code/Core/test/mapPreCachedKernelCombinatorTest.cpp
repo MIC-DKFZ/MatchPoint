@@ -31,6 +31,9 @@
 #include "mapITKTranslationTransform.h"
 #include "mapITKEuler2DTransform.h"
 
+#include "itkAffineTransform.h"
+#include "itkEuler3DTransform.h"
+
 #include "litCheckMacros.h"
 
 namespace map
@@ -204,6 +207,54 @@ namespace map
             typedef ::itk::CompositeTransform<map::core::continuous::ScalarType, 2> CompositeTransformType;
             const CompositeTransformType* compositeTransform = dynamic_cast<const CompositeTransformType*>(castedResultKernel->getTransformModel());
             CHECK(compositeTransform != NULL);
+
+            // test that combining an affine kernel with a rigid one keeps the scaling: some rigid
+            // transforms, like itk::Euler3DTransform, recompute their matrix from their angles
+            typedef core::PreCachedRegistrationKernel<3, 3> Kernel3DType;
+            typedef core::PreCachedKernelCombinator<3, 3, 3> Combinator3DType;
+
+            typedef ::itk::AffineTransform<map::core::continuous::ScalarType, 3> AffineTransformType;
+            AffineTransformType::Pointer affineTransform = AffineTransformType::New();
+            affineTransform->Scale(2.0);
+            AffineTransformType::OutputVectorType affineTranslation;
+            affineTranslation[0] = 1;
+            affineTranslation[1] = -2;
+            affineTranslation[2] = 3;
+            affineTransform->SetTranslation(affineTranslation);
+
+            typedef ::itk::Euler3DTransform<map::core::continuous::ScalarType> EulerTransformType;
+            EulerTransformType::Pointer eulerTransform = EulerTransformType::New();
+            EulerTransformType::InputPointType eulerCenter;
+            eulerCenter[0] = 10;
+            eulerCenter[1] = 20;
+            eulerCenter[2] = 30;
+            eulerTransform->SetCenter(eulerCenter);
+            eulerTransform->SetRotation(0.1, 0.2, 0.3);
+
+            Kernel3DType::Pointer spAffineKernel = Kernel3DType::New();
+            spAffineKernel->setTransformModel(affineTransform);
+            Kernel3DType::Pointer spEulerKernel = Kernel3DType::New();
+            spEulerKernel->setTransformModel(eulerTransform);
+
+            Combinator3DType::Pointer spCombinator3D = Combinator3DType::New();
+            Combinator3DType::RequestType request3D(spAffineKernel, spEulerKernel);
+            Combinator3DType::CombinedKernelBasePointer resultKernel3D;
+            CHECK_NO_THROW(resultKernel3D = spCombinator3D->combineKernels(request3D, NULL));
+
+            map::core::continuous::Elements<3>::PointType inPoint3D;
+            inPoint3D[0] = 7;
+            inPoint3D[1] = -4;
+            inPoint3D[2] = 12;
+
+            map::core::continuous::Elements<3>::PointType combinedResult3D;
+            CHECK(resultKernel3D->mapPoint(inPoint3D, combinedResult3D));
+
+            const map::core::continuous::Elements<3>::PointType refPoint3D =
+                eulerTransform->TransformPoint(affineTransform->TransformPoint(inPoint3D));
+
+            CHECK_CLOSE(refPoint3D[0], combinedResult3D[0], 0.0000001);
+            CHECK_CLOSE(refPoint3D[1], combinedResult3D[1], 0.0000001);
+            CHECK_CLOSE(refPoint3D[2], combinedResult3D[2], 0.0000001);
 
             RETURN_AND_REPORT_TEST_SUCCESS;
         }

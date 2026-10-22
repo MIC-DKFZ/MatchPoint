@@ -24,6 +24,7 @@
 #ifndef __MAP_PRE_CACHED_KERNEL_COMBINATOR_TPP
 #define __MAP_PRE_CACHED_KERNEL_COMBINATOR_TPP
 
+#include "itkAffineTransform.h"
 #include "itkMatrixOffsetTransformBase.h"
 #include "itkCompositeTransform.h"
 #include "mapPreCachedKernelCombinator.h"
@@ -149,11 +150,12 @@ namespace map
 				}
 
 				/**@Remark: The current implementation only implements the combination of kernels with same input and output dimension (square matrices)
-				Because of the limited api of the used MatrixOffsetTransformBase and the usage of the cloned second kernel*/
+				Because of the limited api of the used MatrixOffsetTransformBase*/
 				typedef itk::MatrixOffsetTransformBase < typename Kernel1Type::TransformType::ScalarType, VDimensions, VDimensions >
 				Transform1Type;
 				typedef itk::MatrixOffsetTransformBase < typename Kernel2Type::TransformType::ScalarType, VDimensions, VDimensions >
 				Transform2Type;
+				typedef itk::AffineTransform < typename Kernel2Type::TransformType::ScalarType, VDimensions > CombinedTransformType;
 				typedef ::map::core::PreCachedRegistrationKernel<VDimensions, VDimensions> NewKernelType;
 
 				const Transform1Type* transform1 = dynamic_cast<const Transform1Type*>
@@ -163,16 +165,18 @@ namespace map
 
 				if (transform1 && transform2)
 				{
-					typename Transform2Type::Pointer newModel = dynamic_cast<Transform2Type*>(transform2->Clone().GetPointer());
+					//Composed in an affine transform instead of a clone of the second transform: a transform type with fewer
+					//degrees of freedom cannot hold every product, e.g. itk::Euler3DTransform recomputes its matrix from its
+					//angles and so would drop the scaling and shearing of the first transform.
+					typename CombinedTransformType::Pointer newModel = CombinedTransformType::New();
+					newModel->SetCenter(transform2->GetCenter());
+					newModel->SetMatrix(transform2->GetMatrix());
+					newModel->SetOffset(transform2->GetOffset());
+					newModel->Compose(transform1, true);
 
-					if (newModel)
-					{
-						newModel->Compose(transform1, true);
-
-						typename NewKernelType::Pointer newKernel = NewKernelType::New();
-						newKernel->setTransformModel(newModel);
-						result = dynamic_cast<CombinedKernelBaseType*>(newKernel.GetPointer());
-					}
+					typename NewKernelType::Pointer newKernel = NewKernelType::New();
+					newKernel->setTransformModel(newModel);
+					result = dynamic_cast<CombinedKernelBaseType*>(newKernel.GetPointer());
 				}
 
 				return result;
