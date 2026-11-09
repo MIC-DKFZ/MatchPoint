@@ -132,6 +132,9 @@ namespace map
             /*!Mutex to make the generation of the fields thread safe and to avoid paralel
             * generation of fields because of a racing condition of two checkAndPrepare calls*/
             mutable MutexType _generateMutex;
+            /*!Mutex for readers of _spTransform that do not hold _checkMutex. It is held only briefly, never
+            * while the transform is generated, so that transformExists() does not wait for a generation.*/
+            mutable MutexType _transformMutex;
 
             //No copy constructor allowed
             LazyRegistrationKernel(const Self& source);

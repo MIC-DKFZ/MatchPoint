@@ -61,6 +61,7 @@ namespace map
             LazyRegistrationKernel<VInputDimensions, VOutputDimensions>::
             transformExists() const
         {
+            std::lock_guard<std::mutex> transformHolder(_transformMutex);
             return _spTransform.IsNotNull();
         };
 
@@ -106,7 +107,13 @@ namespace map
                 std::lock_guard<std::mutex> mutexHolder(_generateMutex);
 
                 assert(_spGenerationFunctor.IsNotNull());
-                _spTransform = _spGenerationFunctor->generateTransform();
+                TransformPointer spTransform = _spGenerationFunctor->generateTransform();
+
+                {
+                    std::lock_guard<std::mutex> transformHolder(_transformMutex);
+                    _spTransform = spTransform;
+                }
+
                 mapLogInfoObjMacro(<< "Lazy field kernel has generated the field");
             }
 
@@ -159,7 +166,12 @@ namespace map
           InternalClone() const
         {
           Pointer clone = Self::New();
-          clone->_spTransform = this->_spTransform;
+
+          {
+            std::lock_guard<std::mutex> transformHolder(_transformMutex);
+            clone->_spTransform = this->_spTransform;
+          }
+
           clone->_spGenerationFunctor = this->_spGenerationFunctor;
 
           return clone.GetPointer();
@@ -180,9 +192,16 @@ namespace map
                 os << indent << "Generation functor : NULL" << std::endl;
             }
 
-            if (_spTransform.IsNotNull())
+            TransformPointer spTransform;
+
             {
-                os << indent << "Transform : " << std::endl << _spTransform << std::endl;
+                std::lock_guard<std::mutex> transformHolder(_transformMutex);
+                spTransform = _spTransform;
+            }
+
+            if (spTransform.IsNotNull())
+            {
+                os << indent << "Transform : " << std::endl << spTransform << std::endl;
             }
             else
             {

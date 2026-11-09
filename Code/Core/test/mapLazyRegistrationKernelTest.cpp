@@ -32,6 +32,11 @@
 #include "itkImage.h"
 #include "itkImageRegionIterator.h"
 
+#include <chrono>
+#include <condition_variable>
+#include <future>
+#include <mutex>
+
 namespace map
 {
 	namespace testing
@@ -50,6 +55,54 @@ namespace map
 
 			spKernel->setTransformFunctor(spFunctor.GetPointer());
 		}
+
+    /*! Generates as TestFieldGenerationFunctor, but only once released, so that the kernel can be observed
+    while it generates.*/
+    class BlockingFieldFunctor : public FieldFunctorType
+    {
+    public:
+      typedef BlockingFieldFunctor Self;
+      typedef FieldFunctorType Superclass;
+      typedef itk::SmartPointer<Self> Pointer;
+
+      static Pointer New(const InFieldRepresentationType* pInFieldRepresentation)
+      {
+        Pointer smartPtr = new Self(pInFieldRepresentation);
+        smartPtr->UnRegister();
+        return smartPtr;
+      }
+
+      TransformPointer generateTransform() const override
+      {
+        std::unique_lock<std::mutex> lock(_mutex);
+        _started = true;
+        _changed.notify_all();
+        _changed.wait(lock, [this]() { return _released; });
+        return Superclass::generateTransform();
+      }
+
+      void waitUntilStarted() const
+      {
+        std::unique_lock<std::mutex> lock(_mutex);
+        _changed.wait(lock, [this]() { return _started; });
+      }
+
+      void release() const
+      {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _released = true;
+        _changed.notify_all();
+      }
+
+    protected:
+      BlockingFieldFunctor(const InFieldRepresentationType* pInFieldRepresentation) : Superclass(pInFieldRepresentation) {}
+
+    private:
+      mutable std::mutex _mutex;
+      mutable std::condition_variable _changed;
+      mutable bool _started = false;
+      mutable bool _released = false;
+    };
 
 		int mapLazyRegistrationKernelTest(int, char* [])
 		{
@@ -141,6 +194,23 @@ namespace map
       spFunctor->setNullPoint(nullPointRef);
       CHECK_EQUAL(false, spKernel->usesNullPoint());
       CHECK_EQUAL(nullPointRef, spKernel->getNullPoint());
+
+      /// #5 transformExists() answers while another thread generates the transform, without waiting for it
+      KernelType::Pointer spBlockedKernel = KernelType::New();
+      BlockingFieldFunctor::Pointer spBlockingFunctor = BlockingFieldFunctor::New(testing::createSimpleDescriptor<2>(10, 0.5));
+      spBlockedKernel->setTransformFunctor(spBlockingFunctor.GetPointer());
+
+      std::future<void> generation = std::async(std::launch::async, [&spBlockedKernel]() { spBlockedKernel->precomputeKernel(); });
+      spBlockingFunctor->waitUntilStarted();
+
+      std::future<bool> existsWhileGenerating = std::async(std::launch::async, [&spBlockedKernel]() { return spBlockedKernel->transformExists(); });
+      const bool answeredWhileGenerating = std::future_status::ready == existsWhileGenerating.wait_for(std::chrono::seconds(10));
+      spBlockingFunctor->release();
+      generation.get();
+
+      CHECK_EQUAL(true, answeredWhileGenerating);
+      CHECK_EQUAL(false, existsWhileGenerating.get());
+      CHECK_EQUAL(true, spBlockedKernel->transformExists());
 
 			RETURN_AND_REPORT_TEST_SUCCESS;
 		}
