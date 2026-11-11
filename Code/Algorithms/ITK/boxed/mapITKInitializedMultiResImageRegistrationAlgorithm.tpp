@@ -179,15 +179,11 @@ namespace map
 			{
 				if (name == "PreinitTransform")
 				{
-					bool init;
-					map::core::unwrapMetaProperty(pProperty, init);
-					this->_preInitialize = init;
+					map::core::unwrapMetaProperty(pProperty, this->_preInitialize);
 				}
 				else if (name == "PreinitByCenterOfGravity")
 				{
-					bool init;
-					map::core::unwrapMetaProperty(pProperty, init);
-					this->_useCenterOfGravity = init;
+					map::core::unwrapMetaProperty(pProperty, this->_useCenterOfGravity);
 				}
 				else
 				{
